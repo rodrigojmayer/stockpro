@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+// import './App.css'
 import List from './components/List'
+import { Typography } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import { OkButton, CancelButton } from './components/Buttons';
+import Layout from './components/Layout';
 
 
 interface Sub {
@@ -30,6 +34,9 @@ const INITIAL_STATE = [
 ]
 
 
+
+
+
 function App() {
   const [subs, setSubs] = useState<AppState["subs"]>([])
   const [newSubsNumber, setNewSubsNumber] = useState<AppState["newSubsNumber"]>(0)
@@ -38,10 +45,23 @@ function App() {
     setSubs(INITIAL_STATE)
   }, [])
 
+
   return (
     <div className="App">
-      <h1>Midu subs</h1>
-      <List subs={subs}/>
+      <div>
+      <Layout>
+        <Typography 
+          color="secondary"  
+        >
+          example
+        </Typography>
+        
+        
+        <OkButton></OkButton>
+        <CancelButton></CancelButton>
+      </Layout>
+      </div>
+      
     </div>
   )
 }
