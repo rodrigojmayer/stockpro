@@ -9,12 +9,12 @@ import Paper from '@mui/material/Paper';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 
 interface Data {
-  calories: number;
-  carbs: number;
-  dessert: string;
-  fat: number;
+  amount: number;
+  category: string;
+  product: string;
+  unit: string;
   id: number;
-  protein: number;
+  sub_category: string;
 }
 
 interface ColumnData {
@@ -24,55 +24,56 @@ interface ColumnData {
   width: number;
 }
 
-type Sample = [string, number, number, number, number];
+type Sample = [string, number, string, string, string];
 
 const sample: readonly Sample[] = [
-  ['Frozen yoghurt', 159, 6.0, 24, 4.0],
-  ['Ice cream sandwich', 237, 9.0, 37, 4.3],
-  ['Eclair', 262, 16.0, 24, 6.0],
-  ['Cupcake', 305, 3.7, 67, 4.3],
-  ['Gingerbread', 356, 16.0, 49, 3.9],
+  ['Apples', 20, "U", "Food", "Fruit"],
+  ['Ice cream sandwich ', 237, "U", "Food", "Dessert"],
+  ['Sugar', 26, "Kgs", "Food", "Seasoning"],
+  ['Milk', 305, "Lts", "Comida", "Lácteo"],
+  ['Chairs', 57, "U", "Furniture", "-"],
+  ['Tables', 36, "U", "Furniture", "-"],
 ];
 
 function createData(
   id: number,
-  dessert: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
+  product: string,
+  amount: number,
+  unit: string,
+  category: string,
+  sub_category: string,
 ): Data {
-  return { id, dessert, calories, fat, carbs, protein };
+  return { id, product, amount, unit, category, sub_category };
 }
 
 const columns: ColumnData[] = [
   {
-    width: 200,
-    label: 'Dessert',
-    dataKey: 'dessert',
+    width: 120,
+    label: 'Product',
+    dataKey: 'product',
   },
   {
-    width: 120,
-    label: 'Calories\u00A0(g)',
-    dataKey: 'calories',
+    width: 80,
+    // label: 'Calories\u00A0(g)',
+    label: 'Amount',
+    dataKey: 'amount',
     numeric: true,
   },
   {
-    width: 120,
-    label: 'Fat\u00A0(g)',
-    dataKey: 'fat',
+    width: 80,
+    label: 'Unit',
+    dataKey: 'unit',
+  },
+  {
+    width: 100,
+    label: 'Category',
+    dataKey: 'category',
     numeric: true,
   },
   {
-    width: 120,
-    label: 'Carbs\u00A0(g)',
-    dataKey: 'carbs',
-    numeric: true,
-  },
-  {
-    width: 120,
-    label: 'Protein\u00A0(g)',
-    dataKey: 'protein',
+    width: 100,
+    label: 'Sub Category',
+    dataKey: 'sub_category',
     numeric: true,
   },
 ];
@@ -99,7 +100,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 function fixedHeaderContent() {
   return (
     <TableRow>
-      {columns.map((column) => (
+      {columns.map((column, id) => (
         <TableCell
           key={column.dataKey}
           variant="head"
@@ -112,7 +113,8 @@ function fixedHeaderContent() {
           }}
           sx={{
             // backgroundColor: 'background.paper',
-            color: "white"
+            color: "white",
+            padding: "8px 0",
           }}
         >
           {column.label}
@@ -132,7 +134,10 @@ function rowContent(_index: number, row: Data) {
           // align={column.numeric || false ? 'right' : 'left'}
           style={{ 
             backgroundColor: _index%2?"rgb(162, 199, 220)":"rgb(69, 144, 186)", 
-            border:0
+            border:0,
+          }}
+          sx={{
+            padding: "8px 0",
           }}
         >
           {row[column.dataKey]}
@@ -144,7 +149,7 @@ function rowContent(_index: number, row: Data) {
 
 export default function TableProducts() {
   return (
-    <Paper style={{ height: 400, width: '90vw', margin: "auto"}}>
+    <Paper style={{ height: 490, width: '90vw', margin: "auto"}}>
       <TableVirtuoso
         data={rows}
         components={VirtuosoTableComponents}
