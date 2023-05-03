@@ -34,10 +34,9 @@ const useStyles = makeStyles()({
     page: {
         // backgroundColor: "red",
             // overflowX: "hidden",
-            // overflowY: "hidden",
         // position: "relative",
         padding: "12px !important",
-        // marginBottom: "12px",
+        margin: "0",
 
     },
     footer: {

@@ -7,7 +7,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { OkButton, CancelButton, PlusButton } from './components/Buttons';
 import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
-
+import TableProducts from './components/TableProducts';
 
 interface Sub {
   nick: string
@@ -70,26 +70,9 @@ function App() {
           </Container>
           
 
-          <Typography 
-            color="secondary"  
-          >
-            First example
-          </Typography>
-          <Typography 
-            color="secondary"  
-          >
-            -<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>
-          </Typography>
+          <TableProducts />
 
 
-
-
-
-
-
-          
-          <CancelButton/>
-          <OkButton/>
 
         </Layout>
       </ThemeProvider>
