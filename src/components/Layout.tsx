@@ -32,12 +32,17 @@ const useStyles = makeStyles()({
         flexGrow: 1,
     },
     page: {
-        // backgroundColor: "blue",
+        // backgroundColor: "red",
+            overflowX: "hidden",
+            overflowY: "hidden",
+        // position: "relative",
     },
     footer: {
-        position: "fixed",
+        // position: "fixed",
+        // position: "absolute",
+        // bottom: 0,
         left: 0,
-        // bottom:  '64px',
+        bottom:  '64px',
         color: "white",
         backgroundColor: "rgb(255, 47, 47, .25)",
         height: "32px",
@@ -72,16 +77,20 @@ export default function Layout({ children}: MyComponentProps) {
                     <MenuButton></MenuButton>
                 </Toolbar>
             </AppBar>
-            <Container className={classes.page}>
+            <Container className={classes.page}
+                sx={{
+                    marginBottom: "12px",
+                    minHeight: `calc(100vh - ${(breakpointLG?"44px":"108px")})` }}
+            >
                 <div className={(breakpointLG?classes.toolbar:"")}></div>
                 {children}
-                <Typography 
-                    className={classes.footer}
-                    sx={{ bottom: (breakpointLG?0:"64px") }}
-                >
-                    Footer
-                </Typography>
             </Container>
+            <Typography 
+                className={classes.footer}
+                sx={{ marginBottom: (breakpointLG?"0":"64px") }}
+            >
+                Footer
+            </Typography>
         </div>
     )
 };
