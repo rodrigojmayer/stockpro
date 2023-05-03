@@ -8,8 +8,6 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { makeStyles } from 'tss-react/mui';
 
-// import MenuIcon from '@material-ui/icons/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 
 
 
@@ -138,7 +136,7 @@ export function MenuButton() {
     // onClick={() => setDrawerOpen(true)}
     className={classes.menuIcon}
     id="hamburgerMenuButton">
-    <MenuIcon />
+    <MenuRoundedIcon />
   </IconButton>
 
 )

@@ -39,6 +39,7 @@ const theme = createTheme({
     fontFamily: [
       '"Asap Condensed"',
     ].join(','),
+    fontSize: 20,
   },
 });
 
