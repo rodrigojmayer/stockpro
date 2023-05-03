@@ -6,6 +6,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import { makeStyles } from 'tss-react/mui';
 
 
@@ -70,8 +71,22 @@ const useStyles = makeStyles()({
     // color: `${theme.palette.white} !important`,
     color: "white !important",
     '& .MuiSvgIcon-root': {
-      width: '2.2rem',
-      height: '2.2rem',
+      width: '2.9rem',
+      height: '2.9rem',
+      // [theme.breakpoints.down('md')]: {
+      //   width: '2rem',
+      //   height: '2rem',
+      // },
+    },
+  },  
+  plusIcon: {
+    // color: `${theme.palette.white} !important`,
+    color: "white !important",
+    margin: "0 5px",
+    padding: "1px 1px",
+    '& .MuiSvgIcon-root': {
+      width: '2.9rem',
+      height: '2.9rem',
       // [theme.breakpoints.down('md')]: {
       //   width: '2rem',
       //   height: '2rem',
@@ -132,12 +147,24 @@ export function MenuButton() {
   
 
   return (
-  <IconButton
-    // onClick={() => setDrawerOpen(true)}
-    className={classes.menuIcon}
-    id="hamburgerMenuButton">
-    <MenuRoundedIcon />
-  </IconButton>
+    <IconButton
+      // onClick={() => setDrawerOpen(true)}
+      className={classes.menuIcon}
+      id="hamburgerMenuButton">
+      <MenuRoundedIcon />
+    </IconButton>
 
-)
+  )
+}
+
+export function PlusButton() {
+  const { classes } = useStyles()
+
+  return(
+    <IconButton
+      className={classes.plusIcon}
+      id="plusButton">
+      <ControlPointRoundedIcon />
+    </IconButton>
+  )
 }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 // import './App.css'
 import List from './components/List'
-import { Typography } from '@mui/material'
+import { Container, Typography, Grid } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import { OkButton, CancelButton } from './components/Buttons';
+import { OkButton, CancelButton, PlusButton } from './components/Buttons';
 import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 
@@ -58,9 +58,17 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Layout>
-
-          <MainSearch></MainSearch>
-
+          <Container maxWidth="md" style={{padding: "0"}} >
+            <Grid container>
+              <Grid item xs={10} >
+                <MainSearch/>
+              </Grid>
+              <Grid item xs={2} >
+                <PlusButton/>
+              </Grid>
+            </Grid>
+          </Container>
+          
 
           <Typography 
             color="secondary"  
@@ -80,8 +88,8 @@ function App() {
 
 
           
-          <CancelButton></CancelButton>
-          <OkButton></OkButton>
+          <CancelButton/>
+          <OkButton/>
 
         </Layout>
       </ThemeProvider>
