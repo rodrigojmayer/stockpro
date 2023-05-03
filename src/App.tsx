@@ -57,8 +57,8 @@ function App() {
         </Typography>
         
         
-        <OkButton></OkButton>
         <CancelButton></CancelButton>
+        <OkButton></OkButton>
       </Layout>
       </div>
       

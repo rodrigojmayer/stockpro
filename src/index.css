@@ -195,3 +195,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+/* header {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 900;
+  padding: 1rem;
+  width: 100%;
+  height: var(--header-height);
+  background-color: var(--second-color);
+} */
