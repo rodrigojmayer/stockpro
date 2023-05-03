@@ -33,7 +33,19 @@ const useStyles = makeStyles()({
     },
     page: {
         // backgroundColor: "blue",
-    }
+    },
+    footer: {
+        position: "fixed",
+        left: 0,
+        // bottom:  '64px',
+        // color: "white",
+        backgroundColor: "rgb(255, 47, 47, .25)",
+        height: "32px",
+        width: '100%',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
 })
 
 
@@ -61,9 +73,13 @@ export default function Layout({ children}: MyComponentProps) {
             <div className={classes.page}>
                 <div className={(breakpointLG?classes.toolbar:"")}></div>
                 {children}
+                <Typography 
+                    className={classes.footer}
+                    sx={{ bottom: (breakpointLG?0:"64px") }}
+                >
+                    Footer
+                </Typography>
             </div>
-            {`(min-width:1024px) breakpointLG: ${breakpointLG}`}
-
         </div>
     )
 };
