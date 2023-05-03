@@ -9,6 +9,9 @@ import Typography from '@mui/material/Typography';
 import { makeStyles } from 'tss-react/mui';
 
 
+import { MenuButton } from './Buttons';
+
+
 const useStyles = makeStyles()({
     appbar: {
         position: "fixed",
@@ -51,7 +54,8 @@ export default function Layout({ children}: MyComponentProps) {
                 >
                 <Toolbar >
                     <Typography variant= "h6" className={classes.logo}>StockPro</Typography>
-                    <div>button hamburgues</div>
+                    
+                    <MenuButton></MenuButton>
                 </Toolbar>
             </AppBar>
             <div className={classes.page}>
