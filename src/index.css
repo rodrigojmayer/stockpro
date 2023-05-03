@@ -206,3 +206,9 @@ button:focus-visible {
   height: var(--header-height);
   background-color: var(--second-color);
 } */
+
+body{
+  /* background-color: blue; */
+  background-color: rgb(45, 72, 91, 1);
+  /* height: 100vh; */
+}

@@ -5,7 +5,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-
+import { Container } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles()({
         position: "fixed",
         left: 0,
         bottom: 0,
-        // backgroundColor: "warning",
+        backgroundColor: "rgb(18, 35, 46, 1)",
         // backgroundColor: "red",
         height: "64px",
         // width: `calc(100% - 100px) !important`,
@@ -38,7 +38,7 @@ const useStyles = makeStyles()({
         position: "fixed",
         left: 0,
         // bottom:  '64px',
-        // color: "white",
+        color: "white",
         backgroundColor: "rgb(255, 47, 47, .25)",
         height: "32px",
         width: '100%',
@@ -65,12 +65,14 @@ export default function Layout({ children}: MyComponentProps) {
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
                 >
                 <Toolbar >
-                    <Typography variant= "h6" className={classes.logo}>StockPro</Typography>
+                    <Typography variant= "h6" className={classes.logo}>
+                        StockPro
+                    </Typography>
                     
                     <MenuButton></MenuButton>
                 </Toolbar>
             </AppBar>
-            <div className={classes.page}>
+            <Container className={classes.page}>
                 <div className={(breakpointLG?classes.toolbar:"")}></div>
                 {children}
                 <Typography 
@@ -79,7 +81,7 @@ export default function Layout({ children}: MyComponentProps) {
                 >
                     Footer
                 </Typography>
-            </div>
+            </Container>
         </div>
     )
 };

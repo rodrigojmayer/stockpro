@@ -48,7 +48,6 @@ function App() {
 
   return (
     <div className="App">
-      <div>
       <Layout>
         <Typography 
           color="secondary"  
@@ -60,7 +59,6 @@ function App() {
         <CancelButton></CancelButton>
         <OkButton></OkButton>
       </Layout>
-      </div>
       
     </div>
   )
