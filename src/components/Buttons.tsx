@@ -8,7 +8,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import { makeStyles } from 'tss-react/mui';
-
+import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 
 
 
@@ -81,9 +81,11 @@ const useStyles = makeStyles()({
   },  
   plusIcon: {
     // color: `${theme.palette.white} !important`,
-    color: "white !important",
+    // color: "white !important",
+    color: "rgb(77, 168, 218, 1)",
     margin: "0 5px",
     padding: "1px 1px",
+    backgroundColor: "rgb(77, 168, 218, 0)",
     '& .MuiSvgIcon-root': {
       width: '2.9rem',
       height: '2.9rem',
@@ -92,6 +94,11 @@ const useStyles = makeStyles()({
       //   height: '2rem',
       // },
     },
+  },
+  backPlus: {
+    width: "100px",
+    height: "100px",
+    backgroundColor: "red"
   },
 })
 
@@ -164,7 +171,7 @@ export function PlusButton() {
     <IconButton
       className={classes.plusIcon}
       id="plusButton">
-      <ControlPointRoundedIcon />
+        <ControlPointTwoToneIcon/>
     </IconButton>
   )
 }
