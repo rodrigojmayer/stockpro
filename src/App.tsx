@@ -6,6 +6,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { OkButton, CancelButton } from './components/Buttons';
 import Layout from './components/Layout';
+import MainSearch from './components/MainSearch';
 
 
 interface Sub {
@@ -33,7 +34,13 @@ const INITIAL_STATE = [
   }
 ]
 
-
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      '"Asap Condensed"',
+    ].join(','),
+  },
+});
 
 
 
@@ -48,215 +55,36 @@ function App() {
 
   return (
     <div className="App">
-      <Layout>
-        <Typography 
-          color="secondary"  
-        >
-          First example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <Typography 
-          color="secondary"  
-        >
-          example
-        </Typography>
-        <CancelButton></CancelButton>
-        <OkButton></OkButton>
-      </Layout>
+      <ThemeProvider theme={theme}>
+        <Layout>
+
+          <MainSearch></MainSearch>
+
+
+          <Typography 
+            color="secondary"  
+          >
+            First example
+          </Typography>
+          <Typography 
+            color="secondary"  
+          >
+            -<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>-<br/>
+          </Typography>
+
+
+
+
+
+
+
+          
+          <CancelButton></CancelButton>
+          <OkButton></OkButton>
+
+        </Layout>
+      </ThemeProvider>
+      
       
     </div>
   )

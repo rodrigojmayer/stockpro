@@ -19,7 +19,7 @@
   --white-alpha-color: rgba(255, 255, 255, 0.5);
   --black-alpha-color: rgba(0, 0, 0, 0.5);
   --gray-alpha-color: rgba(119, 119, 119, 0.15);
-  --font: 'Asap Condensed', sans-serif ;
+  --font:  sans-serif ;
   --max-width: 1200px;
   --header-height: 4rem;
   --footer-height: 2rem;
@@ -30,7 +30,8 @@
 
 html {
   box-sizing: border-box;
-  font-family: var(--font);
+  /* font-family: var(--font) !important; */
+  font-family:  Helvetica, sans-serif !important;
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-tap-highlight-color:transparent;

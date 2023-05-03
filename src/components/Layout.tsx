@@ -33,9 +33,12 @@ const useStyles = makeStyles()({
     },
     page: {
         // backgroundColor: "red",
-            overflowX: "hidden",
-            overflowY: "hidden",
+            // overflowX: "hidden",
+            // overflowY: "hidden",
         // position: "relative",
+        padding: "12px !important",
+        // marginBottom: "12px",
+
     },
     footer: {
         // position: "fixed",
@@ -66,7 +69,6 @@ export default function Layout({ children}: MyComponentProps) {
     return (
         <div>
             <AppBar className={classes.appbar}
-                position="fixed" 
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
                 >
                 <Toolbar >
@@ -79,8 +81,7 @@ export default function Layout({ children}: MyComponentProps) {
             </AppBar>
             <Container className={classes.page}
                 sx={{
-                    marginBottom: "12px",
-                    minHeight: `calc(100vh - ${(breakpointLG?"44px":"108px")})` }}
+                    minHeight: `calc(100vh - ${(breakpointLG?"32px":"96px")})` }}
             >
                 <div className={(breakpointLG?classes.toolbar:"")}></div>
                 {children}
