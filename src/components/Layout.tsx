@@ -63,7 +63,7 @@ export default function Layout({ children}: MyComponentProps) {
 
     const { classes } = useStyles()
 
-    console.log(useStyles)
+    // console.log(useStyles)
 
     return (
         <div>
@@ -85,12 +85,12 @@ export default function Layout({ children}: MyComponentProps) {
                 <div className={(breakpointLG?classes.toolbar:"")}></div>
                 {children}
             </Container>
-            <Typography 
+            {/* <Typography 
                 className={classes.footer}
                 sx={{ marginBottom: (breakpointLG?"0":"64px") }}
             >
                 Footer
-            </Typography>
+            </Typography> */}
         </div>
     )
 };

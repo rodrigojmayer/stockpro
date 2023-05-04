@@ -31,11 +31,11 @@
 html {
   box-sizing: border-box;
   /* font-family: var(--font) !important; */
-  font-family:  Helvetica, sans-serif !important;
+  /* font-family:  Helvetica, sans-serif !important; */
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-tap-highlight-color:transparent;
-  /* overflow-y:hidden; */
+  /* overflow-y:hidden !important; */
 }
 
 *,
@@ -47,7 +47,7 @@ html {
 body {
   margin: 0;
   overflow-x: hidden;
-  overflow-y:overlay;
+  overflow-y:hidden ;
   color: var(--text-color);
 }
 
