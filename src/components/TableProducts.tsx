@@ -7,12 +7,21 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
 
 interface Data {
-  amount: number;
-  category: string;
-  product: string;
-  unit: string;
   id: number;
+  product: string;
+  amount: number;
+  unit: string;
+  category: string;
   sub_category: string;
+}
+
+const INITIAL_STATE = {
+  id: NaN,
+  product: "",
+  amount: NaN,
+  unit: "",
+  category: "",
+  sub_category: "",
 }
 
 interface ColumnData {
@@ -22,7 +31,7 @@ interface ColumnData {
   width: number;
 }
 
-// type Sample = [string, number, string, string, string];
+type Sample = [string, number, string, string, string];
 
 // const sample: readonly Sample[] = [
 //   ['Asadfsagdsgdfhgpsples', 20, "U", "Food", "Fruit"],
@@ -162,6 +171,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 // }
 
 function rowContent(_index: number, row: Data) {
+
   return (
     <React.Fragment >
       {columns.map((column) => (
@@ -190,36 +200,42 @@ export default function TableProducts({ data }: { data: Data[] }) {
   
   
   // const [filter, setFilter] = useState('');
-  // const [filteredRows, setFilteredRows] = useState<Data[]>([]);
+  const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
+  const [searchQuery, setSearchQuery] = useState("");
+  // const [filter, setFilter] = useState(data)
+  const [filteredData, setFilteredData] = useState(data)
 
-
-  // useEffect(() => {
-  //   const filtered = rows.filter((row) =>
-  //     Object.values(row)
-  //       .join('')
-  //       .toLowerCase()
-  //       .includes(filter.toLowerCase())
-  //   );
-  //   setFilteredRows(filtered);
-  // }, [filter]);
-
-  // const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFilter(event.target.value);
-  // };
-
-  const [searchTerm, setSearchTerm] = useState('');
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("event.target.id: ", event.target.id)
+    setSearchQuery(event.target.value);
+    setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
+  };
 
   useEffect(() => {
-    setSearchTerm('');
-    console.log("data: ", data)
-  }, [data]);
+    // setSearchTerm('');
+    // console.log("searchQuery: ", searchQuery)
+    // console.log("filteredData: ", filteredData)
+    // console.log("data: ", data)
+    console.log("filteredRows: ", filteredRows)
+    setFilteredData(data.filter((item) =>
+      // console.log("item.product.toLowerCase().includes(searchQuery.toLowerCase()): ", item.product.toLowerCase().includes(searchQuery.toLowerCase()))
+      item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.category.toLowerCase().includes(searchQuery.toLowerCase())
+    ));
+    // console.log("filteredData: ", filteredData)
+
+    // console.log("datasa: ", data)
+  }, [ searchQuery, data]);
   
 
   return (
     <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto"}}>
       <TableVirtuoso
-        // data={filteredRows}
-        data={data}
+        data={filteredData}
+        // data={data}
         components={VirtuosoTableComponents}
         // fixedHeaderContent={fixedHeaderContent}
         fixedHeaderContent={() => {
@@ -243,9 +259,10 @@ export default function TableProducts({ data }: { data: Data[] }) {
                   {/* {filters[0].dataKey} */}
                     {column.label}
                       <TextField
-                        id="filled-multiline-flexible"
+                        id={column.dataKey}
+                        // id="filled-multiline-flexible"
                         // value={filters[0].dataKey}
-                        // onChange={handleFilterChange}
+                        onChange={handleFilterChange}
                         // onChange={handleFilterChange}
                         maxRows={1}
                         size="small"

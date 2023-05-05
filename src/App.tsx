@@ -44,24 +44,34 @@ const sample:  Data[] = [
   {id: 4, product: 'Milk', amount: 305, unit: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 5, product: 'Chairs', amount: 57, unit: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, unit: "U", category: "Furniture", sub_category: "-"},
+  {id: 7, product: 'Apples', amount: 20, unit: "U", category: "Food", sub_category: "Fruit"},
+  {id: 8, product: 'Ice cream sandwich ', amount: 237, unit: "U", category: "Food", sub_category: "Dessert"},
+  {id: 9, product: 'Sugar', amount: 26, unit: "Kgs", category: "Food", sub_category: "Seasoning"},
+  {id: 10, product: 'Milk', amount: 305, unit: "Lts", category: "Food", sub_category: "Dairy"},
+  {id: 11, product: 'Chairs', amount: 57, unit: "U", category: "Furniture", sub_category: "-"},
+  {id: 12, product: 'Tables', amount: 36, unit: "U", category: "Furniture", sub_category: "-"},
 ];
 
 
 function App() {
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [data, setData] = useState(sample)
-  const [filteredData, setFilteredData] = useState(data)
+  // const [data, setData] = useState(sample)
+  // const [filteredData, setFilteredData] = useState(data)
+  const [filteredData, setFilteredData] = useState(sample)
 
   useEffect(() => {
-    setFilteredData(data.filter((item) =>
-    item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+    setFilteredData(sample.filter((item) => 
+      item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.category.toLowerCase().includes(searchQuery.toLowerCase())
+
+    
     ));
-  }, [data, searchQuery])
+  // }, [data, searchQuery])
+}, [ searchQuery])
 
   return (
     <div className="App">
