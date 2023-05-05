@@ -1,13 +1,7 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
@@ -28,27 +22,27 @@ interface ColumnData {
   width: number;
 }
 
-type Sample = [string, number, string, string, string];
+// type Sample = [string, number, string, string, string];
 
-const sample: readonly Sample[] = [
-  ['Apples', 20, "U", "Food", "Fruit"],
-  ['Ice cream sandwich ', 237, "U", "Food", "Dessert"],
-  ['Sugar', 26, "Kgs", "Food", "Seasoning"],
-  ['Milk', 305, "Lts", "Comida", "Lácteo"],
-  ['Chairs', 57, "U", "Furniture", "-"],
-  ['Tables', 36, "U", "Furniture", "-"],
-];
+// const sample: readonly Sample[] = [
+//   ['Asadfsagdsgdfhgpsples', 20, "U", "Food", "Fruit"],
+//   ['Ice cream sandwich ', 237, "U", "Food", "Dessert"],
+//   ['Sugar', 26, "Kgs", "Food", "Seasoning"],
+//   ['Milk', 305, "Lts", "Comida", "Lácteo"],
+//   ['Chairs', 57, "U", "Furniture", "-"],
+//   ['Tables', 36, "U", "Furniture", "-"],
+// ];
 
-function createData(
-  id: number,
-  product: string,
-  amount: number,
-  unit: string,
-  category: string,
-  sub_category: string,
-): Data {
-  return { id, product, amount, unit, category, sub_category };
-}
+// function createData(
+//   id: number,
+//   product: string,
+//   amount: number,
+//   unit: string,
+//   category: string,
+//   sub_category: string,
+// ): Data {
+//   return { id, product, amount, unit, category, sub_category };
+// }
 
 const columns: ColumnData[] = [
   {
@@ -81,13 +75,19 @@ const columns: ColumnData[] = [
     numeric: true,
   },
 ];
-let i=1
-let rows: Data[] = Array.from({ length: 5 }, (_, index) => {
-  const randomSelection = sample[index];
-  // i++
-  return createData(index, ...randomSelection);
+
+// let rowsSearch: Data[] = Array.from({ length: 5 }, (_, index) => {
+//   const randomSelection = sample[index];
+//   // i++
+//   return createData(index, ...randomSelection);
  
-});
+// });
+// let rows: Data[] = Array.from({ length: 5 }, (_, index) => {
+//   const randomSelection = sample[index];
+//   // i++
+//   return createData(index, ...randomSelection);
+ 
+// });
 // console.log(rows)
 // console.log(sample)
 
@@ -184,44 +184,42 @@ function rowContent(_index: number, row: Data) {
   );
 }
 
-export default function TableProducts() {
+export default function TableProducts({ data }: { data: Data[] }) {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
 
-  const pe = "pepe"
-  // const [ filters, setFilters ] = useState([
-  //   {
-  //     dataKey: ''
-  //   }
-  // ])
-  const [ filters, setFilters ] = useState('')
-  // console.log(rows[0].product)
-  rows = rows.filter((row) => {
-    console.log(row.product)
-    if(row.product==="Apples")  return row
+  
+  
+  // const [filter, setFilter] = useState('');
+  // const [filteredRows, setFilteredRows] = useState<Data[]>([]);
 
-  })
-  // console.log(rows)
-  // console.log(filters)
 
-  // const sample: readonly Sample[] = [
-  //   ['Apples', 20, "U", "Food", "Fruit"],
-  //   ['Ice cream sandwich ', 237, "U", "Food", "Dessert"],
-  //   ['Sugar', 26, "Kgs", "Food", "Seasoning"],
-  //   ['Milk', 305, "Lts", "Comida", "Lácteo"],
-  //   ['Chairs', 57, "U", "Furniture", "-"],
-  //   ['Tables', 36, "U", "Furniture", "-"],
-  // ];
-  const handleOnChange = (event: any) => {
-    // const {name, value } = event.target;
-    // setFilters({ ...filters, [name]: value})
-    setFilters(event.target.value)
-  }
+  // useEffect(() => {
+  //   const filtered = rows.filter((row) =>
+  //     Object.values(row)
+  //       .join('')
+  //       .toLowerCase()
+  //       .includes(filter.toLowerCase())
+  //   );
+  //   setFilteredRows(filtered);
+  // }, [filter]);
 
+  // const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFilter(event.target.value);
+  // };
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    setSearchTerm('');
+    console.log("data: ", data)
+  }, [data]);
+  
 
   return (
     <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto"}}>
       <TableVirtuoso
-        data={rows}
+        // data={filteredRows}
+        data={data}
         components={VirtuosoTableComponents}
         // fixedHeaderContent={fixedHeaderContent}
         fixedHeaderContent={() => {
@@ -247,7 +245,8 @@ export default function TableProducts() {
                       <TextField
                         id="filled-multiline-flexible"
                         // value={filters[0].dataKey}
-                        onChange={handleOnChange}
+                        // onChange={handleFilterChange}
+                        // onChange={handleFilterChange}
                         maxRows={1}
                         size="small"
                         sx={{

@@ -1,7 +1,11 @@
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { useState } from 'react';
 
+interface Props {
+    setSearchQuery: (value: string) => void;
+}
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -48,7 +52,15 @@ color: 'inherit',
 
 
 
-export default function MainSearch () {
+export default function MainSearch ({ setSearchQuery }: Props) {
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    // const handleSearchChange = (event: any) => {
+    //     const term = event.target.value;
+    //     setSearchTerm(term);
+    //     setSearchQuery(term);
+    // }
 
     return(
         <Search>
@@ -57,6 +69,7 @@ export default function MainSearch () {
             </SearchIconWrapper>
             <StyledInputBase
                 placeholder="Global search..."
+                onChange={(e) => setSearchQuery(e.target.value)}
                 // inputProps={{ 'aria-label': 'search' }}
             />
         </Search>
