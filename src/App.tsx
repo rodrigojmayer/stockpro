@@ -61,12 +61,16 @@ function App() {
   const [filteredData, setFilteredData] = useState(sample)
 
   useEffect(() => {
-    setFilteredData(sample.filter((item) => 
-      item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    setFilteredData(sample.filter((item) => {
+      // console.log("item.product.toLowerCase().includes(searchQuery.toLowerCase()): ", item.product.toLowerCase().includes(searchQuery.toLowerCase()))
+      
+     return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.category.toLowerCase().includes(searchQuery.toLowerCase())
+
+    }
 
     
     ));

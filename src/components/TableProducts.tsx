@@ -201,13 +201,13 @@ export default function TableProducts({ data }: { data: Data[] }) {
   
   // const [filter, setFilter] = useState('');
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
   // const [filter, setFilter] = useState(data)
   const [filteredData, setFilteredData] = useState(data)
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("event.target.id: ", event.target.id)
-    setSearchQuery(event.target.value);
+    // console.log("event.target.id: ", event.target.id)
+    // setSearchQuery(event.target.value);
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
 
@@ -217,18 +217,51 @@ export default function TableProducts({ data }: { data: Data[] }) {
     // console.log("filteredData: ", filteredData)
     // console.log("data: ", data)
     console.log("filteredRows: ", filteredRows)
-    setFilteredData(data.filter((item) =>
-      // console.log("item.product.toLowerCase().includes(searchQuery.toLowerCase()): ", item.product.toLowerCase().includes(searchQuery.toLowerCase()))
-      item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase())
-    ));
-    // console.log("filteredData: ", filteredData)
+    console.log("Object.values(filteredRows): ", Object.values(filteredRows).some(val => val !== "" && (typeof val === "number" ? !(isNaN(val)) : true)))
+    // const str = 'product' as string;
+    // console.log(filteredRows["product" as keyof typeof filteredRows]);
+    if(Object.values(filteredRows).some(val => val !== "" && (typeof val === "number" ? !(isNaN(val)) : true))) {
+      
+      Object.keys(filteredRows).forEach((arg) => {
+        // if()
+        const str = arg as string;
+        let value = filteredRows[str as keyof typeof filteredRows]
+        // console.log("arg: ", arg)
+        // console.log(typeof value)
+        if (typeof value == "string")
+          value = value.toString().toLowerCase()
+        else if (isNaN(value))
+          value = ""
+          
+          // console.log("value: ", value)
+          
+        if (value !== ""){
+          // console.log("ballena")
+          setFilteredData(data.filter((item) => {
+            // console.log("item[str as keyof typeof item].toString(): ", item[str as keyof typeof item].toString())
+            // console.log("(alue.toString(): ", value)
+            // console.log("item[str as keyof typeof item].toString().includes(value.toString()): ", item[str as keyof typeof item].toString().includes(value.toString()))
+          
+              return item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())
+             
+         
+          }));
+        }
+  
+  
+        // console.log("filteredData: ", filteredData)
+       
+        console.log("-----------")
+  
+      })
 
-    // console.log("datasa: ", data)
-  }, [ searchQuery, data]);
+      
+    } else {
+      
+      console.log("holis")
+      setFilteredData(data)
+    }
+  }, [ filteredRows, data]);
   
 
   return (
