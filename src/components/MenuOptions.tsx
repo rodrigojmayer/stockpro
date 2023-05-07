@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 const useStyles = makeStyles()({
@@ -20,25 +21,43 @@ const useStyles = makeStyles()({
 })
 
 const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
+    position: 'absolute',
+    bottom: 64,
+    width: "100%",
+    height: "70%",
+    backgroundColor: "rgb(18, 35, 46, 1)",
+    '&  > :nth-child(1)': {
+        width: "100%",
+        justifyContent: "space-evenly",
+        height: "100%",
+    },
+    '& Button': {
+        color: "white",
+        height: "100%",
+    },
+   
 };
 
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-  }
+}
+
+
+
 
 // export default function MenuOptions({ open }: ChildProps, { handleClose }: ChildProps) {
 export default function MenuOptions({ open, handleClose }: ChildProps) {
     // export default function MenuOptions({ disp }: ChildProps) {
+
+    const  buttons = [
+        <Button key="fields" variant="text">Fields</Button>,
+        <Button key="alerts" variant="text">Alerts</Button>,
+        <Button key="massive-upload" variant="text">Massive upload</Button>,
+        <Button key="users" variant="text">Users</Button>,
+        <Button key="profile" variant="text">Profile</Button>,
+        <Button key="preferences" variant="text">Preferences</Button>,
+    ];
 
     const { classes } = useStyles()
     const close = () => {
@@ -57,17 +76,15 @@ export default function MenuOptions({ open, handleClose }: ChildProps) {
 
             <Modal
                 open={open} 
-                onClose={close} 
-                //  aria-labelledby="modal-modal-title" 
-                //  aria-describedby="modal-modal-description" 
+                onClose={close}
              > 
                 <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Text in a modal
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
+                    <ButtonGroup 
+                        orientation="vertical"
+                        // variant="text"    
+                    >
+                        {buttons}
+                    </ButtonGroup>
                 </Box>
             </Modal>
         </div>
