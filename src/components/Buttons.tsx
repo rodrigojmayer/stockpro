@@ -148,19 +148,27 @@ export function CancelButton() {
   )
 }
 
-export function MenuButton() {
+
+interface ChildProps {
+  onDataChanged: (newData: boolean) => void;
+}
+
+export function MenuButton({ onDataChanged }: ChildProps) {
 
   const { classes } = useStyles()
-  
+ 
+  const handleClick = () => {
+    onDataChanged(true)
+  }
 
   return (
     <IconButton
+      onClick={handleClick}
       // onClick={() => setDrawerOpen(true)}
       className={classes.menuIcon}
       id="hamburgerMenuButton">
       <MenuRoundedIcon />
     </IconButton>
-
   )
 }
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import AppBar from '@mui/material/AppBar';
@@ -10,6 +11,7 @@ import { makeStyles } from 'tss-react/mui';
 
 
 import { MenuButton } from './Buttons';
+import MenuOptions from './MenuOptions';
 
 
 const useStyles = makeStyles()({
@@ -55,27 +57,45 @@ const useStyles = makeStyles()({
     },
 })
 
-
 type MyComponentProps = React.PropsWithChildren<{}>;
 
 export default function Layout({ children}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
 
     const { classes } = useStyles()
+    const [test, setTest] = useState(false)
 
-    // console.log(useStyles)
+    const handleDataChange = (newData: boolean) => {
+        setOpen(newData)
+    }
+    
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    useEffect(() => {
+        console.log(open)
+
+    }, [open])
 
     return (
         <div>
+            <MenuOptions
+                 open={open} 
+                 handleClose={handleClose} 
+            /> 
             <AppBar className={classes.appbar}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
                 >
+                    
                 <Toolbar >
                     <Typography variant= "h6" className={classes.logo}>
                         StockPro
+                        {test}
                     </Typography>
-                    
-                    <MenuButton></MenuButton>
+                    <MenuButton
+                    onDataChanged={handleOpen}
+                    ></MenuButton>
                 </Toolbar>
             </AppBar>
             <Container className={classes.page}
