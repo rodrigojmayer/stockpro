@@ -3,7 +3,7 @@ import { makeStyles } from 'tss-react/mui';
 // import MenuList from '@mui/material/MenuList/MenuList';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -26,7 +26,7 @@ const style = {
     width: "100%",
     height: "70%",
     backgroundColor: "rgb(18, 35, 46, 1)",
-    '&  > :nth-child(1)': {
+    '&  > :nth-of-type(1)': {
         width: "100%",
         justifyContent: "space-evenly",
         height: "100%",
@@ -35,58 +35,57 @@ const style = {
         color: "white",
         height: "100%",
     },
-   
 };
 
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
+    openOptionF: (newData: boolean) => void
+    openOptionA: (newData: boolean) => void
 }
 
 
 
-
-// export default function MenuOptions({ open }: ChildProps, { handleClose }: ChildProps) {
-export default function MenuOptions({ open, handleClose }: ChildProps) {
-    // export default function MenuOptions({ disp }: ChildProps) {
-
-    const  buttons = [
-        <Button key="fields" variant="text">Fields</Button>,
-        <Button key="alerts" variant="text">Alerts</Button>,
-        <Button key="massive-upload" variant="text">Massive upload</Button>,
-        <Button key="users" variant="text">Users</Button>,
-        <Button key="profile" variant="text">Profile</Button>,
-        <Button key="preferences" variant="text">Preferences</Button>,
-    ];
+export default function MenuOptions({ open, handleClose, openOptionF, openOptionA}: ChildProps) {
 
     const { classes } = useStyles()
     const close = () => {
         handleClose(false)
     }
 
-    return (
-        <div>
-            {/* <menu  */}
-            {/* className={classes.menuOptions} */}
-            {/* // style={{disp}} */}
-            {/* > */}
-                {/* {disp} */}
-                
-            {/* </menu> */}
+    const selOp = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const buttonElement = e.currentTarget.value 
+        console.log("buttonElement: ", buttonElement)
+        if(buttonElement === "fields")
+            openOptionF(true)
+        else if(buttonElement === "alerts")
+            openOptionA(true)
+        handleClose(false)
+    }
 
-            <Modal
-                open={open} 
-                onClose={close}
-             > 
-                <Box sx={style}>
-                    <ButtonGroup 
-                        orientation="vertical"
-                        // variant="text"    
-                    >
-                        {buttons}
-                    </ButtonGroup>
-                </Box>
-            </Modal>
-        </div>
+    const  buttons = [
+        <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
+        <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>,
+        <Button value="massive-upload" key="massive-upload" variant="text" onClick={selOp}>Massive upload</Button>,
+        <Button value="users" key="users" variant="text" onClick={selOp}>Users</Button>,
+        <Button value="profile" key="profile" variant="text" onClick={selOp}>Profile</Button>,
+        <Button value="preferences" key="preferences" variant="text" onClick={selOp}>Preferences</Button>,
+    ];
+
+    return (
+        <Modal
+            open={open} 
+            onClose={close}
+            > 
+            <Box sx={style}>
+                <ButtonGroup 
+                    orientation="vertical"
+                    // variant="text"    
+                >
+                    {buttons}
+                </ButtonGroup>
+            </Box>
+        </Modal>
     )
 }

@@ -12,6 +12,8 @@ import { makeStyles } from 'tss-react/mui';
 
 import { MenuButton } from './Buttons';
 import MenuOptions from './MenuOptions';
+import Fields from './Fields';
+import Alerts from './Alerts';
 
 
 const useStyles = makeStyles()({
@@ -57,6 +59,24 @@ const useStyles = makeStyles()({
     },
 })
 
+interface DataMenuOptions {
+    fields: boolean,
+    alerts: boolean,
+    massive: boolean,
+    users: boolean,
+    profile: boolean,
+    preferences: boolean
+}
+
+const INITIAL_MENU_OPTIONS = {
+    fields: false,
+    alerts: false,
+    massive: false,
+    users: false,
+    profile: false,
+    preferences: false
+}
+
 type MyComponentProps = React.PropsWithChildren<{}>;
 
 export default function Layout({ children}: MyComponentProps) {
@@ -65,24 +85,44 @@ export default function Layout({ children}: MyComponentProps) {
     const { classes } = useStyles()
     const [test, setTest] = useState(false)
 
-    const handleDataChange = (newData: boolean) => {
-        setOpen(newData)
-    }
+    // const handleDataChange = (newData: boolean) => {
+    //     setOpen(newData);
+    //     setOpen2(newData);
+
+    // }
     
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [openMenu, setOpenMenu] = useState(false);
+    const handleOpenMenu = () => setOpenMenu(true);
+    const handleCloseMenu = () => setOpenMenu(false);
+
+    const [openOptions, setOpenOptions] = useState<DataMenuOptions>(INITIAL_MENU_OPTIONS);
+   
+    const handleOpenFields = () => setOpenOptions({...openOptions, fields: true});
+    const handleCloseFields = () => setOpenOptions({...openOptions, fields: false});
+
+    const handleOpenAlerts = () => setOpenOptions({...openOptions, alerts: true});
+    const handleCloseAlerts = () => setOpenOptions({...openOptions, alerts: false});
 
     useEffect(() => {
-        console.log(open)
+        // console.log(open)
 
-    }, [open])
+    }, [openMenu])
 
     return (
         <div>
             <MenuOptions
-                 open={open} 
-                 handleClose={handleClose} 
+                 open={openMenu} 
+                 handleClose={handleCloseMenu} 
+                 openOptionF = {handleOpenFields}
+                 openOptionA = {handleOpenAlerts}
+            /> 
+            <Fields
+                 open={openOptions.fields} 
+                 handleClose={handleCloseFields} 
+            /> 
+            <Alerts
+                 open={openOptions.alerts} 
+                 handleClose={handleCloseAlerts} 
             /> 
             <AppBar className={classes.appbar}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
@@ -94,7 +134,7 @@ export default function Layout({ children}: MyComponentProps) {
                         {test}
                     </Typography>
                     <MenuButton
-                    onDataChanged={handleOpen}
+                    onDataChanged={handleOpenMenu}
                     ></MenuButton>
                 </Toolbar>
             </AppBar>
@@ -105,12 +145,6 @@ export default function Layout({ children}: MyComponentProps) {
                 <div className={(breakpointLG?classes.toolbar:"")}></div>
                 {children}
             </Container>
-            {/* <Typography 
-                className={classes.footer}
-                sx={{ marginBottom: (breakpointLG?"0":"64px") }}
-            >
-                Footer
-            </Typography> */}
         </div>
     )
 };

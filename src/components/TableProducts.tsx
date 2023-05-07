@@ -33,26 +33,6 @@ interface ColumnData {
 
 type Sample = [string, number, string, string, string];
 
-// const sample: readonly Sample[] = [
-//   ['Asadfsagdsgdfhgpsples', 20, "U", "Food", "Fruit"],
-//   ['Ice cream sandwich ', 237, "U", "Food", "Dessert"],
-//   ['Sugar', 26, "Kgs", "Food", "Seasoning"],
-//   ['Milk', 305, "Lts", "Comida", "Lácteo"],
-//   ['Chairs', 57, "U", "Furniture", "-"],
-//   ['Tables', 36, "U", "Furniture", "-"],
-// ];
-
-// function createData(
-//   id: number,
-//   product: string,
-//   amount: number,
-//   unit: string,
-//   category: string,
-//   sub_category: string,
-// ): Data {
-//   return { id, product, amount, unit, category, sub_category };
-// }
-
 const columns: ColumnData[] = [
   {
     width: 120,
