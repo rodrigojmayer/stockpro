@@ -41,12 +41,14 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     openOptionF: (newData: boolean) => void
-    openOptionA: (newData: boolean) => void
+    // openOptionA: (newData: boolean) => void
+    openOptionA: ([]) => void
+    onData: (data: {}) => void;
 }
 
 
 
-export default function MenuOptions({ open, handleClose, openOptionF, openOptionA}: ChildProps) {
+export default function MenuOptions({ open, handleClose, openOptionF, openOptionA, onData}: ChildProps) {
 
     const { classes } = useStyles()
     const close = () => {
@@ -60,7 +62,8 @@ export default function MenuOptions({ open, handleClose, openOptionF, openOption
         if(buttonElement === "fields")
             openOptionF(true)
         else if(buttonElement === "alerts")
-            openOptionA(true)
+            onData({option:"alerts", open: true})
+            // openOptionA(["alerts", true])
         handleClose(false)
     }
 

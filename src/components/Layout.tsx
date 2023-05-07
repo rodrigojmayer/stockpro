@@ -100,11 +100,18 @@ export default function Layout({ children}: MyComponentProps) {
     const handleOpenFields = () => setOpenOptions({...openOptions, fields: true});
     const handleCloseFields = () => setOpenOptions({...openOptions, fields: false});
 
-    const handleOpenAlerts = () => setOpenOptions({...openOptions, alerts: true});
+    const handleOpenAlerts = (newData:  {option: string, open: boolean}) => {
+            // const option = newData[0]
+            setOpenOptions({...openOptions, [newData.option]: newData.open});
+            // console.log([newData[0].option])
+            // console.log(newData.option)
+            // console.log(newData.open)
+        // }
+    }
     const handleCloseAlerts = () => setOpenOptions({...openOptions, alerts: false});
 
     useEffect(() => {
-        // console.log(open)
+        // console.log(handleOpenAlerts)
 
     }, [openMenu])
 
@@ -115,6 +122,7 @@ export default function Layout({ children}: MyComponentProps) {
                  handleClose={handleCloseMenu} 
                  openOptionF = {handleOpenFields}
                  openOptionA = {handleOpenAlerts}
+                 onData = {handleOpenAlerts}
             /> 
             <Fields
                  open={openOptions.fields} 
