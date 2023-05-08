@@ -3,7 +3,7 @@ import { makeStyles } from 'tss-react/mui';
 // import MenuList from '@mui/material/MenuList/MenuList';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Container, Typography, Grid } from '@mui/material';
 import Modal from '@mui/material/Modal';
 
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -21,11 +21,14 @@ const useStyles = makeStyles()({
 })
 
 const style = {
-    // position: 'absolute',
-    // bottom: 64,
-    // width: "100%",
-    // height: "70%",
-    // backgroundColor: "rgb(18, 35, 46, 1)",
+    position: 'absolute',
+    left: "50%",
+    transform: "translate(-50%, 0%)",
+    top: 74,
+    width: "calc(100% - 32px)",
+    height: "70%",
+    backgroundColor: "rgb(45,72, 91, 1)",
+    margin: "auto",
     
     color: "white",
     // '&  > :nth-of-type(1)': {
@@ -68,18 +71,33 @@ export default function Fields({ open, handleClose }: ChildProps) {
         <Modal
             open={open} 
             onClose={close}
-            > 
+            
+        > 
 
             <Box sx={style}>
             
-            <Typography>
-                Fields
-            </Typography>
-                {/* <ButtonGroup 
-                    orientation="vertical"   
-                >
-                    {buttons}
-                </ButtonGroup>  */}
+                <Typography align="center" variant="h5">
+                    Fields
+                </Typography>
+
+                <Grid container>
+              <Grid item xs={2} >
+              </Grid>
+              <Grid item xs={10} >
+                <Typography>
+                    Table order
+                </Typography>
+              </Grid>
+              {/* <Grid item xs={2} >
+              </Grid> */}
+            </Grid>
+
+
+                    {/* <ButtonGroup 
+                        orientation="vertical"   
+                    >
+                        {buttons}
+                    </ButtonGroup>  */}
 
             </Box>
         </Modal>

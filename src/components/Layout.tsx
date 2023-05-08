@@ -98,9 +98,6 @@ export default function Layout({ children}: MyComponentProps) {
 
     const [openOptions, setOpenOptions] = useState<DataMenuOptions>(INITIAL_MENU_OPTIONS);
    
-    // const handleOpenFields = () => setOpenOptions({...openOptions, fields: true});
-    const handleCloseFields = () => setOpenOptions({...openOptions, fields: false});
-
     const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
             setOpenOptions({...openOptions, [newData.option]: newData.open});
     }
@@ -109,15 +106,13 @@ export default function Layout({ children}: MyComponentProps) {
             if (value){
                 setOpenOptions({ ...openOptions, [key]: false})
                 break;
-
             }
         }
     }
-    const handleCloseAlerts = () => setOpenOptions({...openOptions, alerts: false});
 
-    useEffect(() => {
+    // useEffect(() => {
         // console.log(handleOpenAlerts)
-    }, [openMenu])
+    // }, [openMenu])
 
     return (
         <div>
