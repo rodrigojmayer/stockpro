@@ -95,24 +95,28 @@ export default function Layout({ children}: MyComponentProps) {
     const handleOpenMenu = () => setOpenMenu(true);
     const handleCloseMenu = () => setOpenMenu(false);
 
+
     const [openOptions, setOpenOptions] = useState<DataMenuOptions>(INITIAL_MENU_OPTIONS);
    
-    const handleOpenFields = () => setOpenOptions({...openOptions, fields: true});
+    // const handleOpenFields = () => setOpenOptions({...openOptions, fields: true});
     const handleCloseFields = () => setOpenOptions({...openOptions, fields: false});
 
-    const handleOpenAlerts = (newData:  {option: string, open: boolean}) => {
-            // const option = newData[0]
+    const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
             setOpenOptions({...openOptions, [newData.option]: newData.open});
-            // console.log([newData[0].option])
-            // console.log(newData.option)
-            // console.log(newData.open)
-        // }
+    }
+    const handleCloseOptions = () => {
+        for(const [key, value] of Object.entries(openOptions)) {
+            if (value){
+                setOpenOptions({ ...openOptions, [key]: false})
+                break;
+
+            }
+        }
     }
     const handleCloseAlerts = () => setOpenOptions({...openOptions, alerts: false});
 
     useEffect(() => {
         // console.log(handleOpenAlerts)
-
     }, [openMenu])
 
     return (
@@ -120,17 +124,15 @@ export default function Layout({ children}: MyComponentProps) {
             <MenuOptions
                  open={openMenu} 
                  handleClose={handleCloseMenu} 
-                 openOptionF = {handleOpenFields}
-                 openOptionA = {handleOpenAlerts}
-                 onData = {handleOpenAlerts}
+                 onData = {handleOpenOptions}
             /> 
             <Fields
                  open={openOptions.fields} 
-                 handleClose={handleCloseFields} 
+                 handleClose={handleCloseOptions} 
             /> 
             <Alerts
                  open={openOptions.alerts} 
-                 handleClose={handleCloseAlerts} 
+                 handleClose={handleCloseOptions} 
             /> 
             <AppBar className={classes.appbar}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
