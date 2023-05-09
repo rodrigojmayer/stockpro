@@ -50,18 +50,9 @@ export default function Fields({ open, handleClose }: ChildProps) {
         handleClose(false)
     }
 
-    const selOp = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        const buttonElement = e.currentTarget.value 
-        // console.log("buttonElement: ", buttonElement)
-        handleClose(false)
-    }
 
 
 
-    const  buttons = [
-        <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
-    ];
 
 
     return (
@@ -75,11 +66,6 @@ export default function Fields({ open, handleClose }: ChildProps) {
             <Typography>
                 Alerts
             </Typography>
-                {/* <ButtonGroup 
-                    orientation="vertical"   
-                >
-                    {buttons}
-                </ButtonGroup>  */}
 
             </Box>
         </Modal>

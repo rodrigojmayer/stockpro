@@ -10,12 +10,13 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 const useStyles = makeStyles()({
-    menuOptions: {
-        position: "absolute",
-        bottom: 48,
-        zIndex: 500,
-        width: "100%",
-        height: "70%",
+    table: {
+        // position: "absolute",
+        // bottom: 48,
+        // zIndex: 500,
+        width: "calc(100% - 6px)",
+        height: "100%",
+        margin: "3px",
         backgroundColor: "red !important"
     }
 })
@@ -29,14 +30,9 @@ const style = {
     height: "70%",
     backgroundColor: "rgb(45,72, 91, 1)",
     margin: "auto",
+    padding: "3px",
     
     color: "white",
-    // '&  > :nth-of-type(1)': {
-    //     width: "100%",
-    //     justifyContent: "space-evenly",
-    //     height: "100%",
-    //     color: "white",
-    // },
 };
 
 interface ChildProps {
@@ -53,18 +49,8 @@ export default function Fields({ open, handleClose }: ChildProps) {
         handleClose(false)
     }
 
-    const selOp = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        const buttonElement = e.currentTarget.value 
-        // console.log("buttonElement: ", buttonElement)
-        handleClose(false)
-    }
 
 
-
-    const  buttons = [
-        <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
-    ];
 
 
     return (
@@ -88,16 +74,20 @@ export default function Fields({ open, handleClose }: ChildProps) {
                     Table order
                 </Typography>
               </Grid>
-              {/* <Grid item xs={2} >
-              </Grid> */}
+              <Grid item xs={6} >
+                <Box className={classes.table}>
+
+                </Box>
+                {/* table 1 */}
+              </Grid>
+              <Grid item xs={6} >
+                <Box className={classes.table}>
+
+                </Box>
+              </Grid>
             </Grid>
 
 
-                    {/* <ButtonGroup 
-                        orientation="vertical"   
-                    >
-                        {buttons}
-                    </ButtonGroup>  */}
 
             </Box>
         </Modal>

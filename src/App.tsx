@@ -53,6 +53,51 @@ const sample:  Data[] = [
 ];
 
 
+
+interface ColumnData {
+  dataKey: keyof Data;
+  label: string;
+  numeric?: boolean;
+  width: number;
+}
+
+type Sample = [string, number, string, string, string];
+
+const columns: ColumnData[] = [
+  {
+    width: 120,
+    label: 'Product',
+    dataKey: 'product',
+  },
+  {
+    width: 80,
+    // label: 'Calories\u00A0(g)',
+    label: 'Amount',
+    dataKey: 'amount',
+    numeric: true,
+  },
+  {
+    width: 80,
+    label: 'Unit',
+    dataKey: 'unit',
+  },
+  {
+    width: 100,
+    label: 'Category',
+    dataKey: 'category',
+    numeric: true,
+  },
+  {
+    width: 100,
+    label: 'Sub Category',
+    dataKey: 'sub_category',
+    numeric: true,
+  },
+];
+
+
+
+
 function App() {
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -93,7 +138,7 @@ function App() {
           </Container>
           
 
-          <TableProducts data={filteredData} />
+          <TableProducts data={filteredData} columns={columns} />
 
 
 

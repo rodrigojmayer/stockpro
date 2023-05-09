@@ -13,7 +13,9 @@ interface Data {
   unit: string;
   category: string;
   sub_category: string;
+  [key: string]: any;
 }
+
 
 const INITIAL_STATE = {
   id: NaN,
@@ -31,39 +33,43 @@ interface ColumnData {
   width: number;
 }
 
-type Sample = [string, number, string, string, string];
+interface DataTable {
+  data: Data[] 
+  columns: ColumnData[]
+}
+// type Sample = [string, number, string, string, string];
 
-const columns: ColumnData[] = [
-  {
-    width: 120,
-    label: 'Product',
-    dataKey: 'product',
-  },
-  {
-    width: 80,
-    // label: 'Calories\u00A0(g)',
-    label: 'Amount',
-    dataKey: 'amount',
-    numeric: true,
-  },
-  {
-    width: 80,
-    label: 'Unit',
-    dataKey: 'unit',
-  },
-  {
-    width: 100,
-    label: 'Category',
-    dataKey: 'category',
-    numeric: true,
-  },
-  {
-    width: 100,
-    label: 'Sub Category',
-    dataKey: 'sub_category',
-    numeric: true,
-  },
-];
+// const columns: ColumnData[] = [
+//   {
+//     width: 120,
+//     label: 'Product',
+//     dataKey: 'product',
+//   },
+//   {
+//     width: 80,
+//     // label: 'Calories\u00A0(g)',
+//     label: 'Amount',
+//     dataKey: 'amount',
+//     numeric: true,
+//   },
+//   {
+//     width: 80,
+//     label: 'Unit',
+//     dataKey: 'unit',
+//   },
+//   {
+//     width: 100,
+//     label: 'Category',
+//     dataKey: 'category',
+//     numeric: true,
+//   },
+//   {
+//     width: 100,
+//     label: 'Sub Category',
+//     dataKey: 'sub_category',
+//     numeric: true,
+//   },
+// ];
 
 // let rowsSearch: Data[] = Array.from({ length: 5 }, (_, index) => {
 //   const randomSelection = sample[index];
@@ -150,7 +156,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 //   );
 // }
 
-function rowContent(_index: number, row: Data) {
+function rowContent(_index: number, row: Data, columns: ColumnData[]) {
+// function rowContent(_index: number, row: Data) {
 
   return (
     <React.Fragment >
@@ -174,7 +181,8 @@ function rowContent(_index: number, row: Data) {
   );
 }
 
-export default function TableProducts({ data }: { data: Data[] }) {
+export default function TableProducts({ data, columns }:  DataTable ) {
+// export default function TableProducts({ data }: { data: Data[] }) {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
@@ -183,6 +191,8 @@ export default function TableProducts({ data }: { data: Data[] }) {
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
   useEffect(() => {
+    console.log("filteredRows: ", filteredRows)
+    console.log("columns: ", columns)
     setFilteredData(data.filter((item) => {
       let vals = true
      Object.keys(filteredRows).forEach((arg)=> {
@@ -232,7 +242,8 @@ export default function TableProducts({ data }: { data: Data[] }) {
                   {/* {filters[0].dataKey} */}
                     {column.label}
                       <TextField
-                        id={column.dataKey}
+                        // id={column.dataKey}
+                        id={column.dataKey.toString()}
                         // id="filled-multiline-flexible"
                         // value={filters[0].dataKey}
                         onChange={handleFilterChange}
@@ -255,7 +266,10 @@ export default function TableProducts({ data }: { data: Data[] }) {
               </TableRow>
             );
           }}
-        itemContent={rowContent}
+        // itemContent={rowContent}
+        itemContent={(index: number) =>
+          rowContent(index, filteredData[index], columns)
+        }
         style={{backgroundColor: "rgb(45, 72, 91)"}}
         
       />
