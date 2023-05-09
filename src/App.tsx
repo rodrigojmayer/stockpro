@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
-// import './App.css'
 import List from './components/List'
 import { Container, Typography, Grid } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
 import { OkButton, CancelButton, PlusButton } from './components/Buttons';
 import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
@@ -15,7 +13,6 @@ const INITIAL_DATA = [
   {id: 3, name: "Product C"},
 ]
 
-
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -25,9 +22,6 @@ const theme = createTheme({
   },
 });
 
-
-
-// type Sample = [string, number, string, string, string];
 type Data = {
   id: number;
   product: string;
@@ -36,7 +30,6 @@ type Data = {
   category: string;
   sub_category: string;
 }
-
 const sample:  Data[] = [
   {id: 1, product: 'Apples', amount: 20, unit: "U", category: "Food", sub_category: "Fruit"},
   {id: 2, product: 'Ice cream sandwich ', amount: 237, unit: "U", category: "Food", sub_category: "Dessert"},
@@ -44,15 +37,7 @@ const sample:  Data[] = [
   {id: 4, product: 'Milk', amount: 305, unit: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 5, product: 'Chairs', amount: 57, unit: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, unit: "U", category: "Furniture", sub_category: "-"},
-  // {id: 7, product: 'Apples', amount: 20, unit: "U", category: "Food", sub_category: "Fruit"},
-  // {id: 8, product: 'Ice cream sandwich ', amount: 237, unit: "U", category: "Food", sub_category: "Dessert"},
-  // {id: 9, product: 'Sugar', amount: 26, unit: "Kgs", category: "Food", sub_category: "Seasoning"},
-  // {id: 10, product: 'Milk', amount: 305, unit: "Lts", category: "Food", sub_category: "Dairy"},
-  // {id: 11, product: 'Chairs', amount: 57, unit: "U", category: "Furniture", sub_category: "-"},
-  // {id: 12, product: 'Tables', amount: 36, unit: "U", category: "Furniture", sub_category: "-"},
 ];
-
-
 
 interface ColumnData {
   dataKey: keyof Data;
@@ -60,9 +45,7 @@ interface ColumnData {
   numeric?: boolean;
   width: number;
 }
-
 type Sample = [string, number, string, string, string];
-
 const columns: ColumnData[] = [
   {
     width: 120,
@@ -71,7 +54,6 @@ const columns: ColumnData[] = [
   },
   {
     width: 80,
-    // label: 'Calories\u00A0(g)',
     label: 'Amount',
     dataKey: 'amount',
     numeric: true,
@@ -94,21 +76,12 @@ const columns: ColumnData[] = [
     numeric: true,
   },
 ];
-
-
-
-
 function App() {
-
   const [searchQuery, setSearchQuery] = useState("");
-  // const [data, setData] = useState(sample)
-  // const [filteredData, setFilteredData] = useState(data)
   const [filteredData, setFilteredData] = useState(sample)
 
   useEffect(() => {
     setFilteredData(sample.filter((item) => {
-      // console.log("item.product.toLowerCase().includes(searchQuery.toLowerCase()): ", item.product.toLowerCase().includes(searchQuery.toLowerCase()))
-      
      return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -116,16 +89,13 @@ function App() {
       item.category.toLowerCase().includes(searchQuery.toLowerCase())
 
     }
-
-    
     ));
-  // }, [data, searchQuery])
 }, [ searchQuery])
 
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Layout>
+        <Layout columns={columns}>
           <Container maxWidth="md" style={{padding: "0"}} >
             <Grid container>
               <Grid item xs={10} >
@@ -136,18 +106,10 @@ function App() {
               </Grid>
             </Grid>
           </Container>
-          
-
           <TableProducts data={filteredData} columns={columns} />
-
-
-
         </Layout>
       </ThemeProvider>
-      
-      
     </div>
   )
 }
-
 export default App

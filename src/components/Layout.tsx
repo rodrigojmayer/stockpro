@@ -1,20 +1,15 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
-
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-
 import { Container } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-
-
 import { MenuButton } from './Buttons';
 import MenuOptions from './MenuOptions';
 import Fields from './Fields';
 import Alerts from './Alerts';
-
 
 const useStyles = makeStyles()({
     appbar: {
@@ -22,9 +17,7 @@ const useStyles = makeStyles()({
         left: 0,
         bottom: 0,
         backgroundColor: "rgb(18, 35, 46, 1)",
-        // backgroundColor: "red",
         height: "64px",
-        // width: `calc(100% - 100px) !important`,
         display: "flex",
         justifyContent: "center",
     },
@@ -36,17 +29,11 @@ const useStyles = makeStyles()({
         flexGrow: 1,
     },
     page: {
-        // backgroundColor: "red",
-            // overflowX: "hidden",
-        // position: "relative",
         padding: "12px !important",
         margin: "0",
 
     },
     footer: {
-        // position: "fixed",
-        // position: "absolute",
-        // bottom: 0,
         left: 0,
         bottom:  '64px',
         color: "white",
@@ -58,7 +45,6 @@ const useStyles = makeStyles()({
         alignItems: "center",
     },
 })
-
 interface DataMenuOptions {
     fields: boolean,
     alerts: boolean,
@@ -67,7 +53,6 @@ interface DataMenuOptions {
     profile: boolean,
     preferences: boolean
 }
-
 const INITIAL_MENU_OPTIONS = {
     fields: false,
     alerts: false,
@@ -76,28 +61,37 @@ const INITIAL_MENU_OPTIONS = {
     profile: false,
     preferences: false
 }
-
 type MyComponentProps = React.PropsWithChildren<{}>;
 
-export default function Layout({ children}: MyComponentProps) {
-    const breakpointLG = useMediaQuery('(min-width:1024px)');
+type Data = {
+    id: number;
+    product: string;
+    amount: number;
+    unit: string;
+    category: string;
+    sub_category: string;
+  }
+interface ColumnData {
+    dataKey: keyof Data
+    label: string
+    numeric?: boolean
+    width: number
+  }
 
+interface LayoutProps {
+    columns: ColumnData[]
+    children: React.ReactNode
+  }
+
+export default function Layout( {children, columns}: LayoutProps) {
+    // export default function Layout( {children, columns}: MyComponentProps) {
+    const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { classes } = useStyles()
     const [test, setTest] = useState(false)
-
-    // const handleDataChange = (newData: boolean) => {
-    //     setOpen(newData);
-    //     setOpen2(newData);
-
-    // }
-    
     const [openMenu, setOpenMenu] = useState(false);
     const handleOpenMenu = () => setOpenMenu(true);
     const handleCloseMenu = () => setOpenMenu(false);
-
-
     const [openOptions, setOpenOptions] = useState<DataMenuOptions>(INITIAL_MENU_OPTIONS);
-   
     const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
             setOpenOptions({...openOptions, [newData.option]: newData.open});
     }
@@ -109,11 +103,9 @@ export default function Layout({ children}: MyComponentProps) {
             }
         }
     }
-
-    // useEffect(() => {
-        // console.log(handleOpenAlerts)
-    // }, [openMenu])
-
+    useEffect(() => {
+        console.log("Layout columns: ", columns)
+    }, [openMenu])
     return (
         <div>
             <MenuOptions
@@ -124,6 +116,7 @@ export default function Layout({ children}: MyComponentProps) {
             <Fields
                  open={openOptions.fields} 
                  handleClose={handleCloseOptions} 
+                 columns={columns}
             /> 
             <Alerts
                  open={openOptions.alerts} 
@@ -131,8 +124,7 @@ export default function Layout({ children}: MyComponentProps) {
             /> 
             <AppBar className={classes.appbar}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
-                >
-                    
+                >  
                 <Toolbar >
                     <Typography variant= "h6" className={classes.logo}>
                         StockPro

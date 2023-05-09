@@ -191,8 +191,8 @@ export default function TableProducts({ data, columns }:  DataTable ) {
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
   useEffect(() => {
-    console.log("filteredRows: ", filteredRows)
-    console.log("columns: ", columns)
+    // console.log("filteredRows: ", filteredRows)
+    // console.log("columns: ", columns)
     setFilteredData(data.filter((item) => {
       let vals = true
      Object.keys(filteredRows).forEach((arg)=> {
