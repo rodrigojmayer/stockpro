@@ -12,6 +12,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 // import { PlusButton, MinusButton } from './Buttons';
 import { Button, IconButton  } from '@mui/material';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
+import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import List from '@mui/material/List/List';
 import { ListItem } from 'material-ui';
 // import ButtonGroup from '@mui/material/ButtonGroup';
@@ -83,13 +84,22 @@ const useStyles = makeStyles()({
         color: "red",
     },
     backPlus: {
-        color: "red",
+        color: "rgb(255, 47, 47, 1)",
         width: "32px", 
         height: "32px",
         '& svg': {
             width: "32px", 
             height: "32px",
 
+        }
+    },
+    plusIcon: {
+        color: "rgb(32, 205, 60, 1)",
+        width: "32px", 
+        height: "32px",
+        '& svg': {
+            width: "32px", 
+            height: "32px",
         }
     },
 })
@@ -174,19 +184,30 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
 
 // }                               
     const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
-        // console.log("Remove: ")
-        console.log("Remove: ", e.currentTarget.value )
-        console.log("orderedFields: ", orderedFields.find(o => o.id == parseInt(e.currentTarget.value)) )
-        const items = Array.from(unsetFields);
+        let orderedArray = Array.from(orderedFields)
+        const unsetArray = Array.from(unsetFields)
         const fieldToRemove = orderedFields.find(o => o.id == parseInt(e.currentTarget.value))
-        // console.log("iiitems: ", items.push(orderedFields.find(o => o.id == parseInt(e.currentTarget.value))) )
-        // const [reorderData] = items.push(orderedFields[]);
-        // setUnsetFields(  )
         if (fieldToRemove) {
-            items.push(fieldToRemove);
+            orderedArray = orderedArray.filter(function(item) {
+                return item !== fieldToRemove
+            })
+            unsetArray.push(fieldToRemove)
         }
-        setUnsetFields(items);
-
+        setOrderedFields(orderedArray)
+        setUnsetFields(unsetArray)
+    }
+    const addField = (e: React.MouseEvent<HTMLButtonElement>)  => {
+        const orderedArray = Array.from(orderedFields)
+        let unsetArray = Array.from(unsetFields)
+        const fieldToAdd = unsetArray.find(o => o.id == parseInt(e.currentTarget.value))
+        if (fieldToAdd) {
+            unsetArray = unsetArray.filter(function(item) {
+                return item !== fieldToAdd
+            })
+            orderedArray.push(fieldToAdd)
+        }
+        setOrderedFields(orderedArray)
+        setUnsetFields(unsetArray)
     }
     const handleDragEnd = (result: any) => {
         console.log("result: ", result)
@@ -364,6 +385,14 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                                                         {/* <ListItem> */}
                                                                 
                                                             {column.label}
+                                                            
+                                                            <IconButton
+                                                            className={classes.plusIcon}
+                                                            onClick={addField}
+                                                            id="plusButton"
+                                                            value={column.id}>
+                                                                <ControlPointTwoToneIcon/>
+                                                            </IconButton>
                                                         {/* </ListItem> */}
                                                         
                                                         </Paper>
