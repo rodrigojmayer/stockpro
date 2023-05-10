@@ -9,7 +9,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import { makeStyles } from 'tss-react/mui';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
-
+import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 
 
 const theme = createTheme({
@@ -105,7 +105,7 @@ const useStyles = makeStyles()({
 
 
 
-export function OkButton() {
+export function OkButton({ sizeData }: { sizeData?: string }) {
 
   const { classes } = useStyles()
   const colorOk = theme.palette.success.main
@@ -116,7 +116,7 @@ export function OkButton() {
       <Button 
         variant="outlined"
         color="success"
-        sx={{  border: 5, paddingTop:0,  paddingBottom:0, 
+        sx={{   border: 5, paddingTop:0,  paddingBottom:0, 
         }}
         className={classes.btnOk}
       >
@@ -180,6 +180,18 @@ export function PlusButton() {
       className={classes.plusIcon}
       id="plusButton">
         <ControlPointTwoToneIcon/>
+    </IconButton>
+  )
+}
+
+export function MinusButton() {
+  const { classes } = useStyles()
+
+  return(
+    <IconButton
+      className={classes.backPlus}
+      id="minusButton">
+        <RemoveCircleTwoToneIcon/>
     </IconButton>
   )
 }
