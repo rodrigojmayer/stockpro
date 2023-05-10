@@ -194,6 +194,7 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
             unsetArray.push(fieldToRemove)
         }
         setOrderedFields(orderedArray)
+        unsetArray.sort((a,b) => (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0))
         setUnsetFields(unsetArray)
     }
     const addField = (e: React.MouseEvent<HTMLButtonElement>)  => {
@@ -207,6 +208,7 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
             orderedArray.push(fieldToAdd)
         }
         setOrderedFields(orderedArray)
+        unsetArray.sort((a,b) => (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0))
         setUnsetFields(unsetArray)
     }
     const handleDragEnd = (result: any) => {
