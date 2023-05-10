@@ -37,44 +37,38 @@ const sample:  Data[] = [
   {id: 4, product: 'Milk', amount: 305, unit: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 5, product: 'Chairs', amount: 57, unit: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, unit: "U", category: "Furniture", sub_category: "-"},
+  {id: 1, product: 'Apples', amount: 20, unit: "U", category: "Food", sub_category: "Fruit"},
+  {id: 2, product: 'Ice cream sandwich ', amount: 237, unit: "U", category: "Food", sub_category: "Dessert"},
+  {id: 3, product: 'Sugar', amount: 26, unit: "Kgs", category: "Food", sub_category: "Seasoning"},
+  {id: 4, product: 'Milk', amount: 305, unit: "Lts", category: "Food", sub_category: "Dairy"},
+  {id: 5, product: 'Chairs', amount: 57, unit: "U", category: "Furniture", sub_category: "-"},
+  {id: 6, product: 'Tables', amount: 36, unit: "U", category: "Furniture", sub_category: "-"},
 ];
 
 interface ColumnData {
-  dataKey: keyof Data;
+  id: number;
+  dataKey: string;
   label: string;
   numeric?: boolean;
   width: number;
 }
-type Sample = [string, number, string, string, string];
+type Sample = [number, string, number, string, string, string];
 const columns: ColumnData[] = [
-  {
-    width: 120,
-    label: 'Product',
-    dataKey: 'product',
-  },
-  {
-    width: 80,
-    label: 'Amount',
-    dataKey: 'amount',
-    numeric: true,
-  },
-  {
-    width: 80,
-    label: 'Unit',
-    dataKey: 'unit',
-  },
-  {
-    width: 100,
-    label: 'Category',
-    dataKey: 'category',
-    numeric: true,
-  },
-  {
-    width: 100,
-    label: 'Sub Category',
-    dataKey: 'sub_category',
-    numeric: true,
-  },
+  { id: 1, width: 120, label: 'Product', dataKey: 'product' },
+  { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true },
+  { id: 3, width: 80, label: 'Unit', dataKey: 'unit' },
+  { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true },
+  { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true },
+  { id: 6, width: 120, label: 'Product', dataKey: 'product2' },
+  { id: 17, width: 80, label: 'Amount', dataKey: 'amount2', numeric: true },
+  { id: 18, width: 80, label: 'Unit', dataKey: 'unit2' },
+  { id: 19, width: 100, label: 'Category', dataKey: 'category2', numeric: true },
+  { id: 20, width: 100, label: 'Sub Category', dataKey: 'sub_category2', numeric: true },
+  { id: 36, width: 120, label: 'Product', dataKey: 'product2' },
+  { id: 37, width: 80, label: 'Amount', dataKey: 'amount2', numeric: true },
+  { id: 38, width: 80, label: 'Unit', dataKey: 'unit2' },
+  { id: 39, width: 100, label: 'Category', dataKey: 'category2', numeric: true },
+  { id: 30, width: 100, label: 'Sub Category', dataKey: 'sub_category2', numeric: true },
 ];
 function App() {
   const [searchQuery, setSearchQuery] = useState("");

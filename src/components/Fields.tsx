@@ -16,21 +16,26 @@ import { ListItem } from 'material-ui';
 
 
 const useStyles = makeStyles()({
+    // droppable: {
+    //     display: "flex",
+    //     // width: "100%",
+    // },
     table: {
         // position: "absolute",
         // bottom: 48,
         // zIndex: 500,
         width: "calc(100% - 6px)",
-        height: "100%",
+        // height: "250px",
+        // minHeight: "10%",
         margin: "3px",
         padding: "6px 0",
         // backgroundColor: "red !important"
         backgroundColor: "rgb(69, 144, 186)",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-evenly",
+        // justifyContent: "space-evenly",
         alignItems: "center",
-        gap: "9px",
+        // gap: "9px",
         
     },
     buttonsGroup: {
@@ -41,7 +46,7 @@ const useStyles = makeStyles()({
         backgroundColor: "white",
         width: "calc(100% - 12px)",
         // width: "auto",
-        // margin: "8px",
+        margin: "9px",
         height: "32px",
         borderRadius: "10px",
         display: "flex",
@@ -80,12 +85,13 @@ const style = {
     // transform: "translate(-50%, 0%)",
     top: 74,
     width: "100%",
-    height: "70%",
+    // height: "90%",
     // backgroundColor: "rgb(45,72, 91, 1)",
     // margin: "auto",
     // padding: "3px",
     
     // color: "white",
+    overflowX: "hidden",
 };
 const style2 = {
     // position: 'absolute',
@@ -95,12 +101,15 @@ const style2 = {
     // transform: "translate(-50%, 0%)",
     top: 74,
     width: "calc(100% - 32px)",
-    height: "70%",
+    // height: "70%",
+    height: "520px",
     backgroundColor: "rgb(45,72, 91, 1)",
     margin: "auto",
     padding: "3px",
-    
     color: "white",
+    overflow: "scroll",
+    overflowX: "hidden",
+
 };
 
 type Data = {
@@ -111,12 +120,14 @@ type Data = {
     category: string;
     sub_category: string;
   }
+
 interface ColumnData {
-    dataKey: keyof Data
-    label: string
-    numeric?: boolean
-    width: number
-  }
+    id: number;
+    dataKey: string;
+    label: string;
+    numeric?: boolean;
+    width: number;
+}
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
@@ -134,47 +145,24 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
 
 
 
-    useEffect(() => {
-        console.log("Fields columns: ", columns)
+    // useEffect(() => {
+    //     console.log("Fields columns: ", columns)
         
-    }, [])
+    // }, [])
 
+    const [orderedFields, setOrderedFields] = useState(columns)
+    const [unsetFields, setUnsetFields] = useState<ColumnData[]>([])
+     
+    // const handleDragStart = () => {
 
-
-    // const [widgets, setWidgets] = useState<string[]>([]);
-    // const [widgets2, setWidgets2] = useState<string[]>([]);
-
-    // function handleOnDrag(e: React.DragEvent, widgetType: string) {
-    //     e.dataTransfer.setData("widgetType", widgetType);
     // }
-
-    // function handleOnDrop(e: React.DragEvent) {
-    //     const widgetType = e.dataTransfer.getData("widgetType") as string;
-    //     console.log("widgetType", widgetType);
-    //     setWidgets([...widgets, widgetType]);
-    // }
-
-    // function handleDragOver(e: React.DragEvent) {
-    //     e.preventDefault();
-    //     console.log("drag over")
-    // }
-    // function handleOnDrag2(e: React.DragEvent, widgetType: string) {
-    //     e.dataTransfer.setData("widgetType", widgetType);
-    // }
-
-    // function handleOnDrop2(e: React.DragEvent) {
-    //     const widgetType = e.dataTransfer.getData("widgetType") as string;
-    //     console.log("widgetType", widgetType);
-    //     setWidgets([...widgets2, widgetType]);
-    // }
-
-    // function handleDragOver2(e: React.DragEvent) {
-    //     e.preventDefault();
-    //     console.log("drag over")
-    // }
-
-    const handleDragEnd = () => {
-        console.log("testin")
+    const handleDragEnd = (result: any) => {
+        console.log("result: ", result)
+        if (!result.destination) return;
+        const items = Array.from(orderedFields);
+        const [reorderData] = items.splice(result.source.index,1);
+        items.splice(result.destination.index, 0, reorderData);
+        setOrderedFields(items)
     }
 
 
@@ -238,10 +226,24 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={6} >
+                                        <Typography align="center" >
+                                            Hidden fields
+                                        </Typography>
                                     </Grid>
-                                    <Grid item xs={6} >
-                <DragDropContext onDragEnd={handleDragEnd}>
-                    <Droppable droppableId="list">
+                <Grid item xs={6} >
+                <DragDropContext 
+                // onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+                >
+                {/* <Box  className={classes.droppable}> */}
+                
+                    <Droppable
+                   
+                    droppableId="list"
+                    >
+                       
+
+
                         {(provided) => (
                             <List
                             className={classes.table}
@@ -250,10 +252,10 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                                 // sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
                             >
 
-                                            {columns.map((column, index) => (
+                                            {orderedFields.map((column, index) => (
                                                 <Draggable 
-                                                key={column.dataKey} 
-                                                draggableId={column.dataKey.toString()} 
+                                                key={column.id} 
+                                                draggableId={column.id.toString()} 
                                                 index={index}>
                                                     {(provided) => (
                                                         <Paper
@@ -268,7 +270,7 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                                                         
                                                         {/* <ListItem> */}
                                                                 
-                                                                {column.label}
+                                                            {column.label}
                                                         {/* </ListItem> */}
                                                         
                                                         </Paper>
@@ -276,15 +278,58 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                                                 </Draggable>
                                             ))}
 
-                                
+                                {provided.placeholder} 
                             </List>
+                            
 
                         )}
+                            
 
                     </Droppable>
+                    
                 </DragDropContext>
-                </Grid>
+                    </Grid>
+                                    <Grid item xs={6} >
+                    {/* <Droppable droppableId="list"> */}
+                        {/* {(provided) => ( */}
+                            <List
+                            className={classes.table}
+                                // {...provided.droppableProps}
+                                // ref={provided.innerRef}
+                                // sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+                            >
+
+                                            {unsetFields.map((column, index) => (
+                                                    // {(provided) => (
+                                                        <Paper
+                                                        // ref={provided.innerRef}
+                                                        // {...provided.draggableProps}
+                                                        // {...provided.dragHandleProps}
+                                                        // elevation={2}
+                                                        // key={column.dataKey} 
+                                                        className={classes.buttonFields}
+                                                        // endIcon={<MinusButton />}
+                                                        >
+                                                        
+                                                        {/* <ListItem> */}
+                                                                
+                                                            {column.label}
+                                                        {/* </ListItem> */}
+                                                        
+                                                        </Paper>
+                                                    // )}
+                                                // </Draggable>
+                                            ))}
+
+                                {/* {provided.placeholder}  */}
+                            </List>
+
+                        {/* )} */}
+
+                    {/* </Droppable> */}
                                 </Grid>
+                    {/* </Box> */}
+                </Grid>
                 teste
                 </Box>
             </Box>

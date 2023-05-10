@@ -71,11 +71,13 @@ type Data = {
     category: string;
     sub_category: string;
   }
-interface ColumnData {
-    dataKey: keyof Data
-    label: string
-    numeric?: boolean
-    width: number
+
+  interface ColumnData {
+    id: number;
+    dataKey: string;
+    label: string;
+    numeric?: boolean;
+    width: number;
   }
 
 interface LayoutProps {
