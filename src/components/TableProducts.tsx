@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import { useState, useEffect } from 'react';
-
+import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
 
@@ -27,7 +27,8 @@ const INITIAL_STATE = {
 }
 
 interface ColumnData {
-  dataKey: keyof Data;
+  id: number;
+  dataKey: string;
   label: string;
   numeric?: boolean;
   width: number;
@@ -163,7 +164,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
     <React.Fragment >
       {columns.map((column) => (
         <TableCell
-          key={column.dataKey}
+          key={column.id}
           align='center'
           // align={column.numeric || false ? 'right' : 'left'}
           style={{ 
@@ -174,7 +175,12 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
             padding: "8px 0",
           }}
         >
-          {row[column.dataKey]}
+
+          <Typography noWrap>
+            {row[column.dataKey]}
+
+          </Typography>
+
         </TableCell>
       ))}
     </React.Fragment>
@@ -226,7 +232,7 @@ export default function TableProducts({ data, columns }:  DataTable ) {
               <TableRow>
                 {columns.map((column) => (
                   <TableCell
-                    key={column.dataKey}
+                    key={column.id}
                     variant="head"
                     align='center'
                     style={{ 
@@ -240,7 +246,10 @@ export default function TableProducts({ data, columns }:  DataTable ) {
                     }}
                   >
                   {/* {filters[0].dataKey} */}
-                    {column.label}
+                    
+                      <Typography noWrap>
+                        {column.label}
+                      </Typography>
                       <TextField
                         // id={column.dataKey}
                         id={column.dataKey.toString()}

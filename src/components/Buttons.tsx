@@ -96,9 +96,8 @@ const useStyles = makeStyles()({
     },
   },
   backPlus: {
-    width: "100px",
-    height: "100px",
-    backgroundColor: "red"
+    // backgroundColor: "red",
+    color: "red",
   },
 })
 
@@ -184,14 +183,17 @@ export function PlusButton() {
   )
 }
 
-export function MinusButton() {
-  const { classes } = useStyles()
+// export function MinusButton({ sizeData }: { sizeData?: string }) {
+//   const { classes } = useStyles()
+//   console.log("sizeData: ", sizeData)
 
-  return(
-    <IconButton
-      className={classes.backPlus}
-      id="minusButton">
-        <RemoveCircleTwoToneIcon/>
-    </IconButton>
-  )
-}
+//   return(
+//     <IconButton
+//       className={classes.backPlus}
+//       id="minusButton">
+//         <RemoveCircleTwoToneIcon 
+//         sx={{width: sizeData, height: sizeData}}
+//         />
+//     </IconButton>
+//   )
+// }

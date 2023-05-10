@@ -68,7 +68,7 @@ const columns: ColumnData[] = [
   { id: 37, width: 80, label: 'Amount', dataKey: 'amount2', numeric: true },
   { id: 38, width: 80, label: 'Unit', dataKey: 'unit2' },
   { id: 39, width: 100, label: 'Category', dataKey: 'category2', numeric: true },
-  { id: 30, width: 100, label: 'Sub Category', dataKey: 'sub_category2', numeric: true },
+  { id: 30, width: 100, label: 'Sub Category of the lorss', dataKey: 'sub_category2', numeric: true },
 ];
 function App() {
   const [searchQuery, setSearchQuery] = useState("");

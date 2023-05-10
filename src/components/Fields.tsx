@@ -3,13 +3,15 @@ import { useState, useEffect } from 'react'
 import { makeStyles } from 'tss-react/mui';
 // import MenuList from '@mui/material/MenuList/MenuList';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import { Container, Typography, Grid } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
-import { PlusButton, MinusButton } from './Buttons';
+// import { PlusButton, MinusButton } from './Buttons';
+import { Button, IconButton  } from '@mui/material';
+import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import List from '@mui/material/List/List';
 import { ListItem } from 'material-ui';
 // import ButtonGroup from '@mui/material/ButtonGroup';
@@ -30,6 +32,7 @@ const useStyles = makeStyles()({
         margin: "3px",
         padding: "6px 0",
         // backgroundColor: "red !important"
+        borderRadius: "10px",
         backgroundColor: "rgb(69, 144, 186)",
         display: "flex",
         flexDirection: "column",
@@ -47,13 +50,17 @@ const useStyles = makeStyles()({
         width: "calc(100% - 12px)",
         // width: "auto",
         margin: "9px",
+        // padding: "0 5px",
+        paddingLeft: "8px",
         height: "32px",
         borderRadius: "10px",
         display: "flex",
         justifyContent: "space-between",
-        '&  svg': {
-            // color: "red !important",
-        }
+        alignItems: "center",
+        // fontFamily: [
+        //   '"Asap Condensed"',
+        // ].join(','),
+        // fontSize: "20px",
         
     },
 
@@ -74,6 +81,16 @@ const useStyles = makeStyles()({
     },
     dropped_widget: {
         color: "red",
+    },
+    backPlus: {
+        color: "red",
+        width: "32px", 
+        height: "32px",
+        '& svg': {
+            width: "32px", 
+            height: "32px",
+
+        }
     },
 })
 
@@ -112,14 +129,14 @@ const style2 = {
 
 };
 
-type Data = {
-    id: number;
-    product: string;
-    amount: number;
-    unit: string;
-    category: string;
-    sub_category: string;
-  }
+// type Data = {
+//     id: number;
+//     product: string;
+//     amount: number;
+//     unit: string;
+//     category: string;
+//     sub_category: string;
+//   }
 
 interface ColumnData {
     id: number;
@@ -155,15 +172,33 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
      
     // const handleDragStart = () => {
 
-    // }
+// }                               
+    const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
+        // console.log("Remove: ")
+        console.log("Remove: ", e.currentTarget.value )
+        console.log("orderedFields: ", orderedFields.find(o => o.id == parseInt(e.currentTarget.value)) )
+        const items = Array.from(unsetFields);
+        const fieldToRemove = orderedFields.find(o => o.id == parseInt(e.currentTarget.value))
+        // console.log("iiitems: ", items.push(orderedFields.find(o => o.id == parseInt(e.currentTarget.value))) )
+        // const [reorderData] = items.push(orderedFields[]);
+        // setUnsetFields(  )
+        if (fieldToRemove) {
+            items.push(fieldToRemove);
+        }
+        setUnsetFields(items);
+
+    }
     const handleDragEnd = (result: any) => {
         console.log("result: ", result)
         if (!result.destination) return;
         const items = Array.from(orderedFields);
+        console.log("items: ", items)
+        // console.log("items: ", items)
         const [reorderData] = items.splice(result.source.index,1);
         items.splice(result.destination.index, 0, reorderData);
         setOrderedFields(items)
     }
+
 
 
     return (
@@ -265,13 +300,28 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                                                         elevation={2}
                                                         // key={column.dataKey} 
                                                         className={classes.buttonFields}
-                                                        // endIcon={<MinusButton />}
                                                         >
-                                                        
-                                                        {/* <ListItem> */}
                                                                 
-                                                            {column.label}
-                                                        {/* </ListItem> */}
+                                                            <Typography noWrap>
+                                                                {column.label}
+                                                            </Typography>
+                                                            {/* <Button
+                                                            > */}
+                                                            <IconButton
+                                                            onClick={removeField}
+                                                            className={classes.backPlus}
+                                                            id="minusButton"
+                                                            value={column.id}>
+                                                                <RemoveCircleTwoToneIcon 
+                                                                />
+                                                            </IconButton>
+                                                            {/* </Button> */}
+                                                            
+
+                                                            {/* <MinusButton 
+                                                            onClick={() => removeField()}
+                                                            sizeData={"30px"}
+                                                            /> */}
                                                         
                                                         </Paper>
                                                     )}
