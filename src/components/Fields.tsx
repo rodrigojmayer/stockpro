@@ -11,6 +11,7 @@ import { OkButton, CancelButton } from './Buttons';
 import {  IconButton  } from '@mui/material';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
+import EditIcon from '@mui/icons-material/Edit';
 import List from '@mui/material/List/List';
 
 
@@ -74,6 +75,13 @@ const useStyles = makeStyles()({
         justifyContent:  "center",
         gap: 30,
         margin: "20px",
+    },
+    customFieldsTitle: {
+        display: "flex",
+        justifyContent:  "center",
+        gap: 6,
+        marginLeft: "6px",
+        
     }
 })
 
@@ -243,9 +251,13 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                             </List>
                         </Grid>
                     </Grid>
-                    <Typography align='center' variant='h6'>
-                        Custom fields
-                    </Typography>
+                    <Box className={classes.customFieldsTitle}>
+
+                        <Typography variant='h6' >
+                            Custom fields 
+                        </Typography>
+                        <EditIcon  />
+                    </Box>
                      
                     <Box className={classes.finishButtons}>
                         <CancelButton/>
