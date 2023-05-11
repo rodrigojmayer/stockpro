@@ -90,6 +90,7 @@ const style2 = {
     width: "calc(100% - 32px)",
     height: "520px",
     backgroundColor: "rgb(45,72, 91, 1)",
+    borderRadius: "10px",
     margin: "auto",
     padding: "3px",
     color: "white",
@@ -138,6 +139,8 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
     const addField = (e: React.MouseEvent<HTMLButtonElement>)  => {
         const orderedArray = Array.from(orderedFields)
         let unsetArray = Array.from(unsetFields)
+        // console.log("parseInt: ", String(1.01) )
+        // console.log("Number: ", Boolean("2.2"))
         const fieldToAdd = unsetArray.find(o => o.id == parseInt(e.currentTarget.value))
         if (fieldToAdd) {
             unsetArray = unsetArray.filter(function(item) {
@@ -240,6 +243,10 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                             </List>
                         </Grid>
                     </Grid>
+                    <Typography align='center' variant='h6'>
+                        Custom fields
+                    </Typography>
+                     
                     <Box className={classes.finishButtons}>
                         <CancelButton/>
                         <OkButton/>
