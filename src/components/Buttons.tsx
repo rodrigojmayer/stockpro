@@ -105,22 +105,44 @@ const useStyles = makeStyles()({
 
 
 
-export function OkButton({ sizeData }: { sizeData?: string }) {
+export function OkButton({ sizeIco, roundedIco }: { sizeIco?: string, roundedIco?: boolean }) {
 
   const { classes } = useStyles()
   const colorOk = theme.palette.success.main
   
+  let fontIco = 35, noPadding, bor = 5, borRad
+  if(sizeIco) {
+    fontIco = (parseInt(sizeIco) - 12)
+    bor = 3
+  }
+  if(roundedIco){
+    noPadding=0
+    borRad="50px !important"
+  } 
 
   return (  
     <ThemeProvider theme={theme}>
       <Button 
         variant="outlined"
         color="success"
-        sx={{   border: 5, paddingTop:0,  paddingBottom:0, 
+        sx={{  
+          border: bor , 
+          padding:noPadding, 
+          paddingTop:0,  
+          paddingBottom:0, 
+          minWidth: sizeIco, 
+          width: sizeIco, 
+          height: sizeIco,
+          borderRadius: borRad,
         }}
         className={classes.btnOk}
       >
-        <CheckRoundedIcon sx={{ fontSize: 35, stroke: colorOk, strokeWidth: 2 }}></CheckRoundedIcon>
+        <CheckRoundedIcon 
+        sx={{ 
+          fontSize: fontIco,
+          stroke: colorOk, 
+          strokeWidth: 2 
+        }}></CheckRoundedIcon>
       </Button>
     </ThemeProvider>
   )

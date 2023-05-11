@@ -330,7 +330,7 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
                             />
                         </IconButton>
 
-                        <CancelButton
+                        <OkButton
                         sizeIco={"35px"}
                         roundedIco={true}
                         />
