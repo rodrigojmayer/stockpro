@@ -126,7 +126,7 @@ export function OkButton({ sizeIco, roundedIco }: { sizeIco?: string, roundedIco
         variant="outlined"
         color="success"
         sx={{  
-          border: bor , 
+          border: bor, 
           padding:noPadding, 
           paddingTop:0,  
           paddingBottom:0, 

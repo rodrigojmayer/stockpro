@@ -59,7 +59,9 @@ const columns: ColumnData[] = [
   { id: 3, width: 80, label: 'Unit', dataKey: 'unit' },
   { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true },
   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true },
-  { id: 6, width: 120, label: 'Product', dataKey: 'product2' },
+];
+const columnsCustom: ColumnData[] = [
+  { id: 16, width: 120, label: 'Product', dataKey: 'product2' },
   { id: 17, width: 80, label: 'Amount', dataKey: 'amount2', numeric: true },
 ];
 
@@ -93,7 +95,12 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Layout columns={columns} columnsTableOrder={columnsTableOrder} columnsHiddenFields={columnsHiddenFields} >
+        <Layout 
+        columns={columns} 
+        columnsTableOrder={columnsTableOrder} 
+        columnsHiddenFields={columnsHiddenFields} 
+        columnsCustom={columnsCustom}
+        >
           <Container maxWidth="md" style={{padding: "0"}} >
             <Grid container>
               <Grid item xs={10} >

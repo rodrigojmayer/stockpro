@@ -81,38 +81,40 @@ const useStyles = makeStyles()({
     customBoxColumn: {
         display: "flex",
         flexDirection: "column",
-        // justifyContent:  "center",
-        // gap: 6,
-        // marginLeft: "6px",
-        
     },
     customBoxRow: {
         display: "flex",
         justifyContent:  "center",
         alignItems: "center",
         gap: 6,
-        marginLeft: "6px",
-        
     },
     editIcon: {
         width: "32px", 
         height: "32px",
         marginBottom: "6px"
     },
+    newCustomField: {
+        backgroundColor: "white",
+        borderRadius: 10,
+        minWidth: "150px",
+        width: "40%",
+        maxWidth: "250px",
+    },
     ionTrash:{
         color: "rgb(255, 47, 47, 1)",
-        padding: "4px",
-        width: "45px", 
-        height: "45px",
+        padding: "0",
+        marginBottom: "4px",
+        width: "37px", 
+        height: "37px",
         '& img': {
-            width: "45px", 
-            height: "45px",
+            width: "37px", 
+            height: "37px",
         },
     },
     finishButtons: {
         display: "flex",
         justifyContent:  "center",
-        gap: 30,
+        gap: 20,
         margin: "20px",
     },
 })
@@ -127,6 +129,7 @@ const style = {
 };
 const style2 = {
     top: 74,
+    maxWidth: "700px",
     width: "calc(100% - 32px)",
     height: "520px",
     backgroundColor: "rgb(45,72, 91, 1)",
@@ -153,9 +156,10 @@ interface ChildProps {
     columns: ColumnData[]
     columnsTableOrder: ColumnData[]
     columnsHiddenFields: ColumnData[]
+    columnsCustom: ColumnData[]
 }
 
-export default function Fields({ open, handleClose, columns, columnsTableOrder, columnsHiddenFields }: ChildProps) {
+export default function Fields({ open, handleClose, columns, columnsTableOrder, columnsHiddenFields, columnsCustom }: ChildProps) {
 
     const { classes } = useStyles()
     const close = () => {
@@ -163,7 +167,9 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
     }
 
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
-    const [unsetFields, setUnsetFields] = useState(columnsHiddenFields)                               
+    const [unsetFields, setUnsetFields] = useState(columnsHiddenFields)  
+    const [customFields, setCustomFields] = useState(columnsCustom)  
+                                 
     const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
         let orderedArray = Array.from(orderedFields)
         const unsetArray = Array.from(unsetFields)
@@ -266,10 +272,10 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
                         </Grid>
                         <Grid item xs={6} >
                             <List
-                            className={classes.table}>
+                            className={classes.table}
+                            >
                                 {unsetFields.map((column, index) => (
                                     <Paper
-                                    
                                     key={column.id} 
                                     className={classes.buttonFields}>
                                         <Typography noWrap>
@@ -279,7 +285,8 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
                                         className={classes.plusIcon}
                                         onClick={addField}
                                         id="plusButton"
-                                        value={column.id}>
+                                        value={column.id}
+                                        >
                                             <ControlPointTwoToneIcon/>
                                         </IconButton>
                                     </Paper>
@@ -289,59 +296,52 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
                     </Grid>
                     <Box className={classes.customBoxColumn}>
                         <Box className={classes.customBoxRow}>
-                    
-                        <Typography variant='h6'  >
-                            Custom fields 
-                        </Typography>
+                            <Typography variant='h6'  >
+                                Custom fields 
+                            </Typography>
                             <EditIcon 
                             className={classes.editIcon}
                             />
                         </Box>
                         <Box className={classes.customBoxRow}>
-                    <TextField
-                        // id={column.dataKey}
-                        // id={column.dataKey.toString()}
-                        // id="filled-multiline-flexible"
-                        // value={filters[0].dataKey}
-                        // onChange={handleFilterChange}
-                        // onChange={handleFilterChange}
-                        maxRows={1}
-                        size="small"
-                        sx={{
-                          backgroundColor: "white",
-                          borderRadius: 1,
-                          margin: "8px",
-                      }}
-                      InputProps={{
-                        style: {
-                          height:"36px",
-                        },
-                      }}
-                      />
-                      <IconButton
-                        className={classes.ionTrash}
-                        // onClick={addField}
-                        // id="plusButton"
-                        // value={column.id}
-                        >
-                            <img 
-                            src={IonTrash} 
-                            alt="Trash"
+                            <TextField
+                                // id={column.dataKey}
+                                // id={column.dataKey.toString()}
+                                // id="filled-multiline-flexible"
+                                // value={filters[0].dataKey}
+                                // onChange={handleFilterChange}
+                                // onChange={handleFilterChange}
+                                maxRows={1}
+                                size="small"
+                                className={classes.newCustomField}
+                                InputProps={{
+                                    style: {
+                                    height:"34px",
+                                    borderRadius: 10,
+                                    },
+                                }}
                             />
-                        </IconButton>
-
-                        <OkButton
-                        sizeIco={"35px"}
-                        roundedIco={true}
-                        />
-                        
-                    </Box>
-                    <Box className={classes.customBoxRow}>
-                        <PlusButton
-                            sizeIco={"45px !important"}
-                        />
-                     
-                    </Box>
+                            <IconButton
+                            className={classes.ionTrash}
+                            // onClick={addField}
+                            // id="plusButton"
+                            // value={column.id}
+                            >
+                                <img 
+                                src={IonTrash} 
+                                alt="Trash"
+                                />
+                            </IconButton>
+                            <OkButton
+                            sizeIco={"34px"}
+                            roundedIco={true}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <PlusButton
+                                sizeIco={"45px !important"}
+                            />
+                        </Box>
                     </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton/>
