@@ -207,6 +207,17 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
         items.splice(result.destination.index, 0, reorderData);
         setOrderedFields(items)
     }
+    const handleEditCustomField = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("event.currentTarget.id: ", event.currentTarget.id)
+        console.log("event.currentTarget.value: ", event.currentTarget.value)
+        // setCustomFields({...customFields, event.currentTarget.value})
+        const index = customFields.findIndex(field => field.id === Number(event.currentTarget.id))
+        if(index !== -1) {
+            const updateFields = [...customFields]
+            updateFields[index].label = event.currentTarget.value
+            setCustomFields(updateFields)
+        }
+    }
     return (
         <Modal
         open={open} 
@@ -303,40 +314,49 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
                             className={classes.editIcon}
                             />
                         </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                // id={column.dataKey}
-                                // id={column.dataKey.toString()}
-                                // id="filled-multiline-flexible"
-                                // value={filters[0].dataKey}
-                                // onChange={handleFilterChange}
-                                // onChange={handleFilterChange}
-                                maxRows={1}
-                                size="small"
-                                className={classes.newCustomField}
-                                InputProps={{
-                                    style: {
-                                    height:"34px",
-                                    borderRadius: 10,
-                                    },
-                                }}
-                            />
-                            <IconButton
-                            className={classes.ionTrash}
-                            // onClick={addField}
-                            // id="plusButton"
-                            // value={column.id}
-                            >
-                                <img 
-                                src={IonTrash} 
-                                alt="Trash"
-                                />
-                            </IconButton>
-                            <OkButton
-                            sizeIco={"34px"}
-                            roundedIco={true}
-                            />
-                        </Box>
+                            
+                            
+                            {customFields.map((cusField) => (
+                                <Box className={classes.customBoxRow}
+                                key={cusField.id}
+                                >
+                                    <TextField
+                                        id={String(cusField.id)}
+                                        // id={column.dataKey.toString()}
+                                        // id="filled-multiline-flexible"
+                                        value={cusField.label}
+                                        // onChange={handleFilterChange}
+                                        onChange={ handleEditCustomField }
+                                        maxRows={1}
+                                        size="small"
+                                        className={classes.newCustomField}
+                                        InputProps={{
+                                            style: {
+                                            height:"34px",
+                                            borderRadius: 10,
+                                            },
+                                        }}
+                                    />
+                                    <IconButton
+                                    className={classes.ionTrash}
+                                    // onClick={addField}
+                                    // id="plusButton"
+                                    // value={column.id}
+                                    >
+                                        <img 
+                                        src={IonTrash} 
+                                        alt="Trash"
+                                        />
+                                    </IconButton>
+                                    <OkButton
+                                    sizeIco={"34px"}
+                                    roundedIco={true}
+                                    />
+                                </Box>
+                            ))}
+                            
+                            
+                            
                         <Box className={classes.customBoxRow}>
                             <PlusButton
                                 sizeIco={"45px !important"}
