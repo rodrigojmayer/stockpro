@@ -82,10 +82,12 @@ type Data = {
 
 interface LayoutProps {
     columns: ColumnData[]
+    columnsTableOrder: ColumnData[]
+    columnsHiddenFields: ColumnData[]
     children: React.ReactNode
   }
 
-export default function Layout( {children, columns}: LayoutProps) {
+export default function Layout( {children, columns, columnsTableOrder, columnsHiddenFields}: LayoutProps) {
     // export default function Layout( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { classes } = useStyles()
@@ -119,6 +121,8 @@ export default function Layout( {children, columns}: LayoutProps) {
                  open={openOptions.fields} 
                  handleClose={handleCloseOptions} 
                  columns={columns}
+                 columnsTableOrder={columnsTableOrder} 
+                 columnsHiddenFields={columnsHiddenFields} 
             /> 
             <Alerts
                  open={openOptions.alerts} 

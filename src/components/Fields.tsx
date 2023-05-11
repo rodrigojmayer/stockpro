@@ -1,17 +1,23 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { makeStyles } from 'tss-react/mui';
-import Box from '@mui/material/Box';
-import { Container, Typography, Grid } from '@mui/material';
-import Modal from '@mui/material/Modal';
+import { Box, 
+         Container,
+         Grid, 
+         IconButton, 
+         Modal,
+         TextField,
+         Typography, 
+        } from '@mui/material';
 import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
 import { OkButton, CancelButton } from './Buttons';
-import {  IconButton  } from '@mui/material';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import IonTrash from "../assets/ion_trash.svg"
 import List from '@mui/material/List/List';
 
 
@@ -70,19 +76,54 @@ const useStyles = makeStyles()({
             height: "32px",
         }
     },
+    customFieldsTitle: {
+        display: "flex",
+        justifyContent:  "center",
+        alignItems: "center",
+        gap: 6,
+        marginLeft: "6px",
+        
+    },
+    editIcon: {
+        width: "30px",
+        height: "30px",
+    },
+
+    customFieldsInput: {
+      backgroundColor: "white",
+      borderRadius: "6px",
+      margin: "8px",
+      minWidth: "150px",
+      width: "40%"
+    },
+    ionTrash: {
+        // bacgroundColor: "green !important",
+        // color: "green !important",
+        width: "35px",
+        height: "35px",
+        padding: "0",
+        color: "rgb(255, 47, 47, 1)",
+        "& > *": {
+            width: "35px",
+            height: "35px",
+        }
+    },
+
+
+
+
+
+
+
+
+
+
     finishButtons: {
         display: "flex",
         justifyContent:  "center",
         gap: 30,
         margin: "20px",
     },
-    customFieldsTitle: {
-        display: "flex",
-        justifyContent:  "center",
-        gap: 6,
-        marginLeft: "6px",
-        
-    }
 })
 
 const style = {
@@ -119,17 +160,19 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     columns: ColumnData[]
+    columnsTableOrder: ColumnData[]
+    columnsHiddenFields: ColumnData[]
 }
 
-export default function Fields({ open, handleClose, columns }: ChildProps) {
+export default function Fields({ open, handleClose, columns, columnsTableOrder, columnsHiddenFields }: ChildProps) {
 
     const { classes } = useStyles()
     const close = () => {
         handleClose(false)
     }
 
-    const [orderedFields, setOrderedFields] = useState(columns)
-    const [unsetFields, setUnsetFields] = useState<ColumnData[]>([])                               
+    const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
+    const [unsetFields, setUnsetFields] = useState(columnsHiddenFields)                               
     const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
         let orderedArray = Array.from(orderedFields)
         const unsetArray = Array.from(unsetFields)
@@ -256,9 +299,33 @@ export default function Fields({ open, handleClose, columns }: ChildProps) {
                         <Typography variant='h6' >
                             Custom fields 
                         </Typography>
-                        <EditIcon  />
+                        <EditIcon  className={classes.editIcon}/>
                     </Box>
-                     
+                    <Box className={classes.customFieldsTitle}>
+                        <TextField
+                        // id={column.dataKey.toString()}
+                        // value={filters[0].dataKey}
+                        // onChange={handleFilterChange}
+                        maxRows={1}
+                        size="small"
+                        className={classes.customFieldsInput}
+                        InputProps={{
+                            style: {
+                                borderRadius: 6,
+                                height:"34px",
+                            },
+                        }}
+                        />
+                        <IconButton
+                        // onClick={removeCustomField}
+                        className={classes.ionTrash}
+                        id="minusButton"
+                        // value={column.id}
+                        >
+                            <img src={IonTrash} alt="Logo" 
+                            />
+                        </IconButton>
+                    </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton/>
                         <OkButton/>

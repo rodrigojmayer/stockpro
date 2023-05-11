@@ -61,14 +61,18 @@ const columns: ColumnData[] = [
   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true },
   { id: 6, width: 120, label: 'Product', dataKey: 'product2' },
   { id: 17, width: 80, label: 'Amount', dataKey: 'amount2', numeric: true },
-  { id: 18, width: 80, label: 'Unit', dataKey: 'unit2' },
-  { id: 19, width: 100, label: 'Category', dataKey: 'category2', numeric: true },
-  { id: 20, width: 100, label: 'Sub Category', dataKey: 'sub_category2', numeric: true },
-  { id: 36, width: 120, label: 'Product', dataKey: 'product2' },
-  { id: 37, width: 80, label: 'Amount', dataKey: 'amount2', numeric: true },
-  { id: 38, width: 80, label: 'Unit', dataKey: 'unit2' },
-  { id: 39, width: 100, label: 'Category', dataKey: 'category2', numeric: true },
-  { id: 30, width: 100, label: 'Sub Category of the lorss', dataKey: 'sub_category2', numeric: true },
+];
+
+const columnsTableOrder: ColumnData[] = [
+  { id: 1, width: 120, label: 'Product', dataKey: 'product' },
+  { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true },
+  { id: 3, width: 80, label: 'Unit', dataKey: 'unit' },
+  { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true },
+];
+const columnsHiddenFields: ColumnData[] = [
+  { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true },
+  { id: 6, width: 120, label: 'Product2', dataKey: 'product2' },
+  { id: 17, width: 80, label: 'Amount2', dataKey: 'amount2', numeric: true },
 ];
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -89,7 +93,7 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Layout columns={columns}>
+        <Layout columns={columns} columnsTableOrder={columnsTableOrder} columnsHiddenFields={columnsHiddenFields} >
           <Container maxWidth="md" style={{padding: "0"}} >
             <Grid container>
               <Grid item xs={10} >

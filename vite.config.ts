@@ -11,5 +11,12 @@ export default defineConfig({
       // 'Content-Security-Policy': "script-src 'self' 'unsafe-inline' https://apis.google.com/js/api.js'unsafe-eval'; object-src 'self'"
       // "content_security_policy": "script-src 'self' https://apis.google.com/js/api.js 'unsafe-eval'; object-src 'self'"
     // }
-  }
+  },
+  
+  // resolve: {
+  //   alias: {
+  //     // Make sure to use the correct path to your `@svgr/webpack` installation
+  //     'react-svg': '@svgr/webpack?-svgo,+titleProp,+ref!@svgr/webpack',
+  //   },
+  // },
 })
