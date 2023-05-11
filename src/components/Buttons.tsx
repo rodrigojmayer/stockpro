@@ -1,5 +1,3 @@
-
-
 import { Typography } from '@mui/material'
 import { Button, IconButton  } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -32,8 +30,10 @@ const colorOk = {
 
 const useStyles = makeStyles()({
   btnCancel: {
+    borderRadius: "10px",
     backgroundColor: theme.palette.warning.contrastText,
     transition: ".5s",
+    // width: "1px !important",
     "& > *": {
       transition: ".5s",
 
@@ -50,7 +50,8 @@ const useStyles = makeStyles()({
     }
   },
   btnOk: {
-      backgroundColor: theme.palette.success.contrastText,
+    borderRadius: "10px",
+    backgroundColor: theme.palette.success.contrastText,
     transition: ".5s",
     "& > *": {
       transition: ".5s",
@@ -125,23 +126,47 @@ export function OkButton({ sizeData }: { sizeData?: string }) {
   )
 }
 
-export function CancelButton() {
+export function CancelButton({ sizeIco, roundedIco }: { sizeIco?: string, roundedIco?: boolean }) {
 
   const { classes } = useStyles()
   const colorCancel = theme.palette.warning.main
-  
-
+  let fontIco = 35, noPadding, bor = 5, borRad
+  if(sizeIco) {
+    fontIco = (parseInt(sizeIco) - 12)
+    bor = 3
+  }
+  if(roundedIco){
+    noPadding=0
+    borRad="50px !important"
+  } 
+  // console.log("sizeIco: ", sizeIco)
+  // console.log("roundedIco: ", roundedIco)
+  // console.log("fontIco: ", fontIco)
   return (
     <ThemeProvider theme={theme}>
       <Button 
         variant="outlined"
         color="warning"
-        sx={{  border: 5 , paddingTop:0,  paddingBottom:0,
-        }}
         className={classes.btnCancel}
+        sx={{  
+          border: bor , 
+          padding:noPadding, 
+          paddingTop:0,  
+          paddingBottom:0, 
+          minWidth: sizeIco, 
+          width: sizeIco, 
+          height: sizeIco,
+          borderRadius: borRad,
+        }}
       >
         
-        <CloseRoundedIcon sx={{ fontSize: 35, stroke: colorCancel, strokeWidth: 2 }}></CloseRoundedIcon>
+        <CloseRoundedIcon 
+        sx={{ 
+          fontSize: fontIco, 
+          stroke: colorCancel, 
+          strokeWidth: 2 ,
+        }}>
+        </CloseRoundedIcon>
       </Button>
     </ThemeProvider>   
   )
@@ -171,14 +196,18 @@ export function MenuButton({ onDataChanged }: ChildProps) {
   )
 }
 
-export function PlusButton() {
+export function PlusButton({ sizeIco }: { sizeIco?: string }) {
   const { classes } = useStyles()
-
+  // console.log("sizeIco: ", sizeIco)
   return(
     <IconButton
       className={classes.plusIcon}
-      id="plusButton">
-        <ControlPointTwoToneIcon/>
+      id="plusButton"
+      sx={{width: sizeIco, height: sizeIco}}
+      >
+        <ControlPointTwoToneIcon 
+        sx={{width: sizeIco, height: sizeIco}}
+        />
     </IconButton>
   )
 }

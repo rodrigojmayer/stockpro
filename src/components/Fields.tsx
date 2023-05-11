@@ -1,24 +1,26 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { makeStyles } from 'tss-react/mui';
-import { Box, 
+import { Box,
          Container,
-         Grid, 
-         IconButton, 
-         Modal,
+         Grid,
+         IconButton,
+         Modal, 
          TextField,
-         Typography, 
+         Typography,
         } from '@mui/material';
 import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
-import { OkButton, CancelButton } from './Buttons';
+import { OkButton,
+         CancelButton, 
+         PlusButton,
+        } from './Buttons';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import IonTrash from "../assets/ion_trash.svg"
 import List from '@mui/material/List/List';
+import IonTrash from "../assets/ion_trash.svg";
 
 
 const useStyles = makeStyles()({
@@ -76,7 +78,15 @@ const useStyles = makeStyles()({
             height: "32px",
         }
     },
-    customFieldsTitle: {
+    customBoxColumn: {
+        display: "flex",
+        flexDirection: "column",
+        // justifyContent:  "center",
+        // gap: 6,
+        // marginLeft: "6px",
+        
+    },
+    customBoxRow: {
         display: "flex",
         justifyContent:  "center",
         alignItems: "center",
@@ -85,39 +95,20 @@ const useStyles = makeStyles()({
         
     },
     editIcon: {
-        width: "30px",
-        height: "30px",
+        width: "32px", 
+        height: "32px",
+        marginBottom: "6px"
     },
-
-    customFieldsInput: {
-      backgroundColor: "white",
-      borderRadius: "6px",
-      margin: "8px",
-      minWidth: "150px",
-      width: "40%"
-    },
-    ionTrash: {
-        // bacgroundColor: "green !important",
-        // color: "green !important",
-        width: "35px",
-        height: "35px",
-        padding: "0",
+    ionTrash:{
         color: "rgb(255, 47, 47, 1)",
-        "& > *": {
-            width: "35px",
-            height: "35px",
-        }
+        padding: "4px",
+        width: "45px", 
+        height: "45px",
+        '& img': {
+            width: "45px", 
+            height: "45px",
+        },
     },
-
-
-
-
-
-
-
-
-
-
     finishButtons: {
         display: "flex",
         justifyContent:  "center",
@@ -278,6 +269,8 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
                             className={classes.table}>
                                 {unsetFields.map((column, index) => (
                                     <Paper
+                                    
+                                    key={column.id} 
                                     className={classes.buttonFields}>
                                         <Typography noWrap>
                                             {column.label}
@@ -294,37 +287,61 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
                             </List>
                         </Grid>
                     </Grid>
-                    <Box className={classes.customFieldsTitle}>
-
-                        <Typography variant='h6' >
+                    <Box className={classes.customBoxColumn}>
+                        <Box className={classes.customBoxRow}>
+                    
+                        <Typography variant='h6'  >
                             Custom fields 
                         </Typography>
-                        <EditIcon  className={classes.editIcon}/>
-                    </Box>
-                    <Box className={classes.customFieldsTitle}>
-                        <TextField
+                            <EditIcon 
+                            className={classes.editIcon}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                    <TextField
+                        // id={column.dataKey}
                         // id={column.dataKey.toString()}
+                        // id="filled-multiline-flexible"
                         // value={filters[0].dataKey}
+                        // onChange={handleFilterChange}
                         // onChange={handleFilterChange}
                         maxRows={1}
                         size="small"
-                        className={classes.customFieldsInput}
-                        InputProps={{
-                            style: {
-                                borderRadius: 6,
-                                height:"34px",
-                            },
-                        }}
-                        />
-                        <IconButton
-                        // onClick={removeCustomField}
+                        sx={{
+                          backgroundColor: "white",
+                          borderRadius: 1,
+                          margin: "8px",
+                      }}
+                      InputProps={{
+                        style: {
+                          height:"36px",
+                        },
+                      }}
+                      />
+                      <IconButton
                         className={classes.ionTrash}
-                        id="minusButton"
+                        // onClick={addField}
+                        // id="plusButton"
                         // value={column.id}
                         >
-                            <img src={IonTrash} alt="Logo" 
+                            <img 
+                            src={IonTrash} 
+                            alt="Trash"
                             />
                         </IconButton>
+
+                        <CancelButton
+                        sizeIco={"35px"}
+                        roundedIco={true}
+                        />
+                        
+                    </Box>
+                    <Box className={classes.customBoxRow}>
+                        <PlusButton
+                            sizeIco={"45px !important"}
+                        />
+                     
+                    </Box>
                     </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton/>
