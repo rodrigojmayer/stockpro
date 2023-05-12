@@ -81,14 +81,15 @@ type Data = {
   }
 
 interface LayoutProps {
-    columns: ColumnData[]
-    columnsTableOrder: ColumnData[]
-    columnsHiddenFields: ColumnData[]
+    // columns: ColumnData[]
+    columnsDefault: ColumnData[]
     columnsCustom: ColumnData[]
+    idColumnsTableOrder: Number[]
+    // columnsHiddenFields: ColumnData[]
     children: React.ReactNode
   }
 
-export default function Layout( {children, columns, columnsTableOrder, columnsHiddenFields, columnsCustom}: LayoutProps) {
+export default function Layout( {children, columnsDefault, columnsCustom, idColumnsTableOrder}: LayoutProps) {
     // export default function Layout( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { classes } = useStyles()
@@ -109,7 +110,7 @@ export default function Layout( {children, columns, columnsTableOrder, columnsHi
         }
     }
     useEffect(() => {
-        console.log("Layout columns: ", columns)
+        // console.log("Layout columns: ", columns)
     }, [openMenu])
     return (
         <div>
@@ -119,12 +120,14 @@ export default function Layout( {children, columns, columnsTableOrder, columnsHi
                  onData = {handleOpenOptions}
             /> 
             <Fields
-                 open={openOptions.fields} 
-                 handleClose={handleCloseOptions} 
-                 columns={columns}
-                 columnsTableOrder={columnsTableOrder} 
-                 columnsHiddenFields={columnsHiddenFields}
-                 columnsCustom={columnsCustom} 
+                open={openOptions.fields} 
+                handleClose={handleCloseOptions} 
+                //  columns={columns}
+                columnsDefault={columnsDefault}
+                columnsCustom={columnsCustom} 
+                idColumnsTableOrder={idColumnsTableOrder} 
+                //  columnsHiddenFields={columnsHiddenFields}
+                //  columnsCustom={columnsCustom} 
             /> 
             <Alerts
                  open={openOptions.alerts} 

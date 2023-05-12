@@ -153,18 +153,28 @@ interface ColumnData {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    columns: ColumnData[]
-    columnsTableOrder: ColumnData[]
-    columnsHiddenFields: ColumnData[]
+    // columns: ColumnData[]
+    columnsDefault: ColumnData[]
     columnsCustom: ColumnData[]
+    idColumnsTableOrder: Number[]
+    // columnsHiddenFields: ColumnData[]
 }
 
-export default function Fields({ open, handleClose, columns, columnsTableOrder, columnsHiddenFields, columnsCustom }: ChildProps) {
+export default function Fields({ open, handleClose, columnsDefault, columnsCustom, idColumnsTableOrder }: ChildProps) {
 
     const { classes } = useStyles()
     const close = () => {
         handleClose(false)
     }
+    const columns: ColumnData[] = columnsDefault.concat(columnsCustom);
+    const columnsTableOrder = columns.filter((col) => {
+        if(idColumnsTableOrder.includes(col.id))
+            return col
+    })
+    const columnsHiddenFields =  columns.filter((col) => {
+        if(!columnsTableOrder.includes(col))
+            return col
+    })
 
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState(columnsHiddenFields)  
@@ -208,8 +218,10 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
         setOrderedFields(items)
     }
     const handleEditCustomField = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("event.currentTarget.id: ", event.currentTarget.id)
-        console.log("event.currentTarget.value: ", event.currentTarget.value)
+        // console.log("event.currentTarget.id: ", event.currentTarget.id)
+        // console.log("event.currentTarget.value: ", event.currentTarget.value)
+        // console.log("isNaN('w'): ", isNaN(NaN))
+        
         // setCustomFields({...customFields, event.currentTarget.value})
         const index = customFields.findIndex(field => field.id === Number(event.currentTarget.id))
         if(index !== -1) {
@@ -218,6 +230,12 @@ export default function Fields({ open, handleClose, columns, columnsTableOrder, 
             setCustomFields(updateFields)
         }
     }
+
+    useEffect(() => {
+        // console.log("orderedFields: ", orderedFields)
+        // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
+        // console.log("columnsHiddenFields: ", columnsHiddenFields)
+    }, [orderedFields, unsetFields, customFields])
     return (
         <Modal
         open={open} 

@@ -53,7 +53,8 @@ interface ColumnData {
   width: number;
 }
 type Sample = [number, string, number, string, string, string];
-const columns: ColumnData[] = [
+
+const columnsDefault: ColumnData[] = [
   { id: 1, width: 120, label: 'Product', dataKey: 'product' },
   { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true },
   { id: 3, width: 80, label: 'Unit', dataKey: 'unit' },
@@ -61,21 +62,15 @@ const columns: ColumnData[] = [
   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true },
 ];
 const columnsCustom: ColumnData[] = [
-  { id: 16, width: 120, label: 'Product', dataKey: 'product2' },
-  { id: 17, width: 80, label: 'Amount', dataKey: 'amount2', numeric: true },
+  { id: 16, width: 120, label: 'Product2', dataKey: 'product2' },
+  { id: 17, width: 100, label: 'Amount2', dataKey: 'amount2', numeric: true },
 ];
 
-const columnsTableOrder: ColumnData[] = [
-  { id: 1, width: 120, label: 'Product', dataKey: 'product' },
-  { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true },
-  { id: 3, width: 80, label: 'Unit', dataKey: 'unit' },
-  { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true },
-];
-const columnsHiddenFields: ColumnData[] = [
-  { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true },
-  { id: 6, width: 120, label: 'Product2', dataKey: 'product2' },
-  { id: 17, width: 80, label: 'Amount2', dataKey: 'amount2', numeric: true },
-];
+const columns: ColumnData[] = columnsDefault.concat(columnsCustom);
+
+const idColumnsTableOrder: Number[] = [1, 2, 3, 4];
+// const idColumnsHiddenFields: Number[] = [5, 6, 17];
+
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(sample)
@@ -96,10 +91,11 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Layout 
-        columns={columns} 
-        columnsTableOrder={columnsTableOrder} 
-        columnsHiddenFields={columnsHiddenFields} 
+        // columns={columns} 
+        columnsDefault={columnsDefault} 
         columnsCustom={columnsCustom}
+        idColumnsTableOrder={idColumnsTableOrder} 
+        // columnsHiddenFields={idColumnsHiddenFields} 
         >
           <Container maxWidth="md" style={{padding: "0"}} >
             <Grid container>
