@@ -356,7 +356,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                             className={classes.editIcon}
                             />
                         </Box>
-                            {customFieldsNew.map((cusField) => (
+                            {customFieldsNew.map((cusField: ColumnData) => (
                                 <Box className={classes.customBoxRow}
                                 key={cusField.id}
                                 >
