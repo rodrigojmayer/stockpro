@@ -176,9 +176,12 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
             return col
     })
 
+    // const columnsCustomNew: ColumnData[]= [...columnsCustom]
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState(columnsHiddenFields)  
     const [customFields, setCustomFields] = useState(columnsCustom)  
+    const [customFieldsNew, setCustomFieldsNew] = useState(JSON.parse(JSON.stringify(columnsCustom)))  
+
                                  
     const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
         let orderedArray = Array.from(orderedFields)
@@ -217,24 +220,45 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         items.splice(result.destination.index, 0, reorderData);
         setOrderedFields(items)
     }
-    const handleEditCustomField = (event: React.ChangeEvent<HTMLInputElement>) => {
+    
+    const deleteField = (id:number) => {
+        console.log("id: ", id)
+        
+    }
+
+    const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log("event.currentTarget.id: ", event.currentTarget.id)
         // console.log("event.currentTarget.value: ", event.currentTarget.value)
         // console.log("isNaN('w'): ", isNaN(NaN))
         
         // setCustomFields({...customFields, event.currentTarget.value})
-        const index = customFields.findIndex(field => field.id === Number(event.currentTarget.id))
+        const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
+        if(index !== -1) {
+            const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
+            updateFieldsNew[index].label = event.currentTarget.value
+            setCustomFieldsNew(updateFieldsNew)
+        }
+    }
+    const saveCustomField = (id:number, label: string) => {
+        console.log("id: ", id)
+        const index = customFields.findIndex(field => field.id === id)
         if(index !== -1) {
             const updateFields = [...customFields]
-            updateFields[index].label = event.currentTarget.value
+            console.log("label: ", label)
+            updateFields[index].label = label
+            console.log("updateFields: ", updateFields)
             setCustomFields(updateFields)
+           
+            console.log("customFields: ", customFields) 
         }
+    
+
     }
 
     useEffect(() => {
         // console.log("orderedFields: ", orderedFields)
         // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
-        // console.log("columnsHiddenFields: ", columnsHiddenFields)
+        console.log("customFields: ", customFields)
     }, [orderedFields, unsetFields, customFields])
     return (
         <Modal
@@ -332,9 +356,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                             className={classes.editIcon}
                             />
                         </Box>
-                            
-                            
-                            {customFields.map((cusField) => (
+                            {customFieldsNew.map((cusField) => (
                                 <Box className={classes.customBoxRow}
                                 key={cusField.id}
                                 >
@@ -344,7 +366,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                         // id="filled-multiline-flexible"
                                         value={cusField.label}
                                         // onChange={handleFilterChange}
-                                        onChange={ handleEditCustomField }
+                                        onChange={ handleEditCustomFieldNew }
                                         maxRows={1}
                                         size="small"
                                         className={classes.newCustomField}
@@ -357,7 +379,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                     />
                                     <IconButton
                                     className={classes.ionTrash}
-                                    // onClick={addField}
+                                    onClick={() => deleteField(cusField.id)}
                                     // id="plusButton"
                                     // value={column.id}
                                     >
@@ -369,12 +391,11 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                     <OkButton
                                     sizeIco={"34px"}
                                     roundedIco={true}
+                                    cusField = {{id: cusField.id, value: cusField.label}}
+                                    clicked={( ) => saveCustomField(cusField.id, cusField.label)}
                                     />
                                 </Box>
                             ))}
-                            
-                            
-                            
                         <Box className={classes.customBoxRow}>
                             <PlusButton
                                 sizeIco={"45px !important"}
@@ -383,7 +404,9 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                     </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton/>
-                        <OkButton/>
+                        <OkButton
+                        clicked={() => console.log("qsy")}
+                        />
                     </Box>
                 </Box>
             </Box>

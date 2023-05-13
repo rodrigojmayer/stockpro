@@ -103,9 +103,14 @@ const useStyles = makeStyles()({
 })
 
 
+interface OkButtonProps {
+  sizeIco?: string
+  roundedIco?: boolean
+  cusField?: {id: number, value: string}
+  clicked: (id: number, value: string) => void
+}
 
-
-export function OkButton({ sizeIco, roundedIco }: { sizeIco?: string, roundedIco?: boolean }) {
+export function OkButton({ sizeIco, roundedIco, cusField, clicked }: OkButtonProps ) {
 
   const { classes } = useStyles()
   const colorOk = theme.palette.success.main
@@ -119,6 +124,14 @@ export function OkButton({ sizeIco, roundedIco }: { sizeIco?: string, roundedIco
     noPadding=0
     borRad="50px !important"
   } 
+
+  const handleClick = (() => {
+    // console.log("clicking")
+    // console.log("cusField: ", cusField)
+    // console.log("cusField.id: ", cusField.id)
+    if(cusField)
+      clicked(cusField.id, cusField.value)
+  })
 
   return (  
     <ThemeProvider theme={theme}>
@@ -136,6 +149,7 @@ export function OkButton({ sizeIco, roundedIco }: { sizeIco?: string, roundedIco
           borderRadius: borRad,
         }}
         className={classes.btnOk}
+        onClick={handleClick}
       >
         <CheckRoundedIcon 
         sx={{ 
