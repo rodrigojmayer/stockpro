@@ -117,6 +117,13 @@ const useStyles = makeStyles()({
         gap: 20,
         margin: "20px",
     },
+    show: {
+        display: "block",
+    },
+    hide: {
+        // display: "none",
+        visibility: "hidden"
+    },
 })
 
 const style = {
@@ -159,6 +166,14 @@ interface ChildProps {
     idColumnsTableOrder: Number[]
     // columnsHiddenFields: ColumnData[]
 }
+interface ColumnDataCustom {
+    id: number;
+    dataKey: string;
+    label: string;
+    numeric?: boolean;
+    width: number;
+    okButtonShow: boolean;
+}
 
 export default function Fields({ open, handleClose, columnsDefault, columnsCustom, idColumnsTableOrder }: ChildProps) {
 
@@ -175,12 +190,18 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         if(!columnsTableOrder.includes(col))
             return col
     })
+    // const columnsCustomNew = JSON.parse(JSON.stringify(columnsCustom))
+    const columnsCustomNew: ColumnDataCustom[] = columnsCustom.map(obj => ({...obj, okButtonShow: false}));
+    // columnsCustomNew = columnsCustom.map((val, ind) => {
+        // return {[val.id]: false}
+    // })
 
     // const columnsCustomNew: ColumnData[]= [...columnsCustom]
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState(columnsHiddenFields)  
     const [customFields, setCustomFields] = useState(columnsCustom)  
-    const [customFieldsNew, setCustomFieldsNew] = useState(JSON.parse(JSON.stringify(columnsCustom)))  
+    const [customFieldsNew, setCustomFieldsNew] = useState(columnsCustomNew)  
+    // const [okButtonShow, setOkButtonShow] = useState(okButton)  
 
                                  
     const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
@@ -223,19 +244,24 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     
     const deleteField = (id:number) => {
         console.log("id: ", id)
-        
     }
 
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log("event.currentTarget.id: ", event.currentTarget.id)
         // console.log("event.currentTarget.value: ", event.currentTarget.value)
         // console.log("isNaN('w'): ", isNaN(NaN))
-        
         // setCustomFields({...customFields, event.currentTarget.value})
         const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
         if(index !== -1) {
             const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
             updateFieldsNew[index].label = event.currentTarget.value
+            console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+            console.log("customFields[index].label: ", customFields[index].label)
+            if(updateFieldsNew[index].label != customFields[index].label)
+                updateFieldsNew[index].okButtonShow = true
+            else
+            updateFieldsNew[index].okButtonShow = false
+
             setCustomFieldsNew(updateFieldsNew)
         }
     }
@@ -248,18 +274,15 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
             updateFields[index].label = label
             console.log("updateFields: ", updateFields)
             setCustomFields(updateFields)
-           
             console.log("customFields: ", customFields) 
         }
-    
-
     }
 
     useEffect(() => {
-        // console.log("orderedFields: ", orderedFields)
+
         // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
-        console.log("customFields: ", customFields)
-    }, [orderedFields, unsetFields, customFields])
+        // console.log("customFieldsNew: ", customFieldsNew)
+    }, [orderedFields, unsetFields, customFields, customFieldsNew])
     return (
         <Modal
         open={open} 
@@ -356,7 +379,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                             className={classes.editIcon}
                             />
                         </Box>
-                            {customFieldsNew.map((cusField: ColumnData) => (
+                            {customFieldsNew.map((cusField: ColumnDataCustom) => (
                                 <Box className={classes.customBoxRow}
                                 key={cusField.id}
                                 >
@@ -388,12 +411,14 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                         alt="Trash"
                                         />
                                     </IconButton>
-                                    <OkButton
-                                    sizeIco={"34px"}
-                                    roundedIco={true}
-                                    cusField = {{id: cusField.id, value: cusField.label}}
-                                    clicked={( ) => saveCustomField(cusField.id, cusField.label)}
-                                    />
+                                    <div className={cusField.okButtonShow ? classes.show : classes.hide}>
+                                        <OkButton
+                                        sizeIco={"34px"}
+                                        roundedIco={true}
+                                        cusField = {{id: cusField.id, value: cusField.label}}
+                                        clicked={( ) => saveCustomField(cusField.id, cusField.label)}
+                                        />
+                                    </div>
                                 </Box>
                             ))}
                         <Box className={classes.customBoxRow}>
