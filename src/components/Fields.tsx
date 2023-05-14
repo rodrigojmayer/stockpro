@@ -253,24 +253,24 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         // console.log("event.currentTarget.value: ", event.currentTarget.value)
         // console.log("isNaN('w'): ", isNaN(NaN))
         // setCustomFields({...customFields, event.currentTarget.value})
-        const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-        if(index !== -1) {
-            const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
-            updateFieldsNew[index].label = event.currentTarget.value
-            // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-            // console.log("customFields[index].label: ", customFields[index].label)
-            if(customFields[index]){
-                if(updateFieldsNew[index].label == customFields[index].label)
-                    updateFieldsNew[index].okButtonShow = false
-                else
+            const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
+            if(index !== -1) {
+                const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
+                updateFieldsNew[index].label = event.currentTarget.value
+                // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+                // console.log("customFields[index].label: ", customFields[index].label)
+                if(customFields[index]){
+                    if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
+                        updateFieldsNew[index].okButtonShow = false
+                    else
+                        updateFieldsNew[index].okButtonShow = true
+                }else if(updateFieldsNew[index].label !='' ){
                     updateFieldsNew[index].okButtonShow = true
-            }else if(updateFieldsNew[index].label !='' ){
-                updateFieldsNew[index].okButtonShow = true
-            }else if (updateFieldsNew[index].label ==='' ){
-                updateFieldsNew[index].okButtonShow = false
+                }else if (updateFieldsNew[index].label ==='' ){
+                    updateFieldsNew[index].okButtonShow = false
+                }
+                setCustomFieldsNew(updateFieldsNew)
             }
-            setCustomFieldsNew(updateFieldsNew)
-        }
     }
     const saveCustomField = (id:number, label: string) => {
         const updateFields = [...customFields]
