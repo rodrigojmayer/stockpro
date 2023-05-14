@@ -57,7 +57,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     const selOp = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const buttonElement = e.currentTarget.value 
-        console.log("buttonElement: ", buttonElement)
+        // console.log("buttonElement: ", buttonElement)
         onData({option:buttonElement, open: true})
         // if(buttonElement === "fields")
         //     // openOptionF(true)

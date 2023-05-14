@@ -232,14 +232,27 @@ export function MenuButton({ onDataChanged }: ChildProps) {
   )
 }
 
-export function PlusButton({ sizeIco }: { sizeIco?: string }) {
+
+interface PlusButtonProps {
+  sizeIco?: string
+  clicked?: () => void
+}
+
+export function PlusButton({ sizeIco, clicked }:  PlusButtonProps ) {
   const { classes } = useStyles()
   // console.log("sizeIco: ", sizeIco)
+
+  const handleClick = () => {
+    if (clicked)
+      clicked()
+  }
+  
   return(
     <IconButton
       className={classes.plusIcon}
       id="plusButton"
       sx={{width: sizeIco, height: sizeIco}}
+      onClick={handleClick}
       >
         <ControlPointTwoToneIcon 
         sx={{width: sizeIco, height: sizeIco}}

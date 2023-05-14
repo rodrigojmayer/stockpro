@@ -78,6 +78,7 @@ type Data = {
     label: string;
     numeric?: boolean;
     width: number;
+    id_client?: number;
     deleted: boolean;
   }
 

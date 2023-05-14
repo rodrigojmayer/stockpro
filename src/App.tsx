@@ -51,6 +51,7 @@ interface ColumnData {
   label: string;
   numeric?: boolean;
   width: number;
+  id_client?: number;
   deleted: boolean;
 }
 type Sample = [number, string, number, string, string, string];
@@ -63,8 +64,8 @@ const columnsDefault: ColumnData[] = [
   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true, deleted: false  },
 ];
 const columnsCustom: ColumnData[] = [
-  { id: 16, width: 120, label: 'Product2', dataKey: 'product2', deleted: true  },
-  { id: 17, width: 100, label: 'Amount2', dataKey: 'amount2', numeric: true, deleted: false  },
+  { id: 16, width: 120, label: 'Product2', dataKey: 'product2', id_client: 2, deleted: true  },
+  { id: 17, width: 100, label: 'Amount2', dataKey: 'amount2', numeric: true, id_client: 2,  deleted: false  },
 ];
 
 const columns: ColumnData[] = columnsDefault.concat(columnsCustom);

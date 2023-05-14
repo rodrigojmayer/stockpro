@@ -156,6 +156,7 @@ interface ColumnData {
     label: string;
     numeric?: boolean;
     width: number;
+    id_client?: number;
     deleted: boolean;
 }
 interface ChildProps {
@@ -173,6 +174,7 @@ interface ColumnDataCustom {
     label: string;
     numeric?: boolean;
     width: number;
+    id_client?: number;
     deleted: boolean;
     okButtonShow: boolean;
 }
@@ -282,7 +284,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     }
 
     const deleteField = (id:number) => {
-        console.log("id: ", id)
+        // console.log("id: ", id)
         const index = customFields.findIndex(field => field.id === id)
         if(index !== -1) {
             const updateFields = [...customFields]
@@ -293,7 +295,25 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
             setCustomFieldsNew(updateFieldsNew)
             // console.log("customFields: ", customFields) 
         }
+    }
+    const addInputCustomField = () => {
+        console.log("holis clickis", customFieldsNew.length)
+        // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
+        const lastObj = customFieldsNew[customFieldsNew.length - 1]
+        const nextId = lastObj.id + 1
+        const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: 2, deleted: false, okButtonShow: false}]
 
+        
+
+        // updateFieldsNew[index].label = event.currentTarget.value
+        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+        // console.log("customFields[index].label: ", customFields[index].label)
+        // if(updateFieldsNew[index].label != customFields[index].label)
+        //     updateFieldsNew[index].okButtonShow = true
+        // else
+        //     updateFieldsNew[index].okButtonShow = false
+
+        setCustomFieldsNew(updateFieldsNew)
     }
 
     useEffect(() => {
@@ -372,7 +392,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                             <List
                             className={classes.table}
                             >
-                                {unsetFields.map((column, index) => {
+                                {unsetFields.map((column) => {
                                     if (!column.deleted) {
                                         return (
                                             <Paper
@@ -454,6 +474,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                         <Box className={classes.customBoxRow}>
                             <PlusButton
                                 sizeIco={"45px !important"}
+                                clicked={addInputCustomField}
                             />
                         </Box>
                     </Box>
