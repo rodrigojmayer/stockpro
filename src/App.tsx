@@ -51,19 +51,20 @@ interface ColumnData {
   label: string;
   numeric?: boolean;
   width: number;
+  deleted: boolean;
 }
 type Sample = [number, string, number, string, string, string];
 
 const columnsDefault: ColumnData[] = [
-  { id: 1, width: 120, label: 'Product', dataKey: 'product' },
-  { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true },
-  { id: 3, width: 80, label: 'Unit', dataKey: 'unit' },
-  { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true },
-  { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true },
+  { id: 1, width: 120, label: 'Product', dataKey: 'product', deleted: false },
+  { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true, deleted: false  },
+  { id: 3, width: 80, label: 'Unit', dataKey: 'unit', deleted: false  },
+  { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true, deleted: false  },
+  { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true, deleted: false  },
 ];
 const columnsCustom: ColumnData[] = [
-  { id: 16, width: 120, label: 'Product2', dataKey: 'product2' },
-  { id: 17, width: 100, label: 'Amount2', dataKey: 'amount2', numeric: true },
+  { id: 16, width: 120, label: 'Product2', dataKey: 'product2', deleted: true  },
+  { id: 17, width: 100, label: 'Amount2', dataKey: 'amount2', numeric: true, deleted: false  },
 ];
 
 const columns: ColumnData[] = columnsDefault.concat(columnsCustom);

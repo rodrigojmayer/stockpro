@@ -78,6 +78,7 @@ type Data = {
     label: string;
     numeric?: boolean;
     width: number;
+    deleted: boolean;
   }
 
 interface LayoutProps {

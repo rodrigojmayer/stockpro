@@ -156,6 +156,7 @@ interface ColumnData {
     label: string;
     numeric?: boolean;
     width: number;
+    deleted: boolean;
 }
 interface ChildProps {
     open:  boolean
@@ -172,6 +173,7 @@ interface ColumnDataCustom {
     label: string;
     numeric?: boolean;
     width: number;
+    deleted: boolean;
     okButtonShow: boolean;
 }
 
@@ -181,7 +183,10 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     const close = () => {
         handleClose(false)
     }
+    // const columns: ColumnData[] = columnsDefault.concat(columnsCustom).filter(column => !(column.deleted));
     const columns: ColumnData[] = columnsDefault.concat(columnsCustom);
+    // const columns= allColumns.filter(column => !(column.deleted));
+
     const columnsTableOrder = columns.filter((col) => {
         if(idColumnsTableOrder.includes(col.id))
             return col
@@ -191,10 +196,9 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
             return col
     })
     // const columnsCustomNew = JSON.parse(JSON.stringify(columnsCustom))
-    const columnsCustomNew: ColumnDataCustom[] = columnsCustom.map(obj => ({...obj, okButtonShow: false}));
-    // columnsCustomNew = columnsCustom.map((val, ind) => {
-        // return {[val.id]: false}
-    // })
+    const columnsCustomNew: ColumnDataCustom[] = columnsCustom
+    // .filter((obj) => !(obj.deleted))
+    .map((obj) => ({...obj, okButtonShow: false}));
 
     // const columnsCustomNew: ColumnData[]= [...columnsCustom]
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
@@ -262,7 +266,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         }
     }
     const saveCustomField = (id:number, label: string) => {
-        console.log("id: ", id)
+        // console.log("id: ", id)
         const index = customFields.findIndex(field => field.id === id)
         if(index !== -1) {
             const updateFields = [...customFields]
@@ -279,6 +283,17 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
 
     const deleteField = (id:number) => {
         console.log("id: ", id)
+        const index = customFields.findIndex(field => field.id === id)
+        if(index !== -1) {
+            const updateFields = [...customFields]
+            updateFields[index].deleted = true
+            setCustomFields(updateFields)
+            const updateFieldsNew = [...customFieldsNew]
+            updateFieldsNew[index].deleted = true
+            setCustomFieldsNew(updateFieldsNew)
+            // console.log("customFields: ", customFields) 
+        }
+
     }
 
     useEffect(() => {
@@ -317,32 +332,36 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                         className={classes.table}
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
-                                            {orderedFields.map((column, index) => (
-                                                <Draggable 
-                                                key={column.id} 
-                                                draggableId={column.id.toString()} 
-                                                index={index}>
-                                                    {(provided) => (
-                                                        <Paper
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                        elevation={2}
-                                                        className={classes.buttonFields}>
-                                                            <Typography noWrap>
-                                                                {column.label}
-                                                            </Typography>
-                                                            <IconButton
-                                                            onClick={removeField}
-                                                            className={classes.backPlus}
-                                                            id="minusButton"
-                                                            value={column.id}>
-                                                                <RemoveCircleTwoToneIcon/>
-                                                            </IconButton>
-                                                        </Paper>
-                                                    )}
-                                                </Draggable>
-                                            ))}
+                                            {orderedFields.map((column, index) => {
+                                                if (!column.deleted) {
+                                                    return (
+                                                        <Draggable 
+                                                        key={column.id} 
+                                                        draggableId={column.id.toString()} 
+                                                        index={index}>
+                                                            {(provided) => (
+                                                                <Paper
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                elevation={2}
+                                                                className={classes.buttonFields}>
+                                                                    <Typography noWrap>
+                                                                        {column.label}
+                                                                    </Typography>
+                                                                    <IconButton
+                                                                    onClick={removeField}
+                                                                    className={classes.backPlus}
+                                                                    id="minusButton"
+                                                                    value={column.id}>
+                                                                        <RemoveCircleTwoToneIcon/>
+                                                                    </IconButton>
+                                                                </Paper>
+                                                            )}
+                                                        </Draggable>
+                                                    )
+                                                }
+                                            })}
                                             {provided.placeholder} 
                                         </List>
                                     )}
@@ -353,23 +372,27 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                             <List
                             className={classes.table}
                             >
-                                {unsetFields.map((column, index) => (
-                                    <Paper
-                                    key={column.id} 
-                                    className={classes.buttonFields}>
-                                        <Typography noWrap>
-                                            {column.label}
-                                        </Typography>  
-                                        <IconButton
-                                        className={classes.plusIcon}
-                                        onClick={addField}
-                                        id="plusButton"
-                                        value={column.id}
-                                        >
-                                            <ControlPointTwoToneIcon/>
-                                        </IconButton>
-                                    </Paper>
-                                ))}
+                                {unsetFields.map((column, index) => {
+                                    if (!column.deleted) {
+                                        return (
+                                            <Paper
+                                            key={column.id} 
+                                            className={classes.buttonFields}>
+                                                <Typography noWrap>
+                                                    {column.label}
+                                                </Typography>  
+                                                <IconButton
+                                                className={classes.plusIcon}
+                                                onClick={addField}
+                                                id="plusButton"
+                                                value={column.id}
+                                                >
+                                                    <ControlPointTwoToneIcon/>
+                                                </IconButton>
+                                            </Paper>
+                                        )
+                                    }
+                                })}
                             </List>
                         </Grid>
                     </Grid>
@@ -382,48 +405,52 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                             className={classes.editIcon}
                             />
                         </Box>
-                            {customFieldsNew.map((cusField: ColumnDataCustom) => (
-                                <Box className={classes.customBoxRow}
-                                key={cusField.id}
-                                >
-                                    <TextField
-                                        id={String(cusField.id)}
-                                        // id={column.dataKey.toString()}
-                                        // id="filled-multiline-flexible"
-                                        value={cusField.label}
-                                        // onChange={handleFilterChange}
-                                        onChange={ handleEditCustomFieldNew }
-                                        maxRows={1}
-                                        size="small"
-                                        className={classes.newCustomField}
-                                        InputProps={{
-                                            style: {
-                                            height:"34px",
-                                            borderRadius: 10,
-                                            },
-                                        }}
-                                    />
-                                    <IconButton
-                                    className={classes.ionTrash}
-                                    onClick={() => deleteField(cusField.id)}
-                                    // id="plusButton"
-                                    // value={column.id}
-                                    >
-                                        <img 
-                                        src={IonTrash} 
-                                        alt="Trash"
-                                        />
-                                    </IconButton>
-                                    <div className={cusField.okButtonShow ? classes.show : classes.hide}>
-                                        <OkButton
-                                        sizeIco={"34px"}
-                                        roundedIco={true}
-                                        cusField = {{id: cusField.id, value: cusField.label}}
-                                        clicked={( ) => saveCustomField(cusField.id, cusField.label)}
-                                        />
-                                    </div>
-                                </Box>
-                            ))}
+                            {customFieldsNew.map((cusField: ColumnDataCustom) => {
+                                if (!cusField.deleted) {
+                                    return (
+                                        <Box className={classes.customBoxRow}
+                                        key={cusField.id}
+                                        >
+                                            <TextField
+                                                id={String(cusField.id)}
+                                                // id={column.dataKey.toString()}
+                                                // id="filled-multiline-flexible"
+                                                value={cusField.label}
+                                                // onChange={handleFilterChange}
+                                                onChange={ handleEditCustomFieldNew }
+                                                maxRows={1}
+                                                size="small"
+                                                className={classes.newCustomField}
+                                                InputProps={{
+                                                    style: {
+                                                    height:"34px",
+                                                    borderRadius: 10,
+                                                    },
+                                                }}
+                                            />
+                                            <IconButton
+                                            className={classes.ionTrash}
+                                            onClick={() => deleteField(cusField.id)}
+                                            // id="plusButton"
+                                            // value={column.id}
+                                            >
+                                                <img 
+                                                src={IonTrash} 
+                                                alt="Trash"
+                                                />
+                                            </IconButton>
+                                            <div className={cusField.okButtonShow ? classes.show : classes.hide}>
+                                                <OkButton
+                                                sizeIco={"34px"}
+                                                roundedIco={true}
+                                                cusField = {{id: cusField.id, value: cusField.label}}
+                                                clicked={( ) => saveCustomField(cusField.id, cusField.label)}
+                                                />
+                                            </div>
+                                        </Box>
+                                    )
+                                }
+                            })}
                         <Box className={classes.customBoxRow}>
                             <PlusButton
                                 sizeIco={"45px !important"}
