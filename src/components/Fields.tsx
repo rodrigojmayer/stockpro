@@ -206,7 +206,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState(columnsHiddenFields)  
     const [customFields, setCustomFields] = useState(columnsCustom)  
-    const [customFieldsNew, setCustomFieldsNew] = useState(columnsCustomNew)  
+    const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>(columnsCustomNew)  
     // const [okButtonShow, setOkButtonShow] = useState(okButton)  
 
                                  
@@ -259,28 +259,42 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
             updateFieldsNew[index].label = event.currentTarget.value
             // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
             // console.log("customFields[index].label: ", customFields[index].label)
-            if(updateFieldsNew[index].label != customFields[index].label)
+            if(customFields[index]){
+                if(updateFieldsNew[index].label == customFields[index].label)
+                    updateFieldsNew[index].okButtonShow = false
+                else
+                    updateFieldsNew[index].okButtonShow = true
+            }else if(updateFieldsNew[index].label !='' ){
                 updateFieldsNew[index].okButtonShow = true
-            else
+            }else if (updateFieldsNew[index].label ==='' ){
                 updateFieldsNew[index].okButtonShow = false
-
+            }
             setCustomFieldsNew(updateFieldsNew)
         }
     }
     const saveCustomField = (id:number, label: string) => {
-        // console.log("id: ", id)
-        const index = customFields.findIndex(field => field.id === id)
-        if(index !== -1) {
-            const updateFields = [...customFields]
-            // console.log("label: ", label)
+        const updateFields = [...customFields]
+        const updateFieldsNew = [...customFieldsNew]
+        let index = customFields.findIndex(field => field.id === id)
+        if(index !== -1){
+            
             updateFields[index].label = label
+        }else{
+            index = customFieldsNew.findIndex(field => field.id === id)
+            const fieldsToOmit = ['okButtonShow']
+            const newObj = Object.assign({}, customFieldsNew[index])
+            fieldsToOmit.forEach(field => delete newObj[field as keyof ColumnDataCustom])
+            updateFields.push(newObj)
+            setUnsetFields([...unsetFields, newObj])
             // console.log("updateFields: ", updateFields)
+        }
+
+            
             setCustomFields(updateFields)
-            const updateFieldsNew = [...customFieldsNew]
             updateFieldsNew[index].okButtonShow = false
             setCustomFieldsNew(updateFieldsNew)
             // console.log("customFields: ", customFields) 
-        }
+        // }
     }
 
     const deleteField = (id:number) => {
