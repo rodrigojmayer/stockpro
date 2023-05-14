@@ -242,10 +242,6 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         setOrderedFields(items)
     }
     
-    const deleteField = (id:number) => {
-        console.log("id: ", id)
-    }
-
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log("event.currentTarget.id: ", event.currentTarget.id)
         // console.log("event.currentTarget.value: ", event.currentTarget.value)
@@ -255,12 +251,12 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         if(index !== -1) {
             const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
             updateFieldsNew[index].label = event.currentTarget.value
-            console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-            console.log("customFields[index].label: ", customFields[index].label)
+            // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+            // console.log("customFields[index].label: ", customFields[index].label)
             if(updateFieldsNew[index].label != customFields[index].label)
                 updateFieldsNew[index].okButtonShow = true
             else
-            updateFieldsNew[index].okButtonShow = false
+                updateFieldsNew[index].okButtonShow = false
 
             setCustomFieldsNew(updateFieldsNew)
         }
@@ -270,12 +266,19 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         const index = customFields.findIndex(field => field.id === id)
         if(index !== -1) {
             const updateFields = [...customFields]
-            console.log("label: ", label)
+            // console.log("label: ", label)
             updateFields[index].label = label
-            console.log("updateFields: ", updateFields)
+            // console.log("updateFields: ", updateFields)
             setCustomFields(updateFields)
-            console.log("customFields: ", customFields) 
+            const updateFieldsNew = [...customFieldsNew]
+            updateFieldsNew[index].okButtonShow = false
+            setCustomFieldsNew(updateFieldsNew)
+            // console.log("customFields: ", customFields) 
         }
+    }
+
+    const deleteField = (id:number) => {
+        console.log("id: ", id)
     }
 
     useEffect(() => {
