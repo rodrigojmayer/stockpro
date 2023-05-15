@@ -290,26 +290,26 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         }
 
             
-            setCustomFields(updateFields)
-            updateFieldsNew[index].okButtonShow = false
-            setCustomFieldsNew(updateFieldsNew)
-            // console.log("customFields: ", customFields) 
-        // }
+        setCustomFields(updateFields)
+        updateFieldsNew[index].okButtonShow = false
+        setCustomFieldsNew(updateFieldsNew)
     }
 
     const deleteField = (id:number) => {
-        // console.log("id: ", id)
+        console.log("customFieldsNew: ", customFieldsNew)
         const updateFields = [...customFields]
         const updateFieldsNew = [...customFieldsNew]
         let index = customFields.findIndex(field => field.id === id)
         if (index !== -1) {
             updateFields[index].deleted = true
             setCustomFields(updateFields)
+            updateFieldsNew[index].deleted = true
             // console.log("customFields: ", customFields) 
         } else {
             index = customFieldsNew.findIndex(field => field.id === id)
+            updateFieldsNew.splice(index, 1)
+
         }
-        updateFieldsNew[index].deleted = true
         setCustomFieldsNew(updateFieldsNew)
     }
     const addInputCustomField = () => {
@@ -334,6 +334,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
 
     useEffect(() => {
 
+        console.log("customFieldsNewEffect: ", customFieldsNew)
         // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
         // console.log("customFieldsNew: ", customFieldsNew)
     }, [orderedFields, unsetFields, customFields, customFieldsNew])
