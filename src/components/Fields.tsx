@@ -299,16 +299,18 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
 
     const deleteField = (id:number) => {
         // console.log("id: ", id)
-        const index = customFields.findIndex(field => field.id === id)
-        if(index !== -1) {
-            const updateFields = [...customFields]
+        const updateFields = [...customFields]
+        const updateFieldsNew = [...customFieldsNew]
+        let index = customFields.findIndex(field => field.id === id)
+        if (index !== -1) {
             updateFields[index].deleted = true
             setCustomFields(updateFields)
-            const updateFieldsNew = [...customFieldsNew]
-            updateFieldsNew[index].deleted = true
-            setCustomFieldsNew(updateFieldsNew)
             // console.log("customFields: ", customFields) 
+        } else {
+            index = customFieldsNew.findIndex(field => field.id === id)
         }
+        updateFieldsNew[index].deleted = true
+        setCustomFieldsNew(updateFieldsNew)
     }
     const addInputCustomField = () => {
         console.log("holis clickis", customFieldsNew.length)
