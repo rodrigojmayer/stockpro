@@ -15,10 +15,10 @@ import { Box,
 // import Paper from '@mui/material/Paper/Paper';
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
-// import { OkButton,
-//          CancelButton, 
-//          PlusButton,
-//         } from './Buttons';
+import { OkButton,
+         CancelButton, 
+        //  PlusButton,
+        } from './Buttons';
 // import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 // import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 // import EditIcon from '@mui/icons-material/Edit';
@@ -114,12 +114,12 @@ const useStyles = makeStyles()({
     //         height: "37px",
     //     },
     // },
-    // finishButtons: {
-    //     display: "flex",
-    //     justifyContent:  "center",
-    //     gap: 20,
-    //     margin: "20px",
-    // },
+    finishButtons: {
+        display: "flex",
+        justifyContent:  "center",
+        gap: 20,
+        margin: "20px",
+    },
     // show: {
     //     display: "block",
     // },
@@ -133,15 +133,16 @@ const style = {
     position: 'absolute',
     display: "flex",
     justifyContent: "center",
-    top: 74,
+    top: "40%",
     width: "100%",
     overflowX: "hidden",
 };
 const style2 = {
     top: 74,
-    maxWidth: "700px",
-    width: "calc(100% - 32px)",
-    height: "520px",
+    // maxWidth: "700px",
+    // width: "calc(100% - 32px)",
+    width: "220px",
+    // height: "520px",
     backgroundColor: "rgb(45,72, 91, 1)",
     borderRadius: "10px",
     margin: "auto",
@@ -183,7 +184,7 @@ const style2 = {
 // }
 type SaveChangesProps = {
     openSaveChanges: boolean;
-    closeSaveChanges: (newData: boolean) => void;
+    closeSaveChanges: (newData?: boolean) => void;
 }
 
 // export default function Fields({ open, handleClose, columnsDefault, columnsCustom, idColumnsTableOrder }: ChildProps) {
@@ -339,6 +340,12 @@ export default function SaveChanges( props: SaveChangesProps) {
 
     //     setCustomFieldsNew(updateFieldsNew)
     // }
+    // const handleDontSaveChanges = (() => {
+    //     closeSaveChanges(false)
+    // })
+    // const handleSaveChanges = (() => {
+    //     closeSaveChanges(true)
+    // })
 
     useEffect(() => {
 
@@ -352,12 +359,12 @@ export default function SaveChanges( props: SaveChangesProps) {
         // openSaveChanges={openSaveChanges}
         // closeSaveChanges={closeSaveChanges}
         open={openSaveChanges} 
-        onClose={closeSaveChanges}> 
+        onClose={() => closeSaveChanges()}> 
             <Box sx={style}>
                 <Box sx={style2}>
                     
                     
-                    <Typography align="center" variant="h5">
+                    <Typography align="center" variant="h6">
                         Save changes?
                     </Typography>
                     
@@ -523,13 +530,15 @@ export default function SaveChanges( props: SaveChangesProps) {
                                 clicked={addInputCustomField}
                             />
                         </Box>
-                    </Box>
+                        </Box>*/}
                     <Box className={classes.finishButtons}>
-                        <CancelButton/>
-                        <OkButton
-                        clicked={() => console.log("qsy")}
+                        <CancelButton
+                        clicked={() => closeSaveChanges(false)}
                         />
-                    </Box> */}
+                        <OkButton
+                        clicked={() => closeSaveChanges(true)}
+                        />
+                    </Box> 
                 </Box>
             </Box>
         </Modal>

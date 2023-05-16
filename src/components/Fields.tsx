@@ -1,6 +1,7 @@
-import React from 'react'
+// import React from 'react'
 import { useState, useEffect } from 'react'
 import { makeStyles } from 'tss-react/mui';
+// import { makeStyles } from '@mui/styles';
 import { Box,
          Container,
          Grid,
@@ -139,7 +140,8 @@ const style2 = {
     top: 74,
     maxWidth: "700px",
     width: "calc(100% - 32px)",
-    height: "520px",
+    maxHeight: "520px",
+    // height: "520px",
     backgroundColor: "rgb(45,72, 91, 1)",
     borderRadius: "10px",
     margin: "auto",
@@ -335,12 +337,15 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
-    const handleCloseSaveChanges = () => setOpenSaveChanges(false);
+    const handleCloseSaveChanges = (ans?:boolean) => {
+        console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+        setOpenSaveChanges(false);
+    }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     useEffect(() => {
 
-        console.log("customFieldsNewEffect: ", customFieldsNew)
+        // console.log("customFieldsNewEffect: ", customFieldsNew)
         // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
         // console.log("customFieldsNew: ", customFieldsNew)
     }, [orderedFields, unsetFields, customFields, customFieldsNew])
@@ -509,7 +514,9 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                         </Box>
                     </Box>
                     <Box className={classes.finishButtons}>
-                        <CancelButton/>
+                        <CancelButton
+                        clicked={() => close()}
+                        />
                         <OkButton
                         clicked={() => handleOpenSaveChanges()}
                         />

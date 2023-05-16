@@ -103,14 +103,14 @@ const useStyles = makeStyles()({
 })
 
 
-interface OkButtonProps {
+interface ButtonProps {
   sizeIco?: string
   roundedIco?: boolean
   cusField?: {id: number, value: string}
   clicked: (id?: number, value?: string) => void
 }
 
-export function OkButton({ sizeIco, roundedIco, cusField, clicked }: OkButtonProps ) {
+export function OkButton({ sizeIco, roundedIco, cusField, clicked }: ButtonProps ) {
 
   const { classes } = useStyles()
   const colorOk = theme.palette.success.main
@@ -164,7 +164,7 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked }: OkButtonPro
   )
 }
 
-export function CancelButton({ sizeIco, roundedIco }: { sizeIco?: string, roundedIco?: boolean }) {
+export function CancelButton({ sizeIco, roundedIco, clicked }: ButtonProps) {
 
   const { classes } = useStyles()
   const colorCancel = theme.palette.warning.main
@@ -177,6 +177,10 @@ export function CancelButton({ sizeIco, roundedIco }: { sizeIco?: string, rounde
     noPadding=0
     borRad="50px !important"
   } 
+  
+  const handleClick = (() => {
+      clicked()
+  })
   // console.log("sizeIco: ", sizeIco)
   // console.log("roundedIco: ", roundedIco)
   // console.log("fontIco: ", fontIco)
@@ -196,6 +200,7 @@ export function CancelButton({ sizeIco, roundedIco }: { sizeIco?: string, rounde
           height: sizeIco,
           borderRadius: borRad,
         }}
+        onClick={handleClick}
       >
         
         <CloseRoundedIcon 
