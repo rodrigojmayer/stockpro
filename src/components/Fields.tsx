@@ -21,6 +21,7 @@ import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
 import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
+import SaveChanges from './SaveChanges';
 
 
 const useStyles = makeStyles()({
@@ -206,7 +207,8 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState(columnsHiddenFields)  
     const [customFields, setCustomFields] = useState(columnsCustom)  
-    const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>(columnsCustomNew)  
+    const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>(columnsCustomNew)
+    
     // const [okButtonShow, setOkButtonShow] = useState(okButton)  
 
                                  
@@ -332,6 +334,10 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         setCustomFieldsNew(updateFieldsNew)
     }
 
+    const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const handleCloseSaveChanges = () => setOpenSaveChanges(false);
+    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
+
     useEffect(() => {
 
         console.log("customFieldsNewEffect: ", customFieldsNew)
@@ -344,6 +350,13 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         onClose={close}> 
             <Box sx={style}>
                 <Box sx={style2}>
+
+                <SaveChanges
+                    openSaveChanges={openSaveChanges}
+                    closeSaveChanges={handleCloseSaveChanges} 
+
+                />
+
                     <Typography align="center" variant="h5">
                         Fields
                     </Typography>
@@ -481,7 +494,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                                 sizeIco={"34px"}
                                                 roundedIco={true}
                                                 cusField = {{id: cusField.id, value: cusField.label}}
-                                                clicked={( ) => saveCustomField(cusField.id, cusField.label)}
+                                                clicked={() => saveCustomField(cusField.id, cusField.label)}
                                                 />
                                             </div>
                                         </Box>
@@ -498,7 +511,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                     <Box className={classes.finishButtons}>
                         <CancelButton/>
                         <OkButton
-                        clicked={() => console.log("qsy")}
+                        clicked={() => handleOpenSaveChanges()}
                         />
                     </Box>
                 </Box>

@@ -107,7 +107,7 @@ interface OkButtonProps {
   sizeIco?: string
   roundedIco?: boolean
   cusField?: {id: number, value: string}
-  clicked: (id: number, value: string) => void
+  clicked: (id?: number, value?: string) => void
 }
 
 export function OkButton({ sizeIco, roundedIco, cusField, clicked }: OkButtonProps ) {
@@ -131,6 +131,8 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked }: OkButtonPro
     // console.log("cusField.id: ", cusField.id)
     if(cusField)
       clicked(cusField.id, cusField.value)
+    else
+      clicked()
   })
 
   return (  
