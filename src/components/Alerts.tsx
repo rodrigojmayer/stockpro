@@ -11,8 +11,12 @@ import { Box,
          InputLabel,
          MenuItem,
          Select,
-         FormControl
+         FormControl,
+         Stack,
+         Chip,
         } from '@mui/material';
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckIcon from "@mui/icons-material/Check";
 import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
@@ -173,16 +177,41 @@ export default function Alerts( { open, handleClose }: ChildProps) {
 
 
                     <FormControl sx={{ m: 1, width: 500 }}>
-                        <InputLabel>Multiple Select</InputLabel>
+                        <InputLabel>Users</InputLabel>
                         <Select
                             multiple
                             value={selectedNames}
                             onChange={(e) => setSelectedNames([...e.target.value])}
-                            input={<OutlinedInput label="Multiple Select" />}
+                            input={<OutlinedInput label="Users" />}
+                            renderValue={(selected) => (
+                                <Stack gap={1} direction="row" flexWrap="wrap">
+                                    {selected.map((value) => (
+                                        <Chip 
+                                            key={value} 
+                                            label={value} 
+                                            onDelete={() =>
+                                                setSelectedNames(
+                                                    selectedNames.filter((item) => item !== value)
+                                                )
+                                            }
+                                            deleteIcon={
+                                                <CancelIcon
+                                                    onMouseDown={(event) => event.stopPropagation()}
+                                                />   
+                                            }
+                                        />
+                                    ))}
+                                </Stack>
+                            )}
                             >
                                 {names.map((name) => (
-                                    <MenuItem key={name} value={name}>
+                                    <MenuItem 
+                                        key={name} 
+                                        value={name}
+                                        sx={{ justifyContent: "space-between" }}
+                                    >
                                         {name}
+                                        {selectedNames.includes(name) ? <CheckIcon color="info" /> : null}
                                     </MenuItem>
                                 ))}
                             </Select>
