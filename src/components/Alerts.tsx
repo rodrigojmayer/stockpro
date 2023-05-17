@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { Box,
          Container,
@@ -8,6 +7,11 @@ import { Box,
          Modal, 
          TextField,
          Typography,
+         OutlinedInput,
+         InputLabel,
+         MenuItem,
+         Select,
+         FormControl
         } from '@mui/material';
 import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
@@ -22,12 +26,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 
 
@@ -37,6 +36,53 @@ const useStyles = makeStyles()({
         justifyContent:  "center",
         gap: 20,
         margin: "20px",
+    },
+    multiSelectForm: {
+        display: "flex",
+        justifyContent:  "center",
+        backgroundColor: "white",
+        // border: 0,
+        borderRadius: "10px",
+        borderColor: "transparent",
+        // borderRadius: "10px 10px 0 0",
+        "& .MuiOutlinedInput-root": {
+            border: "0px solid",
+            "& fieldset": {
+                border: "0px solid",
+            },
+            '&.Mui-focused': {
+                borderColor: "transparent",
+                // borderRadius: "10px 10px 0 0",
+                // backgroundColor: "white",
+                // borderRadius: "100px",
+                // border: "none !important",
+                // strokeWidth: 10 ,
+                },
+            "&.Mui-focused fieldset": {
+                borderColor: "transparent",
+                borderRadius: "10px 10px 0 0",
+                backgroundColor: "white",
+                // color: "red",
+                // borderRadius: "100px",
+                // border: "none",
+                // borderColor: "rgba(0, 0, 0, 0.23)"             // focus
+            }
+        }
+
+    },
+    multiSelectInput: {
+        '&.Mui-focused': {
+            // borderColor: "transparent",
+            color: "red",
+            // borderRadius: "10px 10px 0 0",
+            // backgroundColor: "white",
+            // borderRadius: "100px",
+            // border: "none !important",
+            // strokeWidth: 10 ,
+            },
+        // justifyContent:  "center",
+        // border: 0,
+        // borderRadius: "10px",
     },
 })
 const style = {
@@ -71,29 +117,6 @@ interface ChildProps {
     handleClose: (newData: boolean) => void
 }
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
 
 export default function Alerts( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -110,16 +133,16 @@ export default function Alerts( { open, handleClose }: ChildProps) {
 
 
 
-    const [personName, setPersonName] = React.useState<string[]>([]);
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-        const {
-        target: { value },
-        } = event;
-        setPersonName(
-        // On autofill we get a stringified value.
-        typeof value === 'string' ? value.split(',') : value,
-        );
-    };
+    // const [personName, setPersonName] = React.useState<string[]>([]);
+    // const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    //     const {
+    //     target: { value },
+    //     } = event;
+    //     setPersonName(
+    //     // On autofill we get a stringified value.
+    //     typeof value === 'string' ? value.split(',') : value,
+    //     );
+    // };
 
     
     return (
@@ -142,27 +165,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                         Alerts
                     </Typography>
 
-                    
-                   <FormControl sx={{ m: 1, width: 300 }}>
-                        <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
-                        <Select
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        multiple
-                        value={personName}
-                        onChange={handleChange}
-                        input={<OutlinedInput label="Tag" />}
-                        renderValue={(selected) => selected.join(', ')}
-                        MenuProps={MenuProps}
-                        >
-                        {names.map((name) => (
-                            <MenuItem key={name} value={name}>
-                            <Checkbox checked={personName.indexOf(name) > -1} />
-                            <ListItemText primary={name} />
-                            </MenuItem>
-                        ))}
-                        </Select>
-                    </FormControl>
+
 
 
                     <Box className={classes.finishButtons}>
