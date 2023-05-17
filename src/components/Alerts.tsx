@@ -118,6 +118,19 @@ interface ChildProps {
 }
 
 
+const names = [
+  "Humaira Sims",
+  "Santiago Solis",
+  "Dawid Floyd",
+  "Mateo Barlow",
+  "Samia Navarro",
+  "Kaden Fields",
+  "Genevieve Watkins",
+  "Mariah Hickman",
+  "Rocco Richardson",
+  "Harris Glenn"
+]
+
 export default function Alerts( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStyles();
@@ -133,16 +146,9 @@ export default function Alerts( { open, handleClose }: ChildProps) {
 
 
 
-    // const [personName, setPersonName] = React.useState<string[]>([]);
-    // const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    //     const {
-    //     target: { value },
-    //     } = event;
-    //     setPersonName(
-    //     // On autofill we get a stringified value.
-    //     typeof value === 'string' ? value.split(',') : value,
-    //     );
-    // };
+    const [selectedNames, setSelectedNames] = useState<string[]>([]);
+    // const [selectedNames, setSelectedNames] = useState([]);
+    
 
     
     return (
@@ -166,6 +172,21 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                     </Typography>
 
 
+                    <FormControl sx={{ m: 1, width: 500 }}>
+                        <InputLabel>Multiple Select</InputLabel>
+                        <Select
+                            multiple
+                            value={selectedNames}
+                            onChange={(e) => setSelectedNames([...e.target.value])}
+                            input={<OutlinedInput label="Multiple Select" />}
+                            >
+                                {names.map((name) => (
+                                    <MenuItem key={name} value={name}>
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                    </FormControl>
 
 
                     <Box className={classes.finishButtons}>
