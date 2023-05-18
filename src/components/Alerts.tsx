@@ -42,97 +42,40 @@ const useStyles = makeStyles()({
         margin: "20px",
     },
 
-
-
     formControlUsers: {
         width: "300px",
-        // height: 32,
         backgroundColor: "white",
         borderRadius: "10px",
         "& .MuiOutlinedInput-root": {
-            // border: "0px solid",
             "& fieldset": {
-                // border: "0px solid",
             },
             '&.Mui-focused': {
-                // borderColor: "transparent",
-                // borderRadius: "10px 10px 0 0",
-                // backgroundColor: "white",
-                // borderRadius: "100px",
-                // border: "none !important",
-                // strokeWidth: 10 ,
                 },
             "&.Mui-focused fieldset": {
-                // borderColor: "transparent",
-                // borderRadius: "10px 10px 0 0",
-                // backgroundColor: "white",
-                // color: "red",
-                // borderRadius: "100px",
-                // border: "none",
-                // borderColor: "rgba(0, 0, 0, 0.23)"             // focus
             }
         }
     },
     selectUsers: {
-
-        // height: "auto",
-        // maxHeight: "250px !important",
-        // overflowY: "auto",
-        // maxMenuHeight: "100px !important",
-        // height: "300px",
-        // backgroundColor: "white",
-        // borderRadius: "10px",
     },
     inputLabelUsers: {
-        // height: "300px !important",
-        // maxHeight: "200px",// Adjust the maxHeight to limit the number of visible options
-        // overflowY: "auto",
-
-        // height: "300px",
-        // backgroundColor: "red",
-        // borderRadius: "10px",
     },
     stackUsers: {
-        // height: "300px !important",// Adjust the maxHeight to limit the number of visible options
-        // overflowY: "auto",
-        // backgroundColor: "red",
-        // borderRadius: "10px",
     },
     chipUsers: {
-        
-    // maxHeight: "200px",
-        // height: "300px",// Adjust the maxHeight to limit the number of visible options
-    // overflowY: "auto",
-
-        // backgroundColor: "red !important",
-        // borderRadius: "10px",
     },
     cancelIconUsers: {
         '& > *': {
             color: 'rgb(255, 47, 47, .9)',
-
         }
     },
     menuItemUsers: {
-         
-        // height: "300px",
-
-        // maxHeight: "200px",// Adjust the maxHeight to limit the number of visible options
-        // overflowY: "auto",
-        // backgroundColor: "red !important",
-        // borderRadius: "10px",
         "&.Mui-selected": {
-        //   backgroundColor: "rgba(40, 40, 40, 1)", // Optional: Change the selected option background color
         },
     },
-
-
-
     customBoxColumn: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-
     },
     customBoxRow: {
         display: "flex",
@@ -140,6 +83,11 @@ const useStyles = makeStyles()({
         alignItems: "center",
         gap: 6,
     },
+
+
+
+
+
 })
 const style = {
     position: 'absolute',
@@ -284,7 +232,67 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                         </FormControl>
 
 
-                    </Box> 
+                        <Box className={classes.customBoxRow}>
+                            <Typography variant='h6'  >
+                                Emails
+                            </Typography>
+                            <EditIcon 
+                            // className={classes.editIcon}
+                            />
+                        </Box>
+                            {/* {customFieldsNew.map((cusField: ColumnDataCustom) => { */}
+                                {/* if (!cusField.deleted) { */}
+                                    {/* return (
+                                        <Box className={classes.customBoxRow}
+                                        key={cusField.id}
+                                        >
+                                            <TextField
+                                                id={String(cusField.id)}
+                                                // id={column.dataKey.toString()}
+                                                // id="filled-multiline-flexible"
+                                                value={cusField.label}
+                                                // onChange={handleFilterChange}
+                                                onChange={ handleEditCustomFieldNew }
+                                                maxRows={1}
+                                                size="small"
+                                                className={classes.newCustomField}
+                                                InputProps={{
+                                                    style: {
+                                                    height:"34px",
+                                                    borderRadius: 10,
+                                                    },
+                                                }}
+                                            />
+                                            <IconButton
+                                            className={classes.ionTrash}
+                                            onClick={() => deleteField(cusField.id)}
+                                            // id="plusButton"
+                                            // value={column.id}
+                                            >
+                                                <img 
+                                                src={IonTrash} 
+                                                alt="Trash"
+                                                />
+                                            </IconButton>
+                                            <div className={cusField.okButtonShow ? classes.show : classes.hide}>
+                                                <OkButton
+                                                sizeIco={"34px"}
+                                                roundedIco={true}
+                                                cusField = {{id: cusField.id, value: cusField.label}}
+                                                clicked={() => saveCustomField(cusField.id, cusField.label)}
+                                                />
+                                            </div> */}
+                                        {/* </Box>
+                                    )
+                                }
+                            })} */}
+                        <Box className={classes.customBoxRow}>
+                            <PlusButton
+                                sizeIco={"45px !important"}
+                                // clicked={addInputCustomField}
+                            />
+                        </Box>
+                    </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}
