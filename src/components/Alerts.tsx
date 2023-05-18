@@ -85,6 +85,17 @@ const useStyles = makeStyles()({
     },
 
 
+    ionTrash:{
+        color: "rgb(255, 47, 47, 1)",
+        padding: "0",
+        marginBottom: "4px",
+        width: "37px", 
+        height: "37px",
+        '& img': {
+            width: "37px", 
+            height: "37px",
+        },
+    },
 
 
 
@@ -134,6 +145,32 @@ const names = [
     "Rocco Richardson",
   "Harris Glenn",
 ]
+interface usersAlertData {
+    id: number;
+    name: string;
+    email: string;
+    enabled: boolean;
+    deleted: boolean;
+  }
+  interface emailsAlertData {
+      id: number;
+      email: string;
+    }
+
+
+const usersAlert: usersAlertData[] = [
+    { id: 1, name: 'Humaira Sims', email: 'hsims@mail.com', enabled: true , deleted: false},
+    { id: 2, name: 'Santiago Solis', email: 'ssolis@mail.com', enabled: true, deleted: false  },
+    { id: 3, name: 'Dawid Floyd', email: 'dfloyd@mail.com', enabled: true  , deleted: false},
+    { id: 4, name: 'Mateo Barlow', email: 'mbarlow@mail.com', enabled: true, deleted: false  },
+    { id: 5, name: 'Samia Navarro', email: 'snavarro@mail.com', enabled: true, deleted: false  },
+];    
+const emailsAlert: emailsAlertData[] = [
+    { id: 1, email: 'product' },
+    { id: 2, email: 'amount'  },
+    { id: 3, email: 'unit'},
+];
+
 
 export default function Alerts( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -153,7 +190,51 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const [selectedNames, setSelectedNames] = useState<string[]>([]);
     // const [selectedNames, setSelectedNames] = useState([]);
     
+    const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
+    const [emailsAlertsNew, setEmailsAlertsNew] = useState<emailsAlertData[]>(emailsAlert)
 
+    const deleteField = (id:number) => {
+        console.log("customFieldsNew: ")
+        // const updateFields = [...customFields]
+        // const updateFieldsNew = [...customFieldsNew]
+        // let index = customFields.findIndex(field => field.id === id)
+        // if (index !== -1) {
+        //     updateFields[index].deleted = true
+        //     // setCustomFields(updateFields)
+        //     updateFieldsNew[index].deleted = true
+        //     // console.log("customFields: ", customFields) 
+        // } else {
+        //     index = customFieldsNew.findIndex(field => field.id === id)
+        //     updateFieldsNew.splice(index, 1)
+
+        // }
+        // // setCustomFieldsNew(updateFieldsNew)
+    }
+    
+    const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // console.log("event.currentTarget.id: ", event.currentTarget.id)
+        // console.log("event.currentTarget.value: ", event.currentTarget.value)
+        console.log("isNaN('w'): ", isNaN(NaN))
+        // setCustomFields({...customFields, event.currentTarget.value})
+            // const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
+            // if(index !== -1) {
+            //     const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
+            //     updateFieldsNew[index].label = event.currentTarget.value
+            //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+            //     // console.log("customFields[index].label: ", customFields[index].label)
+            //     if(customFields[index]){
+            //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
+            //             updateFieldsNew[index].okButtonShow = false
+            //         else
+            //             updateFieldsNew[index].okButtonShow = true
+            //     }else if(updateFieldsNew[index].label !='' ){
+            //         updateFieldsNew[index].okButtonShow = true
+            //     }else if (updateFieldsNew[index].label ==='' ){
+            //         updateFieldsNew[index].okButtonShow = false
+            //     }
+            //     setCustomFieldsNew(updateFieldsNew)
+            // }
+    }
     
     return (
         <Modal
@@ -240,22 +321,22 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             // className={classes.editIcon}
                             />
                         </Box>
-                            {/* {customFieldsNew.map((cusField: ColumnDataCustom) => { */}
-                                {/* if (!cusField.deleted) { */}
-                                    {/* return (
+                            {emailsAlertsNew.map((emailNew: emailsAlertData) => {
+                                //  if (!emailNew.deleted) {
+                                     return (
                                         <Box className={classes.customBoxRow}
-                                        key={cusField.id}
+                                        key={emailNew.id}
                                         >
                                             <TextField
-                                                id={String(cusField.id)}
+                                                id={String(emailNew.id)}
                                                 // id={column.dataKey.toString()}
                                                 // id="filled-multiline-flexible"
-                                                value={cusField.label}
+                                                value={emailNew.email}
                                                 // onChange={handleFilterChange}
                                                 onChange={ handleEditCustomFieldNew }
                                                 maxRows={1}
                                                 size="small"
-                                                className={classes.newCustomField}
+                                                // className={classes.newCustomField}
                                                 InputProps={{
                                                     style: {
                                                     height:"34px",
@@ -265,7 +346,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                             />
                                             <IconButton
                                             className={classes.ionTrash}
-                                            onClick={() => deleteField(cusField.id)}
+                                            onClick={() => deleteField(emailNew.id)}
                                             // id="plusButton"
                                             // value={column.id}
                                             >
@@ -274,18 +355,10 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                                 alt="Trash"
                                                 />
                                             </IconButton>
-                                            <div className={cusField.okButtonShow ? classes.show : classes.hide}>
-                                                <OkButton
-                                                sizeIco={"34px"}
-                                                roundedIco={true}
-                                                cusField = {{id: cusField.id, value: cusField.label}}
-                                                clicked={() => saveCustomField(cusField.id, cusField.label)}
-                                                />
-                                            </div> */}
-                                        {/* </Box>
+                                         </Box>
                                     )
-                                }
-                            })} */}
+                                // }
+                            })} 
                         <Box className={classes.customBoxRow}>
                             <PlusButton
                                 sizeIco={"45px !important"}
