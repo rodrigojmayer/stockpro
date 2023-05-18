@@ -41,21 +41,21 @@ const useStyles = makeStyles()({
         gap: 20,
         margin: "20px",
     },
-    multiSelectForm: {
-        display: "flex",
-        justifyContent:  "center",
+
+
+
+    formControlUsers: {
+        width: "300px",
+        // height: 32,
         backgroundColor: "white",
-        // border: 0,
         borderRadius: "10px",
-        borderColor: "transparent",
-        // borderRadius: "10px 10px 0 0",
         "& .MuiOutlinedInput-root": {
-            border: "0px solid",
+            // border: "0px solid",
             "& fieldset": {
-                border: "0px solid",
+                // border: "0px solid",
             },
             '&.Mui-focused': {
-                borderColor: "transparent",
+                // borderColor: "transparent",
                 // borderRadius: "10px 10px 0 0",
                 // backgroundColor: "white",
                 // borderRadius: "100px",
@@ -63,30 +63,82 @@ const useStyles = makeStyles()({
                 // strokeWidth: 10 ,
                 },
             "&.Mui-focused fieldset": {
-                borderColor: "transparent",
-                borderRadius: "10px 10px 0 0",
-                backgroundColor: "white",
+                // borderColor: "transparent",
+                // borderRadius: "10px 10px 0 0",
+                // backgroundColor: "white",
                 // color: "red",
                 // borderRadius: "100px",
                 // border: "none",
                 // borderColor: "rgba(0, 0, 0, 0.23)"             // focus
             }
         }
+    },
+    selectUsers: {
+
+        // height: "auto",
+        // maxHeight: "250px !important",
+        // overflowY: "auto",
+        // maxMenuHeight: "100px !important",
+        // height: "300px",
+        // backgroundColor: "white",
+        // borderRadius: "10px",
+    },
+    inputLabelUsers: {
+        // height: "300px !important",
+        // maxHeight: "200px",// Adjust the maxHeight to limit the number of visible options
+        // overflowY: "auto",
+
+        // height: "300px",
+        // backgroundColor: "red",
+        // borderRadius: "10px",
+    },
+    stackUsers: {
+        // height: "300px !important",// Adjust the maxHeight to limit the number of visible options
+        // overflowY: "auto",
+        // backgroundColor: "red",
+        // borderRadius: "10px",
+    },
+    chipUsers: {
+        
+    // maxHeight: "200px",
+        // height: "300px",// Adjust the maxHeight to limit the number of visible options
+    // overflowY: "auto",
+
+        // backgroundColor: "red !important",
+        // borderRadius: "10px",
+    },
+    cancelIconUsers: {
+        '& > *': {
+            color: 'rgb(255, 47, 47, .9)',
+
+        }
+    },
+    menuItemUsers: {
+         
+        // height: "300px",
+
+        // maxHeight: "200px",// Adjust the maxHeight to limit the number of visible options
+        // overflowY: "auto",
+        // backgroundColor: "red !important",
+        // borderRadius: "10px",
+        "&.Mui-selected": {
+        //   backgroundColor: "rgba(40, 40, 40, 1)", // Optional: Change the selected option background color
+        },
+    },
+
+
+
+    customBoxColumn: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
 
     },
-    multiSelectInput: {
-        '&.Mui-focused': {
-            // borderColor: "transparent",
-            color: "red",
-            // borderRadius: "10px 10px 0 0",
-            // backgroundColor: "white",
-            // borderRadius: "100px",
-            // border: "none !important",
-            // strokeWidth: 10 ,
-            },
-        // justifyContent:  "center",
-        // border: 0,
-        // borderRadius: "10px",
+    customBoxRow: {
+        display: "flex",
+        justifyContent:  "center",
+        alignItems: "center",
+        gap: 6,
     },
 })
 const style = {
@@ -123,16 +175,16 @@ interface ChildProps {
 
 
 const names = [
-  "Humaira Sims",
-  "Santiago Solis",
-  "Dawid Floyd",
-  "Mateo Barlow",
-  "Samia Navarro",
-  "Kaden Fields",
-  "Genevieve Watkins",
-  "Mariah Hickman",
-  "Rocco Richardson",
-  "Harris Glenn"
+    "Humaira Sims",
+    "Santiago Solis",
+    "Dawid Floyd",
+    "Mateo Barlow",
+    "Samia Navarro",
+    "Kaden Fields",
+    "Genevieve Watkins",
+    "Mariah Hickman",
+    "Rocco Richardson",
+  "Harris Glenn",
 ]
 
 export default function Alerts( { open, handleClose }: ChildProps) {
@@ -176,48 +228,63 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                     </Typography>
 
 
-                    <FormControl sx={{ m: 1, width: 500 }}>
-                        <InputLabel>Users</InputLabel>
-                        <Select
-                            multiple
-                            value={selectedNames}
-                            onChange={(e) => setSelectedNames([...e.target.value])}
-                            input={<OutlinedInput label="Users" />}
-                            renderValue={(selected) => (
-                                <Stack gap={1} direction="row" flexWrap="wrap">
-                                    {selected.map((value) => (
-                                        <Chip 
-                                            key={value} 
-                                            label={value} 
-                                            onDelete={() =>
-                                                setSelectedNames(
-                                                    selectedNames.filter((item) => item !== value)
-                                                )
-                                            }
-                                            deleteIcon={
-                                                <CancelIcon
-                                                    onMouseDown={(event) => event.stopPropagation()}
-                                                />   
-                                            }
-                                        />
-                                    ))}
-                                </Stack>
-                            )}
-                            >
-                                {names.map((name) => (
-                                    <MenuItem 
-                                        key={name} 
-                                        value={name}
-                                        sx={{ justifyContent: "space-between" }}
+                    <Box className={classes.customBoxColumn}>
+                        <FormControl 
+                        className={classes.formControlUsers}
+                                    size="small"
+                        >
+                            <InputLabel 
+                            className={classes.inputLabelUsers} >Users</InputLabel>
+                            <Select
+                            
+                            MenuProps={{ PaperProps: { sx: { maxHeight: "30%" ,
+                            borderRadius: "10px",} } }}
+                            className={classes.selectUsers}
+                                multiple
+                                value={selectedNames}
+                                onChange={(e) => setSelectedNames([...e.target.value])}
+                                input={<OutlinedInput label="Users" className={classes.formControlUsers} />}
+                                renderValue={(selected) => (
+                                    <Stack gap={1} direction="row" flexWrap="wrap"
+                                    className={classes.stackUsers}
                                     >
-                                        {name}
-                                        {selectedNames.includes(name) ? <CheckIcon color="info" /> : null}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                    </FormControl>
+                                        {selected.map((value) => (
+                                            <Chip 
+                                                className={classes.chipUsers}
+                                                key={value} 
+                                                label={value} 
+                                                onDelete={() =>
+                                                    setSelectedNames(
+                                                        selectedNames.filter((item) => item !== value)
+                                                    )
+                                                }
+                                                deleteIcon={
+                                                    <CancelIcon
+                                                    className={classes.cancelIconUsers}
+                                                        onMouseDown={(event) => event.stopPropagation()}
+                                                    />   
+                                                }
+                                            />
+                                        ))}
+                                    </Stack>
+                                )}
+                                >
+                                    {names.map((name) => (
+                                        <MenuItem 
+                                            className={classes.menuItemUsers}
+                                            key={name} 
+                                            value={name}
+                                            sx={{ justifyContent: "space-between" }}
+                                        >
+                                            {name}
+                                            {selectedNames.includes(name) ? <CheckIcon color="info" /> : null}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                        </FormControl>
 
 
+                    </Box> 
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}
