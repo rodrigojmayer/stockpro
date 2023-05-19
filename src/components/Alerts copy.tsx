@@ -191,8 +191,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         if(idUsersAlertSelected.includes(usr.id))
             return usr
     })
-    const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
+    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlert);
+    const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
     // const [selectedNames, setSelectedNames] = useState([]);
     
     const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
@@ -293,19 +293,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             borderRadius: "10px",} } }}
                             className={classes.selectUsers}
                                 multiple
-                                // value={selectedUsers}
-                                value={selectedUsers.map(user => user.name)}
-                                // onChange={(e) => {
-                                //     const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
-                                //     console.log("selectedUserIds: ",selectedUserIds[selectedUserIds.length-1] )
-  
-                                // }}
-                                onChange={(e) => {
-                                    const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
-                                    const selectedUsers = usersAlert.filter(user => selectedUserIds.includes(user.name));
-                                    setSelectedUsers(selectedUsers);
-                                  }}
-                                // onChange={(e) => setSelectedUsers([... e.target.value])}
+                                value={selectedUsers}
+                                onChange={(e) => setSelectedUsers([...e.target.value])}
                                 input={<OutlinedInput label="Users" className={classes.formControlUsers} />}
                                 renderValue={(selected) => (
                                     <Stack gap={1} direction="row" flexWrap="wrap"
@@ -318,7 +307,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                                 label={value} 
                                                 onDelete={() =>
                                                     setSelectedUsers(
-                                                        selectedUsers.filter((item) => item.name !== value)
+                                                        selectedUsers.filter((item) => item !== value)
                                                     )
                                                 }
                                                 deleteIcon={
@@ -340,7 +329,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                             sx={{ justifyContent: "space-between" }}
                                         >
                                             {user.name}
-                                            {selectedUsers.includes(user) ? <CheckIcon color="info" /> : null}
+                                            {selectedUsers.includes(user.id) ? <CheckIcon color="info" /> : null}
                                         </MenuItem>
                                     ))}
                                 </Select>
