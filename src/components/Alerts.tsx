@@ -83,8 +83,13 @@ const useStyles = makeStyles()({
         alignItems: "center",
         gap: 6,
     },
-
-
+    newEmailField: {        
+        backgroundColor: "white",
+        borderRadius: 10,
+        minWidth: "150px",
+        width: "100%",
+        maxWidth: "250px",
+    },
     ionTrash:{
         color: "rgb(255, 47, 47, 1)",
         padding: "0",
@@ -166,9 +171,9 @@ const usersAlert: usersAlertData[] = [
     { id: 5, name: 'Samia Navarro', email: 'snavarro@mail.com', enabled: true, deleted: false  },
 ];    
 const emailsAlert: emailsAlertData[] = [
-    { id: 1, email: 'product' },
-    { id: 2, email: 'amount'  },
-    { id: 3, email: 'unit'},
+    { id: 1, email: 'email1@test.com' },
+    { id: 2, email: 'email2@test.com'  },
+    { id: 3, email: 'email3@test.com'},
 ];
 
 
@@ -191,24 +196,26 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     // const [selectedNames, setSelectedNames] = useState([]);
     
     const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    const [emailsAlertsNew, setEmailsAlertsNew] = useState<emailsAlertData[]>(emailsAlert)
+    const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlert)
 
-    const deleteField = (id:number) => {
-        console.log("customFieldsNew: ")
-        // const updateFields = [...customFields]
+    const deleteEmailTemp = (id:number) => {
+        console.log("idEmailTemp: ", id)
+        const updateEmailsTemp = [...emailsAlertsTemp]
         // const updateFieldsNew = [...customFieldsNew]
-        // let index = customFields.findIndex(field => field.id === id)
+        let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
+        console.log("index: ", index)
+        console.log("updateEmailsTemp: ", updateEmailsTemp)
         // if (index !== -1) {
-        //     updateFields[index].deleted = true
+            // updateFields[index].deleted = true
         //     // setCustomFields(updateFields)
         //     updateFieldsNew[index].deleted = true
         //     // console.log("customFields: ", customFields) 
         // } else {
         //     index = customFieldsNew.findIndex(field => field.id === id)
-        //     updateFieldsNew.splice(index, 1)
+        updateEmailsTemp.splice(index, 1)
 
         // }
-        // // setCustomFieldsNew(updateFieldsNew)
+        setEmailsAlertsTemp(updateEmailsTemp)
     }
     
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -315,28 +322,28 @@ export default function Alerts( { open, handleClose }: ChildProps) {
 
                         <Box className={classes.customBoxRow}>
                             <Typography variant='h6'  >
-                                Emails
+                                External emails
                             </Typography>
-                            <EditIcon 
-                            // className={classes.editIcon}
-                            />
+                            {/* <EditIcon 
+                            className={classes.editIcon}
+                            /> */}
                         </Box>
-                            {emailsAlertsNew.map((emailNew: emailsAlertData) => {
+                            {emailsAlertsTemp.map((emailTemp: emailsAlertData) => {
                                 //  if (!emailNew.deleted) {
                                      return (
                                         <Box className={classes.customBoxRow}
-                                        key={emailNew.id}
+                                        key={emailTemp.id}
                                         >
                                             <TextField
-                                                id={String(emailNew.id)}
+                                                id={String(emailTemp.id)}
                                                 // id={column.dataKey.toString()}
                                                 // id="filled-multiline-flexible"
-                                                value={emailNew.email}
+                                                value={emailTemp.email}
                                                 // onChange={handleFilterChange}
                                                 onChange={ handleEditCustomFieldNew }
                                                 maxRows={1}
                                                 size="small"
-                                                // className={classes.newCustomField}
+                                                className={classes.newEmailField}
                                                 InputProps={{
                                                     style: {
                                                     height:"34px",
@@ -346,7 +353,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                             />
                                             <IconButton
                                             className={classes.ionTrash}
-                                            onClick={() => deleteField(emailNew.id)}
+                                            onClick={() => deleteEmailTemp(emailTemp.id)}
                                             // id="plusButton"
                                             // value={column.id}
                                             >

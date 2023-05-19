@@ -298,7 +298,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     }
 
     const deleteField = (id:number) => {
-        console.log("customFieldsNew: ", customFieldsNew)
+        // console.log("customFieldsNew: ", customFieldsNew)
         const updateFields = [...customFields]
         const updateFieldsNew = [...customFieldsNew]
         let index = customFields.findIndex(field => field.id === id)
