@@ -183,20 +183,13 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const close = () => {
         handleClose(false)
     }
-    const [openSaveChanges, setOpenSaveChanges] = useState(false);  
-    const handleCloseSaveChanges = (ans?:boolean) => {
-        console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
-        setOpenSaveChanges(false);
-    }
-    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
-
 
 
     const [selectedNames, setSelectedNames] = useState<string[]>([]);
     // const [selectedNames, setSelectedNames] = useState([]);
     
     const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlert)
+    const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
 
     const deleteEmailTemp = (id:number) => {
         console.log("idEmailTemp: ", id)
@@ -242,6 +235,22 @@ export default function Alerts( { open, handleClose }: ChildProps) {
             //     setCustomFieldsNew(updateFieldsNew)
             // }
     }
+
+    const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const handleCloseSaveChanges = (ans?:boolean) => {
+        console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+        if(ans){
+            setEmailsAlerts(emailsAlertsTemp)
+            close()
+        }
+        setOpenSaveChanges(false);
+    }
+    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
+
+    useEffect(() => {
+        console.log("useeffect")
+        setEmailsAlertsTemp(emailsAlerts)
+    }, [ open])
     
     return (
         <Modal
