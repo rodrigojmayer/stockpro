@@ -192,6 +192,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
             return usr
     })
     const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
+    const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
     // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
     // const [selectedNames, setSelectedNames] = useState([]);
     
@@ -247,7 +248,9 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const handleCloseSaveChanges = (ans?:boolean) => {
         console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
+            setSelectedUsers(selectedUsersTemp)
             setEmailsAlerts(emailsAlertsTemp)
+            
             close()
         }
         setOpenSaveChanges(false);
@@ -255,7 +258,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     useEffect(() => {
-        console.log("useeffect")
+        // console.log("useeffect")
+        setSelectedUsersTemp(selectedUsers)
         setEmailsAlertsTemp(emailsAlerts)
     }, [ open])
     
@@ -294,7 +298,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             className={classes.selectUsers}
                                 multiple
                                 // value={selectedUsers}
-                                value={selectedUsers.map(user => user.name)}
+                                value={selectedUsersTemp.map(user => user.name)}
                                 // onChange={(e) => {
                                 //     const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
                                 //     console.log("selectedUserIds: ",selectedUserIds[selectedUserIds.length-1] )
@@ -302,8 +306,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                 // }}
                                 onChange={(e) => {
                                     const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
-                                    const selectedUsers = usersAlert.filter(user => selectedUserIds.includes(user.name));
-                                    setSelectedUsers(selectedUsers);
+                                    const selectedUsersTemp = usersAlert.filter(user => selectedUserIds.includes(user.name));
+                                    setSelectedUsersTemp(selectedUsersTemp);
                                   }}
                                 // onChange={(e) => setSelectedUsers([... e.target.value])}
                                 input={<OutlinedInput label="Users" className={classes.formControlUsers} />}
@@ -317,8 +321,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                                 key={value} 
                                                 label={value} 
                                                 onDelete={() =>
-                                                    setSelectedUsers(
-                                                        selectedUsers.filter((item) => item.name !== value)
+                                                    setSelectedUsersTemp(
+                                                        selectedUsersTemp.filter((item) => item.name !== value)
                                                     )
                                                 }
                                                 deleteIcon={
@@ -340,7 +344,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                             sx={{ justifyContent: "space-between" }}
                                         >
                                             {user.name}
-                                            {selectedUsers.includes(user) ? <CheckIcon color="info" /> : null}
+                                            {selectedUsersTemp.includes(user) ? <CheckIcon color="info" /> : null}
                                         </MenuItem>
                                     ))}
                                 </Select>
