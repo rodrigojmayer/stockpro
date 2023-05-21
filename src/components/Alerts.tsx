@@ -200,12 +200,12 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
 
     const deleteEmailTemp = (id:number) => {
-        console.log("idEmailTemp: ", id)
+        // console.log("idEmailTemp: ", id)
         const updateEmailsTemp = [...emailsAlertsTemp]
         // const updateFieldsNew = [...customFieldsNew]
         let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
-        console.log("index: ", index)
-        console.log("updateEmailsTemp: ", updateEmailsTemp)
+        // console.log("index: ", index)
+        // console.log("updateEmailsTemp: ", updateEmailsTemp)
         // if (index !== -1) {
             // updateFields[index].deleted = true
         //     // setCustomFields(updateFields)
