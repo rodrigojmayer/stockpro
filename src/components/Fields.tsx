@@ -279,12 +279,23 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
             }
     }
     const saveCustomField = (id:number, label: string) => {
+        console.log("id: ", id)
+        console.log("label: ", label)
         const updateFields = [...customFieldsTemp]
         const updateFieldsNew = [...customFieldsNewTemp]
+        const updateUnsetFieldsTemp = [...unsetFieldsTemp]
         let index = customFieldsTemp.findIndex(field => field.id === id)
+        let indexUnset = unsetFieldsTemp.findIndex(field => field.id === id)
+        console.log("index: ", index)
+        console.log("updateFields: ", updateFields)
+        console.log("updateFields[index].label: ", updateFields[index].label)
         if(index !== -1){
             
             updateFields[index].label = label
+            if(indexUnset !== -1){
+                updateUnsetFieldsTemp[indexUnset].label = label
+                setUnsetFieldsTemp(updateUnsetFieldsTemp)
+            }
         }else{
             index = customFieldsNewTemp.findIndex(field => field.id === id)
             const fieldsToOmit = ['okButtonShow']
@@ -295,7 +306,9 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
             // console.log("updateFields: ", updateFields)
         }
 
+        console.log("updateFields: ", updateFields)
             
+        console.log("updateFields[index].label: ", updateFields[index].label)
         setCustomFieldsTemp(updateFields)
         updateFieldsNew[index].okButtonShow = false
         setCustomFieldsNewTemp(updateFieldsNew)
@@ -359,10 +372,11 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
         // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
         setOrderedFieldsTemp(orderedFields)
-        setUnsetFieldsTemp(unsetFields)
-        setCustomFieldsTemp(customFields)
-        setCustomFieldsNewTemp(customFieldsNew)
-    }, [open, customFields, customFieldsNew])
+        // setUnsetFieldsTemp(unsetFields)
+        // setCustomFieldsTemp(customFields)
+        // setCustomFieldsNewTemp(customFieldsNew)
+    // }, [open, customFields, customFieldsNew])
+    }, [open])
     return (
         <Modal
         open={open} 
