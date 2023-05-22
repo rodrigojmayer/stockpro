@@ -207,7 +207,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
     const [orderedFieldsTemp, setOrderedFieldsTemp] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState(columnsHiddenFields) 
-    const [unsetFieldsTemp, setUnsetFieldsTemp] = useState(columnsHiddenFields)  
+    const [unsetFieldsTemp, setUnsetFieldsTemp] = useState(unsetFields)  
     const [customFields, setCustomFields] = useState<ColumnDataCustom[]>(columnsCustomNew) 
     const [customFieldsTemp, setCustomFieldsTemp] = useState<ColumnDataCustom[]>(columnsCustomNew) 
     const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>(columnsCustomNew)
@@ -283,32 +283,44 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         console.log("label: ", label)
         const updateFields = [...customFieldsTemp]
         const updateFieldsNew = [...customFieldsNewTemp]
+        const updateOrderedFieldsTemp = [...orderedFieldsTemp]
         const updateUnsetFieldsTemp = [...unsetFieldsTemp]
         let index = customFieldsTemp.findIndex(field => field.id === id)
+        let indexOrdered = orderedFieldsTemp.findIndex(field => field.id === id)
         let indexUnset = unsetFieldsTemp.findIndex(field => field.id === id)
         console.log("index: ", index)
         console.log("updateFields: ", updateFields)
-        console.log("updateFields[index].label: ", updateFields[index].label)
         if(index !== -1){
             
+            console.log("updateFields[index].label: ", updateFields[index].label)
             updateFields[index].label = label
+            if(indexOrdered !== -1){
+                updateOrderedFieldsTemp[indexOrdered].label = label
+                setOrderedFieldsTemp(updateOrderedFieldsTemp)
+            }
             if(indexUnset !== -1){
                 updateUnsetFieldsTemp[indexUnset].label = label
                 setUnsetFieldsTemp(updateUnsetFieldsTemp)
             }
         }else{
             index = customFieldsNewTemp.findIndex(field => field.id === id)
+            console.log("customFieldsNewTemp: ", customFieldsNewTemp)
+            console.log("index2: ", index)
+            console.log("id: ", id)
             const fieldsToOmit = ['okButtonShow']
-            const newObj = Object.assign({}, customFieldsNew[index])
+            const newObj = Object.assign({}, customFieldsNewTemp[index])
+            console.log("newObj: ", newObj)
             fieldsToOmit.forEach(field => delete newObj[field as keyof ColumnDataCustom])
             updateFields.push(newObj)
-            setUnsetFieldsTemp([...unsetFieldsTemp, newObj])
+            updateUnsetFieldsTemp.push(newObj)
+            setUnsetFieldsTemp(updateUnsetFieldsTemp)
+            // setUnsetFieldsTemp([...unsetFieldsTemp, newObj])
             // console.log("updateFields: ", updateFields)
         }
 
         console.log("updateFields: ", updateFields)
             
-        console.log("updateFields[index].label: ", updateFields[index].label)
+        // console.log("customFieldsNewTemp[index].label: ", updateFields[index].label)
         setCustomFieldsTemp(updateFields)
         updateFieldsNew[index].okButtonShow = false
         setCustomFieldsNewTemp(updateFieldsNew)
@@ -347,6 +359,8 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         //     updateFieldsNew[index].okButtonShow = true
         // else
         //     updateFieldsNew[index].okButtonShow = false
+        
+        console.log("updateFieldsNew: ", updateFieldsNew)
 
         setCustomFieldsNewTemp(updateFieldsNew)
     }
@@ -372,9 +386,9 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
         // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
         setOrderedFieldsTemp(orderedFields)
-        // setUnsetFieldsTemp(unsetFields)
-        // setCustomFieldsTemp(customFields)
-        // setCustomFieldsNewTemp(customFieldsNew)
+        setUnsetFieldsTemp(unsetFields)
+        setCustomFieldsTemp(customFields)
+        setCustomFieldsNewTemp(customFieldsNew)
     // }, [open, customFields, customFieldsNew])
     }, [open])
     return (
