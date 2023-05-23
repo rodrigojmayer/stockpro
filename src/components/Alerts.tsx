@@ -222,9 +222,9 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     }
     
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("event.currentTarget.id: ", event.currentTarget.id)
-        console.log("event.currentTarget.value: ", event.currentTarget.value)
-        console.log("isNaN('w'): ", isNaN(NaN))
+        // console.log("event.currentTarget.id: ", event.currentTarget.id)
+        // console.log("event.currentTarget.value: ", event.currentTarget.value)
+        // console.log("isNaN('w'): ", isNaN(NaN))
         // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
             const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
             if(index !== -1) {
@@ -242,7 +242,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
             //     }else if (updateFieldsNew[index].label ==='' ){
             //         updateFieldsNew[index].okButtonShow = false
             //     }
-                console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
+                // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
         
                 setEmailsAlertsTemp(updateEmailsAlertsTemp)
             }
@@ -250,15 +250,36 @@ export default function Alerts( { open, handleClose }: ChildProps) {
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
-        console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             setSelectedUsers(selectedUsersTemp)
-            setEmailsAlerts(emailsAlertsTemp)
+            setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
         }
         setOpenSaveChanges(false);
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
+
+    
+    const addInputCustomField = () => {
+        // console.log("holis clickis", customFieldsNewTemp.length)
+        // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
+        const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
+        const nextId = lastObj.id + 1
+        const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
+        // updateFieldsNew[index].label = event.currentTarget.value
+        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
+        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
+        //     updateFieldsNew[index].okButtonShow = true
+        // else
+        //     updateFieldsNew[index].okButtonShow = false
+        
+        // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
+
+        setEmailsAlertsTemp(updateEmailsAlertsTemp)
+        // setAddButtonShow(false)
+    }
 
     useEffect(() => {
         // console.log("useeffect")
@@ -394,7 +415,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                         <Box className={classes.customBoxRow}>
                             <PlusButton
                                 sizeIco={"45px !important"}
-                                // clicked={addInputCustomField}
+                                clicked={addInputCustomField}
                             />
                         </Box>
                     </Box>
