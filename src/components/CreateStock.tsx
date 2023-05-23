@@ -386,6 +386,52 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                                 />
                             {/* </Box> */}
                             </Grid>
+                            <Grid item xs={4} >
+                                <Typography align='right'>Category</Typography>
+                            </Grid>
+                            <Grid item xs={8} >
+                                <TextField
+                                    // id={String(emailTemp.id)}
+                                    // type="email"
+                                    // id={column.dataKey.toString()}
+                                    // id="filled-multiline-flexible"
+                                    // value={emailTemp.email}
+                                    // onChange={handleFilterChange}
+                                    onChange={ handleEditCustomFieldNew }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.newEmailField}
+                                    InputProps={{
+                                        style: {
+                                        height:"34px",
+                                        borderRadius: 10,
+                                        },
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={4} >
+                                <Typography align='right'>Sub-Categ.</Typography>
+                            </Grid>
+                            <Grid item xs={8} >
+                                <TextField
+                                    // id={String(emailTemp.id)}
+                                    // type="email"
+                                    // id={column.dataKey.toString()}
+                                    // id="filled-multiline-flexible"
+                                    // value={emailTemp.email}
+                                    // onChange={handleFilterChange}
+                                    onChange={ handleEditCustomFieldNew }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.newEmailField}
+                                    InputProps={{
+                                        style: {
+                                        height:"34px",
+                                        borderRadius: 10,
+                                        },
+                                    }}
+                                />
+                            </Grid>
                         </Grid>
                     </Box>
                     <Box className={classes.finishButtons}>
