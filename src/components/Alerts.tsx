@@ -222,14 +222,14 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     }
     
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // console.log("event.currentTarget.id: ", event.currentTarget.id)
-        // console.log("event.currentTarget.value: ", event.currentTarget.value)
+        console.log("event.currentTarget.id: ", event.currentTarget.id)
+        console.log("event.currentTarget.value: ", event.currentTarget.value)
         console.log("isNaN('w'): ", isNaN(NaN))
-        // setCustomFields({...customFields, event.currentTarget.value})
-            // const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-            // if(index !== -1) {
-            //     const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
-            //     updateFieldsNew[index].label = event.currentTarget.value
+        // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
+            const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
+            if(index !== -1) {
+                const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
+                updateEmailsAlertsTemp[index].email = event.currentTarget.value
             //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
             //     // console.log("customFields[index].label: ", customFields[index].label)
             //     if(customFields[index]){
@@ -242,8 +242,10 @@ export default function Alerts( { open, handleClose }: ChildProps) {
             //     }else if (updateFieldsNew[index].label ==='' ){
             //         updateFieldsNew[index].okButtonShow = false
             //     }
-            //     setCustomFieldsNew(updateFieldsNew)
-            // }
+                console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
+        
+                setEmailsAlertsTemp(updateEmailsAlertsTemp)
+            }
     }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -252,7 +254,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         if(ans){
             setSelectedUsers(selectedUsersTemp)
             setEmailsAlerts(emailsAlertsTemp)
-            
             close()
         }
         setOpenSaveChanges(false);
@@ -272,20 +273,13 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         > 
             <Box sx={style}>
                 <Box sx={style2}>
-
-                    
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
-
                     />
-
-
                     <Typography align="center" variant="h5">
                         Alerts
                     </Typography>
-
-
                     <Box className={classes.customBoxColumn}>
                         <FormControl 
                         className={classes.formControlUsers}
@@ -304,7 +298,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                 // onChange={(e) => {
                                 //     const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
                                 //     console.log("selectedUserIds: ",selectedUserIds[selectedUserIds.length-1] )
-  
                                 // }}
                                 onChange={(e) => {
                                     const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
@@ -351,8 +344,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                     ))}
                                 </Select>
                         </FormControl>
-
-
                         <Box className={classes.customBoxRow}>
                             <Typography variant='h6'  >
                                 External emails
@@ -369,6 +360,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                         >
                                             <TextField
                                                 id={String(emailTemp.id)}
+                                                type="email"
                                                 // id={column.dataKey.toString()}
                                                 // id="filled-multiline-flexible"
                                                 value={emailTemp.email}
