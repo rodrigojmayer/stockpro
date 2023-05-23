@@ -44,7 +44,8 @@ const useStyles = makeStyles()({
 
     formControlUsers: {
         width: "300px",
-        backgroundColor: "white",
+        // backgroundColor: "white",
+        backgroundColor: "rgb(255,255, 255, .1)",
         borderRadius: "10px",
         "& .MuiOutlinedInput-root": {
             "& fieldset": {
@@ -62,6 +63,7 @@ const useStyles = makeStyles()({
     stackUsers: {
     },
     chipUsers: {
+        backgroundColor: "rgb(255,255, 255, .8)",
     },
     cancelIconUsers: {
         '& > *': {
@@ -73,22 +75,31 @@ const useStyles = makeStyles()({
         },
     },
     customBoxColumn: {
+        marginRight: "16px",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        // alignItems:  "flex-end",
+        gap: 8,
     },
     customBoxRow: {
         display: "flex",
-        justifyContent:  "center",
+        justifyContent:  "flex-end",
         alignItems: "center",
-        gap: 6,
+        gap: 8,
     },
     newEmailField: {        
         backgroundColor: "white",
         borderRadius: 10,
-        minWidth: "150px",
-        width: "100%",
-        maxWidth: "250px",
+        // minWidth: "150px",
+        // width: "100%",
+        // maxWidth: "250px",
+    },
+    newEmailField2: {        
+        backgroundColor: "white",
+        borderRadius: 10,
+        // minWidth: "150px",
+        // width: "60px",
+        // maxWidth: "250px",
     },
     ionTrash:{
         color: "rgb(255, 47, 47, 1)",
@@ -179,7 +190,7 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 
-export default function Alerts( { open, handleClose }: ChildProps) {
+export default function CreateStock( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStyles();
     const close = () => {
@@ -191,20 +202,21 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         if(idUsersAlertSelected.includes(usr.id))
             return usr
     })
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlert);
-    const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
+    const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
+    const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
+    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
     // const [selectedNames, setSelectedNames] = useState([]);
     
     const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
     const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
 
     const deleteEmailTemp = (id:number) => {
-        console.log("idEmailTemp: ", id)
+        // console.log("idEmailTemp: ", id)
         const updateEmailsTemp = [...emailsAlertsTemp]
         // const updateFieldsNew = [...customFieldsNew]
         let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
-        console.log("index: ", index)
-        console.log("updateEmailsTemp: ", updateEmailsTemp)
+        // console.log("index: ", index)
+        // console.log("updateEmailsTemp: ", updateEmailsTemp)
         // if (index !== -1) {
             // updateFields[index].deleted = true
         //     // setCustomFields(updateFields)
@@ -221,12 +233,12 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log("event.currentTarget.id: ", event.currentTarget.id)
         // console.log("event.currentTarget.value: ", event.currentTarget.value)
-        console.log("isNaN('w'): ", isNaN(NaN))
-        // setCustomFields({...customFields, event.currentTarget.value})
-            // const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-            // if(index !== -1) {
-            //     const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
-            //     updateFieldsNew[index].label = event.currentTarget.value
+        // console.log("isNaN('w'): ", isNaN(NaN))
+        // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
+            const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
+            if(index !== -1) {
+                const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
+                updateEmailsAlertsTemp[index].email = event.currentTarget.value
             //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
             //     // console.log("customFields[index].label: ", customFields[index].label)
             //     if(customFields[index]){
@@ -239,23 +251,48 @@ export default function Alerts( { open, handleClose }: ChildProps) {
             //     }else if (updateFieldsNew[index].label ==='' ){
             //         updateFieldsNew[index].okButtonShow = false
             //     }
-            //     setCustomFieldsNew(updateFieldsNew)
-            // }
+                // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
+        
+                setEmailsAlertsTemp(updateEmailsAlertsTemp)
+            }
     }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
-        console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
-            setEmailsAlerts(emailsAlertsTemp)
+            setSelectedUsers(selectedUsersTemp)
+            setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
         }
         setOpenSaveChanges(false);
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
+    
+    const addInputCustomField = () => {
+        // console.log("holis clickis", customFieldsNewTemp.length)
+        // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
+        const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
+        const nextId = lastObj.id + 1
+        const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
+        // updateFieldsNew[index].label = event.currentTarget.value
+        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
+        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
+        //     updateFieldsNew[index].okButtonShow = true
+        // else
+        //     updateFieldsNew[index].okButtonShow = false
+        
+        // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
+
+        setEmailsAlertsTemp(updateEmailsAlertsTemp)
+        // setAddButtonShow(false)
+    }
+
     useEffect(() => {
-        console.log("useeffect")
+        // console.log("useeffect")
+        setSelectedUsersTemp(selectedUsers)
         setEmailsAlertsTemp(emailsAlerts)
     }, [ open])
     
@@ -266,128 +303,90 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         > 
             <Box sx={style}>
                 <Box sx={style2}>
-
-                    
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
-
                     />
-
-
-                    <Typography align="center" variant="h5">
-                        Alerts
-                    </Typography>
-
-
+                    {/* <Box className={classes.customBoxColumn}> */}
+                    <Typography align='center' variant="h5">Create stock</Typography>
+                    <Typography align='center' variant='h6'>Main data</Typography>
                     <Box className={classes.customBoxColumn}>
-                        <FormControl 
-                        className={classes.formControlUsers}
+                        {/* <Box className={classes.customBoxRow}> */} 
+                        <Grid container spacing={1} >
+                            <Grid item xs={4} >
+                                <Typography align='right'>Name*</Typography>
+                            </Grid>
+                            <Grid item xs={8} >
+                                <TextField
+                                    // id={String(emailTemp.id)}
+                                    // type="email"
+                                    // id={column.dataKey.toString()}
+                                    // id="filled-multiline-flexible"
+                                    // value={emailTemp.email}
+                                    // onChange={handleFilterChange}
+                                    onChange={ handleEditCustomFieldNew }
+                                    maxRows={1}
                                     size="small"
-                        >
-                            <InputLabel 
-                            className={classes.inputLabelUsers} >Users</InputLabel>
-                            <Select
+                                    className={classes.newEmailField}
+                                    InputProps={{
+                                        style: {
+                                        height:"34px",
+                                        borderRadius: 10,
+                                        },
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={4} >
+                        {/* </Box>  */}
+                        {/* <Box className={classes.customBoxRow}> */}
+                            <Typography align='right'>Quantity</Typography>
                             
-                            MenuProps={{ PaperProps: { sx: { maxHeight: "30%" ,
-                            borderRadius: "10px",} } }}
-                            className={classes.selectUsers}
-                                multiple
-                                value={selectedUsers}
-                                onChange={(e) => setSelectedUsers([...e.target.value])}
-                                input={<OutlinedInput label="Users" className={classes.formControlUsers} />}
-                                renderValue={(selected) => (
-                                    <Stack gap={1} direction="row" flexWrap="wrap"
-                                    className={classes.stackUsers}
-                                    >
-                                        {selected.map((value) => (
-                                            <Chip 
-                                                className={classes.chipUsers}
-                                                key={value} 
-                                                label={value} 
-                                                onDelete={() =>
-                                                    setSelectedUsers(
-                                                        selectedUsers.filter((item) => item !== value)
-                                                    )
-                                                }
-                                                deleteIcon={
-                                                    <CancelIcon
-                                                    className={classes.cancelIconUsers}
-                                                        onMouseDown={(event) => event.stopPropagation()}
-                                                    />   
-                                                }
-                                            />
-                                        ))}
-                                    </Stack>
-                                )}
-                                >
-                                    {usersAlert.map((user) => (
-                                        <MenuItem 
-                                            className={classes.menuItemUsers}
-                                            key={user.id} 
-                                            value={user.name}
-                                            sx={{ justifyContent: "space-between" }}
-                                        >
-                                            {user.name}
-                                            {selectedUsers.includes(user.id) ? <CheckIcon color="info" /> : null}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                        </FormControl>
-
-
-                        <Box className={classes.customBoxRow}>
-                            <Typography variant='h6'  >
-                                External emails
-                            </Typography>
-                            {/* <EditIcon 
-                            className={classes.editIcon}
-                            /> */}
-                        </Box>
-                            {emailsAlertsTemp.map((emailTemp: emailsAlertData) => {
-                                //  if (!emailNew.deleted) {
-                                     return (
-                                        <Box className={classes.customBoxRow}
-                                        key={emailTemp.id}
-                                        >
-                                            <TextField
-                                                id={String(emailTemp.id)}
-                                                // id={column.dataKey.toString()}
-                                                // id="filled-multiline-flexible"
-                                                value={emailTemp.email}
-                                                // onChange={handleFilterChange}
-                                                onChange={ handleEditCustomFieldNew }
-                                                maxRows={1}
-                                                size="small"
-                                                className={classes.newEmailField}
-                                                InputProps={{
-                                                    style: {
-                                                    height:"34px",
-                                                    borderRadius: 10,
-                                                    },
-                                                }}
-                                            />
-                                            <IconButton
-                                            className={classes.ionTrash}
-                                            onClick={() => deleteEmailTemp(emailTemp.id)}
-                                            // id="plusButton"
-                                            // value={column.id}
-                                            >
-                                                <img 
-                                                src={IonTrash} 
-                                                alt="Trash"
-                                                />
-                                            </IconButton>
-                                         </Box>
-                                    )
-                                // }
-                            })} 
-                        <Box className={classes.customBoxRow}>
-                            <PlusButton
-                                sizeIco={"45px !important"}
-                                // clicked={addInputCustomField}
+                            </Grid>
+                            <Grid item xs={3} >
+                            <TextField
+                                // id={String(emailTemp.id)}
+                                // type="email"
+                                // id={column.dataKey.toString()}
+                                // id="filled-multiline-flexible"
+                                // value={emailTemp.email}
+                                // onChange={handleFilterChange}
+                                onChange={ handleEditCustomFieldNew }
+                                maxRows={1}
+                                size="small"
+                                className={classes.newEmailField2}
+                                InputProps={{
+                                    style: {
+                                    height:"34px",
+                                    borderRadius: 10,
+                                    },
+                                }}
                             />
-                        </Box>
+                            </Grid>
+                            <Grid item xs={2} >
+                            <Typography align='center'>Unit</Typography>
+                            </Grid>
+                            <Grid item xs={3} >
+                                <TextField
+                                    // id={String(emailTemp.id)}
+                                    // type="email"
+                                    // id={column.dataKey.toString()}
+                                    // id="filled-multiline-flexible"
+                                    // value={emailTemp.email}
+                                    // onChange={handleFilterChange}
+                                    onChange={ handleEditCustomFieldNew }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.newEmailField2}
+                                    InputProps={{
+                                        style: {
+                                        height:"34px",
+                                        borderRadius: 10,
+                                        },
+                                    }}
+                                />
+                            {/* </Box> */}
+                            </Grid>
+                        </Grid>
                     </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton

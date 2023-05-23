@@ -6,6 +6,7 @@ import { OkButton, CancelButton, PlusButton } from './components/Buttons';
 import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
+import CreateStock from './components/CreateStock';
 
 const INITIAL_DATA = [
   {id: 1, name: "Product A"},
@@ -76,8 +77,16 @@ const idColumnsTableOrder: Number[] = [1, 2, 3, 4];
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(sample)
+  
+  const [showCreateStock, setShowCreateStock] = useState(false);
+
+
+  
+  const handleCloseCreateStock = () => setShowCreateStock(false)
+  const openCreateStock = () => setShowCreateStock(true)
 
   useEffect(() => {
+    
     setFilteredData(sample.filter((item) => {
      return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -97,6 +106,7 @@ function App() {
         columnsDefault={columnsDefault} 
         columnsCustom={columnsCustom}
         idColumnsTableOrder={idColumnsTableOrder} 
+
         // columnsHiddenFields={idColumnsHiddenFields} 
         >
           <Container maxWidth="md" style={{padding: "0"}} >
@@ -105,13 +115,20 @@ function App() {
                 <MainSearch setSearchQuery={setSearchQuery} />
               </Grid>
               <Grid item xs={2} >
-                <PlusButton/>
+                <PlusButton
+                  clicked={openCreateStock} 
+                />
               </Grid>
             </Grid>
           </Container>
           <TableProducts data={filteredData} columns={columns} />
         </Layout>
+        <CreateStock
+            open={showCreateStock} 
+            handleClose={handleCloseCreateStock} 
+        />
       </ThemeProvider>
+      
     </div>
   )
 }

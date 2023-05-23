@@ -89,8 +89,11 @@ interface LayoutProps {
     idColumnsTableOrder: Number[]
     // columnsHiddenFields: ColumnData[]
     children: React.ReactNode
+    // showCreateStock: boolean
   }
 
+
+// export default function Layout( {children, columnsDefault, columnsCustom, idColumnsTableOrder, showCreateStock}: LayoutProps) {
 export default function Layout( {children, columnsDefault, columnsCustom, idColumnsTableOrder}: LayoutProps) {
     // export default function Layout( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -100,6 +103,8 @@ export default function Layout( {children, columnsDefault, columnsCustom, idColu
     const handleOpenMenu = () => setOpenMenu(true);
     const handleCloseMenu = () => setOpenMenu(false);
     const [openOptions, setOpenOptions] = useState<DataMenuOptions>(INITIAL_MENU_OPTIONS);
+  
+  
     const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
             setOpenOptions({...openOptions, [newData.option]: newData.open});
     }
@@ -111,6 +116,7 @@ export default function Layout( {children, columnsDefault, columnsCustom, idColu
             }
         }
     }
+    
     useEffect(() => {
         // console.log("Layout columns: ", columns)
     }, [openMenu])
