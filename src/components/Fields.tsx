@@ -119,11 +119,22 @@ const useStyles = makeStyles()({
     },
     show: {
         display: "block",
+        // position: "relative",
+        // top: 0,
+        // visibility: "visible",
+        // flexGrow: "5",
     },
     hide: {
-        // display: "none",
-        visibility: "hidden"
+        display: "none",
+        // position: "relative",
+        // top: 0,
+        // visibility: "hidden",
+        // flexGrow: "6",
     },
+    hideShowSpace: {
+        width: "10%", 
+        // flexGrow: ".5",
+    }
 })
 
 const style = {
@@ -178,6 +189,7 @@ interface ColumnDataCustom {
     id_client?: number;
     deleted: boolean;
     okButtonShow: boolean;
+    fieldRepeatedShow: boolean;
 }
 
 export default function Fields({ open, handleClose, columnsDefault, columnsCustom, idColumnsTableOrder }: ChildProps) {
@@ -201,7 +213,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     // const columnsCustomNew = JSON.parse(JSON.stringify(columnsCustom))
     const columnsCustomNew: ColumnDataCustom[] = columnsCustom
     // .filter((obj) => !(obj.deleted))
-    .map((obj) => ({...obj, okButtonShow: false}));
+    .map((obj) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
 
     // const columnsCustomNew: ColumnData[]= [...columnsCustom]
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
@@ -212,6 +224,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     const [customFieldsTemp, setCustomFieldsTemp] = useState<ColumnDataCustom[]>(columnsCustomNew) 
     const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>(columnsCustomNew)
     const [customFieldsNewTemp, setCustomFieldsNewTemp] = useState<ColumnDataCustom[]>(columnsCustomNew)
+    const [addButtonShow, setAddButtonShow] = useState<boolean>(true)
     
     // const [okButtonShow, setOkButtonShow] = useState(okButton)  
 
@@ -259,27 +272,56 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         // console.log("event.currentTarget.value: ", event.currentTarget.value)
         // console.log("isNaN('w'): ", isNaN(NaN))
         // setCustomFieldsTemp({...customFieldsTemp, event.currentTarget.value})
-            const index = customFieldsNewTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-            if(index !== -1) {
-                const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-                updateFieldsNew[index].label = event.currentTarget.value
-                // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-                // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
+        
+        const index = customFieldsNewTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
+        // if(index !== -1) {
+            const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
+            updateFieldsNew[index].label = event.currentTarget.value
+            // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+            // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
+            
+            const updateDefectFieldsRepeated = columns.filter((col) => {
+                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+                    return col
+            })
+            const updateCustomFieldsRepeated = customFieldsNew.filter((col) => {
+                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+                    return col
+            })
+            const updateCustomFieldsTempRepeated = customFieldsNewTemp.filter((col) => {
+                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+                    return col
+            })
+            if(updateDefectFieldsRepeated[0] || updateCustomFieldsRepeated[0] || updateCustomFieldsTempRepeated[0]){
+                console.log("updateDefectFieldsRepeated: ", updateDefectFieldsRepeated)
+                console.log("updateCustomFieldsRepeated: ", updateCustomFieldsRepeated)
+                updateFieldsNew[index].fieldRepeatedShow = true
+                updateFieldsNew[index].okButtonShow = false
+                setAddButtonShow(false)
+            }else{
+                updateFieldsNew[index].fieldRepeatedShow = false
+                setAddButtonShow(true)
                 if(customFieldsTemp[index]){
-                    if(updateFieldsNew[index].label == customFieldsTemp[index].label || updateFieldsNew[index].label == '')
+                    if(updateFieldsNew[index].label == customFieldsTemp[index].label || updateFieldsNew[index].label == ''){
                         updateFieldsNew[index].okButtonShow = false
-                    else
+                        setAddButtonShow(true)
+                    }
+                    else{
                         updateFieldsNew[index].okButtonShow = true
+                        setAddButtonShow(false)
+                    }
                 }else if(updateFieldsNew[index].label !='' ){
                     updateFieldsNew[index].okButtonShow = true
+                    setAddButtonShow(false)
                 }else if (updateFieldsNew[index].label ==='' ){
                     updateFieldsNew[index].okButtonShow = false
+                    setAddButtonShow(true)
                 }
-                setCustomFieldsNewTemp(updateFieldsNew)
             }
+            setCustomFieldsNewTemp(updateFieldsNew)
+        // }
     }
     const saveCustomField = (id:number, label: string) => {
-        // console.log("id: ", id)
         // console.log("label: ", label)
         // const updateFields = [...customFieldsTemp]
         const updateFields = [...customFieldsTemp.map(obj => ({ ...obj }))]
@@ -327,6 +369,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         // console.log("customFieldsNewTemp[index].label: ", updateFields[index].label)
         setCustomFieldsTemp(updateFields)
         updateFieldsNew[index].okButtonShow = false
+        setAddButtonShow(true)
         setCustomFieldsNewTemp(updateFieldsNew)
     }
 
@@ -376,7 +419,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
         const lastObj = customFieldsNewTemp[customFieldsNewTemp.length - 1]
         const nextId = lastObj.id + 1
-        const updateFieldsNew = [...customFieldsNewTemp, {id:nextId, dataKey: "", label: "", width: 100, id_client: 2, deleted: false, okButtonShow: false}]
+        const updateFieldsNew = [...customFieldsNewTemp, {id:nextId, dataKey: "", label: "", width: 100, id_client: 2, deleted: false, okButtonShow: false, fieldRepeatedShow:false}]
 
         
 
@@ -391,6 +434,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         console.log("updateFieldsNew: ", updateFieldsNew)
 
         setCustomFieldsNewTemp(updateFieldsNew)
+        setAddButtonShow(false)
     }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -570,6 +614,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                                 alt="Trash"
                                                 />
                                             </IconButton>
+                                            <div className={classes.hideShowSpace}>
                                             <div className={cusField.okButtonShow ? classes.show : classes.hide}>
                                                 <OkButton
                                                 sizeIco={"34px"}
@@ -578,15 +623,21 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                                 clicked={() => saveCustomField(cusField.id, cusField.label)}
                                                 />
                                             </div>
+                                            <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
+                                                Field repeated
+                                            </div>
+                                            </div>
                                         </Box>
                                     )
                                 }
                             })}
                         <Box className={classes.customBoxRow}>
+                            <div className={(addButtonShow? "" : classes.hide)}>
                             <PlusButton
                                 sizeIco={"45px !important"}
                                 clicked={addInputCustomField}
                             />
+                            </div>
                         </Box>
                     </Box>
                     <Box className={classes.finishButtons}>
