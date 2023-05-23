@@ -44,7 +44,8 @@ const useStyles = makeStyles()({
 
     formControlUsers: {
         width: "300px",
-        backgroundColor: "white",
+        // backgroundColor: "white",
+        backgroundColor: "rgb(255,255, 255, .1)",
         borderRadius: "10px",
         "& .MuiOutlinedInput-root": {
             "& fieldset": {
@@ -62,6 +63,7 @@ const useStyles = makeStyles()({
     stackUsers: {
     },
     chipUsers: {
+        backgroundColor: "rgb(255,255, 255, .8)",
     },
     cancelIconUsers: {
         '& > *': {
