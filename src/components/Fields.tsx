@@ -281,10 +281,14 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
     const saveCustomField = (id:number, label: string) => {
         // console.log("id: ", id)
         // console.log("label: ", label)
-        const updateFields = [...customFieldsTemp]
-        const updateFieldsNew = [...customFieldsNewTemp]
-        const updateOrderedFieldsTemp = [...orderedFieldsTemp]
-        const updateUnsetFieldsTemp = [...unsetFieldsTemp]
+        // const updateFields = [...customFieldsTemp]
+        const updateFields = [...customFieldsTemp.map(obj => ({ ...obj }))]
+        // const updateFieldsNew = [...customFieldsNewTemp]
+        const updateFieldsNew = [...customFieldsNewTemp.map(obj => ({ ...obj }))]
+        // const updateOrderedFieldsTemp = [...orderedFieldsTemp]
+        const updateOrderedFieldsTemp = [...orderedFieldsTemp.map(obj => ({ ...obj }))]
+        // const updateUnsetFieldsTemp = [...unsetFieldsTemp]
+        const updateUnsetFieldsTemp = [...unsetFieldsTemp.map(obj => ({ ...obj }))]
         let index = customFieldsTemp.findIndex(field => field.id === id)
         let indexOrdered = orderedFieldsTemp.findIndex(field => field.id === id)
         let indexUnset = unsetFieldsTemp.findIndex(field => field.id === id)
@@ -409,7 +413,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         // console.log("orderedFieldsEffect: ", orderedFields)
 
         // console.log("unsetFieldsEffect: ", unsetFields)
-        console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
+        // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
 
         // console.log("customFieldsEffect: ", customFields)
         // console.log("customFieldsNewEffect: ", customFieldsNew)
