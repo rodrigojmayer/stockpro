@@ -75,31 +75,30 @@ const useStyles = makeStyles()({
         },
     },
     customBoxColumn: {
-        marginRight: "16px",
+        margin: "0 auto",
         display: "flex",
         flexDirection: "column",
+        width: "90%",
         // alignItems:  "flex-end",
         gap: 8,
     },
     customBoxRow: {
         display: "flex",
-        justifyContent:  "flex-end",
+        justifyContent:  "center",
         alignItems: "center",
         gap: 8,
     },
-    newEmailField: {        
+    inputMainData: {
         backgroundColor: "white",
         borderRadius: 10,
-        // minWidth: "150px",
-        // width: "100%",
-        // maxWidth: "250px",
+        width: "100%",
+        // width: "70%",
+        // minWidth: "70%",
+        // width: "70%",
+        // height:"34px",
     },
-    newEmailField2: {        
-        backgroundColor: "white",
+    inputClassName: {
         borderRadius: 10,
-        // minWidth: "150px",
-        // width: "60px",
-        // maxWidth: "250px",
     },
     ionTrash:{
         color: "rgb(255, 47, 47, 1)",
@@ -307,132 +306,57 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
                     />
-                    {/* <Box className={classes.customBoxColumn}> */}
                     <Typography align='center' variant="h5">Create stock</Typography>
                     <Typography align='center' variant='h6'>Main data</Typography>
                     <Box className={classes.customBoxColumn}>
-                        {/* <Box className={classes.customBoxRow}> */} 
-                        <Grid container spacing={1} >
-                            <Grid item xs={4} >
-                                <Typography align='right'>Name*</Typography>
-                            </Grid>
-                            <Grid item xs={8} >
-                                <TextField
-                                    // id={String(emailTemp.id)}
-                                    // type="email"
-                                    // id={column.dataKey.toString()}
-                                    // id="filled-multiline-flexible"
-                                    // value={emailTemp.email}
-                                    // onChange={handleFilterChange}
-                                    onChange={ handleEditCustomFieldNew }
-                                    maxRows={1}
-                                    size="small"
-                                    className={classes.newEmailField}
-                                    InputProps={{
-                                        style: {
-                                        height:"34px",
-                                        borderRadius: 10,
-                                        },
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={4} >
-                        {/* </Box>  */}
-                        {/* <Box className={classes.customBoxRow}> */}
-                            <Typography align='right'>Quantity</Typography>
-                            
-                            </Grid>
-                            <Grid item xs={3} >
+                        <Box className={classes.customBoxRow}>
                             <TextField
-                                // id={String(emailTemp.id)}
-                                // type="email"
-                                // id={column.dataKey.toString()}
-                                // id="filled-multiline-flexible"
-                                // value={emailTemp.email}
-                                // onChange={handleFilterChange}
+                                label="Name*"
                                 onChange={ handleEditCustomFieldNew }
                                 maxRows={1}
                                 size="small"
-                                className={classes.newEmailField2}
-                                InputProps={{
-                                    style: {
-                                    height:"34px",
-                                    borderRadius: 10,
-                                    },
-                                }}
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
                             />
-                            </Grid>
-                            <Grid item xs={2} >
-                            <Typography align='center'>Unit</Typography>
-                            </Grid>
-                            <Grid item xs={3} >
-                                <TextField
-                                    // id={String(emailTemp.id)}
-                                    // type="email"
-                                    // id={column.dataKey.toString()}
-                                    // id="filled-multiline-flexible"
-                                    // value={emailTemp.email}
-                                    // onChange={handleFilterChange}
-                                    onChange={ handleEditCustomFieldNew }
-                                    maxRows={1}
-                                    size="small"
-                                    className={classes.newEmailField2}
-                                    InputProps={{
-                                        style: {
-                                        height:"34px",
-                                        borderRadius: 10,
-                                        },
-                                    }}
-                                />
-                            {/* </Box> */}
-                            </Grid>
-                            <Grid item xs={4} >
-                                <Typography align='right'>Category</Typography>
-                            </Grid>
-                            <Grid item xs={8} >
-                                <TextField
-                                    // id={String(emailTemp.id)}
-                                    // type="email"
-                                    // id={column.dataKey.toString()}
-                                    // id="filled-multiline-flexible"
-                                    // value={emailTemp.email}
-                                    // onChange={handleFilterChange}
-                                    onChange={ handleEditCustomFieldNew }
-                                    maxRows={1}
-                                    size="small"
-                                    className={classes.newEmailField}
-                                    InputProps={{
-                                        style: {
-                                        height:"34px",
-                                        borderRadius: 10,
-                                        },
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={4} >
-                                <Typography align='right'>Sub-Categ.</Typography>
-                            </Grid>
-                            <Grid item xs={8} >
-                                <TextField
-                                    // id={String(emailTemp.id)}
-                                    // type="email"
-                                    // id={column.dataKey.toString()}
-                                    // id="filled-multiline-flexible"
-                                    // value={emailTemp.email}
-                                    // onChange={handleFilterChange}
-                                    onChange={ handleEditCustomFieldNew }
-                                    maxRows={1}
-                                    size="small"
-                                    className={classes.newEmailField}
-                                    InputProps={{
-                                        style: {
-                                        height:"34px",
-                                        borderRadius: 10,
-                                        },
-                                    }}
-                                />
-                            </Grid>
-                        </Grid>
+                        </Box> 
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Quantity"
+                                onChange={ handleEditCustomFieldNew }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                            />
+                            <TextField
+                                label="Unit"
+                                onChange={ handleEditCustomFieldNew }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                            />
+                        </Box> 
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Category"
+                                onChange={ handleEditCustomFieldNew }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                            />
+                        </Box> 
+                        <Box className={classes.customBoxRow}>
+                            <TextField 
+                                label="Sub-Category" 
+                                onChange={ handleEditCustomFieldNew }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                            />
+                        </Box>
                     </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton
