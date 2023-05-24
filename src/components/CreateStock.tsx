@@ -89,6 +89,9 @@ const useStyles = makeStyles()({
         alignItems: "center",
         gap: 8,
     },
+    customBoxRowRight: {
+        justifyContent:  "end",
+    },
     inputMainData: {
         backgroundColor: "white",
         borderRadius: 10,
@@ -415,12 +418,16 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                                 </MenuItem>
                             ))}
                         </TextField>
+                        </Box> 
+                        <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
+                            <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
+                            <UpButton
+                            direction="right"
+                            clicked={() => console.log("upButtonClicked")}
+                            />
                         </Box>
                     </Box>
-                    <UpButton
-                    direction="right"
-                    clicked={() => console.log("upButtonClicked")}
-                    />
+                    
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}
