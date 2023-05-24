@@ -10,7 +10,7 @@ import { Box,
          OutlinedInput,
          InputLabel,
          MenuItem,
-         Select,
+         Select ,
          FormControl,
          Stack,
          Chip,
@@ -100,6 +100,11 @@ const useStyles = makeStyles()({
     inputClassName: {
         borderRadius: 10,
     },
+    
+    selectInput: {
+        paddingTop: '10px', // Adjust the top padding as needed
+    },
+    
     ionTrash:{
         color: "rgb(255, 47, 47, 1)",
         padding: "0",
@@ -173,7 +178,7 @@ interface usersAlertData {
     }
 
 
-const usersAlert: usersAlertData[] = [
+const unitsArray: usersAlertData[] = [
     { id: 1, name: 'Humaira Sims', email: 'hsims@mail.com', enabled: true , deleted: false},
     { id: 2, name: 'Santiago Solis', email: 'ssolis@mail.com', enabled: true, deleted: false  },
     { id: 3, name: 'Dawid Floyd', email: 'dfloyd@mail.com', enabled: true  , deleted: false},
@@ -197,12 +202,12 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     }
 
 
-    const usersAlertSelected = usersAlert.filter((usr) => {
-        if(idUsersAlertSelected.includes(usr.id))
-            return usr
-    })
-    const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
-    const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
+    // const usersAlertSelected = usersAlert.filter((usr) => {
+    //     if(idUsersAlertSelected.includes(usr.id))
+    //         return usr
+    // })
+    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
+    // const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
     // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
     // const [selectedNames, setSelectedNames] = useState([]);
     
@@ -260,7 +265,7 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
-            setSelectedUsers(selectedUsersTemp)
+            // setSelectedUsers(selectedUsersTemp)
             setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
         }
@@ -291,7 +296,7 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
 
     useEffect(() => {
         // console.log("useeffect")
-        setSelectedUsersTemp(selectedUsers)
+        // setSelectedUsersTemp(selectedUsers)
         setEmailsAlertsTemp(emailsAlerts)
     }, [ open])
     
@@ -328,34 +333,78 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
                             />
-                            <TextField
+                            <TextField 
                                 label="Unit"
-                                onChange={ handleEditCustomFieldNew }
+                                // onChange={ handleEditCustomFieldNew }
                                 maxRows={1}
                                 size="small"
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
-                            />
-                        </Box> 
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Category"
-                                onChange={ handleEditCustomFieldNew }
-                                maxRows={1}
-                                size="small"
-                                className={classes.inputMainData}
-                                InputProps={{className: classes.inputClassName}}
-                            />
+                                select
+                                // SelectProps={{className: classes.selectInput}}
+
+                                >
+                                    {unitsArray.map((unit) => (
+                                        <MenuItem 
+                                            className={classes.menuItemUsers}
+                                            key={unit.id} 
+                                            value={unit.name}
+                                            sx={{ justifyContent: "space-between" }}
+                                        >
+                                            {unit.name}
+                                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                        </MenuItem>
+                                    ))}
+
+
+                                </TextField>
                         </Box> 
                         <Box className={classes.customBoxRow}>
                             <TextField 
-                                label="Sub-Category" 
-                                onChange={ handleEditCustomFieldNew }
+                                // labelId="demo-simple-select-label"
+                                // id="demo-simple-select"
+                                label="Category"
+                                // onChange={ handleEditCustomFieldNew }
                                 maxRows={1}
                                 size="small"
+                                select
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
-                            />
+                            >
+                                {unitsArray.map((unit) => (
+                                    <MenuItem 
+                                        className={classes.menuItemUsers}
+                                        key={unit.id} 
+                                        value={unit.name}
+                                        sx={{ justifyContent: "space-between" }}
+                                    >
+                                        {unit.name}
+                                        {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Box> 
+                        <Box className={classes.customBoxRow}>
+                            <TextField  
+                                label="Sub-Category" 
+                                maxRows={1}
+                                size="small"
+                                select
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                            >
+                            {unitsArray.map((unit) => (
+                                <MenuItem 
+                                    className={classes.menuItemUsers}
+                                    key={unit.id} 
+                                    value={unit.name}
+                                    sx={{ justifyContent: "space-between" }}
+                                >
+                                    {unit.name}
+                                    {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                         </Box>
                     </Box>
                     <Box className={classes.finishButtons}>
