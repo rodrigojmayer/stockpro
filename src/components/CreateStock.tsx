@@ -23,6 +23,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { OkButton,
          CancelButton, 
          PlusButton,
+         UpButton
         } from './Buttons';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
@@ -416,6 +417,10 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         </TextField>
                         </Box>
                     </Box>
+                    <UpButton
+                    direction="right"
+                    clicked={() => console.log("upButtonClicked")}
+                    />
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}

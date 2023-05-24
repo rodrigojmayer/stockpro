@@ -8,6 +8,10 @@ import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import { makeStyles } from 'tss-react/mui';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 
 const theme = createTheme({
@@ -20,9 +24,31 @@ const theme = createTheme({
       main: 'rgb(255, 47, 47, 1)',
       contrastText: 'rgb(255, 47, 47, .2)',
     },
+    neutral: {
+      main: '#fff',
+      contrastText: '#64748B',
+    },
   },
 });
-  
+declare module '@mui/material/styles' {
+  interface Palette {
+    neutral: Palette['primary'];
+  }
+
+  // allow configuration using `createTheme`
+  interface PaletteOptions {
+    neutral?: PaletteOptions['primary'];
+  }
+}
+
+// @babel-ignore-comment-in-output Update the Button's color prop options
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    neutral: true;
+  }
+}
+
+
 const colorOk = {
   main: 'rgb(32, 205, 60, 1)',
   // dark: 
@@ -100,6 +126,25 @@ const useStyles = makeStyles()({
     // backgroundColor: "red",
     color: "red",
   },
+  btnArrow: {
+    borderRadius: "10px",
+    backgroundColor: theme.palette.neutral.contrastText,
+    transition: ".5s",
+    "& > *": {
+      transition: ".5s",
+
+    },
+    '&:hover': {
+      borderWidth: "5px",
+      borderColor: theme.palette.neutral.dark,
+      backgroundColor: theme.palette.neutral.contrastText,
+      "& > *": {
+        transition: ".5s",
+        stroke: theme.palette.neutral.dark
+
+      }
+    }
+  },  
 })
 
 
@@ -108,6 +153,7 @@ interface ButtonProps {
   roundedIco?: boolean
   cusField?: {id: number, value: string}
   clicked: (id?: number, value?: string) => void
+  direction?: string
 }
 
 export function OkButton({ sizeIco, roundedIco, cusField, clicked }: ButtonProps ) {
@@ -268,17 +314,60 @@ export function PlusButton({ sizeIco, clicked }:  PlusButtonProps ) {
   )
 }
 
-// export function MinusButton({ sizeData }: { sizeData?: string }) {
-//   const { classes } = useStyles()
-//   console.log("sizeData: ", sizeData)
+export function UpButton({ sizeIco, roundedIco, cusField, clicked, direction }: ButtonProps ) {
+  const { classes } = useStyles()
+  // const colorOk = theme.palette.success.main
+  // const colorOk = "white"
+  sizeIco = "50px"
+  roundedIco = true
+  
+  let fontIco = 35, noPadding, bor = 5, borRad
+  if(sizeIco) {
+    fontIco = (parseInt(sizeIco))
+    // bor = 3
+  }
+  if(roundedIco){
+    noPadding=0
+    borRad="50px !important"
+  } 
 
-//   return(
-//     <IconButton
-//       className={classes.backPlus}
-//       id="minusButton">
-//         <RemoveCircleTwoToneIcon 
-//         sx={{width: sizeData, height: sizeData}}
-//         />
-//     </IconButton>
-//   )
-// }
+  const handleClick = (() => {
+    if(cusField)
+      clicked(cusField.id, cusField.value)
+    else
+      clicked()
+  })
+  let Arrow 
+  if(direction === "up") Arrow = ArrowDropUpIcon
+  else if(direction === "down") Arrow = ArrowDropDownIcon
+  else if(direction === "left") Arrow = ArrowLeftIcon
+  else Arrow = ArrowRightIcon
+
+  return (  
+    <ThemeProvider theme={theme}>
+      <Button 
+        variant="outlined"
+        color="neutral"
+        sx={{  
+          border: bor, 
+          padding:noPadding, 
+          paddingTop:0,  
+          paddingBottom:0, 
+          minWidth: sizeIco, 
+          width: sizeIco, 
+          height: sizeIco,
+          borderRadius: borRad,
+        }}
+        className={classes.btnArrow}
+        onClick={handleClick}
+      >
+        <Arrow 
+        sx={{ 
+          fontSize: fontIco,
+          // stroke: colorOk, 
+          // strokeWidth: 2 
+        }}/>
+      </Button>
+    </ThemeProvider>
+  )
+}
