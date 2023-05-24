@@ -165,12 +165,9 @@ interface ChildProps {
 //     "Rocco Richardson",
 //   "Harris Glenn",
 // ]
-interface usersAlertData {
+interface measureData {
     id: number;
     name: string;
-    email: string;
-    enabled: boolean;
-    deleted: boolean;
   }
   interface emailsAlertData {
       id: number;
@@ -178,14 +175,25 @@ interface usersAlertData {
     }
 
 
-const unitsArray: usersAlertData[] = [
-    { id: 1, name: 'Humaira Sims', email: 'hsims@mail.com', enabled: true , deleted: false},
-    { id: 2, name: 'Santiago Solis', email: 'ssolis@mail.com', enabled: true, deleted: false  },
-    { id: 3, name: 'Dawid Floyd', email: 'dfloyd@mail.com', enabled: true  , deleted: false},
-    { id: 4, name: 'Mateo Barlow', email: 'mbarlow@mail.com', enabled: true, deleted: false  },
-    { id: 5, name: 'Samia Navarro', email: 'snavarro@mail.com', enabled: true, deleted: false  },
+const measureArray: measureData[] = [
+    { id: 0, name: '-'},
+    { id: 1, name: 'Unit'},
+    { id: 2, name: 'Kg'},
+    { id: 3, name: 'Lts'},
 ]; 
-const idUsersAlertSelected: number[] = [1,  3, 5];
+const categoryArray: measureData[] = [
+    { id: 0, name: '-'},
+    { id: 1, name: 'Kitchen'},
+    { id: 2, name: 'Food'},
+    { id: 3, name: 'Furniture'},
+];
+const subCategoryArray: measureData[] = [
+    { id: 0, name: '-'},
+    { id: 1, name: 'Cutlery'},
+    { id: 2, name: 'Fruits'},
+    { id: 3, name: 'Chairs'},
+];
+
 
 const emailsAlert: emailsAlertData[] = [
     { id: 1, email: 'email1@test.com' },
@@ -201,7 +209,10 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
         handleClose(false)
     }
 
-
+    const [measure, setMeasure] = useState('');
+    const [category, setCategory] = useState('');
+    const [subCategory, setSubCategory] = useState('');
+    
     // const usersAlertSelected = usersAlert.filter((usr) => {
     //     if(idUsersAlertSelected.includes(usr.id))
     //         return usr
@@ -211,62 +222,62 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
     // const [selectedNames, setSelectedNames] = useState([]);
     
-    const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
+    // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
+    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
 
-    const deleteEmailTemp = (id:number) => {
-        // console.log("idEmailTemp: ", id)
-        const updateEmailsTemp = [...emailsAlertsTemp]
-        // const updateFieldsNew = [...customFieldsNew]
-        let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
-        // console.log("index: ", index)
-        // console.log("updateEmailsTemp: ", updateEmailsTemp)
-        // if (index !== -1) {
-            // updateFields[index].deleted = true
-        //     // setCustomFields(updateFields)
-        //     updateFieldsNew[index].deleted = true
-        //     // console.log("customFields: ", customFields) 
-        // } else {
-        //     index = customFieldsNew.findIndex(field => field.id === id)
-        updateEmailsTemp.splice(index, 1)
+    // const deleteEmailTemp = (id:number) => {
+    //     // console.log("idEmailTemp: ", id)
+    //     const updateEmailsTemp = [...emailsAlertsTemp]
+    //     // const updateFieldsNew = [...customFieldsNew]
+    //     let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
+    //     // console.log("index: ", index)
+    //     // console.log("updateEmailsTemp: ", updateEmailsTemp)
+    //     // if (index !== -1) {
+    //         // updateFields[index].deleted = true
+    //     //     // setCustomFields(updateFields)
+    //     //     updateFieldsNew[index].deleted = true
+    //     //     // console.log("customFields: ", customFields) 
+    //     // } else {
+    //     //     index = customFieldsNew.findIndex(field => field.id === id)
+    //     updateEmailsTemp.splice(index, 1)
 
-        // }
-        setEmailsAlertsTemp(updateEmailsTemp)
-    }
+    //     // }
+    //     setEmailsAlertsTemp(updateEmailsTemp)
+    // }
     
-    const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // console.log("event.currentTarget.id: ", event.currentTarget.id)
-        // console.log("event.currentTarget.value: ", event.currentTarget.value)
-        // console.log("isNaN('w'): ", isNaN(NaN))
-        // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
-            const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-            if(index !== -1) {
-                const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
-                updateEmailsAlertsTemp[index].email = event.currentTarget.value
-            //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-            //     // console.log("customFields[index].label: ", customFields[index].label)
-            //     if(customFields[index]){
-            //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
-            //             updateFieldsNew[index].okButtonShow = false
-            //         else
-            //             updateFieldsNew[index].okButtonShow = true
-            //     }else if(updateFieldsNew[index].label !='' ){
-            //         updateFieldsNew[index].okButtonShow = true
-            //     }else if (updateFieldsNew[index].label ==='' ){
-            //         updateFieldsNew[index].okButtonShow = false
-            //     }
-                // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
+    // const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     // console.log("event.currentTarget.id: ", event.currentTarget.id)
+    //     // console.log("event.currentTarget.value: ", event.currentTarget.value)
+    //     // console.log("isNaN('w'): ", isNaN(NaN))
+    //     // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
+    //         const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
+    //         if(index !== -1) {
+    //             const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
+    //             updateEmailsAlertsTemp[index].email = event.currentTarget.value
+    //         //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+    //         //     // console.log("customFields[index].label: ", customFields[index].label)
+    //         //     if(customFields[index]){
+    //         //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
+    //         //             updateFieldsNew[index].okButtonShow = false
+    //         //         else
+    //         //             updateFieldsNew[index].okButtonShow = true
+    //         //     }else if(updateFieldsNew[index].label !='' ){
+    //         //         updateFieldsNew[index].okButtonShow = true
+    //         //     }else if (updateFieldsNew[index].label ==='' ){
+    //         //         updateFieldsNew[index].okButtonShow = false
+    //         //     }
+    //             // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
         
-                setEmailsAlertsTemp(updateEmailsAlertsTemp)
-            }
-    }
+    //             setEmailsAlertsTemp(updateEmailsAlertsTemp)
+    //         }
+    // }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             // setSelectedUsers(selectedUsersTemp)
-            setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
+            // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
         }
         setOpenSaveChanges(false);
@@ -274,31 +285,31 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     
-    const addInputCustomField = () => {
-        // console.log("holis clickis", customFieldsNewTemp.length)
-        // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-        const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
-        const nextId = lastObj.id + 1
-        const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
-        // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-        //     updateFieldsNew[index].okButtonShow = true
-        // else
-        //     updateFieldsNew[index].okButtonShow = false
+    // const addInputCustomField = () => {
+    //     // console.log("holis clickis", customFieldsNewTemp.length)
+    //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
+    //     const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
+    //     const nextId = lastObj.id + 1
+    //     const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
+    //     // updateFieldsNew[index].label = event.currentTarget.value
+    //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+    //     // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
+    //     // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
+    //     //     updateFieldsNew[index].okButtonShow = true
+    //     // else
+    //     //     updateFieldsNew[index].okButtonShow = false
         
-        // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
+    //     // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
 
-        setEmailsAlertsTemp(updateEmailsAlertsTemp)
-        // setAddButtonShow(false)
-    }
+    //     setEmailsAlertsTemp(updateEmailsAlertsTemp)
+    //     // setAddButtonShow(false)
+    // }
 
-    useEffect(() => {
-        // console.log("useeffect")
-        // setSelectedUsersTemp(selectedUsers)
-        setEmailsAlertsTemp(emailsAlerts)
-    }, [ open])
+    // useEffect(() => {
+    //     // console.log("useeffect")
+    //     // setSelectedUsersTemp(selectedUsers)
+    //     setEmailsAlertsTemp(emailsAlerts)
+    // }, [ open])
     
     return (
         <Modal
@@ -317,7 +328,7 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         <Box className={classes.customBoxRow}>
                             <TextField
                                 label="Name*"
-                                onChange={ handleEditCustomFieldNew }
+                                // onChange={ handleEditCustomFieldNew }
                                 maxRows={1}
                                 size="small"
                                 className={classes.inputMainData}
@@ -327,31 +338,30 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         <Box className={classes.customBoxRow}>
                             <TextField
                                 label="Quantity"
-                                onChange={ handleEditCustomFieldNew }
                                 maxRows={1}
                                 size="small"
+                                type="number"
                                 className={classes.inputMainData}
-                                InputProps={{className: classes.inputClassName}}
+                                InputProps={{  className: classes.inputClassName }}
+                                // onChange={ handleEditCustomFieldNew }
                             />
                             <TextField 
-                                label="Unit"
-                                // onChange={ handleEditCustomFieldNew }
-                                maxRows={1}
+                                label="Measure"
                                 size="small"
+                                select
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
-                                select
-                                // SelectProps={{className: classes.selectInput}}
-
+                                value={measure}
+                                onChange={ (event) => setMeasure(event.target.value) }
                                 >
-                                    {unitsArray.map((unit) => (
+                                    {measureArray.map((measure) => (
                                         <MenuItem 
                                             className={classes.menuItemUsers}
-                                            key={unit.id} 
-                                            value={unit.name}
+                                            key={measure.id} 
+                                            value={measure.name}
                                             sx={{ justifyContent: "space-between" }}
                                         >
-                                            {unit.name}
+                                            {measure.name}
                                             {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
                                         </MenuItem>
                                     ))}
@@ -361,24 +371,22 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         </Box> 
                         <Box className={classes.customBoxRow}>
                             <TextField 
-                                // labelId="demo-simple-select-label"
-                                // id="demo-simple-select"
                                 label="Category"
-                                // onChange={ handleEditCustomFieldNew }
-                                maxRows={1}
                                 size="small"
                                 select
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
+                                value={category}
+                                onChange={ (event) => setCategory(event.target.value) }
                             >
-                                {unitsArray.map((unit) => (
+                                {categoryArray.map((category) => (
                                     <MenuItem 
                                         className={classes.menuItemUsers}
-                                        key={unit.id} 
-                                        value={unit.name}
+                                        key={category.id} 
+                                        value={category.name}
                                         sx={{ justifyContent: "space-between" }}
                                     >
-                                        {unit.name}
+                                        {category.name}
                                         {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
                                     </MenuItem>
                                 ))}
@@ -387,20 +395,21 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         <Box className={classes.customBoxRow}>
                             <TextField  
                                 label="Sub-Category" 
-                                maxRows={1}
                                 size="small"
                                 select
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
+                                value={subCategory}
+                                onChange={ (event) => setSubCategory(event.target.value) }
                             >
-                            {unitsArray.map((unit) => (
+                            {subCategoryArray.map((subCategory) => (
                                 <MenuItem 
                                     className={classes.menuItemUsers}
-                                    key={unit.id} 
-                                    value={unit.name}
+                                    key={subCategory.id} 
+                                    value={subCategory.name}
                                     sx={{ justifyContent: "space-between" }}
                                 >
-                                    {unit.name}
+                                    {subCategory.name}
                                     {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
                                 </MenuItem>
                             ))}
