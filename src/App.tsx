@@ -27,23 +27,23 @@ type Data = {
   id: number;
   product: string;
   amount: number;
-  unit: string;
+  measure: string;
   category: string;
   sub_category: string;
 }
 const sample:  Data[] = [
-  {id: 1, product: 'Apples', amount: 20, unit: "U", category: "Food", sub_category: "Fruit"},
-  {id: 2, product: 'Ice cream sandwich ', amount: 237, unit: "U", category: "Food", sub_category: "Dessert"},
-  {id: 3, product: 'Sugar', amount: 26, unit: "Kgs", category: "Food", sub_category: "Seasoning"},
-  {id: 4, product: 'Milk', amount: 305, unit: "Lts", category: "Food", sub_category: "Dairy"},
-  {id: 5, product: 'Chairs', amount: 57, unit: "U", category: "Furniture", sub_category: "-"},
-  {id: 6, product: 'Tables', amount: 36, unit: "U", category: "Furniture", sub_category: "-"},
-  {id: 1, product: 'Apples', amount: 20, unit: "U", category: "Food", sub_category: "Fruit"},
-  {id: 2, product: 'Ice cream sandwich ', amount: 237, unit: "U", category: "Food", sub_category: "Dessert"},
-  {id: 3, product: 'Sugar', amount: 26, unit: "Kgs", category: "Food", sub_category: "Seasoning"},
-  {id: 4, product: 'Milk', amount: 305, unit: "Lts", category: "Food", sub_category: "Dairy"},
-  {id: 5, product: 'Chairs', amount: 57, unit: "U", category: "Furniture", sub_category: "-"},
-  {id: 6, product: 'Tables', amount: 36, unit: "U", category: "Furniture", sub_category: "-"},
+  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
+  {id: 2, product: 'Ice cream sandwich ', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
+  {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
+  {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
+  {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
+  {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
+  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
+  {id: 2, product: 'Ice cream sandwich ', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
+  {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
+  {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
+  {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
+  {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
 ];
 
 interface ColumnData {
@@ -60,7 +60,7 @@ type Sample = [number, string, number, string, string, string];
 const columnsDefault: ColumnData[] = [
   { id: 1, width: 120, label: 'Product', dataKey: 'product', deleted: false },
   { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true, deleted: false  },
-  { id: 3, width: 80, label: 'Unit', dataKey: 'unit', deleted: false  },
+  { id: 3, width: 80, label: 'Measure', dataKey: 'measure', deleted: false  },
   { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true, deleted: false  },
   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true, deleted: false  },
 ];
@@ -90,7 +90,7 @@ function App() {
     setFilteredData(sample.filter((item) => {
      return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.measure.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.category.toLowerCase().includes(searchQuery.toLowerCase())
 

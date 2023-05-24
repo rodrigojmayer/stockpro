@@ -67,7 +67,7 @@ type Data = {
     id: number;
     product: string;
     amount: number;
-    unit: string;
+    measure: string;
     category: string;
     sub_category: string;
   }

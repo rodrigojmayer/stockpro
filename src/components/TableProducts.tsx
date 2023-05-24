@@ -10,7 +10,7 @@ interface Data {
   id: number;
   product: string;
   amount: number;
-  unit: string;
+  measure: string;
   category: string;
   sub_category: string;
   [key: string]: any;
@@ -21,7 +21,7 @@ const INITIAL_STATE = {
   id: NaN,
   product: "",
   amount: NaN,
-  unit: "",
+  measure: "",
   category: "",
   sub_category: "",
 }
@@ -55,8 +55,8 @@ interface DataTable {
 //   },
 //   {
 //     width: 80,
-//     label: 'Unit',
-//     dataKey: 'unit',
+//     label: 'Measure',
+//     dataKey: 'measure',
 //   },
 //   {
 //     width: 100,
