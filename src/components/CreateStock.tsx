@@ -214,8 +214,11 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     }
 
     const [measure, setMeasure] = useState('');
+    const [measureTemp, setMeasureTemp] = useState('');
     const [category, setCategory] = useState('');
+    const [categoryTemp, setCategoryTemp] = useState('');
     const [subCategory, setSubCategory] = useState('');
+    const [subCategoryTemp, setSubCategoryTemp] = useState('');
     
     // const usersAlertSelected = usersAlert.filter((usr) => {
     //     if(idUsersAlertSelected.includes(usr.id))
@@ -309,11 +312,14 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     //     // setAddButtonShow(false)
     // }
 
-    // useEffect(() => {
-    //     // console.log("useeffect")
-    //     // setSelectedUsersTemp(selectedUsers)
-    //     setEmailsAlertsTemp(emailsAlerts)
-    // }, [ open])
+    useEffect(() => {
+        // console.log("useeffect")
+        // setSelectedUsersTemp(selectedUsers)
+        setMeasureTemp(measure)
+        setCategoryTemp(category)
+        setSubCategoryTemp(subCategory)
+
+    }, [ open])
     
     return (
         <Modal
@@ -355,8 +361,8 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                                 select
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
-                                value={measure}
-                                onChange={ (event) => setMeasure(event.target.value) }
+                                value={measureTemp}
+                                onChange={ (event) => setMeasureTemp(event.target.value) }
                                 >
                                     {measureArray.map((measure) => (
                                         <MenuItem 
@@ -380,8 +386,8 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                                 select
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
-                                value={category}
-                                onChange={ (event) => setCategory(event.target.value) }
+                                value={categoryTemp}
+                                onChange={ (event) => setCategoryTemp(event.target.value) }
                             >
                                 {categoryArray.map((category) => (
                                     <MenuItem 
@@ -403,8 +409,8 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                                 select
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
-                                value={subCategory}
-                                onChange={ (event) => setSubCategory(event.target.value) }
+                                value={subCategoryTemp}
+                                onChange={ (event) => setSubCategoryTemp(event.target.value) }
                             >
                             {subCategoryArray.map((subCategory) => (
                                 <MenuItem 
