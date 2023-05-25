@@ -7,6 +7,8 @@ import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
 import CreateStock from './components/CreateStock';
+import { Data, ColumnData } from './types';
+// import {  } from './data';
 
 const INITIAL_DATA = [
   {id: 1, name: "Product A"},
@@ -23,14 +25,6 @@ const theme = createTheme({
   },
 });
 
-type Data = {
-  id: number;
-  product: string;
-  amount: number;
-  measure: string;
-  category: string;
-  sub_category: string;
-}
 const sample:  Data[] = [
   {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
   {id: 2, product: 'Ice cream sandwich ', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
@@ -45,17 +39,6 @@ const sample:  Data[] = [
   {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
 ];
-
-interface ColumnData {
-  id: number;
-  dataKey: string;
-  label: string;
-  numeric?: boolean;
-  width: number;
-  id_client?: number;
-  deleted: boolean;
-}
-type Sample = [number, string, number, string, string, string];
 
 const columnsDefault: ColumnData[] = [
   { id: 1, width: 120, label: 'Product', dataKey: 'product', deleted: false },

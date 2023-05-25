@@ -5,16 +5,17 @@ import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
+import { Data, ColumnData } from '../types';
 
-interface Data {
-  id: number;
-  product: string;
-  amount: number;
-  measure: string;
-  category: string;
-  sub_category: string;
-  [key: string]: any;
-}
+// interface Data {
+//   id: number;
+//   product: string;
+//   amount: number;
+//   measure: string;
+//   category: string;
+//   sub_category: string;
+//   [key: string]: any;
+// }
 
 
 const INITIAL_STATE = {
@@ -26,13 +27,13 @@ const INITIAL_STATE = {
   sub_category: "",
 }
 
-interface ColumnData {
-  id: number;
-  dataKey: string;
-  label: string;
-  numeric?: boolean;
-  width: number;
-}
+// interface ColumnData {
+//   id: number;
+//   dataKey: string;
+//   label: string;
+//   numeric?: boolean;
+//   width: number;
+// }
 
 interface DataTable {
   data: Data[] 

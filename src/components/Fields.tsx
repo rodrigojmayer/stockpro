@@ -21,6 +21,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
+import { ColumnData } from '../types';
 
 
 const useStyles = makeStyles()({
@@ -162,15 +163,15 @@ const style2 = {
 };
 
 
-interface ColumnData {
-    id: number;
-    dataKey: string;
-    label: string;
-    numeric?: boolean;
-    width: number;
-    id_client?: number;
-    deleted: boolean;
-}
+// interface ColumnData {
+//     id: number;
+//     dataKey: string;
+//     label: string;
+//     numeric?: boolean;
+//     width: number;
+//     id_client?: number;
+//     deleted: boolean;
+// }
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void

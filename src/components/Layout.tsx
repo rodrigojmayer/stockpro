@@ -10,6 +10,7 @@ import { MenuButton } from './Buttons';
 import MenuOptions from './MenuOptions';
 import Fields from './Fields';
 import Alerts from './Alerts';
+import { ColumnData, DataMenuOptions } from '../types';
 
 const useStyles = makeStyles()({
     appbar: {
@@ -45,14 +46,6 @@ const useStyles = makeStyles()({
         alignItems: "center",
     },
 })
-interface DataMenuOptions {
-    fields: boolean,
-    alerts: boolean,
-    massive: boolean,
-    users: boolean,
-    profile: boolean,
-    preferences: boolean
-}
 const INITIAL_MENU_OPTIONS = {
     fields: false,
     alerts: false,
@@ -62,25 +55,6 @@ const INITIAL_MENU_OPTIONS = {
     preferences: false
 }
 type MyComponentProps = React.PropsWithChildren<{}>;
-
-type Data = {
-    id: number;
-    product: string;
-    amount: number;
-    measure: string;
-    category: string;
-    sub_category: string;
-  }
-
-  interface ColumnData {
-    id: number;
-    dataKey: string;
-    label: string;
-    numeric?: boolean;
-    width: number;
-    id_client?: number;
-    deleted: boolean;
-  }
 
 interface LayoutProps {
     // columns: ColumnData[]
