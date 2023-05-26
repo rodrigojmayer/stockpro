@@ -25,7 +25,6 @@ import { OkButton,
          PlusButton,
          UpButton
         } from './Buttons';
-import  CreateStockMainData  from './CreateStockMainData'
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
@@ -34,100 +33,130 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useStylesAlerts, modalStyleExternal, modalStyleInternal } from '../styles'
 
 
-// const useStyles = makeStyles()({
-//     finishButtons: {
-//         display: "flex",
-//         justifyContent:  "center",
-//         gap: 20,
-//         margin: "20px",
-//     },
+const useStyles = makeStyles()({
+    finishButtons: {
+        display: "flex",
+        justifyContent:  "center",
+        gap: 20,
+        margin: "20px",
+    },
 
-//     formControlUsers: {
-//         width: "300px",
-//         // backgroundColor: "white",
-//         backgroundColor: "rgb(255,255, 255, .1)",
-//         borderRadius: "10px",
-//         "& .MuiOutlinedInput-root": {
-//             "& fieldset": {
-//             },
-//             '&.Mui-focused': {
-//                 },
-//             "&.Mui-focused fieldset": {
-//             }
-//         }
-//     },
-//     selectUsers: {
-//     },
-//     inputLabelUsers: {
-//     },
-//     stackUsers: {
-//     },
-//     chipUsers: {
-//         backgroundColor: "rgb(255,255, 255, .8)",
-//     },
-//     cancelIconUsers: {
-//         '& > *': {
-//             color: 'rgb(255, 47, 47, .9)',
-//         }
-//     },
-//     menuItemUsers: {
-//         "&.Mui-selected": {
-//         },
-//     },
-//     customBoxColumn: {
-//         margin: "0 auto",
-//         display: "flex",
-//         flexDirection: "column",
-//         width: "90%",
-//         // alignItems:  "flex-end",
-//         gap: 8,
-//     },
-//     customBoxRow: {
-//         display: "flex",
-//         justifyContent:  "center",
-//         alignItems: "center",
-//         gap: 8,
-//     },
-//     customBoxRowRight: {
-//         justifyContent:  "end",
-//     },
-//     inputMainData: {
-//         backgroundColor: "white",
-//         borderRadius: 10,
-//         width: "100%",
-//         // width: "70%",
-//         // minWidth: "70%",
-//         // width: "70%",
-//         // height:"34px",
-//     },
-//     inputClassName: {
-//         borderRadius: 10,
-//     },
+    formControlUsers: {
+        width: "300px",
+        // backgroundColor: "white",
+        backgroundColor: "rgb(255,255, 255, .1)",
+        borderRadius: "10px",
+        "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+            },
+            '&.Mui-focused': {
+                },
+            "&.Mui-focused fieldset": {
+            }
+        }
+    },
+    selectUsers: {
+    },
+    inputLabelUsers: {
+    },
+    stackUsers: {
+    },
+    chipUsers: {
+        backgroundColor: "rgb(255,255, 255, .8)",
+    },
+    cancelIconUsers: {
+        '& > *': {
+            color: 'rgb(255, 47, 47, .9)',
+        }
+    },
+    menuItemUsers: {
+        "&.Mui-selected": {
+        },
+    },
+    customBoxColumn: {
+        margin: "0 auto",
+        display: "flex",
+        flexDirection: "column",
+        width: "90%",
+        // alignItems:  "flex-end",
+        gap: 8,
+    },
+    customBoxRow: {
+        display: "flex",
+        justifyContent:  "center",
+        alignItems: "center",
+        gap: 8,
+    },
+    customBoxRowRight: {
+        justifyContent:  "end",
+    },
+    inputMainData: {
+        backgroundColor: "white",
+        borderRadius: 10,
+        width: "100%",
+        // width: "70%",
+        // minWidth: "70%",
+        // width: "70%",
+        // height:"34px",
+    },
+    inputClassName: {
+        borderRadius: 10,
+    },
     
-//     selectInput: {
-//         paddingTop: '10px', // Adjust the top padding as needed
-//     },
+    selectInput: {
+        paddingTop: '10px', // Adjust the top padding as needed
+    },
     
-//     ionTrash:{
-//         color: "rgb(255, 47, 47, 1)",
-//         padding: "0",
-//         marginBottom: "4px",
-//         width: "37px", 
-//         height: "37px",
-//         '& img': {
-//             width: "37px", 
-//             height: "37px",
-//         },
-//     },
-// })
+    ionTrash:{
+        color: "rgb(255, 47, 47, 1)",
+        padding: "0",
+        marginBottom: "4px",
+        width: "37px", 
+        height: "37px",
+        '& img': {
+            width: "37px", 
+            height: "37px",
+        },
+    },
 
+
+
+})
+const style = {
+    position: 'absolute',
+    display: "flex",
+    justifyContent: "center",
+    top: 74,
+    width: "100%",
+    overflowX: "hidden",
+};
+const style2 = {
+    top: 74,
+    maxWidth: "700px",
+    width: "calc(100% - 32px)",
+    maxHeight: "520px",
+    // height: "520px",
+    backgroundColor: "rgb(45,72, 91, 1)",
+    borderRadius: "10px",
+    margin: "auto",
+    padding: "3px",
+    color: "white",
+    overflow: "scroll",
+    overflowX: "hidden",
+
+};
+// type SaveChangesProps = {
+//     openSaveChanges: boolean;
+//     closeSaveChanges: (newData?: boolean) => void;
+// }
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
 }
+
+
 // const names = [
 //     "Humaira Sims",
 //     "Santiago Solis",
@@ -179,7 +208,7 @@ const emailsAlert: emailsAlertData[] = [
 
 export default function CreateStock( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
-    const { classes } = useStylesAlerts();
+    const { classes } = useStyles();
     const close = () => {
         handleClose(false)
     }
@@ -297,14 +326,114 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
         open={open} 
         onClose={close}
         > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
+            <Box sx={style}>
+                <Box sx={style2}>
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
                     />
                     <Typography align='center' variant="h5">Create stock</Typography>
-                    <CreateStockMainData />
+                    <Typography align='center' variant='h6'>Main data</Typography>
+                    <Box className={classes.customBoxColumn}>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Name*"
+                                // onChange={ handleEditCustomFieldNew }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                            />
+                        </Box> 
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Quantity"
+                                maxRows={1}
+                                size="small"
+                                type="number"
+                                className={classes.inputMainData}
+                                InputProps={{  className: classes.inputClassName }}
+                                // onChange={ handleEditCustomFieldNew }
+                            />
+                            <TextField 
+                                label="Measure"
+                                size="small"
+                                select
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                                value={measureTemp}
+                                onChange={ (event) => setMeasureTemp(event.target.value) }
+                                >
+                                    {measureArray.map((measure) => (
+                                        <MenuItem 
+                                            className={classes.menuItemUsers}
+                                            key={measure.id} 
+                                            value={measure.name}
+                                            sx={{ justifyContent: "space-between" }}
+                                        >
+                                            {measure.name}
+                                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                        </MenuItem>
+                                    ))}
+
+
+                                </TextField>
+                        </Box> 
+                        <Box className={classes.customBoxRow}>
+                            <TextField 
+                                label="Category"
+                                size="small"
+                                select
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                                value={categoryTemp}
+                                onChange={ (event) => setCategoryTemp(event.target.value) }
+                            >
+                                {categoryArray.map((category) => (
+                                    <MenuItem 
+                                        className={classes.menuItemUsers}
+                                        key={category.id} 
+                                        value={category.name}
+                                        sx={{ justifyContent: "space-between" }}
+                                    >
+                                        {category.name}
+                                        {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Box> 
+                        <Box className={classes.customBoxRow}>
+                            <TextField  
+                                label="Sub-Category" 
+                                size="small"
+                                select
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                                value={subCategoryTemp}
+                                onChange={ (event) => setSubCategoryTemp(event.target.value) }
+                            >
+                            {subCategoryArray.map((subCategory) => (
+                                <MenuItem 
+                                    className={classes.menuItemUsers}
+                                    key={subCategory.id} 
+                                    value={subCategory.name}
+                                    sx={{ justifyContent: "space-between" }}
+                                >
+                                    {subCategory.name}
+                                    {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        </Box> 
+                        <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
+                            <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
+                            <UpButton
+                            direction="right"
+                            clicked={() => console.log("upButtonClicked")}
+                            />
+                        </Box>
+                    </Box>
+                    
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}

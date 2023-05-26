@@ -32,104 +32,9 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
+import { useStylesAlerts, modalStyleExternal, modalStyleInternal } from '../styles'
 
-
-const useStyles = makeStyles()({
-    finishButtons: {
-        display: "flex",
-        justifyContent:  "center",
-        gap: 20,
-        margin: "20px",
-    },
-
-    formControlUsers: {
-        width: "300px",
-        // backgroundColor: "white",
-        backgroundColor: "rgb(255,255, 255, .1)",
-        borderRadius: "10px",
-        "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-            },
-            '&.Mui-focused': {
-                },
-            "&.Mui-focused fieldset": {
-            }
-        }
-    },
-    selectUsers: {
-    },
-    inputLabelUsers: {
-    },
-    stackUsers: {
-    },
-    chipUsers: {
-        backgroundColor: "rgb(255,255, 255, .8)",
-    },
-    cancelIconUsers: {
-        '& > *': {
-            color: 'rgb(255, 47, 47, .9)',
-        }
-    },
-    menuItemUsers: {
-        "&.Mui-selected": {
-        },
-    },
-    customBoxColumn: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    },
-    customBoxRow: {
-        display: "flex",
-        justifyContent:  "center",
-        alignItems: "center",
-        gap: 6,
-    },
-    newEmailField: {        
-        backgroundColor: "white",
-        borderRadius: 10,
-        minWidth: "150px",
-        width: "100%",
-        maxWidth: "250px",
-    },
-    ionTrash:{
-        color: "rgb(255, 47, 47, 1)",
-        padding: "0",
-        marginBottom: "4px",
-        width: "37px", 
-        height: "37px",
-        '& img': {
-            width: "37px", 
-            height: "37px",
-        },
-    },
-
-
-
-})
-const style = {
-    position: 'absolute',
-    display: "flex",
-    justifyContent: "center",
-    top: 74,
-    width: "100%",
-    overflowX: "hidden",
-};
-const style2 = {
-    top: 74,
-    maxWidth: "700px",
-    width: "calc(100% - 32px)",
-    maxHeight: "520px",
-    // height: "520px",
-    backgroundColor: "rgb(45,72, 91, 1)",
-    borderRadius: "10px",
-    margin: "auto",
-    padding: "3px",
-    color: "white",
-    overflow: "scroll",
-    overflowX: "hidden",
-
-};
+// };
 // type SaveChangesProps = {
 //     openSaveChanges: boolean;
 //     closeSaveChanges: (newData?: boolean) => void;
@@ -183,7 +88,7 @@ const emailsAlert: emailsAlertData[] = [
 
 export default function Alerts( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
-    const { classes } = useStyles();
+    const { classes } = useStylesAlerts();
     const close = () => {
         handleClose(false)
     }
@@ -292,8 +197,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         open={open} 
         onClose={close}
         > 
-            <Box sx={style}>
-                <Box sx={style2}>
+            <Box sx={modalStyleExternal}>
+                <Box sx={modalStyleInternal}>
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 

@@ -25,7 +25,6 @@ import { OkButton,
          PlusButton,
          UpButton
         } from './Buttons';
-import  CreateStockMainData  from './CreateStockMainData'
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
@@ -122,12 +121,20 @@ import { useStylesAlerts, modalStyleExternal, modalStyleInternal } from '../styl
 //             height: "37px",
 //         },
 //     },
-// })
 
+
+
+// })
+// type SaveChangesProps = {
+//     openSaveChanges: boolean;
+//     closeSaveChanges: (newData?: boolean) => void;
+// }
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
 }
+
+
 // const names = [
 //     "Humaira Sims",
 //     "Santiago Solis",
@@ -177,11 +184,12 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 
-export default function CreateStock( { open, handleClose }: ChildProps) {
+export default function CreateStockMainData( ) {
+// export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesAlerts();
     const close = () => {
-        handleClose(false)
+        // handleClose(false)
     }
 
     const [measure, setMeasure] = useState('');
@@ -293,28 +301,108 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     }, [ open])
     
     return (
-        <Modal
-        open={open} 
-        onClose={close}
-        > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
+        <div>
+            <Typography align='center' variant='h6'>Main data</Typography>
+            <Box className={classes.customBoxColumn}>
+                <Box className={classes.customBoxRow}>
+                    <TextField
+                        label="Name*"
+                        // onChange={ handleEditCustomFieldNew }
+                        maxRows={1}
+                        size="small"
+                        className={classes.inputMainData}
+                        InputProps={{className: classes.inputClassName}}
                     />
-                    <Typography align='center' variant="h5">Create stock</Typography>
-                    <CreateStockMainData />
-                    <Box className={classes.finishButtons}>
-                        <CancelButton
-                        clicked={() => close()}
-                        />
-                        <OkButton
-                        clicked={() => handleOpenSaveChanges()}
-                        />
-                    </Box> 
+                </Box> 
+                <Box className={classes.customBoxRow}>
+                    <TextField
+                        label="Quantity"
+                        maxRows={1}
+                        size="small"
+                        type="number"
+                        className={classes.inputMainData}
+                        InputProps={{  className: classes.inputClassName }}
+                        // onChange={ handleEditCustomFieldNew }
+                    />
+                    <TextField 
+                        label="Measure"
+                        size="small"
+                        select
+                        className={classes.inputMainData}
+                        InputProps={{className: classes.inputClassName}}
+                        value={measureTemp}
+                        onChange={ (event) => setMeasureTemp(event.target.value) }
+                        >
+                            {measureArray.map((measure) => (
+                                <MenuItem 
+                                    className={classes.menuItemUsers}
+                                    key={measure.id} 
+                                    value={measure.name}
+                                    sx={{ justifyContent: "space-between" }}
+                                >
+                                    {measure.name}
+                                    {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                </MenuItem>
+                            ))}
+
+
+                        </TextField>
+                </Box> 
+                <Box className={classes.customBoxRow}>
+                    <TextField 
+                        label="Category"
+                        size="small"
+                        select
+                        className={classes.inputMainData}
+                        InputProps={{className: classes.inputClassName}}
+                        value={categoryTemp}
+                        onChange={ (event) => setCategoryTemp(event.target.value) }
+                    >
+                        {categoryArray.map((category) => (
+                            <MenuItem 
+                                className={classes.menuItemUsers}
+                                key={category.id} 
+                                value={category.name}
+                                sx={{ justifyContent: "space-between" }}
+                            >
+                                {category.name}
+                                {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Box> 
+                <Box className={classes.customBoxRow}>
+                    <TextField  
+                        label="Sub-Category" 
+                        size="small"
+                        select
+                        className={classes.inputMainData}
+                        InputProps={{className: classes.inputClassName}}
+                        value={subCategoryTemp}
+                        onChange={ (event) => setSubCategoryTemp(event.target.value) }
+                    >
+                    {subCategoryArray.map((subCategory) => (
+                        <MenuItem 
+                            className={classes.menuItemUsers}
+                            key={subCategory.id} 
+                            value={subCategory.name}
+                            sx={{ justifyContent: "space-between" }}
+                        >
+                            {subCategory.name}
+                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                        </MenuItem>
+                    ))}
+                </TextField>
+                </Box> 
+                <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
+                    <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
+                    <UpButton
+                    direction="right"
+                    clicked={() => console.log("upButtonClicked")}
+                    />
                 </Box>
             </Box>
-        </Modal>
+            
+        </div>
     )
 }

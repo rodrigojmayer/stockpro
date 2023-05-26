@@ -22,156 +22,9 @@ import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import { ColumnData } from '../types';
+import { useStylesAlerts, modalStyleExternal, modalStyleInternal } from '../styles'
 
 
-const useStyles = makeStyles()({
-    table: {
-        width: "calc(100% - 6px)",
-        margin: "3px",
-        padding: "6px 0",
-        borderRadius: "10px",
-        backgroundColor: "rgb(69, 144, 186)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    },
-    buttonsGroup: {
-        width: "100%",
-        height: "100%",
-    },
-    buttonFields: {
-        backgroundColor: "white",
-        width: "calc(100% - 12px)",
-        margin: "9px",
-        paddingLeft: "8px",
-        height: "32px",
-        borderRadius: "10px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        
-    },
-    page: {
-        display: "inline-block",
-        margin: "2%",
-        width: "30%",
-        height: "30%",
-        backgroundColor: "white",
-    },
-    dropped_widget: {
-        color: "red",
-    },
-    backPlus: {
-        color: "rgb(255, 47, 47, 1)",
-        width: "32px", 
-        height: "32px",
-        '& svg': {
-            width: "32px", 
-            height: "32px",
-        }
-    },
-    plusIcon: {
-        color: "rgb(32, 205, 60, 1)",
-        width: "32px", 
-        height: "32px",
-        '& svg': {
-            width: "32px", 
-            height: "32px",
-        }
-    },
-    customBoxColumn: {
-        display: "flex",
-        flexDirection: "column",
-    },
-    customBoxRow: {
-        display: "flex",
-        justifyContent:  "center",
-        alignItems: "center",
-        gap: 6,
-    },
-    editIcon: {
-        width: "32px", 
-        height: "32px",
-        marginBottom: "6px"
-    },
-    newCustomField: {
-        backgroundColor: "white",
-        borderRadius: 10,
-        minWidth: "150px",
-        width: "40%",
-        maxWidth: "250px",
-    },
-    ionTrash:{
-        color: "rgb(255, 47, 47, 1)",
-        padding: "0",
-        marginBottom: "4px",
-        width: "37px", 
-        height: "37px",
-        '& img': {
-            width: "37px", 
-            height: "37px",
-        },
-    },
-    finishButtons: {
-        display: "flex",
-        justifyContent:  "center",
-        gap: 20,
-        margin: "20px",
-    },
-    show: {
-        display: "block",
-        // position: "relative",
-        // top: 0,
-        // visibility: "visible",
-        // flexGrow: "5",
-    },
-    hide: {
-        display: "none",
-        // position: "relative",
-        // top: 0,
-        // visibility: "hidden",
-        // flexGrow: "6",
-    },
-    hideShowSpace: {
-        width: "10%", 
-        // flexGrow: ".5",
-    }
-})
-
-const style = {
-    position: 'absolute',
-    display: "flex",
-    justifyContent: "center",
-    top: 74,
-    width: "100%",
-    overflowX: "hidden",
-};
-const style2 = {
-    top: 74,
-    maxWidth: "700px",
-    width: "calc(100% - 32px)",
-    maxHeight: "520px",
-    // height: "520px",
-    backgroundColor: "rgb(45,72, 91, 1)",
-    borderRadius: "10px",
-    margin: "auto",
-    padding: "3px",
-    color: "white",
-    overflow: "scroll",
-    overflowX: "hidden",
-
-};
-
-
-// interface ColumnData {
-//     id: number;
-//     dataKey: string;
-//     label: string;
-//     numeric?: boolean;
-//     width: number;
-//     id_client?: number;
-//     deleted: boolean;
-// }
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
@@ -195,7 +48,7 @@ interface ColumnDataCustom {
 
 export default function Fields({ open, handleClose, columnsDefault, columnsCustom, idColumnsTableOrder }: ChildProps) {
 
-    const { classes } = useStyles()
+    const { classes } = useStylesAlerts()
     const close = () => {
         handleClose(false)
     }
@@ -474,8 +327,8 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         <Modal
         open={open} 
         onClose={close}> 
-            <Box sx={style}>
-                <Box sx={style2}>
+            <Box sx={modalStyleExternal}>
+                <Box sx={modalStyleInternal}>
 
                 <SaveChanges
                     openSaveChanges={openSaveChanges}
