@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { makeStyles } from 'tss-react/mui';
 import { Box,
          Container,
          Grid,
@@ -21,34 +20,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
-import { ColumnData } from '../types';
-import { useStylesAlerts, modalStyleExternal, modalStyleInternal } from '../styles'
+import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
 
-
-interface ChildProps {
-    open:  boolean
-    handleClose: (newData: boolean) => void
-    // columns: ColumnData[]
-    columnsDefault: ColumnData[]
-    columnsCustom: ColumnData[]
-    idColumnsTableOrder: Number[]
-    // columnsHiddenFields: ColumnData[]
-}
-interface ColumnDataCustom {
-    id: number;
-    dataKey: string;
-    label: string;
-    numeric?: boolean;
-    width: number;
-    id_client?: number;
-    deleted: boolean;
-    okButtonShow: boolean;
-    fieldRepeatedShow: boolean;
-}
 
 export default function Fields({ open, handleClose, columnsDefault, columnsCustom, idColumnsTableOrder }: ChildProps) {
 
-    const { classes } = useStylesAlerts()
+    const { classes } = useStylesGlobal()
     const close = () => {
         handleClose(false)
     }

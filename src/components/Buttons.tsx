@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material'
 import { Button, IconButton  } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';

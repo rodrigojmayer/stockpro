@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from 'tss-react/mui';
 import { Box,
          Container,
          Grid,
@@ -33,120 +32,9 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useStylesAlerts, modalStyleExternal, modalStyleInternal } from '../styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
 
 
-// const useStyles = makeStyles()({
-//     finishButtons: {
-//         display: "flex",
-//         justifyContent:  "center",
-//         gap: 20,
-//         margin: "20px",
-//     },
-
-//     formControlUsers: {
-//         width: "300px",
-//         // backgroundColor: "white",
-//         backgroundColor: "rgb(255,255, 255, .1)",
-//         borderRadius: "10px",
-//         "& .MuiOutlinedInput-root": {
-//             "& fieldset": {
-//             },
-//             '&.Mui-focused': {
-//                 },
-//             "&.Mui-focused fieldset": {
-//             }
-//         }
-//     },
-//     selectUsers: {
-//     },
-//     inputLabelUsers: {
-//     },
-//     stackUsers: {
-//     },
-//     chipUsers: {
-//         backgroundColor: "rgb(255,255, 255, .8)",
-//     },
-//     cancelIconUsers: {
-//         '& > *': {
-//             color: 'rgb(255, 47, 47, .9)',
-//         }
-//     },
-//     menuItemUsers: {
-//         "&.Mui-selected": {
-//         },
-//     },
-//     customBoxColumn: {
-//         margin: "0 auto",
-//         display: "flex",
-//         flexDirection: "column",
-//         width: "90%",
-//         // alignItems:  "flex-end",
-//         gap: 8,
-//     },
-//     customBoxRow: {
-//         display: "flex",
-//         justifyContent:  "center",
-//         alignItems: "center",
-//         gap: 8,
-//     },
-//     customBoxRowRight: {
-//         justifyContent:  "end",
-//     },
-//     inputMainData: {
-//         backgroundColor: "white",
-//         borderRadius: 10,
-//         width: "100%",
-//         // width: "70%",
-//         // minWidth: "70%",
-//         // width: "70%",
-//         // height:"34px",
-//     },
-//     inputClassName: {
-//         borderRadius: 10,
-//     },
-    
-//     selectInput: {
-//         paddingTop: '10px', // Adjust the top padding as needed
-//     },
-    
-//     ionTrash:{
-//         color: "rgb(255, 47, 47, 1)",
-//         padding: "0",
-//         marginBottom: "4px",
-//         width: "37px", 
-//         height: "37px",
-//         '& img': {
-//             width: "37px", 
-//             height: "37px",
-//         },
-//     },
-
-
-
-// })
-// type SaveChangesProps = {
-//     openSaveChanges: boolean;
-//     closeSaveChanges: (newData?: boolean) => void;
-// }
-interface ChildProps {
-    open:  boolean
-    handleClose: (newData: boolean) => void
-}
-
-
-// const names = [
-//     "Humaira Sims",
-//     "Santiago Solis",
-//     "Dawid Floyd",
-//     "Mateo Barlow",
-//     "Samia Navarro",
-//     "Kaden Fields",
-//     "Genevieve Watkins",
-//     "Mariah Hickman",
-//     "Rocco Richardson",
-//   "Harris Glenn",
-// ]
 interface measureData {
     id: number;
     name: string;
@@ -187,7 +75,7 @@ const emailsAlert: emailsAlertData[] = [
 export default function CreateStockMainData( ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
-    const { classes } = useStylesAlerts();
+    const { classes } = useStylesGlobal();
     const close = () => {
         // handleClose(false)
     }

@@ -1,4 +1,3 @@
-import { makeStyles } from 'tss-react/mui';
 import { Box,
          Modal, 
          Typography,
@@ -6,49 +5,24 @@ import { Box,
 import { OkButton,
          CancelButton, 
         } from './Buttons';
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal } from '../styles'
 
-const useStyles = makeStyles()({
-    finishButtons: {
-        display: "flex",
-        justifyContent:  "center",
-        gap: 20,
-        margin: "20px",
-    },
-})
-const style = {
-    position: 'absolute',
-    display: "flex",
-    justifyContent: "center",
-    top: "40%",
-    width: "100%",
-    overflowX: "hidden",
-};
-const style2 = {
-    top: 74,
-    width: "220px",
-    backgroundColor: "rgb(45,72, 91, 1)",
-    borderRadius: "10px",
-    margin: "auto",
-    padding: "3px",
-    color: "white",
-    overflow: "scroll",
-    overflowX: "hidden",
-};
+
 type SaveChangesProps = {
     openSaveChanges: boolean;
     closeSaveChanges: (newData?: boolean) => void;
 }
 export default function SaveChanges( props: SaveChangesProps) {
     const { openSaveChanges, closeSaveChanges } = props;
-    const { classes } = useStyles();
+    const { classes } = useStylesGlobal();
 
     return (
         <Modal
         open={openSaveChanges} 
         onClose={() => closeSaveChanges()}
         > 
-            <Box sx={style}>
-                <Box sx={style2}>
+            <Box sx={modalStyleSaveExternal}>
+                <Box sx={modalStyleSaveInternal}>
                     <Typography align="center" variant="h6">
                         Save changes?
                     </Typography>

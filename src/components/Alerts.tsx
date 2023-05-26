@@ -32,7 +32,7 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useStylesAlerts, modalStyleExternal, modalStyleInternal } from '../styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
 
 // };
 // type SaveChangesProps = {
@@ -88,7 +88,7 @@ const emailsAlert: emailsAlertData[] = [
 
 export default function Alerts( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
-    const { classes } = useStylesAlerts();
+    const { classes } = useStylesGlobal();
     const close = () => {
         handleClose(false)
     }

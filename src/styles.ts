@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-export const useStylesAlerts = makeStyles()({
+export const useStylesGlobal = makeStyles()({
     finishButtons: {
         display: "flex",
         justifyContent:  "center",
@@ -198,4 +198,25 @@ export const modalStyleInternal = {
     overflow: "scroll",
     overflowX: "hidden",
 
+};
+
+
+export const modalStyleSaveExternal = {
+    position: 'absolute',
+    display: "flex",
+    justifyContent: "center",
+    top: "40%",
+    width: "100%",
+    overflowX: "hidden",
+};
+export const modalStyleSaveInternal = {
+    top: 74,
+    width: "220px",
+    backgroundColor: "rgb(45,72, 91, 1)",
+    borderRadius: "10px",
+    margin: "auto",
+    padding: "3px",
+    color: "white",
+    overflow: "scroll",
+    overflowX: "hidden",
 };

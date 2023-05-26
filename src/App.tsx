@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import List from './components/List'
 import { Container, Typography, Grid } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { OkButton, CancelButton, PlusButton } from './components/Buttons';

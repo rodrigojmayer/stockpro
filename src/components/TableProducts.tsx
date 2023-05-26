@@ -5,17 +5,8 @@ import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
-import { Data, ColumnData } from '../types';
+import { Data, DataTable, ColumnData } from '../types';
 
-// interface Data {
-//   id: number;
-//   product: string;
-//   amount: number;
-//   measure: string;
-//   category: string;
-//   sub_category: string;
-//   [key: string]: any;
-// }
 
 
 const INITIAL_STATE = {
@@ -27,66 +18,6 @@ const INITIAL_STATE = {
   sub_category: "",
 }
 
-// interface ColumnData {
-//   id: number;
-//   dataKey: string;
-//   label: string;
-//   numeric?: boolean;
-//   width: number;
-// }
-
-interface DataTable {
-  data: Data[] 
-  columns: ColumnData[]
-}
-// type Sample = [string, number, string, string, string];
-
-// const columns: ColumnData[] = [
-//   {
-//     width: 120,
-//     label: 'Product',
-//     dataKey: 'product',
-//   },
-//   {
-//     width: 80,
-//     // label: 'Calories\u00A0(g)',
-//     label: 'Amount',
-//     dataKey: 'amount',
-//     numeric: true,
-//   },
-//   {
-//     width: 80,
-//     label: 'Measure',
-//     dataKey: 'measure',
-//   },
-//   {
-//     width: 100,
-//     label: 'Category',
-//     dataKey: 'category',
-//     numeric: true,
-//   },
-//   {
-//     width: 100,
-//     label: 'Sub Category',
-//     dataKey: 'sub_category',
-//     numeric: true,
-//   },
-// ];
-
-// let rowsSearch: Data[] = Array.from({ length: 5 }, (_, index) => {
-//   const randomSelection = sample[index];
-//   // i++
-//   return createData(index, ...randomSelection);
- 
-// });
-// let rows: Data[] = Array.from({ length: 5 }, (_, index) => {
-//   const randomSelection = sample[index];
-//   // i++
-//   return createData(index, ...randomSelection);
- 
-// });
-// console.log(rows)
-// console.log(sample)
 
 const VirtuosoTableComponents: TableComponents<Data> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
@@ -103,64 +34,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 };
 
 
-// function fixedHeaderContent() {
-//   return (
-//     <TableRow>
-//       {columns.map((column) => (
-//         <TableCell
-//           key={column.dataKey}
-//           variant="head"
-//           align='center'
-//           // align={column.numeric || false ? 'right' : 'left'}
-//           style={{ 
-//             width: column.width, 
-//             backgroundColor:"rgb(25, 54, 72)", 
-//             border:0
-//           }}
-//           sx={{
-//             // backgroundColor: 'background.paper',
-//             color: "white",
-//             padding: "8px 0",
-//           }}
-//         >
-//           {column.label}
-          
-          
-//             <TextField
-//               // defaultValue={pe}
-//               id="filled-multiline-flexible"
-//               // label="Multiline"
-//               // multiline
-//               maxRows={1}
-//               size="small"
-//               // variant="filled"
-//               sx={{
-//                 // backgroundColor: 'background.paper',
-//                 backgroundColor: "white",
-//                 borderRadius: 1,
-//                 // height: "50px",
-//                 // width: "50px",
-//                 margin: "8px",
-//             }}
-//             InputProps={{
-//               style: {
-//                 height:"36px",
-//               },
-//             }}
-//               // style={{height: "10px"}}
-//             />
-         
-
-
-//         </TableCell>
-//       ))}
-//     </TableRow>
-//   );
-// }
-
 function rowContent(_index: number, row: Data, columns: ColumnData[]) {
-// function rowContent(_index: number, row: Data) {
-
   return (
     <React.Fragment >
       {columns.map((column) => (
