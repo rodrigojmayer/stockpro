@@ -297,7 +297,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                                 className={classes.newEmailField}
                                                 InputProps={{
                                                     style: {
-                                                    height:"34px",
+                                                    // height:"36px",
                                                     borderRadius: 10,
                                                     },
                                                 }}

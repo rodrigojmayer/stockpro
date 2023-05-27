@@ -430,7 +430,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                                                 className={classes.newCustomField}
                                                 InputProps={{
                                                     style: {
-                                                    height:"34px",
+                                                    // height:"36px",
                                                     borderRadius: 10,
                                                     },
                                                 }}

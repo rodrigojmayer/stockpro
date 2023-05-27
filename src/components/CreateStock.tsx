@@ -25,6 +25,7 @@ import { OkButton,
          UpButton
         } from './Buttons';
 import  CreateStockMainData  from './CreateStockMainData'
+import  CreateStockSecondaryData  from './CreateStockSecondaryData'
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
@@ -217,6 +218,7 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                     />
                     <Typography align='center' variant="h5">Create stock</Typography>
                     <CreateStockMainData />
+                    <CreateStockSecondaryData />
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}

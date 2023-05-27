@@ -107,9 +107,10 @@ export const useStylesGlobal = makeStyles()({
     buttonFields: {
         backgroundColor: "white",
         width: "calc(100% - 12px)",
-        margin: "9px",
+        margin: "5px",
         paddingLeft: "8px",
-        height: "32px",
+        paddingRight: "4px",
+        height: "40px",
         borderRadius: "10px",
         display: "flex",
         justifyContent: "space-between",

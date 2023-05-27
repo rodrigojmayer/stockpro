@@ -72,7 +72,7 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 
-export default function CreateStockMainData( ) {
+export default function CreateStockSecondaryData( ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -190,7 +190,7 @@ export default function CreateStockMainData( ) {
     
     return (
         <div>
-            <Typography align='center' variant='h6'>Main data</Typography>
+            <Typography align='center' variant='h6'>Secondary data</Typography>
             <Box className={classes.customBoxColumn}>
                 <Box className={classes.customBoxRow}>
                     <TextField
