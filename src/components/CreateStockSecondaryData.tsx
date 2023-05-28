@@ -194,7 +194,7 @@ export default function CreateStockSecondaryData( ) {
             <Box className={classes.customBoxColumn}>
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Name*"
+                        label="Price"
                         // onChange={ handleEditCustomFieldNew }
                         maxRows={1}
                         size="small"
@@ -210,7 +210,7 @@ export default function CreateStockSecondaryData( ) {
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Quantity"
+                        label="Description"
                         maxRows={1}
                         size="small"
                         type="number"
@@ -219,7 +219,7 @@ export default function CreateStockSecondaryData( ) {
                         // onChange={ handleEditCustomFieldNew }
                     />
                     <TextField 
-                        label="Measure"
+                        label="Image 1"
                         size="small"
                         select
                         className={classes.inputMainData}
@@ -242,54 +242,8 @@ export default function CreateStockSecondaryData( ) {
 
                         </TextField>
                 </Box> 
-                <Box className={classes.customBoxRow}>
-                    <TextField 
-                        label="Category"
-                        size="small"
-                        select
-                        className={classes.inputMainData}
-                        InputProps={{className: classes.inputClassName}}
-                        value={categoryTemp}
-                        onChange={ (event) => setCategoryTemp(event.target.value) }
-                    >
-                        {categoryArray.map((category) => (
-                            <MenuItem 
-                                className={classes.menuItemUsers}
-                                key={category.id} 
-                                value={category.name}
-                                sx={{ justifyContent: "space-between" }}
-                            >
-                                {category.name}
-                                {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Box> 
-                <Box className={classes.customBoxRow}>
-                    <TextField  
-                        label="Sub-Category" 
-                        size="small"
-                        select
-                        className={classes.inputMainData}
-                        InputProps={{className: classes.inputClassName}}
-                        value={subCategoryTemp}
-                        onChange={ (event) => setSubCategoryTemp(event.target.value) }
-                    >
-                    {subCategoryArray.map((subCategory) => (
-                        <MenuItem 
-                            className={classes.menuItemUsers}
-                            key={subCategory.id} 
-                            value={subCategory.name}
-                            sx={{ justifyContent: "space-between" }}
-                        >
-                            {subCategory.name}
-                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
-                        </MenuItem>
-                    ))}
-                </TextField>
-                </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
-                    <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
+                    <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
                     <UpButton
                     direction="right"
                     clicked={() => console.log("upButtonClicked")}
