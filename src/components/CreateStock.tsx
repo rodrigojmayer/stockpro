@@ -35,6 +35,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
+import { DataCreateStockOptions } from '../types';
 
 
 interface ChildProps {
@@ -89,6 +90,12 @@ const emailsAlert: emailsAlertData[] = [
     { id: 3, email: 'email3@test.com'},
 ];
 
+const INITIAL_CREATESTOCK_OPTIONS = {
+    mainData: true,  
+    secondaryData: false,
+    alerts: false,    
+    customFields: false,
+}
 
 export default function CreateStock( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -97,6 +104,7 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
         handleClose(false)
     }
 
+    const [openOptions, setOpenOptions] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [measure, setMeasure] = useState('');
     const [measureTemp, setMeasureTemp] = useState('');
     const [category, setCategory] = useState('');
@@ -176,6 +184,17 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     
+    const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
+        setOpenOptions({...openOptions, [newData.option]: newData.open});
+    }
+    const handleCloseOptions = () => {
+        for(const [key, value] of Object.entries(openOptions)) {
+            if (value){
+                setOpenOptions({ ...openOptions, [key]: false})
+                break;
+            }
+        }
+    }
     // const addInputCustomField = () => {
     //     // console.log("holis clickis", customFieldsNewTemp.length)
     //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
@@ -217,7 +236,9 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         closeSaveChanges={handleCloseSaveChanges} 
                     />
                     <Typography align='center' variant="h5">Create stock</Typography>
-                    <CreateStockMainData />
+                    <CreateStockMainData 
+                        hiddenPanel={openOptions.mainData}
+                    />
                     <CreateStockSecondaryData />
                     <Box className={classes.finishButtons}>
                         <CancelButton

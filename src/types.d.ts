@@ -43,6 +43,12 @@ export interface DataMenuOptions {
   profile: boolean,
   preferences: boolean
 }
+export interface DataCreateStockOptions {
+  mainData: boolean,
+  secondaryData: boolean,
+  alerts: boolean,
+  customFields: boolean
+}
 
 export interface ChildProps {
   open:  boolean

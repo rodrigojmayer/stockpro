@@ -33,6 +33,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
+import { DataCreateStockOptions } from '../types';
 
 
 interface measureData {
@@ -72,14 +73,19 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 
-export default function CreateStockMainData( ) {
+interface ChildProps {
+    open:  boolean
+    handleClose: (newData: boolean) => void
+}
+
+export default function CreateStockMainData({ hiddenPanel }: { hiddenPanel: boolean })  {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
         // handleClose(false)
     }
-
+    console.log("hiddenPanel: ", hiddenPanel)
     const [measure, setMeasure] = useState('');
     const [measureTemp, setMeasureTemp] = useState('');
     const [category, setCategory] = useState('');
@@ -189,7 +195,10 @@ export default function CreateStockMainData( ) {
     }, [ open])
     
     return (
-        <div>
+       
+        <div
+        hidden= {hiddenPanel}
+        >
             <Typography align='center' variant='h6'>Main data</Typography>
             <Box className={classes.customBoxColumn}>
                 <Box className={classes.customBoxRow}>
