@@ -243,7 +243,7 @@ export default function CreateStockAlerts( ) {
                         </TextField>
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
-                    <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
+                    <Typography align="right" sx={{ width: "95px" }}>Other button</Typography>
                     <UpButton
                     direction="right"
                     clicked={() => console.log("upButtonClicked")}
