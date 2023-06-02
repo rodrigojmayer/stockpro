@@ -249,6 +249,13 @@ export default function CreateStockAlerts( ) {
                     clicked={() => console.log("upButtonClicked")}
                     />
                 </Box>
+                <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
+                    <Typography align="right" sx={{ width: "95px" }}>Other button</Typography>
+                    <UpButton
+                    direction="right"
+                    clicked={() => console.log("upButtonClicked")}
+                    />
+                </Box>
             </Box>
             
         </div>
