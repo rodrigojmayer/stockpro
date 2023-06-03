@@ -192,65 +192,30 @@ export default function CreateStockAlerts( ) {
         <div>
             <Typography align='center' variant='h6'>Alerts</Typography>
             <Box className={classes.customBoxColumn}>
-                <Box className={classes.customBoxRow}>
-                    <TextField
-                        label="Price"
-                        // onChange={ handleEditCustomFieldNew }
-                        maxRows={1}
-                        size="small"
-                        className={classes.inputMainData}
-                        InputProps={{
-                            className: classes.inputClassName,
-                            style: {
-                            // height:"36px"
-                            // borderRadius: 10,
-                            },
-                        }}
-                    />
+            <Box className={classes.customBoxRow}>
+                    
+                <Typography align="center" variant="h6">
+                        By quantity
+                    </Typography>
                 </Box> 
                 <Box className={classes.customBoxRow}>
-                    <TextField
-                        label="Description"
-                        maxRows={1}
-                        size="small"
-                        type="number"
-                        className={classes.inputMainData}
-                        InputProps={{  className: classes.inputClassName }}
-                        // onChange={ handleEditCustomFieldNew }
-                    />
-                    <TextField 
-                        label="Image 1"
-                        size="small"
-                        select
-                        className={classes.inputMainData}
-                        InputProps={{className: classes.inputClassName}}
-                        value={measureTemp}
-                        onChange={ (event) => setMeasureTemp(event.target.value) }
-                        >
-                            {measureArray.map((measure) => (
-                                <MenuItem 
-                                    className={classes.menuItemUsers}
-                                    key={measure.id} 
-                                    value={measure.name}
-                                    sx={{ justifyContent: "space-between" }}
-                                >
-                                    {measure.name}
-                                    {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
-                                </MenuItem>
-                            ))}
-
-
-                        </TextField>
+                    <PlusButton/>
+                </Box><Box className={classes.customBoxRow}>
+                
+                <Typography align="center" variant="h6">
+                        By date
+                    </Typography>
                 </Box> 
-                <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
-                    <Typography align="right" sx={{ width: "95px" }}>Other button</Typography>
+                <Box className={classes.customBoxRow}>
+                    <PlusButton/>
+                </Box> 
+                <Box className={`${classes.customBoxRow} `} sx={{ marginTop: "10px" }}>
                     <UpButton
-                    direction="right"
-                    clicked={() => console.log("upButtonClicked")}
-                    />
-                </Box>
-                <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
-                    <Typography align="right" sx={{ width: "95px" }}>Other button</Typography>
+                        direction="left"
+                        clicked={() => console.log("upButtonClicked")}
+                    /><Typography align="left" sx={{ width: "95px" }}>Secondary data</Typography>
+                    
+                    <Typography align="right" sx={{ width: "95px" }}>Custom fields</Typography>
                     <UpButton
                     direction="right"
                     clicked={() => console.log("upButtonClicked")}
