@@ -24,10 +24,6 @@ import { OkButton,
          PlusButton,
          UpButton
         } from './Buttons';
-import  CreateStockMainData  from './CreateStockMainData'
-import  CreateStockSecondaryData  from './CreateStockSecondaryData'
-import  CreateStockAlerts  from './CreateStockAlerts'
-import  CreateStockCustomFields  from './CreateStockCustomFields'
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
@@ -37,25 +33,8 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
-import { DataCreateStockOptions } from '../types';
 
 
-interface ChildProps {
-    open:  boolean
-    handleClose: (newData: boolean) => void
-}
-// const names = [
-//     "Humaira Sims",
-//     "Santiago Solis",
-//     "Dawid Floyd",
-//     "Mateo Barlow",
-//     "Samia Navarro",
-//     "Kaden Fields",
-//     "Genevieve Watkins",
-//     "Mariah Hickman",
-//     "Rocco Richardson",
-//   "Harris Glenn",
-// ]
 interface measureData {
     id: number;
     name: string;
@@ -92,21 +71,15 @@ const emailsAlert: emailsAlertData[] = [
     { id: 3, email: 'email3@test.com'},
 ];
 
-const INITIAL_CREATESTOCK_OPTIONS = {
-    mainData: true,  
-    secondaryData: false,
-    alerts: false,    
-    customFields: false,
-}
 
-export default function CreateStock( { open, handleClose }: ChildProps) {
+export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel: boolean } ) {
+// export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
-        handleClose(false)
+        // handleClose(false)
     }
 
-    const [openOptions, setOpenOptions] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [measure, setMeasure] = useState('');
     const [measureTemp, setMeasureTemp] = useState('');
     const [category, setCategory] = useState('');
@@ -186,17 +159,6 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     
-    const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
-        setOpenOptions({...openOptions, [newData.option]: newData.open});
-    }
-    const handleCloseOptions = () => {
-        for(const [key, value] of Object.entries(openOptions)) {
-            if (value){
-                setOpenOptions({ ...openOptions, [key]: false})
-                break;
-            }
-        }
-    }
     // const addInputCustomField = () => {
     //     // console.log("holis clickis", customFieldsNewTemp.length)
     //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
@@ -227,39 +189,34 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     }, [ open])
     
     return (
-        <Modal
-        open={open} 
-        onClose={close}
-        > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
+        <div>
+            <Typography align='center' variant='h6'>Custom fields</Typography>
+            <Box className={classes.customBoxColumn}>
+            <Box className={classes.customBoxRow}>
+                <Typography align="center" variant="h6">
+                    By quantity
+                </Typography>
+                </Box> 
+                <Box className={classes.customBoxRow}>
+                    <PlusButton/>
+                </Box><Box className={classes.customBoxRow}>
+                
+                <Typography align="center" variant="h6">
+                    By date
+                </Typography>
+                </Box> 
+                <Box className={classes.customBoxRow}>
+                    <PlusButton/>
+                </Box> 
+                <Box className={`${classes.customBoxRow} ${classes.customBoxRowLeft}`} sx={{ marginTop: "10px" }}>
+                    <UpButton
+                        direction="left"
+                        clicked={() => console.log("upButtonClicked")}
                     />
-                    <Typography align='center' variant="h5">Create stock</Typography>
-                    <CreateStockMainData 
-                        hiddenPanel={openOptions.mainData}
-                    />
-                    <CreateStockSecondaryData 
-                        hiddenPanel={openOptions.secondaryData}
-                    />
-                    <CreateStockAlerts 
-                        hiddenPanel={openOptions.alerts}
-                    />
-                    <CreateStockCustomFields
-                        hiddenPanel={openOptions.customFields}
-                    />
-                    <Box className={classes.finishButtons}>
-                        <CancelButton
-                        clicked={() => close()}
-                        />
-                        <OkButton
-                        clicked={() => handleOpenSaveChanges()}
-                        />
-                    </Box> 
+                    <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
                 </Box>
             </Box>
-        </Modal>
+            
+        </div>
     )
 }

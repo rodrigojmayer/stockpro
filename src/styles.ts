@@ -75,6 +75,9 @@ export const useStylesGlobal = makeStyles()({
             height: "37px",
         },
     },
+    customBoxRowLeft: {
+        justifyContent:  "start",
+    },
     customBoxRowRight: {
         justifyContent:  "end",
     },
