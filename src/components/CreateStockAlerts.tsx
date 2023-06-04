@@ -72,7 +72,7 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 
-export default function CreateStockAlerts( ) {
+export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();

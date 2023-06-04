@@ -240,8 +240,12 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                     <CreateStockMainData 
                         hiddenPanel={openOptions.mainData}
                     />
-                    <CreateStockSecondaryData />
-                    <CreateStockAlerts />
+                    <CreateStockSecondaryData 
+                        hiddenPanel={openOptions.secondaryData}
+                    />
+                    <CreateStockAlerts 
+                        hiddenPanel={openOptions.mainData}
+                    />
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}
