@@ -192,19 +192,6 @@ export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel:
         <div>
             <Typography align='center' variant='h6'>Custom fields</Typography>
             <Box className={classes.customBoxColumn}>
-            <Box className={classes.customBoxRow}>
-                <Typography align="center" variant="h6">
-                    By quantity
-                </Typography>
-                </Box> 
-                <Box className={classes.customBoxRow}>
-                    <PlusButton/>
-                </Box><Box className={classes.customBoxRow}>
-                
-                <Typography align="center" variant="h6">
-                    By date
-                </Typography>
-                </Box> 
                 <Box className={classes.customBoxRow}>
                     <PlusButton/>
                 </Box> 
