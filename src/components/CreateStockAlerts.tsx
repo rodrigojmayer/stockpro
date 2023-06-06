@@ -189,7 +189,9 @@ export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boole
     }, [ open])
     
     return (
-        <div>
+        <div
+        hidden= {hiddenPanel}
+        >
             <Typography align='center' variant='h6'>Alerts</Typography>
             <Box className={classes.customBoxColumn}>
             <Box className={classes.customBoxRow}>

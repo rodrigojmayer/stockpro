@@ -93,10 +93,10 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 const INITIAL_CREATESTOCK_OPTIONS = {
-    mainData: true,  
-    secondaryData: false,
-    alerts: false,    
-    customFields: false,
+    mainData: false,  
+    secondaryData: true,
+    alerts: true,    
+    customFields: true,
 }
 
 export default function CreateStock( { open, handleClose }: ChildProps) {

@@ -189,7 +189,9 @@ export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel:
     }, [ open])
     
     return (
-        <div>
+        <div
+        hidden= {hiddenPanel}
+        >
             <Typography align='center' variant='h6'>Custom fields</Typography>
             <Box className={classes.customBoxColumn}>
                 <Box className={classes.customBoxRow}>

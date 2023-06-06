@@ -189,7 +189,9 @@ export default function CreateStockSecondaryData( { hiddenPanel }: { hiddenPanel
     }, [ open])
     
     return (
-        <div>
+        <div
+        hidden= {hiddenPanel}
+        >
             <Typography align='center' variant='h6'>Secondary data</Typography>
             <Box className={classes.customBoxColumn}>
                 <Box className={classes.customBoxRow}>
