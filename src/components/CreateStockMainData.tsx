@@ -301,6 +301,7 @@ export default function CreateStockMainData({ hiddenPanel }: { hiddenPanel: bool
                     <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
                     <UpButton
                     direction="right"
+                    //clicked={() => console.log("upButtonClicked")}
                     clicked={() => console.log("upButtonClicked")}
                     />
                 </Box>
