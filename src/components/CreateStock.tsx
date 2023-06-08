@@ -44,18 +44,6 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
 }
-// const names = [
-//     "Humaira Sims",
-//     "Santiago Solis",
-//     "Dawid Floyd",
-//     "Mateo Barlow",
-//     "Samia Navarro",
-//     "Kaden Fields",
-//     "Genevieve Watkins",
-//     "Mariah Hickman",
-//     "Rocco Richardson",
-//   "Harris Glenn",
-// ]
 interface measureData {
     id: number;
     name: string;
@@ -106,7 +94,7 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
         handleClose(false)
     }
 
-    const [openOptions, setOpenOptions] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
+    const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [measure, setMeasure] = useState('');
     const [measureTemp, setMeasureTemp] = useState('');
     const [category, setCategory] = useState('');
@@ -114,64 +102,6 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     const [subCategory, setSubCategory] = useState('');
     const [subCategoryTemp, setSubCategoryTemp] = useState('');
     
-    // const usersAlertSelected = usersAlert.filter((usr) => {
-    //     if(idUsersAlertSelected.includes(usr.id))
-    //         return usr
-    // })
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
-    // const [selectedNames, setSelectedNames] = useState([]);
-    
-    // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
-
-    // const deleteEmailTemp = (id:number) => {
-    //     // console.log("idEmailTemp: ", id)
-    //     const updateEmailsTemp = [...emailsAlertsTemp]
-    //     // const updateFieldsNew = [...customFieldsNew]
-    //     let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
-    //     // console.log("index: ", index)
-    //     // console.log("updateEmailsTemp: ", updateEmailsTemp)
-    //     // if (index !== -1) {
-    //         // updateFields[index].deleted = true
-    //     //     // setCustomFields(updateFields)
-    //     //     updateFieldsNew[index].deleted = true
-    //     //     // console.log("customFields: ", customFields) 
-    //     // } else {
-    //     //     index = customFieldsNew.findIndex(field => field.id === id)
-    //     updateEmailsTemp.splice(index, 1)
-
-    //     // }
-    //     setEmailsAlertsTemp(updateEmailsTemp)
-    // }
-    
-    // const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     // console.log("event.currentTarget.id: ", event.currentTarget.id)
-    //     // console.log("event.currentTarget.value: ", event.currentTarget.value)
-    //     // console.log("isNaN('w'): ", isNaN(NaN))
-    //     // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
-    //         const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-    //         if(index !== -1) {
-    //             const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
-    //             updateEmailsAlertsTemp[index].email = event.currentTarget.value
-    //         //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //         //     // console.log("customFields[index].label: ", customFields[index].label)
-    //         //     if(customFields[index]){
-    //         //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
-    //         //             updateFieldsNew[index].okButtonShow = false
-    //         //         else
-    //         //             updateFieldsNew[index].okButtonShow = true
-    //         //     }else if(updateFieldsNew[index].label !='' ){
-    //         //         updateFieldsNew[index].okButtonShow = true
-    //         //     }else if (updateFieldsNew[index].label ==='' ){
-    //         //         updateFieldsNew[index].okButtonShow = false
-    //         //     }
-    //             // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
-        
-    //             setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //         }
-    // }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
@@ -186,35 +116,20 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     
-    const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
-        setOpenOptions({...openOptions, [newData.option]: newData.open});
+    const handleOpenOptionsCreate = (newData:  {option: string, open: boolean}) => {
+        setOpenOptionsCreate({...openOptionsCreate, [newData.option]: newData.open});
     }
-    const handleCloseOptions = () => {
-        for(const [key, value] of Object.entries(openOptions)) {
-            if (value){
-                setOpenOptions({ ...openOptions, [key]: false})
-                break;
-            }
-        }
-    }
-    // const addInputCustomField = () => {
-    //     // console.log("holis clickis", customFieldsNewTemp.length)
-    //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-    //     const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
-    //     const nextId = lastObj.id + 1
-    //     const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
-    //     // updateFieldsNew[index].label = event.currentTarget.value
-    //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //     // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-    //     // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-    //     //     updateFieldsNew[index].okButtonShow = true
-    //     // else
-    //     //     updateFieldsNew[index].okButtonShow = false
-        
-    //     // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
+    // const handleCloseOptionsCreate = (newData:string) => {
+    //     console.log("Received data:", newData);
+    //     for(const [key, value] of Object.entries(openOptionsCreate)) {
+    //         console.log("key: ", key)
+    //         console.log("value: ", value)
 
-    //     setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //     // setAddButtonShow(false)
+    //         // if (value){
+    //             setOpenOptionsCreate({ ...openOptionsCreate, [key]: value})
+    //             // break;
+    //         // }
+    //     }
     // }
 
     useEffect(() => {
@@ -239,16 +154,17 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                     />
                     <Typography align='center' variant="h5">Create stock</Typography>
                     <CreateStockMainData 
-                        hiddenPanel={openOptions.mainData}
+                        hiddenPanel={openOptionsCreate.mainData}
+                        openOptionsCreate={handleOpenOptionsCreate}
                     />
                     <CreateStockSecondaryData 
-                        hiddenPanel={openOptions.secondaryData}
+                        hiddenPanel={openOptionsCreate.secondaryData}
                     />
                     <CreateStockAlerts 
-                        hiddenPanel={openOptions.alerts}
+                        hiddenPanel={openOptionsCreate.alerts}
                     />
                     <CreateStockCustomFields
-                        hiddenPanel={openOptions.customFields}
+                        hiddenPanel={openOptionsCreate.customFields}
                     />
                     <Box className={classes.finishButtons}>
                         <CancelButton

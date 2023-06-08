@@ -74,18 +74,21 @@ const emailsAlert: emailsAlertData[] = [
 
 
 interface ChildProps {
-    open:  boolean
-    handleClose: (newData: boolean) => void
+    hiddenPanel:  boolean
+    // openOptionsCreate: (newData: string) => void
+    openOptionsCreate: (newData:  {option: string, open: boolean} )=> void
+    
 }
 
-export default function CreateStockMainData({ hiddenPanel }: { hiddenPanel: boolean })  {
+export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: ChildProps )  {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
         // handleClose(false)
     }
-    console.log("hiddenPanel: ", hiddenPanel)
+    // console.log("hiddenPanel: ", hiddenPanel)
+    // console.log("openOptionsCreate: ", openOptionsCreate)
     const [measure, setMeasure] = useState('');
     const [measureTemp, setMeasureTemp] = useState('');
     const [category, setCategory] = useState('');
@@ -163,7 +166,8 @@ export default function CreateStockMainData({ hiddenPanel }: { hiddenPanel: bool
         setOpenSaveChanges(false);
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
-
+    
+    const handleHiddenOptions = () =>  openOptionsCreate({ option: "1", open: true })
     
     // const addInputCustomField = () => {
     //     // console.log("holis clickis", customFieldsNewTemp.length)
@@ -302,11 +306,10 @@ export default function CreateStockMainData({ hiddenPanel }: { hiddenPanel: bool
                     <UpButton
                     direction="right"
                     //clicked={() => console.log("upButtonClicked")}
-                    clicked={() => console.log("upButtonClicked")}
+                    clicked={() => handleHiddenOptions()}
                     />
                 </Box>
             </Box>
-            
         </div>
     )
 }
