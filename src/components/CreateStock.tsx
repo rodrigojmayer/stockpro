@@ -116,30 +116,24 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     
-    const handleOpenOptionsCreate = (newData:  {option: string, open: boolean}) => {
-        setOpenOptionsCreate({...openOptionsCreate, [newData.option]: newData.open});
-    }
-    // const handleCloseOptionsCreate = (newData:string) => {
-    //     console.log("Received data:", newData);
-    //     for(const [key, value] of Object.entries(openOptionsCreate)) {
-    //         console.log("key: ", key)
-    //         console.log("value: ", value)
+    const handleOpenOptionsCreate = (newData:  string) => {
+        const updatedOptions = { ...openOptionsCreate };
+        for (const key in updatedOptions) {
+            if (Object.prototype.hasOwnProperty.call(updatedOptions, key)) 
+            updatedOptions[key as keyof typeof updatedOptions] = (newData===key ? false : true );
+        }
+        setOpenOptionsCreate(updatedOptions);
 
-    //         // if (value){
-    //             setOpenOptionsCreate({ ...openOptionsCreate, [key]: value})
-    //             // break;
-    //         // }
-    //     }
-    // }
+    }
 
     useEffect(() => {
-        // console.log("useeffect")
+        console.log("openOptionsCreate: ", openOptionsCreate)
         // setSelectedUsersTemp(selectedUsers)
         setMeasureTemp(measure)
         setCategoryTemp(category)
         setSubCategoryTemp(subCategory)
 
-    }, [ open])
+    }, [ open, openOptionsCreate])
     
     return (
         <Modal
@@ -159,12 +153,15 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                     />
                     <CreateStockSecondaryData 
                         hiddenPanel={openOptionsCreate.secondaryData}
+                        openOptionsCreate={handleOpenOptionsCreate}
                     />
                     <CreateStockAlerts 
                         hiddenPanel={openOptionsCreate.alerts}
+                        openOptionsCreate={handleOpenOptionsCreate}
                     />
                     <CreateStockCustomFields
                         hiddenPanel={openOptionsCreate.customFields}
+                        openOptionsCreate={handleOpenOptionsCreate}
                     />
                     <Box className={classes.finishButtons}>
                         <CancelButton

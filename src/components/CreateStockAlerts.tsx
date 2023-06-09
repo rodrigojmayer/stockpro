@@ -72,7 +72,15 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 
-export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
+interface ChildProps {
+    hiddenPanel:  boolean
+    // openOptionsCreate: (newData: string) => void
+    openOptionsCreate: (newData: string )=> void
+    
+}
+
+export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: ChildProps )  {
+// export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -179,6 +187,10 @@ export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boole
     //     // setAddButtonShow(false)
     // }
 
+    const handleHiddenOptions = (changeTo:string) =>  {
+        openOptionsCreate(changeTo)
+    }
+
     useEffect(() => {
         // console.log("useeffect")
         // setSelectedUsersTemp(selectedUsers)
@@ -214,13 +226,13 @@ export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boole
                 <Box className={`${classes.customBoxRow} `} sx={{ marginTop: "10px" }}>
                     <UpButton
                         direction="left"
-                        clicked={() => console.log("upButtonClicked")}
+                        clicked={() => handleHiddenOptions("secondaryData")}
                     /><Typography align="left" sx={{ width: "95px" }}>Secondary data</Typography>
                     
                     <Typography align="right" sx={{ width: "95px" }}>Custom fields</Typography>
                     <UpButton
                     direction="right"
-                    clicked={() => console.log("upButtonClicked")}
+                    clicked={() => handleHiddenOptions("customFields")}
                     />
                 </Box>
             </Box>

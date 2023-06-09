@@ -76,7 +76,7 @@ const emailsAlert: emailsAlertData[] = [
 interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
-    openOptionsCreate: (newData:  {option: string, open: boolean} )=> void
+    openOptionsCreate: (newData: string )=> void
     
 }
 
@@ -167,8 +167,9 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
     
-    const handleHiddenOptions = () =>  openOptionsCreate({ option: "1", open: true })
-    
+    const handleHiddenOptions = (changeTo:string) =>  {
+        openOptionsCreate(changeTo)
+    }
     // const addInputCustomField = () => {
     //     // console.log("holis clickis", customFieldsNewTemp.length)
     //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
@@ -306,7 +307,7 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
                     <UpButton
                     direction="right"
                     //clicked={() => console.log("upButtonClicked")}
-                    clicked={() => handleHiddenOptions()}
+                    clicked={() => handleHiddenOptions("secondaryData")}
                     />
                 </Box>
             </Box>

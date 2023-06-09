@@ -72,7 +72,15 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 
-export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel: boolean } ) {
+interface ChildProps {
+    hiddenPanel:  boolean
+    // openOptionsCreate: (newData: string) => void
+    openOptionsCreate: (newData: string )=> void
+    
+}
+
+export default function CreateStockCustomFields({ hiddenPanel, openOptionsCreate }: ChildProps )  {
+// export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel: boolean } ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -179,6 +187,10 @@ export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel:
     //     // setAddButtonShow(false)
     // }
 
+    const handleHiddenOptions = (changeTo:string) =>  {
+        openOptionsCreate(changeTo)
+    }
+
     useEffect(() => {
         // console.log("useeffect")
         // setSelectedUsersTemp(selectedUsers)
@@ -200,7 +212,7 @@ export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel:
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowLeft}`} sx={{ marginTop: "10px" }}>
                     <UpButton
                         direction="left"
-                        clicked={() => console.log("upButtonClicked")}
+                    clicked={() => handleHiddenOptions("alerts")}
                     />
                     <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
                 </Box>

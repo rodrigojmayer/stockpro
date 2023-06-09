@@ -72,7 +72,15 @@ const emailsAlert: emailsAlertData[] = [
 ];
 
 
-export default function CreateStockSecondaryData( { hiddenPanel }: { hiddenPanel: boolean } ) {
+interface ChildProps {
+    hiddenPanel:  boolean
+    // openOptionsCreate: (newData: string) => void
+    openOptionsCreate: (newData: string )=> void
+    
+}
+
+export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreate }: ChildProps )  {
+// export default function CreateStockSecondaryData( { hiddenPanel }: { hiddenPanel: boolean } ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -179,6 +187,10 @@ export default function CreateStockSecondaryData( { hiddenPanel }: { hiddenPanel
     //     // setAddButtonShow(false)
     // }
 
+    const handleHiddenOptions = (changeTo:string) =>  {
+        openOptionsCreate(changeTo)
+    }
+
     useEffect(() => {
         // console.log("useeffect")
         // setSelectedUsersTemp(selectedUsers)
@@ -244,13 +256,26 @@ export default function CreateStockSecondaryData( { hiddenPanel }: { hiddenPanel
 
                         </TextField>
                 </Box> 
-                <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
+                {/* <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
                     <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
                     <UpButton
                     direction="right"
-                    clicked={() => console.log("upButtonClicked")}
+                    />
+                </Box> */}
+                 
+                <Box className={`${classes.customBoxRow} `} sx={{ marginTop: "10px" }}>
+                    <UpButton
+                        direction="left"
+                        clicked={() => handleHiddenOptions("mainData")}
+                    /><Typography align="left" sx={{ width: "95px" }}>Main data</Typography>
+                    
+                    <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
+                    <UpButton
+                    direction="right"
+                    clicked={() => handleHiddenOptions("alerts")}
                     />
                 </Box>
+
             </Box>
             
         </div>
