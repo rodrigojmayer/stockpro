@@ -41,14 +41,14 @@ export const useStylesGlobal = makeStyles()({
         },
     },
     customBoxColumn: {
-        // display: "flex",
-        // flexDirection: "column",
         // alignItems: "center", 
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
         width: "90%",
+        // height: "110%",
         // alignItems:  "flex-end",
+        // justifyContent:  "space-between" ,
         gap: 8,
     },
     customBoxRow: {
@@ -177,7 +177,12 @@ export const useStylesGlobal = makeStyles()({
     hideShowSpace: {
         width: "10%", 
         // flexGrow: ".5",
-    }
+    },
+
+    testt: {
+        backgroundColor: "red",
+        height: "74%",
+    },
 })
 
 export const modalStyleExternal = {
@@ -192,8 +197,9 @@ export const modalStyleInternal = {
     top: 74,
     maxWidth: "700px",
     width: "calc(100% - 32px)",
-    maxHeight: "520px",
-    // height: "520px",
+    height: "520px",
+    // maxHeight: "520px",
+    // minHeight: "490px",
     backgroundColor: "rgb(45,72, 91, 1)",
     borderRadius: "10px",
     margin: "auto",

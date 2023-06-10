@@ -203,6 +203,7 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
        
         <div
         hidden= {hiddenPanel}
+        className={classes.testt}
         >
             <Typography align='center' variant='h6'>Main data</Typography>
             <Box className={classes.customBoxColumn}>

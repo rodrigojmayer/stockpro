@@ -206,17 +206,16 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
         >
             <Typography align='center' variant='h6'>Alerts</Typography>
             <Box className={classes.customBoxColumn}>
-            <Box className={classes.customBoxRow}>
-                    
-                <Typography align="center" variant="h6">
+                <Box className={classes.customBoxRow}>
+                    <Typography align="center" variant="h6">
                         By quantity
                     </Typography>
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <PlusButton/>
-                </Box><Box className={classes.customBoxRow}>
-                
-                <Typography align="center" variant="h6">
+                </Box>
+                <Box className={classes.customBoxRow}>
+                    <Typography align="center" variant="h6">
                         By date
                     </Typography>
                 </Box> 
@@ -227,7 +226,8 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                     <UpButton
                         direction="left"
                         clicked={() => handleHiddenOptions("secondaryData")}
-                    /><Typography align="left" sx={{ width: "95px" }}>Secondary data</Typography>
+                    />
+                    <Typography align="left" sx={{ width: "95px" }}>Secondary data</Typography>
                     
                     <Typography align="right" sx={{ width: "95px" }}>Custom fields</Typography>
                     <UpButton
@@ -236,7 +236,6 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                     />
                 </Box>
             </Box>
-            
         </div>
     )
 }
