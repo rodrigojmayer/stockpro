@@ -46,7 +46,7 @@ export const useStylesGlobal = makeStyles()({
         display: "flex",
         flexDirection: "column",
         width: "90%",
-        // height: "110%",
+        minHeight: "340px",
         // alignItems:  "flex-end",
         // justifyContent:  "space-between" ,
         gap: 8,
@@ -179,10 +179,12 @@ export const useStylesGlobal = makeStyles()({
         // flexGrow: ".5",
     },
 
-    testt: {
-        backgroundColor: "red",
-        height: "74%",
-    },
+    // testt: {
+    //     backgroundColor: "red",
+    //     minHeight: "74%",
+    //     display: "flex",
+    //     // flex-direction: "column",
+    // },
 })
 
 export const modalStyleExternal = {

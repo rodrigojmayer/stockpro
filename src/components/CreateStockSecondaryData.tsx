@@ -263,7 +263,7 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                     />
                 </Box> */}
                  
-                <Box className={`${classes.customBoxRow} `} sx={{ marginTop: "10px" }}>
+                <Box className={`${classes.customBoxRow} `} sx={{ marginTop: "auto" }}>
                     <UpButton
                         direction="left"
                         clicked={() => handleHiddenOptions("mainData")}

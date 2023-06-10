@@ -203,7 +203,7 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
        
         <div
         hidden= {hiddenPanel}
-        className={classes.testt}
+        // className={classes.testt}
         >
             <Typography align='center' variant='h6'>Main data</Typography>
             <Box className={classes.customBoxColumn}>
@@ -301,9 +301,9 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
                             {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
                         </MenuItem>
                     ))}
-                </TextField>
+                    </TextField>
                 </Box> 
-                <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
+                <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "auto" }}>
                     <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
                     <UpButton
                     direction="right"
