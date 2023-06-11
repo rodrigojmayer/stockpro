@@ -222,7 +222,7 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                 <Box className={classes.customBoxRow}>
                     <PlusButton/>
                 </Box> 
-                <Box className={`${classes.customBoxRow} `} sx={{ marginTop: "auto" }}>
+                <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
                     <UpButton
                         direction="left"
                         clicked={() => handleHiddenOptions("secondaryData")}

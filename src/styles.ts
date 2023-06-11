@@ -57,6 +57,16 @@ export const useStylesGlobal = makeStyles()({
         alignItems: "center",
         gap: 8,
     },
+    customBoxRowLeft: {
+        justifyContent:  "start",
+    },
+    customBoxRowRight: {
+        justifyContent:  "end",
+    },
+    customBoxRowArrowButton: {
+        marginTop: "auto",
+        height: "70px"
+    },
     newEmailField: {        
         backgroundColor: "white",
         borderRadius: 10,
@@ -74,12 +84,6 @@ export const useStylesGlobal = makeStyles()({
             width: "37px", 
             height: "37px",
         },
-    },
-    customBoxRowLeft: {
-        justifyContent:  "start",
-    },
-    customBoxRowRight: {
-        justifyContent:  "end",
     },
     inputMainData: {
         backgroundColor: "white",

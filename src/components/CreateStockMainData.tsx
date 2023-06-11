@@ -303,7 +303,7 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
                     ))}
                     </TextField>
                 </Box> 
-                <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "auto" }}>
+                <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} ${classes.customBoxRowRight}`}>
                     <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
                     <UpButton
                     direction="right"
