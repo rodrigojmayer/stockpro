@@ -10,7 +10,6 @@ export const useStylesGlobal = makeStyles()({
 
     formControlUsers: {
         width: "300px",
-        // backgroundColor: "white",
         backgroundColor: "rgb(255,255, 255, .1)",
         borderRadius: "10px",
         "& .MuiOutlinedInput-root": {
@@ -40,15 +39,12 @@ export const useStylesGlobal = makeStyles()({
         "&.Mui-selected": {
         },
     },
-    customBoxColumn: {
-        // alignItems: "center", 
+    customBoxColumn: { 
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
         width: "90%",
-        minHeight: "340px",
-        // alignItems:  "flex-end",
-        // justifyContent:  "space-between" ,
+        minHeight: "330px",
         gap: 8,
     },
     customBoxRow: {
@@ -89,10 +85,6 @@ export const useStylesGlobal = makeStyles()({
         backgroundColor: "white",
         borderRadius: 10,
         width: "100%",
-        // width: "70%",
-        // minWidth: "70%",
-        // width: "70%",
-        // height:"34px",
     },
     inputClassName: {
         borderRadius: 10,
