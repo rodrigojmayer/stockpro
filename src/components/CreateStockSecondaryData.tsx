@@ -22,7 +22,8 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { OkButton,
          CancelButton, 
          PlusButton,
-         UpButton
+         UpButton,
+         FolderButton
         } from './Buttons';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
@@ -262,7 +263,9 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                     direction="right"
                     />
                 </Box> */}
-                 
+                <FolderButton
+                    clicked={() => console.log("click folder button")}
+                />
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
                     <UpButton
                         direction="left"

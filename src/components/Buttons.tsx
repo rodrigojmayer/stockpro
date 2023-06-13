@@ -11,6 +11,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded';
 
 
 const theme = createTheme({
@@ -368,5 +369,35 @@ export function UpButton({ sizeIco, roundedIco, cusField, clicked, direction }: 
         }}/>
       </Button>
     </ThemeProvider>
+  )
+}
+
+export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction }: ButtonProps ) {
+
+  
+  const handleClick = (() => {
+      clicked()
+  })
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Button
+        color="neutral"
+        sx={{  
+          border: bor, 
+          padding:noPadding, 
+          paddingTop:0,  
+          paddingBottom:0, 
+          minWidth: sizeIco, 
+          width: sizeIco, 
+          height: sizeIco,
+          borderRadius: borRad,
+        }}
+        onClick={handleClick}
+        >
+        <FolderOpenRoundedIcon></FolderOpenRoundedIcon>
+      </Button>
+    </ThemeProvider>
+
   )
 }
