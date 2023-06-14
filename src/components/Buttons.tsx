@@ -384,14 +384,11 @@ export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction
       <Button
         color="neutral"
         sx={{  
-          border: bor, 
-          padding:noPadding, 
           paddingTop:0,  
           paddingBottom:0, 
           minWidth: sizeIco, 
           width: sizeIco, 
           height: sizeIco,
-          borderRadius: borRad,
         }}
         onClick={handleClick}
         >
