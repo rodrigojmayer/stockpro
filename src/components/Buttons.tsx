@@ -375,6 +375,18 @@ export function UpButton({ sizeIco, roundedIco, cusField, clicked, direction }: 
 export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction }: ButtonProps ) {
 
   
+  sizeIco = "50px"
+  roundedIco = true
+  
+  let fontIco = 35, noPadding, bor = 5, borRad
+  if(sizeIco) {
+    fontIco = (parseInt(sizeIco))
+    // bor = 3
+  }
+  if(roundedIco){
+    noPadding=0
+    borRad="50px !important"
+  } 
   const handleClick = (() => {
       clicked()
   })
@@ -384,11 +396,14 @@ export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction
       <Button
         color="neutral"
         sx={{  
+          // border: bor, 
+          padding:noPadding, 
           paddingTop:0,  
           paddingBottom:0, 
           minWidth: sizeIco, 
           width: sizeIco, 
           height: sizeIco,
+          borderRadius: borRad,
         }}
         onClick={handleClick}
         >
