@@ -212,6 +212,7 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                     </Typography>
                 </Box> 
                 <Box className={classes.customBoxRow}>
+                    add form
                     {/* <PlusButton/>       */}
                 </Box>
                 <Box className={classes.customBoxRow}>
@@ -220,6 +221,7 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                     </Typography>
                 </Box> 
                 <Box className={classes.customBoxRow}>
+                    add form
                     {/* <PlusButton/> */}
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
