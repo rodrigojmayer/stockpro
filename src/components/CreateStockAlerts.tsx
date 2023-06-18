@@ -206,22 +206,49 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
         >
             <Typography align='center' variant='h6'>Alerts</Typography>
             <Box className={classes.customBoxColumn}>
-                <Box className={classes.customBoxRow}>
+                {/* <Box className={classes.customBoxRow}>
                     <Typography align="center" variant="h6">
-                        By quantity
+                        
                     </Typography>
-                </Box> 
+                </Box>  */}
                 <Box className={classes.customBoxRow}>
-                    add form
+                    <TextField
+                        label="By quantity"
+                        // onChange={ handleEditCustomFieldNew }
+                        maxRows={1}
+                        size="small"
+                        className={classes.inputMainData}
+                        InputProps={{
+                            className: classes.inputClassName,
+                            style: {
+                            // height:"36px"
+                            // borderRadius: 10,
+                            },
+                        }}
+                    />
                     {/* <PlusButton/>       */}
                 </Box>
-                <Box className={classes.customBoxRow}>
+                {/* <Box className={classes.customBoxRow}>
                     <Typography align="center" variant="h6">
                         By date
                     </Typography>
-                </Box> 
+                </Box>  */}
                 <Box className={classes.customBoxRow}>
-                    add form
+                    
+                    <TextField
+                        label="By date"
+                        // onChange={ handleEditCustomFieldNew }
+                        maxRows={1}
+                        size="small"
+                        className={classes.inputMainData}
+                        InputProps={{
+                            className: classes.inputClassName,
+                            style: {
+                            // height:"36px"
+                            // borderRadius: 10,
+                            },
+                        }}
+                    />
                     {/* <PlusButton/> */}
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >

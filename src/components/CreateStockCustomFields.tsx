@@ -38,13 +38,11 @@ import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styl
 interface measureData {
     id: number;
     name: string;
-  }
-  interface emailsAlertData {
-      id: number;
-      email: string;
-    }
-
-
+}
+interface emailsAlertData {
+    id: number;
+    email: string;
+}
 const measureArray: measureData[] = [
     { id: 0, name: '-'},
     { id: 1, name: 'Unit'},
@@ -64,13 +62,11 @@ const subCategoryArray: measureData[] = [
     { id: 3, name: 'Chairs'},
 ];
 
-
 const emailsAlert: emailsAlertData[] = [
     { id: 1, email: 'email1@test.com' },
     { id: 2, email: 'email2@test.com'  },
     { id: 3, email: 'email3@test.com'},
 ];
-
 
 interface ChildProps {
     hiddenPanel:  boolean
