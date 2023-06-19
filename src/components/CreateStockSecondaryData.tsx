@@ -18,6 +18,9 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
+import { styled, alpha } from '@mui/material/styles';
 
 import { OkButton,
          CancelButton, 
@@ -71,6 +74,17 @@ const emailsAlert: emailsAlertData[] = [
     { id: 2, email: 'email2@test.com'  },
     { id: 3, email: 'email3@test.com'},
 ];
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    right: 0,
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
 
 
 interface ChildProps {
@@ -220,8 +234,15 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                             // height:"36px"
                             // borderRadius: 10,
                             },
+                            endAdornment: (
+                                <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
+                            ),
                         }}
+                    // >
                     />
+                    {/* <SearchIconWrapper> */}
+                        
+                    {/* </SearchIconWrapper> */}
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField
@@ -233,9 +254,12 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                         InputProps={{  className: classes.inputClassName }}
                         // onChange={ handleEditCustomFieldNew }
                     />
+                </Box> 
+                <Box className={classes.customBoxRow}>
                     <TextField 
                         label="Image 1"
                         size="small"
+                        maxRows={1}
                         select
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
