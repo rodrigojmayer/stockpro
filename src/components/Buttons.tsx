@@ -404,6 +404,7 @@ export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction
           width: sizeIco, 
           height: sizeIco,
           borderRadius: borRad,
+          color: "rgb(45,72, 91, 1)" ,
         }}
         onClick={handleClick}
         >

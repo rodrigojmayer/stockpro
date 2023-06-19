@@ -260,13 +260,21 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                         label="Image 1"
                         size="small"
                         maxRows={1}
-                        select
+                        // select
                         className={classes.inputMainData}
-                        InputProps={{className: classes.inputClassName}}
-                        value={measureTemp}
-                        onChange={ (event) => setMeasureTemp(event.target.value) }
+                        InputProps={{
+                            className: classes.inputClassName,
+                                endAdornment: (
+                                    
+                <FolderButton
+                    clicked={() => console.log("click folder button")}
+                />
+                                ),
+                        }}
+                        // value={measureTemp}
+                        // onChange={ (event) => setMeasureTemp(event.target.value) }
                         >
-                            {measureArray.map((measure) => (
+                            {/* {measureArray.map((measure) => (
                                 <MenuItem 
                                     className={classes.menuItemUsers}
                                     key={measure.id} 
@@ -274,9 +282,9 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                                     sx={{ justifyContent: "space-between" }}
                                 >
                                     {measure.name}
-                                    {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                    {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null}
                                 </MenuItem>
-                            ))}
+                            ))} */}
 
 
                         </TextField>
@@ -287,9 +295,6 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                     direction="right"
                     />
                 </Box> */}
-                <FolderButton
-                    clicked={() => console.log("click folder button")}
-                />
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
                     <UpButton
                         direction="left"
