@@ -26,7 +26,8 @@ import { OkButton,
          CancelButton, 
          PlusButton,
          UpButton,
-         FolderButton
+         FolderButton,
+         SelectImageButton
         } from './Buttons';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
@@ -75,16 +76,16 @@ const emailsAlert: emailsAlertData[] = [
     { id: 3, email: 'email3@test.com'},
 ];
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    right: 0,
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
+// const SearchIconWrapper = styled('div')(({ theme }) => ({
+//     padding: theme.spacing(0, 2),
+//     height: '100%',
+//     position: 'absolute',
+//     right: 0,
+//     pointerEvents: 'none',
+//     display: 'flex',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+// }));
 
 
 interface ChildProps {
@@ -256,38 +257,23 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>
-                    <TextField 
+                    {/* <TextField 
                         label="Image 1"
                         size="small"
                         maxRows={1}
-                        // select
                         className={classes.inputMainData}
                         InputProps={{
                             className: classes.inputClassName,
-                                endAdornment: (
-                                    
-                <FolderButton
-                    clicked={() => console.log("click folder button")}
-                />
-                                ),
+                            endAdornment: (   
+                                <FolderButton
+                                    clicked={() => console.log("click folder button")}
+                                />
+                            ),
                         }}
-                        // value={measureTemp}
-                        // onChange={ (event) => setMeasureTemp(event.target.value) }
-                        >
-                            {/* {measureArray.map((measure) => (
-                                <MenuItem 
-                                    className={classes.menuItemUsers}
-                                    key={measure.id} 
-                                    value={measure.name}
-                                    sx={{ justifyContent: "space-between" }}
-                                >
-                                    {measure.name}
-                                    {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null}
-                                </MenuItem>
-                            ))} */}
-
-
-                        </TextField>
+                    /> */}
+                        
+                        
+                    <SelectImageButton/>
                 </Box> 
                 {/* <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
                     <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
