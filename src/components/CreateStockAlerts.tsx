@@ -34,6 +34,12 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
 
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 interface measureData {
     id: number;
@@ -83,6 +89,7 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
 // export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
+    const breakpointLG =useMediaQuery('(min-width:1024px)')
     const { classes } = useStylesGlobal();
     const close = () => {
         // handleClose(false)
@@ -234,8 +241,16 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                     </Typography>
                 </Box>  */}
                 <Box className={classes.customBoxRow}>
-                    
-                    <TextField
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                        {breakpointLG ? (
+                                <DatePicker label="By date" />
+                            ) : (
+                                <MobileDatePicker  label="By date" />
+                        )}
+                    </DemoContainer>
+                    </LocalizationProvider>
+                    {/* <TextField
                         label="By date"
                         // onChange={ handleEditCustomFieldNew }
                         maxRows={1}
@@ -248,7 +263,7 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                             // borderRadius: 10,
                             },
                         }}
-                    />
+                    /> */}
                     {/* <PlusButton/> */}
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
