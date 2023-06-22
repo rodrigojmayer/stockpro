@@ -13,7 +13,7 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded';
 import { useEffect, useState } from 'react';
-
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 const theme = createTheme({
   palette: {
@@ -439,15 +439,21 @@ export function SelectImageButton() {
           }}
       />
       <label htmlFor='select-image'>
-        <Button color='primary' component='span' sx={{ height:"150px", width: "150px" }}>
-          { imageUrl && selectedImage ? (
-              <Box mt={1} textAlign="center">
-                {/* <div>Image Preview:</div> */}
-                <img src={imageUrl} alt={imageUrl} />
-              </Box>
-            ) : "Upload Image"}
-        </Button>
+        <ThemeProvider theme={theme}>
+          <Button color='neutral' 
+         component='span' sx={{ outline: "dotted  1px", padding: "0", height:"130px", width: "230px" }}>
+            { imageUrl && selectedImage ? (
+                  <img 
+                    src={imageUrl} 
+                    alt={selectedImage.name} 
+                    style={{ borderRadius:"3px", height: "100%", width: "100%", objectFit: "contain" }}
+                  />
+               ) : <AddAPhotoIcon /> 
+              
+               } 
+          </Button>
+        </ThemeProvider>
       </label>
-    </>
+      </>
   )
 }
