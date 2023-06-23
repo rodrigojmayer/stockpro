@@ -242,11 +242,16 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                 </Box>  */}
                 <Box className={classes.customBoxRow}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
+                    <DemoContainer components={['DatePicker']} >
                         {breakpointLG ? (
-                                <DatePicker label="By date" />
+                                <DatePicker label="By date"
+                                slotProps={{ textField: { size: 'small' } }}
+                                className={classes.inputMainData} />
                             ) : (
-                                <MobileDatePicker  label="By date" />
+                                <MobileDatePicker  label="By date"
+                                slotProps={{ textField: { size: 'small' } }}
+                                
+                                className={classes.inputMainData} />
                         )}
                     </DemoContainer>
                     </LocalizationProvider>
