@@ -201,9 +201,10 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
     useEffect(() => {
         // console.log("useeffect")
         // setSelectedUsersTemp(selectedUsers)
-        setMeasureTemp(measure)
-        setCategoryTemp(category)
-        setSubCategoryTemp(subCategory)
+        // setMeasureTemp(measure)
+        // setCategoryTemp(category)
+        // setSubCategoryTemp(subCategory)
+        console.log("subCategory")
 
     }, [ open])
     
@@ -224,6 +225,7 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                         // onChange={ handleEditCustomFieldNew }
                         maxRows={1}
                         size="small"
+                        type="number"
                         className={classes.inputMainData}
                         InputProps={{
                             className: classes.inputClassName,
