@@ -102,6 +102,8 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
     const [subCategory, setSubCategory] = useState('');
     const [subCategoryTemp, setSubCategoryTemp] = useState('');
     
+    const DatePickerComponent = breakpointLG ? DatePicker : MobileDatePicker;
+
     // const usersAlertSelected = usersAlert.filter((usr) => {
     //     if(idUsersAlertSelected.includes(usr.id))
     //         return usr
@@ -242,19 +244,15 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                         By date
                     </Typography>
                 </Box>  */}
-                <Box className={classes.customBoxRow}>
+                {/* <Box className={classes.customBoxRow}> */}
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']} >
-                        {breakpointLG ? (
-                                <DatePicker label="By date"
-                                slotProps={{ textField: { size: 'small' } }}
-                                className={classes.inputMainData} />
-                            ) : (
-                                <MobileDatePicker  label="By date"
-                                slotProps={{ textField: { size: 'small' } }}
-                                
-                                className={classes.inputMainData} />
-                        )}
+                        <DatePickerComponent
+                            label="By date"
+                            slotProps={{ textField: { size: 'small' } }}
+                            className={classes.inputMainData} 
+                            sx={{ marginTop: "-8px !important"  }}
+                        />
                     </DemoContainer>
                     </LocalizationProvider>
                     {/* <TextField
@@ -272,7 +270,7 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                         }}
                     /> */}
                     {/* <PlusButton/> */}
-                </Box> 
+                {/* </Box>  */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
                     <UpButton
                         direction="left"
