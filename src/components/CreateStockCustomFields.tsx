@@ -187,14 +187,10 @@ export default function CreateStockCustomFields({ hiddenPanel, openOptionsCreate
         openOptionsCreate(changeTo)
     }
 
-    useEffect(() => {
-        // console.log("useeffect")
-        // setSelectedUsersTemp(selectedUsers)
-        setMeasureTemp(measure)
-        setCategoryTemp(category)
-        setSubCategoryTemp(subCategory)
+    // useEffect(() => {
+        
 
-    }, [ open])
+    // }, [ ])
     
     return (
         <div

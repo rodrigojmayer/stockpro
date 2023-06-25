@@ -96,12 +96,6 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
         // handleClose(false)
     }
 
-    const [measure, setMeasure] = useState('');
-    const [measureTemp, setMeasureTemp] = useState('');
-    const [category, setCategory] = useState('');
-    const [categoryTemp, setCategoryTemp] = useState('');
-    const [subCategory, setSubCategory] = useState('');
-    const [subCategoryTemp, setSubCategoryTemp] = useState('');
     
     const DatePickerComponent = breakpointLG ? DatePicker : MobileDatePicker;
 
@@ -207,7 +201,7 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
         // setMeasureTemp(measure)
         // setCategoryTemp(category)
         // setSubCategoryTemp(subCategory)
-        console.log("subCategory")
+        // console.log("subCategory")
 
     }, [ open])
     

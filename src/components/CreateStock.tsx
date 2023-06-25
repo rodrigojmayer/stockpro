@@ -62,7 +62,7 @@ const measureArray: measureData[] = [
 ]; 
 const categoryArray: measureData[] = [
     { id: 0, name: '-'},
-    { id: 1, name: 'Kitchen'},
+    { id: 1, name: 'Kitchens'},
     { id: 2, name: 'Food'},
     { id: 3, name: 'Furniture'},
 ];
@@ -125,13 +125,18 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
         setOpenOptionsCreate(updatedOptions);
 
     }
-
+    
+    const handleMeasureChange = (value: string) => {
+        console.log("value: ", value)
+        setMeasureTemp(value)
+    }
     useEffect(() => {
         console.log("openOptionsCreate: ", openOptionsCreate)
         // setSelectedUsersTemp(selectedUsers)
-        setMeasureTemp(measure)
-        setCategoryTemp(category)
-        setSubCategoryTemp(subCategory)
+        // setMeasureTemp(measure)
+        // setCategoryTemp(category)
+        // setSubCategoryTemp(subCategory)
+        console.log("measureTemp: ", measureTemp)
 
     }, [ open, openOptionsCreate])
     
@@ -150,6 +155,9 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                     <CreateStockMainData 
                         hiddenPanel={openOptionsCreate.mainData}
                         openOptionsCreate={handleOpenOptionsCreate}
+                        measureArray={measureArray}
+                        measureTemp={measureTemp}
+                        onMeasureChange={handleMeasureChange}
                     />
                     <CreateStockSecondaryData 
                         hiddenPanel={openOptionsCreate.secondaryData}

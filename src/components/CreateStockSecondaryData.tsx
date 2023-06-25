@@ -210,9 +210,9 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
     useEffect(() => {
         // console.log("useeffect")
         // setSelectedUsersTemp(selectedUsers)
-        setMeasureTemp(measure)
-        setCategoryTemp(category)
-        setSubCategoryTemp(subCategory)
+        // setMeasureTemp(measure)
+        // setCategoryTemp(category)
+        // setSubCategoryTemp(subCategory)
 
     }, [ open])
     

@@ -46,12 +46,6 @@ interface measureData {
     }
 
 
-const measureArray: measureData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Unit'},
-    { id: 2, name: 'Kg'},
-    { id: 3, name: 'Lts'},
-]; 
 const categoryArray: measureData[] = [
     { id: 0, name: '-'},
     { id: 1, name: 'Kitchen'},
@@ -77,10 +71,13 @@ interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
+    measureArray: measureData[]
+    measureTemp: string
+    onMeasureChange: (newData: string )=> void
     
 }
 
-export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: ChildProps )  {
+export default function CreateStockMainData({ hiddenPanel, openOptionsCreate, measureArray, measureTemp, onMeasureChange }: ChildProps )  {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -90,7 +87,7 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
     // console.log("hiddenPanel: ", hiddenPanel)
     // console.log("openOptionsCreate: ", openOptionsCreate)
     const [measure, setMeasure] = useState('');
-    const [measureTemp, setMeasureTemp] = useState('');
+    // const [measureTemp, setMeasureTemp] = useState('');
     const [category, setCategory] = useState('');
     const [categoryTemp, setCategoryTemp] = useState('');
     const [subCategory, setSubCategory] = useState('');
@@ -191,13 +188,13 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
     // }
 
     useEffect(() => {
-        // console.log("useeffect")
+        console.log("measureTemp: ", measureTemp)
         // setSelectedUsersTemp(selectedUsers)
-        setMeasureTemp(measure)
+        // setMeasureTemp(measure)
         setCategoryTemp(category)
         setSubCategoryTemp(subCategory)
 
-    }, [ open])
+    }, [ open, measureTemp])
     
     return (
        
@@ -240,7 +237,8 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={measureTemp}
-                        onChange={ (event) => setMeasureTemp(event.target.value) }
+                        // onChange={ (event) => setMeasureTemp(event.target.value) }
+                        onChange={ (event) => onMeasureChange(event.target.value) }
                         >
                             {measureArray.map((measure) => (
                                 <MenuItem 
