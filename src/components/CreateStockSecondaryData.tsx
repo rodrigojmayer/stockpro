@@ -293,9 +293,7 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                     clicked={() => handleHiddenOptions("alerts")}
                     />
                 </Box>
-
-            </Box>
-            
+            </Box>  
         </div>
     )
 }

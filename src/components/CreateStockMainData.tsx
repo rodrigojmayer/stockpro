@@ -253,9 +253,7 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
                                     {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
                                 </MenuItem>
                             ))}
-
-
-                        </TextField>
+                    </TextField>
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField 
@@ -303,7 +301,9 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate }: 
                     ))}
                     </TextField>
                 </Box> 
-                <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} ${classes.customBoxRowRight}`}>
+                <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
+                    <Typography align="left" sx={{ width: "153px" }}></Typography>
+                    
                     <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
                     <UpButton
                     direction="right"

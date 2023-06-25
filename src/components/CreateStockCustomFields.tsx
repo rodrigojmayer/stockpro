@@ -205,12 +205,14 @@ export default function CreateStockCustomFields({ hiddenPanel, openOptionsCreate
                 <Box className={classes.customBoxRow}>
                     <PlusButton/>
                 </Box> 
-                <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} ${classes.customBoxRowLeft}`}>
+                <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
                     <UpButton
                         direction="left"
                     clicked={() => handleHiddenOptions("alerts")}
                     />
                     <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
+                    <Typography align="right" sx={{ width: "153px" }}></Typography>
+                
                 </Box>
             </Box>
             
