@@ -212,7 +212,6 @@ export default function CreateStockCustomFields({ hiddenPanel, openOptionsCreate
                     />
                     <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
                     <Typography align="right" sx={{ width: "153px" }}></Typography>
-                
                 </Box>
             </Box>
             

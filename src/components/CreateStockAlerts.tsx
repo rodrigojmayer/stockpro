@@ -39,6 +39,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+// import DatePicker from "material-ui-pickers/DatePicker";
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 interface measureData {
@@ -210,6 +211,8 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
 
     }, [ open])
     
+
+    
     return (
         <div
         hidden= {hiddenPanel}
@@ -246,38 +249,26 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                 </Box>  */}
                 {/* <Box className={classes.customBoxRow}> */}
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']} >
-                        <DatePickerComponent
-                            label="By date"
-                            slotProps={{ textField: { size: 'small' } }}
-                            className={classes.inputMainData} 
-                            sx={{ marginTop: "-8px !important"  }}
-                        />
-                    </DemoContainer>
+                        <DemoContainer components={['DatePicker']} >
+                            <DatePickerComponent
+                                label="By date"
+                                slotProps={{ textField: { size: 'small' } }}
+                                className={classes.inputMainData} 
+                                sx={{ marginTop: "-8px !important",
+                                "& .MuiOutlinedInput-root": {
+                                    borderRadius:  "10px !important",
+                                }
+                                }} 
+
+                            />
+                        </DemoContainer>
                     </LocalizationProvider>
-                    {/* <TextField
-                        label="By date"
-                        // onChange={ handleEditCustomFieldNew }
-                        maxRows={1}
-                        size="small"
-                        className={classes.inputMainData}
-                        InputProps={{
-                            className: classes.inputClassName,
-                            style: {
-                            // height:"36px"
-                            // borderRadius: 10,
-                            },
-                        }}
-                    /> */}
-                    {/* <PlusButton/> */}
-                {/* </Box>  */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
                     <UpButton
                         direction="left"
                         clicked={() => handleHiddenOptions("secondaryData")}
                     />
                     <Typography align="left" sx={{ width: "95px" }}>Secondary data</Typography>
-                    
                     <Typography align="right" sx={{ width: "95px" }}>Custom fields</Typography>
                     <UpButton
                     direction="right"
