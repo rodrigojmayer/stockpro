@@ -44,7 +44,7 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
 }
-interface measureData {
+interface mainData {
     id: number;
     name: string;
   }
@@ -54,19 +54,19 @@ interface measureData {
     }
 
 
-const measureArray: measureData[] = [
+const measureArray: mainData[] = [
     { id: 0, name: '-'},
     { id: 1, name: 'Unit'},
     { id: 2, name: 'Kg'},
     { id: 3, name: 'Lts'},
 ]; 
-const categoryArray: measureData[] = [
+const categoryArray: mainData[] = [
     { id: 0, name: '-'},
     { id: 1, name: 'Kitchens'},
     { id: 2, name: 'Food'},
     { id: 3, name: 'Furniture'},
 ];
-const subCategoryArray: measureData[] = [
+const subCategoryArray: mainData[] = [
     { id: 0, name: '-'},
     { id: 1, name: 'Cutlery'},
     { id: 2, name: 'Fruits'},
@@ -127,9 +127,20 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
     }
     
     const handleMeasureChange = (value: string) => {
-        console.log("value: ", value)
+        console.log("Measure value: ", value)
         setMeasureTemp(value)
     }
+    const handleCategoryChange = (value: string) => {
+        console.log("Category value: ", value)
+        setCategoryTemp(value)
+    }
+    const handleSubCategoryChange = (value: string) => {
+        console.log("SubCategory value: ", value)
+        setSubCategoryTemp(value)
+    }
+
+
+    
     useEffect(() => {
         console.log("openOptionsCreate: ", openOptionsCreate)
         // setSelectedUsersTemp(selectedUsers)
@@ -158,6 +169,14 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         measureArray={measureArray}
                         measureTemp={measureTemp}
                         onMeasureChange={handleMeasureChange}
+                        
+                        categoryArray={categoryArray}
+                        categoryTemp={categoryTemp}
+                        onCategoryChange={handleCategoryChange}
+                        
+                        subCategoryArray={subCategoryArray}
+                        subCategoryTemp={subCategoryTemp}
+                        onSubCategoryChange={handleSubCategoryChange}
                     />
                     <CreateStockSecondaryData 
                         hiddenPanel={openOptionsCreate.secondaryData}

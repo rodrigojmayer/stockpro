@@ -36,7 +36,7 @@ import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styl
 import { DataCreateStockOptions } from '../types';
 
 
-interface measureData {
+interface mainData {
     id: number;
     name: string;
   }
@@ -46,18 +46,18 @@ interface measureData {
     }
 
 
-const categoryArray: measureData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Kitchen'},
-    { id: 2, name: 'Food'},
-    { id: 3, name: 'Furniture'},
-];
-const subCategoryArray: measureData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Cutlery'},
-    { id: 2, name: 'Fruits'},
-    { id: 3, name: 'Chairs'},
-];
+// const categoryArray: measureData[] = [
+//     { id: 0, name: '-'},
+//     { id: 1, name: 'Kitchen'},
+//     { id: 2, name: 'Food'},
+//     { id: 3, name: 'Furniture'},
+// ];
+// const subCategoryArray: measureData[] = [
+//     { id: 0, name: '-'},
+//     { id: 1, name: 'Cutlery'},
+//     { id: 2, name: 'Fruits'},
+//     { id: 3, name: 'Chairs'},
+// ];
 
 
 const emailsAlert: emailsAlertData[] = [
@@ -71,13 +71,31 @@ interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
-    measureArray: measureData[]
+    measureArray: mainData[]
     measureTemp: string
     onMeasureChange: (newData: string )=> void
+    categoryArray: mainData[]
+    categoryTemp: string
+    onCategoryChange: (newData: string )=> void
+    subCategoryArray: mainData[]
+    subCategoryTemp: string
+    onSubCategoryChange: (newData: string )=> void
     
 }
 
-export default function CreateStockMainData({ hiddenPanel, openOptionsCreate, measureArray, measureTemp, onMeasureChange }: ChildProps )  {
+export default function CreateStockMainData(
+        {   hiddenPanel, 
+            openOptionsCreate, 
+            measureArray, 
+            measureTemp, 
+            onMeasureChange,
+            categoryArray, 
+            categoryTemp, 
+            onCategoryChange,
+            subCategoryArray, 
+            subCategoryTemp, 
+            onSubCategoryChange, 
+        }: ChildProps )  {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -89,9 +107,9 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate, me
     const [measure, setMeasure] = useState('');
     // const [measureTemp, setMeasureTemp] = useState('');
     const [category, setCategory] = useState('');
-    const [categoryTemp, setCategoryTemp] = useState('');
+    // const [categoryTemp, setCategoryTemp] = useState('');  
     const [subCategory, setSubCategory] = useState('');
-    const [subCategoryTemp, setSubCategoryTemp] = useState('');
+    // const [subCategoryTemp, setSubCategoryTemp] = useState('');
     
     // const usersAlertSelected = usersAlert.filter((usr) => {
     //     if(idUsersAlertSelected.includes(usr.id))
@@ -191,8 +209,8 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate, me
         console.log("measureTemp: ", measureTemp)
         // setSelectedUsersTemp(selectedUsers)
         // setMeasureTemp(measure)
-        setCategoryTemp(category)
-        setSubCategoryTemp(subCategory)
+        // setCategoryTemp(category)
+        // setSubCategoryTemp(subCategory)
 
     }, [ open, measureTemp])
     
@@ -261,7 +279,7 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate, me
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={categoryTemp}
-                        onChange={ (event) => setCategoryTemp(event.target.value) }
+                        onChange={ (event) => onCategoryChange(event.target.value) }
                     >
                         {categoryArray.map((category) => (
                             <MenuItem 
@@ -284,7 +302,7 @@ export default function CreateStockMainData({ hiddenPanel, openOptionsCreate, me
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={subCategoryTemp}
-                        onChange={ (event) => setSubCategoryTemp(event.target.value) }
+                        onChange={ (event) => onSubCategoryChange(event.target.value) }
                     >
                     {subCategoryArray.map((subCategory) => (
                         <MenuItem 
