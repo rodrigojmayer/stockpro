@@ -63,12 +63,17 @@ interface LayoutProps {
     idColumnsTableOrder: Number[]
     // columnsHiddenFields: ColumnData[]
     children: React.ReactNode
-    // showCreateStock: boolean
+    // showCreataddButtonShoweStock: boolean
   }
 
 
 // export default function Layout( {children, columnsDefault, columnsCustom, idColumnsTableOrder, showCreateStock}: LayoutProps) {
-export default function Layout( {children, columnsDefault, columnsCustom, idColumnsTableOrder}: LayoutProps) {
+export default function Layout( 
+    {   children, 
+        columnsDefault, 
+        columnsCustom, 
+        idColumnsTableOrder
+    }: LayoutProps) {
     // export default function Layout( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { classes } = useStyles()

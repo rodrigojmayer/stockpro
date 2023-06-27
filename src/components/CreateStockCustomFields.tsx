@@ -33,6 +33,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
+import { ColumnData } from '../types';
 
 
 interface measureData {
@@ -72,10 +73,15 @@ interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
+    columnsCustom: ColumnData[] 
     
 }
 
-export default function CreateStockCustomFields({ hiddenPanel, openOptionsCreate }: ChildProps )  {
+export default function CreateStockCustomFields(
+    {   hiddenPanel, 
+        openOptionsCreate,
+        columnsCustom, 
+    }: ChildProps )  {
 // export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel: boolean } ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -161,7 +167,10 @@ export default function CreateStockCustomFields({ hiddenPanel, openOptionsCreate
         setOpenSaveChanges(false);
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
-
+    
+    const addInputCustomField = () => {
+        console.log("push te plus button yeah", columnsCustom )
+    }
     
     // const addInputCustomField = () => {
     //     // console.log("holis clickis", customFieldsNewTemp.length)
@@ -199,12 +208,14 @@ export default function CreateStockCustomFields({ hiddenPanel, openOptionsCreate
             <Typography align='center' variant='h6'>Custom fields</Typography>
             <Box className={classes.customBoxColumn}>
                 <Box className={classes.customBoxRow}>
-                    <PlusButton/>
+                    <PlusButton
+                        clicked={addInputCustomField}
+                    />
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
                     <UpButton
                         direction="left"
-                    clicked={() => handleHiddenOptions("alerts")}
+                        clicked={() => handleHiddenOptions("alerts")}
                     />
                     <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
                     <Typography align="right" sx={{ width: "153px" }}></Typography>

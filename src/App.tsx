@@ -108,6 +108,8 @@ function App() {
         <CreateStock
             open={showCreateStock} 
             handleClose={handleCloseCreateStock} 
+            
+            columnsCustom={columnsCustom}
         />
       </ThemeProvider>
       

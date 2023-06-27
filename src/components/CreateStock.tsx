@@ -37,13 +37,9 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
-import { DataCreateStockOptions } from '../types';
+import { DataCreateStockOptions, ColumnData } from '../types';
 
 
-interface ChildProps {
-    open:  boolean
-    handleClose: (newData: boolean) => void
-}
 interface mainData {
     id: number;
     name: string;
@@ -87,7 +83,17 @@ const INITIAL_CREATESTOCK_OPTIONS = {
     customFields: true,
 }
 
-export default function CreateStock( { open, handleClose }: ChildProps) {
+interface ChildProps {
+    open:  boolean
+    handleClose: (newData: boolean) => void
+    columnsCustom: ColumnData[] 
+}
+
+export default function CreateStock( 
+    {   open, 
+        handleClose, 
+        columnsCustom,
+    }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -193,6 +199,8 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                     <CreateStockCustomFields
                         hiddenPanel={openOptionsCreate.customFields}
                         openOptionsCreate={handleOpenOptionsCreate}
+                        
+                        columnsCustom={columnsCustom}
                     />
                     <Box className={classes.finishButtons}>
                         <CancelButton
