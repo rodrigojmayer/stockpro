@@ -43,15 +43,18 @@ export const useStylesGlobal = makeStyles()({
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
-        width: "80%",
+        width: "90%",
         minHeight: "330px",
         gap: 8,
     },
     customBoxRow: {
         display: "flex",
         justifyContent:  "center",
-        alignItems: "center",
         gap: 8,
+    },
+    customBoxCenter: {
+        display: "flex",
+        alignItems: "center", 
     },
     customBoxRowLeft: {
         justifyContent:  "start",

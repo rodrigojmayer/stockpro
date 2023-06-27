@@ -188,7 +188,7 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
 
                         
                         measureTemp={measureTemp}
-                        
+
                     />
                     <CreateStockCustomFields
                         hiddenPanel={openOptionsCreate.customFields}

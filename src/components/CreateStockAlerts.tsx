@@ -226,7 +226,7 @@ export default function CreateStockAlerts(
                 </Box>  */}
                 <Box className={classes.customBoxRow}>
                     <Grid container>
-                        <Grid item xs={9} >
+                        <Grid item xs={10} >
                         <TextField
                             label="By quantity"
                             // onChange={ handleEditCustomFieldNew }
@@ -244,12 +244,14 @@ export default function CreateStockAlerts(
                         />
                             
                         </Grid>
-                        <Grid item xs={1} >
+                        <Grid item xs={.5} >
                         </Grid>
-                        <Grid item xs={2} >
+                {/* <Box className={classes.customBoxRow}>  */}
+                        <Grid item xs={1.5} >
                             <Typography align='center' variant='h6'>{measureTemp}</Typography>
                             {/* <PlusButton/>       */}
                         </Grid>
+                {/* </Box> */}
                     </Grid>
                 </Box>
                 {/* <Box className={classes.customBoxRow}>
@@ -257,35 +259,33 @@ export default function CreateStockAlerts(
                         By date
                     </Typography>
                 </Box>  */}
-                {/* <Box className={classes.customBoxRow}> */}
-                
-                <Grid container>
-                    <Grid item xs={9} >
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DatePicker']} >
-                                <DatePickerComponent
-                                    label="By date"
-                                    slotProps={{ textField: { size: 'small' } }}
-                                    className={classes.inputMainData} 
-                                    sx={{ marginTop: "-8px !important",
-                                    "& .MuiOutlinedInput-root": {
-                                        borderRadius:  "10px !important",
-                                    }
-                                    }} 
-
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                        
+               
+                    <Grid container>
+                        <Grid item xs={10} >
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['DatePicker']} >
+                                    <DatePickerComponent
+                                        label="By date"
+                                        slotProps={{ textField: { size: 'small' } }}
+                                        className={classes.inputMainData} 
+                                        sx={{ marginTop: "-8px !important",
+                                        "& .MuiOutlinedInput-root": {
+                                            borderRadius:  "10px !important",
+                                        }
+                                        }} 
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                        </Grid>
+                        <Grid item xs={.5} >
+                        </Grid>
+                <Box className={classes.customBoxCenter}> 
+                        <Grid item xs={1.5} >
+                            <CalendarMonthRoundedIcon />
+                                
+                        </Grid>
+                </Box>
                     </Grid>
-                    <Grid item xs={1} >
-                    </Grid>
-                    <Grid item xs={2} >
-                        <CalendarMonthRoundedIcon/>
-                            
-                    </Grid>
-                </Grid>
-                {/* </Box> */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
                     <UpButton
                         direction="left"
