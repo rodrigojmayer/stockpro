@@ -185,6 +185,10 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                     <CreateStockAlerts 
                         hiddenPanel={openOptionsCreate.alerts}
                         openOptionsCreate={handleOpenOptionsCreate}
+
+                        
+                        measureTemp={measureTemp}
+                        
                     />
                     <CreateStockCustomFields
                         hiddenPanel={openOptionsCreate.customFields}

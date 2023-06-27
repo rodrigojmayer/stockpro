@@ -248,6 +248,7 @@ export default function CreateStockMainData(
                         InputProps={{  className: classes.inputClassName }}
                         // onChange={ handleEditCustomFieldNew }
                     />
+                    
                     <TextField 
                         label="Measure"
                         size="small"

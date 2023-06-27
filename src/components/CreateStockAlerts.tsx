@@ -41,6 +41,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import DatePicker from "material-ui-pickers/DatePicker";
 import useMediaQuery from '@mui/material/useMediaQuery'
+import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 
 interface measureData {
     id: number;
@@ -83,10 +84,15 @@ interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
+    measureTemp: string
     
 }
 
-export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: ChildProps )  {
+export default function CreateStockAlerts(
+    {   hiddenPanel, 
+        openOptionsCreate, 
+        measureTemp,
+    }: ChildProps )  {
 // export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -219,22 +225,32 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                     </Typography>
                 </Box>  */}
                 <Box className={classes.customBoxRow}>
-                    <TextField
-                        label="By quantity"
-                        // onChange={ handleEditCustomFieldNew }
-                        maxRows={1}
-                        size="small"
-                        type="number"
-                        className={classes.inputMainData}
-                        InputProps={{
-                            className: classes.inputClassName,
-                            style: {
-                            // height:"36px"
-                            // borderRadius: 10,
-                            },
-                        }}
-                    />
-                    {/* <PlusButton/>       */}
+                    <Grid container>
+                        <Grid item xs={9} >
+                        <TextField
+                            label="By quantity"
+                            // onChange={ handleEditCustomFieldNew }
+                            maxRows={1}
+                            size="small"
+                            type="number"
+                            className={classes.inputMainData}
+                            InputProps={{
+                                className: classes.inputClassName,
+                                style: {
+                                // height:"36px"
+                                // borderRadius: 10,
+                                },
+                            }}
+                        />
+                            
+                        </Grid>
+                        <Grid item xs={1} >
+                        </Grid>
+                        <Grid item xs={2} >
+                            <Typography align='center' variant='h6'>{measureTemp}</Typography>
+                            {/* <PlusButton/>       */}
+                        </Grid>
+                    </Grid>
                 </Box>
                 {/* <Box className={classes.customBoxRow}>
                     <Typography align="center" variant="h6">
@@ -242,21 +258,34 @@ export default function CreateStockAlerts({ hiddenPanel, openOptionsCreate }: Ch
                     </Typography>
                 </Box>  */}
                 {/* <Box className={classes.customBoxRow}> */}
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={['DatePicker']} >
-                            <DatePickerComponent
-                                label="By date"
-                                slotProps={{ textField: { size: 'small' } }}
-                                className={classes.inputMainData} 
-                                sx={{ marginTop: "-8px !important",
-                                "& .MuiOutlinedInput-root": {
-                                    borderRadius:  "10px !important",
-                                }
-                                }} 
+                
+                <Grid container>
+                    <Grid item xs={9} >
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={['DatePicker']} >
+                                <DatePickerComponent
+                                    label="By date"
+                                    slotProps={{ textField: { size: 'small' } }}
+                                    className={classes.inputMainData} 
+                                    sx={{ marginTop: "-8px !important",
+                                    "& .MuiOutlinedInput-root": {
+                                        borderRadius:  "10px !important",
+                                    }
+                                    }} 
 
-                            />
-                        </DemoContainer>
-                    </LocalizationProvider>
+                                />
+                            </DemoContainer>
+                        </LocalizationProvider>
+                        
+                    </Grid>
+                    <Grid item xs={1} >
+                    </Grid>
+                    <Grid item xs={2} >
+                        <CalendarMonthRoundedIcon/>
+                            
+                    </Grid>
+                </Grid>
+                {/* </Box> */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
                     <UpButton
                         direction="left"

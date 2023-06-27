@@ -43,7 +43,7 @@ export const useStylesGlobal = makeStyles()({
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
-        width: "90%",
+        width: "80%",
         minHeight: "330px",
         gap: 8,
     },
