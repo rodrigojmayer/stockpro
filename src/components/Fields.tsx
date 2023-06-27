@@ -24,7 +24,13 @@ import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
 
 
-export default function Fields({ open, handleClose, columnsDefault, columnsCustom, idColumnsTableOrder }: ChildProps) {
+export default function Fields(
+    {   open, 
+        handleClose, 
+        columnsDefault, 
+        columnsCustom, 
+        idColumnsTableOrder 
+    }: ChildProps) {
 
     const { classes } = useStylesGlobal()
     const close = () => {
@@ -247,7 +253,7 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
         // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
     }
     const addInputCustomField = () => {
-        console.log("holis clickis", customFieldsNewTemp.length)
+        // console.log("holis clickis", customFieldsNewTemp.length)
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
         const lastObj = customFieldsNewTemp[customFieldsNewTemp.length - 1]
         const nextId = lastObj.id + 1
@@ -412,57 +418,57 @@ export default function Fields({ open, handleClose, columnsDefault, columnsCusto
                             className={classes.editIcon}
                             />
                         </Box>
-                            {customFieldsNewTemp.map((cusField: ColumnDataCustom) => {
-                                if (!cusField.deleted) {
-                                    return (
-                                        <Box className={classes.customBoxRow}
-                                        key={cusField.id}
+                        {customFieldsNewTemp.map((cusField: ColumnDataCustom) => {
+                            if (!cusField.deleted) {
+                                return (
+                                    <Box className={classes.customBoxRow}
+                                    key={cusField.id}
+                                    >
+                                        <TextField
+                                            id={String(cusField.id)}
+                                            // id={column.dataKey.toString()}
+                                            // id="filled-multiline-flexible"
+                                            value={cusField.label}
+                                            // onChange={handleFilterChange}
+                                            onChange={ handleEditCustomFieldNew }
+                                            maxRows={1}
+                                            size="small"
+                                            className={classes.newCustomField}
+                                            InputProps={{
+                                                style: {
+                                                // height:"36px",
+                                                borderRadius: 10,
+                                                },
+                                            }}
+                                        />
+                                        <IconButton
+                                        className={classes.ionTrash}
+                                        onClick={() => deleteField(cusField.id)}
+                                        // id="plusButton"
+                                        // value={column.id}
                                         >
-                                            <TextField
-                                                id={String(cusField.id)}
-                                                // id={column.dataKey.toString()}
-                                                // id="filled-multiline-flexible"
-                                                value={cusField.label}
-                                                // onChange={handleFilterChange}
-                                                onChange={ handleEditCustomFieldNew }
-                                                maxRows={1}
-                                                size="small"
-                                                className={classes.newCustomField}
-                                                InputProps={{
-                                                    style: {
-                                                    // height:"36px",
-                                                    borderRadius: 10,
-                                                    },
-                                                }}
+                                            <img 
+                                            src={IonTrash} 
+                                            alt="Trash"
                                             />
-                                            <IconButton
-                                            className={classes.ionTrash}
-                                            onClick={() => deleteField(cusField.id)}
-                                            // id="plusButton"
-                                            // value={column.id}
-                                            >
-                                                <img 
-                                                src={IonTrash} 
-                                                alt="Trash"
-                                                />
-                                            </IconButton>
-                                            <div className={classes.hideShowSpace}>
-                                            <div className={cusField.okButtonShow ? classes.show : classes.hide}>
-                                                <OkButton
-                                                sizeIco={"34px"}
-                                                roundedIco={true}
-                                                cusField = {{id: cusField.id, value: cusField.label}}
-                                                clicked={() => saveCustomField(cusField.id, cusField.label)}
-                                                />
-                                            </div>
-                                            <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
-                                                Field repeated
-                                            </div>
-                                            </div>
-                                        </Box>
-                                    )
-                                }
-                            })}
+                                        </IconButton>
+                                        <div className={classes.hideShowSpace}>
+                                        <div className={cusField.okButtonShow ? classes.show : classes.hide}>
+                                            <OkButton
+                                            sizeIco={"34px"}
+                                            roundedIco={true}
+                                            cusField = {{id: cusField.id, value: cusField.label}}
+                                            clicked={() => saveCustomField(cusField.id, cusField.label)}
+                                            />
+                                        </div>
+                                        <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
+                                            Field repeated
+                                        </div>
+                                        </div>
+                                    </Box>
+                                )
+                            }
+                        })}
                         <Box className={classes.customBoxRow}>
                             <div className={(addButtonShow? "" : classes.hide)}>
                             <PlusButton
