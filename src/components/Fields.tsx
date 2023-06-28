@@ -441,17 +441,20 @@ export default function Fields(
                                                 },
                                             }}
                                         />
-                                        <IconButton
-                                        className={classes.ionTrash}
-                                        onClick={() => deleteField(cusField.id)}
-                                        // id="plusButton"
-                                        // value={column.id}
-                                        >
-                                            <img 
-                                            src={IonTrash} 
-                                            alt="Trash"
-                                            />
-                                        </IconButton>
+                                        <Box className={classes.customBoxCenter}> 
+                                            <IconButton
+                                            className={classes.ionTrash}
+                                            onClick={() => deleteField(cusField.id)}
+                                            // id="plusButton"
+                                            // value={column.id}
+                                            >
+                                                <img 
+                                                src={IonTrash} 
+                                                alt="Trash"
+                                                />
+                                            </IconButton>
+                                        </Box>
+
                                         <div className={classes.hideShowSpace}>
                                         <div className={cusField.okButtonShow ? classes.show : classes.hide}>
                                             <OkButton

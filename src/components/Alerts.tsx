@@ -302,17 +302,19 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                                     },
                                                 }}
                                             />
-                                            <IconButton
-                                            className={classes.ionTrash}
-                                            onClick={() => deleteEmailTemp(emailTemp.id)}
-                                            // id="plusButton"
-                                            // value={column.id}
-                                            >
-                                                <img 
-                                                src={IonTrash} 
-                                                alt="Trash"
-                                                />
-                                            </IconButton>
+                                            <Box className={classes.customBoxCenter}> 
+                                                <IconButton
+                                                className={classes.ionTrash}
+                                                onClick={() => deleteEmailTemp(emailTemp.id)}
+                                                // id="plusButton"
+                                                // value={column.id}
+                                                >
+                                                    <img 
+                                                    src={IonTrash} 
+                                                    alt="Trash"
+                                                    />
+                                                </IconButton>
+                                            </Box>
                                          </Box>
                                     )
                                 // }
