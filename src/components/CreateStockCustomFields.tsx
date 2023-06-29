@@ -424,19 +424,23 @@ export default function CreateStockCustomFields(
                                         />
                                     </IconButton>
                                 </Box>
-                                <div className={classes.hideShowSpace}>
-                                <div className={cusField.okButtonShow ? classes.show : classes.hide}>
-                                    <OkButton
-                                    sizeIco={"34px"}
-                                    roundedIco={true}
-                                    cusField = {{id: cusField.id, value: cusField.label}}
-                                    clicked={() => saveCustomField(cusField.id, cusField.label)}
-                                    />
-                                </div>
-                                <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
-                                    Field repeated
-                                </div>
-                                </div>
+                                <div className={`${classes.customBoxCenter} ${classes.hideShowSpace} `}> 
+
+                                    {/* <Box className={classes.customBoxCenter}>  */}
+                                        {/* <div className={classes.hideShowSpace}> */}
+                                        <div className={cusField.okButtonShow ? classes.show : classes.hide}>
+                                            <OkButton
+                                            sizeIco={"34px"}
+                                            roundedIco={true}
+                                            cusField = {{id: cusField.id, value: cusField.label}}
+                                            clicked={() => saveCustomField(cusField.id, cusField.label)}
+                                            />
+                                        </div>
+                                        <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
+                                            Field repeated
+                                        </div>
+                                    </div>
+                                {/* </Box> */}
                             </Box>
                         )
                     }

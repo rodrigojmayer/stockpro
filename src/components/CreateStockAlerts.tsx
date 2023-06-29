@@ -279,12 +279,12 @@ export default function CreateStockAlerts(
                         </Grid>
                         <Grid item xs={.5} >
                         </Grid>
-                <Box className={classes.customBoxCenter}> 
-                        <Grid item xs={1.5} >
-                            <CalendarMonthRoundedIcon />
-                                
-                        </Grid>
-                </Box>
+                        <Box className={classes.customBoxCenter}> 
+                            <Grid item xs={1.5} >
+                                <CalendarMonthRoundedIcon />
+                                    
+                            </Grid>
+                        </Box>
                     </Grid>
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
                     <UpButton

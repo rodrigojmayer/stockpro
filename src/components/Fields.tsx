@@ -441,7 +441,7 @@ export default function Fields(
                                                 },
                                             }}
                                         />
-                                        <Box className={classes.customBoxCenter}> 
+                                        <div className={classes.customBoxCenter}> 
                                             <IconButton
                                             className={classes.ionTrash}
                                             onClick={() => deleteField(cusField.id)}
@@ -453,20 +453,23 @@ export default function Fields(
                                                 alt="Trash"
                                                 />
                                             </IconButton>
-                                        </Box>
-
-                                        <div className={classes.hideShowSpace}>
-                                        <div className={cusField.okButtonShow ? classes.show : classes.hide}>
-                                            <OkButton
-                                            sizeIco={"34px"}
-                                            roundedIco={true}
-                                            cusField = {{id: cusField.id, value: cusField.label}}
-                                            clicked={() => saveCustomField(cusField.id, cusField.label)}
-                                            />
                                         </div>
-                                        <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
-                                            Field repeated
-                                        </div>
+                                        {/* className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `} */}
+                                        <div className={`${classes.customBoxCenter} ${classes.hideShowSpace} `}> 
+                                        {/* <div className={classes.customBoxCenter}>  */}
+                                            {/* <div className={classes.hideShowSpace}> */}
+                                            <div className={cusField.okButtonShow ? classes.show : classes.hide}>
+                                                <OkButton
+                                                sizeIco={"34px"}
+                                                roundedIco={true}
+                                                cusField = {{id: cusField.id, value: cusField.label}}
+                                                clicked={() => saveCustomField(cusField.id, cusField.label)}
+                                                />
+                                            </div>
+                                            <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
+                                                Field repeated
+                                            {/* </div> */}
+                                            </div>
                                         </div>
                                     </Box>
                                 )
