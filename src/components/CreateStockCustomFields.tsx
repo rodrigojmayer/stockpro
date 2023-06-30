@@ -394,16 +394,17 @@ export default function CreateStockCustomFields(
                             <Box className={classes.customBoxRow}
                             key={cusField.id}
                             >
+                                {/* {cusField.label} */}
                                 <TextField
-                                    id={String(cusField.id)}
+                                    label={cusField.label}
                                     // id={column.dataKey.toString()}
                                     // id="filled-multiline-flexible"
-                                    value={cusField.label}
-                                    // onChange={handleFilterChange}
+                                    // value={cusField.label}
                                     onChange={ handleEditCustomFieldNew }
                                     maxRows={1}
                                     size="small"
                                     className={classes.newCustomField}
+                                    // className={classes.inputMainData}
                                     InputProps={{
                                         style: {
                                         // height:"36px",
@@ -411,7 +412,7 @@ export default function CreateStockCustomFields(
                                         },
                                     }}
                                 />
-                                <Box className={classes.customBoxCenter}> 
+                                {/* <Box className={classes.customBoxCenter}> 
                                     <IconButton
                                     className={classes.ionTrash}
                                     onClick={() => deleteField(cusField.id)}
@@ -425,33 +426,29 @@ export default function CreateStockCustomFields(
                                     </IconButton>
                                 </Box>
                                 <div className={`${classes.customBoxCenter} ${classes.hideShowSpace} `}> 
-
-                                    {/* <Box className={classes.customBoxCenter}>  */}
-                                        {/* <div className={classes.hideShowSpace}> */}
-                                        <div className={cusField.okButtonShow ? classes.show : classes.hide}>
-                                            <OkButton
-                                            sizeIco={"34px"}
-                                            roundedIco={true}
-                                            cusField = {{id: cusField.id, value: cusField.label}}
-                                            clicked={() => saveCustomField(cusField.id, cusField.label)}
-                                            />
-                                        </div>
-                                        <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
-                                            Field repeated
-                                        </div>
+                                    <div className={cusField.okButtonShow ? classes.show : classes.hide}>
+                                        <OkButton
+                                        sizeIco={"34px"}
+                                        roundedIco={true}
+                                        cusField = {{id: cusField.id, value: cusField.label}}
+                                        clicked={() => saveCustomField(cusField.id, cusField.label)}
+                                        />
                                     </div>
-                                {/* </Box> */}
+                                    <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
+                                        Field repeated
+                                    </div>
+                                </div> */}
                             </Box>
                         )
                     }
                 })}
-                <Box className={classes.customBoxRow}>
+                {/* <Box className={classes.customBoxRow}>
                     <div className={(addButtonShow? "" : classes.hide)}>
                         <PlusButton
                             clicked={addInputCustomField}
                         />
                     </div>
-                </Box> 
+                </Box>  */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
                     <UpButton
                         direction="left"
