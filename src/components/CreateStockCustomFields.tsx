@@ -400,10 +400,11 @@ export default function CreateStockCustomFields(
                                     // id={column.dataKey.toString()}
                                     // id="filled-multiline-flexible"
                                     // value={cusField.label}
-                                    onChange={ handleEditCustomFieldNew }
-                                    maxRows={1}
+                                    // onChange={ handleEditCustomFieldNew }
+                                    // maxRows={1}
                                     size="small"
-                                    className={classes.newCustomField}
+                                    className={classes.inputMainData}
+                                    // className={classes.newCustomField}
                                     // className={classes.inputMainData}
                                     InputProps={{
                                         style: {
