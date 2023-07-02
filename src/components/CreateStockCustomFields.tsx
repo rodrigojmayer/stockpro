@@ -44,30 +44,6 @@ interface emailsAlertData {
     id: number;
     email: string;
 }
-// const measureArray: measureData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Unit'},
-//     { id: 2, name: 'Kg'},
-//     { id: 3, name: 'Lts'},
-// ]; 
-// const categoryArray: measureData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Kitchen'},
-//     { id: 2, name: 'Food'},
-//     { id: 3, name: 'Furniture'},
-// ];
-// const subCategoryArray: measureData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Cutlery'},
-//     { id: 2, name: 'Fruits'},
-//     { id: 3, name: 'Chairs'},
-// ];
-
-// const emailsAlert: emailsAlertData[] = [
-//     { id: 1, email: 'email1@test.com' },
-//     { id: 2, email: 'email2@test.com'  },
-//     { id: 3, email: 'email3@test.com'},
-// ];
 
 interface ChildProps {
     hiddenPanel:  boolean
@@ -82,9 +58,6 @@ export default function CreateStockCustomFields(
         openOptionsCreate,
         columnsCustom, 
     }: ChildProps )  {
-// export default function CreateStockCustomFields( { hiddenPanel }: { hiddenPanel: boolean } ) {
-// export default function CreateStockMainData( { open, handleClose }: ChildProps) {
-    // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
         // handleClose(false)
@@ -107,65 +80,6 @@ export default function CreateStockCustomFields(
     const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>(columnsCustomNew)
     const [customFieldsNewTemp, setCustomFieldsNewTemp] = useState<ColumnDataCustom[]>(columnsCustomNew)
     const [addButtonShow, setAddButtonShow] = useState<boolean>(true)
-    
-    // const usersAlertSelected = usersAlert.filter((usr) => {
-    //     if(idUsersAlertSelected.includes(usr.id))
-    //         return usr
-    // })
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
-    // const [selectedNames, setSelectedNames] = useState([]);
-    
-    // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
-
-    // const deleteEmailTemp = (id:number) => {
-    //     // console.log("idEmailTemp: ", id)
-    //     const updateEmailsTemp = [...emailsAlertsTemp]
-    //     // const updateFieldsNew = [...customFieldsNew]
-    //     let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
-    //     // console.log("index: ", index)
-    //     // console.log("updateEmailsTemp: ", updateEmailsTemp)
-    //     // if (index !== -1) {
-    //         // updateFields[index].deleted = true
-    //     //     // setCustomFields(updateFields)
-    //     //     updateFieldsNew[index].deleted = true
-    //     //     // console.log("customFields: ", customFields) 
-    //     // } else {
-    //     //     index = customFieldsNew.findIndex(field => field.id === id)
-    //     updateEmailsTemp.splice(index, 1)
-
-    //     // }
-    //     setEmailsAlertsTemp(updateEmailsTemp)
-    // }
-    
-    // const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     // console.log("event.currentTarget.id: ", event.currentTarget.id)
-    //     // console.log("event.currentTarget.value: ", event.currentTarget.value)
-    //     // console.log("isNaN('w'): ", isNaN(NaN))
-    //     // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
-    //         const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-    //         if(index !== -1) {
-    //             const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
-    //             updateEmailsAlertsTemp[index].email = event.currentTarget.value
-    //         //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //         //     // console.log("customFields[index].label: ", customFields[index].label)
-    //         //     if(customFields[index]){
-    //         //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
-    //         //             updateFieldsNew[index].okButtonShow = false
-    //         //         else
-    //         //             updateFieldsNew[index].okButtonShow = true
-    //         //     }else if(updateFieldsNew[index].label !='' ){
-    //         //         updateFieldsNew[index].okButtonShow = true
-    //         //     }else if (updateFieldsNew[index].label ==='' ){
-    //         //         updateFieldsNew[index].okButtonShow = false
-    //         //     }
-    //             // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
-        
-    //             setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //         }
-    // }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
