@@ -72,13 +72,13 @@ interface ChildProps {
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
     measureArray: mainData[]
-    measureTemp: string
+    stockMeasureTemp: string
     onMeasureChange: (newData: string )=> void
     categoryArray: mainData[]
-    categoryTemp: string
+    stockCategoryTemp: string
     onCategoryChange: (newData: string )=> void
     subCategoryArray: mainData[]
-    subCategoryTemp: string
+    stockSubCategoryTemp: string
     onSubCategoryChange: (newData: string )=> void
     
 }
@@ -87,13 +87,13 @@ export default function CreateStockMainData(
         {   hiddenPanel, 
             openOptionsCreate, 
             measureArray, 
-            measureTemp, 
+            stockMeasureTemp, 
             onMeasureChange,
             categoryArray, 
-            categoryTemp, 
+            stockCategoryTemp, 
             onCategoryChange,
             subCategoryArray, 
-            subCategoryTemp, 
+            stockSubCategoryTemp, 
             onSubCategoryChange, 
         }: ChildProps )  {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
@@ -206,13 +206,13 @@ export default function CreateStockMainData(
     // }
 
     useEffect(() => {
-        console.log("measureTemp: ", measureTemp)
+        console.log("stockMeasureTemp: ", stockMeasureTemp)
         // setSelectedUsersTemp(selectedUsers)
         // setMeasureTemp(measure)
         // setCategoryTemp(category)
         // setSubCategoryTemp(subCategory)
 
-    }, [ open, measureTemp])
+    }, [ open, stockMeasureTemp])
     
     return (
        
@@ -255,7 +255,7 @@ export default function CreateStockMainData(
                         select
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
-                        value={measureTemp}
+                        value={stockMeasureTemp}
                         // onChange={ (event) => setMeasureTemp(event.target.value) }
                         onChange={ (event) => onMeasureChange(event.target.value) }
                         >
@@ -279,7 +279,7 @@ export default function CreateStockMainData(
                         select
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
-                        value={categoryTemp}
+                        value={stockCategoryTemp}
                         onChange={ (event) => onCategoryChange(event.target.value) }
                     >
                         {categoryArray.map((category) => (
@@ -302,7 +302,7 @@ export default function CreateStockMainData(
                         select
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
-                        value={subCategoryTemp}
+                        value={stockSubCategoryTemp}
                         onChange={ (event) => onSubCategoryChange(event.target.value) }
                     >
                     {subCategoryArray.map((subCategory) => (

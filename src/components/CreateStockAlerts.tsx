@@ -84,14 +84,14 @@ interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
-    measureTemp: string
+    stockMeasureTemp: string
     
 }
 
 export default function CreateStockAlerts(
     {   hiddenPanel, 
         openOptionsCreate, 
-        measureTemp,
+        stockMeasureTemp,
     }: ChildProps )  {
 // export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
@@ -248,7 +248,7 @@ export default function CreateStockAlerts(
                         </Grid>
                 {/* <Box className={classes.customBoxRow}>  */}
                         <Grid item xs={1.5} >
-                            <Typography align='center' variant='h6'>{measureTemp}</Typography>
+                            <Typography align='center' variant='h6'>{stockMeasureTemp}</Typography>
                             {/* <PlusButton/>       */}
                         </Grid>
                 {/* </Box> */}

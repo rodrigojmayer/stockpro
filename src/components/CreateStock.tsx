@@ -101,12 +101,14 @@ export default function CreateStock(
     }
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-    const [measure, setMeasure] = useState('');
-    const [measureTemp, setMeasureTemp] = useState('');
-    const [category, setCategory] = useState('');
-    const [categoryTemp, setCategoryTemp] = useState('');
-    const [subCategory, setSubCategory] = useState('');
-    const [subCategoryTemp, setSubCategoryTemp] = useState('');
+    const [stockName, setStockName] = useState('');
+    const [stockNameTemp, setStockNameTemp] = useState('');
+    const [stockMeasure, setStockMeasure] = useState('');
+    const [stockMeasureTemp, setStockMeasureTemp] = useState('');
+    const [stockCategory, setStockCategory] = useState('');
+    const [stockCategoryTemp, setStockCategoryTemp] = useState('');
+    const [stockSubCategory, setStockSubCategory] = useState('');
+    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
     
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -134,15 +136,15 @@ export default function CreateStock(
     
     const handleMeasureChange = (value: string) => {
         console.log("Measure value: ", value)
-        setMeasureTemp(value)
+        setStockMeasureTemp(value)
     }
     const handleCategoryChange = (value: string) => {
         console.log("Category value: ", value)
-        setCategoryTemp(value)
+        setStockCategoryTemp(value)
     }
     const handleSubCategoryChange = (value: string) => {
         console.log("SubCategory value: ", value)
-        setSubCategoryTemp(value)
+        setStockSubCategoryTemp(value)
     }
 
 
@@ -150,10 +152,10 @@ export default function CreateStock(
     useEffect(() => {
         console.log("openOptionsCreate: ", openOptionsCreate)
         // setSelectedUsersTemp(selectedUsers)
-        // setMeasureTemp(measure)
-        // setCategoryTemp(category)
-        // setSubCategoryTemp(subCategory)
-        console.log("measureTemp: ", measureTemp)
+        // setStockMeasureTemp(measure)
+        // setStockCategoryTemp(category)
+        // setStockSubCategoryTemp(subCategory)
+        console.log("stockMeasureTemp: ", stockMeasureTemp)
 
     }, [ open, openOptionsCreate])
     
@@ -173,15 +175,15 @@ export default function CreateStock(
                         hiddenPanel={openOptionsCreate.mainData}
                         openOptionsCreate={handleOpenOptionsCreate}
                         measureArray={measureArray}
-                        measureTemp={measureTemp}
+                        stockMeasureTemp={stockMeasureTemp}
                         onMeasureChange={handleMeasureChange}
                         
                         categoryArray={categoryArray}
-                        categoryTemp={categoryTemp}
+                        stockCategoryTemp={stockCategoryTemp}
                         onCategoryChange={handleCategoryChange}
                         
                         subCategoryArray={subCategoryArray}
-                        subCategoryTemp={subCategoryTemp}
+                        stockSubCategoryTemp={stockSubCategoryTemp}
                         onSubCategoryChange={handleSubCategoryChange}
                     />
                     <CreateStockSecondaryData 
@@ -193,7 +195,7 @@ export default function CreateStock(
                         openOptionsCreate={handleOpenOptionsCreate}
 
                         
-                        measureTemp={measureTemp}
+                        stockMeasureTemp={stockMeasureTemp}
 
                     />
                     <CreateStockCustomFields
