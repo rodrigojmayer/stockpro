@@ -103,6 +103,8 @@ export default function CreateStock(
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockName, setStockName] = useState('');
     const [stockNameTemp, setStockNameTemp] = useState('');
+    const [stockQuantity, setStockQuantity] = useState('');
+    const [stockQuantityTemp, setStockQuantityTemp] = useState('');
     const [stockMeasure, setStockMeasure] = useState('');
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
     const [stockCategory, setStockCategory] = useState('');
@@ -134,18 +136,32 @@ export default function CreateStock(
 
     }
     
-    const handleMeasureChange = (value: string) => {
+    const handleStockNameChange = (value: string) => {
+        console.log("Name value: ", value)
+        setStockNameTemp(value)
+    }
+    const handleStockQuantityChange = (value: string) => {
+        console.log("Quantity value: ", value)
+        setStockQuantityTemp(value)
+    }
+    const handleStockMeasureChange = (value: string) => {
         console.log("Measure value: ", value)
         setStockMeasureTemp(value)
     }
-    const handleCategoryChange = (value: string) => {
+    const handleStockCategoryChange = (value: string) => {
         console.log("Category value: ", value)
         setStockCategoryTemp(value)
     }
-    const handleSubCategoryChange = (value: string) => {
+    const handleStockSubCategoryChange = (value: string) => {
         console.log("SubCategory value: ", value)
         setStockSubCategoryTemp(value)
     }
+    // price
+    // description
+    // image?
+    // alert by quantity
+    // alert by date
+    // custom fields???
 
 
     
@@ -174,17 +190,24 @@ export default function CreateStock(
                     <CreateStockMainData 
                         hiddenPanel={openOptionsCreate.mainData}
                         openOptionsCreate={handleOpenOptionsCreate}
+                        
+                        stockNameTemp={stockNameTemp}
+                        onStockNameChange={handleStockNameChange}
+
+                        stockQuantityTemp={stockQuantityTemp}
+                        onStockQuantityChange={handleStockQuantityChange}
+
                         measureArray={measureArray}
                         stockMeasureTemp={stockMeasureTemp}
-                        onMeasureChange={handleMeasureChange}
+                        onStockMeasureChange={handleStockMeasureChange}
                         
                         categoryArray={categoryArray}
                         stockCategoryTemp={stockCategoryTemp}
-                        onCategoryChange={handleCategoryChange}
+                        onStockCategoryChange={handleStockCategoryChange}
                         
                         subCategoryArray={subCategoryArray}
                         stockSubCategoryTemp={stockSubCategoryTemp}
-                        onSubCategoryChange={handleSubCategoryChange}
+                        onStockSubCategoryChange={handleStockSubCategoryChange}
                     />
                     <CreateStockSecondaryData 
                         hiddenPanel={openOptionsCreate.secondaryData}

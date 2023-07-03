@@ -71,30 +71,38 @@ interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
+    stockNameTemp: string
+    onStockNameChange: (newData: string )=> void
+    stockQuantityTemp: string
+    onStockQuantityChange: (newData: string )=> void
     measureArray: mainData[]
     stockMeasureTemp: string
-    onMeasureChange: (newData: string )=> void
+    onStockMeasureChange: (newData: string )=> void
     categoryArray: mainData[]
     stockCategoryTemp: string
-    onCategoryChange: (newData: string )=> void
+    onStockCategoryChange: (newData: string )=> void
     subCategoryArray: mainData[]
     stockSubCategoryTemp: string
-    onSubCategoryChange: (newData: string )=> void
+    onStockSubCategoryChange: (newData: string )=> void
     
 }
 
 export default function CreateStockMainData(
         {   hiddenPanel, 
-            openOptionsCreate, 
-            measureArray, 
+            openOptionsCreate,
+            stockNameTemp, 
+            onStockNameChange,
+            stockQuantityTemp, 
+            onStockQuantityChange,
+            measureArray,  
             stockMeasureTemp, 
-            onMeasureChange,
+            onStockMeasureChange,
             categoryArray, 
             stockCategoryTemp, 
-            onCategoryChange,
+            onStockCategoryChange,
             subCategoryArray, 
             stockSubCategoryTemp, 
-            onSubCategoryChange, 
+            onStockSubCategoryChange, 
         }: ChildProps )  {
 // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -104,11 +112,11 @@ export default function CreateStockMainData(
     }
     // console.log("hiddenPanel: ", hiddenPanel)
     // console.log("openOptionsCreate: ", openOptionsCreate)
-    const [measure, setMeasure] = useState('');
+    // const [measure, setMeasure] = useState('');
     // const [measureTemp, setMeasureTemp] = useState('');
-    const [category, setCategory] = useState('');
+    // const [category, setCategory] = useState('');
     // const [categoryTemp, setCategoryTemp] = useState('');  
-    const [subCategory, setSubCategory] = useState('');
+    // const [subCategory, setSubCategory] = useState('');
     // const [subCategoryTemp, setSubCategoryTemp] = useState('');
     
     // const usersAlertSelected = usersAlert.filter((usr) => {
@@ -225,7 +233,8 @@ export default function CreateStockMainData(
                 <Box className={classes.customBoxRow}>
                     <TextField
                         label="Name*"
-                        // onChange={ handleEditCustomFieldNew }
+                        value={stockNameTemp}
+                        onChange={ (event) => onStockNameChange(event.target.value) }
                         maxRows={1}
                         size="small"
                         className={classes.inputMainData}
@@ -241,6 +250,8 @@ export default function CreateStockMainData(
                 <Box className={classes.customBoxRow}>
                     <TextField
                         label="Quantity"
+                        value={stockQuantityTemp}
+                        onChange={ (event) => onStockQuantityChange(event.target.value) }
                         maxRows={1}
                         size="small"
                         type="number"
@@ -256,8 +267,7 @@ export default function CreateStockMainData(
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockMeasureTemp}
-                        // onChange={ (event) => setMeasureTemp(event.target.value) }
-                        onChange={ (event) => onMeasureChange(event.target.value) }
+                        onChange={ (event) => onStockMeasureChange(event.target.value) }
                         >
                             {measureArray.map((measure) => (
                                 <MenuItem 
@@ -280,7 +290,7 @@ export default function CreateStockMainData(
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockCategoryTemp}
-                        onChange={ (event) => onCategoryChange(event.target.value) }
+                        onChange={ (event) => onStockCategoryChange(event.target.value) }
                     >
                         {categoryArray.map((category) => (
                             <MenuItem 
@@ -303,7 +313,7 @@ export default function CreateStockMainData(
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockSubCategoryTemp}
-                        onChange={ (event) => onSubCategoryChange(event.target.value) }
+                        onChange={ (event) => onStockSubCategoryChange(event.target.value) }
                     >
                     {subCategoryArray.map((subCategory) => (
                         <MenuItem 
