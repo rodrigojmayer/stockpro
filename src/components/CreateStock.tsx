@@ -111,7 +111,12 @@ export default function CreateStock(
     const [stockCategoryTemp, setStockCategoryTemp] = useState('');
     const [stockSubCategory, setStockSubCategory] = useState('');
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
-    
+    const [stockPrice, setStockPrice] = useState('');
+    const [stockPriceTemp, setStockPriceTemp] = useState('');
+    const [stockDescription, setStockDescription] = useState('');
+    const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
+
+
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
@@ -133,7 +138,6 @@ export default function CreateStock(
             updatedOptions[key as keyof typeof updatedOptions] = (newData===key ? false : true );
         }
         setOpenOptionsCreate(updatedOptions);
-
     }
     
     const handleStockNameChange = (value: string) => {
@@ -156,7 +160,15 @@ export default function CreateStock(
         console.log("SubCategory value: ", value)
         setStockSubCategoryTemp(value)
     }
-    // price
+    const handleStockPriceChange = (value: string) => {
+        console.log("Price value: ", value)
+        setStockPriceTemp(value)
+    }
+    const handleStockDescriptionChange = (value: string) => {
+        console.log("Description value: ", value)
+        setStockDescriptionTemp(value)
+    }
+    // price Price
     // description
     // image?
     // alert by quantity
@@ -211,7 +223,13 @@ export default function CreateStock(
                     />
                     <CreateStockSecondaryData 
                         hiddenPanel={openOptionsCreate.secondaryData}
-                        openOptionsCreate={handleOpenOptionsCreate}
+                        openOptionsCreate={handleOpenOptionsCreate} 
+                        
+                        stockPriceTemp={stockPriceTemp}
+                        onStockPriceChange={handleStockPriceChange}
+                        
+                        stockDescriptionTemp={stockDescriptionTemp}
+                        onStockDescriptionChange={handleStockDescriptionChange}
                     />
                     <CreateStockAlerts 
                         hiddenPanel={openOptionsCreate.alerts}

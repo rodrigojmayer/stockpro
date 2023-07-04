@@ -43,132 +43,39 @@ import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styl
 interface measureData {
     id: number;
     name: string;
-  }
-  interface emailsAlertData {
-      id: number;
-      email: string;
-    }
+}
+interface emailsAlertData {
+    id: number;
+    email: string;
+}
 
 
-const measureArray: measureData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Unit'},
-    { id: 2, name: 'Kg'},
-    { id: 3, name: 'Lts'},
-]; 
-const categoryArray: measureData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Kitchen'},
-    { id: 2, name: 'Food'},
-    { id: 3, name: 'Furniture'},
-];
-const subCategoryArray: measureData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Cutlery'},
-    { id: 2, name: 'Fruits'},
-    { id: 3, name: 'Chairs'},
-];
 
-
-const emailsAlert: emailsAlertData[] = [
-    { id: 1, email: 'email1@test.com' },
-    { id: 2, email: 'email2@test.com'  },
-    { id: 3, email: 'email3@test.com'},
-];
-
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//     padding: theme.spacing(0, 2),
-//     height: '100%',
-//     position: 'absolute',
-//     right: 0,
-//     pointerEvents: 'none',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-// }));
 
 
 interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
+    stockPriceTemp: string
+    onStockPriceChange: (newData: string )=> void
+    stockDescriptionTemp: string
+    onStockDescriptionChange: (newData: string )=> void
     
 }
 
-export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreate }: ChildProps )  {
-// export default function CreateStockSecondaryData( { hiddenPanel }: { hiddenPanel: boolean } ) {
-// export default function CreateStockMainData( { open, handleClose }: ChildProps) {
-    // const { openSaveChanges, closeSaveChanges } = props;
+export default function CreateStockSecondaryData(
+    {   hiddenPanel, 
+        openOptionsCreate, 
+        stockPriceTemp, 
+        onStockPriceChange, 
+        stockDescriptionTemp, 
+        onStockDescriptionChange, 
+    }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const close = () => {
         // handleClose(false)
     }
-
-    const [measure, setMeasure] = useState('');
-    const [measureTemp, setMeasureTemp] = useState('');
-    const [category, setCategory] = useState('');
-    const [categoryTemp, setCategoryTemp] = useState('');
-    const [subCategory, setSubCategory] = useState('');
-    const [subCategoryTemp, setSubCategoryTemp] = useState('');
-    
-    // const usersAlertSelected = usersAlert.filter((usr) => {
-    //     if(idUsersAlertSelected.includes(usr.id))
-    //         return usr
-    // })
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
-    // const [selectedNames, setSelectedNames] = useState([]);
-    
-    // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
-
-    // const deleteEmailTemp = (id:number) => {
-    //     // console.log("idEmailTemp: ", id)
-    //     const updateEmailsTemp = [...emailsAlertsTemp]
-    //     // const updateFieldsNew = [...customFieldsNew]
-    //     let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
-    //     // console.log("index: ", index)
-    //     // console.log("updateEmailsTemp: ", updateEmailsTemp)
-    //     // if (index !== -1) {
-    //         // updateFields[index].deleted = true
-    //     //     // setCustomFields(updateFields)
-    //     //     updateFieldsNew[index].deleted = true
-    //     //     // console.log("customFields: ", customFields) 
-    //     // } else {
-    //     //     index = customFieldsNew.findIndex(field => field.id === id)
-    //     updateEmailsTemp.splice(index, 1)
-
-    //     // }
-    //     setEmailsAlertsTemp(updateEmailsTemp)
-    // }
-    
-    // const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     // console.log("event.currentTarget.id: ", event.currentTarget.id)
-    //     // console.log("event.currentTarget.value: ", event.currentTarget.value)
-    //     // console.log("isNaN('w'): ", isNaN(NaN))
-    //     // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
-    //         const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-    //         if(index !== -1) {
-    //             const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
-    //             updateEmailsAlertsTemp[index].email = event.currentTarget.value
-    //         //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //         //     // console.log("customFields[index].label: ", customFields[index].label)
-    //         //     if(customFields[index]){
-    //         //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
-    //         //             updateFieldsNew[index].okButtonShow = false
-    //         //         else
-    //         //             updateFieldsNew[index].okButtonShow = true
-    //         //     }else if(updateFieldsNew[index].label !='' ){
-    //         //         updateFieldsNew[index].okButtonShow = true
-    //         //     }else if (updateFieldsNew[index].label ==='' ){
-    //         //         updateFieldsNew[index].okButtonShow = false
-    //         //     }
-    //             // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
-        
-    //             setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //         }
-    // }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
@@ -183,25 +90,6 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     
-    // const addInputCustomField = () => {
-    //     // console.log("holis clickis", customFieldsNewTemp.length)
-    //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-    //     const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
-    //     const nextId = lastObj.id + 1
-    //     const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
-    //     // updateFieldsNew[index].label = event.currentTarget.value
-    //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //     // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-    //     // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-    //     //     updateFieldsNew[index].okButtonShow = true
-    //     // else
-    //     //     updateFieldsNew[index].okButtonShow = false
-        
-    //     // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
-
-    //     setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //     // setAddButtonShow(false)
-    // }
 
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
@@ -228,7 +116,10 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                         // onChange={ handleEditCustomFieldNew }
                         maxRows={1}
                         size="small"
+                        type="number"
                         className={classes.inputMainData}
+                        value={stockPriceTemp}
+                        onChange={ (event) => onStockPriceChange(event.target.value) }
                         InputProps={{
                             className: classes.inputClassName,
                             style: {
@@ -239,48 +130,23 @@ export default function CreateStockSecondaryData({ hiddenPanel, openOptionsCreat
                                 <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
                             ),
                         }}
-                    // >
                     />
-                    {/* <SearchIconWrapper> */}
-                        
-                    {/* </SearchIconWrapper> */}
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField
                         label="Description"
                         maxRows={1}
                         size="small"
-                        type="number"
                         className={classes.inputMainData}
+                        value={stockDescriptionTemp}
+                        onChange={ (event) => onStockDescriptionChange(event.target.value) }
                         InputProps={{  className: classes.inputClassName }}
                         // onChange={ handleEditCustomFieldNew }
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>
-                    {/* <TextField 
-                        label="Image 1"
-                        size="small"
-                        maxRows={1}
-                        className={classes.inputMainData}
-                        InputProps={{
-                            className: classes.inputClassName,
-                            endAdornment: (   
-                                <FolderButton
-                                    clicked={() => console.log("click folder button")}
-                                />
-                            ),
-                        }}
-                    /> */}
-                        
-                        
                     <SelectImageButton/>
                 </Box> 
-                {/* <Box className={`${classes.customBoxRow} ${classes.customBoxRowRight}`} sx={{ marginTop: "10px" }}>
-                    <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
-                    <UpButton
-                    direction="right"
-                    />
-                </Box> */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
                     <UpButton
                         direction="left"

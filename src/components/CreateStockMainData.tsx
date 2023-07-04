@@ -84,6 +84,8 @@ interface ChildProps {
     subCategoryArray: mainData[]
     stockSubCategoryTemp: string
     onStockSubCategoryChange: (newData: string )=> void
+
+    
     
 }
 
