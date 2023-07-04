@@ -414,10 +414,14 @@ export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction
   )
 }
 
-export function SelectImageButton() {
+interface SelectImageButtonProps{
+  imageUrl:string
+  setImageUrl:(newData: string) => void
+}
+
+export function SelectImageButton( { imageUrl, setImageUrl } : SelectImageButtonProps) {
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
-  const [imageUrl, setImageUrl] = useState<string>("")
 
   useEffect(() => {
     if(selectedImage){

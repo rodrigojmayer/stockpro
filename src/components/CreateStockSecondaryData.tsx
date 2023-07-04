@@ -61,6 +61,8 @@ interface ChildProps {
     onStockPriceChange: (newData: string )=> void
     stockDescriptionTemp: string
     onStockDescriptionChange: (newData: string )=> void
+    imageUrl: string
+    onSetImageUrl: (newData: string )=> void
     
 }
 
@@ -70,7 +72,9 @@ export default function CreateStockSecondaryData(
         stockPriceTemp, 
         onStockPriceChange, 
         stockDescriptionTemp, 
-        onStockDescriptionChange, 
+        onStockDescriptionChange,
+        imageUrl,
+        onSetImageUrl, 
     }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -145,7 +149,11 @@ export default function CreateStockSecondaryData(
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>
-                    <SelectImageButton/>
+                    <SelectImageButton 
+                        imageUrl = {imageUrl}
+                        setImageUrl = {onSetImageUrl}
+
+                    />
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
                     <UpButton

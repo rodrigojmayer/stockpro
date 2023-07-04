@@ -115,7 +115,9 @@ export default function CreateStock(
     const [stockPriceTemp, setStockPriceTemp] = useState('');
     const [stockDescription, setStockDescription] = useState('');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
-
+    const [stockImageUrl, setStockImageUrl] = useState('');
+    const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
+    
 
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -168,6 +170,12 @@ export default function CreateStock(
         console.log("Description value: ", value)
         setStockDescriptionTemp(value)
     }
+    
+    const handleSetImageUrl = (value: string) => {
+    console.log("handleSetImageUrl value: ", value)
+    setStockImageUrlTemp(value)
+    }
+
     // price Price
     // description
     // image?
@@ -230,6 +238,9 @@ export default function CreateStock(
                         
                         stockDescriptionTemp={stockDescriptionTemp}
                         onStockDescriptionChange={handleStockDescriptionChange}
+                        
+                        imageUrl={stockImageUrlTemp}
+                        onSetImageUrl={handleSetImageUrl}
                     />
                     <CreateStockAlerts 
                         hiddenPanel={openOptionsCreate.alerts}
