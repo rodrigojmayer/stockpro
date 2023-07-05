@@ -117,6 +117,10 @@ export default function CreateStock(
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
     const [stockImageUrl, setStockImageUrl] = useState('');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
+    const [stockAlertQuantity, setStockAlertQuantity] = useState('');
+    const [stockAlertQuantityTemp, setStockAlertQuantityTemp] = useState('');
+    // const [stockAlertDate, setStockAlertDate] = useState('');
+    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState('');
     
 
 
@@ -170,17 +174,23 @@ export default function CreateStock(
         console.log("Description value: ", value)
         setStockDescriptionTemp(value)
     }
-    
     const handleSetImageUrl = (value: string) => {
     console.log("handleSetImageUrl value: ", value)
     setStockImageUrlTemp(value)
     }
+    const handleStockAlertQuantityChange = (value: string) => {
+    console.log("handleSetAlertQuantity value: ", value)
+    setStockAlertQuantityTemp(value)
+    }
+    // const handleStockAlertDateChange = (value: null) => {
+    //     console.log("handleSetAlertDate value: ", value)
+    //     if (value)
+    //         setStockAlertDateTemp(value)
+    // }
 
-    // price Price
-    // description
-    // image?
-    // alert by quantity
-    // alert by date
+    
+    // alert by AlertQuantity
+    // alert by AlertDate
     // custom fields???
 
 
@@ -245,9 +255,14 @@ export default function CreateStock(
                     <CreateStockAlerts 
                         hiddenPanel={openOptionsCreate.alerts}
                         openOptionsCreate={handleOpenOptionsCreate}
-
                         
                         stockMeasureTemp={stockMeasureTemp}
+
+                        stockAlertQuantityTemp = {stockAlertQuantityTemp}
+                        onStockAlertQuantityChange = {handleStockAlertQuantityChange}
+                        
+                        // stockAlertDateTemp={stockAlertDateTemp}
+                        // onStockAlertDateChange={handleStockAlertDateChange}
 
                     />
                     <CreateStockCustomFields

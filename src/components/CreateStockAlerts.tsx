@@ -85,6 +85,10 @@ interface ChildProps {
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
     stockMeasureTemp: string
+    stockAlertQuantityTemp: string
+    onStockAlertQuantityChange: (newData: string) => void
+    // stockAlertDateTemp: null
+    // onStockAlertDateChange: (newData: null) => void
     
 }
 
@@ -92,78 +96,22 @@ export default function CreateStockAlerts(
     {   hiddenPanel, 
         openOptionsCreate, 
         stockMeasureTemp,
+        stockAlertQuantityTemp,
+        onStockAlertQuantityChange,
+        // stockAlertDateTemp,
+        // onStockAlertDateChange,
     }: ChildProps )  {
-// export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
-// export default function CreateStockMainData( { open, handleClose }: ChildProps) {
+    // export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
+    // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
-    const breakpointLG =useMediaQuery('(min-width:1024px)')
+    const breakpointLG = useMediaQuery('(min-width:1024px)')
     const { classes } = useStylesGlobal();
     const close = () => {
         // handleClose(false)
     }
-
     
     const DatePickerComponent = breakpointLG ? DatePicker : MobileDatePicker;
-
-    // const usersAlertSelected = usersAlert.filter((usr) => {
-    //     if(idUsersAlertSelected.includes(usr.id))
-    //         return usr
-    // })
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
-    // const [selectedNames, setSelectedNames] = useState([]);
     
-    // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
-
-    // const deleteEmailTemp = (id:number) => {
-    //     // console.log("idEmailTemp: ", id)
-    //     const updateEmailsTemp = [...emailsAlertsTemp]
-    //     // const updateFieldsNew = [...customFieldsNew]
-    //     let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
-    //     // console.log("index: ", index)
-    //     // console.log("updateEmailsTemp: ", updateEmailsTemp)
-    //     // if (index !== -1) {
-    //         // updateFields[index].deleted = true
-    //     //     // setCustomFields(updateFields)
-    //     //     updateFieldsNew[index].deleted = true
-    //     //     // console.log("customFields: ", customFields) 
-    //     // } else {
-    //     //     index = customFieldsNew.findIndex(field => field.id === id)
-    //     updateEmailsTemp.splice(index, 1)
-
-    //     // }
-    //     setEmailsAlertsTemp(updateEmailsTemp)
-    // }
-    
-    // const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     // console.log("event.currentTarget.id: ", event.currentTarget.id)
-    //     // console.log("event.currentTarget.value: ", event.currentTarget.value)
-    //     // console.log("isNaN('w'): ", isNaN(NaN))
-    //     // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
-    //         const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-    //         if(index !== -1) {
-    //             const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
-    //             updateEmailsAlertsTemp[index].email = event.currentTarget.value
-    //         //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //         //     // console.log("customFields[index].label: ", customFields[index].label)
-    //         //     if(customFields[index]){
-    //         //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
-    //         //             updateFieldsNew[index].okButtonShow = false
-    //         //         else
-    //         //             updateFieldsNew[index].okButtonShow = true
-    //         //     }else if(updateFieldsNew[index].label !='' ){
-    //         //         updateFieldsNew[index].okButtonShow = true
-    //         //     }else if (updateFieldsNew[index].label ==='' ){
-    //         //         updateFieldsNew[index].okButtonShow = false
-    //         //     }
-    //             // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
-        
-    //             setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //         }
-    // }
-
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
@@ -176,38 +124,14 @@ export default function CreateStockAlerts(
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
+    // const [selectedDate, setSelectedDate] = useState('');
     
-    // const addInputCustomField = () => {
-    //     // console.log("holis clickis", customFieldsNewTemp.length)
-    //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-    //     const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
-    //     const nextId = lastObj.id + 1
-    //     const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
-    //     // updateFieldsNew[index].label = event.currentTarget.value
-    //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //     // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-    //     // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-    //     //     updateFieldsNew[index].okButtonShow = true
-    //     // else
-    //     //     updateFieldsNew[index].okButtonShow = false
-        
-    //     // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
-
-    //     setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //     // setAddButtonShow(false)
-    // }
-
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
 
     useEffect(() => {
-        // console.log("useeffect")
-        // setSelectedUsersTemp(selectedUsers)
-        // setMeasureTemp(measure)
-        // setCategoryTemp(category)
-        // setSubCategoryTemp(subCategory)
-        // console.log("subCategory")
+        
 
     }, [ open])
     
@@ -234,6 +158,8 @@ export default function CreateStockAlerts(
                             size="small"
                             type="number"
                             className={classes.inputMainData}
+                            value={stockAlertQuantityTemp}
+                            onChange={ (event) => onStockAlertQuantityChange(event.target.value) }
                             InputProps={{
                                 className: classes.inputClassName,
                                 style: {
@@ -254,11 +180,6 @@ export default function CreateStockAlerts(
                 {/* </Box> */}
                     </Grid>
                 </Box>
-                {/* <Box className={classes.customBoxRow}>
-                    <Typography align="center" variant="h6">
-                        By date
-                    </Typography>
-                </Box>  */}
                
                     <Grid container>
                         <Grid item xs={10} >
@@ -266,6 +187,8 @@ export default function CreateStockAlerts(
                                 <DemoContainer components={['DatePicker']} >
                                     <DatePickerComponent
                                         label="By date"
+                                        // value={stockAlertDateTemp}
+                                        // onChange={ (newDate) => onStockAlertDateChange(newDate) }
                                         slotProps={{ textField: { size: 'small' } }}
                                         className={classes.inputMainData} 
                                         sx={{ marginTop: "-8px !important",
