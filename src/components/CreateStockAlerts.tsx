@@ -87,8 +87,8 @@ interface ChildProps {
     stockMeasureTemp: string
     stockAlertQuantityTemp: string
     onStockAlertQuantityChange: (newData: string) => void
-    // stockAlertDateTemp: null
-    // onStockAlertDateChange: (newData: null) => void
+    stockAlertDateTemp: string
+    onStockAlertDateChange: (newData: string) => void
     
 }
 
@@ -98,8 +98,8 @@ export default function CreateStockAlerts(
         stockMeasureTemp,
         stockAlertQuantityTemp,
         onStockAlertQuantityChange,
-        // stockAlertDateTemp,
-        // onStockAlertDateChange,
+        stockAlertDateTemp,
+        onStockAlertDateChange,
     }: ChildProps )  {
     // export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
     // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
@@ -187,7 +187,9 @@ export default function CreateStockAlerts(
                                 <DemoContainer components={['DatePicker']} >
                                     <DatePickerComponent
                                         label="By date"
-                                        // value={stockAlertDateTemp}
+                                        format="DD/MM/YYYY"
+                                        value={stockAlertDateTemp || null}
+                                        onChange={ (newDate) => onStockAlertDateChange(newDate || '') }
                                         // onChange={ (newDate) => onStockAlertDateChange(newDate) }
                                         slotProps={{ textField: { size: 'small' } }}
                                         className={classes.inputMainData} 

@@ -119,8 +119,8 @@ export default function CreateStock(
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
     const [stockAlertQuantity, setStockAlertQuantity] = useState('');
     const [stockAlertQuantityTemp, setStockAlertQuantityTemp] = useState('');
-    // const [stockAlertDate, setStockAlertDate] = useState('');
-    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState('');
+    const [stockAlertDate, setStockAlertDate] = useState('');
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState('');
     
 
 
@@ -182,11 +182,10 @@ export default function CreateStock(
     console.log("handleSetAlertQuantity value: ", value)
     setStockAlertQuantityTemp(value)
     }
-    // const handleStockAlertDateChange = (value: null) => {
-    //     console.log("handleSetAlertDate value: ", value)
-    //     if (value)
-    //         setStockAlertDateTemp(value)
-    // }
+    const handleStockAlertDateChange = (value: string) => {
+        console.log("handleSetAlertDate value: ", value.$D)
+        setStockAlertDateTemp(value)
+    }
 
     
     // alert by AlertQuantity
@@ -261,8 +260,8 @@ export default function CreateStock(
                         stockAlertQuantityTemp = {stockAlertQuantityTemp}
                         onStockAlertQuantityChange = {handleStockAlertQuantityChange}
                         
-                        // stockAlertDateTemp={stockAlertDateTemp}
-                        // onStockAlertDateChange={handleStockAlertDateChange}
+                        stockAlertDateTemp={stockAlertDateTemp}
+                        onStockAlertDateChange={handleStockAlertDateChange}
 
                     />
                     <CreateStockCustomFields
