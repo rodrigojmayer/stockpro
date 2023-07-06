@@ -87,8 +87,8 @@ interface ChildProps {
     stockMeasureTemp: string
     stockAlertQuantityTemp: string
     onStockAlertQuantityChange: (newData: string) => void
-    stockAlertDateTemp: string
-    onStockAlertDateChange: (newData: string) => void
+    stockAlertDateTemp: Date | string
+    onStockAlertDateChange: (newData: Date | string) => void
     
 }
 

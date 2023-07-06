@@ -120,7 +120,7 @@ export default function CreateStock(
     const [stockAlertQuantity, setStockAlertQuantity] = useState('');
     const [stockAlertQuantityTemp, setStockAlertQuantityTemp] = useState('');
     const [stockAlertDate, setStockAlertDate] = useState('');
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState('');
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>('');
     
 
 
@@ -182,9 +182,17 @@ export default function CreateStock(
     console.log("handleSetAlertQuantity value: ", value)
     setStockAlertQuantityTemp(value)
     }
-    const handleStockAlertDateChange = (value: string) => {
-        console.log("handleSetAlertDate value: ", value.$D)
-        setStockAlertDateTemp(value)
+    // const handleStockAlertDateChange = (value: string) => {
+    const handleStockAlertDateChange = (date:Date | null) => {
+        console.log("handleSetAlertDate value: ", date)
+        // if(date)
+        //     setStockAlertDateTemp(date)
+        if (date) {
+            const formattedDate = date.toISOString();
+            setStockAlertDateTemp(formattedDate);
+        } else {
+            setStockAlertDateTemp('');
+        }
     }
 
     
