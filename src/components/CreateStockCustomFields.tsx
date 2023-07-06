@@ -365,12 +365,15 @@ export default function CreateStockCustomFields(
                     </div>
                 </Box>  */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
-                    <UpButton
-                        direction="left"
-                        clicked={() => handleHiddenOptions("alerts")}
-                    />
-                    <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
-                    <Typography align="right" sx={{ width: "153px" }}></Typography>
+                    <div className={classes.customBoxCenter}>
+                        <UpButton
+                            direction="left"
+                            clicked={() => handleHiddenOptions("alerts")}
+                        />
+                        <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
+                    
+                    <Typography align="right" sx={{ width: "169px" }}></Typography>
+                    </div>
                 </Box>
             </Box>
             

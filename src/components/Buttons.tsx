@@ -358,6 +358,7 @@ export function UpButton({ sizeIco, roundedIco, cusField, clicked, direction }: 
           width: sizeIco, 
           height: sizeIco,
           borderRadius: borRad,
+          margin: 1,
         }}
         className={classes.btnArrow}
         onClick={handleClick}

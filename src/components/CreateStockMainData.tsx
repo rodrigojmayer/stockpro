@@ -331,14 +331,18 @@ export default function CreateStockMainData(
                     </TextField>
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
-                    <Typography align="left" sx={{ width: "153px" }}></Typography>
                     
-                    <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
-                    <UpButton
-                    direction="right"
-                    //clicked={() => console.log("upButtonClicked")}
-                    clicked={() => handleHiddenOptions("secondaryData")}
-                    />
+                    <div className={classes.customBoxCenter}>
+                        <Typography align="left" sx={{ width: "169px" }}></Typography>
+                    
+                        <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
+                        <UpButton
+                        direction="right"
+                        //clicked={() => console.log("upButtonClicked")}
+                        clicked={() => handleHiddenOptions("secondaryData")}
+                        />
+                    
+                    </div> 
                 </Box>
             </Box>
         </div>

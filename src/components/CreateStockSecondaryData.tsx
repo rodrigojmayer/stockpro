@@ -156,16 +156,22 @@ export default function CreateStockSecondaryData(
                     />
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
-                    <UpButton
-                        direction="left"
-                        clicked={() => handleHiddenOptions("mainData")}
-                    /><Typography align="left" sx={{ width: "95px" }}>Main data</Typography>
                     
-                    <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
-                    <UpButton
-                    direction="right"
-                    clicked={() => handleHiddenOptions("alerts")}
-                    />
+                    <div className={classes.customBoxCenter}>
+                        <UpButton
+                            direction="left"
+                            clicked={() => handleHiddenOptions("mainData")}
+                        />
+                        <Typography align="left" sx={{ width: "95px" }}>Main data</Typography>
+                    
+                    </div> 
+                    <div className={classes.customBoxCenter}>  
+                        <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
+                        <UpButton
+                        direction="right"
+                        clicked={() => handleHiddenOptions("alerts")}
+                        />
+                    </div>
                 </Box>
             </Box>  
         </div>

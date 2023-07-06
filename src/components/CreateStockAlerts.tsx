@@ -196,10 +196,11 @@ export default function CreateStockAlerts(
                                         // onChange={ (newDate) => onStockAlertDateChange(newDate) }
                                         slotProps={{ textField: { size: 'small' } }}
                                         className={classes.inputMainData} 
-                                        sx={{ marginTop: "-8px !important",
-                                        "& .MuiOutlinedInput-root": {
-                                            borderRadius:  "10px !important",
-                                        }
+                                        sx={{ 
+                                            marginTop: "-8px !important",
+                                            "& .MuiOutlinedInput-root": {
+                                                borderRadius:  "10px !important",
+                                            }
                                         }} 
                                     />
                                 </DemoContainer>
@@ -215,16 +216,23 @@ export default function CreateStockAlerts(
                         </Box>
                     </Grid>
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
-                    <UpButton
-                        direction="left"
-                        clicked={() => handleHiddenOptions("secondaryData")}
-                    />
-                    <Typography align="left" sx={{ width: "95px" }}>Secondary data</Typography>
-                    <Typography align="right" sx={{ width: "95px" }}>Custom fields</Typography>
-                    <UpButton
-                    direction="right"
-                    clicked={() => handleHiddenOptions("customFields")}
-                    />
+                    
+                        <div className={classes.customBoxCenter}>
+                            <UpButton
+                                direction="left"
+                                clicked={() => handleHiddenOptions("secondaryData")}
+                            />
+                            <Typography align="left" sx={{ width: "95px" }}>Secondary data</Typography>
+                            
+                            </div>
+                            
+                        <div className={classes.customBoxCenter}>
+                            <Typography align="right" sx={{ width: "95px" }}>Custom fields</Typography>
+                            <UpButton
+                            direction="right"
+                            clicked={() => handleHiddenOptions("customFields")}
+                            />
+                        </div>
                 </Box>
             </Box>
         </div>
