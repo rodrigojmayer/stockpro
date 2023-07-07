@@ -21,6 +21,8 @@ export interface ColumnData {
   width: number;
   id_client?: number;
   deleted: boolean;
+  [key: string]: any;
+  customFields?: object;
 }
 
 export interface ColumnDataCustom {
@@ -34,7 +36,12 @@ export interface ColumnDataCustom {
   okButtonShow: boolean;
   fieldRepeatedShow: boolean;
 }
-
+export interface CustomValueData {
+  id_custom_fields_value: number,
+  id_custom_field_product: number,
+  id_product: number,
+  custom_field_value: string,
+}
 export interface DataMenuOptions {
   fields: boolean,
   alerts: boolean,

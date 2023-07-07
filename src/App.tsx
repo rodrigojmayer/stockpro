@@ -6,7 +6,7 @@ import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
 import CreateStock from './components/CreateStock';
-import { Data, ColumnData } from './types';
+import { Data, ColumnData, CustomValueData } from './types';
 // import {  } from './data';
 
 const INITIAL_DATA = [
@@ -25,18 +25,18 @@ const theme = createTheme({
 });
 
 const sample:  Data[] = [
-  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
+  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", customFields: { id_custom_field_product: 17, custom_field_value: "Red"},},
   {id: 2, product: 'Ice cream sandwich ', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
   {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
   {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
-  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
-  {id: 2, product: 'Ice cream sandwich ', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
-  {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
-  {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
-  {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
-  {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
+  {id: 7, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
+  {id: 8, product: 'Ice cream sandwich ', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
+  {id: 9, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
+  {id: 10, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
+  {id: 11, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
+  {id: 12, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
 ];
 
 const columnsDefault: ColumnData[] = [
@@ -47,9 +47,16 @@ const columnsDefault: ColumnData[] = [
   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true, deleted: false  },
 ];
 const columnsCustom: ColumnData[] = [
-  { id: 16, width: 120, label: 'Product2', dataKey: 'product2', id_client: 2, deleted: true  },
-  { id: 17, width: 100, label: 'Amount2', dataKey: 'amount2', numeric: true, id_client: 2,  deleted: false  },
+  { id: 16, width: 120, label: 'Size', dataKey: 'product2', id_client: 2, deleted: true  },
+  { id: 17, width: 100, label: 'Color', dataKey: 'amount2', numeric: true, id_client: 2,  deleted: false  },
 ];
+const customFieldsValues: CustomValueData[] = [
+  
+  { id_custom_fields_value: 2, id_custom_field_product: 17, id_product: 2, custom_field_value: "Black"},
+  { id_custom_fields_value: 3, id_custom_field_product: 17, id_product: 3, custom_field_value: "White"},
+  { id_custom_fields_value: 4, id_custom_field_product: 17, id_product: 4, custom_field_value: "White"},
+  { id_custom_fields_value: 5, id_custom_field_product: 17, id_product: 5, custom_field_value: "Brown"},
+]
 
 const columns: ColumnData[] = columnsDefault.concat(columnsCustom);
 

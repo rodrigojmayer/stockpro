@@ -44,19 +44,27 @@ interface emailsAlertData {
     id: number;
     email: string;
 }
+interface DataCustomValues {
+    label: string;
+    value: string;
+}
 
 interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
     columnsCustom: ColumnData[] 
+    stockCustomValuesTemp: DataCustomValues[] 
+    onStockCustomValuesTemp: (newData: string )=> void
     
 }
 
 export default function CreateStockCustomFields(
     {   hiddenPanel, 
         openOptionsCreate,
-        columnsCustom, 
+        columnsCustom,
+        stockCustomValuesTemp,
+        onStockCustomValuesTemp,
     }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -289,7 +297,9 @@ export default function CreateStockCustomFields(
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
-
+    console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
+    console.log("stockCustomValuesTemp[0]: ", stockCustomValuesTemp[0])
+    console.log("stockCustomValuesTemp[0].label: ", stockCustomValuesTemp[0].label)
     // useEffect(() => {
         
 
@@ -318,6 +328,8 @@ export default function CreateStockCustomFields(
                                     // maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
+                                    value={stockCustomValuesTemp}
+                                    onChange={ (event) => onStockCustomValuesTemp(event.target.value) }
                                     // className={classes.newCustomField}
                                     // className={classes.inputMainData}
                                     InputProps={{

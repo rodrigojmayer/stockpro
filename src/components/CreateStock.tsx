@@ -121,6 +121,11 @@ export default function CreateStock(
     const [stockAlertQuantityTemp, setStockAlertQuantityTemp] = useState('');
     const [stockAlertDate, setStockAlertDate] = useState('');
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>('');
+    const [stockCustomValues, setStockCustomValues] = useState('');
+    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
+        label: value.label,
+        value: "",
+    })));
     
 
 
@@ -194,21 +199,44 @@ export default function CreateStock(
             setStockAlertDateTemp('');
         }
     }
+    const handleStockCustomValuesTemp = (value: string) => {
+        console.log("Custom value: ", value)
+        
+        // const updateEmailsAlertsTemp = [...stockCustomValuesTemp, {id:nextId, email: ""}]
+        // updateFieldsNew[index].label = event.currentTarget.value
+        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
+        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
+        //     updateFieldsNew[index].okButtonShow = true
+        // else
+        //     updateFieldsNew[index].okButtonShow = false
+        
+        // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
+
+        // setStockCustomValuesTemp(updateEmailsAlertsTemp)
+    }
 
     
     // alert by AlertQuantity
     // alert by AlertDate
     // custom fields???
 
+    // const customeante = stockCustomValuesTemp.map((value) => ({
+    //     label: value.label,
+    //     newField: "new value",
+    // }))
 
     
     useEffect(() => {
-        console.log("openOptionsCreate: ", openOptionsCreate)
+        // stockCustomValuesTemp.map((value) => {
+        //     console.log(value)
+        // })
+        // console.log("openOptionsCreate: ", openOptionsCreate)
         // setSelectedUsersTemp(selectedUsers)
         // setStockMeasureTemp(measure)
         // setStockCategoryTemp(category)
         // setStockSubCategoryTemp(subCategory)
-        console.log("stockMeasureTemp: ", stockMeasureTemp)
+        // console.log("stockMeasureTemp: ", stockMeasureTemp)
 
     }, [ open, openOptionsCreate])
     
@@ -277,6 +305,9 @@ export default function CreateStock(
                         openOptionsCreate={handleOpenOptionsCreate}
                         
                         columnsCustom={columnsCustom}
+                        
+                        stockCustomValuesTemp={stockCustomValuesTemp}
+                        onStockCustomValuesTemp={handleStockCustomValuesTemp}
                     />
                     <Box className={classes.finishButtons}>
                         <CancelButton
