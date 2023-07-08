@@ -18,7 +18,23 @@ const INITIAL_STATE = {
   sub_category: "",
 }
 
-
+const additionalFields = {
+  customFields: {},
+}
+const mergedInitialState = {
+  ...INITIAL_STATE,
+  ...additionalFields,
+}
+interface DataMerged {
+  id: number;
+  product: string;
+  amount: number;
+  measure: string;
+  category: string;
+  sub_category: string;
+  [key: string]: any;
+  customFields: object;
+}
 const VirtuosoTableComponents: TableComponents<Data> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Paper} {...props} ref={ref} />
@@ -65,15 +81,18 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
 export default function TableProducts({ data, columns }:  DataTable ) {
 // export default function TableProducts({ data }: { data: Data[] }) {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
-  const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
+  
+  const [filteredRows, setFilteredRows] = useState<DataMerged>(mergedInitialState);
+  // const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
   useEffect(() => {
-    // console.log("filteredRows: ", filteredRows)
-    // console.log("columns: ", columns)
+    console.log("data: ", data)
+    console.log("filteredData: ", filteredData)
+    console.log("columns: ", columns)
     setFilteredData(data.filter((item) => {
       let vals = true
      Object.keys(filteredRows).forEach((arg)=> {
@@ -92,6 +111,7 @@ export default function TableProducts({ data, columns }:  DataTable ) {
       })
       return vals
     }))
+    console.log("filteredRows: ", filteredRows)
   }, [ filteredRows, data]);
   
 
