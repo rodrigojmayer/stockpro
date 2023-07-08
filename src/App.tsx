@@ -30,8 +30,8 @@ const user: UserData = {
 
 const sample:  Data[] = [
   {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", customFields: [{ color: "Red"}],},
-  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
-  {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
+  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", customFields: [{ color: "Black"}],},
+  {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning", customFields: [{ color: "White"}],},
   {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
@@ -137,7 +137,7 @@ function App() {
         <CreateStock
             open={showCreateStock} 
             handleClose={handleCloseCreateStock} 
-            
+            data={filteredData}
             columnsCustom={columnsCustom}
         />
       </ThemeProvider>

@@ -37,7 +37,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
-import { DataCreateStockOptions, ColumnData } from '../types';
+import { Data, DataCreateStockOptions, ColumnData } from '../types';
 
 
 interface mainData {
@@ -86,12 +86,14 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
+    data: Data
     columnsCustom: ColumnData[] 
 }
 
 export default function CreateStock( 
     {   open, 
         handleClose, 
+        data,
         columnsCustom,
     }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -122,10 +124,12 @@ export default function CreateStock(
     const [stockAlertDate, setStockAlertDate] = useState('');
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>('');
     const [stockCustomValues, setStockCustomValues] = useState('');
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
-        label: value.label,
-        value: "",
-    })));
+    // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
+    //     label: value.label,
+    //     value: "",
+    // })));
+    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState('');
+
     
 
 

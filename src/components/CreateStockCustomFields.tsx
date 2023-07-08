@@ -33,7 +33,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
-import { ColumnData, ColumnDataCustom } from '../types';
+import { Data, ColumnData, ColumnDataCustom } from '../types';
 
 
 interface measureData {
@@ -54,7 +54,8 @@ interface ChildProps {
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
     columnsCustom: ColumnData[] 
-    stockCustomValuesTemp: DataCustomValues[] 
+    // stockCustomValuesTemp: DataCustomValues[] 
+    stockCustomValuesTemp: string
     onStockCustomValuesTemp: (newData: string )=> void
     
 }
@@ -203,7 +204,7 @@ export default function CreateStockCustomFields(
             // console.log("updateFields: ", updateFields)
         }
 
-        console.log("updateFields: ", updateFields)
+        // console.log("updateFields: ", updateFields)
             
         // console.log("customFieldsNewTemp[index].label: ", updateFields[index].label)
         setCustomFieldsTemp(updateFields)
@@ -299,7 +300,7 @@ export default function CreateStockCustomFields(
     }
     console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
     console.log("stockCustomValuesTemp[0]: ", stockCustomValuesTemp[0])
-    console.log("stockCustomValuesTemp[0].label: ", stockCustomValuesTemp[0].label)
+    // console.log("stockCustomValuesTemp[0].label: ", stockCustomValuesTemp[0].label)
     // useEffect(() => {
         
 

@@ -78,7 +78,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
             })
       }
       
-      console.log("newRow: ", newRow)
+      // console.log("newRow: ", newRow)
 
   return (
     <React.Fragment >
