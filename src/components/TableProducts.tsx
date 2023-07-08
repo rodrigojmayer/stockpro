@@ -18,23 +18,24 @@ const INITIAL_STATE = {
   sub_category: "",
 }
 
-const additionalFields = {
-  customFields: {},
-}
-const mergedInitialState = {
-  ...INITIAL_STATE,
-  ...additionalFields,
-}
-interface DataMerged {
-  id: number;
-  product: string;
-  amount: number;
-  measure: string;
-  category: string;
-  sub_category: string;
-  [key: string]: any;
-  customFields: object;
-}
+// const additionalFields = {
+//   customFields: {},
+// }
+// const mergedInitialState = {
+//   ...INITIAL_STATE,
+//   ...additionalFields,
+// }
+// interface DataMerged {
+//   id: number;
+//   product: string;
+//   amount: number;
+//   measure: string;
+//   category: string;
+//   sub_category: string;
+//   [key: string]: any;
+//   customFields: object;
+// }
+
 const VirtuosoTableComponents: TableComponents<Data> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Paper} {...props} ref={ref} />
@@ -51,6 +52,34 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 
 
 function rowContent(_index: number, row: Data, columns: ColumnData[]) {
+
+  
+    // console.log("_index: ", _index)
+    // console.log("row: ", row)
+    // console.log("row.customFields: ", row.customFields)
+    // console.log("row.customFields: ", row.customFields)
+    // console.log("columns: ", columns)
+      let newRow = { ...row } // Create a copy of the item to add in the same level the customFields
+
+      // console.log("newRow: ", newRow)
+      if (newRow.customFields) {
+        // Merge the customFields into the item and delete the initial customFields object
+        // newRow = {
+        //   ...newRow,
+        //   ...newRow.customFields,
+        //   customFields: undefined,
+        // }
+        newRow.customFields.map((customField:any) => {
+          
+          newRow = {
+              ...newRow,
+              ...customField
+            }
+            })
+      }
+      
+      console.log("newRow: ", newRow)
+
   return (
     <React.Fragment >
       {columns.map((column) => (
@@ -68,7 +97,8 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
         >
 
           <Typography noWrap>
-            {row[column.dataKey]}
+            { newRow[column.dataKey] }
+            {/* {column.dataKey} */}
 
           </Typography>
 
@@ -82,20 +112,21 @@ export default function TableProducts({ data, columns }:  DataTable ) {
 // export default function TableProducts({ data }: { data: Data[] }) {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
   
-  const [filteredRows, setFilteredRows] = useState<DataMerged>(mergedInitialState);
+  const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   // const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
+    // console.log("data: ", data)
   const [filteredData, setFilteredData] = useState(data)
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
   useEffect(() => {
-    console.log("data: ", data)
-    console.log("filteredData: ", filteredData)
-    console.log("columns: ", columns)
+    // console.log("data: ", data)
+    // console.log("filteredData: ", filteredData)
+    // console.log("columns: ", columns)
     setFilteredData(data.filter((item) => {
       let vals = true
-     Object.keys(filteredRows).forEach((arg)=> {
+      Object.keys(filteredRows).forEach((arg)=> {
         const str = arg as string;
         let value = filteredRows[str as keyof typeof filteredRows]
             if (typeof value == "string")
@@ -111,7 +142,7 @@ export default function TableProducts({ data, columns }:  DataTable ) {
       })
       return vals
     }))
-    console.log("filteredRows: ", filteredRows)
+    // console.log("filteredRows: ", filteredRows)
   }, [ filteredRows, data]);
   
 

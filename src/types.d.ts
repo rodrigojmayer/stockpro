@@ -1,3 +1,13 @@
+export interface UserData {
+  id: number;
+  client: number;
+  name: string;
+  user: string;
+  pass: string;
+  deleted: boolean;
+  enabled: boolean;
+}
+
 export interface Data {
   id: number;
   product: string;
@@ -6,6 +16,8 @@ export interface Data {
   category: string;
   sub_category: string;
   [key?: string]: any;
+  customFields?: array;
+  id_custom_field_product?: number;
 }
 
 export interface DataTable {
@@ -22,7 +34,6 @@ export interface ColumnData {
   id_client?: number;
   deleted: boolean;
   [key: string]: any;
-  customFields?: object;
 }
 
 export interface ColumnDataCustom {

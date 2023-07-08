@@ -6,7 +6,7 @@ import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
 import CreateStock from './components/CreateStock';
-import { Data, ColumnData, CustomValueData } from './types';
+import { Data, ColumnData, CustomValueData, UserData } from './types';
 // import {  } from './data';
 
 const INITIAL_DATA = [
@@ -24,15 +24,19 @@ const theme = createTheme({
   },
 });
 
+const user: UserData = {
+  id: 1, client: 2, name: "Rodrigo", user: "rmayer", pass: "123", deleted: false, enabled: true
+}
+
 const sample:  Data[] = [
-  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", customFields: { id_custom_field_product: 17, custom_field_value: "Red"},},
-  {id: 2, product: 'Ice cream sandwich ', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
+  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", customFields: [{ color: "Red"}],},
+  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
   {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
   {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
   {id: 7, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
-  {id: 8, product: 'Ice cream sandwich ', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
+  {id: 8, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
   {id: 9, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
   {id: 10, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 11, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
@@ -47,26 +51,25 @@ const columnsDefault: ColumnData[] = [
   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true, deleted: false  },
 ];
 const columnsCustom: ColumnData[] = [
-  { id: 16, width: 120, label: 'Size', dataKey: 'product2', id_client: 2, deleted: true  },
-  { id: 17, width: 100, label: 'Color', dataKey: 'amount2', numeric: true, id_client: 2,  deleted: false  },
+  { id: 16, width: 120, label: 'Size', dataKey: 'size', id_client: 2, deleted: true  },
+  { id: 17, width: 100, label: 'Color', dataKey: 'color', id_client: 2, deleted: false  },
+  { id: 18, width: 100, label: 'Color', dataKey: 'color', id_client: 3, deleted: false  }
 ];
-const customFieldsValues: CustomValueData[] = [
-  
-  { id_custom_fields_value: 2, id_custom_field_product: 17, id_product: 2, custom_field_value: "Black"},
-  { id_custom_fields_value: 3, id_custom_field_product: 17, id_product: 3, custom_field_value: "White"},
-  { id_custom_fields_value: 4, id_custom_field_product: 17, id_product: 4, custom_field_value: "White"},
-  { id_custom_fields_value: 5, id_custom_field_product: 17, id_product: 5, custom_field_value: "Brown"},
-]
 
-const columns: ColumnData[] = columnsDefault.concat(columnsCustom);
+const columns: ColumnData[] = columnsDefault.concat(
+    columnsCustom.filter((column) => column.id_client === user.client && column.deleted === false)
+  );
 
 const idColumnsTableOrder: Number[] = [1, 2, 3, 4];
 // const idColumnsHiddenFields: Number[] = [5, 6, 17];
+
+     
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(sample)
   
+
   const [showCreateStock, setShowCreateStock] = useState(false);
 
 
@@ -77,15 +80,34 @@ function App() {
   useEffect(() => {
     
     setFilteredData(sample.filter((item) => {
-     return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+
+      // console.log("item: ", item)
+      // let newItem = { ...item } // Create a copy of the item to add in the same level the customFields
+
+      // // console.log("newItem: ", newItem)
+      // if (newItem.customFields) {
+      //   // Merge the customFields into the item and delete the initial customFields object
+      //   newItem.customFields.map((customField:any) => {
+          
+      //   newItem = {
+      //     ...newItem,
+      //     ...customField.id_custom_field_product
+      //   }
+      //   })
+        
+      // }
+      // console.log("newItem: ", newItem)
+
+      return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.measure.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.category.toLowerCase().includes(searchQuery.toLowerCase())
-
     }
+
     ));
-}, [ searchQuery])
+    // console.log("filteredData: ", filteredData)
+}, [ ])
 
   return (
     <div className="App">
