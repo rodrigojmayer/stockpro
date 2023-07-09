@@ -52,13 +52,18 @@ const columnsDefault: ColumnData[] = [
 ];
 const columnsCustom: ColumnData[] = [
   { id: 16, width: 120, label: 'Size', dataKey: 'size', id_client: 2, deleted: true  },
-  { id: 17, width: 100, label: 'Color', dataKey: 'color', id_client: 2, deleted: false  },
-  { id: 18, width: 100, label: 'Color', dataKey: 'color', id_client: 3, deleted: false  }
+  { id: 17, width: 100, label: 'Color client 2', dataKey: 'color', id_client: 2, deleted: false  },
+  { id: 18, width: 100, label: 'Color client 3', dataKey: 'color', id_client: 3, deleted: false  }
 ];
 
-const columns: ColumnData[] = columnsDefault.concat(
-    columnsCustom.filter((column) => column.id_client === user.client && column.deleted === false)
-  );
+const filteredColumnsCustom : ColumnData[] =  columnsCustom.filter((element) => {
+  return element.id_client === user.client && element.deleted === false
+})
+
+// const columns: ColumnData[] = columnsDefault.concat(
+//   columnsCustom.filter((column) => column.id_client === user.client && column.deleted === false)
+// );
+const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
 
 const idColumnsTableOrder: Number[] = [1, 2, 3, 4];
 // const idColumnsHiddenFields: Number[] = [5, 6, 17];
@@ -138,7 +143,7 @@ function App() {
             open={showCreateStock} 
             handleClose={handleCloseCreateStock} 
             data={filteredData}
-            columnsCustom={columnsCustom}
+            columnsCustom={filteredColumnsCustom}
         />
       </ThemeProvider>
       

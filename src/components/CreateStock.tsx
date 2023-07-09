@@ -86,7 +86,7 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    data: Data
+    data: Data[]
     columnsCustom: ColumnData[] 
 }
 

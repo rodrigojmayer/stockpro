@@ -73,7 +73,10 @@ export default function CreateStockCustomFields(
     }
     const columns: ColumnData[] = columnsCustom;
     const columnsCustomNew: ColumnDataCustom[] = columnsCustom
-    .map((obj) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
+    .map((obj) => {
+        console.log("obj: ", obj)
+        return {...obj, okButtonShow: false, fieldRepeatedShow: false}
+    });
 
     const [measure, setMeasure] = useState('');
     const [measureTemp, setMeasureTemp] = useState('');
