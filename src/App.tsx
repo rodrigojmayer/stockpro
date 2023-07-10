@@ -82,7 +82,45 @@ function App() {
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
 
+  const [defaultColumns, setDefaultColumns] = useState([])
+
   useEffect(() => {
+
+    const fetchDefaultColumns = async () => {
+      const response = await fetch('http://localhost:4000/api/defaultColumns/')
+      // console.log(response)
+      const json = await response.json()
+      // console.log("json: ", json)
+
+      // console.log("json: ", json)
+      if (response.ok) {
+        setDefaultColumns(json)
+      }
+
+
+      // var responseClone:any; // 1
+      // fetch('/api/defaultColumns')
+      // .then(function (response) {
+      //     responseClone = response.clone(); // 2
+      //     return response.json();
+      // })
+      // .then(function (data) {
+      //     // Do something with data
+      // }, function (rejectionReason) { // 3
+      //     console.log('Error parsing JSON from response:', rejectionReason, responseClone); // 4
+      //     responseClone.text() // 5
+      //     .then(function (bodyText:any) {
+      //         console.log('Received the following instead of valid JSON:', bodyText); // 6
+      //     });
+      // });
+
+
+
+    }
+
+    fetchDefaultColumns()
+    console.log("defaultColumns: ", defaultColumns)
+    
     
     setFilteredData(sample.filter((item) => {
 
@@ -146,7 +184,6 @@ function App() {
             columnsCustom={filteredColumnsCustom}
         />
       </ThemeProvider>
-      
     </div>
   )
 }
