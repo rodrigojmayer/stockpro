@@ -44,9 +44,9 @@ const sample:  Data[] = [
 ];
 
 const columnsDefault: ColumnData[] = [
-  { id: 1, width: 120, label: 'Product', dataKey: 'product', deleted: false },
+  { id: 1, width: 120, label: 'Product', dataKey: 'product', numeric: false, deleted: false },
   { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true, deleted: false  },
-  { id: 3, width: 80, label: 'Measure', dataKey: 'measure', deleted: false  },
+  { id: 3, width: 80, label: 'Measure', dataKey: 'measure', numeric: false, deleted: false  },
   { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true, deleted: false  },
   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true, deleted: false  },
 ];
@@ -82,64 +82,31 @@ function App() {
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
 
-  const [defaultColumns, setDefaultColumns] = useState([])
+  const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
+  const [isLoading, setIsLoading] = useState(true); // New state for loading status
 
   useEffect(() => {
 
     const fetchDefaultColumns = async () => {
-      const response = await fetch('http://localhost:4000/api/defaultColumns/')
-      // console.log(response)
-      const json = await response.json()
-      // console.log("json: ", json)
-
-      // console.log("json: ", json)
-      if (response.ok) {
-        setDefaultColumns(json)
+      try {
+        const response = await fetch('http://localhost:4000/api/defaultColumns/')
+        if (response.ok) {
+          const json = await response.json()
+          setDefaultColumns(json)
+        } else {
+        // Handle the case where the response is not OK (e.g., show an error message)
       }
-
-
-      // var responseClone:any; // 1
-      // fetch('/api/defaultColumns')
-      // .then(function (response) {
-      //     responseClone = response.clone(); // 2
-      //     return response.json();
-      // })
-      // .then(function (data) {
-      //     // Do something with data
-      // }, function (rejectionReason) { // 3
-      //     console.log('Error parsing JSON from response:', rejectionReason, responseClone); // 4
-      //     responseClone.text() // 5
-      //     .then(function (bodyText:any) {
-      //         console.log('Received the following instead of valid JSON:', bodyText); // 6
-      //     });
-      // });
-
-
-
+    } catch (error) {
+      // Handle any network or fetch-related errors
+    } finally {
+      setIsLoading(false); // Set loading status to false when the fetch is complete
     }
 
+    }
     fetchDefaultColumns()
-    console.log("defaultColumns: ", defaultColumns)
-    
+    // console.log("defaultColumns: ", defaultColumns)
     
     setFilteredData(sample.filter((item) => {
-
-      // console.log("item: ", item)
-      // let newItem = { ...item } // Create a copy of the item to add in the same level the customFields
-
-      // // console.log("newItem: ", newItem)
-      // if (newItem.customFields) {
-      //   // Merge the customFields into the item and delete the initial customFields object
-      //   newItem.customFields.map((customField:any) => {
-          
-      //   newItem = {
-      //     ...newItem,
-      //     ...customField.id_custom_field_product
-      //   }
-      //   })
-        
-      // }
-      // console.log("newItem: ", newItem)
 
       return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -151,6 +118,11 @@ function App() {
     ));
     // console.log("filteredData: ", filteredData)
 }, [ ])
+
+  // Wait for the defaultColumns to be fetched before rendering the TableProducts component
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="App">
@@ -175,7 +147,7 @@ function App() {
               </Grid>
             </Grid>
           </Container>
-          <TableProducts data={filteredData} columns={columns} />
+          <TableProducts data={filteredData} columns={defaultColumns} />
         </Layout>
         <CreateStock
             open={showCreateStock} 
