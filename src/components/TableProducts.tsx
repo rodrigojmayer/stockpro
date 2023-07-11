@@ -19,7 +19,7 @@ const INITIAL_STATE = {
 }
 
 // const additionalFields = {
-//   customFields: {},
+//   custom_fields: {},
 // }
 // const mergedInitialState = {
 //   ...INITIAL_STATE,
@@ -33,7 +33,7 @@ const INITIAL_STATE = {
 //   category: string;
 //   sub_category: string;
 //   [key: string]: any;
-//   customFields: object;
+//   custom_fields: object;
 // }
 
 const VirtuosoTableComponents: TableComponents<Data> = {
@@ -56,24 +56,24 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
   
     // console.log("_index: ", _index)
     // console.log("row: ", row)
-    // console.log("row.customFields: ", row.customFields)
-    // console.log("row.customFields: ", row.customFields)
+    // console.log("row.custom_fields: ", row.custom_fields)
+    // console.log("row.custom_fields: ", row.custom_fields)
     // console.log("columns: ", columns)
-      let newRow = { ...row } // Create a copy of the item to add in the same level the customFields
+      let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
       // console.log("newRow: ", newRow)
-      if (newRow.customFields) {
-        // Merge the customFields into the item and delete the initial customFields object
+      if (newRow.custom_fields) {
+        // Merge the custom_fields into the item and delete the initial custom_fields object
         // newRow = {
         //   ...newRow,
-        //   ...newRow.customFields,
-        //   customFields: undefined,
+        //   ...newRow.custom_fields,
+        //   custom_fields: undefined,
         // }
-        newRow.customFields.map((customField:any) => {
+        newRow.custom_fields.map((custom_fields:any) => {
           
           newRow = {
               ...newRow,
-              ...customField
+              ...custom_fields
             }
             })
       }

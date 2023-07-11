@@ -29,9 +29,9 @@ const user: UserData = {
 }
 
 const sample:  Data[] = [
-  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", customFields: [{ color: "Red"}],},
-  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", customFields: [{ color: "Black"}],},
-  {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning", customFields: [{ color: "White"}],},
+  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", custom_fields: [{ color: "Red"}],},
+  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", custom_fields: [{ color: "Black"}],},
+  {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning", custom_fields: [{ color: "White"}],},
   {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
@@ -42,7 +42,7 @@ const sample:  Data[] = [
   {id: 11, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
   {id: 12, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
 ];
-
+ 
 // const columnsDefault: ColumnData[] = [
 //   { id: 1, width: 120, label: 'Product', dataKey: 'product', numeric: false, deleted: false },
 //   { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true, deleted: false  },
@@ -55,20 +55,20 @@ const sample:  Data[] = [
 //   { id: 17, width: 100, label: 'Color client 2', dataKey: 'color', id_client: 2, deleted: false  },
 //   { id: 18, width: 100, label: 'Color client 3', dataKey: 'color', id_client: 3, deleted: false  }
 // ];
-let filteredColumnsCustom : ColumnData[] 
 // const filteredColumnsCustom : ColumnData[] =  columnsCustom.filter((element) => {
-//   return element.id_client === user.client && element.deleted === false
-// })
-
-// // const columns: ColumnData[] = columnsDefault.concat(
-// //   columnsCustom.filter((column) => column.id_client === user.client && column.deleted === false)
-// // );
-// const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
-
-const idColumnsTableOrder: Number[] = [1, 2, 3, 4];
-// const idColumnsHiddenFields: Number[] = [5, 6, 17];
-
-     
+  //   return element.id_client === user.client && element.deleted === false
+  // })
+  
+  // // const columns: ColumnData[] = columnsDefault.concat(
+    // //   columnsCustom.filter((column) => column.id_client === user.client && column.deleted === false)
+    // // );
+    // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
+    
+    const idColumnsTableOrder: Number[] = [1, 2, 3, 4];
+    // const idColumnsHiddenFields: Number[] = [5, 6, 17];
+    
+    
+// let filteredColumnsCustom : ColumnData[] 
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -85,11 +85,15 @@ function App() {
   const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
   const [customColumns, setCustomColumns] = useState<ColumnData[]>([])
   const [columns, setColumns] = useState<ColumnData[]>([])
+  const [filteredColumnsCustom, setFilteredColumnsCustom] = useState<ColumnData[]>([])
+  const [products, setProducts] = useState<Data[]>([])
+
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
   const [isLoading, setIsLoading] = useState({
     defaultColumns: true,
     customColumns: true,
     columns: true,
+    products: true,
   }); // New state for loading status
 
   useEffect(() => {
@@ -132,7 +136,7 @@ function App() {
     }
     fetchDefaultColumns();
     fetchCustomColumns();
-
+ 
     setFilteredData(sample.filter((item) => {
 
       return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -144,31 +148,56 @@ function App() {
 
     ));
     // console.log("filteredData: ", filteredData)
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/products/')
+      if (response.ok) {
+        const json = await response.json()
+        setProducts(json)
+      } else {
+      // Handle the case where the response is not OK (e.g., show an error message)
+    }
+    } catch (error) {
+      // Handle any network or fetch-related errors
+    } finally {
+      setIsLoading((prevLoading) => ({
+        ...prevLoading,
+        products: false,
+      }));
+    }
+  }
+
+  fetchProducts();
 }, [ ]) 
 
 useEffect(() => {
   if (!isLoading.defaultColumns && !isLoading.customColumns) {
-    const filteredColumnsCustom = customColumns.filter((element) => {
-      return element.id_client === user.client && element.deleted === false;
-    });
+     setFilteredColumnsCustom( customColumns.filter((element) => {
+      // filteredColumnsCustom = customColumns.filter((element) => {
+        return element.id_client === user.client && element.deleted === false;
+      })
+    )
     setColumns(defaultColumns.concat(filteredColumnsCustom));
     setIsLoading((prevLoading) => ({
       ...prevLoading,
       columns: false,
     }));
   }
-}, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns]);
+  
+}, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns, isLoading.products]);
+
 
 
 
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component
-  if (isLoading.defaultColumns || isLoading.customColumns || isLoading.columns) {
+  if (isLoading.defaultColumns || isLoading.customColumns || isLoading.columns || isLoading.products) {
     return <div>Loading...</div>;
   }
 
   console.log("defaultColumns: ", defaultColumns)
   console.log("customColumns: ", customColumns)
   console.log("columns: ", columns)
+  console.log("products: ", products)
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
