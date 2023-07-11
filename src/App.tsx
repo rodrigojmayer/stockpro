@@ -88,7 +88,8 @@ function App() {
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
   const [isLoading, setIsLoading] = useState({
     defaultColumns: true,
-    customColumns: true
+    customColumns: true,
+    columns: true,
   }); // New state for loading status
 
   useEffect(() => {
@@ -104,12 +105,13 @@ function App() {
       }
       } catch (error) {
         // Handle any network or fetch-related errors
-      // } finally {
-        // console.log("default columns: ", defaultColumns)
-        // setIsLoading({...isLoading, defaultColumns: false}); // Set loading status to false when the fetch is complete
+      } finally {
+        setIsLoading((prevLoading) => ({
+          ...prevLoading,
+          defaultColumns: false,
+        }));
       }
     }
-
     const fetchCustomColumns = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/customColumns/')
@@ -121,29 +123,16 @@ function App() {
       }
       } catch (error) {
         // Handle any network or fetch-related errors
-      // } finally {
-        // console.log("custom columns: ", customColumns)
-        // setIsLoading({...isLoading, customColumns: false}); // Set loading status to false when the fetch is complete
+      } finally {
+        setIsLoading((prevLoading) => ({
+          ...prevLoading,
+          customColumns: false,
+        }));
       }
     }
+    fetchDefaultColumns();
+    fetchCustomColumns();
 
-    Promise.all([fetchDefaultColumns(), fetchCustomColumns()])
-      .then(() => {
-        filteredColumnsCustom =  customColumns.filter((element) => {
-          return element.id_client === user.client && element.deleted === false
-        })
-        setColumns(defaultColumns.concat(filteredColumnsCustom))
-        // Set the loading status for both columns to false
-        setIsLoading({
-          defaultColumns: false,
-          customColumns: false
-        })
-      })
-      .catch((error) => {
-        // Handle any errors during fetching
-        console.log(error)
-      })
-    
     setFilteredData(sample.filter((item) => {
 
       return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -155,17 +144,31 @@ function App() {
 
     ));
     // console.log("filteredData: ", filteredData)
-}, [ ])
+}, [ ]) 
 
-// console.log("isLoading.defaultColumns: ", isLoading.defaultColumns)
-// console.log("isLoading.customColumns: ", isLoading.customColumns)
+useEffect(() => {
+  if (!isLoading.defaultColumns && !isLoading.customColumns) {
+    const filteredColumnsCustom = customColumns.filter((element) => {
+      return element.id_client === user.client && element.deleted === false;
+    });
+    setColumns(defaultColumns.concat(filteredColumnsCustom));
+    setIsLoading((prevLoading) => ({
+      ...prevLoading,
+      columns: false,
+    }));
+  }
+}, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns]);
+
+
+
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component
-  if (isLoading.defaultColumns || isLoading.customColumns) {
+  if (isLoading.defaultColumns || isLoading.customColumns || isLoading.columns) {
     return <div>Loading...</div>;
   }
 
   console.log("defaultColumns: ", defaultColumns)
   console.log("customColumns: ", customColumns)
+  console.log("columns: ", columns)
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -191,7 +194,7 @@ function App() {
               </Grid>
             </Grid>
           </Container>
-          <TableProducts data={filteredData} columns={defaultColumns} />
+          <TableProducts data={filteredData} columns={columns} />
         </Layout>
         <CreateStock
             open={showCreateStock} 
