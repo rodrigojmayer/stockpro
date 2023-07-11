@@ -43,27 +43,27 @@ const sample:  Data[] = [
   {id: 12, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
 ];
 
-const columnsDefault: ColumnData[] = [
-  { id: 1, width: 120, label: 'Product', dataKey: 'product', numeric: false, deleted: false },
-  { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true, deleted: false  },
-  { id: 3, width: 80, label: 'Measure', dataKey: 'measure', numeric: false, deleted: false  },
-  { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true, deleted: false  },
-  { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true, deleted: false  },
-];
-const columnsCustom: ColumnData[] = [
-  { id: 16, width: 120, label: 'Size', dataKey: 'size', id_client: 2, deleted: true  },
-  { id: 17, width: 100, label: 'Color client 2', dataKey: 'color', id_client: 2, deleted: false  },
-  { id: 18, width: 100, label: 'Color client 3', dataKey: 'color', id_client: 3, deleted: false  }
-];
+// const columnsDefault: ColumnData[] = [
+//   { id: 1, width: 120, label: 'Product', dataKey: 'product', numeric: false, deleted: false },
+//   { id: 2, width: 80, label: 'Amount', dataKey: 'amount', numeric: true, deleted: false  },
+//   { id: 3, width: 80, label: 'Measure', dataKey: 'measure', numeric: false, deleted: false  },
+//   { id: 4, width: 100, label: 'Category', dataKey: 'category', numeric: true, deleted: false  },
+//   { id: 5, width: 100, label: 'Sub Category', dataKey: 'sub_category', numeric: true, deleted: false  },
+// ];
+// const columnsCustom: ColumnData[] = [
+//   { id: 16, width: 120, label: 'Size', dataKey: 'size', id_client: 2, deleted: true  },
+//   { id: 17, width: 100, label: 'Color client 2', dataKey: 'color', id_client: 2, deleted: false  },
+//   { id: 18, width: 100, label: 'Color client 3', dataKey: 'color', id_client: 3, deleted: false  }
+// ];
+let filteredColumnsCustom : ColumnData[] 
+// const filteredColumnsCustom : ColumnData[] =  columnsCustom.filter((element) => {
+//   return element.id_client === user.client && element.deleted === false
+// })
 
-const filteredColumnsCustom : ColumnData[] =  columnsCustom.filter((element) => {
-  return element.id_client === user.client && element.deleted === false
-})
-
-// const columns: ColumnData[] = columnsDefault.concat(
-//   columnsCustom.filter((column) => column.id_client === user.client && column.deleted === false)
-// );
-const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
+// // const columns: ColumnData[] = columnsDefault.concat(
+// //   columnsCustom.filter((column) => column.id_client === user.client && column.deleted === false)
+// // );
+// const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
 
 const idColumnsTableOrder: Number[] = [1, 2, 3, 4];
 // const idColumnsHiddenFields: Number[] = [5, 6, 17];
@@ -83,7 +83,13 @@ function App() {
   const openCreateStock = () => setShowCreateStock(true)
 
   const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
-  const [isLoading, setIsLoading] = useState(true); // New state for loading status
+  const [customColumns, setCustomColumns] = useState<ColumnData[]>([])
+  const [columns, setColumns] = useState<ColumnData[]>([])
+  // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
+  const [isLoading, setIsLoading] = useState({
+    defaultColumns: true,
+    customColumns: true
+  }); // New state for loading status
 
   useEffect(() => {
 
@@ -96,15 +102,47 @@ function App() {
         } else {
         // Handle the case where the response is not OK (e.g., show an error message)
       }
-    } catch (error) {
-      // Handle any network or fetch-related errors
-    } finally {
-      setIsLoading(false); // Set loading status to false when the fetch is complete
+      } catch (error) {
+        // Handle any network or fetch-related errors
+      // } finally {
+        // console.log("default columns: ", defaultColumns)
+        // setIsLoading({...isLoading, defaultColumns: false}); // Set loading status to false when the fetch is complete
+      }
     }
 
+    const fetchCustomColumns = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/api/customColumns/')
+        if (response.ok) {
+          const json = await response.json()
+          setCustomColumns(json)
+        } else {
+        // Handle the case where the response is not OK (e.g., show an error message)
+      }
+      } catch (error) {
+        // Handle any network or fetch-related errors
+      // } finally {
+        // console.log("custom columns: ", customColumns)
+        // setIsLoading({...isLoading, customColumns: false}); // Set loading status to false when the fetch is complete
+      }
     }
-    fetchDefaultColumns()
-    // console.log("defaultColumns: ", defaultColumns)
+
+    Promise.all([fetchDefaultColumns(), fetchCustomColumns()])
+      .then(() => {
+        filteredColumnsCustom =  customColumns.filter((element) => {
+          return element.id_client === user.client && element.deleted === false
+        })
+        setColumns(defaultColumns.concat(filteredColumnsCustom))
+        // Set the loading status for both columns to false
+        setIsLoading({
+          defaultColumns: false,
+          customColumns: false
+        })
+      })
+      .catch((error) => {
+        // Handle any errors during fetching
+        console.log(error)
+      })
     
     setFilteredData(sample.filter((item) => {
 
@@ -119,18 +157,24 @@ function App() {
     // console.log("filteredData: ", filteredData)
 }, [ ])
 
+// console.log("isLoading.defaultColumns: ", isLoading.defaultColumns)
+// console.log("isLoading.customColumns: ", isLoading.customColumns)
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component
-  if (isLoading) {
+  if (isLoading.defaultColumns || isLoading.customColumns) {
     return <div>Loading...</div>;
   }
 
+  console.log("defaultColumns: ", defaultColumns)
+  console.log("customColumns: ", customColumns)
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <Layout 
         // columns={columns} 
-        columnsDefault={columnsDefault} 
-        columnsCustom={columnsCustom}
+        // columnsDefault={columnsDefault} 
+        // columnsCustom={columnsCustom}
+        columnsDefault={defaultColumns} 
+        columnsCustom={customColumns}
         idColumnsTableOrder={idColumnsTableOrder} 
 
         // columnsHiddenFields={idColumnsHiddenFields} 
