@@ -30,8 +30,11 @@ const user: UserData = {
 
 const sample:  Data[] = [
   {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", custom_fields: [{ color: "Red"}],},
+  // {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit",},
   {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", custom_fields: [{ color: "Black"}],},
+  // {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", },
   {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning", custom_fields: [{ color: "White"}],},
+  // {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning",},
   {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
   {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
   {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
@@ -145,8 +148,8 @@ function App() {
         const json = await response.json()
         setProducts(json)
       } else {
-      // Handle the case where the response is not OK (e.g., show an error message)
-    }
+        // Handle the case where the response is not OK (e.g., show an error message)
+      }
     } catch (error) {
       // Handle any network or fetch-related errors
     } finally {
@@ -180,19 +183,48 @@ useEffect(() => {
 
 
 useEffect(() => {
-  setFilteredData(sample.filter((item) => {
+  
+  console.log("columns: ", columns.map((val) => val.dataKey))
+  console.log("defaultColumns: ", defaultColumns.map((val) => val.dataKey))
+  // console.log("sample: ", sample)
 
-    return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.measure.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+  setFilteredData(sample.filter((item) => {
+    // (item.custom_fields ? console.log("item: ", item.custom_fields) : console.log("no hay custom fields: "))
+    // console.log("item: ", item.custom_fields)
+    return (
+
+      defaultColumns.some((column) => 
+        
+        item[column.dataKey].toString().toLowerCase().includes(searchQuery.toLowerCase()) 
+        
+        ) ||
+        (item.custom_fields &&
+          item.custom_fields.some((field:any) =>
+            field.color.toLowerCase().includes(searchQuery.toLowerCase())
+          ))
+        // (item.custom_fields ? 
+
+        //     item.custom_fields.some((field:any) => 
+        //       field.color.toLowerCase().includes(searchQuery.toLowerCase()))) : "")
+        // )
+
+      
+      // item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      // item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+      // item.measure.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      // item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      // item.category.toLowerCase().includes(searchQuery.toLowerCase())
+      // || (item.custom_fields ? item.custom_fields[0].color.toLowerCase().includes(searchQuery.toLowerCase()) : "")
+      // || 
+      // ''
+    )
+    
   }
 
   ));
-  console.log("filteredData: ", filteredData)
+  // console.log("filteredData: ", filteredData)
 
-}, [searchQuery]) 
+}, [searchQuery, columns]) 
 
 
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component
