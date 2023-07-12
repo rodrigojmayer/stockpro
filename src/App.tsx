@@ -31,7 +31,7 @@ const user: UserData = {
 const sample:  Data[] = [
   {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", custom_fields: [{ color: "Red"}],},
   // {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit",},
-  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", custom_fields: [{ color: "Black"}],},
+  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", custom_fields: [{ color: "Black", internal_code: "SAP123"}],},
   // {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", },
   {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning", custom_fields: [{ color: "White"}],},
   // {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning",},
@@ -184,44 +184,38 @@ useEffect(() => {
 
 useEffect(() => {
   
-  console.log("columns: ", columns.map((val) => val.dataKey))
-  console.log("defaultColumns: ", defaultColumns.map((val) => val.dataKey))
+  // console.log("columns: ", columns.map((val) => val.dataKey))
+  // console.log("defaultColumns: ", defaultColumns.map((val) => val.dataKey))
   // console.log("sample: ", sample)
 
-  setFilteredData(sample.filter((item) => {
+  setFilteredData(
+    sample.filter((item) => {
     // (item.custom_fields ? console.log("item: ", item.custom_fields) : console.log("no hay custom fields: "))
     // console.log("item: ", item.custom_fields)
-    return (
-
-      defaultColumns.some((column) => 
-        
-        item[column.dataKey].toString().toLowerCase().includes(searchQuery.toLowerCase()) 
-        
+      return (
+        defaultColumns.some((column) => 
+          item[column.dataKey]
+            .toString()
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) 
+          
         ) ||
         (item.custom_fields &&
-          item.custom_fields.some((field:any) =>
-            field.color.toLowerCase().includes(searchQuery.toLowerCase())
-          ))
-        // (item.custom_fields ? 
-
-        //     item.custom_fields.some((field:any) => 
-        //       field.color.toLowerCase().includes(searchQuery.toLowerCase()))) : "")
-        // )
-
-      
-      // item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      // item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-      // item.measure.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      // item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      // item.category.toLowerCase().includes(searchQuery.toLowerCase())
-      // || (item.custom_fields ? item.custom_fields[0].color.toLowerCase().includes(searchQuery.toLowerCase()) : "")
-      // || 
-      // ''
-    )
-    
-  }
-
-  ));
+          customColumns
+            // .filter((column) => column.id_client)
+            .some((customColumn) =>
+              item.custom_fields.some(
+                (field:any) => 
+                  field[customColumn.dataKey]
+                    ?.toString()
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+              )
+            )
+        )
+      )
+    })
+  );
   // console.log("filteredData: ", filteredData)
 
 }, [searchQuery, columns]) 
