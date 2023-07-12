@@ -122,7 +122,7 @@ export default function TableProducts({ data, columns }:  DataTable ) {
   };
   useEffect(() => {
     // console.log("data: ", data)
-    // console.log("filteredData: ", filteredData)
+    console.log("filteredData: ", filteredData)
     // console.log("columns: ", columns)
     setFilteredData(data.filter((item) => {
       let vals = true

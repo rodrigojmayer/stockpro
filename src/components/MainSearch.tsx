@@ -62,6 +62,8 @@ export default function MainSearch ({ setSearchQuery }: Props) {
     //     setSearchTerm(term);
     //     setSearchQuery(term);
     // }
+    // console.log("main search:")
+    
 
     return(
         <Search>

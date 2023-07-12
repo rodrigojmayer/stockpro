@@ -137,17 +137,7 @@ function App() {
     fetchDefaultColumns();
     fetchCustomColumns();
  
-    setFilteredData(sample.filter((item) => {
-
-      return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.measure.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase())
-    }
-
-    ));
-    // console.log("filteredData: ", filteredData)
+    
   const fetchProducts = async () => {
     try {
       const response = await fetch('http://localhost:4000/api/products/')
@@ -183,10 +173,26 @@ useEffect(() => {
       columns: false,
     }));
   }
+
+
   
 }, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns, isLoading.products]);
 
 
+useEffect(() => {
+  setFilteredData(sample.filter((item) => {
+
+    return item.product.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.amount.toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.measure.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.sub_category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+  }
+
+  ));
+  console.log("filteredData: ", filteredData)
+
+}, [searchQuery]) 
 
 
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component
@@ -194,10 +200,10 @@ useEffect(() => {
     return <div>Loading...</div>;
   }
 
-  console.log("defaultColumns: ", defaultColumns)
-  console.log("customColumns: ", customColumns)
-  console.log("columns: ", columns)
-  console.log("products: ", products)
+  // console.log("defaultColumns: ", defaultColumns)
+  // console.log("customColumns: ", customColumns)
+  // console.log("columns: ", columns)
+  // console.log("products: ", products)
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
