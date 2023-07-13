@@ -142,29 +142,45 @@ export default function TableProducts({ data, columns }:  DataTable ) {
           console.log("str: ", str)
           console.log("str as keyof typeof item: ", str as keyof typeof item)
           console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
-          if(item.custom_fields)
-            console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
-          console.log("_________________________")
+          console.log("item.custom_fields: ", item.custom_fields)
+          // if(item.custom_fields)
+          //   console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
+          
           if(item[str as keyof typeof item]){
             console.log("llega aqui?")
 
             if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
               vals = false
+              console.log("a_________________________")
               return 
             }
           } 
           else if(item.custom_fields ){
-            if(item.custom_fields[0][str as keyof typeof item]!== ""){
+            // console.log("item.custom_fields: ", item.custom_fields)
+            if(item.custom_fields[0][str as keyof typeof item] || item.custom_fields[0][str as keyof typeof item] == ""){
+              console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
               if(!item.custom_fields[0][str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
                 
                 console.log("llega aqui?")
                 vals = false
+                console.log("s_________________________")
                 return 
               }
             }
+            else{
+              vals = false
+              return
+
+            }
+          }
+          else{
+            vals = false
+            return
+
           }
         }
       })
+      console.log("d_________________________")
       return vals
     }))
     // console.log("filteredRows: ", filteredRows)
