@@ -31,7 +31,7 @@ const user: UserData = {
 const sample:  Data[] = [
   {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", custom_fields: [{ color: "Red"}],},
   // {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit",},
-  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", custom_fields: [{ color: "Black", internal_code: "SAP123"}],},
+  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", custom_fields: [{ color: "Black", internal_code: "SAP"}],},
   // {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", },
   {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning", custom_fields: [{ color: "White"}],},
   // {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning",},
@@ -206,6 +206,7 @@ useEffect(() => {
             .some((customColumn) =>
               item.custom_fields.some(
                 (field:any) => 
+                  // field[customColumn.dataKey] &&
                   field[customColumn.dataKey]
                     ?.toString()
                     .toLowerCase()
