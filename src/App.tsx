@@ -25,26 +25,26 @@ const theme = createTheme({
 });
 
 const user: UserData = {
-  id: 1, client: 2, name: "Rodrigo", user: "rmayer", pass: "123", deleted: false, enabled: true
+  id: 1, client: 3, name: "Rodrigo", user: "rmayer", pass: "123", deleted: false, enabled: true
 }
 
-const sample:  Data[] = [
-  {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", custom_fields: [{ color: "Red"}],},
-  // {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit",},
-  {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", custom_fields: [{ color: "Black", internal_code: "SAP"}],},
-  // {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", },
-  {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning", custom_fields: [{ color: "White"}],},
-  // {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning",},
-  {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
-  {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
-  {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
-  {id: 7, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
-  {id: 8, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
-  {id: 9, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
-  {id: 10, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
-  {id: 11, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
-  {id: 12, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
-];
+// const sample:  Data[] = [
+//   {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", custom_fields: [{ color: "Red"}],},
+//   // {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit",},
+//   {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", custom_fields: [{ color: "Black", internal_code: "SAP123"}],},
+//   // {id: 2, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert", },
+//   {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning", custom_fields: [{ color: "White"}],},
+//   // {id: 3, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning",},
+//   {id: 4, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
+//   {id: 5, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
+//   {id: 6, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
+//   {id: 7, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit"},
+//   {id: 8, product: 'Ice cream sandwich', amount: 237, measure: "U", category: "Food", sub_category: "Dessert"},
+//   {id: 9, product: 'Sugar', amount: 26, measure: "Kgs", category: "Food", sub_category: "Seasoning"},
+//   {id: 10, product: 'Milk', amount: 305, measure: "Lts", category: "Food", sub_category: "Dairy"},
+//   {id: 11, product: 'Chairs', amount: 57, measure: "U", category: "Furniture", sub_category: "-"},
+//   {id: 12, product: 'Tables', amount: 36, measure: "U", category: "Furniture", sub_category: "-"},
+// ];
  
 // const columnsDefault: ColumnData[] = [
 //   { id: 1, width: 120, label: 'Product', dataKey: 'product', numeric: false, deleted: false },
@@ -75,22 +75,22 @@ const sample:  Data[] = [
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(sample)
   
-
+  
   const [showCreateStock, setShowCreateStock] = useState(false);
-
-
+  
+  
   
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
-
+  
   const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
   const [customColumns, setCustomColumns] = useState<ColumnData[]>([])
   const [columns, setColumns] = useState<ColumnData[]>([])
   const [filteredColumnsCustom, setFilteredColumnsCustom] = useState<ColumnData[]>([])
   const [products, setProducts] = useState<Data[]>([])
-
+  const [filteredData, setFilteredData] = useState(products)
+  
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
   const [isLoading, setIsLoading] = useState({
     defaultColumns: true,
@@ -121,9 +121,11 @@ function App() {
     }
     const fetchCustomColumns = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/customColumns/')
+        const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.client}`)
         if (response.ok) {
           const json = await response.json()
+          // console.log(json)
+          // console.log(json.filter((val:any) => {val.id_client===2}))
           setCustomColumns(json)
         } else {
         // Handle the case where the response is not OK (e.g., show an error message)
@@ -167,7 +169,8 @@ useEffect(() => {
   if (!isLoading.defaultColumns && !isLoading.customColumns) {
      setFilteredColumnsCustom( customColumns.filter((element) => {
       // filteredColumnsCustom = customColumns.filter((element) => {
-        return element.id_client === user.client && element.deleted === false;
+        // return element.id_client === user.client && element.deleted === false;
+        return element.deleted === false;
       })
     )
     setColumns(defaultColumns.concat(filteredColumnsCustom));
@@ -189,7 +192,7 @@ useEffect(() => {
   // console.log("sample: ", sample)
 
   setFilteredData(
-    sample.filter((item) => {
+    products.filter((item) => {
     // (item.custom_fields ? console.log("item: ", item.custom_fields) : console.log("no hay custom fields: "))
     // console.log("item: ", item.custom_fields)
       return (

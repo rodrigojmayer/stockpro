@@ -122,65 +122,65 @@ export default function TableProducts({ data, columns }:  DataTable ) {
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
   useEffect(() => {
-    console.log("data: ", data)
-    console.log("filteredRows: ", filteredRows)
-    console.log("filteredData: ", filteredData)
-    console.log("columns: ", columns)
+    // console.log("data: ", data)
+    // console.log("filteredRows: ", filteredRows)
+    // console.log("filteredData: ", filteredData)
+    // console.log("columns: ", columns)
     setFilteredData(data.filter((item) => {
       let vals = true
       Object.keys(filteredRows).forEach((arg)=> {
         const str = arg as string;
         let value = filteredRows[str as keyof typeof filteredRows]
 
-        console.log("value: ", value)
+        // console.log("value: ", value)
         if (typeof value == "string")
           value = value.toString().toLowerCase()
         else if (isNaN(value))
           value = ""
         if (value !== "" ){
-          console.log("item: ", item)
-          console.log("str: ", str)
-          console.log("str as keyof typeof item: ", str as keyof typeof item)
-          console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
-          console.log("item.custom_fields: ", item.custom_fields)
+          // console.log("item: ", item)
+          // console.log("str: ", str)
+          // console.log("str as keyof typeof item: ", str as keyof typeof item)
+          // console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
+          // console.log("item.custom_fields: ", item.custom_fields)
           // if(item.custom_fields)
           //   console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
           
           if(item[str as keyof typeof item]){
-            console.log("llega aqui?")
+            // console.log("llega aqui?")
 
             if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
               vals = false
-              console.log("a_________________________")
-              return 
+              // console.log("a_________________________")
+              // return 
             }
           } 
           else if(item.custom_fields ){
             // console.log("item.custom_fields: ", item.custom_fields)
             if(item.custom_fields[0][str as keyof typeof item] || item.custom_fields[0][str as keyof typeof item] == ""){
-              console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
+              // console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
               if(!item.custom_fields[0][str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
                 
-                console.log("llega aqui?")
+                // console.log("llega aqui?")
                 vals = false
-                console.log("s_________________________")
-                return 
+                // console.log("s_________________________")
+                // return 
               }
             }
             else{
               vals = false
-              return
+              // return
 
             }
           }
           else{
             vals = false
-            return
+            // return
 
           }
         }
       })
-      console.log("d_________________________")
+      // console.log("d_________________________")
       return vals
     }))
     // console.log("filteredRows: ", filteredRows)
