@@ -1,6 +1,6 @@
 export interface UserData {
   id: number;
-  client: number;
+  id_client: number;
   name: string;
   user: string;
   pass: string;
@@ -10,13 +10,14 @@ export interface UserData {
 
 export interface Data {
   id: number;
+  id_client: number;
   product: string;
   amount: number;
   measure: string;
   category: string;
   sub_category: string;
   [key?: string]: any;
-  customFields?: array;
+  custom_fields?: array;
   id_custom_field_product?: number;
 }
 

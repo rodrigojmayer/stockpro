@@ -11,12 +11,14 @@ import { Data, DataTable, ColumnData } from '../types';
 
 const INITIAL_STATE = {
   id: NaN,
+  // id_client: NaN,
   product: "",
   amount: NaN,
   measure: "",
   category: "",
   sub_category: "",
-  // color: "",
+  // custom_fields: [],
+  // id_custom_field_product: NaN,
 }
 
 // const additionalFields = {
@@ -157,14 +159,22 @@ export default function TableProducts({ data, columns }:  DataTable ) {
           } 
           else if(item.custom_fields ){
             // console.log("item.custom_fields: ", item.custom_fields)
-            if(item.custom_fields[0][str as keyof typeof item] || item.custom_fields[0][str as keyof typeof item] == ""){
-              // console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
-              if(!item.custom_fields[0][str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
-                
-                // console.log("llega aqui?")
+            if(item.custom_fields[0]){
+              // console.log("item.custom_fields[0]: ", item.custom_fields[0])
+              if(item.custom_fields[0][str as keyof typeof item] || item.custom_fields[0][str as keyof typeof item] == ""){
+                // console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
+                if(!item.custom_fields[0][str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
+                  
+                  // console.log("llega aqui?")
+                  vals = false
+                  // console.log("s_________________________")
+                  // return 
+                }
+              }
+              else{
                 vals = false
-                // console.log("s_________________________")
-                // return 
+                // return
+
               }
             }
             else{
@@ -172,11 +182,6 @@ export default function TableProducts({ data, columns }:  DataTable ) {
               // return
 
             }
-          }
-          else{
-            vals = false
-            // return
-
           }
         }
       })

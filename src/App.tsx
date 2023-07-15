@@ -15,6 +15,18 @@ const INITIAL_DATA = [
   {id: 3, name: "Product C"},
 ]
 
+
+const INITIAL_USER = {
+  id: NaN,
+  id_client: NaN,
+  name: "",
+  user: "",
+  pass: "",
+  deleted: false,
+  enabled: true,
+}
+
+
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -24,9 +36,9 @@ const theme = createTheme({
   },
 });
 
-const user: UserData = {
-  id: 1, client: 3, name: "Rodrigo", user: "rmayer", pass: "123", deleted: false, enabled: true
-}
+// const user: UserData = {
+//   id: 1, id_client: 2, name: "Rodrigo", user: "rmayer", pass: "123", deleted: false, enabled: true
+// }
 
 // const sample:  Data[] = [
 //   {id: 1, product: 'Apples', amount: 20, measure: "U", category: "Food", sub_category: "Fruit", custom_fields: [{ color: "Red"}],},
@@ -89,6 +101,7 @@ function App() {
   const [columns, setColumns] = useState<ColumnData[]>([])
   const [filteredColumnsCustom, setFilteredColumnsCustom] = useState<ColumnData[]>([])
   const [products, setProducts] = useState<Data[]>([])
+  const [user, setUser] = useState<UserData>(INITIAL_USER)
   const [filteredData, setFilteredData] = useState(products)
   
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
@@ -97,7 +110,34 @@ function App() {
     customColumns: true,
     columns: true,
     products: true,
+    user: true,
   }); // New state for loading status
+
+  useEffect(() => {
+
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`)
+        if (response.ok) {
+          const json = await response.json()
+          console.log("userjson: ", json)
+          setUser(json)
+        } else {
+          // Handle the case where the response is not OK (e.g., show an error message)
+        }
+      } catch (error) {
+        setUser(INITIAL_USER)
+        // Handle any network or fetch-related errors
+      } finally {
+        setIsLoading((prevLoading) => ({
+          ...prevLoading,
+          user: false,
+        }));
+      }
+    }
+  
+    fetchUser();
+  }, [])
 
   useEffect(() => {
 
@@ -121,10 +161,10 @@ function App() {
     }
     const fetchCustomColumns = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.client}`)
+        const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
         if (response.ok) {
           const json = await response.json()
-          // console.log(json)
+          console.log("custom columns json:", json)
           // console.log(json.filter((val:any) => {val.id_client===2}))
           setCustomColumns(json)
         } else {
@@ -139,13 +179,11 @@ function App() {
         }));
       }
     }
-    fetchDefaultColumns();
-    fetchCustomColumns();
  
     
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:4000/api/products/')
+      const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)
       if (response.ok) {
         const json = await response.json()
         setProducts(json)
@@ -153,6 +191,7 @@ function App() {
         // Handle the case where the response is not OK (e.g., show an error message)
       }
     } catch (error) {
+      setProducts([])
       // Handle any network or fetch-related errors
     } finally {
       setIsLoading((prevLoading) => ({
@@ -162,8 +201,15 @@ function App() {
     }
   }
 
-  fetchProducts();
-}, [ ]) 
+
+
+  if (!isLoading.user) {
+    console.log(user.id_client)
+    fetchDefaultColumns();
+    fetchCustomColumns();
+    fetchProducts();
+  }
+}, [user ]) 
 
 useEffect(() => {
   if (!isLoading.defaultColumns && !isLoading.customColumns) {
