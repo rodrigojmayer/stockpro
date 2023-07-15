@@ -11,7 +11,7 @@ import { Data, DataTable, ColumnData } from '../types';
 
 const INITIAL_STATE = {
   id: NaN,
-  // id_client: NaN,
+  id_client: NaN,
   product: "",
   amount: NaN,
   measure: "",
