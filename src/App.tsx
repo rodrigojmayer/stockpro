@@ -24,6 +24,7 @@ const INITIAL_USER = {
   pass: "",
   deleted: false,
   enabled: true,
+  ordered_fields: [],
 }
 
 
@@ -99,6 +100,7 @@ function App() {
   const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
   const [customColumns, setCustomColumns] = useState<ColumnData[]>([])
   const [columns, setColumns] = useState<ColumnData[]>([])
+  const [columnsUserOrder, setColumnsUserOrder] = useState<ColumnData[]>([])
   const [filteredColumnsCustom, setFilteredColumnsCustom] = useState<ColumnData[]>([])
   const [products, setProducts] = useState<Data[]>([])
   const [user, setUser] = useState<UserData>(INITIAL_USER)
@@ -120,7 +122,7 @@ function App() {
         const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`)
         if (response.ok) {
           const json = await response.json()
-          // console.log("userjson: ", json)
+          console.log("userjson: ", json)
           setUser(json)
         } else {
           // Handle the case where the response is not OK (e.g., show an error message)
@@ -248,6 +250,44 @@ useEffect(() => {
 }, [filteredColumnsCustom]);
 
 useEffect(() => {
+
+  // user.ordered_fields
+
+  // console.log("user: ", user.ordered_fields)
+
+
+  // user.ordered_fields.forEach((id_field: number) => {
+  //   // console.log("id_field: ", id_field)
+  //   // console.log("columns filter: ", columns.filter((item) => item.id===id_field) )
+  //   const columnsFiltered = columns.filter((item) => item.id===id_field)
+  //   setColumnsUserOrder((prevColumnsUserOrder) => ({
+  //     ...prevColumnsUserOrder,
+  //     columnsFiltered
+  //   }), )
+  // })
+  // const orderedFields = [4, 3, 5];
+
+  // const columns_user_order = columns.filter((column) => orderedFields.includes(column.id))
+  // const columns_user_order = columns.filter((column) => user.ordered_fields.includes(column.id))
+  
+  
+  const columns_user_order = user.ordered_fields.map((idField: number) => {
+    return columns.find((column) => column.id === idField);
+  }).filter(Boolean) as ColumnData[];
+  // console.log("columns_user_order: ", columns_user_order)
+  setColumnsUserOrder(columns_user_order)
+
+  // console.log("useEffect customColumns true: ", customColumns)
+
+    // setColumnsUserOrder((columns.filter((element) => {
+    //     return element.deleted === false;
+    //   })
+    // ))
+  // }
+
+}, [columns ])
+
+useEffect(() => {
   
   // console.log("columns: ", columns.map((val) => val.dataKey))
   // console.log("defaultColumns: ", defaultColumns.map((val) => val.dataKey))
@@ -296,6 +336,7 @@ useEffect(() => {
   // console.log("defaultColumns: ", defaultColumns)
   // console.log("customColumns: ", customColumns)
   // console.log("columns: ", columns)
+  console.log("columnsUserOrder: ", columnsUserOrder)
   // console.log("products: ", products)
   return (
     <div className="App">

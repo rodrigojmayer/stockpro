@@ -6,6 +6,7 @@ export interface UserData {
   pass: string;
   deleted: boolean;
   enabled: boolean;
+  ordered_fields: array;
 }
 
 export interface Data {
