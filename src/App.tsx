@@ -173,10 +173,10 @@ function App() {
       } catch (error) {
         // Handle any network or fetch-related errors
       } finally {
-        setIsLoading((prevLoading) => ({
-          ...prevLoading,
-          customColumns: false,
-        }));
+        // setIsLoading((prevLoading) => ({
+        //   ...prevLoading,
+        //   customColumns: false,
+        // }));
       }
     }
  
@@ -210,6 +210,21 @@ function App() {
     fetchProducts();
   }
 }, [user ]) 
+
+useEffect(() => {
+
+  // console.log("useEffect customColumns: ", customColumns)
+  if(customColumns.length != 0){
+  // console.log("useEffect customColumns true: ", customColumns)
+
+    setIsLoading((prevLoading) => ({
+      ...prevLoading,
+      customColumns: false,
+    }));
+  }
+
+}, [customColumns ])
+
 
 useEffect(() => {
   if (!isLoading.defaultColumns && !isLoading.customColumns) {
@@ -274,7 +289,7 @@ useEffect(() => {
 
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component
   // if (isLoading.defaultColumns || isLoading.customColumns || isLoading.columns || isLoading.products) {
-  if ( isLoading.columns || isLoading.products) {
+  if ( isLoading.columns || isLoading.products || isLoading.customColumns ) {
     return <div>Loading...</div>;
   }
 
@@ -286,14 +301,14 @@ useEffect(() => {
     <div className="App">
       <ThemeProvider theme={theme}>
         <Layout 
-        // columns={columns} 
-        // columnsDefault={columnsDefault} 
-        // columnsCustom={columnsCustom}
-        columnsDefault={defaultColumns} 
-        columnsCustom={customColumns}
-        idColumnsTableOrder={idColumnsTableOrder} 
+          // columns={columns} 
+          // columnsDefault={columnsDefault} 
+          // columnsCustom={columnsCustom}
+          columnsDefault={defaultColumns} 
+          columnsCustom={customColumns}
+          idColumnsTableOrder={idColumnsTableOrder} 
 
-        // columnsHiddenFields={idColumnsHiddenFields} 
+          // columnsHiddenFields={idColumnsHiddenFields} 
         >
           <Container maxWidth="md" style={{padding: "0"}} >
             <Grid container>
