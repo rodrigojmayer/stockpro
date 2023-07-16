@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext, useMemo } from 'react'
 import { Container, Typography, Grid } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { OkButton, CancelButton, PlusButton } from './components/Buttons';
@@ -7,6 +7,7 @@ import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
 import CreateStock from './components/CreateStock';
 import { Data, ColumnData, CustomValueData, UserData } from './types';
+import { UserContext } from './context/UserContext';
 // import {  } from './data';
 
 const INITIAL_DATA = [
@@ -103,7 +104,21 @@ function App() {
   const [columnsUserOrder, setColumnsUserOrder] = useState<ColumnData[]>([])
   const [filteredColumnsCustom, setFilteredColumnsCustom] = useState<ColumnData[]>([])
   const [products, setProducts] = useState<Data[]>([])
-  const [user, setUser] = useState<UserData>(INITIAL_USER)
+  // const { initialUser } = useContext<any>(UserContext);
+  // const [user, setUser] = useState<UserData>( INITIAL_USER)
+  // const [user, setUser] = useState<UserData>( initialUser)
+  
+  const { user, setUser } = useContext<any>(UserContext);
+  // const [user, setUser] = useState()
+  // const value = useMemo(
+  //   () => ({ user, setUser }),
+  //   [user]
+  // )
+console.log("user: ", user)
+  // const { user, setUser } = useContext<any>(UserContext)
+  const changeHandler = (event: any) => setUser(event.target.value);
+  
+
   const [filteredData, setFilteredData] = useState(products)
   
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
@@ -112,34 +127,35 @@ function App() {
     customColumns: true,
     columns: true,
     products: true,
-    user: true,
+    user: false,
   }); // New state for loading status
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   console.log("user: ", user)
 
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`)
-        if (response.ok) {
-          const json = await response.json()
-          console.log("userjson: ", json)
-          setUser(json)
-        } else {
-          // Handle the case where the response is not OK (e.g., show an error message)
-        }
-      } catch (error) {
-        setUser(INITIAL_USER)
-        // Handle any network or fetch-related errors
-      } finally {
-        setIsLoading((prevLoading) => ({
-          ...prevLoading,
-          user: false,
-        }));
-      }
-    }
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`)
+  //       if (response.ok) {
+  //         const json = await response.json()
+  //         // console.log("userjson: ", json)
+  //         setUser(json)
+  //       } else {
+  //         // Handle the case where the response is not OK (e.g., show an error message)
+  //       }
+  //     } catch (error) {
+  //       setUser(INITIAL_USER)
+  //       // Handle any network or fetch-related errors
+  //     } finally {
+  //       setIsLoading((prevLoading) => ({
+  //         ...prevLoading,
+  //         user: false,
+  //       }));
+  //     }
+  //   }
   
-    fetchUser();
-  }, [])
+  //   fetchUser();
+  // }, [])
 
   useEffect(() => {
 
@@ -339,40 +355,44 @@ useEffect(() => {
   console.log("columnsUserOrder: ", columnsUserOrder)
   // console.log("products: ", products)
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
-        <Layout 
-          // columns={columns} 
-          // columnsDefault={columnsDefault} 
-          // columnsCustom={columnsCustom}
-          columnsDefault={defaultColumns} 
-          columnsCustom={customColumns}
-          idColumnsTableOrder={idColumnsTableOrder} 
+    // <UserContext.Provider value={value}>
+    //   {useMemo(() => (
+        <div className="App">
+          <ThemeProvider theme={theme}>
+            <Layout 
+              // columns={columns} 
+              // columnsDefault={columnsDefault} 
+              // columnsCustom={columnsCustom}
+              columnsDefault={defaultColumns} 
+              columnsCustom={customColumns}
+              idColumnsTableOrder={idColumnsTableOrder} 
 
-          // columnsHiddenFields={idColumnsHiddenFields} 
-        >
-          <Container maxWidth="md" style={{padding: "0"}} >
-            <Grid container>
-              <Grid item xs={10} >
-                <MainSearch setSearchQuery={setSearchQuery} />
-              </Grid>
-              <Grid item xs={2} >
-                <PlusButton
-                  clicked={openCreateStock} 
-                />
-              </Grid>
-            </Grid>
-          </Container>
-          <TableProducts data={filteredData} columns={columns} />
-        </Layout>
-        <CreateStock
-            open={showCreateStock} 
-            handleClose={handleCloseCreateStock} 
-            data={filteredData}
-            columnsCustom={filteredColumnsCustom}
-        />
-      </ThemeProvider>
-    </div>
+              // columnsHiddenFields={idColumnsHiddenFields} 
+            >
+              <Container maxWidth="md" style={{padding: "0"}} >
+                <Grid container>
+                  <Grid item xs={10} >
+                    <MainSearch setSearchQuery={setSearchQuery} />
+                  </Grid>
+                  <Grid item xs={2} >
+                    <PlusButton
+                      clicked={openCreateStock} 
+                    />
+                  </Grid>
+                </Grid>
+              </Container>
+              <TableProducts data={filteredData} columns={columnsUserOrder} />
+            </Layout>
+            <CreateStock
+                open={showCreateStock} 
+                handleClose={handleCloseCreateStock} 
+                data={filteredData}
+                columnsCustom={filteredColumnsCustom}
+            />
+          </ThemeProvider>
+        </div>
+    //   ), [])}
+    // </UserContext.Provider>
   )
 }
 export default App
