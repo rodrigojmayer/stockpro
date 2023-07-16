@@ -120,7 +120,7 @@ function App() {
         const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`)
         if (response.ok) {
           const json = await response.json()
-          console.log("userjson: ", json)
+          // console.log("userjson: ", json)
           setUser(json)
         } else {
           // Handle the case where the response is not OK (e.g., show an error message)
@@ -164,7 +164,7 @@ function App() {
         const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
         if (response.ok) {
           const json = await response.json()
-          console.log("custom columns json:", json)
+          // console.log("custom columns json:", json)
           // console.log(json.filter((val:any) => {val.id_client===2}))
           setCustomColumns(json)
         } else {
@@ -204,7 +204,7 @@ function App() {
 
 
   if (!isLoading.user) {
-    console.log(user.id_client)
+    // console.log(user.id_client)
     fetchDefaultColumns();
     fetchCustomColumns();
     fetchProducts();
@@ -213,23 +213,24 @@ function App() {
 
 useEffect(() => {
   if (!isLoading.defaultColumns && !isLoading.customColumns) {
+    
      setFilteredColumnsCustom( customColumns.filter((element) => {
       // filteredColumnsCustom = customColumns.filter((element) => {
         // return element.id_client === user.client && element.deleted === false;
         return element.deleted === false;
       })
     )
-    setColumns(defaultColumns.concat(filteredColumnsCustom));
-    setIsLoading((prevLoading) => ({
-      ...prevLoading,
-      columns: false,
-    }));
   }
 
-
-  
 }, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns, isLoading.products]);
 
+useEffect(() => {
+  setColumns(defaultColumns.concat(filteredColumnsCustom));
+  setIsLoading((prevLoading) => ({
+    ...prevLoading,
+    columns: false,
+  }));
+}, [filteredColumnsCustom]);
 
 useEffect(() => {
   
@@ -272,7 +273,8 @@ useEffect(() => {
 
 
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component
-  if (isLoading.defaultColumns || isLoading.customColumns || isLoading.columns || isLoading.products) {
+  // if (isLoading.defaultColumns || isLoading.customColumns || isLoading.columns || isLoading.products) {
+  if ( isLoading.columns || isLoading.products) {
     return <div>Loading...</div>;
   }
 
