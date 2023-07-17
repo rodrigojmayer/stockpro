@@ -9,6 +9,7 @@ import CreateStock from './components/CreateStock';
 import { Data, ColumnData, CustomValueData, UserData } from './types';
 import { UserContext } from './context/UserContext';
 import { IsLoadingContext } from './context/IsLoadingContext';
+import { ColumnsContext } from './context/ColumnsContext';
 // import {  } from './data';
 
 const INITIAL_DATA = [
@@ -99,11 +100,11 @@ function App() {
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
   
-  const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
-  const [customColumns, setCustomColumns] = useState<ColumnData[]>([])
-  const [columns, setColumns] = useState<ColumnData[]>([])
-  const [columnsUserOrder, setColumnsUserOrder] = useState<ColumnData[]>([])
-  const [filteredColumnsCustom, setFilteredColumnsCustom] = useState<ColumnData[]>([])
+  // const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
+  // const [customColumns, setCustomColumns] = useState<ColumnData[]>([])
+  // const [columns, setColumns] = useState<ColumnData[]>([])
+  // const [columnsUserOrder, setColumnsUserOrder] = useState<ColumnData[]>([])
+  // const [filteredColumnsCustom, setFilteredColumnsCustom] = useState<ColumnData[]>([])
   const [products, setProducts] = useState<Data[]>([])
   // const { initialUser } = useContext<any>(UserContext);
   // const [user, setUser] = useState<UserData>( INITIAL_USER)
@@ -112,6 +113,7 @@ function App() {
   // const { user, setUser } = useContext<any>(UserContext);
   const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
+  const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   // const [user, setUser] = useState()
   // const value = useMemo(
   //   () => ({ user, setUser }),
@@ -127,7 +129,7 @@ console.log("user: ", user)
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
 
 
-  // useEffect(() => {
+  useEffect(() => {
   //   console.log("user: ", user)
 
   //   const fetchUser = async () => {
@@ -154,47 +156,47 @@ console.log("user: ", user)
   //   fetchUser();
   // }, [])
 
-  useEffect(() => {
+  // useEffect(() => {
 
 
-    const fetchDefaultColumns = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/api/defaultColumns/')
-        if (response.ok) {
-          const json = await response.json()
-          setDefaultColumns(json)
-        } else {
-        // Handle the case where the response is not OK (e.g., show an error message)
-      }
-      } catch (error) {
-        // Handle any network or fetch-related errors
-      } finally {
-        setIsLoading((prevLoading: any) => ({
-          ...prevLoading,
-          defaultColumns: false,
-        }));
-      }
-    }
-    const fetchCustomColumns = async () => {
-      try {
-        const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
-        if (response.ok) {
-          const json = await response.json()
-          // console.log("custom columns json:", json)
-          // console.log(json.filter((val:any) => {val.id_client===2}))
-          setCustomColumns(json)
-        } else {
-        // Handle the case where the response is not OK (e.g., show an error message)
-      }
-      } catch (error) {
-        // Handle any network or fetch-related errors
-      } finally {
-        // setIsLoading((prevLoading) => ({
-        //   ...prevLoading,
-        //   customColumns: false,
-        // }));
-      }
-    }
+  //   const fetchDefaultColumns = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:4000/api/defaultColumns/')
+  //       if (response.ok) {
+  //         const json = await response.json()
+  //         setDefaultColumns(json)
+  //       } else {
+  //       // Handle the case where the response is not OK (e.g., show an error message)
+  //     }
+  //     } catch (error) {
+  //       // Handle any network or fetch-related errors
+  //     } finally {
+  //       setIsLoading((prevLoading: any) => ({
+  //         ...prevLoading,
+  //         defaultColumns: false,
+  //       }));
+  //     }
+  //   }
+  //   const fetchCustomColumns = async () => {
+  //     try {
+  //       const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
+  //       if (response.ok) {
+  //         const json = await response.json()
+  //         // console.log("custom columns json:", json)
+  //         // console.log(json.filter((val:any) => {val.id_client===2}))
+  //         setCustomColumns(json)
+  //       } else {
+  //       // Handle the case where the response is not OK (e.g., show an error message)
+  //     }
+  //     } catch (error) {
+  //       // Handle any network or fetch-related errors
+  //     } finally {
+  //       // setIsLoading((prevLoading) => ({
+  //       //   ...prevLoading,
+  //       //   customColumns: false,
+  //       // }));
+  //     }
+  //   }
  
     
   const fetchProducts = async () => {
@@ -221,8 +223,8 @@ console.log("user: ", user)
 
   if (!isLoading.user) {
     // console.log(user.id_client)
-    fetchDefaultColumns();
-    fetchCustomColumns();
+    // fetchDefaultColumns();
+    // fetchCustomColumns();
     fetchProducts();
   }
 }, [user ]) 
@@ -242,28 +244,28 @@ useEffect(() => {
 }, [customColumns ])
 
 
-useEffect(() => {
-  if (!isLoading.defaultColumns && !isLoading.customColumns) {
+// useEffect(() => {
+//   if (!isLoading.defaultColumns && !isLoading.customColumns) {
     
-     setFilteredColumnsCustom( customColumns.filter((element) => {
-      // filteredColumnsCustom = customColumns.filter((element) => {
-        // return element.id_client === user.client && element.deleted === false;
-        return element.deleted === false;
-      })
-    )
-  }
+//      setFilteredColumnsCustom( customColumns.filter((element) => {
+//       // filteredColumnsCustom = customColumns.filter((element) => {
+//         // return element.id_client === user.client && element.deleted === false;
+//         return element.deleted === false;
+//       })
+//     )
+//   }
 
-}, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns, isLoading.products]);
+// }, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns, isLoading.products]);
 
-useEffect(() => {
-  setColumns(defaultColumns.concat(filteredColumnsCustom));
-  setIsLoading((prevLoading: any) => ({
-    ...prevLoading,
-    columns: false,
-  }));
-}, [filteredColumnsCustom]);
+// useEffect(() => {
+//   setColumns(defaultColumns.concat(filteredColumnsCustom));
+//   setIsLoading((prevLoading: any) => ({
+//     ...prevLoading,
+//     columns: false,
+//   }));
+// }, [filteredColumnsCustom]);
 
-useEffect(() => {
+// useEffect(() => {
 
   // user.ordered_fields
 
@@ -285,11 +287,11 @@ useEffect(() => {
   // const columns_user_order = columns.filter((column) => user.ordered_fields.includes(column.id))
   
   
-  const columns_user_order = user.ordered_fields.map((idField: number) => {
-    return columns.find((column) => column.id === idField);
-  }).filter(Boolean) as ColumnData[];
-  // console.log("columns_user_order: ", columns_user_order)
-  setColumnsUserOrder(columns_user_order)
+  // const columns_user_order = user.ordered_fields.map((idField: number) => {
+  //   return columns.find((column) => column.id === idField);
+  // }).filter(Boolean) as ColumnData[];
+  // // console.log("columns_user_order: ", columns_user_order)
+  // setColumnsUserOrder(columns_user_order)
 
   // console.log("useEffect customColumns true: ", customColumns)
 
@@ -299,7 +301,7 @@ useEffect(() => {
     // ))
   // }
 
-}, [columns ])
+// }, [columns ])
 
 useEffect(() => {
   
@@ -312,7 +314,7 @@ useEffect(() => {
     // (item.custom_fields ? console.log("item: ", item.custom_fields) : console.log("no hay custom fields: "))
     // console.log("item: ", item.custom_fields)
       return (
-        defaultColumns.some((column) => 
+        defaultColumns.some((column:any) => 
           item[column.dataKey]
             .toString()
             .toLowerCase()
@@ -322,7 +324,7 @@ useEffect(() => {
         (item.custom_fields &&
           customColumns
             // .filter((column) => column.id_client)
-            .some((customColumn) =>
+            .some((customColumn:any) =>
               item.custom_fields.some(
                 (field:any) => 
                   // field[customColumn.dataKey] &&

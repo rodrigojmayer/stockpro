@@ -7,6 +7,7 @@ import './index.css'
 // import { UserData } from './types'
 import { UserProvider } from './context/UserContext';
 import { IsLoadingProvider } from './context/IsLoadingContext';
+import { ColumnsProvider } from './context/ColumnsContext';
 
 // const contextValue: UserData = {
 //     id: 1, 
@@ -25,7 +26,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
     <IsLoadingProvider >
       <UserProvider >
+        <ColumnsProvider >
           <App />
+        </ColumnsProvider>
       </UserProvider>
     </IsLoadingProvider>
   // </React.StrictMode>, 
