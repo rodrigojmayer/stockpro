@@ -8,6 +8,7 @@ import TableProducts from './components/TableProducts';
 import CreateStock from './components/CreateStock';
 import { Data, ColumnData, CustomValueData, UserData } from './types';
 import { UserContext } from './context/UserContext';
+import { IsLoadingContext } from './context/IsLoadingContext';
 // import {  } from './data';
 
 const INITIAL_DATA = [
@@ -108,7 +109,9 @@ function App() {
   // const [user, setUser] = useState<UserData>( INITIAL_USER)
   // const [user, setUser] = useState<UserData>( initialUser)
   
-  const { user, setUser } = useContext<any>(UserContext);
+  // const { user, setUser } = useContext<any>(UserContext);
+  const { user } = useContext<any>(UserContext);
+  const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   // const [user, setUser] = useState()
   // const value = useMemo(
   //   () => ({ user, setUser }),
@@ -116,19 +119,13 @@ function App() {
   // )
 console.log("user: ", user)
   // const { user, setUser } = useContext<any>(UserContext)
-  const changeHandler = (event: any) => setUser(event.target.value);
+  // const changeHandler = (event: any) => setUser(event.target.value);
   
 
   const [filteredData, setFilteredData] = useState(products)
   
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
-  const [isLoading, setIsLoading] = useState({
-    defaultColumns: true,
-    customColumns: true,
-    columns: true,
-    products: true,
-    user: false,
-  }); // New state for loading status
+
 
   // useEffect(() => {
   //   console.log("user: ", user)
@@ -159,6 +156,7 @@ console.log("user: ", user)
 
   useEffect(() => {
 
+
     const fetchDefaultColumns = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/defaultColumns/')
@@ -171,7 +169,7 @@ console.log("user: ", user)
       } catch (error) {
         // Handle any network or fetch-related errors
       } finally {
-        setIsLoading((prevLoading) => ({
+        setIsLoading((prevLoading: any) => ({
           ...prevLoading,
           defaultColumns: false,
         }));
@@ -212,7 +210,7 @@ console.log("user: ", user)
       setProducts([])
       // Handle any network or fetch-related errors
     } finally {
-      setIsLoading((prevLoading) => ({
+      setIsLoading((prevLoading: any) => ({
         ...prevLoading,
         products: false,
       }));
@@ -235,7 +233,7 @@ useEffect(() => {
   if(customColumns.length != 0){
   // console.log("useEffect customColumns true: ", customColumns)
 
-    setIsLoading((prevLoading) => ({
+    setIsLoading((prevLoading: any) => ({
       ...prevLoading,
       customColumns: false,
     }));
@@ -259,7 +257,7 @@ useEffect(() => {
 
 useEffect(() => {
   setColumns(defaultColumns.concat(filteredColumnsCustom));
-  setIsLoading((prevLoading) => ({
+  setIsLoading((prevLoading: any) => ({
     ...prevLoading,
     columns: false,
   }));
@@ -355,8 +353,7 @@ useEffect(() => {
   console.log("columnsUserOrder: ", columnsUserOrder)
   // console.log("products: ", products)
   return (
-    // <UserContext.Provider value={value}>
-    //   {useMemo(() => (
+    // {/* //   {useMemo(() => ( */}
         <div className="App">
           <ThemeProvider theme={theme}>
             <Layout 
@@ -391,8 +388,7 @@ useEffect(() => {
             />
           </ThemeProvider>
         </div>
-    //   ), [])}
-    // </UserContext.Provider>
+    // {/* //   ), [])} */}
   )
 }
 export default App

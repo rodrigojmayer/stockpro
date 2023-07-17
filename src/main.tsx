@@ -5,6 +5,8 @@ import App from './App'
 import './index.css'
 // import { UserContext } from './context/UserContext'
 // import { UserData } from './types'
+import { UserProvider } from './context/UserContext';
+import { IsLoadingProvider } from './context/IsLoadingContext';
 
 // const contextValue: UserData = {
 //     id: 1, 
@@ -21,7 +23,11 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
+    <IsLoadingProvider >
+      <UserProvider >
           <App />
+      </UserProvider>
+    </IsLoadingProvider>
   // </React.StrictMode>, 
 )
 
