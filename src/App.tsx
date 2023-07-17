@@ -10,6 +10,7 @@ import { Data, ColumnData, CustomValueData, UserData } from './types';
 import { UserContext } from './context/UserContext';
 import { IsLoadingContext } from './context/IsLoadingContext';
 import { ColumnsContext } from './context/ColumnsContext';
+import { ProductsContext } from './context/ProductsContext';
 // import {  } from './data';
 
 const INITIAL_DATA = [
@@ -105,7 +106,7 @@ function App() {
   // const [columns, setColumns] = useState<ColumnData[]>([])
   // const [columnsUserOrder, setColumnsUserOrder] = useState<ColumnData[]>([])
   // const [filteredColumnsCustom, setFilteredColumnsCustom] = useState<ColumnData[]>([])
-  const [products, setProducts] = useState<Data[]>([])
+  // const [products, setProducts] = useState<Data[]>([])
   // const { initialUser } = useContext<any>(UserContext);
   // const [user, setUser] = useState<UserData>( INITIAL_USER)
   // const [user, setUser] = useState<UserData>( initialUser)
@@ -114,6 +115,7 @@ function App() {
   const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+  const { products } = useContext<any>(ProductsContext);
   // const [user, setUser] = useState()
   // const value = useMemo(
   //   () => ({ user, setUser }),
@@ -124,12 +126,12 @@ console.log("user: ", user)
   // const changeHandler = (event: any) => setUser(event.target.value);
   
 
-  const [filteredData, setFilteredData] = useState(products)
+  const [filteredData, setFilteredData] = useState([])
   
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
 
 
-  useEffect(() => {
+  // useEffect(() => {
   //   console.log("user: ", user)
 
   //   const fetchUser = async () => {
@@ -199,49 +201,49 @@ console.log("user: ", user)
   //   }
  
     
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)
-      if (response.ok) {
-        const json = await response.json()
-        setProducts(json)
-      } else {
-        // Handle the case where the response is not OK (e.g., show an error message)
-      }
-    } catch (error) {
-      setProducts([])
-      // Handle any network or fetch-related errors
-    } finally {
-      setIsLoading((prevLoading: any) => ({
-        ...prevLoading,
-        products: false,
-      }));
-    }
-  }
+  // const fetchProducts = async () => {
+  //   try {
+  //     const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)
+  //     if (response.ok) {
+  //       const json = await response.json()
+  //       setProducts(json)
+  //     } else {
+  //       // Handle the case where the response is not OK (e.g., show an error message)
+  //     }
+  //   } catch (error) {
+  //     setProducts([])
+  //     // Handle any network or fetch-related errors
+  //   } finally {
+  //     setIsLoading((prevLoading: any) => ({
+  //       ...prevLoading,
+  //       products: false,
+  //     }));
+  //   }
+  // }
 
 
 
-  if (!isLoading.user) {
-    // console.log(user.id_client)
-    // fetchDefaultColumns();
-    // fetchCustomColumns();
-    fetchProducts();
-  }
-}, [user ]) 
+  // if (!isLoading.user) {
+  //   // console.log(user.id_client)
+  //   // fetchDefaultColumns();
+  //   // fetchCustomColumns();
+  //   fetchProducts();
+  // }
+// }, [user ]) 
 
-useEffect(() => {
+// useEffect(() => {
 
-  // console.log("useEffect customColumns: ", customColumns)
-  if(customColumns.length != 0){
-  // console.log("useEffect customColumns true: ", customColumns)
+//   // console.log("useEffect customColumns: ", customColumns)
+//   if(customColumns.length != 0){
+//   // console.log("useEffect customColumns true: ", customColumns)
 
-    setIsLoading((prevLoading: any) => ({
-      ...prevLoading,
-      customColumns: false,
-    }));
-  }
+//     setIsLoading((prevLoading: any) => ({
+//       ...prevLoading,
+//       customColumns: false,
+//     }));
+//   }
 
-}, [customColumns ])
+// }, [customColumns ])
 
 
 // useEffect(() => {
@@ -307,40 +309,44 @@ useEffect(() => {
   
   // console.log("columns: ", columns.map((val) => val.dataKey))
   // console.log("defaultColumns: ", defaultColumns.map((val) => val.dataKey))
-  // console.log("sample: ", sample)
+  console.log("products: ", products)
+  if (!isLoading.products){
+    console.log("products: ", products)
+    
 
-  setFilteredData(
-    products.filter((item) => {
-    // (item.custom_fields ? console.log("item: ", item.custom_fields) : console.log("no hay custom fields: "))
-    // console.log("item: ", item.custom_fields)
-      return (
-        defaultColumns.some((column:any) => 
-          item[column.dataKey]
-            .toString()
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) 
-          
-        ) ||
-        (item.custom_fields &&
-          customColumns
-            // .filter((column) => column.id_client)
-            .some((customColumn:any) =>
-              item.custom_fields.some(
-                (field:any) => 
-                  // field[customColumn.dataKey] &&
-                  field[customColumn.dataKey]
-                    ?.toString()
-                    .toLowerCase()
-                    .includes(searchQuery.toLowerCase())
+    setFilteredData(
+      products.filter((item:any) => {
+      // (item.custom_fields ? console.log("item: ", item.custom_fields) : console.log("no hay custom fields: "))
+      // console.log("item: ", item.custom_fields)
+        return (
+          defaultColumns.some((column:any) => 
+            item[column.dataKey]
+              .toString()
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) 
+            
+          ) ||
+          (item.custom_fields &&
+            customColumns
+              // .filter((column) => column.id_client)
+              .some((customColumn:any) =>
+                item.custom_fields.some(
+                  (field:any) => 
+                    // field[customColumn.dataKey] &&
+                    field[customColumn.dataKey]
+                      ?.toString()
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())
+                )
               )
-            )
+          )
         )
-      )
-    })
-  );
+      })
+    );
+  }
   // console.log("filteredData: ", filteredData)
 
-}, [searchQuery, columns]) 
+}, [searchQuery, columns, products]) 
 
 
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component

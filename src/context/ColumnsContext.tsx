@@ -103,5 +103,20 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
   setColumnsUserOrder(columns_user_order)
 }, [columns]);
 
+  useEffect(() => {
+
+  // console.log("useEffect customColumns: ", customColumns)
+  if(customColumns.length != 0){
+  // console.log("useEffect customColumns true: ", customColumns)
+
+    setIsLoading((prevLoading: any) => ({
+      ...prevLoading,
+      customColumns: false,
+    }));
+  }
+
+}, [customColumns ])
+
+
   return <  ColumnsContext.Provider value={{ defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom }}>{children}</ColumnsContext.Provider>;
 };
