@@ -63,6 +63,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
       fetchProducts();
     }
   }, [user ])
+  
 
 
   return <ProductsContext.Provider value={{ products }}>{children}</ProductsContext.Provider>;

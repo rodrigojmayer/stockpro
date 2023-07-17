@@ -121,7 +121,7 @@ function App() {
   //   () => ({ user, setUser }),
   //   [user]
   // )
-console.log("user: ", user)
+// console.log("user: ", user)
   // const { user, setUser } = useContext<any>(UserContext)
   // const changeHandler = (event: any) => setUser(event.target.value);
   
@@ -309,9 +309,9 @@ useEffect(() => {
   
   // console.log("columns: ", columns.map((val) => val.dataKey))
   // console.log("defaultColumns: ", defaultColumns.map((val) => val.dataKey))
-  console.log("products: ", products)
-  if (!isLoading.products){
-    console.log("products: ", products)
+  // console.log("products: ", products)
+  // if (!isLoading.products){
+    // console.log("products: ", products)
     
 
     setFilteredData(
@@ -343,7 +343,7 @@ useEffect(() => {
         )
       })
     );
-  }
+  // }
   // console.log("filteredData: ", filteredData)
 
 }, [searchQuery, columns, products]) 
@@ -358,7 +358,7 @@ useEffect(() => {
   // console.log("defaultColumns: ", defaultColumns)
   // console.log("customColumns: ", customColumns)
   // console.log("columns: ", columns)
-  console.log("columnsUserOrder: ", columnsUserOrder)
+  // console.log("columnsUserOrder: ", columnsUserOrder)
   // console.log("products: ", products)
   return (
     // {/* //   {useMemo(() => ( */}

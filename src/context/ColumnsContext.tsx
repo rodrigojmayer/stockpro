@@ -101,7 +101,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
   }).filter(Boolean) as ColumnData[];
   // console.log("columns_user_order: ", columns_user_order)
   setColumnsUserOrder(columns_user_order)
-}, [columns]);
+  }, [columns]);
 
   useEffect(() => {
 

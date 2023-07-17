@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Box,
          Container,
          Grid,
@@ -22,6 +22,7 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
+import { ColumnsContext } from '../context/ColumnsContext';
 
 
 export default function Fields(
@@ -37,21 +38,33 @@ export default function Fields(
         handleClose(false)
     }
     // const columns: ColumnData[] = columnsDefault.concat(columnsCustom).filter(column => !(column.deleted));
-    const columns: ColumnData[] = columnsDefault.concat(columnsCustom);
     // const columns= allColumns.filter(column => !(column.deleted));
+    
+    const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+    
+    const columns: ColumnData[] = defaultColumns.concat(customColumns);
+    // const columnsprev: ColumnData[] = columnsDefault.concat(columnsCustom);
 
-    const columnsTableOrder = columns.filter((col) => {
+    // console.log("columns prev: ", columnsprev)
+    // console.log("columns: ", columns)
+    // console.log("columnsCustom prev: ", columnsCustom)
+    // console.log("customColumns: ", customColumns)
+    // console.log("idColumnsTableOrder prev: ", idColumnsTableOrder)
+    // console.log("columnsUserOrder: ", columnsUserOrder)
+    const columnsTableOrder = columns.filter((col: any) => {
         if(idColumnsTableOrder.includes(col.id))
             return col
     })
-    const columnsHiddenFields =  columns.filter((col) => {
+    const columnsHiddenFields =  columns.filter((col: any) => {
         if(!columnsTableOrder.includes(col))
             return col
     })
+    console.log("columnsTableOrder : ", columnsTableOrder)
+    console.log("columnsHiddenFields: ", columnsHiddenFields)
     // const columnsCustomNew = JSON.parse(JSON.stringify(columnsCustom))
-    const columnsCustomNew: ColumnDataCustom[] = columnsCustom
+    const columnsCustomNew: ColumnDataCustom[] = customColumns
     // .filter((obj) => !(obj.deleted))
-    .map((obj) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
+    .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
 
     // const columnsCustomNew: ColumnData[]= [...columnsCustom]
     const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
@@ -70,7 +83,7 @@ export default function Fields(
     const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
         let orderedArray = Array.from(orderedFieldsTemp)
         const unsetArray = Array.from(unsetFieldsTemp)
-        const fieldToRemove = orderedFieldsTemp.find(o => o.id == parseInt(e.currentTarget.value))
+        const fieldToRemove = orderedFieldsTemp.find((o: any) => o.id == parseInt(e.currentTarget.value))
         if (fieldToRemove) {
             orderedArray = orderedArray.filter(function(item) {
                 return item !== fieldToRemove
@@ -118,7 +131,7 @@ export default function Fields(
             // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
             // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
             
-            const updateDefectFieldsRepeated = columns.filter((col) => {
+            const updateDefectFieldsRepeated = columns.filter((col: any) => {
                 if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                     return col
             })
@@ -166,11 +179,11 @@ export default function Fields(
         // const updateFieldsNew = [...customFieldsNewTemp]
         const updateFieldsNew = [...customFieldsNewTemp.map(obj => ({ ...obj }))]
         // const updateOrderedFieldsTemp = [...orderedFieldsTemp]
-        const updateOrderedFieldsTemp = [...orderedFieldsTemp.map(obj => ({ ...obj }))]
+        const updateOrderedFieldsTemp = [...orderedFieldsTemp.map((obj: any) => ({ ...obj }))]
         // const updateUnsetFieldsTemp = [...unsetFieldsTemp]
         const updateUnsetFieldsTemp = [...unsetFieldsTemp.map(obj => ({ ...obj }))]
         let index = customFieldsTemp.findIndex(field => field.id === id)
-        let indexOrdered = orderedFieldsTemp.findIndex(field => field.id === id)
+        let indexOrdered = orderedFieldsTemp.findIndex((field: any) => field.id === id)
         let indexUnset = unsetFieldsTemp.findIndex(field => field.id === id)
         // console.log("index: ", index)
         // console.log("updateFields: ", updateFields)
@@ -218,11 +231,11 @@ export default function Fields(
         // const updateFieldsNew = [...customFieldsNewTemp]
         const updateFieldsNew = [...customFieldsNewTemp.map(obj => ({ ...obj }))]
         // const updateOrderedFieldsTemp = [...orderedFieldsTemp]
-        const updateOrderedFieldsTemp = [...orderedFieldsTemp.map(obj => ({ ...obj }))]
+        const updateOrderedFieldsTemp = [...orderedFieldsTemp.map((obj: any) => ({ ...obj }))]
         // const updateUnsetFieldsTemp = [...unsetFieldsTemp]
         const updateUnsetFieldsTemp = [...unsetFieldsTemp.map(obj => ({ ...obj }))]
         let index = customFieldsTemp.findIndex(field => field.id === id)
-        let indexOrdered = orderedFieldsTemp.findIndex(field => field.id === id)
+        let indexOrdered = orderedFieldsTemp.findIndex((field: any) => field.id === id)
         let indexUnset = unsetFieldsTemp.findIndex(field => field.id === id)
         if (index !== -1) {
             updateFields[index].deleted = true
@@ -345,7 +358,7 @@ export default function Fields(
                                         className={classes.table}
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
-                                            {orderedFieldsTemp.map((column, index) => {
+                                            {orderedFieldsTemp.map((column: any, index: any) => {
                                                 if (!column.deleted) {
                                                     return (
                                                         <Draggable 

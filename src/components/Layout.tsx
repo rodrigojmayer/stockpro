@@ -82,7 +82,8 @@ export default function Layout(
     const handleOpenMenu = () => setOpenMenu(true);
     const handleCloseMenu = () => setOpenMenu(false);
     const [openOptions, setOpenOptions] = useState<DataMenuOptions>(INITIAL_MENU_OPTIONS);
-  
+
+    
   
     const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
             setOpenOptions({...openOptions, [newData.option]: newData.open});
