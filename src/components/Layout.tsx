@@ -107,15 +107,9 @@ export default function Layout(
                  handleClose={handleCloseMenu} 
                  onData = {handleOpenOptions}
             /> 
-            <Fields
+            <Fields 
                 open={openOptions.fields} 
-                handleClose={handleCloseOptions} 
-                //  columns={columns}
-                columnsDefault={columnsDefault}
-                columnsCustom={columnsCustom} 
-                idColumnsTableOrder={idColumnsTableOrder} 
-                //  columnsHiddenFields={columnsHiddenFields}
-                //  columnsCustom={columnsCustom} 
+                handleClose={handleCloseOptions}  
             /> 
             <Alerts
                  open={openOptions.alerts} 

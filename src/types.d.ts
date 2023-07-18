@@ -73,9 +73,4 @@ export interface DataCreateStockOptions {
 export interface ChildProps {
   open:  boolean
   handleClose: (newData: boolean) => void
-  // columns: ColumnData[]
-  columnsDefault: ColumnData[]
-  columnsCustom: ColumnData[]
-  idColumnsTableOrder: Number[]
-  // columnsHiddenFields: ColumnData[]
 }

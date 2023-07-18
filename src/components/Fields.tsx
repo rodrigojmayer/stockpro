@@ -23,80 +23,94 @@ import SaveChanges from './SaveChanges';
 import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
 import { ColumnsContext } from '../context/ColumnsContext';
+import { UserContext } from '../context/UserContext';
 
 
 export default function Fields(
     {   open, 
         handleClose, 
-        columnsDefault, 
-        columnsCustom, 
-        idColumnsTableOrder 
     }: ChildProps) {
-
+ 
     const { classes } = useStylesGlobal()
     const close = () => {
         handleClose(false)
     }
     // const columns: ColumnData[] = columnsDefault.concat(columnsCustom).filter(column => !(column.deleted));
     // const columns= allColumns.filter(column => !(column.deleted));
+  
+    const { user } = useContext<any>(UserContext);
+    const { columns, defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
     
-    const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
-    
-    const columns: ColumnData[] = defaultColumns.concat(customColumns);
+    // const columns: ColumnData[] = defaultColumns.concat(customColumns);
     // const columnsprev: ColumnData[] = columnsDefault.concat(columnsCustom);
 
-    // console.log("columns prev: ", columnsprev)
+    // console.log("customColumns: ", customColumns)
+    // console.log("filteredColumnsCustom: ", filteredColumnsCustom)
     // console.log("columns: ", columns)
     // console.log("columnsCustom prev: ", columnsCustom)
     // console.log("customColumns: ", customColumns)
     // console.log("idColumnsTableOrder prev: ", idColumnsTableOrder)
     // console.log("columnsUserOrder: ", columnsUserOrder)
-    const columnsTableOrder = columns.filter((col: any) => {
-        if(idColumnsTableOrder.includes(col.id))
-            return col
-    })
-    const columnsHiddenFields =  columns.filter((col: any) => {
-        if(!columnsTableOrder.includes(col))
-            return col
-    })
-    console.log("columnsTableOrder : ", columnsTableOrder)
-    console.log("columnsHiddenFields: ", columnsHiddenFields)
+    // const columnsTableOrder = columnsUserOrder
+    // const columnsTableOrder = columns.filter((col: any) => {
+    //     if(idColumnsTableOrder.includes(col.id))
+    //         return col
+    // })
+    // console.log("columnsUserOrder: ", columnsUserOrder)
+    // console.log("columnsTableOrder: ", columnsTableOrder)
+    // const columnsHiddenFields =  columns.filter((col: any) => {
+    //     if(!columnsTableOrder.includes(col))
+    //         return col
+    // })
+
+    // console.log("columnsHiddenFields: ", columnsHiddenFields)
+    // console.log("columnsTableOrder : ", columnsTableOrder)
+    // console.log("columnsHiddenFields: ", columnsHiddenFields)
     // const columnsCustomNew = JSON.parse(JSON.stringify(columnsCustom))
-    const columnsCustomNew: ColumnDataCustom[] = customColumns
+    // const columnsCustomNew: ColumnDataCustom[] = customColumns
+    // .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
+    // const filteredColumnsCustomNew: ColumnDataCustom[] = filteredColumnsCustom
+    // .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
+    // console.log("columnsCustomNew: ", columnsCustomNew)
+    // console.log("filteredColumnsCustomNew: ", filteredColumnsCustomNew)
+    // const columnsCustomNew: ColumnDataCustom[] = customColumns
     // .filter((obj) => !(obj.deleted))
-    .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
+    // .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
 
     // const columnsCustomNew: ColumnData[]= [...columnsCustom]
-    const [orderedFields, setOrderedFields] = useState(columnsTableOrder)
-    const [orderedFieldsTemp, setOrderedFieldsTemp] = useState(columnsTableOrder)
-    const [unsetFields, setUnsetFields] = useState<ColumnData[]>([...columnsHiddenFields]) 
-    const [unsetFieldsTemp, setUnsetFieldsTemp] = useState<ColumnData[]>([...columnsHiddenFields])  
-    const [customFields, setCustomFields] = useState<ColumnDataCustom[]>(columnsCustomNew) 
-    const [customFieldsTemp, setCustomFieldsTemp] = useState<ColumnDataCustom[]>(columnsCustomNew) 
-    const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>(columnsCustomNew)
-    const [customFieldsNewTemp, setCustomFieldsNewTemp] = useState<ColumnDataCustom[]>(columnsCustomNew)
+    const [orderedFields, setOrderedFields] = useState<ColumnData[]>([]) 
+    // const [orderedFieldsTemp, setOrderedFieldsTemp] = useState(columnsTableOrder)
+    const [unsetFields, setUnsetFields] = useState<ColumnData[]>([]) 
+    // const [unsetFieldsTemp, setUnsetFieldsTemp] = useState<ColumnData[]>([])  
+    const [customFields, setCustomFields] = useState<ColumnDataCustom[]>([]) 
+    // const [customFieldsTemp, setCustomFieldsTemp] = useState<ColumnDataCustom[]>(columnsCustomNew) 
+    const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>([])
+    // const [customFieldsNewTemp, setCustomFieldsNewTemp] = useState<ColumnDataCustom[]>(columnsCustomNew)
     const [addButtonShow, setAddButtonShow] = useState<boolean>(true)
     
+    // console.log("orderedFields: ", orderedFields)
+    // console.log("columnsTableOrder: ", columnsTableOrder)
     // const [okButtonShow, setOkButtonShow] = useState(okButton)  
 
+ 
                                  
     const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
-        let orderedArray = Array.from(orderedFieldsTemp)
-        const unsetArray = Array.from(unsetFieldsTemp)
-        const fieldToRemove = orderedFieldsTemp.find((o: any) => o.id == parseInt(e.currentTarget.value))
+        let orderedArray = Array.from(orderedFields)
+        const unsetArray = Array.from(unsetFields)
+        const fieldToRemove = orderedFields.find((o: any) => o.id == parseInt(e.currentTarget.value))
         if (fieldToRemove) {
             orderedArray = orderedArray.filter(function(item) {
                 return item !== fieldToRemove
             })
             unsetArray.push(fieldToRemove)
         }
-        setOrderedFieldsTemp(orderedArray)
+        setOrderedFields(orderedArray)
         unsetArray.sort((a,b) => (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0))
-        setUnsetFieldsTemp(unsetArray)
+        setUnsetFields(unsetArray)
     }
     const addField = (e: React.MouseEvent<HTMLButtonElement>)  => {
-        const orderedArray = Array.from(orderedFieldsTemp)
-        let unsetArray = Array.from(unsetFieldsTemp)
+        const orderedArray = Array.from(orderedFields)
+        let unsetArray = Array.from(unsetFields)
         // console.log("parseInt: ", String(1.01) )
         // console.log("Number: ", Boolean("2.2"))
         const fieldToAdd = unsetArray.find(o => o.id == parseInt(e.currentTarget.value))
@@ -106,16 +120,16 @@ export default function Fields(
             })
             orderedArray.push(fieldToAdd)
         }
-        setOrderedFieldsTemp(orderedArray)
+        setOrderedFields(orderedArray)
         unsetArray.sort((a,b) => (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0))
-        setUnsetFieldsTemp(unsetArray)
+        setUnsetFields(unsetArray)
     }
     const handleDragEnd = (result: any) => {
         if (!result.destination) return;
-        const items = Array.from(orderedFieldsTemp);
+        const items = Array.from(orderedFields);
         const [reorderData] = items.splice(result.source.index,1);
         items.splice(result.destination.index, 0, reorderData);
-        setOrderedFieldsTemp(items)
+        setOrderedFields(items)
     }
     
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,36 +138,39 @@ export default function Fields(
         // console.log("isNaN('w'): ", isNaN(NaN))
         // setCustomFieldsTemp({...customFieldsTemp, event.currentTarget.value})
         
-        const index = customFieldsNewTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
+        const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
         // if(index !== -1) {
-            const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
+            const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
             updateFieldsNew[index].label = event.currentTarget.value
             // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
             // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
             
             const updateDefectFieldsRepeated = columns.filter((col: any) => {
-                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
+                // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                     return col
-            })
+            }) 
             const updateCustomFieldsRepeated = customFieldsNew.filter((col) => {
-                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
+                // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                     return col
             })
-            const updateCustomFieldsTempRepeated = customFieldsNewTemp.filter((col) => {
-                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+            const updateCustomFieldsTempRepeated = customFieldsNew.filter((col) => {
+                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
+                // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                     return col
             })
             if(updateDefectFieldsRepeated[0] || updateCustomFieldsRepeated[0] || updateCustomFieldsTempRepeated[0]){
-                console.log("updateDefectFieldsRepeated: ", updateDefectFieldsRepeated)
-                console.log("updateCustomFieldsRepeated: ", updateCustomFieldsRepeated)
+                // console.log("updateDefectFieldsRepeated: ", updateDefectFieldsRepeated)
+                // console.log("updateCustomFieldsRepeated: ", updateCustomFieldsRepeated)
                 updateFieldsNew[index].fieldRepeatedShow = true
                 updateFieldsNew[index].okButtonShow = false
                 setAddButtonShow(false)
             }else{
                 updateFieldsNew[index].fieldRepeatedShow = false
                 setAddButtonShow(true)
-                if(customFieldsTemp[index]){
-                    if(updateFieldsNew[index].label == customFieldsTemp[index].label || updateFieldsNew[index].label == ''){
+                if(customFields[index]){
+                    if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == ''){
                         updateFieldsNew[index].okButtonShow = false
                         setAddButtonShow(true)
                     }
@@ -169,22 +186,23 @@ export default function Fields(
                     setAddButtonShow(true)
                 }
             }
-            setCustomFieldsNewTemp(updateFieldsNew)
+            setCustomFieldsNew(updateFieldsNew)
         // }
     }
     const saveCustomField = (id:number, label: string) => {
+        // console.log("id: ", id)
         // console.log("label: ", label)
         // const updateFields = [...customFieldsTemp]
-        const updateFields = [...customFieldsTemp.map(obj => ({ ...obj }))]
+        const updateFields = [...customFields.map(obj => ({ ...obj }))]
         // const updateFieldsNew = [...customFieldsNewTemp]
-        const updateFieldsNew = [...customFieldsNewTemp.map(obj => ({ ...obj }))]
+        const updateFieldsNew = [...customFieldsNew.map(obj => ({ ...obj }))]
         // const updateOrderedFieldsTemp = [...orderedFieldsTemp]
-        const updateOrderedFieldsTemp = [...orderedFieldsTemp.map((obj: any) => ({ ...obj }))]
+        const updateOrderedFieldsTemp = [...orderedFields.map((obj: any) => ({ ...obj }))]
         // const updateUnsetFieldsTemp = [...unsetFieldsTemp]
-        const updateUnsetFieldsTemp = [...unsetFieldsTemp.map(obj => ({ ...obj }))]
-        let index = customFieldsTemp.findIndex(field => field.id === id)
-        let indexOrdered = orderedFieldsTemp.findIndex((field: any) => field.id === id)
-        let indexUnset = unsetFieldsTemp.findIndex(field => field.id === id)
+        const updateUnsetFields = [...unsetFields.map(obj => ({ ...obj }))]
+        let index = customFields.findIndex(field => field.id === id)
+        let indexOrdered = orderedFields.findIndex((field: any) => field.id === id)
+        let indexUnset = unsetFields.findIndex(field => field.id === id)
         // console.log("index: ", index)
         // console.log("updateFields: ", updateFields)
         if(index !== -1){
@@ -193,74 +211,74 @@ export default function Fields(
             updateFields[index].label = label
             if(indexOrdered !== -1){
                 updateOrderedFieldsTemp[indexOrdered].label = label
-                setOrderedFieldsTemp(updateOrderedFieldsTemp)
+                setOrderedFields(updateOrderedFieldsTemp)
             }
             if(indexUnset !== -1){
-                updateUnsetFieldsTemp[indexUnset].label = label
-                setUnsetFieldsTemp(updateUnsetFieldsTemp)
+                updateUnsetFields[indexUnset].label = label
+                setUnsetFields(updateUnsetFields)
             }
         }else{
-            index = customFieldsNewTemp.findIndex(field => field.id === id)
+            index = customFieldsNew.findIndex(field => field.id === id)
             // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
             // console.log("index2: ", index)
             // console.log("id: ", id)
             const fieldsToOmit = ['okButtonShow']
-            const newObj = Object.assign({}, customFieldsNewTemp[index])
+            const newObj = Object.assign({}, customFieldsNew[index])
             // console.log("newObj: ", newObj)
             fieldsToOmit.forEach(field => delete newObj[field as keyof ColumnDataCustom])
             updateFields.push(newObj)
-            updateUnsetFieldsTemp.push(newObj)
-            setUnsetFieldsTemp(updateUnsetFieldsTemp)
+            updateUnsetFields.push(newObj)
+            setUnsetFields(updateUnsetFields)
             // setUnsetFieldsTemp([...unsetFieldsTemp, newObj])
             // console.log("updateFields: ", updateFields)
         }
 
-        console.log("updateFields: ", updateFields)
+        // console.log("updateFields: ", updateFields)
             
         // console.log("customFieldsNewTemp[index].label: ", updateFields[index].label)
-        setCustomFieldsTemp(updateFields)
+        setCustomFields(updateFields)
         updateFieldsNew[index].okButtonShow = false
         setAddButtonShow(true)
-        setCustomFieldsNewTemp(updateFieldsNew)
+        setCustomFieldsNew(updateFieldsNew)
     }
-
+ 
     const deleteField = (id:number) => {
         // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
         // const updateFields = [...customFieldsTemp]
-        const updateFields = [...customFieldsTemp.map(obj => ({ ...obj }))]
+        const updateFields = [...customFields.map(obj => ({ ...obj }))]
         // const updateFieldsNew = [...customFieldsNewTemp]
-        const updateFieldsNew = [...customFieldsNewTemp.map(obj => ({ ...obj }))]
+        const updateFieldsNew = [...customFieldsNew.map(obj => ({ ...obj }))]
         // const updateOrderedFieldsTemp = [...orderedFieldsTemp]
-        const updateOrderedFieldsTemp = [...orderedFieldsTemp.map((obj: any) => ({ ...obj }))]
+        const updateOrderedFieldsTemp = [...orderedFields.map((obj: any) => ({ ...obj }))]
         // const updateUnsetFieldsTemp = [...unsetFieldsTemp]
-        const updateUnsetFieldsTemp = [...unsetFieldsTemp.map(obj => ({ ...obj }))]
-        let index = customFieldsTemp.findIndex(field => field.id === id)
-        let indexOrdered = orderedFieldsTemp.findIndex((field: any) => field.id === id)
-        let indexUnset = unsetFieldsTemp.findIndex(field => field.id === id)
+        const updateUnsetFieldsTemp = [...unsetFields.map(obj => ({ ...obj }))]
+        let index = customFields.findIndex(field => field.id === id)
+        let indexOrdered = orderedFields.findIndex((field: any) => field.id === id)
+        let indexUnset = unsetFields.findIndex(field => field.id === id)
         if (index !== -1) {
             updateFields[index].deleted = true
-            setCustomFieldsTemp(updateFields)
+            setCustomFields(updateFields)
             updateFieldsNew[index].deleted = true
             // console.log("customFieldsTemp: ", customFieldsTemp) 
             if(indexOrdered !== -1){
                 updateOrderedFieldsTemp[indexOrdered].deleted = true
-                setOrderedFieldsTemp(updateOrderedFieldsTemp)
+                setOrderedFields(updateOrderedFieldsTemp)
             }
             if(indexUnset !== -1){
                 // console.log("unsetFieldsDelete5: ", unsetFields[2].deleted)
                 updateUnsetFieldsTemp[indexUnset].deleted = true
                 // console.log("unsetFieldsDelete4: ", unsetFields[2].deleted)
-                setUnsetFieldsTemp(updateUnsetFieldsTemp)
+                setUnsetFields(updateUnsetFieldsTemp)
                 // console.log("unsetFieldsDelete3: ", unsetFields[2].deleted)
             }
             // console.log("unsetFieldsDelete2: ", unsetFields[2].deleted)
         } else {
-            index = customFieldsNewTemp.findIndex(field => field.id === id)
+            index = customFieldsNew.findIndex(field => field.id === id)
             updateFieldsNew.splice(index, 1)
 
         }
         // console.log("unsetFieldsDelete1: ", unsetFields[2].deleted)
-        setCustomFieldsNewTemp(updateFieldsNew)
+        setCustomFieldsNew(updateFieldsNew)
         
         // console.log("unsetFieldsDelete: ", unsetFields[2])
         // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
@@ -268,23 +286,24 @@ export default function Fields(
     const addInputCustomField = () => {
         // console.log("holis clickis", customFieldsNewTemp.length)
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-        const lastObj = customFieldsNewTemp[customFieldsNewTemp.length - 1]
+        const lastObj = customFieldsNew[customFieldsNew.length - 1]
         const nextId = lastObj.id + 1
-        const updateFieldsNew = [...customFieldsNewTemp, {id:nextId, dataKey: "", label: "", width: 100, id_client: 2, deleted: false, okButtonShow: false, fieldRepeatedShow:false}]
+        const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false}]
 
         
 
         // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+        console.log("updateFieldsNew: ", updateFieldsNew)
         // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
         // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
         //     updateFieldsNew[index].okButtonShow = true
         // else
         //     updateFieldsNew[index].okButtonShow = false
         
-        console.log("updateFieldsNew: ", updateFieldsNew)
+        // console.log("updateFieldsNew: ", updateFieldsNew)
 
-        setCustomFieldsNewTemp(updateFieldsNew)
+        // setCustomFields(updateFieldsNew)
+        setCustomFieldsNew(updateFieldsNew)
         setAddButtonShow(false)
     }
 
@@ -292,10 +311,13 @@ export default function Fields(
     const handleCloseSaveChanges = (ans?:boolean) => {
         console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
-            setOrderedFields(orderedFieldsTemp)
-            setUnsetFields(unsetFieldsTemp)
-            setCustomFields(customFieldsTemp)
-            setCustomFieldsNew(customFieldsNewTemp)
+            // setOrderedFields(orderedFields)
+            // setUnsetFields(unsetFields)
+            // setCustomFields(customFields)
+            // setCustomFieldsNew(customFieldsNewTemp)
+            
+
+
             
             close()
         }
@@ -306,6 +328,7 @@ export default function Fields(
     useEffect(() => {
 
         // console.log("orderedFieldsEffect: ", orderedFields)
+        // console.log("orderedFieldsTempEffect: ", orderedFields)
 
         // console.log("unsetFieldsEffect: ", unsetFields)
         // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
@@ -314,10 +337,19 @@ export default function Fields(
         // console.log("customFieldsNewEffect: ", customFieldsNew)
         // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
         // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
-        setOrderedFieldsTemp(orderedFields)
-        setUnsetFieldsTemp(unsetFields)
-        setCustomFieldsTemp(customFields)
-        setCustomFieldsNewTemp(customFieldsNew)
+        const columnsHiddenFields =  columns.filter((col: any) => {
+            if(!columnsUserOrder.includes(col))
+            return col
+        })
+
+        const ColumnsCustom: ColumnDataCustom[] = filteredColumnsCustom
+        .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
+
+        setOrderedFields(columnsUserOrder)
+        setUnsetFields(columnsHiddenFields)
+        setCustomFields(ColumnsCustom)
+        setCustomFieldsNew(ColumnsCustom)
+        setAddButtonShow(true)
     // }, [open, customFields, customFieldsNew])
     }, [open])
     return (
@@ -326,13 +358,10 @@ export default function Fields(
         onClose={close}> 
             <Box sx={modalStyleExternal}>
                 <Box sx={modalStyleInternal}>
-
-                <SaveChanges
-                    openSaveChanges={openSaveChanges}
-                    closeSaveChanges={handleCloseSaveChanges} 
-
-                />
-
+                    <SaveChanges
+                        openSaveChanges={openSaveChanges}
+                        closeSaveChanges={handleCloseSaveChanges} 
+                    />
                     <Typography align="center" variant="h5">
                         Fields
                     </Typography>
@@ -358,9 +387,9 @@ export default function Fields(
                                         className={classes.table}
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
-                                            {orderedFieldsTemp.map((column: any, index: any) => {
+                                            {orderedFields.map((column: any, index: any) => {
                                                 if (!column.deleted) {
-                                                    return (
+                                                    return ( 
                                                         <Draggable 
                                                         key={column.id} 
                                                         draggableId={column.id.toString()} 
@@ -398,7 +427,7 @@ export default function Fields(
                             <List
                             className={classes.table}
                             >
-                                {unsetFieldsTemp.map((column) => {
+                                {unsetFields.map((column) => {
                                     if (!column.deleted) {
                                         return (
                                             <Paper
@@ -431,7 +460,7 @@ export default function Fields(
                             className={classes.editIcon}
                             />
                         </Box>
-                        {customFieldsNewTemp.map((cusField: ColumnDataCustom) => {
+                        {customFieldsNew.map((cusField: ColumnDataCustom) => {
                             if (!cusField.deleted) {
                                 return (
                                     <Box className={classes.customBoxRow}

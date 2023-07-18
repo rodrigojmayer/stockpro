@@ -33,18 +33,19 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
+import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
 
 // };
 // type SaveChangesProps = {
 //     openSaveChanges: boolean;
 //     closeSaveChanges: (newData?: boolean) => void;
 // }
-interface ChildProps {
-    open:  boolean
-    handleClose: (newData: boolean) => void
-}
+// interface ChildProps {
+//     open:  boolean
+//     handleClose: (newData: boolean) => void
+// }
 
-
+ 
 // const names = [
 //     "Humaira Sims",
 //     "Santiago Solis",
@@ -92,7 +93,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const close = () => {
         handleClose(false)
     }
-
 
     const usersAlertSelected = usersAlert.filter((usr) => {
         if(idUsersAlertSelected.includes(usr.id))
