@@ -134,7 +134,7 @@ export default function Fields(
     
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log("event.currentTarget.id: ", event.currentTarget.id)
-        // console.log("event.currentTarget.value: ", event.currentTarget.value)
+        console.log("event.currentTarget.value: ", event.currentTarget.value)
         // console.log("isNaN('w'): ", isNaN(NaN))
         // setCustomFieldsTemp({...customFieldsTemp, event.currentTarget.value})
         
@@ -241,9 +241,9 @@ export default function Fields(
         setAddButtonShow(true)
         setCustomFieldsNew(updateFieldsNew)
     }
- 
+
     const deleteField = (id:number) => {
-        // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
+        console.log("customFieldsNew in deletedField1: ", customFieldsNew)
         // const updateFields = [...customFieldsTemp]
         const updateFields = [...customFields.map(obj => ({ ...obj }))]
         // const updateFieldsNew = [...customFieldsNewTemp]
@@ -280,6 +280,7 @@ export default function Fields(
         // console.log("unsetFieldsDelete1: ", unsetFields[2].deleted)
         setCustomFieldsNew(updateFieldsNew)
         
+        console.log("customFieldsNew in deletedField2: ", updateFieldsNew)
         // console.log("unsetFieldsDelete: ", unsetFields[2])
         // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
     }
