@@ -48,6 +48,7 @@ export interface ColumnDataCustom {
   deleted: boolean;
   okButtonShow: boolean;
   fieldRepeatedShow: boolean;
+  pre_saved?: boolean;
 }
 export interface CustomValueData {
   id_custom_fields_value: number,

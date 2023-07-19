@@ -134,7 +134,7 @@ export default function Fields(
     
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log("event.currentTarget.id: ", event.currentTarget.id)
-        console.log("event.currentTarget.value: ", event.currentTarget.value)
+        // console.log("event.currentTarget.value: ", event.currentTarget.value)
         // console.log("isNaN('w'): ", isNaN(NaN))
         // setCustomFieldsTemp({...customFieldsTemp, event.currentTarget.value})
         
@@ -238,12 +238,13 @@ export default function Fields(
         // console.log("customFieldsNewTemp[index].label: ", updateFields[index].label)
         setCustomFields(updateFields)
         updateFieldsNew[index].okButtonShow = false
+        updateFieldsNew[index].pre_saved = true
         setAddButtonShow(true)
         setCustomFieldsNew(updateFieldsNew)
     }
 
     const deleteField = (id:number) => {
-        console.log("customFieldsNew in deletedField1: ", customFieldsNew)
+        // console.log("customFieldsNew in deletedField1: ", customFieldsNew)
         // const updateFields = [...customFieldsTemp]
         const updateFields = [...customFields.map(obj => ({ ...obj }))]
         // const updateFieldsNew = [...customFieldsNewTemp]
@@ -279,8 +280,18 @@ export default function Fields(
         }
         // console.log("unsetFieldsDelete1: ", unsetFields[2].deleted)
         setCustomFieldsNew(updateFieldsNew)
+        console.log("updateUnsetFieldsTemp?: ", updateUnsetFieldsTemp )
+        console.log("some pre_saved?: ", updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}) )
+        if(updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
+            console.log("enter to if")
+
+            setAddButtonShow(true)
+        } else if ((updateFieldsNew.find((obj) => { if(obj.deleted==false && (obj.pre_saved == true || obj.pre_saved==undefined))  return true}))){
+            if(!updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}))
+            setAddButtonShow(true)
+        }
         
-        console.log("customFieldsNew in deletedField2: ", updateFieldsNew)
+        // console.log("customFieldsNew in deletedField2: ", updateFieldsNew)
         // console.log("unsetFieldsDelete: ", unsetFields[2])
         // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
     }
@@ -289,12 +300,12 @@ export default function Fields(
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
         const lastObj = customFieldsNew[customFieldsNew.length - 1]
         const nextId = lastObj.id + 1
-        const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false}]
+        const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
 
         
 
         // updateFieldsNew[index].label = event.currentTarget.value
-        console.log("updateFieldsNew: ", updateFieldsNew)
+        // console.log("updateFieldsNew: ", updateFieldsNew)
         // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
         // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
         //     updateFieldsNew[index].okButtonShow = true
@@ -353,6 +364,11 @@ export default function Fields(
         setAddButtonShow(true)
     // }, [open, customFields, customFieldsNew])
     }, [open])
+
+    useEffect(() => {
+        // console.log("customFieldsNewEffect: ", customFieldsNew)
+    }, [customFieldsNew])
+
     return (
         <Modal
         open={open} 
