@@ -141,6 +141,7 @@ export default function Fields(
         const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
         // if(index !== -1) {
             const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
+            updateFieldsNew[index].pre_saved = true     //continue here         //////////////////////////////////
             updateFieldsNew[index].label = event.currentTarget.value
             // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
             // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
@@ -282,14 +283,20 @@ export default function Fields(
         setCustomFieldsNew(updateFieldsNew)
         console.log("updateUnsetFieldsTemp?: ", updateUnsetFieldsTemp )
         console.log("some pre_saved?: ", updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}) )
-        if(updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
-            console.log("enter to if")
 
-            setAddButtonShow(true)
-        } else if ((updateFieldsNew.find((obj) => { if(obj.deleted==false && (obj.pre_saved == true || obj.pre_saved==undefined))  return true}))){
-            if(!updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}))
+        if (!updateFieldsNew.some((obj) => obj.deleted==false)){
+        // if (!updateFieldsNew.find((obj) => { if(obj.deleted==false)  return true})){
             setAddButtonShow(true)
         }
+        else if(updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
+        //     console.log("enter to if")
+
+            setAddButtonShow(true)
+        } 
+        // else if ((updateFieldsNew.find((obj) => { if(obj.deleted==false && (obj.pre_saved == true || obj.pre_saved==undefined))  return true}))){
+        //     if(!updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}))
+        //     setAddButtonShow(true)
+        // }
         
         // console.log("customFieldsNew in deletedField2: ", updateFieldsNew)
         // console.log("unsetFieldsDelete: ", unsetFields[2])
