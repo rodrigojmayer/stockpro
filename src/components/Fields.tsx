@@ -141,7 +141,6 @@ export default function Fields(
         const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
         // if(index !== -1) {
             const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
-            updateFieldsNew[index].pre_saved = true     //continue here         //////////////////////////////////
             updateFieldsNew[index].label = event.currentTarget.value
             // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
             // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
@@ -166,25 +165,31 @@ export default function Fields(
                 // console.log("updateCustomFieldsRepeated: ", updateCustomFieldsRepeated)
                 updateFieldsNew[index].fieldRepeatedShow = true
                 updateFieldsNew[index].okButtonShow = false
-                setAddButtonShow(false)
+                updateFieldsNew[index].pre_saved = false
+                console.log("updateFieldsNew repeated: ", updateFieldsNew)
+////////////                setAddButtonShow(false)
             }else{
                 updateFieldsNew[index].fieldRepeatedShow = false
-                setAddButtonShow(true)
+ //////////               setAddButtonShow(true)
                 if(customFields[index]){
                     if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == ''){
                         updateFieldsNew[index].okButtonShow = false
+                        updateFieldsNew[index].pre_saved = false
+                        console.log("updateFieldsNew repeated: ", updateFieldsNew)
                         setAddButtonShow(true)
                     }
                     else{
                         updateFieldsNew[index].okButtonShow = true
-                        setAddButtonShow(false)
+                        updateFieldsNew[index].pre_saved = false
+ ///////////////                       setAddButtonShow(false)
                     }
                 }else if(updateFieldsNew[index].label !='' ){
                     updateFieldsNew[index].okButtonShow = true
-                    setAddButtonShow(false)
+                    updateFieldsNew[index].pre_saved = false
+ /////////                   setAddButtonShow(false)
                 }else if (updateFieldsNew[index].label ==='' ){
                     updateFieldsNew[index].okButtonShow = false
-                    setAddButtonShow(true)
+//////////                    setAddButtonShow(true)
                 }
             }
             setCustomFieldsNew(updateFieldsNew)
@@ -240,8 +245,8 @@ export default function Fields(
         setCustomFields(updateFields)
         updateFieldsNew[index].okButtonShow = false
         updateFieldsNew[index].pre_saved = true
-        setAddButtonShow(true)
         setCustomFieldsNew(updateFieldsNew)
+/////////        setAddButtonShow(true)
     }
 
     const deleteField = (id:number) => {
@@ -281,23 +286,23 @@ export default function Fields(
         }
         // console.log("unsetFieldsDelete1: ", unsetFields[2].deleted)
         setCustomFieldsNew(updateFieldsNew)
-        console.log("updateUnsetFieldsTemp?: ", updateUnsetFieldsTemp )
-        console.log("some pre_saved?: ", updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}) )
+        // console.log("updateUnsetFieldsTemp?: ", updateUnsetFieldsTemp )
+        // console.log("some pre_saved?: ", updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}) )
 
-        if (!updateFieldsNew.some((obj) => obj.deleted==false)){
-        // if (!updateFieldsNew.find((obj) => { if(obj.deleted==false)  return true})){
-            setAddButtonShow(true)
-        }
-        else if(updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
-        //     console.log("enter to if")
+//////////        // if (!updateFieldsNew.some((obj) => obj.deleted==false)){
+        // // if (!updateFieldsNew.find((obj) => { if(obj.deleted==false)  return true})){
+        //     setAddButtonShow(true)
+        // }
+        // else if(updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
+        // //     console.log("enter to if")
 
-            setAddButtonShow(true)
-        } 
+        //     setAddButtonShow(true)
+        // } 
         // else if ((updateFieldsNew.find((obj) => { if(obj.deleted==false && (obj.pre_saved == true || obj.pre_saved==undefined))  return true}))){
         //     if(!updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}))
         //     setAddButtonShow(true)
         // }
-        
+ ///////////       
         // console.log("customFieldsNew in deletedField2: ", updateFieldsNew)
         // console.log("unsetFieldsDelete: ", unsetFields[2])
         // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
@@ -323,12 +328,12 @@ export default function Fields(
 
         // setCustomFields(updateFieldsNew)
         setCustomFieldsNew(updateFieldsNew)
-        setAddButtonShow(false)
+////////        // setAddButtonShow(false)
     }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
-        console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             // setOrderedFields(orderedFields)
             // setUnsetFields(unsetFields)
@@ -368,12 +373,20 @@ export default function Fields(
         setUnsetFields(columnsHiddenFields)
         setCustomFields(ColumnsCustom)
         setCustomFieldsNew(ColumnsCustom)
-        setAddButtonShow(true)
+/////////        // setAddButtonShow(true)
     // }, [open, customFields, customFieldsNew])
     }, [open])
 
     useEffect(() => {
-        // console.log("customFieldsNewEffect: ", customFieldsNew)
+        console.log("customFieldsNewEffect: ", customFieldsNew)
+        if(customFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
+            setAddButtonShow(false)
+        } else {
+            setAddButtonShow(true)
+        }
+
+        // setAddButtonShow(false)
+        // setAddButtonShow(true)
     }, [customFieldsNew])
 
     return (
