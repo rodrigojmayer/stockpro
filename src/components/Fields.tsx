@@ -82,7 +82,9 @@ export default function Fields(
     // const [orderedFieldsTemp, setOrderedFieldsTemp] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState<ColumnData[]>([]) 
     // const [unsetFieldsTemp, setUnsetFieldsTemp] = useState<ColumnData[]>([])  
+
     const [customFields, setCustomFields] = useState<ColumnDataCustom[]>([]) 
+    
     // const [customFieldsTemp, setCustomFieldsTemp] = useState<ColumnDataCustom[]>(columnsCustomNew) 
     const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>([])
     // const [customFieldsNewTemp, setCustomFieldsNewTemp] = useState<ColumnDataCustom[]>(columnsCustomNew)
@@ -146,13 +148,13 @@ export default function Fields(
             // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
             
             const updateDefectFieldsRepeated = columns.filter((col: any) => {
-                console.log("col: ", col)
+                // console.log("col: ", col)
                     if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
                     // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                         return col
             }) 
             const updateCustomFieldsRepeated = customFieldsNew.filter((col) => {
-                console.log("col2: ", col)
+                // console.log("col2: ", col)
                 if(!col.deleted){
                     if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
                     // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
@@ -171,7 +173,7 @@ export default function Fields(
                 updateFieldsNew[index].fieldRepeatedShow = true
                 updateFieldsNew[index].okButtonShow = false
                 updateFieldsNew[index].pre_saved = false
-                console.log("updateFieldsNew repeated: ", updateFieldsNew)
+                // console.log("updateFieldsNew repeated: ", updateFieldsNew)
             } else {
                 updateFieldsNew[index].fieldRepeatedShow = false
                 if(customFields[index]){
@@ -195,9 +197,10 @@ export default function Fields(
             setCustomFieldsNew(updateFieldsNew)
         // }
     }
-    const saveCustomField = (id:number, label: string) => {
-        // console.log("id: ", id)
-        // console.log("label: ", label)
+    const saveCustomField = (_id:number, id:number, label: string) => {
+        console.log("_id: ", _id)
+        console.log("label: ", label)
+        console.log("label: ", label)
         // const updateFields = [...customFieldsTemp]
         const updateFields = [...customFields.map(obj => ({ ...obj }))]
         // const updateFieldsNew = [...customFieldsNewTemp]
@@ -245,10 +248,12 @@ export default function Fields(
         setCustomFields(updateFields)
         updateFieldsNew[index].okButtonShow = false
         updateFieldsNew[index].pre_saved = true
+        if(_id)
+            updateFieldsNew[index].edited = true
         setCustomFieldsNew(updateFieldsNew)
     }
 
-    const deleteField = (id:number) => {
+    const deleteField = (_id:any, id:number) => {
         // console.log("customFieldsNew in deletedField1: ", customFieldsNew)
         // const updateFields = [...customFieldsTemp]
         const updateFields = [...customFields.map(obj => ({ ...obj }))]
@@ -284,6 +289,9 @@ export default function Fields(
 
         }
         // console.log("unsetFieldsDelete1: ", unsetFields[2].deleted)
+        
+        if(_id)
+            updateFieldsNew[index].edited = true
         setCustomFieldsNew(updateFieldsNew)
     }
     const addInputCustomField = () => {
@@ -317,6 +325,57 @@ export default function Fields(
             // setUnsetFields(unsetFields)
             // setCustomFields(customFields)
             // setCustomFieldsNew(customFieldsNewTemp)
+            // console.log("save customFields: ", customFields)  
+            // console.log("save customFieldsNew: ", customFieldsNew)  
+            customFieldsNew.forEach((obj) => {
+                // console.log("Custom field new: ", obj)  
+                if(obj._id) {
+                    // console.log("obj._id: ", obj._id)
+                    if(obj.edited) {
+                        console.log("Object to edit: ", obj)
+
+                        const fetchEditCustomColumn = async () => {
+                            try {
+                                const response = await fetch(`http://localhost:4000/api/customColumns/${obj._id}`, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        label: obj.label,
+                                        deleted: obj.deleted
+                                    })
+                                })
+                                if (response.ok) {
+                                    console.log('Update successful:', response);
+                                    
+                                    window.location.reload();
+
+                                } else {
+                                    console.log('Update failed.');
+                                  }
+                            }catch (error) {
+                                // Handle the case where the response is not OK (e.g., show an error message)
+                            } finally {
+
+                            }
+                        }
+                        fetchEditCustomColumn()
+
+
+                    } 
+                } else if(!obj.deleted){    // To avoid fields created and deleted in the moment
+                    console.log("Obj to create: ", obj)
+
+
+
+
+
+
+                }
+
+
+            })
             
 
 
@@ -500,7 +559,7 @@ export default function Fields(
                                         <div className={classes.customBoxCenter}> 
                                             <IconButton
                                             className={classes.ionTrash}
-                                            onClick={() => deleteField(cusField.id)}
+                                            onClick={() => deleteField(cusField._id, cusField.id)}
                                             // id="plusButton"
                                             // value={column.id}
                                             >
@@ -519,7 +578,7 @@ export default function Fields(
                                                 sizeIco={"34px"}
                                                 roundedIco={true}
                                                 cusField = {{id: cusField.id, value: cusField.label}}
-                                                clicked={() => saveCustomField(cusField.id, cusField.label)}
+                                                clicked={() => saveCustomField(cusField._id, cusField.id, cusField.label)}
                                                 />
                                             </div>
                                             <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>

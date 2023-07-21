@@ -39,6 +39,7 @@ export interface ColumnData {
 }
 
 export interface ColumnDataCustom {
+  _id?:  any;
   id: number;
   dataKey: string;
   label: string;
@@ -49,6 +50,7 @@ export interface ColumnDataCustom {
   okButtonShow: boolean;
   fieldRepeatedShow: boolean;
   pre_saved?: boolean;
+  edited?: boolean;
 }
 export interface CustomValueData {
   id_custom_fields_value: number,
