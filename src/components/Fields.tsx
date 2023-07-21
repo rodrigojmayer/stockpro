@@ -146,50 +146,50 @@ export default function Fields(
             // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
             
             const updateDefectFieldsRepeated = columns.filter((col: any) => {
-                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
-                // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
-                    return col
+                console.log("col: ", col)
+                    if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
+                    // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+                        return col
             }) 
             const updateCustomFieldsRepeated = customFieldsNew.filter((col) => {
-                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
-                // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
-                    return col
+                console.log("col2: ", col)
+                if(!col.deleted){
+                    if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
+                    // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+                        return col
+                }
             })
-            const updateCustomFieldsTempRepeated = customFieldsNew.filter((col) => {
-                if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
-                // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
-                    return col
-            })
-            if(updateDefectFieldsRepeated[0] || updateCustomFieldsRepeated[0] || updateCustomFieldsTempRepeated[0]){
+            // const updateCustomFieldsTempRepeated = customFieldsNew.filter((col) => {
+            //     if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
+            //     // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
+            //         return col
+            // })
+            // if(updateDefectFieldsRepeated[0] || updateCustomFieldsRepeated[0] || updateCustomFieldsTempRepeated[0]){
+            if(updateDefectFieldsRepeated[0] || updateCustomFieldsRepeated[0] ){
                 // console.log("updateDefectFieldsRepeated: ", updateDefectFieldsRepeated)
                 // console.log("updateCustomFieldsRepeated: ", updateCustomFieldsRepeated)
                 updateFieldsNew[index].fieldRepeatedShow = true
                 updateFieldsNew[index].okButtonShow = false
                 updateFieldsNew[index].pre_saved = false
                 console.log("updateFieldsNew repeated: ", updateFieldsNew)
-////////////                setAddButtonShow(false)
-            }else{
+            } else {
                 updateFieldsNew[index].fieldRepeatedShow = false
- //////////               setAddButtonShow(true)
                 if(customFields[index]){
                     if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == ''){
                         updateFieldsNew[index].okButtonShow = false
                         updateFieldsNew[index].pre_saved = false
-                        console.log("updateFieldsNew repeated: ", updateFieldsNew)
+                        // console.log("updateFieldsNew repeated: ", updateFieldsNew)
                         setAddButtonShow(true)
                     }
                     else{
                         updateFieldsNew[index].okButtonShow = true
                         updateFieldsNew[index].pre_saved = false
- ///////////////                       setAddButtonShow(false)
                     }
                 }else if(updateFieldsNew[index].label !='' ){
                     updateFieldsNew[index].okButtonShow = true
                     updateFieldsNew[index].pre_saved = false
- /////////                   setAddButtonShow(false)
                 }else if (updateFieldsNew[index].label ==='' ){
                     updateFieldsNew[index].okButtonShow = false
-//////////                    setAddButtonShow(true)
                 }
             }
             setCustomFieldsNew(updateFieldsNew)
@@ -246,7 +246,6 @@ export default function Fields(
         updateFieldsNew[index].okButtonShow = false
         updateFieldsNew[index].pre_saved = true
         setCustomFieldsNew(updateFieldsNew)
-/////////        setAddButtonShow(true)
     }
 
     const deleteField = (id:number) => {
@@ -286,26 +285,6 @@ export default function Fields(
         }
         // console.log("unsetFieldsDelete1: ", unsetFields[2].deleted)
         setCustomFieldsNew(updateFieldsNew)
-        // console.log("updateUnsetFieldsTemp?: ", updateUnsetFieldsTemp )
-        // console.log("some pre_saved?: ", updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}) )
-
-//////////        // if (!updateFieldsNew.some((obj) => obj.deleted==false)){
-        // // if (!updateFieldsNew.find((obj) => { if(obj.deleted==false)  return true})){
-        //     setAddButtonShow(true)
-        // }
-        // else if(updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
-        // //     console.log("enter to if")
-
-        //     setAddButtonShow(true)
-        // } 
-        // else if ((updateFieldsNew.find((obj) => { if(obj.deleted==false && (obj.pre_saved == true || obj.pre_saved==undefined))  return true}))){
-        //     if(!updateFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true}))
-        //     setAddButtonShow(true)
-        // }
- ///////////       
-        // console.log("customFieldsNew in deletedField2: ", updateFieldsNew)
-        // console.log("unsetFieldsDelete: ", unsetFields[2])
-        // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
     }
     const addInputCustomField = () => {
         // console.log("holis clickis", customFieldsNewTemp.length)
@@ -328,7 +307,6 @@ export default function Fields(
 
         // setCustomFields(updateFieldsNew)
         setCustomFieldsNew(updateFieldsNew)
-////////        // setAddButtonShow(false)
     }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -367,18 +345,17 @@ export default function Fields(
         })
 
         const ColumnsCustom: ColumnDataCustom[] = filteredColumnsCustom
-        .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
+        .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false, pre_saved: true}));
 
         setOrderedFields(columnsUserOrder)
         setUnsetFields(columnsHiddenFields)
         setCustomFields(ColumnsCustom)
         setCustomFieldsNew(ColumnsCustom)
-/////////        // setAddButtonShow(true)
     // }, [open, customFields, customFieldsNew])
     }, [open])
 
     useEffect(() => {
-        console.log("customFieldsNewEffect: ", customFieldsNew)
+        // console.log("customFieldsNewEffect: ", customFieldsNew)
         if(customFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
             setAddButtonShow(false)
         } else {
