@@ -333,7 +333,6 @@ export default function Fields(
                     // console.log("obj._id: ", obj._id)
                     if(obj.edited) {
                         console.log("Object to edit: ", obj)
-
                         const fetchEditCustomColumn = async () => {
                             try {
                                 const response = await fetch(`http://localhost:4000/api/customColumns/${obj._id}`, {
@@ -346,11 +345,10 @@ export default function Fields(
                                         deleted: obj.deleted
                                     })
                                 })
-                                if (response.ok) {
+                                if (response) {
                                     console.log('Update successful:', response);
                                     setCustomColumns(customFieldsNew)
                                     // window.location.reload();
-
                                 } else {
                                     console.log('Update failed.');
                                   }
@@ -361,14 +359,52 @@ export default function Fields(
                             }
                         }
                         fetchEditCustomColumn()
-
-
                     } 
                 } else if(!obj.deleted){    // To avoid fields created and deleted in the moment
                     console.log("Obj to create: ", obj)
 
+                    const fetchCreateCustomColumn = async () => {
+                        try {
+                            const response = await fetch(`http://localhost:4000/api/customColumns/`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                                    // Add any other required headers here
+                                },
+                                body: JSON.stringify({
+                                    "id": obj.id, 
+                                    "width": 100, 
+                                    "label": obj.label, 
+                                    "dataKey": obj.label.toLowerCase(),  
+                                    "id_client": obj.id_client, 
+                                    "deleted": false
+                                })
+                            })
 
-
+                            // Check if the response status is successful (2xx range)
+                            if (response.ok) {
+                                const responseData = await response.json() // parse the response data
+                                console.log('POST request successful: ', responseData)
+                                setCustomColumns(customFieldsNew)
+                                // Handle the response data here
+                            } else {
+                                // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+                                console.error('Request failed: ', response.status, response.statusText)
+                                // Handle the error here
+                            }
+                        } catch (error: unknown) {
+                            if (typeof error === 'string') {
+                                // 'error' is now narrowed down to type 'string'
+                                console.error('Error:', error);
+                            } else if (error instanceof Error) {
+                                // 'error' is now narrowed down to type 'Error'
+                                console.error('Error object:', error.message);
+                            } else {
+                                // Handle other cases as needed
+                            }
+                        }
+                    }
+                    fetchCreateCustomColumn()
 
 
 

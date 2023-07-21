@@ -172,7 +172,7 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: B
     noPadding=0
     borRad="50px !important"
   } 
-  console.log("submitOk: ", submitOk)
+  // console.log("submitOk: ", submitOk)
   const handleClick:any = (() => {
     // console.log("clicking")
     // console.log("cusField: ", cusField)
@@ -200,7 +200,7 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: B
         }}
         className={classes.btnOk}
         onClick={handleClick}
-        type={ submitOk ? "submit" : "button" }
+        // type={ submitOk ? "submit" : "button" }
         >
         <CheckRoundedIcon 
         sx={{ 
