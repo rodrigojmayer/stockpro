@@ -155,9 +155,10 @@ interface ButtonProps {
   cusField?: {id: number, value: string}
   clicked: (id?: number, value?: string) => void
   direction?: string
+  submitOk?: boolean
 }
 
-export function OkButton({ sizeIco, roundedIco, cusField, clicked }: ButtonProps ) {
+export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: ButtonProps ) {
 
   const { classes } = useStyles()
   const colorOk = theme.palette.success.main
@@ -171,8 +172,8 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked }: ButtonProps
     noPadding=0
     borRad="50px !important"
   } 
-
-  const handleClick = (() => {
+  console.log("submitOk: ", submitOk)
+  const handleClick:any = (() => {
     // console.log("clicking")
     // console.log("cusField: ", cusField)
     // console.log("cusField.id: ", cusField.id)
@@ -199,7 +200,8 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked }: ButtonProps
         }}
         className={classes.btnOk}
         onClick={handleClick}
-      >
+        type={ submitOk ? "submit" : "button" }
+        >
         <CheckRoundedIcon 
         sx={{ 
           fontSize: fontIco,

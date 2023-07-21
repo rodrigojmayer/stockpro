@@ -39,7 +39,7 @@ export default function Fields(
     // const columns= allColumns.filter(column => !(column.deleted));
   
     const { user } = useContext<any>(UserContext);
-    const { columns, defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+    const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
     
     // const columns: ColumnData[] = defaultColumns.concat(customColumns);
     // const columnsprev: ColumnData[] = columnsDefault.concat(columnsCustom);
@@ -348,8 +348,8 @@ export default function Fields(
                                 })
                                 if (response.ok) {
                                     console.log('Update successful:', response);
-                                    
-                                    window.location.reload();
+                                    setCustomColumns(customFieldsNew)
+                                    // window.location.reload();
 
                                 } else {
                                     console.log('Update failed.');
@@ -605,6 +605,7 @@ export default function Fields(
                         />
                         <OkButton
                         clicked={() => handleOpenSaveChanges()}
+                        submitOk={true}
                         />
                     </Box>
                 </Box>
