@@ -38,7 +38,7 @@ export default function Fields(
     // const columns: ColumnData[] = columnsDefault.concat(columnsCustom).filter(column => !(column.deleted));
     // const columns= allColumns.filter(column => !(column.deleted));
   
-    const { user } = useContext<any>(UserContext);
+    const { user, setUser } = useContext<any>(UserContext);
     const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
     
     // const columns: ColumnData[] = defaultColumns.concat(customColumns);
@@ -325,8 +325,11 @@ export default function Fields(
             // setUnsetFields(unsetFields)
             // setCustomFields(customFields)
             // setCustomFieldsNew(customFieldsNewTemp)
-            // console.log("save customFields: ", customFields)  
+            // console.log("save customFields: ", customFields)  orderedFields
             // console.log("save customFieldsNew: ", customFieldsNew)  
+            
+////////////// Should I check if there have been any changes in the custom columns before or is it already checking that?
+
             customFieldsNew.forEach((obj) => {
                 // console.log("Custom field new: ", obj)  
                 if(obj._id) {
@@ -335,7 +338,7 @@ export default function Fields(
                         console.log("Object to edit: ", obj)
                         const fetchEditCustomColumn = async () => {
                             try {
-                                const response = await fetch(`http://localhost:4000/api/customColumns/${obj._id}`, {
+                                const response = await fetch(`http://localhost:4000/api/customColumns/${obj._id}/`, {
                                     method: 'PATCH',
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -405,14 +408,44 @@ export default function Fields(
                         }
                     }
                     fetchCreateCustomColumn()
-
-
-
                 }
-
-
             })
             
+            
+            // console.log("save user: ", user)
+            console.log("save user ordered_fields: ", user.ordered_fields)
+            console.log("save array orderedFields: ", orderedFields.map((col) => col.id))
+            const array_ordered_fields = orderedFields.map((col)=>col.id)
+            if(JSON.stringify(user.ordered_fields) !== JSON.stringify(array_ordered_fields)){
+                console.log("Different arrays")
+                const fetchEditUsersFieldsOrder = async () => {
+                    try {
+                        const response = await fetch(`http://localhost:4000/api/users/${user._id}/`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                ordered_fields: array_ordered_fields
+                            })
+                        })
+                        if (response) {
+                            console.log('Update successful')
+                            setUser(user)       //////////////////////////////////////////// Check if I should update the user first
+                        } else {
+                            console.log('Update failed.')
+                        }
+                    } catch (error) {
+                        // Handle the case where the response is not OK (e.g., show an error message)
+                    } finally {
+
+                    }
+                }
+                fetchEditUsersFieldsOrder()
+
+            }
+            // else
+            //     console.log("Equal arrays")
 
 
             

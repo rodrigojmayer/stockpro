@@ -15,9 +15,11 @@ const INITIAL_USER = {
 
 type UserContextType = {
   user: UserData;
+//   setUser: UserData;
 };
 
-export const UserContext = createContext<UserContextType | undefined>(undefined);
+// export const UserContext = createContext<UserContextType | undefined>(undefined);
+export const UserContext = createContext<object | undefined>(undefined);
 
 type UserProviderProps = {
   children: React.ReactNode;
@@ -54,7 +56,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     fetchUser();
   }, []);
 
-  return <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };
 
 // const [getUser, setGetUser] = useState<UserData>( INITIAL_USER)
