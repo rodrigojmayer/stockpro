@@ -18,5 +18,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
     fieldsFetchEditUsersFieldsOrder: false,
   }); // New state for loading status
   
-  return <IsLoadingContext.Provider value={{ isLoading, setIsLoading }}>{children}</IsLoadingContext.Provider>;
+  const [openBackdrop, setOpenBackdrop] = useState(false)
+  
+  return <IsLoadingContext.Provider value={{ isLoading, setIsLoading, openBackdrop, setOpenBackdrop }}>{children}</IsLoadingContext.Provider>;
 };

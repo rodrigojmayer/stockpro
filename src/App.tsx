@@ -1,6 +1,9 @@
 import { useEffect, useState, useContext, useMemo } from 'react'
 import { Container, Typography, Grid } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
+
 import { OkButton, CancelButton, PlusButton } from './components/Buttons';
 import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
@@ -113,7 +116,7 @@ function App() {
   
   // const { user, setUser } = useContext<any>(UserContext);
   const { user } = useContext<any>(UserContext);
-  const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
+  const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   const { products } = useContext<any>(ProductsContext);
   // const [user, setUser] = useState()
@@ -127,7 +130,11 @@ function App() {
   
 
   const [filteredData, setFilteredData] = useState([])
+  // const [openBackdrop, setOpenBackdrop] = useState(false)
   
+  // const openBackdrop = () => {
+
+  // }
   // const columns: ColumnData[] = columnsDefault.concat(filteredColumnsCustom);
 
 
@@ -349,11 +356,28 @@ useEffect(() => {
 }, [searchQuery, columns, products]) 
 
 
+useEffect(() => {
+  if ( isLoading.columns || isLoading.products || isLoading.customColumns ) {
+    setOpenBackdrop(true)
+  } else {
+    setOpenBackdrop(false)
+  }
+
+}, [isLoading])
+
   // Wait for the defaultColumns to be fetched before rendering the TableProducts component
   // if (isLoading.defaultColumns || isLoading.customColumns || isLoading.columns || isLoading.products) {
-  if ( isLoading.columns || isLoading.products || isLoading.customColumns ) {
-    return <div>Loading...</div>;
-  }
+  // if ( isLoading.columns || isLoading.products || isLoading.customColumns ) {
+    // return <div>Loading...</div>;
+    // return (
+    //   <Backdrop
+    //     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    //     open={openBackdrop}
+    //     // onClick={handleClose}
+    //   >
+    //   </Backdrop>
+    // )
+  // }
 
   // console.log("defaultColumns: ", defaultColumns)
   // console.log("customColumns: ", customColumns)
@@ -363,6 +387,13 @@ useEffect(() => {
   return (
     // {/* //   {useMemo(() => ( */}
         <div className="App">
+          
+          <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={openBackdrop}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
           <ThemeProvider theme={theme}>
             <Layout 
               // columns={columns} 
@@ -386,7 +417,11 @@ useEffect(() => {
                   </Grid>
                 </Grid>
               </Container>
-              <TableProducts data={filteredData} columns={columnsUserOrder} />
+              {openBackdrop ? "": 
+                <TableProducts data={filteredData} columns={columnsUserOrder} />
+              }
+              
+
             </Layout>
             <CreateStock
                 open={showCreateStock} 

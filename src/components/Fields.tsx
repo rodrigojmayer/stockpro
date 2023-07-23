@@ -38,7 +38,7 @@ export default function Fields(
     } 
     // const columns: ColumnData[] = columnsDefault.concat(columnsCustom).filter(column => !(column.deleted));
     // const columns= allColumns.filter(column => !(column.deleted));
-    const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext)
+    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
     const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
      
@@ -322,6 +322,10 @@ export default function Fields(
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
+            setOpenBackdrop(true)
+            setIsLoading((prevLoading: any) => ({
+                ...prevLoading,
+            }));
             // setOrderedFields(orderedFields)
             // setUnsetFields(unsetFields)
             // setCustomFields(customFields)
