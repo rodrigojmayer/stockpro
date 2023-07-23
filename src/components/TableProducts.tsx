@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
 import { Data, DataTable, ColumnData } from '../types';
+import { UserContext } from '../context/UserContext'
+import { ColumnsContext } from '../context/ColumnsContext'
 
 
 
@@ -111,9 +113,15 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
   );
 }
 
-export default function TableProducts({ data, columns }:  DataTable ) {
+export default function TableProducts({ data }:  DataTable ) {
+  // export default function TableProducts({ data, columns }:  DataTable ) {
 // export default function TableProducts({ data }: { data: Data[] }) {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
+
+  const { user } = useContext<any>(UserContext);
+  const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+
+  const columns = columnsUserOrder
   
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   // const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
@@ -202,7 +210,7 @@ export default function TableProducts({ data, columns }:  DataTable ) {
         fixedHeaderContent={() => {
             return (
               <TableRow>
-                {columns.map((column) => (
+                {columns.map((column:any) => (
                   <TableCell
                     key={column.id}
                     variant="head"

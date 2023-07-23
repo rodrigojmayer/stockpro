@@ -118,5 +118,5 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
 }, [customColumns ])
 
 
-  return <  ColumnsContext.Provider value={{ defaultColumns, customColumns, setCustomColumns, columns, columnsUserOrder, filteredColumnsCustom }}>{children}</ColumnsContext.Provider>;
+  return <  ColumnsContext.Provider value={{ defaultColumns, customColumns, setCustomColumns, columns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom }}>{children}</ColumnsContext.Provider>;
 };
