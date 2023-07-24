@@ -296,10 +296,16 @@ export default function Fields(
         setCustomFieldsNew(updateFieldsNew)
     }
     const addInputCustomField = () => {
-        // console.log("holis clickis", customFieldsNewTemp.length)
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-        const lastObj = customFieldsNew[customFieldsNew.length - 1]
+        
+        // console.log("customFieldsNew: " , customFieldsNew)
+        console.log("customColumns: " , customColumns)
+        // const lastObj = customFieldsNew[customFieldsNew.length - 1 ]
+        const lastObj = customColumns[customColumns.length - 1]
+        console.log("lastObj: " , lastObj)
+
         const nextId = lastObj.id + 1
+        console.log("nextId: " , nextId)
         const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
 
         
