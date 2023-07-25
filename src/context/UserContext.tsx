@@ -32,8 +32,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`); //User 1 client 2
-        const response = await fetch(`http://localhost:4000/api/users/64b6c0553204de99e630a0ac`); // User 2 client 3
+        const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`); //User 1 client 2
+        // const response = await fetch(`http://localhost:4000/api/users/64b6c0553204de99e630a0ac`); // User 2 client 3
         
         if (response.ok) {
           const json = await response.json();

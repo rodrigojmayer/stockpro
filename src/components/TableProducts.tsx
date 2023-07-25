@@ -101,7 +101,10 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
           }}
         >
 
-          <Typography noWrap>
+          <Typography noWrap 
+          sx={{
+            padding: "0 4px ",
+          }}>
             { newRow[column.dataKey] }
             {/* {column.dataKey} */}
 
@@ -227,7 +230,11 @@ export default function TableProducts({ data }:  DataTable ) {
                   >
                   {/* {filters[0].dataKey} */}
                     
-                      <Typography noWrap>
+                      <Typography noWrap
+                        sx={{
+                          padding: "0 4px ",
+                        }}
+                      >
                         {column.label}
                       </Typography>
                       <TextField
@@ -243,12 +250,12 @@ export default function TableProducts({ data }:  DataTable ) {
                           backgroundColor: "white",
                           borderRadius: 1,
                           margin: "8px",
-                      }}
-                      InputProps={{
-                        style: {
-                          height:"36px",
-                        },
-                      }}
+                        }}
+                        InputProps={{
+                          style: {
+                            height:"36px",
+                          },
+                        }}
                       />
                   </TableCell>
                 ))}
