@@ -357,7 +357,7 @@ useEffect(() => {
 
 
 useEffect(() => {
-  if ( isLoading.columns || isLoading.products || isLoading.customColumns ) {
+  if ( isLoading.columns || isLoading.products || isLoading.customColumns || isLoading.fieldsFetchEditCustomColumn || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder) {
     setOpenBackdrop(true)
   } else {
     setOpenBackdrop(false)
@@ -378,6 +378,7 @@ useEffect(() => {
     //   </Backdrop>
     // )
   // }
+
 
   // console.log("defaultColumns: ", defaultColumns)
   // console.log("customColumns: ", customColumns)

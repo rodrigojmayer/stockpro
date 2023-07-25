@@ -41,6 +41,7 @@ export default function Fields(
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
     const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+    
      
     // const columns: ColumnData[] = defaultColumns.concat(customColumns);
     // const columnsprev: ColumnData[] = columnsDefault.concat(columnsCustom);
@@ -90,6 +91,7 @@ export default function Fields(
     const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>([])
     // const [customFieldsNewTemp, setCustomFieldsNewTemp] = useState<ColumnDataCustom[]>(columnsCustomNew)
     const [addButtonShow, setAddButtonShow] = useState<boolean>(true)
+    const [isFetching, setIsFetching] = useState(false)
     
     // console.log("orderedFields: ", orderedFields)
     // console.log("columnsTableOrder: ", columnsTableOrder)
@@ -299,13 +301,13 @@ export default function Fields(
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
         
         // console.log("customFieldsNew: " , customFieldsNew)
-        console.log("customColumns: " , customColumns)
+        // console.log("customColumns: " , customColumns)
         // const lastObj = customFieldsNew[customFieldsNew.length - 1 ]
         const lastObj = customColumns[customColumns.length - 1]
-        console.log("lastObj: " , lastObj)
+        // console.log("lastObj: " , lastObj)
 
         const nextId = lastObj.id + 1
-        console.log("nextId: " , nextId)
+        // console.log("nextId: " , nextId)
         const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
 
         
@@ -327,11 +329,9 @@ export default function Fields(
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+
         if(ans){
-            setOpenBackdrop(true)
-            setIsLoading((prevLoading: any) => ({
-                ...prevLoading,
-            }));
+            // // setOpenBackdrop(true)
             // setOrderedFields(orderedFields)
             // setUnsetFields(unsetFields)
             // setCustomFields(customFields)
@@ -444,6 +444,7 @@ export default function Fields(
                 console.log("Different arrays")
                 const fetchEditUsersFieldsOrder = async () => {
                     let loadingSuccess: boolean = false
+                    // setIsFetching(true)
                     try {
                         const response = await fetch(`http://localhost:4000/api/users/${user._id}/`, {
                             method: 'PATCH',
@@ -482,9 +483,12 @@ export default function Fields(
             // else
             //     console.log("Equal arrays")
 
-
+            setIsLoading((prevLoading: any) => ({
+                ...prevLoading,
+            }));
             
             close()
+            // setOpenBackdrop(true)
         }
         setOpenSaveChanges(false);
     }
@@ -495,11 +499,28 @@ export default function Fields(
 
             if(isLoading.fieldsFetchEditCustomColumn || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder){
                 // alert("Reload page")
+                        // setIsFetching(false)
                 window.location.reload();
             }
-    }, [isLoading])
+    }, [isLoading]) // To know if after save should reload the page
 
-    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
+    // useEffect(() => {
+    //     // When 'isFetching' becomes 'true', show the backdrop
+    //     if (isFetching) {
+    //         setOpenBackdrop(true)
+    //     } else {
+    //         // When 'isFetching' becomes 'false', hise the backdrop
+    //         setOpenBackdrop(false)
+    //     }
+    // }, [isFetching]) // To wait with backdrop while the fetchs are loading
+
+    const handleOpenSaveChanges = () => {
+        // setOpenBackdrop(true)
+        // setIsLoading((prevLoading: any) => ({
+        //     ...prevLoading,
+        // }));
+        setOpenSaveChanges(true);
+    }
 
     useEffect(() => {
 
@@ -720,7 +741,7 @@ export default function Fields(
                         />
                         <OkButton
                         clicked={() => handleOpenSaveChanges()}
-                        submitOk={true}
+                        // submitOk={true}
                         />
                     </Box>
                 </Box>
