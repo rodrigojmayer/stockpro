@@ -40,6 +40,7 @@ import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styl
 import { Data, DataCreateStockOptions, ColumnData } from '../types';
 
 import { CategoriesContext } from '../context/CategoriesContext';
+import { MeasuresContext } from '../context/MeasuresContext';
 
 interface mainData {
     id: number;
@@ -51,12 +52,12 @@ interface mainData {
     }
 
 
-const measureArray: mainData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Unit'},
-    { id: 2, name: 'Kg'},
-    { id: 3, name: 'Lts'},
-]; 
+// const measureArray: mainData[] = [
+//     { id: 0, name: '-'},
+//     { id: 1, name: 'Unit'},
+//     { id: 2, name: 'Kg'},
+//     { id: 3, name: 'Lts'},
+// ]; 
 // const categoryArray: mainData[] = [
 //     { id: 0, name: '-'},
 //     { id: 1, name: 'Kitchens'},
@@ -105,6 +106,9 @@ export default function CreateStock(
 
     const { categories } = useContext<any>(CategoriesContext)
     const categoryArray = categories
+    const { measures } = useContext<any>(MeasuresContext)
+    const measureArray = measures
+
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockName, setStockName] = useState('');

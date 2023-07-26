@@ -13,6 +13,8 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
     columns: true,
     products: true,
     user: true,
+    measures: true,
+    categories: true,
     fieldsFetchEditCustomColumn: false,
     fieldsFetchCreateCustomColumn: false,
     fieldsFetchEditUsersFieldsOrder: false,

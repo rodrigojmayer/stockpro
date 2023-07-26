@@ -7,6 +7,7 @@ import './index.css'
 // import { UserData } from './types'
 import { UserProvider } from './context/UserContext';
 import { CategoriesProvider } from './context/CategoriesContext';
+import { MeasuresProvider } from './context/MeasuresContext';
 import { IsLoadingProvider } from './context/IsLoadingContext';
 import { ColumnsProvider } from './context/ColumnsContext';
 import { ProductsProvider } from './context/ProductsContext';
@@ -28,13 +29,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
     <IsLoadingProvider >
       <UserProvider >
-        <CategoriesProvider >
-          <ColumnsProvider >
-            <ProductsProvider >
-              <App />
-            </ProductsProvider>
-          </ColumnsProvider>
-        </CategoriesProvider>
+        <MeasuresProvider >
+          <CategoriesProvider >
+            <ColumnsProvider >
+              <ProductsProvider >
+                <App />
+              </ProductsProvider>
+            </ColumnsProvider>
+          </CategoriesProvider>
+        </MeasuresProvider>
       </UserProvider>
     </IsLoadingProvider>
   // </React.StrictMode>, 

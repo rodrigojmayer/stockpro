@@ -9,6 +9,12 @@ export interface UserData {
   ordered_fields: array;
 }
 
+export interface MeasuresData {
+  id: number;
+  name: string;
+  deleted: boolean;
+};
+
 export interface CategoriesData {
   id: number;
   name: string;

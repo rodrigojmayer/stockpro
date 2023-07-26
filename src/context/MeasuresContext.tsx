@@ -1,57 +1,54 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import { CategoriesData } from '../types';
+import { MeasuresData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 
-const INITIAL_CATEGORY = {
+const INITIAL_MEASURE = {
   id: NaN,
   name: '',
-  sub_categories: [],
   deleted: false,
 };
 
-// type CategoriesContextType = {
-//   categories: CategoriesData;
-// //   setUser: UserData;
+// type MeasuresContextType = {
+//   user: MeasuresData;
 // };
 
-// export const CategoriesContext = createContext<UserContextType | undefined>(undefined);
-export const CategoriesContext = createContext<object | undefined>(undefined);
+export const MeasuresContext = createContext<object | undefined>(undefined);
 
-type CategoriesProviderProps = {
+type MeasuresProviderProps = {
   children: React.ReactNode;
 };
 
-export const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children }) => {
-  const [categories, setCategories] = useState<CategoriesData>(INITIAL_CATEGORY);
+export const MeasuresProvider: React.FC<MeasuresProviderProps> = ({ children }) => {
+  const [measures, setMeasures] = useState<MeasuresData>(INITIAL_MEASURE);
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchMeasures = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/categories/`);
+        const response = await fetch(`http://localhost:4000/api/measures/`);
         
         if (response.ok) {
           const json = await response.json();
-          setCategories(json);
+          setMeasures(json);
         } else {
-          setCategories(INITIAL_CATEGORY);
+          setMeasures(INITIAL_MEASURE);
           // Handle the case where the response is not OK (e.g., show an error message)
         }
       } catch (error) {
-        setCategories(INITIAL_CATEGORY);
+        setMeasures(INITIAL_MEASURE);
         // Handle any network or fetch-related errors
       } finally {
             setIsLoading((prevLoading:any) => ({
             ...prevLoading,
-            categories: false,
+            measures: false,
             }));
         }
     };
 
-    fetchCategories();
+    fetchMeasures();
   }, []);
 
-  return <CategoriesContext.Provider value={{ categories, setCategories }}>{children}</CategoriesContext.Provider>;
+  return <MeasuresContext.Provider value={{ measures, setMeasures }}>{children}</MeasuresContext.Provider>;
 };
 
 // const [getUser, setGetUser] = useState<UserData>( INITIAL_USER)
