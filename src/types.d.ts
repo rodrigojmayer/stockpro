@@ -9,6 +9,13 @@ export interface UserData {
   ordered_fields: array;
 }
 
+export interface CategoriesData {
+  id: number;
+  name: string;
+  sub_categories: array;
+  deleted: boolean;
+};
+
 export interface Data {
   id: number;
   id_client: number;

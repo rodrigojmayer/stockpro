@@ -16,23 +16,23 @@ import { ColumnsContext } from './context/ColumnsContext';
 import { ProductsContext } from './context/ProductsContext';
 // import {  } from './data';
 
-const INITIAL_DATA = [
-  {id: 1, name: "Product A"},
-  {id: 2, name: "Product B"},
-  {id: 3, name: "Product C"},
-]
+// const INITIAL_DATA = [
+//   {id: 1, name: "Product A"},
+//   {id: 2, name: "Product B"},
+//   {id: 3, name: "Product C"},
+// ]
 
 
-const INITIAL_USER = {
-  id: NaN,
-  id_client: NaN,
-  name: "",
-  user: "",
-  pass: "",
-  deleted: false,
-  enabled: true,
-  ordered_fields: [],
-}
+// const INITIAL_USER = {
+//   id: NaN,
+//   id_client: NaN,
+//   name: "",
+//   user: "",
+//   pass: "",
+//   deleted: false,
+//   enabled: true,
+//   ordered_fields: [],
+// }
 
 
 const theme = createTheme({

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box,
          Container,
          Grid,
@@ -39,6 +39,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
 import { Data, DataCreateStockOptions, ColumnData } from '../types';
 
+import { CategoriesContext } from '../context/CategoriesContext';
 
 interface mainData {
     id: number;
@@ -56,12 +57,12 @@ const measureArray: mainData[] = [
     { id: 2, name: 'Kg'},
     { id: 3, name: 'Lts'},
 ]; 
-const categoryArray: mainData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Kitchens'},
-    { id: 2, name: 'Food'},
-    { id: 3, name: 'Furniture'},
-];
+// const categoryArray: mainData[] = [
+//     { id: 0, name: '-'},
+//     { id: 1, name: 'Kitchens'},
+//     { id: 2, name: 'Food'},
+//     { id: 3, name: 'Furniture'},
+// ];
 const subCategoryArray: mainData[] = [
     { id: 0, name: '-'},
     { id: 1, name: 'Cutlery'},
@@ -100,7 +101,10 @@ export default function CreateStock(
     const { classes } = useStylesGlobal();
     const close = () => {
         handleClose(false)
-    }
+    } 
+
+    const { categories } = useContext<any>(CategoriesContext)
+    const categoryArray = categories
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockName, setStockName] = useState('');
