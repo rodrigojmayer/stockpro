@@ -74,7 +74,7 @@ export default function CreateStockCustomFields(
     const columns: ColumnData[] = columnsCustom;
     const columnsCustomNew: ColumnDataCustom[] = columnsCustom
     .map((obj) => {
-        console.log("obj: ", obj)
+        // console.log("obj: ", obj)
         return {...obj, okButtonShow: false, fieldRepeatedShow: false}
     });
 
@@ -301,8 +301,8 @@ export default function CreateStockCustomFields(
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
-    console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
-    console.log("stockCustomValuesTemp[0]: ", stockCustomValuesTemp[0])
+    // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
+    // console.log("stockCustomValuesTemp[0]: ", stockCustomValuesTemp[0])
     // console.log("stockCustomValuesTemp[0].label: ", stockCustomValuesTemp[0].label)
     // useEffect(() => {
         

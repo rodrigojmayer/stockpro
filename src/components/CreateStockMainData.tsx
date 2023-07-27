@@ -39,11 +39,11 @@ import { DataCreateStockOptions } from '../types';
 interface mainData {
     id: number;
     name: string;
-  }
-  interface emailsAlertData {
-      id: number;
-      email: string;
-    }
+}
+interface emailsAlertData {
+    id: number;
+    email: string;
+}
 
 
 // const categoryArray: measureData[] = [
@@ -66,6 +66,17 @@ const emailsAlert: emailsAlertData[] = [
     { id: 3, email: 'email3@test.com'},
 ];
 
+interface Category {
+    _id: string;
+    id: number;
+    name: string;
+    deleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+    sub_categories: string[];
+}
+
 
 interface ChildProps {
     hiddenPanel:  boolean
@@ -77,10 +88,13 @@ interface ChildProps {
     onStockQuantityChange: (newData: string )=> void
     measureArray: mainData[]
     stockMeasureTemp: string
-    onStockMeasureChange: (newData: string )=> void
+    // onStockMeasureChange: (newData: string )=> void
+    onStockMeasureChange: (newData: any )=> void
     categoryArray: mainData[]
-    stockCategoryTemp: string
-    onStockCategoryChange: (newData: string )=> void
+    // stockCategoryTemp: string
+    stockCategoryTemp: (Category | null)
+    // onStockCategoryChange: (newData: string )=> void
+    onStockCategoryChange: (newData: any )=> void
     subCategoryArray: mainData[]
     stockSubCategoryTemp: string
     onStockSubCategoryChange: (newData: string )=> void
@@ -112,6 +126,7 @@ export default function CreateStockMainData(
     const close = () => {
         // handleClose(false)
     }
+    console.log("measureArray: ", measureArray)
     // console.log("hiddenPanel: ", hiddenPanel)
     // console.log("openOptionsCreate: ", openOptionsCreate)
     // const [measure, setMeasure] = useState('');
@@ -216,7 +231,7 @@ export default function CreateStockMainData(
     // }
 
     useEffect(() => {
-        console.log("stockMeasureTemp: ", stockMeasureTemp)
+        // console.log("stockMeasureTemp: ", stockMeasureTemp)
         // setSelectedUsersTemp(selectedUsers)
         // setMeasureTemp(measure)
         // setCategoryTemp(category)
@@ -224,6 +239,14 @@ export default function CreateStockMainData(
 
     }, [ open, stockMeasureTemp])
     
+
+    useEffect(() => {
+        console.log("measureArray: ", measureArray)
+        console.log("categoryArray: ", categoryArray)
+        console.log("subCategoryArray : ", subCategoryArray )
+        console.log("stockCategoryTemp: ", stockCategoryTemp)
+    
+}, [])
     return (
        
         <div
@@ -269,6 +292,7 @@ export default function CreateStockMainData(
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockMeasureTemp}
+                        // onChange={ (event) => onStockMeasureChange(event) }
                         onChange={ (event) => onStockMeasureChange(event.target.value) }
                         >
                             {measureArray.map((measure) => (
@@ -291,14 +315,16 @@ export default function CreateStockMainData(
                         select
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
-                        value={stockCategoryTemp}
+                        // value={stockCategoryTemp}
+                        value={stockCategoryTemp?.id || ''}
                         onChange={ (event) => onStockCategoryChange(event.target.value) }
                     >
                         {categoryArray.map((category) => (
                             <MenuItem 
                                 className={classes.menuItemUsers}
                                 key={category.id} 
-                                value={category.name}
+                                value={category.id}
+                                // value={category.name}
                                 sx={{ justifyContent: "space-between" }}
                             >
                                 {category.name}
@@ -312,22 +338,30 @@ export default function CreateStockMainData(
                         label="Sub-Category" 
                         size="small"
                         select
+                        disabled={stockCategoryTemp ? false : true}
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockSubCategoryTemp}
                         onChange={ (event) => onStockSubCategoryChange(event.target.value) }
                     >
-                    {subCategoryArray.map((subCategory) => (
-                        <MenuItem 
-                            className={classes.menuItemUsers}
-                            key={subCategory.id} 
-                            value={subCategory.name}
-                            sx={{ justifyContent: "space-between" }}
-                        >
-                            {subCategory.name}
-                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
-                        </MenuItem>
-                    ))}
+                        {stockCategoryTemp ? stockCategoryTemp.sub_categories.map((subCategory, index) => (
+                            
+                            <MenuItem 
+                                className={classes.menuItemUsers}
+                                key={index} 
+                                // key={subCategory.id} 
+                                // value={subCategory.name}
+                                value={subCategory}
+                                sx={{ justifyContent: "space-between" }}
+                            >
+                                {subCategory}
+                                {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                            </MenuItem>
+                        )) :
+                            <MenuItem 
+                            >
+                            </MenuItem>
+                        }
                     </TextField>
                 </Box> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>

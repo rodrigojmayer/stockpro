@@ -72,6 +72,17 @@ const subCategoryArray: mainData[] = [
 ];
 
 
+interface Category {
+    _id: string;
+    id: number;
+    name: string;
+    deleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+    sub_categories: string[];
+}
+
 const emailsAlert: emailsAlertData[] = [
     { id: 1, email: 'email1@test.com' },
     { id: 2, email: 'email2@test.com'  },
@@ -118,7 +129,8 @@ export default function CreateStock(
     const [stockMeasure, setStockMeasure] = useState('');
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
     const [stockCategory, setStockCategory] = useState('');
-    const [stockCategoryTemp, setStockCategoryTemp] = useState('');
+    // const [stockCategoryTemp, setStockCategoryTemp] = useState('');
+    const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
     const [stockSubCategory, setStockSubCategory] = useState('');
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
     const [stockPrice, setStockPrice] = useState('');
@@ -132,6 +144,10 @@ export default function CreateStock(
     const [stockAlertDate, setStockAlertDate] = useState('');
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>('');
     const [stockCustomValues, setStockCustomValues] = useState('');
+    
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+    const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
+
     // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
     //     label: value.label,
     //     value: "",
@@ -152,7 +168,6 @@ export default function CreateStock(
         setOpenSaveChanges(false);
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
-
     
     const handleOpenOptionsCreate = (newData:  string) => {
         const updatedOptions = { ...openOptionsCreate };
@@ -172,12 +187,21 @@ export default function CreateStock(
         setStockQuantityTemp(value)
     }
     const handleStockMeasureChange = (value: string) => {
+    // const handleStockMeasureChange = (event: any) => {
         console.log("Measure value: ", value)
+        // console.log("Measure event: ", event)
         setStockMeasureTemp(value)
     }
-    const handleStockCategoryChange = (value: string) => {
-        console.log("Category value: ", value)
-        setStockCategoryTemp(value)
+    // const handleStockCategoryChange = (value: string) => {
+    const handleStockCategoryChange = (id: number) => {
+        // console.log("Category value: ", value)
+        // const selectedCategoryId = event.target.value as number;
+        const selectedCategory = categories.find((category: any) => category.id === id) || null;
+    
+        console.log("Category value: ", id)
+        console.log("selectedCategory: ", selectedCategory)
+        // setStockCategoryTemp(value)
+        setStockCategoryTemp(selectedCategory)
     }
     const handleStockSubCategoryChange = (value: string) => {
         console.log("SubCategory value: ", value)
