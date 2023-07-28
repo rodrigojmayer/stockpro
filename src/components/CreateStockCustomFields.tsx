@@ -55,7 +55,7 @@ interface ChildProps {
     openOptionsCreate: (newData: string )=> void
     columnsCustom: ColumnData[] 
     // stockCustomValuesTemp: DataCustomValues[] 
-    stockCustomValuesTemp: string
+    stockCustomValuesTemp: object
     onStockCustomValuesTemp: (newData: string, name:string )=> void
     
 }
@@ -332,7 +332,8 @@ export default function CreateStockCustomFields(
                                     // maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
-                                    value={stockCustomValuesTemp[cusField.dataKey]}
+                                    // value={stockCustomValuesTemp[cusField.dataKey]}
+                                    value={stockCustomValuesTemp[cusField.dataKey as keyof typeof stockCustomValuesTemp] || ''}
                                     onChange={ (event) => onStockCustomValuesTemp(event.target.value, cusField.dataKey) }
                                     // className={classes.newCustomField}
                                     // className={classes.inputMainData} 

@@ -152,13 +152,7 @@ export default function CreateStock(
     //     label: value.label,
     //     value: "",
     // })));
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<any>(
-        {
-            'color': 'teste color',
-            'internal_code': 'tessstear'
-        
-        }
-    );
+    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
 
     
 
@@ -174,6 +168,7 @@ export default function CreateStock(
             console.log("stockImageUrlTemp: ", stockImageUrlTemp)
             console.log("stockAlertQuantityTemp: ", stockAlertQuantityTemp)
             console.log("stockAlertDateTemp: ", stockAlertDateTemp)
+            console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
             // setSelectedUsers(selectedUsersTemp)
             // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
@@ -249,11 +244,11 @@ export default function CreateStock(
         }
     }
     const handleStockCustomValuesTemp = (value: string, dataKey: string) => {
-        console.log("Custom value: ", value)
-        console.log("Custom dataKey: ", dataKey)
+        // console.log("Custom value: ", value)
+        // console.log("Custom dataKey: ", dataKey)
         // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState('');
     
-        const updateCustomValuesTemp = [{[dataKey]:value}]
+        // const updateCustomValuesTemp = [...stockCustomValuesTemp, {[dataKey]:value}]
         // updateFieldsNew[index].label = event.currentTarget.value
         // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
         // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
@@ -262,9 +257,13 @@ export default function CreateStock(
         // else
         //     updateFieldsNew[index].okButtonShow = false
         
-        console.log("updateCustomValuesTemp: ", updateCustomValuesTemp)
+        setStockCustomValuesTemp((prevCustomValues: object) => ({
+            ...prevCustomValues,
+            [dataKey]:value,
+        }));
+        // console.log("updateCustomValuesTemp: ", updateCustomValuesTemp)
 
-        setStockCustomValuesTemp(updateCustomValuesTemp)
+        // setStockCustomValuesTemp(updateCustomValuesTemp)
     }
 
     
