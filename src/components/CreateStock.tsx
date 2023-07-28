@@ -152,7 +152,13 @@ export default function CreateStock(
     //     label: value.label,
     //     value: "",
     // })));
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState('');
+    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<any>(
+        {
+            'color': 'teste color',
+            'internal_code': 'tessstear'
+        
+        }
+    );
 
     
 
@@ -161,6 +167,13 @@ export default function CreateStock(
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
+            console.log("stockCategoryTemp: ", stockCategoryTemp)
+            console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
+            console.log("stockPriceTemp: ", stockPriceTemp)
+            console.log("stockDescriptionTemp: ", stockDescriptionTemp)
+            console.log("stockImageUrlTemp: ", stockImageUrlTemp)
+            console.log("stockAlertQuantityTemp: ", stockAlertQuantityTemp)
+            console.log("stockAlertDateTemp: ", stockAlertDateTemp)
             // setSelectedUsers(selectedUsersTemp)
             // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
@@ -235,10 +248,12 @@ export default function CreateStock(
             setStockAlertDateTemp('');
         }
     }
-    const handleStockCustomValuesTemp = (value: string) => {
+    const handleStockCustomValuesTemp = (value: string, dataKey: string) => {
         console.log("Custom value: ", value)
-        
-        // const updateEmailsAlertsTemp = [...stockCustomValuesTemp, {id:nextId, email: ""}]
+        console.log("Custom dataKey: ", dataKey)
+        // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState('');
+    
+        const updateCustomValuesTemp = [{[dataKey]:value}]
         // updateFieldsNew[index].label = event.currentTarget.value
         // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
         // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
@@ -247,9 +262,9 @@ export default function CreateStock(
         // else
         //     updateFieldsNew[index].okButtonShow = false
         
-        // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
+        console.log("updateCustomValuesTemp: ", updateCustomValuesTemp)
 
-        // setStockCustomValuesTemp(updateEmailsAlertsTemp)
+        setStockCustomValuesTemp(updateCustomValuesTemp)
     }
 
     

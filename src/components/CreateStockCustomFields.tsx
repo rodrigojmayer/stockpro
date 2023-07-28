@@ -56,7 +56,7 @@ interface ChildProps {
     columnsCustom: ColumnData[] 
     // stockCustomValuesTemp: DataCustomValues[] 
     stockCustomValuesTemp: string
-    onStockCustomValuesTemp: (newData: string )=> void
+    onStockCustomValuesTemp: (newData: string, name:string )=> void
     
 }
 
@@ -332,10 +332,10 @@ export default function CreateStockCustomFields(
                                     // maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
-                                    value={stockCustomValuesTemp}
-                                    onChange={ (event) => onStockCustomValuesTemp(event.target.value) }
+                                    value={stockCustomValuesTemp[cusField.dataKey]}
+                                    onChange={ (event) => onStockCustomValuesTemp(event.target.value, cusField.dataKey) }
                                     // className={classes.newCustomField}
-                                    // className={classes.inputMainData}
+                                    // className={classes.inputMainData} 
                                     InputProps={{
                                         style: {
                                         // height:"36px",
