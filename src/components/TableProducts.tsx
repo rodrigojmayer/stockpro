@@ -66,7 +66,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
     // console.log("columns: ", columns)
       let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
-      console.log("newRow: ", newRow)
+      // console.log("newRow: ", newRow)
       if (newRow.custom_fields) {
         // Merge the custom_fields into the item and delete the initial custom_fields object
         // newRow = {
@@ -85,13 +85,13 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
         // })
 
         for (const key in newRow.custom_fields) {
-          console.log(`${key}: ${newRow.custom_fields[key]}`)
+          // console.log(`${key}: ${newRow.custom_fields[key]}`)
           newRow = {
                 ...newRow,
                 ...newRow.custom_fields
               }
         }
-      console.log("new newRow: ", newRow)
+      // console.log("new newRow: ", newRow)
 
 
       }
@@ -145,6 +145,9 @@ export default function TableProducts({ data }:  DataTable ) {
   const [filteredData, setFilteredData] = useState(data)
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log("event.target.id: ", event.target.id)
+    // console.log("event.target.value: ", event.target.value)
+
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
   useEffect(() => {
@@ -171,9 +174,11 @@ export default function TableProducts({ data }:  DataTable ) {
           // console.log("item.custom_fields: ", item.custom_fields)
           // if(item.custom_fields)
           //   console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
+          // console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
+          console.log("item.custom_fields: ", item.custom_fields)
           
           if(item[str as keyof typeof item]){
-            // console.log("llega aqui?")
+            console.log("llega aqui?")
 
             if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
               vals = false
@@ -182,23 +187,17 @@ export default function TableProducts({ data }:  DataTable ) {
             }
           } 
           else if(item.custom_fields ){
-            // console.log("item.custom_fields: ", item.custom_fields)
-            if(item.custom_fields[0]){
+            // console.log("---item.custom_fields2: ", item.custom_fields)
+            // if(item.custom_fields){
               // console.log("item.custom_fields[0]: ", item.custom_fields[0])
-              if(item.custom_fields[0][str as keyof typeof item] || item.custom_fields[0][str as keyof typeof item] == ""){
-                // console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
-                if(!item.custom_fields[0][str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
-                  
-                  // console.log("llega aqui?")
-                  vals = false
-                  // console.log("s_________________________")
-                  // return 
-                }
-              }
-              else{
+            if(item.custom_fields[str as keyof typeof item] || item.custom_fields[str as keyof typeof item] == ""){
+              // console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
+              if(!item.custom_fields[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
+                
+                // console.log("llega aqui?")
                 vals = false
-                // return
-
+                // console.log("s_________________________")
+                // return 
               }
             }
             else{
@@ -206,10 +205,22 @@ export default function TableProducts({ data }:  DataTable ) {
               // return
 
             }
+            // }
+            // else{
+            //   vals = false
+            //   // return
+
+            // }
+          }
+          else{
+            vals = false
+            // return
+
           }
         }
       })
-      // console.log("d_________________________")
+      console.log("vals: ", vals)
+      console.log("d_________________________")
       return vals
     }))
     // console.log("filteredRows: ", filteredRows)
@@ -256,7 +267,6 @@ export default function TableProducts({ data }:  DataTable ) {
                         // id="filled-multiline-flexible"
                         // value={filters[0].dataKey}
                         onChange={handleFilterChange}
-                        // onChange={handleFilterChange}
                         maxRows={1}
                         size="small"
                         sx={{

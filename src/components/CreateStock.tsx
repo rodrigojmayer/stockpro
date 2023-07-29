@@ -164,17 +164,17 @@ export default function CreateStock(
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            console.log("stockNameTemp: ", stockNameTemp)
-            console.log("stockQuantityTemp: ", stockQuantityTemp)
-            console.log("stockMeasureTemp: ", stockMeasureTemp)
-            console.log("stockCategoryTemp: ", stockCategoryTemp)
-            console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
-            console.log("stockPriceTemp: ", stockPriceTemp)
-            console.log("stockDescriptionTemp: ", stockDescriptionTemp)
-            console.log("stockImageUrlTemp: ", stockImageUrlTemp)
-            console.log("stockAlertQuantityTemp: ", stockAlertQuantityTemp)
-            console.log("stockAlertDateTemp: ", stockAlertDateTemp)
-            console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
+            // console.log("stockNameTemp: ", stockNameTemp)
+            // console.log("stockQuantityTemp: ", stockQuantityTemp)
+            // console.log("stockMeasureTemp: ", stockMeasureTemp)
+            // console.log("stockCategoryTemp: ", stockCategoryTemp)
+            // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
+            // console.log("stockPriceTemp: ", stockPriceTemp)
+            // console.log("stockDescriptionTemp: ", stockDescriptionTemp)
+            // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
+            // console.log("stockAlertQuantityTemp: ", stockAlertQuantityTemp)
+            // console.log("stockAlertDateTemp: ", stockAlertDateTemp)
+            // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
 
             const fetchCreateStockProduct = async () => {
                 
