@@ -66,7 +66,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
     // console.log("columns: ", columns)
       let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
-      // console.log("newRow: ", newRow)
+      console.log("newRow: ", newRow)
       if (newRow.custom_fields) {
         // Merge the custom_fields into the item and delete the initial custom_fields object
         // newRow = {
@@ -74,13 +74,26 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
         //   ...newRow.custom_fields,
         //   custom_fields: undefined,
         // }
-        newRow.custom_fields.map((custom_fields:any) => {
+
+
+        // newRow.custom_fields.map((custom_fields:any) => {
           
+        //   newRow = {
+        //     ...newRow,
+        //     ...custom_fields
+        //   }
+        // })
+
+        for (const key in newRow.custom_fields) {
+          console.log(`${key}: ${newRow.custom_fields[key]}`)
           newRow = {
-              ...newRow,
-              ...custom_fields
-            }
-            })
+                ...newRow,
+                ...newRow.custom_fields
+              }
+        }
+      console.log("new newRow: ", newRow)
+
+
       }
       
       // console.log("newRow: ", newRow)
