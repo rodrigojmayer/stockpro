@@ -41,6 +41,7 @@ import { Data, DataCreateStockOptions, ColumnData } from '../types';
 
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
+import { UserContext } from '../context/UserContext';
 
 interface mainData {
     id: number;
@@ -119,6 +120,7 @@ export default function CreateStock(
     const categoryArray = categories
     const { measures } = useContext<any>(MeasuresContext)
     const measureArray = measures
+    const { user } = useContext<any>(UserContext)
 
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
@@ -161,6 +163,10 @@ export default function CreateStock(
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
+            
+            console.log("stockNameTemp: ", stockNameTemp)
+            console.log("stockQuantityTemp: ", stockQuantityTemp)
+            console.log("stockMeasureTemp: ", stockMeasureTemp)
             console.log("stockCategoryTemp: ", stockCategoryTemp)
             console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
             console.log("stockPriceTemp: ", stockPriceTemp)
@@ -169,6 +175,51 @@ export default function CreateStock(
             console.log("stockAlertQuantityTemp: ", stockAlertQuantityTemp)
             console.log("stockAlertDateTemp: ", stockAlertDateTemp)
             console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
+
+            const fetchCreateStockProduct = async () => {
+                
+                try {
+                    const response = await fetch(`http://localhost.4000/api/products/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                            // Add any other requires headers here
+                        },
+                        body:JSON.stringify({
+                            "id": 7,
+                            "id_user": user.id,
+                            "product": stockNameTemp,
+                            "amount": stockQuantityTemp,
+                            "measure": stockMeasureTemp,
+                            "category": stockCategoryTemp,
+                            "sub_category": stockSubCategoryTemp,
+                            "custom_fields": stockCustomValuesTemp,
+                            "deleted": false,
+
+                            // "price": stockPriceTemp,
+                            // "description": stockDescriptionTemp,
+                            // "image": stockImageUrlTemp,
+                            // "alert_quantity": stockAlertQuantityTemp,
+                            // "alert_date": stockAlertDateTemp,
+                        })
+                    })
+                } catch (error: unknown) {
+                    if (typeof error === 'string') {
+                        // 'error' is now narrowed down to type 'string'
+                        console.error('Error:', error)
+                    } else if (error instanceof Error) {
+                        // 'error' is now narrowed down to type 'Error'
+                        console.error('Error object:', error.message)
+                    } else {
+                        // Handle other cases as needed
+                    }
+                } finally {
+                    // setIsLoading(())
+                }
+            } 
+            // fetchCreateStockProduct()
+
+
             // setSelectedUsers(selectedUsersTemp)
             // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
