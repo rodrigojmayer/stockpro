@@ -175,10 +175,10 @@ export default function TableProducts({ data }:  DataTable ) {
           // if(item.custom_fields)
           //   console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
           // console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
-          console.log("item.custom_fields: ", item.custom_fields)
+          // console.log("item.custom_fields: ", item.custom_fields)
           
           if(item[str as keyof typeof item]){
-            console.log("llega aqui?")
+            // console.log("llega aqui?")
 
             if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
               vals = false
@@ -219,8 +219,8 @@ export default function TableProducts({ data }:  DataTable ) {
           }
         }
       })
-      console.log("vals: ", vals)
-      console.log("d_________________________")
+      // console.log("vals: ", vals)
+      // console.log("d_________________________")
       return vals
     }))
     // console.log("filteredRows: ", filteredRows)

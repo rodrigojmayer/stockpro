@@ -124,7 +124,7 @@ function App() {
   //   () => ({ user, setUser }),
   //   [user]
   // )
-// console.log("user: ", user)
+// console.log("customColumns: ", customColumns)
   // const { user, setUser } = useContext<any>(UserContext)
   // const changeHandler = (event: any) => setUser(event.target.value);
   
@@ -318,34 +318,122 @@ useEffect(() => {
   // console.log("defaultColumns: ", defaultColumns.map((val) => val.dataKey))
   // console.log("products: ", products)
   // if (!isLoading.products){
-    // console.log("products: ", products)
+    // console.log("customColumns: ", customColumns)
     
 
     setFilteredData(
       products.filter((item:any) => {
       // (item.custom_fields ? console.log("item: ", item.custom_fields) : console.log("no hay custom fields: "))
-      // console.log("item: ", item.custom_fields)
+      // (item.custom_fields ?  customColumns
+      //   .some((customColumn:any) =>{
+      //     for (const key in item.custom_fields){
+      //       item.custom_fields[customColumn.dataKey]
+      //       ?.toString()
+      //       .toLowerCase()
+      //       .includes(searchQuery.toLowerCase())
+      //     }
+      //   }
+        
+      // ) : console.log("no hay custom fields: "))
+      // console.log("item: ", item)
+      // console.log("item product: ", item.product)
+      // console.log("item.custom_fields: ", item.custom_fields)
+      
+      // console.log("answers default:", defaultColumns.some((column:any) => 
+      //       item[column.dataKey]
+      //         .toString()
+      //         .toLowerCase()
+      //         .includes(searchQuery.toLowerCase()) 
+      //     ))
+
+          // if( item.custom_fields){
+
+          //   // console.log("answers custom:",  filteredColumnsCustom.some(() =>
+          //     const objete = Object.values(item.custom_fields).some((field:any) => 
+          //         field
+          //             .toString()
+          //             .toLowerCase()
+          //             .includes(searchQuery.toLowerCase())
+                
+          //     )
+            
+
+          //   console.log("objete:",  objete)
+
+
+          // } 
+      // console.log("filteredColumnsCustom:", filteredColumnsCustom)
+        
+      //  item.custom_fields && filteredColumnsCustom.some((customColumn:any) =>{
+      //   // console.log("customColumn: ", customColumn)
+      //    Object.values(item.custom_fields).some((field:any) => {
+      //      console.log("field:",field
+      //            .toString()
+      //            .toLowerCase()
+      //            .includes(searchQuery.toLowerCase())
+      //      )
+      //      }
+      //    )
+      //  }
+                  
+      // )
+
         return (
+          
           defaultColumns.some((column:any) => 
+          // {
+            // console.log("column: ", column)
             item[column.dataKey]
               .toString()
               .toLowerCase()
               .includes(searchQuery.toLowerCase()) 
-            
-          ) ||
-          (item.custom_fields &&
-            customColumns
-              // .filter((column) => column.id_client)
+          // }
+          ) || (
+            item.custom_fields &&
+              customColumns
               .some((customColumn:any) =>
-                item.custom_fields.some(
+                Object.values(item.custom_fields).some(
                   (field:any) => 
-                    // field[customColumn.dataKey] &&
-                    field[customColumn.dataKey]
-                      ?.toString()
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase())
+                    // console.log("field: ", field?.toString()
+                    // .toLowerCase()
+                    // .includes(searchQuery.toLowerCase()))
+                    field
+                        .toString()
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase())
                 )
-              )
+                  // console.log("customColumn1: ", customColumn)
+    
+                  // for (const key in item.custom_fields){
+                  // //   console.log("customColumn2: ", customColumn)
+                  // //   console.log("item.custom_fields: ", item.custom_fields)
+                  //   console.log("item.custom_fields[key]: ", item.custom_fields[key])
+                  // //   console.log("item.custom_fields[customColumn.dataKey]: ", item.custom_fields[customColumn.dataKey])
+                  // //   console.log("item.custom_fields[key][customColumn.dataKey]: ", item.custom_fields[key][customColumn.dataKey])
+                  //   // item.custom_fields[key][customColumn.dataKey]
+                  //   item.custom_fields[key]
+                  //   ?.toString()
+                  //   .toLowerCase()
+                  //   .includes(searchQuery.toLowerCase())
+                  // // }
+                  // }
+            )
+
+             
+            
+
+            // customColumns
+            //   // .filter((column) => column.id_client)
+            //   .some((customColumn:any) =>
+            //     item.custom_fields.some(
+            //       (field:any) => 
+            //         // field[customColumn.dataKey] &&
+            //         field[customColumn.dataKey]
+            //           ?.toString()
+            //           .toLowerCase()
+            //           .includes(searchQuery.toLowerCase())
+            //     )
+              // )
           )
         )
       })
