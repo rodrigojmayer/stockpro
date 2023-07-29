@@ -362,9 +362,13 @@ useEffect(() => {
 
 
           // } 
-      // console.log("filteredColumnsCustom:", filteredColumnsCustom)
-        
-      //  item.custom_fields && filteredColumnsCustom.some((customColumn:any) =>{
+        const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 
+          // console.log("columnsUserOrder:", columnsUserOrder)
+          columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
+        )
+        console.log("filteredColumnsCustom:", filteredColumnsCustom)
+        console.log("filteredColumnsCustomUser:", filteredColumnsCustomUser)
+            //  item.custom_fields && filteredColumnsCustom.some((customColumn:any) =>{
       //   // console.log("customColumn: ", customColumn)
       //    Object.values(item.custom_fields).some((field:any) => {
       //      console.log("field:",field
@@ -383,6 +387,7 @@ useEffect(() => {
           defaultColumns.some((column:any) => 
           // {
             // console.log("column: ", column)
+            // console.log("column: ", column)
             item[column.dataKey]
               .toString()
               .toLowerCase()
@@ -390,18 +395,29 @@ useEffect(() => {
           // }
           ) || (
             item.custom_fields &&
-              customColumns
+            filteredColumnsCustomUser
               .some((customColumn:any) =>
-                Object.values(item.custom_fields).some(
-                  (field:any) => 
-                    // console.log("field: ", field?.toString()
-                    // .toLowerCase()
-                    // .includes(searchQuery.toLowerCase()))
-                    field
-                        .toString()
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase())
-                )
+                // Object.values(item.custom_fields).some(
+                //   (field:any) => 
+                //     field
+                //         .toString()
+                //         .toLowerCase()
+                //         .includes(searchQuery.toLowerCase())
+                // )
+                // console.log("customColumn: ", customColumn.dataKey
+                // )
+                  // Object.fromEntries(
+                      Object.entries(item.custom_fields).filter(
+                        ([key, value]) => 
+                        // console.log("value: ", value)
+                        (value as string).toString().toLowerCase().includes(searchQuery.toLowerCase())
+                        && key == customColumn.dataKey
+                      ).length
+                  // )
+                // )
+
+
+
                   // console.log("customColumn1: ", customColumn)
     
                   // for (const key in item.custom_fields){
