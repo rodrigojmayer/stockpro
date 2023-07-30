@@ -179,30 +179,41 @@ export default function CreateStock(
             const fetchCreateStockProduct = async () => {
                 
                 try {
-                    const response = await fetch(`http://localhost.4000/api/products/`, {
+                    const response = await fetch(`http://localhost:4000/api/products/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
                         body:JSON.stringify({
-                            "id": 7,
-                            "id_user": user.id,
+                                // "id": 7,
                             "product": stockNameTemp,
+                            "id_client": user.id_client,
                             "amount": stockQuantityTemp,
                             "measure": stockMeasureTemp,
-                            "category": stockCategoryTemp,
+                            "category": stockCategoryTemp && stockCategoryTemp.name,
                             "sub_category": stockSubCategoryTemp,
                             "custom_fields": stockCustomValuesTemp,
                             "deleted": false,
 
-                            // "price": stockPriceTemp,
-                            // "description": stockDescriptionTemp,
-                            // "image": stockImageUrlTemp,
-                            // "alert_quantity": stockAlertQuantityTemp,
-                            // "alert_date": stockAlertDateTemp,
+                                // "price": stockPriceTemp,
+                                // "description": stockDescriptionTemp,
+                                // "image": stockImageUrlTemp,
+                                // "alert_quantity": stockAlertQuantityTemp,
+                                // "alert_date": stockAlertDateTemp,
                         })
                     })
+
+                    // Check if the response status is successful
+                    if (response.ok) {
+                        const responseData = await response.json() // parse the response data
+                        console.log('POST request successful: ', responseData)
+                        // loadingSuccess = true
+                    } else {
+                        // Handle non-successful responses
+                        console.error('Request failed: ', response.status, response.statusText)
+                        // Handle the error here
+                    }
                 } catch (error: unknown) {
                     if (typeof error === 'string') {
                         // 'error' is now narrowed down to type 'string'
@@ -217,7 +228,7 @@ export default function CreateStock(
                     // setIsLoading(())
                 }
             } 
-            // fetchCreateStockProduct()
+            fetchCreateStockProduct()
 
 
             // setSelectedUsers(selectedUsersTemp)
