@@ -366,8 +366,8 @@ useEffect(() => {
           // console.log("columnsUserOrder:", columnsUserOrder)
           columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
         )
-        console.log("filteredColumnsCustom:", filteredColumnsCustom)
-        console.log("filteredColumnsCustomUser:", filteredColumnsCustomUser)
+        // console.log("filteredColumnsCustom:", filteredColumnsCustom)
+        // console.log("filteredColumnsCustomUser:", filteredColumnsCustomUser)
             //  item.custom_fields && filteredColumnsCustom.some((customColumn:any) =>{
       //   // console.log("customColumn: ", customColumn)
       //    Object.values(item.custom_fields).some((field:any) => {
@@ -388,6 +388,7 @@ useEffect(() => {
           // {
             // console.log("column: ", column)
             // console.log("column: ", column)
+            item[column.dataKey] &&
             item[column.dataKey]
               .toString()
               .toLowerCase()
