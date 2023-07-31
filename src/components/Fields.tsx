@@ -597,6 +597,18 @@ export default function Fields(
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
                                             {orderedFields.map((column: any, index: any) => {
+                                                // console.log("index: ", index)
+                                                if (index === 0)
+                                                    return ( 
+                                                        <Paper
+                                                        ref={provided.innerRef}
+                                                        elevation={2}
+                                                        className={classes.buttonFields}>
+                                                            <Typography noWrap>
+                                                                {column.label}
+                                                            </Typography>  
+                                                        </Paper>
+                                                    )
                                                 if (!column.deleted) {
                                                     return ( 
                                                         <Draggable 
