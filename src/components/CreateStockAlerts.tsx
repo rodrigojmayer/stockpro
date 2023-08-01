@@ -87,8 +87,8 @@ interface ChildProps {
     stockMeasureTemp: string
     stockAlertQuantityTemp: string
     onStockAlertQuantityChange: (newData: string) => void
-    stockAlertDateTemp: Date | string
-    onStockAlertDateChange: (newData: Date | null) => void
+    stockAlertDateTemp: Date | String
+    onStockAlertDateChange: (newData: Date | null | string) => void
     
 }
 
@@ -125,7 +125,26 @@ export default function CreateStockAlerts(
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
 
     // const [selectedDate, setSelectedDate] = useState('');
-    
+
+    const handleDatePickerChange = (newDate:any) => { 
+        console.log("newDate: ", newDate)
+        console.log("newDate.$d: ", newDate.$d)
+        // Here, we adjust the selected date to GMT+0400 by using the utcOffset method
+        // const adjustedDate = newDate.utcOffset('+0400', true);
+        // const adjustedDate = newDate
+        // const day = newDate.$D
+        // console.log("day: ", day) 
+        // const month = (newDate.$M + 1)
+        // console.log("month: ", month)
+        // const year = newDate.$y
+        // console.log("year: ", year)
+        const adjustedDate = newDate.add(2, 'hour').toISOString(); // Adding 2 hours because the GMT comes in +0200 and returns the day before
+        // const adjustedDate = `${day}-${month}-${year}` // Adding 2 hours because the GMT comes in +0200 and returns the day before
+        // // const formattedDate = date;
+      
+        // Call the onStockAlertDateChange function with the adjusted date
+        onStockAlertDateChange(adjustedDate);
+      };
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
@@ -192,8 +211,8 @@ export default function CreateStockAlerts(
                                         value={ typeof stockAlertDateTemp === 'string'
                                         ? null
                                         : stockAlertDateTemp}
-                                        onChange={ (newDate) => onStockAlertDateChange(newDate) }
                                         // onChange={ (newDate) => onStockAlertDateChange(newDate) }
+                                        onChange={ (newDate) => handleDatePickerChange(newDate) }
                                         slotProps={{ textField: { size: 'small' } }}
                                         className={classes.inputMainData} 
                                         sx={{ 

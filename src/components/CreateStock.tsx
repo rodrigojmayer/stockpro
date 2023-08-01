@@ -137,6 +137,7 @@ export default function CreateStock(
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
     const [stockPrice, setStockPrice] = useState('');
     const [stockPriceTemp, setStockPriceTemp] = useState('');
+    const [stockCodeTemp, setStockCodeTemp] = useState('');
     const [stockDescription, setStockDescription] = useState('');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
     const [stockImageUrl, setStockImageUrl] = useState('');
@@ -144,7 +145,8 @@ export default function CreateStock(
     const [stockAlertQuantity, setStockAlertQuantity] = useState('');
     const [stockAlertQuantityTemp, setStockAlertQuantityTemp] = useState('');
     const [stockAlertDate, setStockAlertDate] = useState('');
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>('');
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
+    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     const [stockCustomValues, setStockCustomValues] = useState('');
     
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -170,6 +172,7 @@ export default function CreateStock(
             // console.log("stockCategoryTemp: ", stockCategoryTemp)
             // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
             // console.log("stockPriceTemp: ", stockPriceTemp)
+            // console.log("stockCodeTemp: ", stockCodeTemp)
             // console.log("stockDescriptionTemp: ", stockDescriptionTemp)
             // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
             // console.log("stockAlertQuantityTemp: ", stockAlertQuantityTemp)
@@ -196,11 +199,13 @@ export default function CreateStock(
                             "custom_fields": stockCustomValuesTemp,
                             "deleted": false,
 
-                                // "price": stockPriceTemp,
-                                // "description": stockDescriptionTemp,
-                                // "image": stockImageUrlTemp,
-                                // "alert_quantity": stockAlertQuantityTemp,
-                                // "alert_date": stockAlertDateTemp,
+                            "price": stockPriceTemp,
+                            "code": stockCodeTemp,
+                            "description": stockDescriptionTemp,
+                            "url_image": stockImageUrlTemp,
+
+                            "alert_quantity": stockAlertQuantityTemp,
+                            "alert_date": stockAlertDateTemp,
                         })
                     })
 
@@ -281,6 +286,10 @@ export default function CreateStock(
         console.log("Price value: ", value)
         setStockPriceTemp(value)
     }
+    const handleStockCodeChange = (value: string) => {
+        console.log("Code value: ", value)
+        setStockCodeTemp(value)
+    }
     const handleStockDescriptionChange = (value: string) => {
         console.log("Description value: ", value)
         setStockDescriptionTemp(value)
@@ -294,15 +303,19 @@ export default function CreateStock(
     setStockAlertQuantityTemp(value)
     }
     // const handleStockAlertDateChange = (value: string) => {
-    const handleStockAlertDateChange = (date:Date | null) => {
+    const handleStockAlertDateChange = (date:Date | null | string) => {
         console.log("handleSetAlertDate value: ", date)
         // if(date)
         //     setStockAlertDateTemp(date)
         if (date) {
-            const formattedDate = date.toISOString();
-            setStockAlertDateTemp(formattedDate);
+            // const formattedDate = date.toISOString();
+            // const formattedDate = date;
+            console.log("date: ", date)
+            // setStockAlertDateTemp(formattedDate);
+            setStockAlertDateTemp(date);
         } else {
-            setStockAlertDateTemp('');
+            // setStockAlertDateTemp('');
+            setStockAlertDateTemp("");
         }
     }
     const handleStockCustomValuesTemp = (value: string, dataKey: string) => {
@@ -378,6 +391,9 @@ export default function CreateStock(
                         stockMeasureTemp={stockMeasureTemp}
                         onStockMeasureChange={handleStockMeasureChange}
                         
+                        stockCodeTemp={stockCodeTemp}
+                        onStockCodeChange={handleStockCodeChange}
+
                         categoryArray={categoryArray}
                         stockCategoryTemp={stockCategoryTemp}
                         onStockCategoryChange={handleStockCategoryChange}
@@ -410,7 +426,7 @@ export default function CreateStock(
                         
                         stockAlertDateTemp={stockAlertDateTemp}
                         onStockAlertDateChange={handleStockAlertDateChange}
-
+ 
                     />
                     <CreateStockCustomFields
                         hiddenPanel={openOptionsCreate.customFields}

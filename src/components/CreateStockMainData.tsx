@@ -90,6 +90,8 @@ interface ChildProps {
     stockMeasureTemp: string
     // onStockMeasureChange: (newData: string )=> void
     onStockMeasureChange: (newData: any )=> void
+    stockCodeTemp: string
+    onStockCodeChange: (newData: string )=> void
     categoryArray: mainData[]
     // stockCategoryTemp: string
     stockCategoryTemp: (Category | null)
@@ -113,6 +115,8 @@ export default function CreateStockMainData(
             measureArray,  
             stockMeasureTemp, 
             onStockMeasureChange,
+            stockCodeTemp, 
+            onStockCodeChange,
             categoryArray, 
             stockCategoryTemp, 
             onStockCategoryChange,
@@ -127,73 +131,6 @@ export default function CreateStockMainData(
         // handleClose(false)
     }
     console.log("measureArray: ", measureArray)
-    // console.log("hiddenPanel: ", hiddenPanel)
-    // console.log("openOptionsCreate: ", openOptionsCreate)
-    // const [measure, setMeasure] = useState('');
-    // const [measureTemp, setMeasureTemp] = useState('');
-    // const [category, setCategory] = useState('');
-    // const [categoryTemp, setCategoryTemp] = useState('');  
-    // const [subCategory, setSubCategory] = useState('');
-    // const [subCategoryTemp, setSubCategoryTemp] = useState('');
-    
-    // const usersAlertSelected = usersAlert.filter((usr) => {
-    //     if(idUsersAlertSelected.includes(usr.id))
-    //         return usr
-    // })
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
-    // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
-    // const [selectedNames, setSelectedNames] = useState([]);
-    
-    // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
-
-    // const deleteEmailTemp = (id:number) => {
-    //     // console.log("idEmailTemp: ", id)
-    //     const updateEmailsTemp = [...emailsAlertsTemp]
-    //     // const updateFieldsNew = [...customFieldsNew]
-    //     let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
-    //     // console.log("index: ", index)
-    //     // console.log("updateEmailsTemp: ", updateEmailsTemp)
-    //     // if (index !== -1) {
-    //         // updateFields[index].deleted = true
-    //     //     // setCustomFields(updateFields)
-    //     //     updateFieldsNew[index].deleted = true
-    //     //     // console.log("customFields: ", customFields) 
-    //     // } else {
-    //     //     index = customFieldsNew.findIndex(field => field.id === id)
-    //     updateEmailsTemp.splice(index, 1)
-
-    //     // }
-    //     setEmailsAlertsTemp(updateEmailsTemp)
-    // }
-    
-    // const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     // console.log("event.currentTarget.id: ", event.currentTarget.id)
-    //     // console.log("event.currentTarget.value: ", event.currentTarget.value)
-    //     // console.log("isNaN('w'): ", isNaN(NaN))
-    //     // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
-    //         const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-    //         if(index !== -1) {
-    //             const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
-    //             updateEmailsAlertsTemp[index].email = event.currentTarget.value
-    //         //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //         //     // console.log("customFields[index].label: ", customFields[index].label)
-    //         //     if(customFields[index]){
-    //         //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
-    //         //             updateFieldsNew[index].okButtonShow = false
-    //         //         else
-    //         //             updateFieldsNew[index].okButtonShow = true
-    //         //     }else if(updateFieldsNew[index].label !='' ){
-    //         //         updateFieldsNew[index].okButtonShow = true
-    //         //     }else if (updateFieldsNew[index].label ==='' ){
-    //         //         updateFieldsNew[index].okButtonShow = false
-    //         //     }
-    //             // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
-        
-    //             setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //         }
-    // }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
@@ -210,26 +147,6 @@ export default function CreateStockMainData(
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
-    // const addInputCustomField = () => {
-    //     // console.log("holis clickis", customFieldsNewTemp.length)
-    //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-    //     const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
-    //     const nextId = lastObj.id + 1
-    //     const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
-    //     // updateFieldsNew[index].label = event.currentTarget.value
-    //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-    //     // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-    //     // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-    //     //     updateFieldsNew[index].okButtonShow = true
-    //     // else
-    //     //     updateFieldsNew[index].okButtonShow = false
-        
-    //     // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
-
-    //     setEmailsAlertsTemp(updateEmailsAlertsTemp)
-    //     // setAddButtonShow(false)
-    // }
-
     useEffect(() => {
         // console.log("stockMeasureTemp: ", stockMeasureTemp)
         // setSelectedUsersTemp(selectedUsers)
@@ -260,6 +177,23 @@ export default function CreateStockMainData(
                         label="Name*"
                         value={stockNameTemp}
                         onChange={ (event) => onStockNameChange(event.target.value) }
+                        maxRows={1}
+                        size="small"
+                        className={classes.inputMainData}
+                        InputProps={{
+                            className: classes.inputClassName,
+                            style: {
+                            // height:"36px"
+                            // borderRadius: 10,
+                            },
+                        }}
+                    />
+                </Box> 
+                <Box className={classes.customBoxRow}>
+                    <TextField
+                        label="Code*"
+                        value={stockCodeTemp}
+                        onChange={ (event) => onStockCodeChange(event.target.value) }
                         maxRows={1}
                         size="small"
                         className={classes.inputMainData}
@@ -332,10 +266,11 @@ export default function CreateStockMainData(
                             </MenuItem>
                         ))}
                     </TextField>
-                </Box> 
-                <Box className={classes.customBoxRow}>
+                {/* </Box> 
+                <Box className={classes.customBoxRow}> */}
                     <TextField  
-                        label="Sub-Category" 
+                    
+                        label="Sub-Categ." 
                         size="small"
                         select
                         disabled={stockCategoryTemp ? false : true}
@@ -347,6 +282,7 @@ export default function CreateStockMainData(
                         {stockCategoryTemp ? stockCategoryTemp.sub_categories.map((subCategory, index) => (
                             
                             <MenuItem 
+                            
                                 className={classes.menuItemUsers}
                                 key={index} 
                                 // key={subCategory.id} 
@@ -359,6 +295,7 @@ export default function CreateStockMainData(
                             </MenuItem>
                         )) :
                             <MenuItem 
+                            
                             >
                             </MenuItem>
                         }
