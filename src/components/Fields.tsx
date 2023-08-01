@@ -601,7 +601,8 @@ export default function Fields(
                                                 if (index === 0)
                                                     return ( 
                                                         <Paper
-                                                        ref={provided.innerRef}
+                                                        key="header"
+                                                        // ref={provided.innerRef}
                                                         elevation={2}
                                                         className={classes.buttonFields}>
                                                             <Typography noWrap>

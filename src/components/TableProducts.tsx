@@ -118,7 +118,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
           sx={{
             padding: "0 4px ",
           }}>
-            { newRow[column.dataKey] }
+            { newRow[column.dataKey] ? newRow[column.dataKey] : "-"}
             {/* {column.dataKey} */}
 
           </Typography>
