@@ -18,6 +18,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
     fieldsFetchEditCustomColumn: false,
     fieldsFetchCreateCustomColumn: false,
     fieldsFetchEditUsersFieldsOrder: false,
+    fieldsFetchCreateStock: false,
   }); // New state for loading status
   
   // console.log("realoading isLoadingContext???")

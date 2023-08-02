@@ -42,6 +42,7 @@ import { Data, DataCreateStockOptions, ColumnData } from '../types';
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
+import { IsLoadingContext } from '../context/IsLoadingContext';
 
 interface mainData {
     id: number;
@@ -116,11 +117,12 @@ export default function CreateStock(
         handleClose(false)
     } 
 
-    const { categories } = useContext<any>(CategoriesContext)
+    const { categories } = useContext<any>(CategoriesContext) 
     const categoryArray = categories
     const { measures } = useContext<any>(MeasuresContext)
     const measureArray = measures
     const { user } = useContext<any>(UserContext)
+    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
@@ -181,7 +183,7 @@ export default function CreateStock(
 
             // const stockAlertDateTemp2 = new Date()
             const fetchCreateStockProduct = async () => {
-                
+                let loadingSuccess: boolean = false
                 try {
                     const response = await fetch(`http://localhost:4000/api/products/`, {
                         method: 'POST',
@@ -214,7 +216,7 @@ export default function CreateStock(
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
                         console.log('POST request successful: ', responseData)
-                        // loadingSuccess = true
+                        loadingSuccess = true
                     } else {
                         // Handle non-successful responses
                         console.error('Request failed: ', response.status, response.statusText)
@@ -232,6 +234,10 @@ export default function CreateStock(
                     }
                 } finally {
                     // setIsLoading(())
+                    setIsLoading((prevLoading: any) => ({
+                        ...prevLoading,
+                        fieldsFetchCreateStock: loadingSuccess,
+                    }));
                 }
             } 
             fetchCreateStockProduct()
@@ -343,6 +349,17 @@ export default function CreateStock(
     }
 
     
+    useEffect(() => {
+        // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
+        // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
+        // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
+
+        if(isLoading.fieldsFetchCreateStock){
+            // alert("Reload page")
+                    // setIsFetching(false)
+            window.location.reload();
+        }
+    }, [isLoading]) // To know if after save should reload the page
     // alert by AlertAmount
     // alert by AlertDate
     // custom fields???
