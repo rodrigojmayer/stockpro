@@ -347,7 +347,7 @@ export default function CreateStock( { open, handleClose }: ChildProps) {
                         </Box> 
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Quantity"
+                                label="Amount"
                                 maxRows={1}
                                 size="small"
                                 type="number"

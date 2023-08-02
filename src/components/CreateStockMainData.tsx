@@ -84,8 +84,8 @@ interface ChildProps {
     openOptionsCreate: (newData: string )=> void
     stockNameTemp: string
     onStockNameChange: (newData: string )=> void
-    stockQuantityTemp: string
-    onStockQuantityChange: (newData: string )=> void
+    stockAmountTemp: string
+    onStockAmountChange: (newData: string )=> void
     measureArray: mainData[]
     stockMeasureTemp: string
     // onStockMeasureChange: (newData: string )=> void
@@ -110,8 +110,8 @@ export default function CreateStockMainData(
             openOptionsCreate,
             stockNameTemp, 
             onStockNameChange,
-            stockQuantityTemp, 
-            onStockQuantityChange,
+            stockAmountTemp, 
+            onStockAmountChange,
             measureArray,  
             stockMeasureTemp, 
             onStockMeasureChange,
@@ -208,9 +208,9 @@ export default function CreateStockMainData(
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Quantity"
-                        value={stockQuantityTemp}
-                        onChange={ (event) => onStockQuantityChange(event.target.value) }
+                        label="Amount"
+                        value={stockAmountTemp}
+                        onChange={ (event) => onStockAmountChange(event.target.value) }
                         maxRows={1}
                         size="small"
                         type="number"

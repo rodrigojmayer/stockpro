@@ -85,8 +85,8 @@ interface ChildProps {
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
     stockMeasureTemp: string
-    stockAlertQuantityTemp: string
-    onStockAlertQuantityChange: (newData: string) => void
+    stockAlertAmountTemp: string
+    onStockAlertAmountChange: (newData: string) => void
     stockAlertDateTemp: Date | String
     onStockAlertDateChange: (newData: Date | null | string) => void
     
@@ -96,8 +96,8 @@ export default function CreateStockAlerts(
     {   hiddenPanel, 
         openOptionsCreate, 
         stockMeasureTemp,
-        stockAlertQuantityTemp,
-        onStockAlertQuantityChange,
+        stockAlertAmountTemp,
+        onStockAlertAmountChange,
         stockAlertDateTemp,
         onStockAlertDateChange,
     }: ChildProps )  {
@@ -172,14 +172,14 @@ export default function CreateStockAlerts(
                     <Grid container>
                         <Grid item xs={10} >
                         <TextField
-                            label="By quantity"
+                            label="By amount"
                             // onChange={ handleEditCustomFieldNew }
                             maxRows={1}
                             size="small"
                             type="number"
                             className={classes.inputMainData}
-                            value={stockAlertQuantityTemp}
-                            onChange={ (event) => onStockAlertQuantityChange(event.target.value) }
+                            value={stockAlertAmountTemp}
+                            onChange={ (event) => onStockAlertAmountChange(event.target.value) }
                             InputProps={{
                                 className: classes.inputClassName,
                                 style: {
