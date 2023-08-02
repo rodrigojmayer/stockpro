@@ -39,7 +39,22 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
         const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)
         if (response.ok) {
           const json = await response.json()
-          setProducts(json)
+
+          // Map through the products array and edit the date format
+          const formattedProducts = json.map((product: Data) => {
+            // Assuming the 'alert_date' field is in ISO format ('YYYY-MM-DDTHH:mm:ss.sssZ')
+            // You can parse the date and format it as 'DD-MM-YY' before setting it to the state
+            const alert_date = product.alert_date ? new Date(product.alert_date).toLocaleDateString('en-GB') : null;
+
+            // Return the modified product object
+            return {
+              ...product,
+              alert_date: alert_date,
+            };
+          });
+
+        
+          setProducts(formattedProducts)
         } else {
           // Handle the case where the response is not OK (e.g., show an error message)
         }

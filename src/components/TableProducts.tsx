@@ -60,7 +60,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
 
   
     // console.log("_index: ", _index)
-    console.log("row: ", row)
+    // console.log("row: ", row)
     // console.log("row.custom_fields: ", row.custom_fields)
     // console.log("row.custom_fields: ", row.custom_fields)
     // console.log("columns: ", columns)

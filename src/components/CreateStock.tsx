@@ -179,6 +179,7 @@ export default function CreateStock(
             // console.log("stockAlertDateTemp: ", stockAlertDateTemp)
             // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
 
+            // const stockAlertDateTemp2 = new Date()
             const fetchCreateStockProduct = async () => {
                 
                 try {

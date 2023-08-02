@@ -127,8 +127,8 @@ export default function CreateStockAlerts(
     // const [selectedDate, setSelectedDate] = useState('');
 
     const handleDatePickerChange = (newDate:any) => { 
-        console.log("newDate: ", newDate)
-        console.log("newDate.$d: ", newDate.$d)
+        // console.log("newDate: ", newDate) 
+        // console.log("newDate.$d: ", newDate.$d)
         // Here, we adjust the selected date to GMT+0400 by using the utcOffset method
         // const adjustedDate = newDate.utcOffset('+0400', true);
         // const adjustedDate = newDate
@@ -138,8 +138,9 @@ export default function CreateStockAlerts(
         // console.log("month: ", month)
         // const year = newDate.$y
         // console.log("year: ", year)
+        // const adjustedDate = `${day}-${month}-${year}T02:00:00.000Z` // Adding 2 hours because the GMT comes in +0200 and returns the day before
+        // const adjustedDate = `15-08-2023T02:00:00.000Z` // Adding 2 hours because the GMT comes in +0200 and returns the day before
         const adjustedDate = newDate.add(2, 'hour').toISOString(); // Adding 2 hours because the GMT comes in +0200 and returns the day before
-        // const adjustedDate = `${day}-${month}-${year}` // Adding 2 hours because the GMT comes in +0200 and returns the day before
         // // const formattedDate = date;
       
         // Call the onStockAlertDateChange function with the adjusted date
