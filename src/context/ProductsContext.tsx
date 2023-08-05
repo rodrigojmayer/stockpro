@@ -30,6 +30,12 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
   
   const [products, setProducts] = useState<Data[]>([])
 
+  const formatAlertDate = (dateString: string | null) => {
+    if (!dateString) return null
+    const date = new Date(dateString)
+    return date.getTime() // Returns the time in miliseconds since January 1, 1970 (UNIX timestamp)
+  }
+
 
   useEffect(() => {
 
@@ -53,7 +59,17 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
             };
           });
 
-        
+          // Sort the products array by the 'alert_on' field
+          formattedProducts.sort((a:any, b:any) => {
+            const alertOnA = formatAlertDate(a.alert_on)
+            const alertOnB = formatAlertDate(b.alert_on)
+            if (alertOnA && alertOnB) {
+              return alertOnA - alertOnB
+            }
+            // If one of the dates is null or undefined, place it at the end
+            return alertOnA ? -1 : 1
+          })
+          
           setProducts(formattedProducts)
         } else {
           // Handle the case where the response is not OK (e.g., show an error message)
