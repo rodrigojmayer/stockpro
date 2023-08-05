@@ -9,6 +9,7 @@ import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
 import CreateStock from './components/CreateStock';
+import EditStock from './components/EditStock';
 import { Data, ColumnData, CustomValueData, UserData } from './types';
 import { UserContext } from './context/UserContext';
 import { IsLoadingContext } from './context/IsLoadingContext';
@@ -33,11 +34,15 @@ function App() {
   
   
   const [showCreateStock, setShowCreateStock] = useState(false);
-  
-  
+  const [showEditStock, setShowEditStock] = useState(false);
   
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
+
+  const handleCloseEditStock = () => setShowEditStock(false)
+  // const openEditStock = () => setShowEditStock(true)
+  const openEditStock = () => alert("test onlick")
+  
   const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
@@ -116,13 +121,19 @@ function App() {
                 </Grid>
               </Container>
               {openBackdrop ? "": 
-                <TableProducts data={filteredData} columns={columnsUserOrder} />
+                <TableProducts data={filteredData} columns={columnsUserOrder} openEditStock={openEditStock} />
               }
               
             </Layout>
             <CreateStock
                 open={showCreateStock} 
                 handleClose={handleCloseCreateStock} 
+                data={filteredData}
+                columnsCustom={filteredColumnsCustom}
+            />
+            <EditStock
+                open={showEditStock} 
+                handleClose={handleCloseEditStock} 
                 data={filteredData}
                 columnsCustom={filteredColumnsCustom}
             />

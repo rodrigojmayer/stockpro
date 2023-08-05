@@ -38,6 +38,7 @@ export interface Data {
 export interface DataTable {
   data: Data[] 
   columns: ColumnData[]
+  openEditStock: (newData: boolean) => void
 }
 
 export interface ColumnData {
