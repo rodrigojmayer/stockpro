@@ -1,4 +1,5 @@
 import { makeStyles } from 'tss-react/mui';
+import {  Theme } from '@mui/material/styles';
 
 export const useStylesGlobal = makeStyles()({
     finishButtons: {
@@ -184,6 +185,10 @@ export const useStylesGlobal = makeStyles()({
     //     display: "flex",
     //     // flex-direction: "column",
     // },
+
+    alert_on : {
+        color: "red",
+    }
 })
 
 export const modalStyleExternal = {
@@ -231,3 +236,23 @@ export const modalStyleSaveInternal = {
     overflow: "scroll",
     overflowX: "hidden",
 };
+
+// export const TableStyles = makeStyles((theme: Theme) => ({
+export const tableStyles = makeStyles()({
+    alert_on : {
+        backgroundColor: "rgb(220, 3, 0, .6)", 
+        color:"white",
+    },
+    rows : {
+        padding: "8px 0",
+        border:0,
+    },
+    row_even: {
+        backgroundColor:"rgb(162, 199, 220)", 
+    },
+    row_odd: {
+        backgroundColor: "rgb(69, 144, 186)", 
+    },
+           
+// }))
+})

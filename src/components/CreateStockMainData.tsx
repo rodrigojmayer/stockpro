@@ -32,7 +32,7 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { DataCreateStockOptions } from '../types';
 
 

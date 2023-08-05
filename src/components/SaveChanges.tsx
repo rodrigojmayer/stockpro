@@ -5,7 +5,7 @@ import { Box,
 import { OkButton,
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal } from '../styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal } from '../Styles'
 
 
 type SaveChangesProps = {

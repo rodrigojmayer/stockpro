@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Box } from '@mui/material';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
@@ -8,8 +8,11 @@ import TextField from '@mui/material/TextField';
 import { Data, DataTable, ColumnData } from '../types';
 import { UserContext } from '../context/UserContext'
 import { ColumnsContext } from '../context/ColumnsContext'
+import { tableStyles, useStylesGlobal } from '../Styles';
+// import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
 
 
+// type TableClasses = ReturnType<typeof useStyles>;
 
 const INITIAL_STATE = {
   id: NaN,
@@ -56,9 +59,12 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 };
 
 
-function rowContent(_index: number, row: Data, columns: ColumnData[]) {
 
-  
+// const { classes } = useStylesGlobal()
+// function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any) {
+
+    
     // console.log("_index: ", _index)
     // console.log("row: ", row)
     // console.log("row.custom_fields: ", row.custom_fields)
@@ -91,7 +97,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
                 ...newRow.custom_fields
               }
         }
-      // console.log("new newRow: ", newRow)
+      console.log("new newRow: ", newRow)
 
 
       }
@@ -100,36 +106,47 @@ function rowContent(_index: number, row: Data, columns: ColumnData[]) {
 
   return (
     <React.Fragment >
+
       {columns.map((column) => (
         <TableCell
           key={column.id}
           align='center'
+          
+          className={`${ _index%2 ? classes.row_even  : classes.row_odd }`}
+          // className={`${ _index%2 ? classes.row_even  : classes.row_odd } ${ newRow.alert_on ? classes.alert_on  : "" }`}
+          // className={` ${ classes.alert_on  : "" }`}
           // align={column.numeric || false ? 'right' : 'left'}
           style={{ 
-            backgroundColor: _index%2?"rgb(162, 199, 220)":"rgb(69, 144, 186)", 
-            border:0,
+             border:0,
           }}
           sx={{
-            padding: "8px 0",
+            // padding: "8px 0",
+            padding: "0",
           }}
         >
+          <div 
+            // className={classes.table}
+            className={`${ newRow.alert_on ? classes.alert_on  : "" } ${classes.rows}`}
+          >
+            <Typography noWrap 
+            sx={{
+              padding: "0 4px ",
+            }}>
+              { newRow[column.dataKey] ? newRow[column.dataKey] : "-"}
 
-          <Typography noWrap 
-          sx={{
-            padding: "0 4px ",
-          }}>
-            { newRow[column.dataKey] ? newRow[column.dataKey] : "-"}
-            {/* {column.dataKey} */}
-
-          </Typography>
+            </Typography>
+          </div>
 
         </TableCell>
-      ))}
+))}
     </React.Fragment>
   );
 }
 
 export default function TableProducts({ data }:  DataTable ) {
+
+  const  {classes} = tableStyles()
+  // const  {classes} = tableStyles()
   // export default function TableProducts({ data, columns }:  DataTable ) {
 // export default function TableProducts({ data }: { data: Data[] }) {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -141,7 +158,7 @@ export default function TableProducts({ data }:  DataTable ) {
   
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   // const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
-    // console.log("data: ", data)
+    console.log("data: ", data)
   const [filteredData, setFilteredData] = useState(data)
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -287,7 +304,8 @@ export default function TableProducts({ data }:  DataTable ) {
           }}
         // itemContent={rowContent}
         itemContent={(index: number) =>
-          rowContent(index, filteredData[index], columns)
+          rowContent(index, filteredData[index], columns, classes)
+          // rowContent(index, filteredData[index], columns)
         }
         style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
         

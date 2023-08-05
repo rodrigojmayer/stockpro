@@ -21,7 +21,7 @@ import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { ColumnsContext } from '../context/ColumnsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext'
