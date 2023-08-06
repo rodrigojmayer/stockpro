@@ -240,7 +240,7 @@ export const modalStyleSaveInternal = {
 // export const TableStyles = makeStyles((theme: Theme) => ({
 export const tableStyles = makeStyles()({
     alert_on : {
-        backgroundColor: "rgb(220, 3, 0, .6)", 
+        backgroundColor: "rgb(290, 10, 50, .6)", 
         color:"white",
     },
     rows : {
@@ -248,10 +248,10 @@ export const tableStyles = makeStyles()({
         border:0,
     },
     row_even: {
-        backgroundColor:"rgb(162, 199, 220)", 
+        backgroundColor: "rgb(69, 144, 186)", 
     },
     row_odd: {
-        backgroundColor: "rgb(69, 144, 186)", 
+        backgroundColor:"rgb(162, 199, 220)", 
     },
            
 // }))

@@ -41,8 +41,10 @@ function App() {
 
   const handleCloseEditStock = () => setShowEditStock(false)
   // const openEditStock = () => setShowEditStock(true)
-  const openEditStock = () => alert("test onlick")
-  
+  const openEditStock = () => {
+    setShowEditStock(true)
+  }
+
   const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
