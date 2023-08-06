@@ -38,7 +38,7 @@ export interface Data {
 export interface DataTable {
   data: Data[] 
   columns: ColumnData[]
-  openEditStock: () => void
+  openEditStock: (id: Number) => void
 }
 
 export interface ColumnData {

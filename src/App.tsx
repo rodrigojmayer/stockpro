@@ -41,8 +41,10 @@ function App() {
 
   const handleCloseEditStock = () => setShowEditStock(false)
   // const openEditStock = () => setShowEditStock(true)
-  const openEditStock = () => {
+  const openEditStock = (id_prod:Number) => {
     setShowEditStock(true)
+    alert(`Product: ${id_prod}`)
+    // console.log("Product: ", id_prod)
   }
 
   const { user } = useContext<any>(UserContext);
