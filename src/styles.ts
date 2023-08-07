@@ -237,6 +237,17 @@ export const modalStyleSaveInternal = {
     overflowX: "hidden",
 };
 
+export const modalStyleMissingDataInternal = {
+    top: 74,
+    width: "270px",
+    backgroundColor: "rgb(45,72, 91, 1)",
+    borderRadius: "10px",
+    margin: "auto",
+    padding: "3px",
+    color: "white",
+    overflow: "scroll",
+    overflowX: "hidden",
+};
 // export const TableStyles = makeStyles((theme: Theme) => ({
 export const tableStyles = makeStyles()({
     alert_on : {

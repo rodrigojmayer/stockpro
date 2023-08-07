@@ -105,7 +105,7 @@ interface ChildProps {
     columnsCustom: ColumnData[] 
 }
 
-export default function EditStock( 
+export default function UpdateAmountStock( 
     {   open, 
         handleClose, 
         data,
@@ -394,7 +394,7 @@ export default function EditStock(
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
                     />
-                    <Typography align='center' variant="h5">Edit stock</Typography>
+                    <Typography align='center' variant="h5">Update Amount Stock</Typography>
                     <CreateStockMainData 
                         hiddenPanel={openOptionsCreate.mainData}
                         openOptionsCreate={handleOpenOptionsCreate}

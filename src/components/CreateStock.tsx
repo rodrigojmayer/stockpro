@@ -43,6 +43,7 @@ import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
+import MissingData from './MissingData';
 
 interface mainData {
     id: number;
@@ -164,6 +165,7 @@ export default function CreateStock(
 
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const [openMissingData, setOpenMissingData] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -249,8 +251,18 @@ export default function CreateStock(
         }
         setOpenSaveChanges(false);
     }
-    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
-    
+    const handleCloseMissingData = () => {
+        setOpenMissingData(false)
+    }
+
+    const handleOpenSaveChanges = () => {
+        console.log("stockNameTemp: ", stockNameTemp)
+        if(stockNameTemp)
+            setOpenSaveChanges(true);
+        else
+            setOpenMissingData(true)
+    }
+
     const handleOpenOptionsCreate = (newData:  string) => {
         const updatedOptions = { ...openOptionsCreate };
         for (const key in updatedOptions) {
@@ -393,6 +405,10 @@ export default function CreateStock(
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
+                    />
+                    <MissingData
+                        openMissingData={openMissingData}
+                        closeMissingData={handleCloseMissingData} 
                     />
                     <Typography align='center' variant="h5">Create stock</Typography>
                     <CreateStockMainData 

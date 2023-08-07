@@ -62,7 +62,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 
 // const { classes } = useStylesGlobal()
 // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openEditStock:(id: Number) => void) {
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(id: Number) => void) {
 
     
     // console.log("_index: ", _index)
@@ -110,7 +110,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         <TableCell
           key={column.id}
           align='center'
-          onClick={() => openEditStock(newRow._id)}
+          onClick={() => openUpdateAmountStock(newRow._id)}
           className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
           // className={`${ _index%2 ? classes.row_even  : classes.row_odd } ${ newRow.alert_on ? classes.alert_on  : "" }`}
           // className={` ${ classes.alert_on  : "" }`}
@@ -142,7 +142,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   );
 }
 
-export default function TableProducts({ data, openEditStock }:  DataTable ) {
+export default function TableProducts({ data, openUpdateAmountStock }:  DataTable ) {
 
   const  {classes} = tableStyles()
   // const  {classes} = tableStyles()
@@ -303,7 +303,7 @@ export default function TableProducts({ data, openEditStock }:  DataTable ) {
           }}
         // itemContent={rowContent}
         itemContent={(index: number) =>
-          rowContent(index, filteredData[index], columns, classes, openEditStock) 
+          rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock) 
           // rowContent(index, filteredData[index], columns)
         }
         style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}

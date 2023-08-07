@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
 import CreateStock from './components/CreateStock';
-import EditStock from './components/EditStock';
+import UpdateAmountStock from './components/UpdateAmountStock';
 import { Data, ColumnData, CustomValueData, UserData } from './types';
 import { UserContext } from './context/UserContext';
 import { IsLoadingContext } from './context/IsLoadingContext';
@@ -34,15 +34,15 @@ function App() {
   
   
   const [showCreateStock, setShowCreateStock] = useState(false);
-  const [showEditStock, setShowEditStock] = useState(false);
+  const [showUpdateAmountStock, setShowUpdateAmountStock] = useState(false);
   
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
 
-  const handleCloseEditStock = () => setShowEditStock(false)
-  // const openEditStock = () => setShowEditStock(true)
-  const openEditStock = (id_prod:Number) => {
-    setShowEditStock(true)
+  const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
+  // const openUpdateAmountStock = () => setShowUpdateAmountStock(true)
+  const openUpdateAmountStock = (id_prod:Number) => {
+    setShowUpdateAmountStock(true)
     alert(`Product: ${id_prod}`)
     // console.log("Product: ", id_prod)
   }
@@ -125,7 +125,7 @@ function App() {
                 </Grid>
               </Container>
               {openBackdrop ? "": 
-                <TableProducts data={filteredData} columns={columnsUserOrder} openEditStock={openEditStock} />
+                <TableProducts data={filteredData} columns={columnsUserOrder} openUpdateAmountStock={openUpdateAmountStock} />
               }
               
             </Layout>
@@ -135,9 +135,9 @@ function App() {
                 data={filteredData}
                 columnsCustom={filteredColumnsCustom}
             />
-            <EditStock
-                open={showEditStock} 
-                handleClose={handleCloseEditStock} 
+            <UpdateAmountStock
+                open={showUpdateAmountStock} 
+                handleClose={handleCloseUpdateAmountStock} 
                 data={filteredData}
                 columnsCustom={filteredColumnsCustom}
             />
