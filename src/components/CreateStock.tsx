@@ -43,7 +43,7 @@ import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
-import MissingData from './MissingData';
+import ErrorModal from './ErrorModal';
 
 interface mainData {
     id: number;
@@ -165,7 +165,8 @@ export default function CreateStock(
 
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
-    const [openMissingData, setOpenMissingData] = useState(false);  
+    const [openErrorModal, setOpenErrorModal] = useState(false);  
+    const [errorData, setErrorData] = useState("");  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -211,6 +212,7 @@ export default function CreateStock(
 
                             "alert_amount": stockAlertAmountTemp,
                             "alert_date": stockAlertDateTemp,
+                            "alert_on": false,
                         })
                     })
 
@@ -219,10 +221,17 @@ export default function CreateStock(
                         const responseData = await response.json() // parse the response data
                         console.log('POST request successful: ', responseData)
                         loadingSuccess = true
-                    } else {
+                    } else if (response.status === 400) {
                         // Handle non-successful responses
                         console.error('Request failed: ', response.status, response.statusText)
+                        const errorData = await response.json()
+                        console.error('Request failed 2: ', errorData.error)
                         // Handle the error here
+                        if (errorData.errorCode === 'duplicate_product') {
+                            setOpenErrorModal(true) // Open the modal for duplicate product error
+                            setErrorData(errorData.errorCode)
+                        
+                        }
                     }
                 } catch (error: unknown) {
                     if (typeof error === 'string') {
@@ -236,6 +245,7 @@ export default function CreateStock(
                     }
                 } finally {
                     // setIsLoading(())
+                    console.log("loadingSuccess: ", loadingSuccess)
                     setIsLoading((prevLoading: any) => ({
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
@@ -247,20 +257,22 @@ export default function CreateStock(
 
             // setSelectedUsers(selectedUsersTemp)
             // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
-            close()
+            // close()
         }
         setOpenSaveChanges(false);
     }
-    const handleCloseMissingData = () => {
-        setOpenMissingData(false)
+    const handleCloseErrorModal = () => {
+        setOpenErrorModal(false)
     }
 
     const handleOpenSaveChanges = () => {
         console.log("stockNameTemp: ", stockNameTemp)
         if(stockNameTemp)
             setOpenSaveChanges(true);
-        else
-            setOpenMissingData(true)
+        else{
+            setOpenErrorModal(true)
+            setErrorData("missing_data")
+        }
     }
 
     const handleOpenOptionsCreate = (newData:  string) => {
@@ -365,6 +377,7 @@ export default function CreateStock(
         // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
         // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
         // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
+        // console.log("isLoading.fieldsFetchCreateStock", isLoading.fieldsFetchCreateStock)
 
         if(isLoading.fieldsFetchCreateStock){
             // alert("Reload page")
@@ -406,9 +419,10 @@ export default function CreateStock(
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
                     />
-                    <MissingData
-                        openMissingData={openMissingData}
-                        closeMissingData={handleCloseMissingData} 
+                    <ErrorModal
+                        openErrorModal={openErrorModal}
+                        closeErrorModal={handleCloseErrorModal}
+                        errorData={errorData} 
                     />
                     <Typography align='center' variant="h5">Create stock</Typography>
                     <CreateStockMainData 

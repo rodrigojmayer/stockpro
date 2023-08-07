@@ -237,7 +237,7 @@ export const modalStyleSaveInternal = {
     overflowX: "hidden",
 };
 
-export const modalStyleMissingDataInternal = {
+export const modalStyleErrorModalInternal = {
     top: 74,
     width: "270px",
     backgroundColor: "rgb(45,72, 91, 1)",
