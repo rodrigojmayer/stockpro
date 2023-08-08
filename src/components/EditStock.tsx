@@ -101,15 +101,15 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    data: Data[]
-    columnsCustom: ColumnData[] 
+    // data: Data[]
+    // columnsCustom: ColumnData[] 
 }
 
 export default function EditStock( 
     {   open, 
         handleClose, 
-        data,
-        columnsCustom,
+        // data,
+        // columnsCustom,
     }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -446,15 +446,15 @@ export default function EditStock(
                         onStockAlertDateChange={handleStockAlertDateChange}
  
                     />
-                    <CreateStockCustomFields
+                    {/* <CreateStockCustomFields
                         hiddenPanel={openOptionsCreate.customFields}
                         openOptionsCreate={handleOpenOptionsCreate}
                         
-                        columnsCustom={columnsCustom}
+                        // columnsCustom={columnsCustom}
                         
                         stockCustomValuesTemp={stockCustomValuesTemp}
                         onStockCustomValuesTemp={handleStockCustomValuesTemp}
-                    />
+                    /> */}
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}

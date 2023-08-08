@@ -37,21 +37,23 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { Data, DataCreateStockOptions, ColumnData } from '../types';
+import { Data, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../types';
 
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
+import EditStock from './EditStock';
+import ErrorModal from './ErrorModal';
 
-interface mainData {
-    id: number;
-    name: string;
-  }
-  interface emailsAlertData {
-      id: number;
-      email: string;
-    }
+// interface mainData {
+//     id: number;
+//     name: string;
+//   }
+//   interface emailsAlertData {
+//       id: number;
+//       email: string;
+//     }
 
 
 // const measureArray: mainData[] = [
@@ -66,12 +68,12 @@ interface mainData {
 //     { id: 2, name: 'Food'},
 //     { id: 3, name: 'Furniture'},
 // ];
-const subCategoryArray: mainData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Cutlery'},
-    { id: 2, name: 'Fruits'},
-    { id: 3, name: 'Chairs'},
-];
+// const subCategoryArray: mainData[] = [
+//     { id: 0, name: '-'},
+//     { id: 1, name: 'Cutlery'},
+//     { id: 2, name: 'Fruits'},
+//     { id: 3, name: 'Chairs'},
+// ];
 
 
 interface Category {
@@ -85,31 +87,29 @@ interface Category {
     sub_categories: string[];
 }
 
-const emailsAlert: emailsAlertData[] = [
-    { id: 1, email: 'email1@test.com' },
-    { id: 2, email: 'email2@test.com'  },
-    { id: 3, email: 'email3@test.com'},
-];
+// const emailsAlert: emailsAlertData[] = [
+//     { id: 1, email: 'email1@test.com' },
+//     { id: 2, email: 'email2@test.com'  },
+//     { id: 3, email: 'email3@test.com'},
+// ];
 
-const INITIAL_CREATESTOCK_OPTIONS = {
-    mainData: false,  
-    secondaryData: true,
-    alerts: true,    
-    customFields: true,
-}
+// const INITIAL_CREATESTOCK_OPTIONS = {
+//     mainData: false,  
+//     secondaryData: true,
+//     alerts: true,    
+//     customFields: true,
+// }
 
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    data: Data[]
-    columnsCustom: ColumnData[] 
+    productUpdate:  ProductUpdateData 
 }
 
 export default function UpdateAmountStock( 
     {   open, 
         handleClose, 
-        data,
-        columnsCustom,
+        productUpdate,
     }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -117,98 +117,42 @@ export default function UpdateAmountStock(
         handleClose(false)
     } 
 
+
+    console.log("productUpdate: ", productUpdate)
+    // console.log("columnsCustom: ", columnsCustom)
+
     const { categories } = useContext<any>(CategoriesContext) 
-    const categoryArray = categories
     const { measures } = useContext<any>(MeasuresContext)
-    const measureArray = measures
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
 
-    const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-    const [stockName, setStockName] = useState('');
-    const [stockNameTemp, setStockNameTemp] = useState('');
-    const [stockAmount, setStockAmount] = useState('');
-    const [stockAmountTemp, setStockAmountTemp] = useState('');
-    const [stockMeasure, setStockMeasure] = useState('');
-    const [stockMeasureTemp, setStockMeasureTemp] = useState('');
-    const [stockCategory, setStockCategory] = useState('');
-    // const [stockCategoryTemp, setStockCategoryTemp] = useState('');
-    const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
-    const [stockSubCategory, setStockSubCategory] = useState('');
-    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
-    const [stockPrice, setStockPrice] = useState('');
-    const [stockPriceTemp, setStockPriceTemp] = useState('');
-    const [stockCodeTemp, setStockCodeTemp] = useState('');
-    const [stockDescription, setStockDescription] = useState('');
-    const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
-    const [stockImageUrl, setStockImageUrl] = useState('');
-    const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
-    const [stockAlertAmount, setStockAlertAmount] = useState('');
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
-    const [stockAlertDate, setStockAlertDate] = useState('');
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
-    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
-    const [stockCustomValues, setStockCustomValues] = useState('');
-    
-    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-    const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
-
-    // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
-    //     label: value.label,
-    //     value: "",
-    // })));
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
-
-    
-
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const [openErrorModal, setOpenErrorModal] = useState(false);  
+    const [errorData, setErrorData] = useState(""); 
+    
+    const handleCloseErrorModal = () => {
+        setOpenErrorModal(false)
+    }
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
             // console.log("stockNameTemp: ", stockNameTemp)
-            // console.log("stockAmountTemp: ", stockAmountTemp)
-            // console.log("stockMeasureTemp: ", stockMeasureTemp)
-            // console.log("stockCategoryTemp: ", stockCategoryTemp)
-            // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
-            // console.log("stockPriceTemp: ", stockPriceTemp)
-            // console.log("stockCodeTemp: ", stockCodeTemp)
-            // console.log("stockDescriptionTemp: ", stockDescriptionTemp)
-            // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
-            // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
-            // console.log("stockAlertDateTemp: ", stockAlertDateTemp)
-            // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
 
-            // const stockAlertDateTemp2 = new Date()
             const fetchCreateStockProduct = async () => {
                 let loadingSuccess: boolean = false
                 try {
                     const response = await fetch(`http://localhost:4000/api/products/`, {
-                        method: 'POST',
+                        method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
                         body:JSON.stringify({
-                                // "id": 7,
-                            "product": stockNameTemp,
                             "id_client": user.id_client,
-                            "amount": stockAmountTemp,
-                            "measure": stockMeasureTemp,
-                            "category": stockCategoryTemp && stockCategoryTemp.name,
-                            "sub_category": stockSubCategoryTemp,
-                            "custom_fields": stockCustomValuesTemp,
-                            "deleted": false,
 
-                            "price": stockPriceTemp,
-                            "code": stockCodeTemp,
-                            "description": stockDescriptionTemp,
-                            "url_image": stockImageUrlTemp,
-
-                            "alert_amount": stockAlertAmountTemp,
-                            "alert_date": stockAlertDateTemp,
                         })
                     })
 
@@ -240,7 +184,7 @@ export default function UpdateAmountStock(
                     }));
                 }
             } 
-            fetchCreateStockProduct()
+            // fetchCreateStockProduct()        //////////Change the name for update
 
 
             // setSelectedUsers(selectedUsersTemp)
@@ -251,103 +195,6 @@ export default function UpdateAmountStock(
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
     
-    const handleOpenOptionsCreate = (newData:  string) => {
-        const updatedOptions = { ...openOptionsCreate };
-        for (const key in updatedOptions) {
-            if (Object.prototype.hasOwnProperty.call(updatedOptions, key)) 
-            updatedOptions[key as keyof typeof updatedOptions] = (newData===key ? false : true );
-        }
-        setOpenOptionsCreate(updatedOptions);
-    }
-    
-    const handleStockNameChange = (value: string) => {
-        console.log("Name value: ", value)
-        setStockNameTemp(value)
-    }
-    const handleStockAmountChange = (value: string) => {
-        console.log("Amount value: ", value)
-        setStockAmountTemp(value)
-    }
-    const handleStockMeasureChange = (value: string) => {
-    // const handleStockMeasureChange = (event: any) => {
-        console.log("Measure value: ", value)
-        // console.log("Measure event: ", event)
-        setStockMeasureTemp(value)
-    }
-    // const handleStockCategoryChange = (value: string) => {
-    const handleStockCategoryChange = (id: number) => {
-        // console.log("Category value: ", value)
-        // const selectedCategoryId = event.target.value as number;
-        const selectedCategory = categories.find((category: any) => category.id === id) || null;
-    
-        console.log("Category value: ", id)
-        console.log("selectedCategory: ", selectedCategory)
-        // setStockCategoryTemp(value)
-        setStockCategoryTemp(selectedCategory)
-    }
-    const handleStockSubCategoryChange = (value: string) => {
-        console.log("SubCategory value: ", value)
-        setStockSubCategoryTemp(value)
-    }
-    const handleStockPriceChange = (value: string) => {
-        console.log("Price value: ", value)
-        setStockPriceTemp(value)
-    }
-    const handleStockCodeChange = (value: string) => {
-        console.log("Code value: ", value)
-        setStockCodeTemp(value)
-    }
-    const handleStockDescriptionChange = (value: string) => {
-        console.log("Description value: ", value)
-        setStockDescriptionTemp(value)
-    }
-    const handleSetImageUrl = (value: string) => {
-    console.log("handleSetImageUrl value: ", value)
-    setStockImageUrlTemp(value)
-    }
-    const handleStockAlertAmountChange = (value: string) => {
-    console.log("handleSetAlertAmount value: ", value)
-    setStockAlertAmountTemp(value)
-    }
-    // const handleStockAlertDateChange = (value: string) => {
-    const handleStockAlertDateChange = (date:Date | null | string) => {
-        console.log("handleSetAlertDate value: ", date)
-        // if(date)
-        //     setStockAlertDateTemp(date)
-        if (date) {
-            // const formattedDate = date.toISOString();
-            // const formattedDate = date;
-            console.log("date: ", date)
-            // setStockAlertDateTemp(formattedDate);
-            setStockAlertDateTemp(date);
-        } else {
-            // setStockAlertDateTemp('');
-            setStockAlertDateTemp("");
-        }
-    }
-    const handleStockCustomValuesTemp = (value: string, dataKey: string) => {
-        // console.log("Custom value: ", value)
-        // console.log("Custom dataKey: ", dataKey)
-        // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState('');
-    
-        // const updateCustomValuesTemp = [...stockCustomValuesTemp, {[dataKey]:value}]
-        // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-        //     updateFieldsNew[index].okButtonShow = true
-        // else
-        //     updateFieldsNew[index].okButtonShow = false
-        
-        setStockCustomValuesTemp((prevCustomValues: object) => ({
-            ...prevCustomValues,
-            [dataKey]:value,
-        }));
-        // console.log("updateCustomValuesTemp: ", updateCustomValuesTemp)
-
-        // setStockCustomValuesTemp(updateCustomValuesTemp)
-    }
-
     
     useEffect(() => {
         // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
@@ -360,28 +207,8 @@ export default function UpdateAmountStock(
             window.location.reload();
         }
     }, [isLoading]) // To know if after save should reload the page
-    // alert by AlertAmount
-    // alert by AlertDate
-    // custom fields???
-
-    // const customeante = stockCustomValuesTemp.map((value) => ({
-    //     label: value.label,
-    //     newField: "new value",
-    // }))
 
     
-    useEffect(() => {
-        // stockCustomValuesTemp.map((value) => {
-        //     console.log(value)
-        // })
-        // console.log("openOptionsCreate: ", openOptionsCreate)
-        // setSelectedUsersTemp(selectedUsers)
-        // setStockMeasureTemp(measure)
-        // setStockCategoryTemp(category)
-        // setStockSubCategoryTemp(subCategory)
-        // console.log("stockMeasureTemp: ", stockMeasureTemp)
-
-    }, [ open, openOptionsCreate])
     
     return (
         <Modal
@@ -394,66 +221,62 @@ export default function UpdateAmountStock(
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
                     />
-                    <Typography align='center' variant="h5">Update Amount Stock</Typography>
-                    <CreateStockMainData 
-                        hiddenPanel={openOptionsCreate.mainData}
-                        openOptionsCreate={handleOpenOptionsCreate}
-                        
-                        stockNameTemp={stockNameTemp}
-                        onStockNameChange={handleStockNameChange}
+                     {/* <ErrorModal
+                        openErrorModal={openErrorModal}
+                        closeErrorModal={handleCloseErrorModal}
+                        errorData={errorData} 
+                    /> */}
+                    <Typography variant="h5">{productUpdate.name_prod}</Typography>
+                    
+                    <Box className={classes.customBoxColumn}>
+                        <UpButton
+                            direction="up"
+                            clicked={() => alert("up")}
+                        /> 
+                        <Box className={classes.customBoxRow}>
+                            <Typography variant="h6">{productUpdate.amount_prod}</Typography>
+                            
+                            
+                            <PlusButton
+                                sizeIcoExt="50px !important"
+                                sizeIcoInt="57px !important"
+                                colorIco = "white"  // Fix color
+                                clicked={() => alert("plus")}
+                            /> 
 
-                        stockAmountTemp={stockAmountTemp}
-                        onStockAmountChange={handleStockAmountChange}
-
-                        measureArray={measureArray}
-                        stockMeasureTemp={stockMeasureTemp}
-                        onStockMeasureChange={handleStockMeasureChange}
-                        
-                        stockCodeTemp={stockCodeTemp}
-                        onStockCodeChange={handleStockCodeChange}
-
-                        categoryArray={categoryArray}
-                        stockCategoryTemp={stockCategoryTemp}
-                        onStockCategoryChange={handleStockCategoryChange}
-                        
-                        subCategoryArray={subCategoryArray}
-                        stockSubCategoryTemp={stockSubCategoryTemp}
-                        onStockSubCategoryChange={handleStockSubCategoryChange}
-                    />
-                    <CreateStockSecondaryData 
-                        hiddenPanel={openOptionsCreate.secondaryData}
-                        openOptionsCreate={handleOpenOptionsCreate} 
-                        
-                        stockPriceTemp={stockPriceTemp}
-                        onStockPriceChange={handleStockPriceChange}
-                        
-                        stockDescriptionTemp={stockDescriptionTemp}
-                        onStockDescriptionChange={handleStockDescriptionChange}
-                        
-                        imageUrl={stockImageUrlTemp}
-                        onSetImageUrl={handleSetImageUrl}
-                    />
-                    <CreateStockAlerts 
-                        hiddenPanel={openOptionsCreate.alerts}
-                        openOptionsCreate={handleOpenOptionsCreate}
-                        
-                        stockMeasureTemp={stockMeasureTemp}
-
-                        stockAlertAmountTemp = {stockAlertAmountTemp}
-                        onStockAlertAmountChange = {handleStockAlertAmountChange}
-                        
-                        stockAlertDateTemp={stockAlertDateTemp}
-                        onStockAlertDateChange={handleStockAlertDateChange}
- 
-                    />
-                    <CreateStockCustomFields
-                        hiddenPanel={openOptionsCreate.customFields}
-                        openOptionsCreate={handleOpenOptionsCreate}
-                        
-                        columnsCustom={columnsCustom}
-                        
-                        stockCustomValuesTemp={stockCustomValuesTemp}
-                        onStockCustomValuesTemp={handleStockCustomValuesTemp}
+                            <TextField
+                                // label="Price"
+                                // onChange={ handleEditCustomFieldNew }
+                                maxRows={1}
+                                size="small"
+                                type="number"
+                                className={classes.inputUpdateAmountStock}
+                                // value={productUpdate.amount_prod}
+                                // onChange={ (event) => onStockPriceChange(event.target.value) }
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                    style: {
+                                    // borderRadius: 10,
+                                    },
+                                    // endAdornment: (
+                                        // <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
+                                    // ),
+                                }}
+                            />
+                        </Box> 
+                        <UpButton
+                            direction="down"
+                            clicked={() => alert("down")}
+                        /> 
+                    </Box>  
+                    
+                    <EditStock  ////////////////////////////////////////////// Continue with the edit stock modal here
+                        open={false} 
+                        handleClose={function (newData: boolean): void {
+                            throw new Error('Function not implemented.');
+                        } } 
+                        // data={[]} 
+                        // columnsCustom={[]}                    
                     />
                     <Box className={classes.finishButtons}>
                         <CancelButton

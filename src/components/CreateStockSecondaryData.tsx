@@ -81,6 +81,8 @@ export default function CreateStockSecondaryData(
         // handleClose(false)
     }
 
+    // console.log("entra al createstocksecondarydata: ")   
+        
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes

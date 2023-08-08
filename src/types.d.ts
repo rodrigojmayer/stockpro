@@ -38,7 +38,8 @@ export interface Data {
 export interface DataTable {
   data: Data[] 
   columns: ColumnData[]
-  openUpdateAmountStock: (id: Number) => void
+  // openUpdateAmountStock: (id_prod: Number, name_prod: String, amount_prod: Number) => void
+  openUpdateAmountStock: (newData: ProductUpdateData) => void
 }
 
 export interface ColumnData {
@@ -90,4 +91,10 @@ export interface DataCreateStockOptions {
 export interface ChildProps {
   open:  boolean
   handleClose: (newData: boolean) => void
+}
+
+export interface ProductUpdateData {
+  id_prod: number;
+  name_prod: string;
+  amount_prod: number;
 }

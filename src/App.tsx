@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useMemo } from 'react'
+import { useEffect, useState, useContext, useCallback } from 'react'
 import { Container, Typography, Grid } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Backdrop from '@mui/material/Backdrop'
@@ -10,7 +10,7 @@ import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
 import CreateStock from './components/CreateStock';
 import UpdateAmountStock from './components/UpdateAmountStock';
-import { Data, ColumnData, CustomValueData, UserData } from './types';
+import { Data, ColumnData, CustomValueData, UserData, ProductUpdateData } from './types';
 import { UserContext } from './context/UserContext';
 import { IsLoadingContext } from './context/IsLoadingContext';
 import { ColumnsContext } from './context/ColumnsContext';
@@ -24,33 +24,41 @@ const theme = createTheme({
     ].join(','),
     fontSize: 20,
   },
-});
+})
 
-const idColumnsTableOrder: Number[] = [1, 2, 3, 4];
+const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
     
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState("");
+  console.log("Rerender App: ")
+
+  const [ searchQuery, setSearchQuery ] = useState("")
   
   
-  const [showCreateStock, setShowCreateStock] = useState(false);
-  const [showUpdateAmountStock, setShowUpdateAmountStock] = useState(false);
-  
+  const [ showCreateStock, setShowCreateStock ] = useState(false)
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
 
+  const [ productUpdate, setProductUpdate ] = useState<ProductUpdateData>({
+    "id_prod": 0,
+    "name_prod": "",
+    "amount_prod": 0
+  })
+  const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
   const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
-  // const openUpdateAmountStock = () => setShowUpdateAmountStock(true)
-  const openUpdateAmountStock = (id_prod:Number) => {
+  const openUpdateAmountStock = (newData:ProductUpdateData) => {
     setShowUpdateAmountStock(true)
-    alert(`Product: ${id_prod}`)
-    // console.log("Product: ", id_prod)
-  }
+    setProductUpdate({
+      "id_prod": newData.id_prod,
+      "name_prod": newData.name_prod,
+      "amount_prod": newData.amount_prod
+    })
+  }  
 
   const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
-  const { products } = useContext<any>(ProductsContext);
+  const { products } = useContext<any>(ProductsContext)
   
 
   const [filteredData, setFilteredData] = useState([])
@@ -138,8 +146,8 @@ function App() {
             <UpdateAmountStock
                 open={showUpdateAmountStock} 
                 handleClose={handleCloseUpdateAmountStock} 
-                data={filteredData}
-                columnsCustom={filteredColumnsCustom}
+
+                productUpdate={productUpdate} 
             />
           </ThemeProvider>
         </div>

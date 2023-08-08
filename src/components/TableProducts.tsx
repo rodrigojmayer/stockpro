@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
-import { Data, DataTable, ColumnData } from '../types';
+import { Data, DataTable, ColumnData, ProductUpdateData } from '../types';
 import { UserContext } from '../context/UserContext'
 import { ColumnsContext } from '../context/ColumnsContext'
 import { tableStyles, useStylesGlobal } from '../Styles';
@@ -62,7 +62,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 
 // const { classes } = useStylesGlobal()
 // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(id: Number) => void) {
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
 
     
     // console.log("_index: ", _index)
@@ -97,7 +97,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                 ...newRow.custom_fields
               }
         }
-      console.log("new newRow: ", newRow)
+      // console.log("new newRow: ", newRow)
 
 
       }
@@ -110,7 +110,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         <TableCell
           key={column.id}
           align='center'
-          onClick={() => openUpdateAmountStock(newRow._id)}
+          onClick={() => openUpdateAmountStock({"id_prod":newRow._id, "name_prod": newRow.product, "amount_prod": newRow.amount})}
           className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
           // className={`${ _index%2 ? classes.row_even  : classes.row_odd } ${ newRow.alert_on ? classes.alert_on  : "" }`}
           // className={` ${ classes.alert_on  : "" }`}
@@ -157,7 +157,7 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
   
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   // const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
-    console.log("data: ", data)
+    // console.log("data: ", data)
   const [filteredData, setFilteredData] = useState(data)
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {

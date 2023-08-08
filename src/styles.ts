@@ -90,6 +90,11 @@ export const useStylesGlobal = makeStyles()({
         borderRadius: 10,
         width: "100%",
     },
+    inputUpdateAmountStock: {
+        backgroundColor: "white",
+        borderRadius: 10,
+        width: "60px",
+    },
     inputClassName: {
         borderRadius: 10,
     },
