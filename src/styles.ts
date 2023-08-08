@@ -48,6 +48,10 @@ export const useStylesGlobal = makeStyles()({
         minHeight: "330px",
         gap: 8,
     },
+    updateBoxColumn: {
+        marginTop: "16px",
+        minHeight: "250px",
+    },
     customBoxRow: {
         display: "flex",
         justifyContent:  "center",
@@ -91,9 +95,8 @@ export const useStylesGlobal = makeStyles()({
         width: "100%",
     },
     inputUpdateAmountStock: {
-        backgroundColor: "white",
-        borderRadius: 10,
-        width: "60px",
+        margin: "auto",
+        width: "65px",
     },
     inputClassName: {
         borderRadius: 10,
@@ -208,8 +211,8 @@ export const modalStyleInternal = {
     top: 74,
     maxWidth: "700px",
     width: "calc(100% - 32px)",
-    height: "520px",
-    // maxHeight: "520px",
+    // height: "520px",
+    maxHeight: "520px",
     // minHeight: "490px",
     backgroundColor: "rgb(45,72, 91, 1)",
     borderRadius: "10px",
@@ -220,6 +223,7 @@ export const modalStyleInternal = {
     overflowX: "hidden",
 
 };
+
 
 
 export const modalStyleSaveExternal = {

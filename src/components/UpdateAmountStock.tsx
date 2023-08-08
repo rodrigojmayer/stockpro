@@ -226,48 +226,71 @@ export default function UpdateAmountStock(
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
                     /> */}
+                    <Box className={`${classes.customBoxColumn} ${classes.updateBoxColumn}`}>
                     <Typography variant="h5">{productUpdate.name_prod}</Typography>
                     
-                    <Box className={classes.customBoxColumn}>
-                        <UpButton
-                            direction="up"
-                            clicked={() => alert("up")}
-                        /> 
-                        <Box className={classes.customBoxRow}>
-                            <Typography variant="h6">{productUpdate.amount_prod}</Typography>
-                            
-                            
-                            <PlusButton
-                                sizeIcoExt="50px !important"
-                                sizeIcoInt="57px !important"
-                                colorIco = "white"  // Fix color
-                                clicked={() => alert("plus")}
-                            /> 
+                        <Grid container spacing={0} alignItems="center" >
+                            <Grid item xs={6} md={6} > </Grid>
+                            <Grid item xs={3} md={6} display="flex" justifyContent="center">
+                                <UpButton
+                                    direction="up"
+                                    clicked={() => alert("up")}
+                                /> 
+                            </Grid>
+                            <Grid item xs={3} md={6} > </Grid>
 
-                            <TextField
-                                // label="Price"
-                                // onChange={ handleEditCustomFieldNew }
-                                maxRows={1}
-                                size="small"
-                                type="number"
-                                className={classes.inputUpdateAmountStock}
-                                // value={productUpdate.amount_prod}
-                                // onChange={ (event) => onStockPriceChange(event.target.value) }
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                    style: {
-                                    // borderRadius: 10,
-                                    },
-                                    // endAdornment: (
-                                        // <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
-                                    // ),
-                                }}
-                            />
-                        </Box> 
-                        <UpButton
-                            direction="down"
-                            clicked={() => alert("down")}
-                        /> 
+                            <Grid item xs={1} md={8} > </Grid>
+                            <Grid item xs={2} md={8} >
+                            {/* <Box className={classes.customBoxRow}> */}
+                                <Typography align='center' variant="h6" >
+                                    {productUpdate.amount_prod}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3} md={8} display="flex" justifyContent="center" > 
+                                <PlusButton
+                                    sizeIcoExt="50px !important"
+                                    sizeIcoInt="57px !important"
+                                    colorIco = "white"  // Fix color
+                                    clicked={() => alert("plus")}
+                                />
+                            </Grid>
+                            <Grid item xs={3} md={8} display="flex" justifyContent="center" >
+                                <TextField
+                                    // onChange={ handleEditCustomFieldNew }
+                                    maxRows={1}
+                                    size="small"
+                                    type="number"
+                                    className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
+                                    // value={productUpdate.amount_prod}
+                                    // onChange={ (event) => onStockPriceChange(event.target.value) }
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        style: {
+                                            // borderRadius: 10,
+                                        },
+                                        // endAdornment: (
+                                            // <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
+                                            // ),
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={2} md={8} display="flex" justifyContent="center" >
+                                <Typography variant="h6" >
+                                    {productUpdate.measure_prod}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={1} md={8} > </Grid>
+
+                            <Grid item xs={6} md={8} > </Grid>
+                            <Grid item xs={3} md={8} display="flex" justifyContent="center" >
+                                {/* </Box>  */}
+                                <UpButton
+                                    direction="down"
+                                    clicked={() => alert("down")}
+                                /> 
+                            </Grid>
+                            <Grid item xs={3} md={6} > </Grid>
+                        </Grid>
                     </Box>  
                     
                     <EditStock  ////////////////////////////////////////////// Continue with the edit stock modal here

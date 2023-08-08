@@ -97,4 +97,5 @@ export interface ProductUpdateData {
   id_prod: number;
   name_prod: string;
   amount_prod: number;
+  measure_prod: string;
 }

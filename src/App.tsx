@@ -42,7 +42,8 @@ function App() {
   const [ productUpdate, setProductUpdate ] = useState<ProductUpdateData>({
     "id_prod": 0,
     "name_prod": "",
-    "amount_prod": 0
+    "amount_prod": 0,
+    "measure_prod": ""
   })
   const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
   const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
@@ -51,7 +52,8 @@ function App() {
     setProductUpdate({
       "id_prod": newData.id_prod,
       "name_prod": newData.name_prod,
-      "amount_prod": newData.amount_prod
+      "amount_prod": newData.amount_prod,
+    "measure_prod": newData.measure_prod
     })
   }  
 
