@@ -126,7 +126,7 @@ export default function UpdateAmountStock(
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
-
+    const [ valueUpdate, setValueUpdate ] = useState<number>(0)
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -234,26 +234,26 @@ export default function UpdateAmountStock(
                             <Grid item xs={3} md={6} display="flex" justifyContent="center">
                                 <UpButton
                                     direction="up"
-                                    clicked={() => alert("up")}
+                                    clicked={() => setValueUpdate(valueUpdate+1)}
                                 /> 
                             </Grid>
                             <Grid item xs={3} md={6} > </Grid>
 
                             <Grid item xs={1} md={8} > </Grid>
-                            <Grid item xs={2} md={8} >
+                            <Grid item xs={5} md={8} >
                             {/* <Box className={classes.customBoxRow}> */}
                                 <Typography align='center' variant="h6" >
                                     {productUpdate.amount_prod}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={3} md={8} display="flex" justifyContent="center" > 
-                                <PlusButton
+                            {/* <Grid item xs={3} md={8} display="flex" justifyContent="center" >  */}
+                                {/* <PlusButton
                                     sizeIcoExt="50px !important"
                                     sizeIcoInt="57px !important"
                                     colorIco = "white"  // Fix color
                                     clicked={() => alert("plus")}
-                                />
-                            </Grid>
+                                /> */}
+                            {/* </Grid> */}
                             <Grid item xs={3} md={8} display="flex" justifyContent="center" >
                                 <TextField
                                     // onChange={ handleEditCustomFieldNew }
@@ -261,7 +261,7 @@ export default function UpdateAmountStock(
                                     size="small"
                                     type="number"
                                     className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
-                                    // value={productUpdate.amount_prod}
+                                    value={valueUpdate}
                                     // onChange={ (event) => onStockPriceChange(event.target.value) }
                                     InputProps={{
                                         className: classes.inputClassName,
@@ -286,7 +286,7 @@ export default function UpdateAmountStock(
                                 {/* </Box>  */}
                                 <UpButton
                                     direction="down"
-                                    clicked={() => alert("down")}
+                                    clicked={() => setValueUpdate(valueUpdate-1)}
                                 /> 
                             </Grid>
                             <Grid item xs={3} md={6} > </Grid>
