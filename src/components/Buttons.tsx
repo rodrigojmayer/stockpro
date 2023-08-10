@@ -325,6 +325,35 @@ export function PlusButton({ sizeIco, sizeIcoExt, sizeIcoInt, colorIco, clicked 
   )
 }
 
+
+export function MinusButton({ sizeIco, sizeIcoExt, sizeIcoInt, colorIco, clicked }:  PlusButtonProps ) {
+  const { classes } = useStyles()
+  // console.log("sizeIco: ", sizeIco)
+
+  const handleClick = () => {
+    if (clicked)
+      clicked()
+  }
+  if (sizeIco) {
+    sizeIcoExt = sizeIco
+    sizeIcoInt = sizeIco
+  }
+  
+  return(
+    <IconButton
+      className={classes.plusIcon}
+      id="minusButton"
+      sx={{width: sizeIcoExt, height: sizeIcoExt}}
+      onClick={handleClick}
+      >
+        <RemoveCircleTwoToneIcon 
+        // sx={{width: sizeIco, height: sizeIco}}
+        sx={{width: sizeIcoInt, height: sizeIcoInt, color: colorIco}}
+        />
+    </IconButton>
+  )
+}
+
 export function UpButton({ sizeIco, roundedIco, cusField, clicked, direction }: ButtonProps ) {
   const { classes } = useStyles()
   // const colorOk = theme.palette.success.main
