@@ -33,15 +33,15 @@ import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
 import List from '@mui/material/List/List';
-import IonTrash from "../assets/ion_trash.svg";
+// import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
+// import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../types';
 
-import { CategoriesContext } from '../context/CategoriesContext';
-import { MeasuresContext } from '../context/MeasuresContext';
+// import { CategoriesContext } from '../context/CategoriesContext';
+// import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import EditStock from './EditStock';
@@ -77,16 +77,16 @@ import ErrorModal from './ErrorModal';
 // ];
 
 
-interface Category {
-    _id: string;
-    id: number;
-    name: string;
-    deleted: boolean;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-    sub_categories: string[];
-}
+// interface Category {
+//     _id: string;
+//     id: number;
+//     name: string;
+//     deleted: boolean;
+//     createdAt: string;
+//     updatedAt: string;
+//     __v: number;
+//     sub_categories: string[];
+// }
 
 // const emailsAlert: emailsAlertData[] = [
 //     { id: 1, email: 'email1@test.com' },
@@ -119,29 +119,41 @@ export default function UpdateAmountStock(
     } 
 
 
-    console.log("productUpdate: ", productUpdate)
+    // console.log("productUpdate: ", productUpdate)
     // console.log("columnsCustom: ", columnsCustom)
 
-    const { categories } = useContext<any>(CategoriesContext) 
-    const { measures } = useContext<any>(MeasuresContext)
+    // const { categories } = useContext<any>(CategoriesContext) 
+    // const { measures } = useContext<any>(MeasuresContext)
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
-    const [ valueUpdate, setValueUpdate ] = useState<number>(0)
-    const [ valueModuleUpdate, setValueModuleUpdate ] = useState<number>(0)
+    const [ valueUpdate, setValueUpdate ] = useState<number>(-1)
+    const [ valueModuleUpdate, setValueModuleUpdate ] = useState<number>(1)
 
     const upValue = () => {
-        setValueUpdate(valueUpdate+1)
-        setValueModuleUpdate(Math.abs(valueUpdate+1))
+        let newValue = valueUpdate+1
+        if(newValue===0)
+            newValue = 1
+        setValueUpdate(newValue)
+        setValueModuleUpdate(Math.abs(newValue))
     }
     const downValue = () => {
-        setValueUpdate(valueUpdate-1)
-        setValueModuleUpdate(Math.abs(valueUpdate-1))
+        let newValue = valueUpdate-1
+        if(newValue===0)
+            newValue = -1
+        setValueUpdate(newValue)
+        setValueModuleUpdate(Math.abs(newValue))
     }
     const writeValue = (e:any) => {
-        setValueUpdate(Number(e.target.value))
-        setValueModuleUpdate(Math.abs(Number(e.target.value)))
+        let newValue = (Number(e.target.value))
+        setValueUpdate(newValue)
+        setValueModuleUpdate(Math.abs(newValue))
     }
+    const ButtonOperator = valueUpdate > 0 ? PlusButton : MinusButton;
+    const swapOperator = () => {
+        setValueUpdate(-valueUpdate)
+    }
+
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState(""); 
@@ -261,21 +273,12 @@ export default function UpdateAmountStock(
                                 </Typography>
                             </Grid>
                             <Grid item xs={3} md={8} display="flex" justifyContent="center" > 
-                                {valueUpdate > 0 ? (
-                                <PlusButton
+                                <ButtonOperator
                                     sizeIcoExt="50px !important"
                                     sizeIcoInt="57px !important"
                                     colorIco = "white"  // Fix color
-                                    clicked={() => alert("plus")}
+                                    clicked={() => swapOperator()}
                                 />
-                                ) : (
-                                <MinusButton
-                                    sizeIcoExt="50px !important"
-                                    sizeIcoInt="57px !important"
-                                    colorIco = "white"  // Fix color
-                                    clicked={() => alert("plus")}
-                                />
-                                )}
                             </Grid>
                             <Grid item xs={3} md={8} display="flex" justifyContent="center" >
                                 <TextField

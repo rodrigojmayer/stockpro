@@ -30,7 +30,7 @@ const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
     
 
 function App() {
-  console.log("Rerender App: ")
+  // console.log("Rerender App: ")
 
   const [ searchQuery, setSearchQuery ] = useState("")
   
