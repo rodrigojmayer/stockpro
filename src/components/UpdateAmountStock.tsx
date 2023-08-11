@@ -165,19 +165,24 @@ export default function UpdateAmountStock(
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            // console.log("stockNameTemp: ", stockNameTemp)
-
-            const fetchCreateStockProduct = async () => {
+            // console.log("stockNameTemp: ", ans)
+            console.log("productUpdate.amount_prod: ", productUpdate.id_prod)
+            console.log("valueUpdate: ", valueUpdate)
+            console.log("productUpdate.amount_prod: ", productUpdate.amount_prod)
+            const resultUpdated = productUpdate.amount_prod + valueUpdate
+            console.log("Updated result: ", resultUpdated)
+            
+            const fetchUpdateStockProduct = async () => {
                 let loadingSuccess: boolean = false
                 try {
-                    const response = await fetch(`http://localhost:4000/api/products/`, {
+                    const response = await fetch(`http://localhost:4000/api/products/${productUpdate.id_prod}`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
                         body:JSON.stringify({
-                            "id_client": user.id_client,
+                            "amount": resultUpdated,
 
                         })
                     })
@@ -210,7 +215,7 @@ export default function UpdateAmountStock(
                     }));
                 }
             } 
-            // fetchCreateStockProduct()        //////////Change the name for update
+            fetchUpdateStockProduct()        //////////Change the name for update
 
 
             // setSelectedUsers(selectedUsersTemp)
