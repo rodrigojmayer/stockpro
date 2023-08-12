@@ -23,19 +23,12 @@ import { OkButton,
          CancelButton, 
          PlusButton,
          UpButton,
-         MinusButton
+         MinusButton,
+         EditButton
         } from './Buttons';
-import  CreateStockMainData  from './CreateStockMainData'
-import  CreateStockSecondaryData  from './CreateStockSecondaryData'
-import  CreateStockAlerts  from './CreateStockAlerts'
-import  CreateStockCustomFields  from './CreateStockCustomFields'
-import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
-import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
-import EditIcon from '@mui/icons-material/Edit';
-import List from '@mui/material/List/List';
+// import EditIcon from '@mui/icons-material/Edit';
 // import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
-import ListItemText from '@mui/material/ListItemText';
 // import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../types';
@@ -46,60 +39,6 @@ import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import EditStock from './EditStock';
 import ErrorModal from './ErrorModal';
-
-// interface mainData {
-//     id: number;
-//     name: string;
-//   }
-//   interface emailsAlertData {
-//       id: number;
-//       email: string;
-//     }
-
-
-// const measureArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Unit'},
-//     { id: 2, name: 'Kg'},
-//     { id: 3, name: 'Lts'},
-// ]; 
-// const categoryArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Kitchens'},
-//     { id: 2, name: 'Food'},
-//     { id: 3, name: 'Furniture'},
-// ];
-// const subCategoryArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Cutlery'},
-//     { id: 2, name: 'Fruits'},
-//     { id: 3, name: 'Chairs'},
-// ];
-
-
-// interface Category {
-//     _id: string;
-//     id: number;
-//     name: string;
-//     deleted: boolean;
-//     createdAt: string;
-//     updatedAt: string;
-//     __v: number;
-//     sub_categories: string[];
-// }
-
-// const emailsAlert: emailsAlertData[] = [
-//     { id: 1, email: 'email1@test.com' },
-//     { id: 2, email: 'email2@test.com'  },
-//     { id: 3, email: 'email3@test.com'},
-// ];
-
-// const INITIAL_CREATESTOCK_OPTIONS = {
-//     mainData: false,  
-//     secondaryData: true,
-//     alerts: true,    
-//     customFields: true,
-// }
 
 interface ChildProps {
     open:  boolean
@@ -112,18 +51,11 @@ export default function UpdateAmountStock(
         handleClose, 
         productUpdate,
     }: ChildProps) {
-    // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
         handleClose(false)
     } 
 
-
-    // console.log("productUpdate: ", productUpdate)
-    // console.log("columnsCustom: ", columnsCustom)
-
-    // const { categories } = useContext<any>(CategoriesContext) 
-    // const { measures } = useContext<any>(MeasuresContext)
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
@@ -343,7 +275,11 @@ export default function UpdateAmountStock(
                         // data={[]} 
                         // columnsCustom={[]}                    
                     />
+                    
                     <Box className={classes.finishButtons}>
+                        <EditButton
+                        clicked={() => alert("test edit button")}
+                        />
                         <CancelButton
                         clicked={() => close()}
                         />

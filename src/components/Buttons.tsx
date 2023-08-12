@@ -14,6 +14,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded';
 import { useEffect, useState } from 'react';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import EditIcon from '@mui/icons-material/Edit';
 
 const theme = createTheme({
   palette: {
@@ -26,8 +27,9 @@ const theme = createTheme({
       contrastText: 'rgb(255, 47, 47, .2)',
     },
     neutral: {
-      main: '#fff',
-      contrastText: '#64748B',
+      main: 'rgb(255, 255, 255, 1)',
+      contrastText: 'rgb(255, 255, 255, .2)',
+      dark: 'rgb(155, 155, 155, 1)',
     },
   },
 });
@@ -56,60 +58,57 @@ const colorOk = {
 }
 
 const useStyles = makeStyles()({
-  btnCancel: {
+  btnCommonStyle: {
     borderRadius: "10px",
-    backgroundColor: theme.palette.warning.contrastText,
     transition: ".5s",
-    // width: "1px !important",
     "& > *": {
       transition: ".5s",
-
     },
     '&:hover': {
       borderWidth: "5px",
+      "& > *": {
+        transition: ".5s",
+      }
+    }
+  },
+  btnCancel: {
+    backgroundColor: theme.palette.warning.contrastText,
+    '&:hover': {
       borderColor: theme.palette.warning.dark,
       backgroundColor: theme.palette.warning.contrastText,
       "& > *": {
-        transition: ".5s",
         stroke: theme.palette.warning.dark
-
       }
     }
   },
   btnOk: {
-    borderRadius: "10px",
     backgroundColor: theme.palette.success.contrastText,
-    transition: ".5s",
-    "& > *": {
-      transition: ".5s",
-
-    },
     '&:hover': {
-      borderWidth: "5px",
       borderColor: theme.palette.success.dark,
       backgroundColor: theme.palette.success.contrastText,
       "& > *": {
-        transition: ".5s",
         stroke: theme.palette.success.dark
-
       }
     }
   },  
+  btnEdit: {
+    backgroundColor: theme.palette.neutral.contrastText,
+    '&:hover': {
+      borderColor: theme.palette.neutral.dark,
+      backgroundColor: theme.palette.neutral.contrastText,
+      "& > *": {
+        stroke: theme.palette.neutral.dark
+      }
+    }
+  },
   menuIcon: {
-    // color: `${theme.palette.white} !important`,
     color: "white !important",
     '& .MuiSvgIcon-root': {
       width: '2.9rem',
       height: '2.9rem',
-      // [theme.breakpoints.down('md')]: {
-      //   width: '2rem',
-      //   height: '2rem',
-      // },
     },
   },  
   plusIcon: {
-    // color: `${theme.palette.white} !important`,
-    // color: "white !important",
     color: "rgb(77, 168, 218, 1)",
     margin: "0 5px",
     padding: "1px 1px",
@@ -117,14 +116,9 @@ const useStyles = makeStyles()({
     '& .MuiSvgIcon-root': {
       width: '2.9rem',
       height: '2.9rem',
-      // [theme.breakpoints.down('md')]: {
-      //   width: '2rem',
-      //   height: '2rem',
-      // },
     },
   },
   backPlus: {
-    // backgroundColor: "red",
     color: "red",
   },
   btnArrow: {
@@ -172,11 +166,7 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: B
     noPadding=0
     borRad="50px !important"
   } 
-  // console.log("submitOk: ", submitOk)
   const handleClick:any = (() => {
-    // console.log("clicking")
-    // console.log("cusField: ", cusField)
-    // console.log("cusField.id: ", cusField.id)
     if(cusField)
       clicked(cusField.id, cusField.value)
     else
@@ -188,6 +178,7 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: B
       <Button 
         variant="outlined"
         color="success"
+        className={`${classes.btnCommonStyle} ${classes.btnOk}`}
         sx={{  
           border: bor, 
           padding:noPadding, 
@@ -198,9 +189,7 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: B
           height: sizeIco,
           borderRadius: borRad,
         }}
-        className={classes.btnOk}
         onClick={handleClick}
-        // type={ submitOk ? "submit" : "button" }
         >
         <CheckRoundedIcon 
         sx={{ 
@@ -230,15 +219,12 @@ export function CancelButton({ sizeIco, roundedIco, clicked }: ButtonProps) {
   const handleClick = (() => {
       clicked()
   })
-  // console.log("sizeIco: ", sizeIco)
-  // console.log("roundedIco: ", roundedIco)
-  // console.log("fontIco: ", fontIco)
   return (
     <ThemeProvider theme={theme}>
       <Button 
         variant="outlined"
         color="warning"
-        className={classes.btnCancel}
+        className={`${classes.btnCommonStyle} ${classes.btnCancel}`}
         sx={{  
           border: bor , 
           padding:noPadding, 
@@ -264,6 +250,54 @@ export function CancelButton({ sizeIco, roundedIco, clicked }: ButtonProps) {
   )
 }
 
+
+export function EditButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: ButtonProps ) {
+
+  const { classes } = useStyles()
+  const colorOk = theme.palette.neutral.main
+  
+  let fontIco = 35, noPadding, bor = 5, borRad
+  if(sizeIco) {
+    fontIco = (parseInt(sizeIco) - 12)
+    bor = 3
+  }
+  if(roundedIco){
+    noPadding=0
+    borRad="50px !important"
+  } 
+  const handleClick:any = (() => {
+    if(cusField)
+      clicked(cusField.id, cusField.value)
+    else
+      clicked()
+  })
+
+  return (  
+    <ThemeProvider theme={theme}>
+      <Button 
+        variant="outlined"
+        color="neutral"
+        className={`${classes.btnCommonStyle} ${classes.btnEdit}`}
+        sx={{  
+          border: bor, 
+          padding:noPadding, 
+          paddingTop:0,  
+          paddingBottom:0, 
+          minWidth: sizeIco, 
+          width: sizeIco, 
+          height: sizeIco,
+          borderRadius: borRad,
+        }}
+        onClick={handleClick}
+        >
+        <EditIcon 
+        sx={{ 
+          fontSize: fontIco,
+        }}></EditIcon>
+      </Button>
+    </ThemeProvider>
+  )
+}
 
 interface ChildProps {
   onDataChanged: (newData: boolean) => void;
