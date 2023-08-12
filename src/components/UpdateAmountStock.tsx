@@ -128,28 +128,34 @@ export default function UpdateAmountStock(
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
     const [ valueUpdate, setValueUpdate ] = useState<number>(-1)
-    const [ valueModuleUpdate, setValueModuleUpdate ] = useState<number>(1)
 
     const upValue = () => {
         let newValue = valueUpdate+1
         if(newValue===0)
             newValue = 1
         setValueUpdate(newValue)
-        setValueModuleUpdate(Math.abs(newValue))
     }
     const downValue = () => {
         let newValue = valueUpdate-1
         if(newValue===0)
             newValue = -1
         setValueUpdate(newValue)
-        setValueModuleUpdate(Math.abs(newValue))
     }
     const writeValue = (e:any) => {
         let newValue = (Number(e.target.value))
         setValueUpdate(newValue)
-        setValueModuleUpdate(Math.abs(newValue))
     }
-    const ButtonOperator = valueUpdate > 0 ? PlusButton : MinusButton;
+
+    let ButtonOperator
+    let buttonOperatorColor
+    if (valueUpdate > 0 ){
+        ButtonOperator = PlusButton 
+        buttonOperatorColor = "rgb(100, 200, 100)"
+    } else {
+        ButtonOperator = MinusButton       
+        buttonOperatorColor = "rgb(250, 100, 100)"
+
+    }
     const swapOperator = () => {
         setValueUpdate(-valueUpdate)
     }
@@ -161,6 +167,10 @@ export default function UpdateAmountStock(
     const handleCloseErrorModal = () => {
         setOpenErrorModal(false)
     }
+
+    useEffect(() => {
+        setValueUpdate(-1)
+    }, [handleClose])
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -281,7 +291,8 @@ export default function UpdateAmountStock(
                                 <ButtonOperator
                                     sizeIcoExt="50px !important"
                                     sizeIcoInt="57px !important"
-                                    colorIco = "white"  // Fix color
+                                    // colorIco = "white"  // Fix color
+                                    colorIco = {buttonOperatorColor}
                                     clicked={() => swapOperator()}
                                 />
                             </Grid>
@@ -291,7 +302,7 @@ export default function UpdateAmountStock(
                                     size="small"
                                     type="number"
                                     className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
-                                    value={valueModuleUpdate}
+                                    value={Math.abs(valueUpdate)}
                                     onChange={ (event) => writeValue(event) }
                                     style= {{
                                         textAlign: 'center',
