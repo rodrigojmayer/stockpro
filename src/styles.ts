@@ -96,9 +96,12 @@ export const useStylesGlobal = makeStyles()({
     },
     inputUpdateAmountStock: {
         margin: "auto",
+        padding: "auto",
         width: "65px",
+        
     },
     inputClassName: {
+        textAlign: 'center',
         borderRadius: 10,
     },
     table: {

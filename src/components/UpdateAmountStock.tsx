@@ -287,21 +287,20 @@ export default function UpdateAmountStock(
                             </Grid>
                             <Grid item xs={3} md={8} display="flex" justifyContent="center" >
                                 <TextField
-                                    // onChange={ handleEditCustomFieldNew }
                                     maxRows={1}
                                     size="small"
                                     type="number"
                                     className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
                                     value={valueModuleUpdate}
                                     onChange={ (event) => writeValue(event) }
+                                    style= {{
+                                        textAlign: 'center',
+                                    }}
                                     InputProps={{
                                         className: classes.inputClassName,
-                                        style: {
-                                            // borderRadius: 10,
+                                        inputProps: {
+                                            style: { textAlign: "center" },
                                         },
-                                        // endAdornment: (
-                                            // <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
-                                            // ),
                                     }}
                                 />
                             </Grid>
