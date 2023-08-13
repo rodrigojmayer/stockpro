@@ -60,6 +60,8 @@ export default function UpdateAmountStock(
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
     const [ valueUpdate, setValueUpdate ] = useState<number>(-1)
+    const [ resultUpdated, setResultUpdated ] = useState<number>(productUpdate.amount_prod)
+    const [ alertOn, setAlertOn ] = useState(false)
 
     const upValue = () => {
         let newValue = valueUpdate+1
@@ -71,10 +73,14 @@ export default function UpdateAmountStock(
         let newValue = valueUpdate-1
         if(newValue===0)
             newValue = -1
+        if(-productUpdate.amount_prod > newValue)
+            newValue = -productUpdate.amount_prod
         setValueUpdate(newValue)
     }
     const writeValue = (e:any) => {
-        let newValue = (Number(e.target.value))
+        let newValue = (Number(e.target.value)) 
+        if(-productUpdate.amount_prod > newValue)
+            newValue = -productUpdate.amount_prod
         setValueUpdate(newValue)
     }
 
@@ -89,10 +95,16 @@ export default function UpdateAmountStock(
 
     }
     const swapOperator = () => {
-        setValueUpdate(-valueUpdate)
+        let newValue = -valueUpdate
+        if(-productUpdate.amount_prod > newValue)
+            newValue = -productUpdate.amount_prod
+        setValueUpdate(newValue)
     }
 
+    const [updatedResultVisible, setUpdatedResultVisible] = useState(false);
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const [messageBeforeSave, setMessageBeforeSave] = useState("");  
+    
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState(""); 
     
@@ -102,9 +114,13 @@ export default function UpdateAmountStock(
 
     // console.log("alert_amount: ", productUpdate.alert_amount)
 
+
     useEffect(() => {
         setValueUpdate(-1)
+        setAlertOn(false);
+        setMessageBeforeSave("");
     }, [handleClose])
+
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -113,13 +129,7 @@ export default function UpdateAmountStock(
             console.log("productUpdate.amount_prod: ", productUpdate.id_prod)
             console.log("valueUpdate: ", valueUpdate)
             console.log("productUpdate.amount_prod: ", productUpdate.amount_prod)
-            const resultUpdated = productUpdate.amount_prod + valueUpdate
-            console.log("Updated result: ", resultUpdated)
-            let alertOn = false
-            if(productUpdate.alert_amount){
-                if (productUpdate.alert_amount >= resultUpdated)
-                    alertOn = true
-            }
+            
             
             const fetchUpdateStockProduct = async () => {
                 let loadingSuccess: boolean = false
@@ -173,9 +183,61 @@ export default function UpdateAmountStock(
         }
         setOpenSaveChanges(false);
     }
-    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
+
+
+
+
+    // const handleOpenSaveChanges = () => {
+    //     const updatedResult  = productUpdate.amount_prod + valueUpdate
+    //     setResultUpdated(updatedResult )
+    //     // console.log("Updated result: ", resultUpdated)
+    //     if(productUpdate.alert_amount){
+    //         if (productUpdate.alert_amount >= resultUpdated){
+    //             setAlertOn(true)
+    //             setMessageBeforeSave("The stock amount will drop below the alert level.")
+    //         }else {
+    //             setAlertOn(false)
+    //             setMessageBeforeSave("")                
+    //         }
+    //     } 
+    //     setUpdatedResultVisible(true);
+    // }
+    // useEffect(() => {
+    //     if (updatedResultVisible) {
+    //         setOpenSaveChanges(true); // Now you can safely open the modal
+    //         setUpdatedResultVisible(false); // Reset the state
+    //     }
+    // }, [updatedResultVisible]);
     
+
+
+    const handleOpenSaveChanges = () => {
+        const updatedResult = productUpdate.amount_prod + valueUpdate;
+        setResultUpdated(updatedResult);
+        setUpdatedResultVisible(true);
+    }
     
+    // ...
+    
+    useEffect(() => {
+        if (updatedResultVisible) {
+            if (productUpdate.alert_amount) {
+                if (productUpdate.alert_amount >= resultUpdated) {
+                    setAlertOn(true);
+                    setMessageBeforeSave("The stock amount will drop below the alert level.");
+                } else {
+                    setAlertOn(false);
+                    setMessageBeforeSave("");
+                }
+            }
+            
+            setOpenSaveChanges(true);
+            setUpdatedResultVisible(false);
+        }
+    }, [updatedResultVisible, resultUpdated, productUpdate.alert_amount]);
+
+
+
     useEffect(() => {
         // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
         // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
@@ -200,6 +262,8 @@ export default function UpdateAmountStock(
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
+
+                        messageBeforeSave={messageBeforeSave}
                     />
                      {/* <ErrorModal
                         openErrorModal={openErrorModal}

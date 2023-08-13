@@ -231,9 +231,12 @@ export const modalStyleSaveExternal = {
     position: 'absolute',
     display: "flex",
     justifyContent: "center",
-    top: "40%",
+    alignItems: "center",
+    top: "50%",
+    transform: "translateY(-50%)", // Center vertically using transform
     width: "100%",
     overflowX: "hidden",
+    margin: "auto",
 };
 export const modalStyleSaveInternal = {
     top: 74,

@@ -11,9 +11,10 @@ import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal } from 
 type SaveChangesProps = {
     openSaveChanges: boolean;
     closeSaveChanges: (newData?: boolean) => void;
+    messageBeforeSave?: string;
 }
 export default function SaveChanges( props: SaveChangesProps) {
-    const { openSaveChanges, closeSaveChanges } = props;
+    const { openSaveChanges, closeSaveChanges, messageBeforeSave } = props;
     const { classes } = useStylesGlobal();
 
     return (
@@ -25,6 +26,9 @@ export default function SaveChanges( props: SaveChangesProps) {
                 <Box sx={modalStyleSaveInternal}>
                     <Typography align="center" variant="h6">
                         Save changes?
+                    </Typography>
+                    <Typography align="center" >
+                        {messageBeforeSave}
                     </Typography>
                     <Box className={classes.finishButtons}>
                         <CancelButton
