@@ -110,7 +110,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         <TableCell
           key={column.id}
           align='center'
-          onClick={() => openUpdateAmountStock({"id_prod":newRow._id, "name_prod": newRow.product, "amount_prod": newRow.amount, "measure_prod": newRow.measure})}
+          onClick={() => openUpdateAmountStock({"id_prod":newRow._id, "name_prod": newRow.product, "amount_prod": newRow.amount, "measure_prod": newRow.measure, "alert_amount": newRow.alert_amount})}
           className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
           // className={`${ _index%2 ? classes.row_even  : classes.row_odd } ${ newRow.alert_on ? classes.alert_on  : "" }`}
           // className={` ${ classes.alert_on  : "" }`}

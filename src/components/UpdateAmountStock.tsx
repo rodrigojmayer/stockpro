@@ -100,6 +100,8 @@ export default function UpdateAmountStock(
         setOpenErrorModal(false)
     }
 
+    // console.log("alert_amount: ", productUpdate.alert_amount)
+
     useEffect(() => {
         setValueUpdate(-1)
     }, [handleClose])
@@ -113,6 +115,11 @@ export default function UpdateAmountStock(
             console.log("productUpdate.amount_prod: ", productUpdate.amount_prod)
             const resultUpdated = productUpdate.amount_prod + valueUpdate
             console.log("Updated result: ", resultUpdated)
+            let alertOn = false
+            if(productUpdate.alert_amount){
+                if (productUpdate.alert_amount >= resultUpdated)
+                    alertOn = true
+            }
             
             const fetchUpdateStockProduct = async () => {
                 let loadingSuccess: boolean = false
@@ -125,7 +132,7 @@ export default function UpdateAmountStock(
                         },
                         body:JSON.stringify({
                             "amount": resultUpdated,
-
+                            "alert_on": alertOn
                         })
                     })
 

@@ -43,7 +43,8 @@ function App() {
     "id_prod": 0,
     "name_prod": "",
     "amount_prod": 0,
-    "measure_prod": ""
+    "measure_prod": "",
+    "alert_amount": 0,
   })
   const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
   const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
@@ -53,7 +54,8 @@ function App() {
       "id_prod": newData.id_prod,
       "name_prod": newData.name_prod,
       "amount_prod": newData.amount_prod,
-    "measure_prod": newData.measure_prod
+      "measure_prod": newData.measure_prod,
+      "alert_amount": newData.alert_amount
     })
   }  
 

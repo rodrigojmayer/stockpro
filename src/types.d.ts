@@ -98,4 +98,5 @@ export interface ProductUpdateData {
   name_prod: string;
   amount_prod: number;
   measure_prod: string;
+  alert_amount: number;
 }
