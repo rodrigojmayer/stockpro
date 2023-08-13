@@ -103,6 +103,7 @@ export default function UpdateAmountStock(
 
     const [updatedResultVisible, setUpdatedResultVisible] = useState(false);
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const [openEditStock, setOpenEditStock] = useState(false);  
     const [messageBeforeSave, setMessageBeforeSave] = useState("");  
     
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -126,9 +127,9 @@ export default function UpdateAmountStock(
         if(ans){
             
             // console.log("stockNameTemp: ", ans)
-            console.log("productUpdate.amount_prod: ", productUpdate.id_prod)
-            console.log("valueUpdate: ", valueUpdate)
-            console.log("productUpdate.amount_prod: ", productUpdate.amount_prod)
+            // console.log("productUpdate.amount_prod: ", productUpdate.id_prod)
+            // console.log("valueUpdate: ", valueUpdate)
+            // console.log("productUpdate.amount_prod: ", productUpdate.amount_prod)
             
             
             const fetchUpdateStockProduct = async () => {
@@ -217,6 +218,15 @@ export default function UpdateAmountStock(
         setUpdatedResultVisible(true);
     }
     
+    const handleOpenEditStock = () => {
+        setOpenEditStock(true)
+    }
+
+    const handleCloseEditStock = () => {
+        close()
+        setOpenEditStock(false)
+    }  
+
     // ...
     
     useEffect(() => {
@@ -339,17 +349,15 @@ export default function UpdateAmountStock(
                     </Box>  
                     
                     <EditStock  ////////////////////////////////////////////// Continue with the edit stock modal here
-                        open={false} 
-                        handleClose={function (newData: boolean): void {
-                            throw new Error('Function not implemented.');
-                        } } 
+                        open={openEditStock} 
+                        handleClose={handleCloseEditStock} 
                         // data={[]} 
                         // columnsCustom={[]}                    
                     />
                     
                     <Box className={classes.finishButtons}>
                         <EditButton
-                        clicked={() => alert("test edit button")}
+                        clicked={() => handleOpenEditStock()}
                         />
                         <CancelButton
                         clicked={() => close()}

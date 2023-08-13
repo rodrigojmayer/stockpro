@@ -240,7 +240,7 @@ export default function EditStock(
                     }));
                 }
             } 
-            fetchCreateStockProduct()
+            // fetchCreateStockProduct()
 
 
             // setSelectedUsers(selectedUsersTemp)
