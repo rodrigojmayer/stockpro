@@ -97,12 +97,13 @@ const useStyles = makeStyles()({
       borderColor: theme.palette.neutral.dark,
       backgroundColor: theme.palette.neutral.contrastText,
       "& > *": {
-        stroke: theme.palette.neutral.dark
+        color:theme.palette.neutral.dark,
       }
-    }
+    },
   },
   menuIcon: {
-    color: "white !important",
+    // color: "white !important",
+    color: theme.palette.neutral.main,
     '& .MuiSvgIcon-root': {
       width: '2.9rem',
       height: '2.9rem',
@@ -121,25 +122,6 @@ const useStyles = makeStyles()({
   backPlus: {
     color: "red",
   },
-  btnArrow: {
-    borderRadius: "10px",
-    backgroundColor: theme.palette.neutral.contrastText,
-    transition: ".5s",
-    "& > *": {
-      transition: ".5s",
-
-    },
-    '&:hover': {
-      borderWidth: "5px",
-      borderColor: theme.palette.neutral.dark,
-      backgroundColor: theme.palette.neutral.contrastText,
-      "& > *": {
-        transition: ".5s",
-        stroke: theme.palette.neutral.dark
-
-      }
-    }
-  },  
 })
 
 
@@ -422,6 +404,7 @@ export function UpButton({ sizeIco, roundedIco, cusField, clicked, direction }: 
       <Button 
         variant="outlined"
         color="neutral"
+        className={`${classes.btnCommonStyle} ${classes.btnEdit}`}
         sx={{  
           border: bor, 
           padding:noPadding, 
@@ -433,7 +416,6 @@ export function UpButton({ sizeIco, roundedIco, cusField, clicked, direction }: 
           borderRadius: borRad,
           margin: 1,
         }}
-        className={classes.btnArrow}
         onClick={handleClick}
       >
         <Arrow 
