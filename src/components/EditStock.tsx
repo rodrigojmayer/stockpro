@@ -37,7 +37,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { Data, DataCreateStockOptions, ColumnData } from '../types';
+import { Data, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../types';
 
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
@@ -101,14 +101,14 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    // data: Data[]
+    data: ProductUpdateData
     // columnsCustom: ColumnData[] 
 }
 
 export default function EditStock( 
     {   open, 
         handleClose, 
-        // data,
+        data,
         // columnsCustom,
     }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -116,6 +116,8 @@ export default function EditStock(
     const close = () => {
         handleClose(false)
     } 
+
+    console.log("data: ", data)
 
     const { categories } = useContext<any>(CategoriesContext) 
     const categoryArray = categories
@@ -126,27 +128,16 @@ export default function EditStock(
 
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-    const [stockName, setStockName] = useState('');
-    const [stockNameTemp, setStockNameTemp] = useState('');
-    const [stockAmount, setStockAmount] = useState('');
-    const [stockAmountTemp, setStockAmountTemp] = useState('');
-    const [stockMeasure, setStockMeasure] = useState('');
-    const [stockMeasureTemp, setStockMeasureTemp] = useState('');
-    const [stockCategory, setStockCategory] = useState('');
-    // const [stockCategoryTemp, setStockCategoryTemp] = useState('');
-    const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
-    const [stockSubCategory, setStockSubCategory] = useState('');
-    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
-    const [stockPrice, setStockPrice] = useState('');
-    const [stockPriceTemp, setStockPriceTemp] = useState('');
+    const [stockNameTemp, setStockNameTemp] = useState(data.name_prod);
     const [stockCodeTemp, setStockCodeTemp] = useState('');
-    const [stockDescription, setStockDescription] = useState('');
+    const [stockAmountTemp, setStockAmountTemp] = useState('');
+    const [stockMeasureTemp, setStockMeasureTemp] = useState('');
+    const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
+    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
+    const [stockPriceTemp, setStockPriceTemp] = useState('');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
-    const [stockImageUrl, setStockImageUrl] = useState('');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
-    const [stockAlertAmount, setStockAlertAmount] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
-    const [stockAlertDate, setStockAlertDate] = useState('');
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     const [stockCustomValues, setStockCustomValues] = useState('');

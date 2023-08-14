@@ -351,7 +351,7 @@ export default function UpdateAmountStock(
                     <EditStock  ////////////////////////////////////////////// Continue with the edit stock modal here
                         open={openEditStock} 
                         handleClose={handleCloseEditStock} 
-                        // data={[]} 
+                        data={productUpdate} 
                         // columnsCustom={[]}                    
                     />
                     
