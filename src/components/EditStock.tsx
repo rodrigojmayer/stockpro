@@ -130,7 +130,7 @@ export default function EditStock(
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.name_prod);
     const [stockCodeTemp, setStockCodeTemp] = useState('');
-    const [stockAmountTemp, setStockAmountTemp] = useState('');
+    const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount_prod);
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
@@ -255,7 +255,7 @@ export default function EditStock(
         console.log("Name value: ", value)
         setStockNameTemp(value)
     }
-    const handleStockAmountChange = (value: string) => {
+    const handleStockAmountChange = (value: number | string) => {
         console.log("Amount value: ", value)
         setStockAmountTemp(value)
     }

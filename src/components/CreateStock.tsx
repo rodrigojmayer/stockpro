@@ -130,7 +130,7 @@ export default function CreateStock(
     const [stockName, setStockName] = useState('');
     const [stockNameTemp, setStockNameTemp] = useState('');
     const [stockAmount, setStockAmount] = useState('');
-    const [stockAmountTemp, setStockAmountTemp] = useState('');
+    const [stockAmountTemp, setStockAmountTemp] = useState<number | string>('');
     const [stockMeasure, setStockMeasure] = useState('');
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
     const [stockCategory, setStockCategory] = useState('');
@@ -288,7 +288,7 @@ export default function CreateStock(
         console.log("Name value: ", value)
         setStockNameTemp(value)
     }
-    const handleStockAmountChange = (value: string) => {
+    const handleStockAmountChange = (value: number | string) => {
         console.log("Amount value: ", value)
         setStockAmountTemp(value)
     }
