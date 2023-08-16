@@ -101,7 +101,8 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    data: ProductUpdateData
+    // data: ProductUpdateData
+    data: Data
     // columnsCustom: ColumnData[] 
 }
 
@@ -128,9 +129,9 @@ export default function EditStock(
 
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-    const [stockNameTemp, setStockNameTemp] = useState(data.name_prod);
+    const [stockNameTemp, setStockNameTemp] = useState(data.product);
     const [stockCodeTemp, setStockCodeTemp] = useState('');
-    const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount_prod);
+    const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount);
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');

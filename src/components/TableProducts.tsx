@@ -15,6 +15,7 @@ import { tableStyles, useStylesGlobal } from '../Styles';
 // type TableClasses = ReturnType<typeof useStyles>;
 
 const INITIAL_STATE = {
+  _id: NaN,
   id: NaN,
   id_client: NaN,
   product: "",
@@ -22,6 +23,7 @@ const INITIAL_STATE = {
   measure: "",
   category: "",
   sub_category: "",
+  // alert_on: false,
   // custom_fields: [],
   // id_custom_field_product: NaN,
 }
@@ -62,7 +64,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 
 // const { classes } = useStylesGlobal()
 // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
+  // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void) {
 
     
     // console.log("_index: ", _index)
@@ -105,12 +108,12 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 
   return (
     <React.Fragment >
-
+ 
       {columns.map((column) => (
         <TableCell
           key={column.id}
           align='center'
-          onClick={() => openUpdateAmountStock({"id_prod":newRow._id, "name_prod": newRow.product, "amount_prod": newRow.amount, "measure_prod": newRow.measure, "alert_amount": newRow.alert_amount})}
+          onClick={() => openUpdateAmountStock({"_id":newRow._id, "id": newRow.id, "id_client": newRow.id_client, "product": newRow.product, "amount": newRow.amount, "measure": newRow.measure, "category": newRow.category, "sub_category": newRow.sub_category, "alert_amount": newRow.alert_amount, "alert_on": newRow.alert_on})}
           className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
           // className={`${ _index%2 ? classes.row_even  : classes.row_odd } ${ newRow.alert_on ? classes.alert_on  : "" }`}
           // className={` ${ classes.alert_on  : "" }`}

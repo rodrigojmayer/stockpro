@@ -43,7 +43,8 @@ import ErrorModal from './ErrorModal';
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    productUpdate:  ProductUpdateData 
+    // productUpdate:  ProductUpdateData 
+    productUpdate:  Data 
 }
 
 export default function UpdateAmountStock( 
@@ -60,7 +61,7 @@ export default function UpdateAmountStock(
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
     const [ valueUpdate, setValueUpdate ] = useState<number>(-1)
-    const [ resultUpdated, setResultUpdated ] = useState<number>(productUpdate.amount_prod)
+    const [ resultUpdated, setResultUpdated ] = useState<number | string>(productUpdate.amount)
     const [ alertOn, setAlertOn ] = useState(false)
 
     const upValue = () => {
@@ -73,14 +74,14 @@ export default function UpdateAmountStock(
         let newValue = valueUpdate-1
         if(newValue===0)
             newValue = -1
-        if(-productUpdate.amount_prod > newValue)
-            newValue = -productUpdate.amount_prod
+        if(-productUpdate.amount > newValue)
+            newValue = -productUpdate.amount
         setValueUpdate(newValue)
     }
     const writeValue = (e:any) => {
         let newValue = (Number(e.target.value)) 
-        if(-productUpdate.amount_prod > newValue)
-            newValue = -productUpdate.amount_prod
+        if(-productUpdate.amount > newValue)
+            newValue = -productUpdate.amount
         setValueUpdate(newValue)
     }
 
@@ -96,8 +97,8 @@ export default function UpdateAmountStock(
     }
     const swapOperator = () => {
         let newValue = -valueUpdate
-        if(-productUpdate.amount_prod > newValue)
-            newValue = -productUpdate.amount_prod
+        if(-productUpdate.amount > newValue)
+            newValue = -productUpdate.amount
         setValueUpdate(newValue)
     }
 
@@ -135,7 +136,7 @@ export default function UpdateAmountStock(
             const fetchUpdateStockProduct = async () => {
                 let loadingSuccess: boolean = false
                 try {
-                    const response = await fetch(`http://localhost:4000/api/products/${productUpdate.id_prod}`, {
+                    const response = await fetch(`http://localhost:4000/api/products/${productUpdate._id}`, {
                         method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -213,7 +214,7 @@ export default function UpdateAmountStock(
 
 
     const handleOpenSaveChanges = () => {
-        const updatedResult = productUpdate.amount_prod + valueUpdate;
+        const updatedResult = Number(productUpdate.amount) + valueUpdate;
         setResultUpdated(updatedResult);
         setUpdatedResultVisible(true);
     }
@@ -232,7 +233,7 @@ export default function UpdateAmountStock(
     useEffect(() => {
         if (updatedResultVisible) {
             if (productUpdate.alert_amount) {
-                if (productUpdate.alert_amount >= resultUpdated) {
+                if (Number(productUpdate.alert_amount) >= Number(resultUpdated)) {
                     setAlertOn(true);
                     setMessageBeforeSave("The stock amount will drop below the alert level.");
                 } else {
@@ -281,7 +282,7 @@ export default function UpdateAmountStock(
                         errorData={errorData} 
                     /> */}
                     <Box className={`${classes.customBoxColumn} ${classes.updateBoxColumn}`}>
-                    <Typography variant="h5">{productUpdate.name_prod}</Typography>
+                    <Typography variant="h5">{productUpdate.product}</Typography>
                     
                         <Grid container spacing={0} alignItems="center" >
                             <Grid item xs={6} md={6} > </Grid>
@@ -297,7 +298,7 @@ export default function UpdateAmountStock(
                             <Grid item xs={2} md={8} >
                             {/* <Box className={classes.customBoxRow}> */}
                                 <Typography align='center' variant="h6" >
-                                    {productUpdate.amount_prod}
+                                    {productUpdate.amount}
                                 </Typography>
                             </Grid>
                             <Grid item xs={3} md={8} display="flex" justifyContent="center" > 
@@ -330,7 +331,7 @@ export default function UpdateAmountStock(
                             </Grid>
                             <Grid item xs={2} md={8} display="flex" justifyContent="center" >
                                 <Typography variant="h6" >
-                                    {productUpdate.measure_prod}
+                                    {productUpdate.measure}
                                 </Typography>
                             </Grid>
                             <Grid item xs={1} md={8} > </Grid>

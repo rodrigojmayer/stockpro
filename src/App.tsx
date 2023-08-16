@@ -39,23 +39,48 @@ function App() {
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
 
-  const [ productUpdate, setProductUpdate ] = useState<ProductUpdateData>({
-    "id_prod": 0,
-    "name_prod": "",
-    "amount_prod": 0,
-    "measure_prod": "",
+  // const [ productUpdate, setProductUpdate ] = useState<ProductUpdateData>({
+  //   "id_prod": 0,
+  //   "name_prod": "",
+  //   "amount_prod": 0,
+  //   "measure_prod": "",
+  //   "alert_amount": 0,
+  // })
+  const [ productUpdate, setProductUpdate ] = useState<Data>({
+    "_id":0,
+    "id": 0,
+    "id_client": 0,
+    "product": "",
+    "amount": 0,
+    "measure": "",
+    "category": "",
+    "sub_category": "",
     "alert_amount": 0,
+    // "alert_on": false,
   })
   const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
   const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
-  const openUpdateAmountStock = (newData:ProductUpdateData) => {
+  // const openUpdateAmountStock = (newData:ProductUpdateData) => {
+  const openUpdateAmountStock = (newData:Data) => {
     setShowUpdateAmountStock(true)
+    // setProductUpdate({
+    //   "id_prod": newData.id_prod,
+    //   "name_prod": newData.name_prod,
+    //   "amount_prod": newData.amount_prod,
+    //   "measure_prod": newData.measure_prod,
+    //   "alert_amount": newData.alert_amount
+    // })
     setProductUpdate({
-      "id_prod": newData.id_prod,
-      "name_prod": newData.name_prod,
-      "amount_prod": newData.amount_prod,
-      "measure_prod": newData.measure_prod,
-      "alert_amount": newData.alert_amount
+      "_id": newData._id,
+      "id": newData.id,
+      "id_client": newData.id_client,
+      "product": newData.product,
+      "amount": newData.amount,
+      "measure": newData.measure,
+      "category": newData.category,
+      "sub_category": newData.sub_category,
+      "alert_amount": newData.alert_amount,
+      // "alert_on": newData.alert_on,
     })
   }  
 

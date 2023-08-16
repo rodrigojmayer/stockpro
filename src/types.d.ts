@@ -23,23 +23,32 @@ export interface CategoriesData {
 };
 
 export interface Data {
+  _id:number;
   id: number;
   id_client: number;
   product: string;
-  amount: number;
+  amount: number | string;
   measure: string;
   category: string;
   sub_category: string;
   [key?: string]: any;
   custom_fields?: array;
   id_custom_field_product?: number;
+  code?: string;
+  price?: number;
+  description?: string;
+  url_image?: string;
+  alert_amount?: number;
+  alert_date?: Date;
+  alert_on?: boolean;
 }
 
 export interface DataTable {
   data: Data[] 
   columns: ColumnData[]
   // openUpdateAmountStock: (id_prod: Number, name_prod: String, amount_prod: Number) => void
-  openUpdateAmountStock: (newData: ProductUpdateData) => void
+  // openUpdateAmountStock: (newData: ProductUpdateData) => void
+  openUpdateAmountStock: (newData: Data) => void
 }
 
 export interface ColumnData {
@@ -96,7 +105,7 @@ export interface ChildProps {
 export interface ProductUpdateData {
   id_prod: number;
   name_prod: string;
-  amount_prod: number;
+  amount_prod: number | string;
   measure_prod: string;
-  alert_amount: number;
+  alert_amount?: number;
 }
