@@ -90,7 +90,7 @@ interface ChildProps {
     stockMeasureTemp: string
     // onStockMeasureChange: (newData: string )=> void
     onStockMeasureChange: (newData: any )=> void
-    stockCodeTemp: string
+    stockCodeTemp: string | null
     onStockCodeChange: (newData: string )=> void
     categoryArray: mainData[]
     // stockCategoryTemp: string
@@ -158,10 +158,11 @@ export default function CreateStockMainData(
     
 
     useEffect(() => {
-        console.log("measureArray: ", measureArray)
-        console.log("categoryArray: ", categoryArray)
-        console.log("subCategoryArray : ", subCategoryArray )
-        console.log("stockCategoryTemp: ", stockCategoryTemp)
+        // console.log("stockCodeTemp: ", stockCodeTemp)
+        // console.log("measureArray: ", measureArray)
+        // console.log("categoryArray: ", categoryArray)
+        // console.log("subCategoryArray : ", subCategoryArray )
+        // console.log("stockCategoryTemp: ", stockCategoryTemp)
     
 }, [])
     return (

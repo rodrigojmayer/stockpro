@@ -127,16 +127,21 @@ export default function EditStock(
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
-
+    console.log("data: ", data)
+    // console.log("data.category: ", data.category)
+    // console.log("data.sub_category: ", data.sub_category)
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
-    const [stockCodeTemp, setStockCodeTemp] = useState('');
+    const [stockCodeTemp, setStockCodeTemp] = useState<string>(data.code?data.code:'');
     const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount);
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
+    // const [stockMeasureTemp, setStockMeasureTemp] = useState(data.measure);
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
+    // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState(data.sub_category);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
-    const [stockPriceTemp, setStockPriceTemp] = useState('');
-    const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
+    const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
+    // const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
+    const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
@@ -281,7 +286,7 @@ export default function EditStock(
         console.log("SubCategory value: ", value)
         setStockSubCategoryTemp(value)
     }
-    const handleStockPriceChange = (value: string) => {
+    const handleStockPriceChange = (value: number | string) => {
         console.log("Price value: ", value)
         setStockPriceTemp(value)
     }

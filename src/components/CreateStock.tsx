@@ -139,7 +139,7 @@ export default function CreateStock(
     const [stockSubCategory, setStockSubCategory] = useState('');
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
     const [stockPrice, setStockPrice] = useState('');
-    const [stockPriceTemp, setStockPriceTemp] = useState('');
+    const [stockPriceTemp, setStockPriceTemp] = useState<number | string>('');
     const [stockCodeTemp, setStockCodeTemp] = useState('');
     const [stockDescription, setStockDescription] = useState('');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
@@ -313,7 +313,7 @@ export default function CreateStock(
         console.log("SubCategory value: ", value)
         setStockSubCategoryTemp(value)
     }
-    const handleStockPriceChange = (value: string) => {
+    const handleStockPriceChange = (value: number | string) => {
         console.log("Price value: ", value)
         setStockPriceTemp(value)
     }

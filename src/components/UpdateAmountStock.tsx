@@ -57,6 +57,8 @@ export default function UpdateAmountStock(
         handleClose(false)
     } 
 
+    console.log("productUpdate: ", productUpdate)
+
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 

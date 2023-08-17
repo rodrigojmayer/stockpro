@@ -35,7 +35,7 @@ export interface Data {
   custom_fields?: array;
   id_custom_field_product?: number;
   code?: string;
-  price?: number;
+  price?: number | string;
   description?: string;
   url_image?: string;
   alert_amount?: number;

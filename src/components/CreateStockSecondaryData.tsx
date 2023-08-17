@@ -57,8 +57,8 @@ interface ChildProps {
     hiddenPanel:  boolean
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
-    stockPriceTemp: string
-    onStockPriceChange: (newData: string )=> void
+    stockPriceTemp: number | string
+    onStockPriceChange: (newData: number | string )=> void
     stockDescriptionTemp: string
     onStockDescriptionChange: (newData: string )=> void
     imageUrl: string
@@ -125,7 +125,7 @@ export default function CreateStockSecondaryData(
                         type="number"
                         className={classes.inputMainData}
                         value={stockPriceTemp}
-                        onChange={ (event) => onStockPriceChange(event.target.value) }
+                        onChange={ (event) => onStockPriceChange(Number(event.target.value)) }
                         InputProps={{
                             className: classes.inputClassName,
                             style: {
