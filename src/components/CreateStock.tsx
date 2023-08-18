@@ -146,7 +146,7 @@ export default function CreateStock(
     const [stockImageUrl, setStockImageUrl] = useState('');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
     const [stockAlertAmount, setStockAlertAmount] = useState('');
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
+    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>('');
     const [stockAlertDate, setStockAlertDate] = useState('');
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
@@ -329,7 +329,7 @@ export default function CreateStock(
     console.log("handleSetImageUrl value: ", value)
     setStockImageUrlTemp(value)
     }
-    const handleStockAlertAmountChange = (value: string) => {
+    const handleStockAlertAmountChange = (value: number | string) => {
     console.log("handleSetAlertAmount value: ", value)
     setStockAlertAmountTemp(value)
     }

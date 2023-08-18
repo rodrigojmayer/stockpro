@@ -127,23 +127,23 @@ export default function EditStock(
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
-    console.log("data: ", data)
+    // console.log("data: ", data)
     // console.log("data.category: ", data.category)
     // console.log("data.sub_category: ", data.sub_category)
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
     const [stockCodeTemp, setStockCodeTemp] = useState<string>(data.code?data.code:'');
     const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount);
-    const [stockMeasureTemp, setStockMeasureTemp] = useState('');
-    // const [stockMeasureTemp, setStockMeasureTemp] = useState(data.measure);
+    const [stockMeasureTemp, setStockMeasureTemp] = useState(data.measure);
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
     // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState(data.sub_category);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
-    // const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
-    const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
+    // const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
+    const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');
+    // const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
+    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:'');
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     const [stockCustomValues, setStockCustomValues] = useState('');
@@ -302,7 +302,7 @@ export default function EditStock(
     console.log("handleSetImageUrl value: ", value)
     setStockImageUrlTemp(value)
     }
-    const handleStockAlertAmountChange = (value: string) => {
+    const handleStockAlertAmountChange = (value: number | string) => {
     console.log("handleSetAlertAmount value: ", value)
     setStockAlertAmountTemp(value)
     }
@@ -368,6 +368,7 @@ export default function EditStock(
 
     
     useEffect(() => {
+        console.log("stockImageUrlTemp: ", stockImageUrlTemp)
         // stockCustomValuesTemp.map((value) => {
         //     console.log(value)
         // })

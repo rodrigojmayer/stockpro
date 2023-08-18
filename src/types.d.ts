@@ -38,7 +38,7 @@ export interface Data {
   price?: number | string;
   description?: string;
   url_image?: string;
-  alert_amount?: number;
+  alert_amount?: number | string;
   alert_date?: Date;
   alert_on?: boolean;
 }

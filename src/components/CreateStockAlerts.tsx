@@ -85,8 +85,8 @@ interface ChildProps {
     // openOptionsCreate: (newData: string) => void
     openOptionsCreate: (newData: string )=> void
     stockMeasureTemp: string
-    stockAlertAmountTemp: string
-    onStockAlertAmountChange: (newData: string) => void
+    stockAlertAmountTemp: number | string
+    onStockAlertAmountChange: (newData: number | string) => void
     stockAlertDateTemp: Date | String
     onStockAlertDateChange: (newData: Date | null | string) => void
     

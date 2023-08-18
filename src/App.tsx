@@ -58,6 +58,7 @@ function App() {
     "code": "",
     "price": "",
     "description": "",
+    "url_image": "",
     "alert_amount": 0,
     // "alert_on": false,
   })
@@ -84,6 +85,7 @@ function App() {
       "code": newData.code,
       "price": newData.price,
       "description": newData.description,
+      "url_image": newData.url_image,
       "sub_category": newData.sub_category,
       "alert_amount": newData.alert_amount,
       // "alert_on": newData.alert_on,
