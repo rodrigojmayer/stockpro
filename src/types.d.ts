@@ -39,7 +39,7 @@ export interface Data {
   description?: string;
   url_image?: string;
   alert_amount?: number | string;
-  alert_date?: Date;
+  alert_date?: Date | string;
   alert_on?: boolean;
 }
 

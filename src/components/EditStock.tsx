@@ -118,7 +118,7 @@ export default function EditStock(
         handleClose(false)
     } 
 
-    console.log("data: ", data)
+    // console.log("data: ", data)
 
     const { categories } = useContext<any>(CategoriesContext) 
     const categoryArray = categories
@@ -130,6 +130,7 @@ export default function EditStock(
     // console.log("data: ", data)
     // console.log("data.category: ", data.category)
     // console.log("data.sub_category: ", data.sub_category)
+    // console.log("data.alert_date: ", data.alert_date)
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
     const [stockCodeTemp, setStockCodeTemp] = useState<string>(data.code?data.code:'');
@@ -144,7 +145,8 @@ export default function EditStock(
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');
     // const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:'');
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
+    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>(data.alert_date?data.alert_date:'');
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     const [stockCustomValues, setStockCustomValues] = useState('');
     
@@ -314,7 +316,7 @@ export default function EditStock(
         if (date) {
             // const formattedDate = date.toISOString();
             // const formattedDate = date;
-            console.log("date: ", date)
+            // console.log("date: ", date)
             // setStockAlertDateTemp(formattedDate);
             setStockAlertDateTemp(date);
         } else {
@@ -368,7 +370,7 @@ export default function EditStock(
 
     
     useEffect(() => {
-        console.log("stockImageUrlTemp: ", stockImageUrlTemp)
+        // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
         // stockCustomValuesTemp.map((value) => {
         //     console.log(value)
         // })

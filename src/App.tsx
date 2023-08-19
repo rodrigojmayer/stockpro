@@ -60,6 +60,7 @@ function App() {
     "description": "",
     "url_image": "",
     "alert_amount": 0,
+    "alert_date": "",
     // "alert_on": false,
   })
   const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
@@ -74,6 +75,32 @@ function App() {
     //   "measure_prod": newData.measure_prod,
     //   "alert_amount": newData.alert_amount
     // })
+    let dateObject
+    let formattedDate
+    // console.log("newData.alert_date: ", newData.alert_date)
+    if(typeof newData.alert_date === 'string'){
+      // console.log("newData.alert_date.substring(0,2): ", newData.alert_date.substring(0,2))
+      const dateDay = newData.alert_date.substring(0,2)
+      const dateMonth = newData.alert_date.substring(3,5)
+      const dateYear = newData.alert_date.substring(6,10)
+      // console.log("dateDay: ", dateDay)
+      // console.log("dateMonth: ", dateMonth)
+      // console.log("dateYear: ", dateYear)
+      const dateString = `${dateYear}-${dateMonth}-${dateDay}T00:00:00Z`
+      dateObject = new Date(dateString)
+      formattedDate = dateObject.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      });
+    } else {
+      dateObject = newData.alert_date
+      formattedDate = newData.alert_date
+    }
+
+    console.log("dateObject: ", dateObject)
+    console.log("formattedDate: ", formattedDate)
+
     setProductUpdate({
       "_id": newData._id,
       "id": newData.id,
@@ -88,6 +115,7 @@ function App() {
       "url_image": newData.url_image,
       "sub_category": newData.sub_category,
       "alert_amount": newData.alert_amount,
+      "alert_date": formattedDate,
       // "alert_on": newData.alert_on,
     })
   }  

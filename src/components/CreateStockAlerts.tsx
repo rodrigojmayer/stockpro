@@ -87,9 +87,8 @@ interface ChildProps {
     stockMeasureTemp: string
     stockAlertAmountTemp: number | string
     onStockAlertAmountChange: (newData: number | string) => void
-    stockAlertDateTemp: Date | String
-    onStockAlertDateChange: (newData: Date | null | string) => void
-    
+    stockAlertDateTemp: Date | string
+    onStockAlertDateChange: (newData: Date | string) => void
 }
 
 export default function CreateStockAlerts(
@@ -143,6 +142,7 @@ export default function CreateStockAlerts(
         const adjustedDate = newDate.add(2, 'hour').toISOString(); // Adding 2 hours because the GMT comes in +0200 and returns the day before
         // // const formattedDate = date;
       
+        console.log("adjustedDate: ", adjustedDate) 
         // Call the onStockAlertDateChange function with the adjusted date
         onStockAlertDateChange(adjustedDate);
       };
@@ -209,9 +209,8 @@ export default function CreateStockAlerts(
                                         label="By date"
                                         format="DD/MM/YYYY"
                                         // value={stockAlertDateTemp || null}
-                                        value={ typeof stockAlertDateTemp === 'string'
-                                        ? null
-                                        : stockAlertDateTemp}
+                                        value={ typeof stockAlertDateTemp === 'string' ? null : stockAlertDateTemp}
+                                        // value={18/08/2025}
                                         // onChange={ (newDate) => onStockAlertDateChange(newDate) }
                                         onChange={ (newDate) => handleDatePickerChange(newDate) }
                                         slotProps={{ textField: { size: 'small' } }}

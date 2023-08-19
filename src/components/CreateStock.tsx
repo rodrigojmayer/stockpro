@@ -148,7 +148,7 @@ export default function CreateStock(
     const [stockAlertAmount, setStockAlertAmount] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>('');
     const [stockAlertDate, setStockAlertDate] = useState('');
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>("");
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     const [stockCustomValues, setStockCustomValues] = useState('');
     

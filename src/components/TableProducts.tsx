@@ -113,7 +113,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         <TableCell
           key={column.id}
           align='center'
-          onClick={() => openUpdateAmountStock({"_id":newRow._id, "id": newRow.id, "id_client": newRow.id_client, "product": newRow.product, "amount": newRow.amount, "measure": newRow.measure, "category": newRow.category, "sub_category": newRow.sub_category, "code": newRow.code, "price": newRow.price, "description": newRow.description, "url_image": newRow.url_image, "alert_amount": newRow.alert_amount, "alert_on": newRow.alert_on})}
+          onClick={() => openUpdateAmountStock({"_id":newRow._id, "id": newRow.id, "id_client": newRow.id_client, "product": newRow.product, "amount": newRow.amount, "measure": newRow.measure, "category": newRow.category, "sub_category": newRow.sub_category, "code": newRow.code, "price": newRow.price, "description": newRow.description, "url_image": newRow.url_image, "alert_amount": newRow.alert_amount, "alert_date": newRow.alert_date, "alert_on": newRow.alert_on})}
           className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
           // className={`${ _index%2 ? classes.row_even  : classes.row_odd } ${ newRow.alert_on ? classes.alert_on  : "" }`}
           // className={` ${ classes.alert_on  : "" }`}
