@@ -408,6 +408,12 @@ export default function CreateStock(
 
     }, [ open, openOptionsCreate])
     
+
+    useEffect(() => {
+        console.log("useeffect  stockAlertDateTemp: ",  stockAlertDateTemp)
+        console.log("useeffect typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
+    
+}, [stockAlertDateTemp])
     return (
         <Modal
         open={open} 

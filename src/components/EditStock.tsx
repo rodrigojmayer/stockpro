@@ -43,6 +43,7 @@ import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
+import dayjs, { Dayjs } from 'dayjs';
 
 interface mainData {
     id: number;
@@ -146,7 +147,10 @@ export default function EditStock(
     // const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:'');
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>(data.alert_date?data.alert_date:'');
+    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>(data.alert_date?data.alert_date:'');
+    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Dayjs | string>(data.alert_date?dayjs(data.alert_date):'');
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>(data.alert_date?dayjs(data.alert_date):'');
+    
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     const [stockCustomValues, setStockCustomValues] = useState('');
     
@@ -309,7 +313,7 @@ export default function EditStock(
     setStockAlertAmountTemp(value)
     }
     // const handleStockAlertDateChange = (value: string) => {
-    const handleStockAlertDateChange = (date:Date | null | string) => {
+    const handleStockAlertDateChange = (date:Dayjs | Date | null | string) => {
         console.log("handleSetAlertDate value: ", date)
         // if(date)
         //     setStockAlertDateTemp(date)
@@ -383,6 +387,11 @@ export default function EditStock(
 
     }, [ open, openOptionsCreate])
     
+    useEffect(() => {
+        console.log("Edit stock useeffect  stockAlertDateTemp: ",  stockAlertDateTemp)
+        console.log("Edit stock useeffect typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
+    
+}, [stockAlertDateTemp])
     return (
         <Modal
         open={open} 

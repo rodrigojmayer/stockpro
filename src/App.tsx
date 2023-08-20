@@ -116,6 +116,7 @@ function App() {
       "sub_category": newData.sub_category,
       "alert_amount": newData.alert_amount,
       "alert_date": formattedDate,
+      // "alert_date": "2023-08-22T00:00:00.000Z",
       // "alert_on": newData.alert_on,
     })
   }  

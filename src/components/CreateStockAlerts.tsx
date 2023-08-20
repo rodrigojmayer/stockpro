@@ -109,6 +109,10 @@ export default function CreateStockAlerts(
         // handleClose(false)
     }
     
+    console.log("typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
+    // stockAlertDateTemp = Date.parse(stockAlertDateTemp)
+    // console.log("typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
+
     const DatePickerComponent = breakpointLG ? DatePicker : MobileDatePicker;
     
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
