@@ -175,42 +175,37 @@ export default function CreateStockAlerts(
                 </Box>  */}
                 <Box className={classes.customBoxRow}>
                     <Grid container>
-                        <Grid item xs={10} >
-                        <TextField
-                            label="By amount"
-                            // onChange={ handleEditCustomFieldNew }
-                            maxRows={1}
-                            size="small"
-                            type="number"
-                            className={classes.inputMainData}
-                            value={stockAlertAmountTemp}
-                            onChange={ (event) => onStockAlertAmountChange(event.target.value) }
-                            InputProps={{
-                                className: classes.inputClassName,
-                                style: {
-                                // height:"36px"
-                                // borderRadius: 10,
-                                },
-                            }}
-                        />
+                        <Grid item xs={12} >
+                            <TextField
+                                label="By amount"
+                                // onChange={ handleEditCustomFieldNew }
+                                maxRows={1}
+                                size="small"
+                                type="number"
+                                className={classes.inputMainData}
+                                value={stockAlertAmountTemp}
+                                onChange={ (event) => onStockAlertAmountChange(event.target.value) }
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                    style: {
+                                    // height:"36px"
+                                    // borderRadius: 10,
+                                    },
+                                    endAdornment: (
+                                        <Typography align='center' variant='h6'>{stockMeasureTemp}</Typography>
+                                    ),
+                                }}
+                            />
                             
                         </Grid>
-                        <Grid item xs={.5} >
-                        </Grid>
-                {/* <Box className={classes.customBoxRow}>  */}
-                        <Grid item xs={1.5} >
-                            <Typography align='center' variant='h6'>{stockMeasureTemp}</Typography>
-                            {/* <PlusButton/>       */}
-                        </Grid>
-                {/* </Box> */}
                     </Grid>
                 </Box>
                 <Grid container>
                     <Grid item xs={12} >
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DatePicker']} >
-                            <DatePickerComponent
-                                label="By date3"
+                                <DatePickerComponent
+                                    label="By date"
                                     format="DD/MM/YYYY"
                                     value={ typeof stockAlertDateTemp === 'string' ? null : stockAlertDateTemp}
                                     onChange={ (newDate) => handleDatePickerChange(newDate) }
