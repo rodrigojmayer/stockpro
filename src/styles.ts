@@ -91,6 +91,7 @@ export const useStylesGlobal = makeStyles()({
     },
     inputMainData: {
         backgroundColor: "white",
+        // backgroundColor: "red",
         borderRadius: 10,
         width: "100%",
     },

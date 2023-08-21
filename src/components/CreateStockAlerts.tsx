@@ -13,6 +13,7 @@ import { Box,
          FormControl,
          Stack,
          Chip,
+         InputAdornment,
         } from '@mui/material';
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
@@ -204,40 +205,52 @@ export default function CreateStockAlerts(
                 {/* </Box> */}
                     </Grid>
                 </Box>
-               
-                    <Grid container>
-                        <Grid item xs={10} >
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DemoContainer components={['DatePicker']} >
-                                    <DatePickerComponent
-                                        label="By date"
-                                        format="DD/MM/YYYY"
-                                        // value={stockAlertDateTemp || null}
-                                        value={ typeof stockAlertDateTemp === 'string' ? null : stockAlertDateTemp}
-                                        // value={18/08/2025}
-                                        // onChange={ (newDate) => onStockAlertDateChange(newDate) }
-                                        onChange={ (newDate) => handleDatePickerChange(newDate) }
-                                        slotProps={{ textField: { size: 'small' } }}
-                                        className={classes.inputMainData} 
-                                        sx={{ 
-                                            marginTop: "-8px !important",
-                                            "& .MuiOutlinedInput-root": {
-                                                borderRadius:  "10px !important",
-                                            }
-                                        }} 
-                                    />
-                                </DemoContainer>
-                            </LocalizationProvider>
-                        </Grid>
-                        <Grid item xs={.5} >
-                        </Grid>
-                        <Box className={classes.customBoxCenter}> 
-                            <Grid item xs={1.5} >
-                                <CalendarMonthRoundedIcon />
-                                    
-                            </Grid>
-                        </Box>
+                <Grid container>
+                    <Grid item xs={12} >
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={['DatePicker']} >
+                            <DatePickerComponent
+                                label="By date3"
+                                    format="DD/MM/YYYY"
+                                    value={ typeof stockAlertDateTemp === 'string' ? null : stockAlertDateTemp}
+                                    onChange={ (newDate) => handleDatePickerChange(newDate) }
+                                    slotProps={{
+                                        textField: {
+                                            size: 'small',
+                                            InputProps: {
+                                            endAdornment: (
+                                            <InputAdornment
+                                            sx={{
+                                                color: "rgb(45,72, 91, 1)",
+                                            }}
+                                            position="end"
+                                            >
+                                            <CalendarMonthRoundedIcon />
+                                            </InputAdornment>
+                                            ),
+                                            },
+                                        },
+                                        }}
+                                    className={classes.inputMainData} 
+                                    sx={{ 
+                                        marginTop: "-8px !important",
+                                        "& .MuiOutlinedInput-root": {
+                                            borderRadius:  "10px !important",
+                                        }
+                                    }} 
+                                />
+                            </DemoContainer>
+                        </LocalizationProvider>
                     </Grid>
+                    {/* <Grid item xs={.5} >
+                    </Grid>
+                    <Box className={classes.customBoxCenter}> 
+                        <Grid item xs={1.5} >
+                            <CalendarMonthRoundedIcon />
+                                
+                        </Grid>
+                    </Box> */}
+                </Grid>
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
                     
                         <div className={classes.customBoxCenter}>
