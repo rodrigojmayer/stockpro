@@ -88,8 +88,8 @@ interface ChildProps {
     stockMeasureTemp: string
     stockAlertAmountTemp: number | string
     onStockAlertAmountChange: (newData: number | string) => void
-    stockAlertDateTemp: Date | string
-    onStockAlertDateChange: (newData: Date | string) => void
+    stockAlertDateTemp: Date | null
+    onStockAlertDateChange: (newData: Date | null) => void
 }
 
 export default function CreateStockAlerts(
@@ -110,7 +110,7 @@ export default function CreateStockAlerts(
         // handleClose(false)
     }
     
-    console.log("typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
+    // console.log("typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
     // stockAlertDateTemp = Date.parse(stockAlertDateTemp)
     // console.log("typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
 
@@ -131,7 +131,7 @@ export default function CreateStockAlerts(
     // const [selectedDate, setSelectedDate] = useState('');
 
     const handleDatePickerChange = (newDate:any) => { 
-        // console.log("newDate: ", newDate) 
+        console.log("newDate: ", newDate) 
         // console.log("newDate.$d: ", newDate.$d)
         // Here, we adjust the selected date to GMT+0400 by using the utcOffset method
         // const adjustedDate = newDate.utcOffset('+0400', true);
@@ -192,7 +192,15 @@ export default function CreateStockAlerts(
                                     // borderRadius: 10,
                                     },
                                     endAdornment: (
-                                        <Typography align='center' variant='h6'>{stockMeasureTemp}</Typography>
+                                        <Typography 
+                                            align='center' 
+                                            variant='h6' 
+                                            sx={{
+                                                color: "rgb(45,72, 91, 1)",
+                                            }}
+                                        >
+                                            {stockMeasureTemp}
+                                        </Typography>
                                     ),
                                 }}
                             />
@@ -207,7 +215,9 @@ export default function CreateStockAlerts(
                                 <DatePickerComponent
                                     label="By date"
                                     format="DD/MM/YYYY"
-                                    value={ typeof stockAlertDateTemp === 'string' ? null : stockAlertDateTemp}
+                                    defaultValue = { stockAlertDateTemp? stockAlertDateTemp : null}
+                                    // value={ typeof stockAlertDateTemp === 'string' ? null : stockAlertDateTemp}
+                                    // value = { stockAlertDateTemp }
                                     onChange={ (newDate) => handleDatePickerChange(newDate) }
                                     slotProps={{
                                         textField: {

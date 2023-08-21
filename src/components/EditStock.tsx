@@ -388,8 +388,8 @@ export default function EditStock(
     }, [ open, openOptionsCreate])
     
     useEffect(() => {
-        console.log("Edit stock useeffect  stockAlertDateTemp: ",  stockAlertDateTemp)
-        console.log("Edit stock useeffect typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
+        // console.log("Edit stock useeffect  stockAlertDateTemp: ",  stockAlertDateTemp)
+        // console.log("Edit stock useeffect typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
     
 }, [stockAlertDateTemp])
     return (

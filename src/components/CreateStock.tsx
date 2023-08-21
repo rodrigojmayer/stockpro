@@ -148,7 +148,7 @@ export default function CreateStock(
     const [stockAlertAmount, setStockAlertAmount] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>('');
     const [stockAlertDate, setStockAlertDate] = useState('');
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>("");
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     const [stockCustomValues, setStockCustomValues] = useState('');
     
@@ -334,7 +334,7 @@ export default function CreateStock(
     setStockAlertAmountTemp(value)
     }
     // const handleStockAlertDateChange = (value: string) => {
-    const handleStockAlertDateChange = (date:Date | null | string) => {
+    const handleStockAlertDateChange = (date:Date | null) => {
         console.log("handleSetAlertDate value: ", date)
         // if(date)
         //     setStockAlertDateTemp(date)
@@ -346,7 +346,7 @@ export default function CreateStock(
             setStockAlertDateTemp(date);
         } else {
             // setStockAlertDateTemp('');
-            setStockAlertDateTemp("");
+            setStockAlertDateTemp(null);
         }
     }
     const handleStockCustomValuesTemp = (value: string, dataKey: string) => {
@@ -410,8 +410,8 @@ export default function CreateStock(
     
 
     useEffect(() => {
-        console.log("useeffect  stockAlertDateTemp: ",  stockAlertDateTemp)
-        console.log("useeffect typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
+        // console.log("useeffect  stockAlertDateTemp: ",  stockAlertDateTemp)
+        // console.log("useeffect typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
     
 }, [stockAlertDateTemp])
     return (
