@@ -1,7 +1,8 @@
 import React from 'react'
 import { makeStyles } from 'tss-react/mui';
 // import MenuList from '@mui/material/MenuList/MenuList';
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
