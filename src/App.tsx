@@ -61,6 +61,7 @@ function App() {
     "url_image": "",
     "alert_amount": 0,
     "alert_date": "",
+    "custom_fields": [],
     // "alert_on": false,
   })
   const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
@@ -77,6 +78,8 @@ function App() {
     // })
     let dateObject
     let formattedDate
+    console.log("newData.newRow: ", newData.newRow)
+    console.log("newData.newRow.custom_fields: ", newData.newRow.custom_fields)
     // console.log("newData.alert_date: ", newData.alert_date)
     if(typeof newData.alert_date === 'string'){
       // console.log("newData.alert_date.substring(0,2): ", newData.alert_date.substring(0,2))
@@ -98,8 +101,8 @@ function App() {
       formattedDate = newData.alert_date
     }
 
-    console.log("dateObject: ", dateObject)
-    console.log("formattedDate: ", formattedDate)
+    // console.log("dateObject: ", dateObject)
+    // console.log("formattedDate: ", formattedDate)
 
     setProductUpdate({
       "_id": newData._id,
@@ -116,6 +119,7 @@ function App() {
       "sub_category": newData.sub_category,
       "alert_amount": newData.alert_amount,
       "alert_date": formattedDate,
+      "custom_fields": newData.newRow.custom_fields,
       // "alert_date": "2023-08-22T00:00:00.000Z",
       // "alert_on": newData.alert_on,
     })

@@ -104,14 +104,14 @@ interface ChildProps {
     handleClose: (newData: boolean) => void
     // data: ProductUpdateData
     data: Data
-    // columnsCustom: ColumnData[] 
+    columnsCustom: ColumnData[] 
 }
 
 export default function EditStock( 
     {   open, 
         handleClose, 
         data,
-        // columnsCustom,
+        columnsCustom,
     }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -455,15 +455,15 @@ export default function EditStock(
                         onStockAlertDateChange={handleStockAlertDateChange}
  
                     />
-                    {/* <CreateStockCustomFields
+                    <CreateStockCustomFields
                         hiddenPanel={openOptionsCreate.customFields}
                         openOptionsCreate={handleOpenOptionsCreate}
                         
-                        // columnsCustom={columnsCustom}
+                        columnsCustom={columnsCustom}
                         
                         stockCustomValuesTemp={stockCustomValuesTemp}
                         onStockCustomValuesTemp={handleStockCustomValuesTemp}
-                    /> */}
+                    />
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}

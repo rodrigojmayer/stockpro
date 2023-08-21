@@ -58,7 +58,8 @@ export default function UpdateAmountStock(
     } 
 
     // console.log("productUpdate: ", productUpdate)
-
+    console.log("productUpdate.custom_fields: ", productUpdate.custom_fields)
+    
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
@@ -355,7 +356,9 @@ export default function UpdateAmountStock(
                         open={openEditStock} 
                         handleClose={handleCloseEditStock} 
                         data={productUpdate} 
-                        // columnsCustom={[]}                    
+                        // columnsCustom={[]} 
+                        columnsCustom={[productUpdate.custom_fields]} 
+                                          
                     />
                     
                     <Box className={classes.finishButtons}>
