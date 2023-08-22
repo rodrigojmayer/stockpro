@@ -152,8 +152,8 @@ export default function CreateStock(
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     const [stockCustomValues, setStockCustomValues] = useState('');
     
-    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-    const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
+    // const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+    // const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
 
     // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
     //     label: value.label,
@@ -306,6 +306,8 @@ export default function CreateStock(
         console.log("selectedCategory: ", selectedCategory)
         // setStockCategoryTemp(value)
         setStockCategoryTemp(selectedCategory)
+        setStockSubCategoryTemp('')
+
     }
     const handleStockSubCategoryChange = (value: string) => {
         console.log("SubCategory value: ", value)

@@ -37,7 +37,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { Data, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../types';
+import { Data, DataCreateStockOptions, ColumnData, ProductEditData } from '../types';
 
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
@@ -128,7 +128,9 @@ export default function EditStock(
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
-    // console.log("data: ", data)
+    console.log("data: ", data)
+    // console.log("categories: ", categories)
+    // console.log("categoryArray: ", categoryArray)
     // console.log("data.category: ", data.category)
     // console.log("data.sub_category: ", data.sub_category)
     // console.log("data.alert_date: ", data.alert_date)
@@ -136,10 +138,15 @@ export default function EditStock(
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
     const [stockCodeTemp, setStockCodeTemp] = useState<string>(data.code?data.code:'');
     const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount);
-    const [stockMeasureTemp, setStockMeasureTemp] = useState(data.measure);
-    const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
+    const [stockMeasureTemp, setStockMeasureTemp] = useState<any>(data.measure?data.measure:'');
+
+    const selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
+    const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
+
+
     // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState(data.sub_category);
-    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
+    // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
+    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category?data.sub_category:'');
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
     // const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
@@ -154,15 +161,15 @@ export default function EditStock(
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
     // const [stockCustomValues, setStockCustomValues] = useState('');
     
-    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-    const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
+    // const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+    // const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
 
     // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
     //     label: value.label,
     //     value: "",
     // })));
     // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>(data.custom_fields);
+    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>(data.custom_fields?data.custom_fields:{});
 
     
 
@@ -171,21 +178,46 @@ export default function EditStock(
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
+            const bodyUpdate: ProductEditData = {}
+            if(data.product!=stockNameTemp)
+                bodyUpdate.product= stockNameTemp
+            if(data.code!=stockCodeTemp)
+                bodyUpdate.code = stockCodeTemp
+            if(data.amount!=stockAmountTemp)
+                bodyUpdate.amount = stockAmountTemp
+            if(data.measure!=stockMeasureTemp)
+                bodyUpdate.measure = stockMeasureTemp
+            if(stockCategoryTemp && data.category!=stockCategoryTemp.name)
+                bodyUpdate.category = stockCategoryTemp.name
+            if(data.sub_category!=stockSubCategoryTemp)
+                bodyUpdate.sub_category = stockSubCategoryTemp
+                
+            // "custom_fields": stockCustomValuesTemp,
+            // "deleted": false,
+
+            // "price": stockPriceTemp,
+            // "description": stockDescriptionTemp,
+            // "url_image": stockImageUrlTemp,
+
+            // "alert_amount": stockAlertAmountTemp,
+            // "alert_date": stockAlertDateTemp,
+
             
-            console.log("data.: ", data)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
-            console.log("user.id_client: ", user.id_client)
-            console.log("stockNameTemp: ", stockNameTemp)
-            console.log("stockCodeTemp: ", stockCodeTemp)
-            console.log("stockAmountTemp: ", stockAmountTemp)
-            console.log("stockMeasureTemp: ", stockMeasureTemp)
-            // console.log("stockCategoryTemp: ", stockCategoryTemp)
+            // console.log("data.: ", data)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+            // console.log("user.id_client: ", user.id_client)
+            // console.log("stockNameTemp: ", stockNameTemp)
+            // console.log("stockCodeTemp: ", stockCodeTemp)
+            // console.log("stockAmountTemp: ", stockAmountTemp)
+            // console.log("stockMeasureTemp: ", stockMeasureTemp)
+            // console.log("stockCategoryTemp: ", stockCategoryTemp && stockCategoryTemp.name)
             // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
+            // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
             // console.log("stockPriceTemp: ", stockPriceTemp)
             // console.log("stockDescriptionTemp: ", stockDescriptionTemp)
             // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
             // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
             // console.log("stockAlertDateTemp: ", stockAlertDateTemp)
-            // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
+            console.log("bodyUpdate: ", bodyUpdate)
 
             // const stockAlertDateTemp2 = new Date()
             const fetchEditStockProduct = async () => {
@@ -197,25 +229,27 @@ export default function EditStock(
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
-                        body:JSON.stringify({
+
+                        body:JSON.stringify(bodyUpdate)
+                        // body:JSON.stringify({
                             // "id": 7,
-                            "id_client": user.id_client,
-                            "product": stockNameTemp,
-                            "code": stockCodeTemp,
-                            "amount": stockAmountTemp,
-                            "measure": stockMeasureTemp,
-                            "category": stockCategoryTemp && stockCategoryTemp.name,
-                            "sub_category": stockSubCategoryTemp,
-                            "custom_fields": stockCustomValuesTemp,
-                            "deleted": false,
+                            // "id_client": user.id_client,
+                            // "product": stockNameTemp,
+                            // "code": stockCodeTemp,
+                            // "amount": stockAmountTemp,
+                            // "measure": stockMeasureTemp,
+                            // "category": stockCategoryTemp && stockCategoryTemp.name,
+                            // "sub_category": stockSubCategoryTemp,
+                            // "custom_fields": stockCustomValuesTemp,
+                            // "deleted": false,
 
-                            "price": stockPriceTemp,
-                            "description": stockDescriptionTemp,
-                            "url_image": stockImageUrlTemp,
+                            // "price": stockPriceTemp,
+                            // "description": stockDescriptionTemp,
+                            // "url_image": stockImageUrlTemp,
 
-                            "alert_amount": stockAlertAmountTemp,
-                            "alert_date": stockAlertDateTemp,
-                        })
+                            // "alert_amount": stockAlertAmountTemp,
+                            // "alert_date": stockAlertDateTemp,
+                        // })
                     })
 
                     // Check if the response status is successful
@@ -246,7 +280,7 @@ export default function EditStock(
                     }));
                 }
             } 
-            // fetchEditStockProduct()
+            fetchEditStockProduct()
 
 
             // setSelectedUsers(selectedUsersTemp)
@@ -290,6 +324,7 @@ export default function EditStock(
         console.log("selectedCategory: ", selectedCategory)
         // setStockCategoryTemp(value)
         setStockCategoryTemp(selectedCategory)
+        setStockSubCategoryTemp('')
     }
     const handleStockSubCategoryChange = (value: string) => {
         console.log("SubCategory value: ", value)

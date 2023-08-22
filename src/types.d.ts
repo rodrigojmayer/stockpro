@@ -109,3 +109,19 @@ export interface ProductUpdateData {
   measure_prod: string;
   alert_amount?: number;
 }
+export interface ProductEditData {
+  product?: string;
+  code?: string;
+  amount?: number | string;
+  measure?: string;
+  category?: string;
+  sub_category?: string;
+  custom_fields?: array;
+  id_custom_field_product?: number;
+  price?: number | string;
+  description?: string;
+  url_image?: string;
+  alert_amount?: number | string;
+  alert_date?: Date | string;
+  alert_on?: boolean;
+}
