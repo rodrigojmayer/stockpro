@@ -130,7 +130,7 @@ export default function CreateStockMainData(
     const close = () => {
         // handleClose(false)
     }
-    console.log("measureArray: ", measureArray)
+    // console.log("measureArray: ", measureArray)
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {

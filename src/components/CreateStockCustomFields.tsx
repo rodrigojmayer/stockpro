@@ -71,6 +71,9 @@ export default function CreateStockCustomFields(
     const close = () => {
         // handleClose(false)
     }
+
+    // console.log("CreateStockCustomFields columnsCustom: ", columnsCustom)
+
     const columns: ColumnData[] = columnsCustom;
     const columnsCustomNew: ColumnDataCustom[] = columnsCustom
     .map((obj) => {
@@ -256,28 +259,28 @@ export default function CreateStockCustomFields(
         // console.log("unsetFieldsDelete: ", unsetFields[2])
         // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
     }
-    const addInputCustomField = () => {
-        console.log("holis clickis", customFieldsNewTemp.length)
-        // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-        const lastObj = customFieldsNewTemp[customFieldsNewTemp.length - 1]
-        const nextId = lastObj.id + 1
-        const updateFieldsNew = [...customFieldsNewTemp, {id:nextId, dataKey: "", label: "", width: 100, id_client: 2, deleted: false, okButtonShow: false, fieldRepeatedShow:false}]
+    // const addInputCustomField = () => { 
+    //     console.log("holis clickis", customFieldsNewTemp.length)
+    //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
+    //     const lastObj = customFieldsNewTemp[customFieldsNewTemp.length - 1]
+    //     const nextId = lastObj.id + 1
+    //     const updateFieldsNew = [...customFieldsNewTemp, {id:nextId, dataKey: "", label: "", width: 100, id_client: 2, deleted: false, okButtonShow: false, fieldRepeatedShow:false}]
 
         
 
-        // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-        //     updateFieldsNew[index].okButtonShow = true
-        // else
-        //     updateFieldsNew[index].okButtonShow = false
+    //     // updateFieldsNew[index].label = event.currentTarget.value
+    //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+    //     // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
+    //     // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
+    //     //     updateFieldsNew[index].okButtonShow = true
+    //     // else
+    //     //     updateFieldsNew[index].okButtonShow = false
         
-        console.log("updateFieldsNew: ", updateFieldsNew)
+    //     console.log("updateFieldsNew: ", updateFieldsNew)
 
-        setCustomFieldsNewTemp(updateFieldsNew)
-        setAddButtonShow(false)
-    }
+    //     setCustomFieldsNewTemp(updateFieldsNew)
+    //     setAddButtonShow(false)
+    // }
     // const addInputCustomField = () => {
     //     // console.log("holis clickis", customFieldsNewTemp.length)
     //     // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))

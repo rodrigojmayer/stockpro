@@ -43,6 +43,7 @@ import ErrorModal from './ErrorModal';
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
+    columnsCustom:  ColumnData[] 
     // productUpdate:  ProductUpdateData 
     productUpdate:  Data 
 }
@@ -50,6 +51,7 @@ interface ChildProps {
 export default function UpdateAmountStock( 
     {   open, 
         handleClose, 
+        columnsCustom,
         productUpdate,
     }: ChildProps) {
     const { classes } = useStylesGlobal();
@@ -58,7 +60,7 @@ export default function UpdateAmountStock(
     } 
 
     // console.log("productUpdate: ", productUpdate)
-    console.log("productUpdate.custom_fields: ", productUpdate.custom_fields)
+    // console.log("productUpdate.custom_fields: ", productUpdate.custom_fields)
     
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
@@ -357,7 +359,7 @@ export default function UpdateAmountStock(
                         handleClose={handleCloseEditStock} 
                         data={productUpdate} 
                         // columnsCustom={[]} 
-                        columnsCustom={[productUpdate.custom_fields]} 
+                        columnsCustom={columnsCustom} 
                                           
                     />
                     

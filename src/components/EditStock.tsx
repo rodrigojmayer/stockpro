@@ -152,7 +152,7 @@ export default function EditStock(
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>(data.alert_date?dayjs(data.alert_date):'');
     
     // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
-    const [stockCustomValues, setStockCustomValues] = useState('');
+    // const [stockCustomValues, setStockCustomValues] = useState('');
     
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
@@ -161,7 +161,8 @@ export default function EditStock(
     //     label: value.label,
     //     value: "",
     // })));
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
+    // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
+    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>(data.custom_fields);
 
     
 
@@ -171,13 +172,15 @@ export default function EditStock(
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            // console.log("stockNameTemp: ", stockNameTemp)
-            // console.log("stockAmountTemp: ", stockAmountTemp)
-            // console.log("stockMeasureTemp: ", stockMeasureTemp)
+            console.log("data.: ", data)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+            console.log("user.id_client: ", user.id_client)
+            console.log("stockNameTemp: ", stockNameTemp)
+            console.log("stockCodeTemp: ", stockCodeTemp)
+            console.log("stockAmountTemp: ", stockAmountTemp)
+            console.log("stockMeasureTemp: ", stockMeasureTemp)
             // console.log("stockCategoryTemp: ", stockCategoryTemp)
             // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
             // console.log("stockPriceTemp: ", stockPriceTemp)
-            // console.log("stockCodeTemp: ", stockCodeTemp)
             // console.log("stockDescriptionTemp: ", stockDescriptionTemp)
             // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
             // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
@@ -185,19 +188,20 @@ export default function EditStock(
             // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
 
             // const stockAlertDateTemp2 = new Date()
-            const fetchCreateStockProduct = async () => {
+            const fetchEditStockProduct = async () => {
                 let loadingSuccess: boolean = false
                 try {
-                    const response = await fetch(`http://localhost:4000/api/products/`, {
-                        method: 'POST',
+                    const response = await fetch(`http://localhost:4000/api/products/${data._id}`, {
+                        method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
                         body:JSON.stringify({
-                                // "id": 7,
-                            "product": stockNameTemp,
+                            // "id": 7,
                             "id_client": user.id_client,
+                            "product": stockNameTemp,
+                            "code": stockCodeTemp,
                             "amount": stockAmountTemp,
                             "measure": stockMeasureTemp,
                             "category": stockCategoryTemp && stockCategoryTemp.name,
@@ -206,7 +210,6 @@ export default function EditStock(
                             "deleted": false,
 
                             "price": stockPriceTemp,
-                            "code": stockCodeTemp,
                             "description": stockDescriptionTemp,
                             "url_image": stockImageUrlTemp,
 
@@ -243,7 +246,7 @@ export default function EditStock(
                     }));
                 }
             } 
-            // fetchCreateStockProduct()
+            // fetchEditStockProduct()
 
 
             // setSelectedUsers(selectedUsersTemp)

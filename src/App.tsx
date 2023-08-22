@@ -78,8 +78,8 @@ function App() {
     // })
     let dateObject
     let formattedDate
-    console.log("newData.newRow: ", newData.newRow)
-    console.log("newData.newRow.custom_fields: ", newData.newRow.custom_fields)
+    // console.log("newData.newRow: ", newData.newRow)
+    // console.log("newData.newRow.custom_fields: ", newData.newRow.custom_fields)
     // console.log("newData.alert_date: ", newData.alert_date)
     if(typeof newData.alert_date === 'string'){
       // console.log("newData.alert_date.substring(0,2): ", newData.alert_date.substring(0,2))
@@ -217,6 +217,7 @@ function App() {
                 open={showUpdateAmountStock} 
                 handleClose={handleCloseUpdateAmountStock} 
 
+                columnsCustom={filteredColumnsCustom}
                 productUpdate={productUpdate} 
             />
           </ThemeProvider>

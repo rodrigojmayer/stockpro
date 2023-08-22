@@ -160,9 +160,7 @@ export default function CreateStock(
     //     value: "",
     // })));
     const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
-
     
-
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
