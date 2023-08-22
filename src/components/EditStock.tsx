@@ -191,13 +191,19 @@ export default function EditStock(
                 bodyUpdate.category = stockCategoryTemp.name
             if(data.sub_category!=stockSubCategoryTemp)
                 bodyUpdate.sub_category = stockSubCategoryTemp
+            if(data.custom_fields!=stockCustomValuesTemp)
+                bodyUpdate.custom_fields = stockCustomValuesTemp
+            if(data.price!=stockPriceTemp)
+                bodyUpdate.price = stockPriceTemp
+            if(data.description!=stockDescriptionTemp)
+                bodyUpdate.description = stockDescriptionTemp
+            if(data.url_image!=stockImageUrlTemp)
+                bodyUpdate.url_image = stockImageUrlTemp
+            if(data.alert_amount!=stockAlertAmountTemp)
+                bodyUpdate.alert_amount = stockAlertAmountTemp
+            if(data.alert_date!=stockAlertDateTemp)
+                bodyUpdate.alert_date = stockAlertDateTemp
                 
-            // "custom_fields": stockCustomValuesTemp,
-            // "deleted": false,
-
-            // "price": stockPriceTemp,
-            // "description": stockDescriptionTemp,
-            // "url_image": stockImageUrlTemp,
 
             // "alert_amount": stockAlertAmountTemp,
             // "alert_date": stockAlertDateTemp,
