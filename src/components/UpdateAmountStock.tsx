@@ -61,6 +61,7 @@ export default function UpdateAmountStock(
 
     // console.log("productUpdate: ", productUpdate)
     // console.log("productUpdate.custom_fields: ", productUpdate.custom_fields)
+    console.log("productUpdate.amount: ", productUpdate.amount)
     
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
@@ -123,10 +124,11 @@ export default function UpdateAmountStock(
 
 
     useEffect(() => {
-        setValueUpdate(-1)
+        setValueUpdate(productUpdate.amount==0?1:-1)
         setAlertOn(false);
         setMessageBeforeSave("");
-    }, [handleClose])
+    // }, [handleClose])
+    }, [open])
 
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
@@ -190,34 +192,7 @@ export default function UpdateAmountStock(
         }
         setOpenSaveChanges(false);
     }
-
-
-
-
-    // const handleOpenSaveChanges = () => {
-    //     const updatedResult  = productUpdate.amount_prod + valueUpdate
-    //     setResultUpdated(updatedResult )
-    //     // console.log("Updated result: ", resultUpdated)
-    //     if(productUpdate.alert_amount){
-    //         if (productUpdate.alert_amount >= resultUpdated){
-    //             setAlertOn(true)
-    //             setMessageBeforeSave("The stock amount will drop below the alert level.")
-    //         }else {
-    //             setAlertOn(false)
-    //             setMessageBeforeSave("")                
-    //         }
-    //     } 
-    //     setUpdatedResultVisible(true);
-    // }
-    // useEffect(() => {
-    //     if (updatedResultVisible) {
-    //         setOpenSaveChanges(true); // Now you can safely open the modal
-    //         setUpdatedResultVisible(false); // Reset the state
-    //     }
-    // }, [updatedResultVisible]);
     
-
-
     const handleOpenSaveChanges = () => {
         const updatedResult = Number(productUpdate.amount) + valueUpdate;
         setResultUpdated(updatedResult);
