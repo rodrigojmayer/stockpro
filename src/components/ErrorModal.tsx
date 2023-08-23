@@ -26,6 +26,9 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (props.errorData === "duplicate_product"){
         title="Duplicated data"
         subTitle=`This product already exists`
+    } else if (props.errorData === "negative_amount"){
+        title="Shortfall"
+        subTitle=`The amount cannot be negative`
     }
 
     return (

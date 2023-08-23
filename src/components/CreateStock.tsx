@@ -265,11 +265,16 @@ export default function CreateStock(
 
     const handleOpenSaveChanges = () => {
         console.log("stockNameTemp: ", stockNameTemp)
-        if(stockNameTemp)
-            setOpenSaveChanges(true);
-        else{
+
+        if(stockNameTemp===""){
             setOpenErrorModal(true)
             setErrorData("missing_data")
+        }else if(Number(stockAmountTemp)<0){
+            setOpenErrorModal(true)
+            setErrorData("negative_amount")
+        }
+        else{
+            setOpenSaveChanges(true);
         }
     }
 

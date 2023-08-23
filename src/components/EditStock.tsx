@@ -44,6 +44,7 @@ import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import dayjs, { Dayjs } from 'dayjs';
+import ErrorModal from './ErrorModal';
 
 interface mainData {
     id: number;
@@ -174,7 +175,9 @@ export default function EditStock(
     
 
 
-    const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const [openSaveChanges, setOpenSaveChanges] = useState(false); 
+    const [openErrorModal, setOpenErrorModal] = useState(false);  
+    const [errorData, setErrorData] = useState("");  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -223,7 +226,7 @@ export default function EditStock(
             // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
             // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
             // console.log("stockAlertDateTemp: ", stockAlertDateTemp)
-            console.log("bodyUpdate: ", bodyUpdate)
+            // console.log("bodyUpdate: ", bodyUpdate)
 
             // const stockAlertDateTemp2 = new Date()
             const fetchEditStockProduct = async () => {
@@ -295,8 +298,28 @@ export default function EditStock(
         }
         setOpenSaveChanges(false);
     }
-    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
+    // const handleOpenSaveChanges = () => setOpenSaveChanges(true);
     
+    
+    const handleCloseErrorModal = () => {
+        setOpenErrorModal(false)
+    }
+
+    const handleOpenSaveChanges = () => {
+        console.log("stockNameTemp: ", stockNameTemp)
+
+        if(stockNameTemp===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_data")
+        }else if(Number(stockAmountTemp)<0){
+            setOpenErrorModal(true)
+            setErrorData("negative_amount")
+        }
+        else{
+            setOpenSaveChanges(true);
+        }
+    }
+
     const handleOpenOptionsCreate = (newData:  string) => {
         const updatedOptions = { ...openOptionsCreate };
         for (const key in updatedOptions) {
@@ -446,6 +469,11 @@ export default function EditStock(
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
+                    />
+                    <ErrorModal
+                        openErrorModal={openErrorModal}
+                        closeErrorModal={handleCloseErrorModal}
+                        errorData={errorData} 
                     />
                     <Typography align='center' variant="h5">Edit stock</Typography>
                     <CreateStockMainData 
