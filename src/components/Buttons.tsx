@@ -15,6 +15,7 @@ import FolderOpenRoundedIcon from '@mui/icons-material/FolderOpenRounded';
 import { useEffect, useState } from 'react';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import EditIcon from '@mui/icons-material/Edit';
+import IonTrash from "../assets/ion_trash.svg";
 
 const theme = createTheme({
   palette: {
@@ -280,6 +281,67 @@ export function EditButton({ sizeIco, roundedIco, cusField, clicked, submitOk }:
     </ThemeProvider>
   )
 }
+
+
+export function DeleteButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: ButtonProps ) {
+
+  const { classes } = useStyles()
+  const colorOk = theme.palette.neutral.main
+  
+  let fontIco = 28, noPadding, bor = 5, borRad
+  if(sizeIco) {
+    fontIco = (parseInt(sizeIco) - 12)
+    bor = 3
+  }
+  if(roundedIco){
+    noPadding=0
+    borRad="50px !important"
+  } 
+  const handleClick:any = (() => {
+    if(cusField)
+      clicked(cusField.id, cusField.value)
+    else
+      clicked()
+  })
+
+  return (  
+    <ThemeProvider theme={theme}>
+      <Button 
+        variant="outlined"
+        color="neutral"
+        className={`${classes.btnCommonStyle} ${classes.btnEdit}`}
+        sx={{  
+          border: bor, 
+          padding:noPadding, 
+          paddingTop:0,  
+          paddingBottom:0, 
+          // minWidth: sizeIco, 
+          width: 74.6, 
+          // height: sizeIco,
+          borderRadius: borRad,
+        }}
+        onClick={handleClick}
+        >
+
+          <img 
+            src={IonTrash} 
+            alt="Trash"
+            style={{ filter: "brightness(0) invert(100%)" }}  
+            
+          width= {28}   
+          />
+
+
+        {/* <EditIcon 
+        sx={{ 
+          fontSize: fontIco,
+        }}></EditIcon> */}
+      </Button>
+    </ThemeProvider>
+  )
+}
+
+
 
 interface ChildProps {
   onDataChanged: (newData: boolean) => void;

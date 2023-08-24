@@ -22,7 +22,8 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { OkButton,
          CancelButton, 
          PlusButton,
-         UpButton
+         UpButton,
+         DeleteButton
         } from './Buttons';
 import  CreateStockMainData  from './CreateStockMainData'
 import  CreateStockSecondaryData  from './CreateStockSecondaryData'
@@ -45,6 +46,7 @@ import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import dayjs, { Dayjs } from 'dayjs';
 import ErrorModal from './ErrorModal';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 interface mainData {
     id: number;
@@ -178,6 +180,7 @@ export default function EditStock(
     const [openSaveChanges, setOpenSaveChanges] = useState(false); 
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
+    const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -418,6 +421,13 @@ export default function EditStock(
         // setStockCustomValuesTemp(updateCustomValuesTemp)
     }
 
+    const handleDeleteProduct = () => {
+        setOpenConfirmDeleteModal(true)
+    }
+    const handleCloseConfirmDeleteModal = () => {
+        setOpenConfirmDeleteModal(false)
+    }
+
     
     useEffect(() => {
         // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
@@ -474,6 +484,11 @@ export default function EditStock(
                         openErrorModal={openErrorModal}
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
+                    />
+                    <ConfirmDeleteModal
+                        openConfirmDeleteModal={openConfirmDeleteModal}
+                        closeConfirmDeleteModal={handleCloseConfirmDeleteModal}
+                        data={"test product 123"} 
                     />
                     <Typography align='center' variant="h5">Edit stock</Typography>
                     <CreateStockMainData 
@@ -537,6 +552,9 @@ export default function EditStock(
                         onStockCustomValuesTemp={handleStockCustomValuesTemp}
                     />
                     <Box className={classes.finishButtons}>
+                        <DeleteButton
+                        clicked={() => handleDeleteProduct()}
+                        /> 
                         <CancelButton
                         clicked={() => close()}
                         />
