@@ -181,6 +181,8 @@ export default function EditStock(
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
     const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
+    // const [confirmDelete, setConfirmDelete] = useState(false);
+    
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -427,7 +429,62 @@ export default function EditStock(
     const handleCloseConfirmDeleteModal = () => {
         setOpenConfirmDeleteModal(false)
     }
+    const handleConfirmDelete = () => {
+        // alert("handleConfirmDelete")
+        // setConfirmDelete(true)
 
+        const fetchDeleteStockProduct = async () => {
+            let loadingSuccess: boolean = false
+            try {
+                const response = await fetch(`http://localhost:4000/api/products/${data._id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                        // Add any other requires headers here
+                    },
+
+                    body:JSON.stringify({
+                        "deleted": true,
+                    })
+                })
+
+                // Check if the response status is successful
+                if (response.ok) {
+                    const responseData = await response.json() // parse the response data
+                    console.log('POST request successful: ', responseData)
+                    loadingSuccess = true
+                } else {
+                    // Handle non-successful responses
+                    console.error('Request failed: ', response.status, response.statusText)
+                    // Handle the error here
+                }
+            } catch (error: unknown) {
+                if (typeof error === 'string') {
+                    // 'error' is now narrowed down to type 'string'
+                    console.error('Error:', error)
+                } else if (error instanceof Error) {
+                    // 'error' is now narrowed down to type 'Error'
+                    console.error('Error object:', error.message)
+                } else {
+                    // Handle other cases as needed
+                }
+            } finally {
+                // setIsLoading(())
+                setIsLoading((prevLoading: any) => ({
+                    ...prevLoading,
+                    fieldsFetchCreateStock: loadingSuccess,
+                }));
+            }
+        } 
+        fetchDeleteStockProduct()
+
+
+        // setSelectedUsers(selectedUsersTemp)
+        // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
+        close()
+
+
+    }
     
     useEffect(() => {
         // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
@@ -488,7 +545,9 @@ export default function EditStock(
                     <ConfirmDeleteModal
                         openConfirmDeleteModal={openConfirmDeleteModal}
                         closeConfirmDeleteModal={handleCloseConfirmDeleteModal}
-                        data={"test product 123"} 
+                        data={stockNameTemp} 
+                        confirmDelete={handleConfirmDelete}
+                        
                     />
                     <Typography align='center' variant="h5">Edit stock</Typography>
                     <CreateStockMainData 

@@ -16,7 +16,7 @@ const PrettoSlider = styled(Slider)({
     height: 25,
     borderRadius: '7px',
     //borderRadius: '0 7px 7px 0',
-    paddingLeft: '40px' ,
+    // paddingLeft: '40px' ,
    // paddingRight: '25px',
     '& .MuiSlider-track': {
       border: 'none',
@@ -24,8 +24,8 @@ const PrettoSlider = styled(Slider)({
     },
     '& .MuiSlider-thumb': {
       height: 25,
-      width: 50,
-      marginLeft: '21px',
+      width: 40,
+    //   marginLeft: '21px',
       //paddingRight: '25px', 
       borderRadius: '7px',
       backgroundColor: '#fff',
@@ -37,63 +37,33 @@ const PrettoSlider = styled(Slider)({
         display: 'none',
       },
     },
-    '& .MuiSlider-valueLabel': {
-      display: 'none',
-      lineHeight: 10.2,
-      fontSize: 12,
-      background: 'unset',
-      padding: 0,
-      width: 32,
-      height: 32,
-      borderRadius: '50% 50% 50% 0',
-      backgroundColor: '#52af77',
-      transformOrigin: 'bottom left',
-      transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
-      '&:before': { display: 'none' },
-      '&.MuiSlider-valueLabelOpen': {
-        transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
-      },
-      '& > *': {
-        transform: 'rotate(45deg)',
-      },
-    },
   });
 
 type ConfirmDeleteModalProps = {
     openConfirmDeleteModal: boolean;
     closeConfirmDeleteModal: (newData?: boolean) => void;
     data: string
+    confirmDelete: (newData?: boolean) => void
 }
 export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     const { openConfirmDeleteModal, closeConfirmDeleteModal } = props;
     const { classes } = useStylesGlobal();
-    let title = "Deletear"
-    let subTitle = props.data
+    // let title = "swipe to confirm deletion of stock "
+    let subTitle = `Swipe to confirm the deletion of stock "${props.data}"`
 
-
-    // if(props.errorData === "missing_data"){
-    //     title="Missing required data"
-    //     subTitle="Name*"
-    // } else if (props.errorData === "duplicate_product"){
-    //     title="Duplicated data"
-    //     subTitle=`This product already exists`
-    // } else if (props.errorData === "negative_amount"){
-    //     title="Shortfall"
-    //     subTitle=`The amount cannot be negative`
-    // }
 
 
     const [isThumbPressed, setIsThumbPressed] = useState(true);
-    const [valueSlider, setValueSlider] = useState(30);
+    const [valueSlider, setValueSlider] = useState(0);
     
     const handleThumbMouseDown = () => {
-        console.log('handleThumbMouseDown');
+        // console.log('handleThumbMouseDown');
       setIsThumbPressed(true);
     };
   
     const handleThumbMouseUp = () => {
-        console.log('handleThumbMouseUp');
-        console.log('valueSlider: ', valueSlider);
+        // console.log('handleThumbMouseUp');
+        // console.log('valueSlider: ', valueSlider);
         if(valueSlider<100)
             setValueSlider(0)
         setIsThumbPressed(false);
@@ -102,7 +72,7 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     const handleSliderChange = (event: Event, newValue: number | number[], activeThumb: number) => {
         const value = typeof newValue === 'number' ? newValue : newValue[activeThumb];
          if (isThumbPressed) {
-            if(valueSlider-20 <= value && value <= valueSlider+20){
+            if(valueSlider-20 <= value && value <= valueSlider+35){
                 console.log('Thumb pressed:', value);
                 setValueSlider(value)
             }
@@ -110,6 +80,12 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
             setValueSlider(0)
         }
     };
+
+    useEffect(() => {
+        if(valueSlider===100 && !isThumbPressed){
+            props.confirmDelete(true)
+        }
+    }, [valueSlider, isThumbPressed])
 
     
     return (
@@ -119,22 +95,23 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
         > 
             <Box sx={modalStyleSaveExternal}>
                 <Box sx={modalStyleErrorModalInternal}>
-                    <Typography align="center" variant="h6">
+                    {/* <Typography align="center" variant="h6">
                         {title}
-                    </Typography>
-                    <Typography align="center" >
+                    </Typography> */}
+                    <Typography className={classes.finishButtons} align="center" >
                         {subTitle}
                     </Typography>
                     
-
-                    
-                    <Box sx={{ width: 100 }}>
+                    <Box 
+                        margin="auto"
+                        sx={{ width: 100 }}
+                    >
                         <PrettoSlider
                             aria-label="Temperature"
                             // defaultValue={30}
                             value={valueSlider}
                             // getAriaValueText={valuetext}
-                            color="secondary"
+                            // color="secondary"
                             // disabled={isThumbPressed}
                             onMouseDown={handleThumbMouseDown} // Attach the event handler when thumb is pressed
                             onMouseUp={handleThumbMouseUp}     // Attach the event handler when thumb is released
