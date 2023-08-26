@@ -109,8 +109,10 @@ export default function EditStock(
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:'');
     const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(data.alert_amount_enabled?data.alert_amount_enabled:false);
+    const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(data.alerted_amount?data.alerted_amount:false);
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>(data.alert_date?dayjs(data.alert_date):'');
     const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(data.alert_date_enabled?data.alert_date_enabled:false);
+    const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(data.alerted_date?data.alerted_date:false);
     const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>(data.custom_fields?data.custom_fields:{});
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false); 
@@ -120,11 +122,10 @@ export default function EditStock(
    
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
-            console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
-            console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
-            console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
+            // console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
+            // console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
+            // console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
 
-            alert("waqqqqit")
             const bodyUpdate: ProductEditData = {}
             if(data.product!=stockNameTemp)
                 bodyUpdate.product= stockNameTemp
@@ -150,10 +151,14 @@ export default function EditStock(
                 bodyUpdate.alert_amount = stockAlertAmountTemp
             if(data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
                 bodyUpdate.alert_amount_enabled = stockAlertAmountEnabledTemp
+            if(data.alerted_amount!=stockAlertedAmountTemp)
+                bodyUpdate.alerted_amount = stockAlertedAmountTemp
             if(data.alert_date!=stockAlertDateTemp)
                 bodyUpdate.alert_date = stockAlertDateTemp
             if(data.alert_date_enabled!=stockAlertDateEnabledTemp)
                 bodyUpdate.alert_date_enabled = stockAlertDateEnabledTemp
+            if(data.alerted_date!=stockAlertedDateTemp)
+                bodyUpdate.alerted_date = stockAlertedDateTemp
                 
             const fetchEditStockProduct = async () => {
                 let loadingSuccess: boolean = false
@@ -349,6 +354,19 @@ export default function EditStock(
         }
     }, [isLoading]) // To know if after save should reload the page
     
+    useEffect(() => {
+        // console.log("stockAmountTemp: ", stockAmountTemp)
+        // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
+        if(stockAmountTemp && stockAlertAmountTemp){
+            if(stockAmountTemp <= stockAlertAmountTemp){
+                // console.log("Enter if: ")
+                setStockAlertedAmountTemp(true)
+            }else{
+                // console.log("Enter else: ")
+                setStockAlertedAmountTemp(false)
+            }
+        }
+    }, [stockAmountTemp, stockAlertAmountTemp])
     
     return (
         <Modal
