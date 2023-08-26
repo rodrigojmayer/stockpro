@@ -107,7 +107,7 @@ export default function EditStock(
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:'');
+    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:0);
     const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(data.alert_amount_enabled?data.alert_amount_enabled:false);
     const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(data.alerted_amount?data.alerted_amount:false);
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>(data.alert_date?dayjs(data.alert_date):'');
@@ -357,14 +357,12 @@ export default function EditStock(
     useEffect(() => {
         // console.log("stockAmountTemp: ", stockAmountTemp)
         // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
-        if(stockAmountTemp && stockAlertAmountTemp){
-            if(stockAmountTemp <= stockAlertAmountTemp){
-                // console.log("Enter if: ")
-                setStockAlertedAmountTemp(true)
-            }else{
-                // console.log("Enter else: ")
-                setStockAlertedAmountTemp(false)
-            }
+        if(stockAmountTemp <= stockAlertAmountTemp){
+            // console.log("Enter if: ")
+            setStockAlertedAmountTemp(true)
+        }else{
+            // console.log("Enter else: ")
+            setStockAlertedAmountTemp(false)
         }
     }, [stockAmountTemp, stockAlertAmountTemp])
     

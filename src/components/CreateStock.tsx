@@ -128,7 +128,7 @@ export default function CreateStock(
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState('');
-    const [stockAmountTemp, setStockAmountTemp] = useState<number | string>('');
+    const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(0);
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
@@ -136,7 +136,7 @@ export default function CreateStock(
     const [stockCodeTemp, setStockCodeTemp] = useState('');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>('');
+    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(0);
     const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(true);
     const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(true);
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
@@ -414,14 +414,12 @@ export default function CreateStock(
     useEffect(() => {
         // console.log("stockAmountTemp: ", stockAmountTemp)
         // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
-        if(stockAmountTemp && stockAlertAmountTemp){
-            if(stockAmountTemp <= stockAlertAmountTemp){
-                // console.log("Enter if: ")
-                setStockAlertedAmountTemp(true)
-            }else{
-                // console.log("Enter else: ")
-                setStockAlertedAmountTemp(false)
-            }
+        if(stockAmountTemp <= stockAlertAmountTemp){
+            // console.log("Enter if: ")
+            setStockAlertedAmountTemp(true)
+        }else{
+            // console.log("Enter else: ")
+            setStockAlertedAmountTemp(false)
         }
     }, [stockAmountTemp, stockAlertAmountTemp])
     // useEffect(() => {        ///////////////// Continue date alert//////////////////////////////////
