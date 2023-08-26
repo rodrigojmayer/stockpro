@@ -39,8 +39,11 @@ export interface Data {
   description?: string;
   url_image?: string;
   alert_amount?: number | string;
+  alert_amount_enabled?: boolean;
+  alerted_amount?: boolean;
   alert_date?: Date | string;
-  alert_on?: boolean;
+  alert_date_enabled?: boolean;
+  alerted_date?: boolean;
 }
 
 export interface DataTable {
@@ -122,6 +125,9 @@ export interface ProductEditData {
   description?: string;
   url_image?: string;
   alert_amount?: number | string;
+  alert_amount_enabled?: boolean;
+  alerted_amount?: boolean;
   alert_date?: Date | string;
-  alert_on?: boolean;
+  alert_date_enabled?: boolean;
+  alerted_date?: boolean;
 }

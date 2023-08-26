@@ -127,38 +127,21 @@ export default function CreateStock(
 
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-    const [stockName, setStockName] = useState('');
     const [stockNameTemp, setStockNameTemp] = useState('');
-    const [stockAmount, setStockAmount] = useState('');
     const [stockAmountTemp, setStockAmountTemp] = useState<number | string>('');
-    const [stockMeasure, setStockMeasure] = useState('');
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
-    const [stockCategory, setStockCategory] = useState('');
-    // const [stockCategoryTemp, setStockCategoryTemp] = useState('');
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
-    const [stockSubCategory, setStockSubCategory] = useState('');
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
-    const [stockPrice, setStockPrice] = useState('');
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>('');
     const [stockCodeTemp, setStockCodeTemp] = useState('');
-    const [stockDescription, setStockDescription] = useState('');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
-    const [stockImageUrl, setStockImageUrl] = useState('');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
-    const [stockAlertAmount, setStockAlertAmount] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>('');
-    const [stockAlertDate, setStockAlertDate] = useState('');
+    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(true);
+    const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(true);
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
-    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
-    const [stockCustomValues, setStockCustomValues] = useState('');
-    
-    // const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-    // const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
-
-    // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
-    //     label: value.label,
-    //     value: "",
-    // })));
+    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(true);
+    const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(true);
     const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
     
 
@@ -209,8 +192,13 @@ export default function CreateStock(
                             "url_image": stockImageUrlTemp,
 
                             "alert_amount": stockAlertAmountTemp,
+                            "alert_amount:enabled": stockAlertAmountEnabledTemp,
+                            "alerted_amount": stockAlertedAmountTemp,
+                            
                             "alert_date": stockAlertDateTemp,
-                            "alert_on": false,
+                            "alert_date_enabled": stockAlertDateEnabledTemp,
+                            "alerted_date": stockAlertedDateTemp,
+                            
                         })
                     })
 
@@ -335,9 +323,14 @@ export default function CreateStock(
     setStockImageUrlTemp(value)
     }
     const handleStockAlertAmountChange = (value: number | string) => {
-    console.log("handleSetAlertAmount value: ", value)
-    setStockAlertAmountTemp(value)
+        // console.log("handleSetAlertAmount value: ", value)
+        setStockAlertAmountTemp(value)
     }
+    const handleStockAlertAmountEnabledChange = (value: boolean) => {
+        // console.log("handleSetAlertAmount value: ", value)
+        setStockAlertAmountEnabledTemp(value)
+    }
+    handleStockAlertAmountEnabledChange
     // const handleStockAlertDateChange = (value: string) => {
     const handleStockAlertDateChange = (date:Date | null) => {
         console.log("handleSetAlertDate value: ", date)
@@ -353,6 +346,10 @@ export default function CreateStock(
             // setStockAlertDateTemp('');
             setStockAlertDateTemp(null);
         }
+    }
+    const handleStockAlertDateEnabledChange = (value: boolean) => {
+        // console.log("handleSetAlertAmount value: ", value)
+        setStockAlertDateEnabledTemp(value)
     }
     const handleStockCustomValuesTemp = (value: string, dataKey: string) => {
         // console.log("Custom value: ", value)
@@ -415,10 +412,25 @@ export default function CreateStock(
     
 
     useEffect(() => {
-        // console.log("useeffect  stockAlertDateTemp: ",  stockAlertDateTemp)
-        // console.log("useeffect typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
-    
-}, [stockAlertDateTemp])
+        // console.log("stockAmountTemp: ", stockAmountTemp)
+        // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
+        if(stockAmountTemp && stockAlertAmountTemp){
+            if(stockAmountTemp <= stockAlertAmountTemp){
+                // console.log("Enter if: ")
+                setStockAlertedAmountTemp(true)
+            }else{
+                // console.log("Enter else: ")
+                setStockAlertedAmountTemp(false)
+            }
+        }
+    }, [stockAmountTemp, stockAlertAmountTemp])
+    // useEffect(() => {        ///////////////// Continue date alert//////////////////////////////////
+    //     if(stockAmountTemp <= stockAlertAmountTemp)
+    //         setStockAlertedAmountTemp(true)
+
+
+    //     setStockAlertedDateTemp
+    // }, [stockAlertDateTemp])
     return (
         <Modal
         open={open} 
@@ -483,8 +495,14 @@ export default function CreateStock(
                         stockAlertAmountTemp = {stockAlertAmountTemp}
                         onStockAlertAmountChange = {handleStockAlertAmountChange}
                         
+                        stockAlertAmountEnabledTemp = {stockAlertAmountEnabledTemp}
+                        onStockAlertAmountEnabledChange = {handleStockAlertAmountEnabledChange}
+                        
                         stockAlertDateTemp={stockAlertDateTemp}
                         onStockAlertDateChange={handleStockAlertDateChange}
+
+                        stockAlertDateEnabledTemp={stockAlertDateEnabledTemp}
+                        onStockAlertDateEnabledChange={handleStockAlertDateEnabledChange}
  
                     />
                     <CreateStockCustomFields

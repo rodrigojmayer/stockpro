@@ -1,42 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Box,
-         Container,
-         Grid,
-         IconButton,
          Modal, 
-         TextField,
          Typography,
-         OutlinedInput,
-         InputLabel,
-         MenuItem,
-         Select ,
-         FormControl,
-         Stack,
-         Chip,
         } from '@mui/material';
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckIcon from "@mui/icons-material/Check";
-import Paper from '@mui/material/Paper/Paper';
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
-
 import { OkButton,
          CancelButton, 
-         PlusButton,
-         UpButton,
          DeleteButton
         } from './Buttons';
 import  CreateStockMainData  from './CreateStockMainData'
 import  CreateStockSecondaryData  from './CreateStockSecondaryData'
 import  CreateStockAlerts  from './CreateStockAlerts'
 import  CreateStockCustomFields  from './CreateStockCustomFields'
-import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
-import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
-import EditIcon from '@mui/icons-material/Edit';
-import List from '@mui/material/List/List';
-import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData, ProductEditData } from '../types';
 
@@ -58,18 +33,6 @@ interface mainData {
     }
 
 
-// const measureArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Unit'},
-//     { id: 2, name: 'Kg'},
-//     { id: 3, name: 'Lts'},
-// ]; 
-// const categoryArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Kitchens'},
-//     { id: 2, name: 'Food'},
-//     { id: 3, name: 'Furniture'},
-// ];
 const subCategoryArray: mainData[] = [
     { id: 0, name: '-'},
     { id: 1, name: 'Cutlery'},
@@ -122,8 +85,7 @@ export default function EditStock(
         handleClose(false)
     } 
 
-    // console.log("data: ", data)
-
+    
     const { categories } = useContext<any>(CategoriesContext) 
     const categoryArray = categories
     const { measures } = useContext<any>(MeasuresContext)
@@ -131,12 +93,6 @@ export default function EditStock(
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
-    console.log("data: ", data)
-    // console.log("categories: ", categories)
-    // console.log("categoryArray: ", categoryArray)
-    // console.log("data.category: ", data.category)
-    // console.log("data.sub_category: ", data.sub_category)
-    // console.log("data.alert_date: ", data.alert_date)
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
     const [stockCodeTemp, setStockCodeTemp] = useState<string>(data.code?data.code:'');
@@ -147,45 +103,28 @@ export default function EditStock(
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
 
 
-    // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState(data.sub_category);
-    // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category?data.sub_category:'');
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
-    // const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');
-    // const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:'');
-    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | String>("");
-    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | string>(data.alert_date?data.alert_date:'');
-    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Dayjs | string>(data.alert_date?dayjs(data.alert_date):'');
+    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(data.alert_amount_enabled?data.alert_amount_enabled:false);
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>(data.alert_date?dayjs(data.alert_date):'');
-    
-    // const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
-    // const [stockCustomValues, setStockCustomValues] = useState('');
-    
-    // const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-    // const [selectedSubCategory, setSelectedSubCategory] = useState<string>('');
-
-    // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState(columnsCustom.map((value) => ({
-    //     label: value.label,
-    //     value: "",
-    // })));
-    // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
+    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(data.alert_date_enabled?data.alert_date_enabled:false);
     const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>(data.custom_fields?data.custom_fields:{});
-
-    
-
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false); 
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
     const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
-    // const [confirmDelete, setConfirmDelete] = useState(false);
-    
+   
     const handleCloseSaveChanges = (ans?:boolean) => {
-        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
+            console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
+            console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
+            console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
+
+            alert("waqqqqit")
             const bodyUpdate: ProductEditData = {}
             if(data.product!=stockNameTemp)
                 bodyUpdate.product= stockNameTemp
@@ -209,31 +148,13 @@ export default function EditStock(
                 bodyUpdate.url_image = stockImageUrlTemp
             if(data.alert_amount!=stockAlertAmountTemp)
                 bodyUpdate.alert_amount = stockAlertAmountTemp
+            if(data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
+                bodyUpdate.alert_amount_enabled = stockAlertAmountEnabledTemp
             if(data.alert_date!=stockAlertDateTemp)
                 bodyUpdate.alert_date = stockAlertDateTemp
+            if(data.alert_date_enabled!=stockAlertDateEnabledTemp)
+                bodyUpdate.alert_date_enabled = stockAlertDateEnabledTemp
                 
-
-            // "alert_amount": stockAlertAmountTemp,
-            // "alert_date": stockAlertDateTemp,
-
-            
-            // console.log("data.: ", data)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
-            // console.log("user.id_client: ", user.id_client)
-            // console.log("stockNameTemp: ", stockNameTemp)
-            // console.log("stockCodeTemp: ", stockCodeTemp)
-            // console.log("stockAmountTemp: ", stockAmountTemp)
-            // console.log("stockMeasureTemp: ", stockMeasureTemp)
-            // console.log("stockCategoryTemp: ", stockCategoryTemp && stockCategoryTemp.name)
-            // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
-            // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
-            // console.log("stockPriceTemp: ", stockPriceTemp)
-            // console.log("stockDescriptionTemp: ", stockDescriptionTemp)
-            // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
-            // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
-            // console.log("stockAlertDateTemp: ", stockAlertDateTemp)
-            // console.log("bodyUpdate: ", bodyUpdate)
-
-            // const stockAlertDateTemp2 = new Date()
             const fetchEditStockProduct = async () => {
                 let loadingSuccess: boolean = false
                 try {
@@ -245,25 +166,6 @@ export default function EditStock(
                         },
 
                         body:JSON.stringify(bodyUpdate)
-                        // body:JSON.stringify({
-                            // "id": 7,
-                            // "id_client": user.id_client,
-                            // "product": stockNameTemp,
-                            // "code": stockCodeTemp,
-                            // "amount": stockAmountTemp,
-                            // "measure": stockMeasureTemp,
-                            // "category": stockCategoryTemp && stockCategoryTemp.name,
-                            // "sub_category": stockSubCategoryTemp,
-                            // "custom_fields": stockCustomValuesTemp,
-                            // "deleted": false,
-
-                            // "price": stockPriceTemp,
-                            // "description": stockDescriptionTemp,
-                            // "url_image": stockImageUrlTemp,
-
-                            // "alert_amount": stockAlertAmountTemp,
-                            // "alert_date": stockAlertDateTemp,
-                        // })
                     })
 
                     // Check if the response status is successful
@@ -295,16 +197,10 @@ export default function EditStock(
                 }
             } 
             fetchEditStockProduct()
-
-
-            // setSelectedUsers(selectedUsersTemp)
-            // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
         }
         setOpenSaveChanges(false);
     }
-    // const handleOpenSaveChanges = () => setOpenSaveChanges(true);
-    
     
     const handleCloseErrorModal = () => {
         setOpenErrorModal(false)
@@ -335,92 +231,59 @@ export default function EditStock(
     }
     
     const handleStockNameChange = (value: string) => {
-        console.log("Name value: ", value)
         setStockNameTemp(value)
     }
     const handleStockAmountChange = (value: number | string) => {
-        console.log("Amount value: ", value)
         setStockAmountTemp(value)
     }
     const handleStockMeasureChange = (value: string) => {
-    // const handleStockMeasureChange = (event: any) => {
-        console.log("Measure value: ", value)
-        // console.log("Measure event: ", event)
         setStockMeasureTemp(value)
     }
-    // const handleStockCategoryChange = (value: string) => {
     const handleStockCategoryChange = (id: number) => {
-        // console.log("Category value: ", value)
-        // const selectedCategoryId = event.target.value as number;
         const selectedCategory = categories.find((category: any) => category.id === id) || null;
     
-        console.log("Category value: ", id)
-        console.log("selectedCategory: ", selectedCategory)
         // setStockCategoryTemp(value)
         setStockCategoryTemp(selectedCategory)
         setStockSubCategoryTemp('')
     }
     const handleStockSubCategoryChange = (value: string) => {
-        console.log("SubCategory value: ", value)
         setStockSubCategoryTemp(value)
     }
     const handleStockPriceChange = (value: number | string) => {
-        console.log("Price value: ", value)
         setStockPriceTemp(value)
     }
     const handleStockCodeChange = (value: string) => {
-        console.log("Code value: ", value)
         setStockCodeTemp(value)
     }
     const handleStockDescriptionChange = (value: string) => {
-        console.log("Description value: ", value)
         setStockDescriptionTemp(value)
     }
     const handleSetImageUrl = (value: string) => {
-    console.log("handleSetImageUrl value: ", value)
-    setStockImageUrlTemp(value)
+        setStockImageUrlTemp(value)
     }
     const handleStockAlertAmountChange = (value: number | string) => {
-    console.log("handleSetAlertAmount value: ", value)
-    setStockAlertAmountTemp(value)
+        setStockAlertAmountTemp(value)
     }
-    // const handleStockAlertDateChange = (value: string) => {
+    const handleStockAlertAmountEnabledChange = (value: boolean) => {
+        setStockAlertAmountEnabledTemp(value)
+    }
     const handleStockAlertDateChange = (date:Dayjs | Date | null | string) => {
         console.log("handleSetAlertDate value: ", date)
-        // if(date)
-        //     setStockAlertDateTemp(date)
         if (date) {
-            // const formattedDate = date.toISOString();
-            // const formattedDate = date;
-            // console.log("date: ", date)
-            // setStockAlertDateTemp(formattedDate);
             setStockAlertDateTemp(date);
         } else {
-            // setStockAlertDateTemp('');
             setStockAlertDateTemp("");
         }
     }
+    const handleStockAlertDateEnabledChange = (value: boolean) => {
+        setStockAlertDateEnabledTemp(value)
+    }
     const handleStockCustomValuesTemp = (value: string, dataKey: string) => {
-        // console.log("Custom value: ", value)
-        // console.log("Custom dataKey: ", dataKey)
-        // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState('');
-    
-        // const updateCustomValuesTemp = [...stockCustomValuesTemp, {[dataKey]:value}]
-        // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-        //     updateFieldsNew[index].okButtonShow = true
-        // else
-        //     updateFieldsNew[index].okButtonShow = false
-        
+
         setStockCustomValuesTemp((prevCustomValues: object) => ({
             ...prevCustomValues,
             [dataKey]:value,
         }));
-        // console.log("updateCustomValuesTemp: ", updateCustomValuesTemp)
-
-        // setStockCustomValuesTemp(updateCustomValuesTemp)
     }
 
     const handleDeleteProduct = () => {
@@ -430,8 +293,6 @@ export default function EditStock(
         setOpenConfirmDeleteModal(false)
     }
     const handleConfirmDelete = () => {
-        // alert("handleConfirmDelete")
-        // setConfirmDelete(true)
 
         const fetchDeleteStockProduct = async () => {
             let loadingSuccess: boolean = false
@@ -477,55 +338,18 @@ export default function EditStock(
             }
         } 
         fetchDeleteStockProduct()
-
-
-        // setSelectedUsers(selectedUsersTemp)
-        // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
         close()
-
-
     }
     
     useEffect(() => {
-        // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
-        // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
-        // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
-
         if(isLoading.fieldsFetchCreateStock){
             // alert("Reload page")
                     // setIsFetching(false)
             window.location.reload();
         }
     }, [isLoading]) // To know if after save should reload the page
-    // alert by AlertAmount
-    // alert by AlertDate
-    // custom fields???
-
-    // const customeante = stockCustomValuesTemp.map((value) => ({
-    //     label: value.label,
-    //     newField: "new value",
-    // }))
-
     
-    useEffect(() => {
-        // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
-        // stockCustomValuesTemp.map((value) => {
-        //     console.log(value)
-        // })
-        // console.log("openOptionsCreate: ", openOptionsCreate)
-        // setSelectedUsersTemp(selectedUsers)
-        // setStockMeasureTemp(measure)
-        // setStockCategoryTemp(category)
-        // setStockSubCategoryTemp(subCategory)
-        // console.log("stockMeasureTemp: ", stockMeasureTemp)
-
-    }, [ open, openOptionsCreate])
     
-    useEffect(() => {
-        // console.log("Edit stock useeffect  stockAlertDateTemp: ",  stockAlertDateTemp)
-        // console.log("Edit stock useeffect typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
-    
-}, [stockAlertDateTemp])
     return (
         <Modal
         open={open} 
@@ -597,8 +421,14 @@ export default function EditStock(
                         stockAlertAmountTemp = {stockAlertAmountTemp}
                         onStockAlertAmountChange = {handleStockAlertAmountChange}
                         
+                        stockAlertAmountEnabledTemp = {stockAlertAmountEnabledTemp}
+                        onStockAlertAmountEnabledChange = {handleStockAlertAmountEnabledChange}
+                        
                         stockAlertDateTemp={stockAlertDateTemp}
                         onStockAlertDateChange={handleStockAlertDateChange}
+ 
+                        stockAlertDateEnabledTemp={stockAlertDateEnabledTemp}
+                        onStockAlertDateEnabledChange={handleStockAlertDateEnabledChange}
  
                     />
                     <CreateStockCustomFields

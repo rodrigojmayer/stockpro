@@ -59,16 +59,12 @@ export default function UpdateAmountStock(
         handleClose(false)
     } 
 
-    // console.log("productUpdate: ", productUpdate)
-    // console.log("productUpdate.custom_fields: ", productUpdate.custom_fields)
-    console.log("productUpdate.amount: ", productUpdate.amount)
-    
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
     const [ valueUpdate, setValueUpdate ] = useState<number>(-1)
     const [ resultUpdated, setResultUpdated ] = useState<number | string>(productUpdate.amount)
-    const [ alertOn, setAlertOn ] = useState(false)
+    const [ alertedAmount, setAlertedAmount ] = useState(false)
 
     const upValue = () => {
         let newValue = valueUpdate+1
@@ -125,7 +121,7 @@ export default function UpdateAmountStock(
 
     useEffect(() => {
         setValueUpdate(productUpdate.amount==0?1:-1)
-        setAlertOn(false);
+        setAlertedAmount(false);
         setMessageBeforeSave("");
     // }, [handleClose])
     }, [open])
@@ -151,7 +147,7 @@ export default function UpdateAmountStock(
                         },
                         body:JSON.stringify({
                             "amount": resultUpdated,
-                            "alert_on": alertOn
+                            "alerted_amount": alertedAmount
                         })
                     })
 
@@ -214,10 +210,10 @@ export default function UpdateAmountStock(
         if (updatedResultVisible) {
             if (productUpdate.alert_amount) {
                 if (Number(productUpdate.alert_amount) >= Number(resultUpdated)) {
-                    setAlertOn(true);
+                    setAlertedAmount(true);
                     setMessageBeforeSave("The stock amount will drop below the alert level.");
                 } else {
-                    setAlertOn(false);
+                    setAlertedAmount(false);
                     setMessageBeforeSave("");
                 }
             }

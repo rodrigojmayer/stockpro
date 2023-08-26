@@ -21,10 +21,10 @@ import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
 import { OkButton,
-         CancelButton, 
-         PlusButton,
-         UpButton
-        } from './Buttons';
+    CancelButton, 
+    PlusButton,
+    UpButton
+} from './Buttons';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
@@ -43,6 +43,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import DatePicker from "material-ui-pickers/DatePicker";
 import useMediaQuery from '@mui/material/useMediaQuery'
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
+import Switch from '@mui/material/Switch';
 
 interface measureData {
     id: number;
@@ -88,8 +89,12 @@ interface ChildProps {
     stockMeasureTemp: string
     stockAlertAmountTemp: number | string
     onStockAlertAmountChange: (newData: number | string) => void
+    stockAlertAmountEnabledTemp: boolean
+    onStockAlertAmountEnabledChange: (newData: boolean) => void
     stockAlertDateTemp: Date | null
     onStockAlertDateChange: (newData: Date | null) => void
+    stockAlertDateEnabledTemp: boolean
+    onStockAlertDateEnabledChange: (newData: boolean) => void
 }
 
 export default function CreateStockAlerts(
@@ -98,8 +103,12 @@ export default function CreateStockAlerts(
         stockMeasureTemp,
         stockAlertAmountTemp,
         onStockAlertAmountChange,
+        stockAlertAmountEnabledTemp,
+        onStockAlertAmountEnabledChange,
         stockAlertDateTemp,
         onStockAlertDateChange,
+        stockAlertDateEnabledTemp,
+        onStockAlertDateEnabledChange,
     }: ChildProps )  {
     // export default function CreateStockAlerts( { hiddenPanel }: { hiddenPanel: boolean } ) {
     // export default function CreateStockMainData( { open, handleClose }: ChildProps) {
@@ -111,6 +120,7 @@ export default function CreateStockAlerts(
     }
     
     // console.log("typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
+    // console.log("stockAlertDateEnabledTemp: ", stockAlertDateEnabledTemp)
     // stockAlertDateTemp = Date.parse(stockAlertDateTemp)
     // console.log("typeof stockAlertDateTemp: ", typeof stockAlertDateTemp)
 
@@ -155,10 +165,10 @@ export default function CreateStockAlerts(
         openOptionsCreate(changeTo)
     }
 
-    useEffect(() => {
-        
+    // useEffect(() => {
+    //     console.log("alertAmountEnabled: ", alertAmountEnabled)
 
-    }, [ open])
+    // }, [ alertAmountEnabled])
     
 
     
@@ -184,7 +194,8 @@ export default function CreateStockAlerts(
                                 type="number"
                                 className={classes.inputMainData}
                                 value={stockAlertAmountTemp}
-                                onChange={ (event) => onStockAlertAmountChange(event.target.value) }
+                                disabled={!stockAlertAmountEnabledTemp}
+                                onChange={ (event) => onStockAlertAmountChange(Number(event.target.value)) }
                                 InputProps={{
                                     className: classes.inputClassName,
                                     style: {
@@ -206,6 +217,20 @@ export default function CreateStockAlerts(
                             />
                             
                         </Grid>
+                        <Grid item xs={3} >
+                            <Typography >{(stockAlertAmountEnabledTemp)?'Enabled':'Disabled'}</Typography>
+                        </Grid>
+                        <Grid item xs={2} >
+                            <Switch 
+                                color='success' 
+                                // defaultChecked 
+                                checked={stockAlertAmountEnabledTemp}
+                                onChange={(event) => {
+                                    onStockAlertAmountEnabledChange(event.target.checked)
+                                    // console.log("event: ", event.target.checked)
+                                }}
+                            />                           
+                        </Grid>
                     </Grid>
                 </Box>
                 <Grid container>
@@ -218,6 +243,7 @@ export default function CreateStockAlerts(
                                     defaultValue = { stockAlertDateTemp? stockAlertDateTemp : null}
                                     // value={ typeof stockAlertDateTemp === 'string' ? null : stockAlertDateTemp}
                                     // value = { stockAlertDateTemp }
+                                    disabled={!stockAlertDateEnabledTemp}
                                     onChange={ (newDate) => handleDatePickerChange(newDate) }
                                     slotProps={{
                                         textField: {
@@ -247,6 +273,20 @@ export default function CreateStockAlerts(
                             </DemoContainer>
                         </LocalizationProvider>
                     </Grid>
+                        <Grid item xs={3} >
+                            <Typography >{(stockAlertDateEnabledTemp)?'Enabled':'Disabled'}</Typography>
+                        </Grid>
+                        <Grid item xs={2} >
+                            <Switch 
+                                color='success' 
+                                // defaultChecked 
+                                checked={stockAlertDateEnabledTemp}
+                                onChange={(event) => {
+                                    onStockAlertDateEnabledChange(event.target.checked)
+                                    // console.log("event: ", event.target.checked)
+                                }}
+                             />   
+                        </Grid>
                     {/* <Grid item xs={.5} >
                     </Grid>
                     <Box className={classes.customBoxCenter}> 

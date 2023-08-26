@@ -23,7 +23,6 @@ const INITIAL_STATE = {
   measure: "",
   category: "",
   sub_category: "",
-  // alert_on: false,
   // custom_fields: [],
   // id_custom_field_product: NaN,
 }
@@ -67,57 +66,44 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
   function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void) {
 
-    
-    // console.log("_index: ", _index)
-    // console.log("row: ", row)
-    // console.log("row.custom_fields: ", row.custom_fields)
-    // console.log("row.custom_fields: ", row.custom_fields)
-    // console.log("columns: ", columns)
       let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
-      // console.log("newRow: ", newRow)
       if (newRow.custom_fields) {
-        // Merge the custom_fields into the item and delete the initial custom_fields object
-        // newRow = {
-        //   ...newRow,
-        //   ...newRow.custom_fields,
-        //   custom_fields: undefined,
-        // }
-
-
-        // newRow.custom_fields.map((custom_fields:any) => {
-          
-        //   newRow = {
-        //     ...newRow,
-        //     ...custom_fields
-        //   }
-        // })
-
         for (const key in newRow.custom_fields) {
-          // console.log(`${key}: ${newRow.custom_fields[key]}`)
           newRow = {
                 ...newRow,
                 ...newRow.custom_fields
               }
         }
-      // console.log("new newRow: ", newRow)
-
-
       }
-      // console.log("newRow: ", newRow)
 
   return (
     <React.Fragment >
- 
       {columns.map((column) => (
         <TableCell
           key={column.id}
           align='center'
-          onClick={() => openUpdateAmountStock({"_id":newRow._id, "id": newRow.id, "id_client": newRow.id_client, "product": newRow.product, "amount": newRow.amount, "measure": newRow.measure, "category": newRow.category, "sub_category": newRow.sub_category, "code": newRow.code, "price": newRow.price, "description": newRow.description, "url_image": newRow.url_image, "alert_amount": newRow.alert_amount, "alert_date": newRow.alert_date, "alert_on": newRow.alert_on, "newRow": newRow})}
+          onClick={() => openUpdateAmountStock({
+              "_id":newRow._id, 
+              "id": newRow.id, 
+              "id_client": newRow.id_client, 
+              "product": newRow.product, 
+              "amount": newRow.amount, 
+              "measure": newRow.measure, 
+              "category": newRow.category, 
+              "sub_category": newRow.sub_category, 
+              "code": newRow.code, 
+              "price": newRow.price, 
+              "description": newRow.description, 
+              "url_image": newRow.url_image, 
+              "alert_amount": newRow.alert_amount, 
+              "alert_amount_enabled": newRow.alert_amount_enabled, 
+              "alerted_amount": newRow.alerted_amount, 
+              "alert_date": newRow.alert_date, 
+              "alert_date_enabled": newRow.alert_date_enabled, 
+              "alerted_date": newRow.alerted_date, 
+              "newRow": newRow})}
           className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
-          // className={`${ _index%2 ? classes.row_even  : classes.row_odd } ${ newRow.alert_on ? classes.alert_on  : "" }`}
-          // className={` ${ classes.alert_on  : "" }`}
-          // align={column.numeric || false ? 'right' : 'left'}
           style={{ 
              border:0,
           }}
@@ -127,8 +113,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
           }}
         >
           <div 
-            // className={classes.table}
-            className={`${ newRow.alert_on ? classes.alert_on  : "" } ${classes.rows}`}
+            className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.alert_on  : "" } ${classes.rows}`}
           >
             <Typography noWrap 
             sx={{
@@ -148,9 +133,6 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 export default function TableProducts({ data, openUpdateAmountStock }:  DataTable ) {
 
   const  {classes} = tableStyles()
-  // const  {classes} = tableStyles()
-  // export default function TableProducts({ data, columns }:  DataTable ) {
-// export default function TableProducts({ data }: { data: Data[] }) {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
 
   const { user } = useContext<any>(UserContext);
@@ -159,90 +141,47 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
   const columns = columnsUserOrder
   
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
-  // const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
-    // console.log("data: ", data)
   const [filteredData, setFilteredData] = useState(data)
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log("event.target.id: ", event.target.id)
-    // console.log("event.target.value: ", event.target.value)
-
+  
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
   useEffect(() => {
-    // console.log("data: ", data)
-    // console.log("filteredRows: ", filteredRows)
-    // console.log("filteredData: ", filteredData)
-    // console.log("columns: ", columns)
     setFilteredData(data.filter((item) => {
       let vals = true
       Object.keys(filteredRows).forEach((arg)=> {
         const str = arg as string;
         let value = filteredRows[str as keyof typeof filteredRows]
 
-        // console.log("value: ", value)
         if (typeof value == "string")
           value = value.toString().toLowerCase()
         else if (isNaN(value))
           value = ""
         if (value !== "" ){
-          // console.log("item: ", item)
-          // console.log("str: ", str)
-          // console.log("str as keyof typeof item: ", str as keyof typeof item)
-          // console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
-          // console.log("item.custom_fields: ", item.custom_fields)
-          // if(item.custom_fields)
-          //   console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
-          // console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
-          // console.log("item.custom_fields: ", item.custom_fields)
-          
           if(item[str as keyof typeof item]){
-            // console.log("llega aqui?")
 
             if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
               vals = false
-              // console.log("a_________________________")
-              // return 
             }
           } 
           else if(item.custom_fields ){
-            // console.log("---item.custom_fields2: ", item.custom_fields)
-            // if(item.custom_fields){
-              // console.log("item.custom_fields[0]: ", item.custom_fields[0])
             if(item.custom_fields[str as keyof typeof item] || item.custom_fields[str as keyof typeof item] == ""){
-              // console.log("item.custom_fields[0][str as keyof typeof item]: ", item.custom_fields[0][str as keyof typeof item])
               if(!item.custom_fields[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
-                
-                // console.log("llega aqui?")
                 vals = false
-                // console.log("s_________________________")
-                // return 
               }
             }
             else{
               vals = false
-              // return
-
             }
-            // }
-            // else{
-            //   vals = false
-            //   // return
-
-            // }
           }
           else{
             vals = false
-            // return
-
           }
         }
       })
-      // console.log("vals: ", vals)
-      // console.log("d_________________________")
       return vals
     }))
-    // console.log("filteredRows: ", filteredRows)
   }, [ filteredRows, data]);
   
 

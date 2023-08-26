@@ -48,7 +48,6 @@ type ConfirmDeleteModalProps = {
 export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     const { openConfirmDeleteModal, closeConfirmDeleteModal } = props;
     const { classes } = useStylesGlobal();
-    // let title = "swipe to confirm deletion of stock "
     let subTitle = `Swipe to confirm the deletion of stock "${props.data}"`
 
 
@@ -57,13 +56,10 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     const [valueSlider, setValueSlider] = useState(0);
     
     const handleThumbMouseDown = () => {
-        // console.log('handleThumbMouseDown');
       setIsThumbPressed(true);
     };
   
     const handleThumbMouseUp = () => {
-        // console.log('handleThumbMouseUp');
-        // console.log('valueSlider: ', valueSlider);
         if(valueSlider<100)
             setValueSlider(0)
         setIsThumbPressed(false);
@@ -95,24 +91,16 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
         > 
             <Box sx={modalStyleSaveExternal}>
                 <Box sx={modalStyleErrorModalInternal}>
-                    {/* <Typography align="center" variant="h6">
-                        {title}
-                    </Typography> */}
                     <Typography className={classes.finishButtons} align="center" >
                         {subTitle}
-                    </Typography>
-                    
+                    </Typography> 
                     <Box 
                         margin="auto"
                         sx={{ width: 100 }}
                     >
                         <PrettoSlider
                             aria-label="Temperature"
-                            // defaultValue={30}
                             value={valueSlider}
-                            // getAriaValueText={valuetext}
-                            // color="secondary"
-                            // disabled={isThumbPressed}
                             onMouseDown={handleThumbMouseDown} // Attach the event handler when thumb is pressed
                             onMouseUp={handleThumbMouseUp}     // Attach the event handler when thumb is released
                             onTouchStart={handleThumbMouseDown} // Attach the event handler when thumb is pressed
@@ -120,9 +108,6 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
                             onChange={handleSliderChange}
                         />
                     </Box>
-
-                    
-
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => closeConfirmDeleteModal(false)}

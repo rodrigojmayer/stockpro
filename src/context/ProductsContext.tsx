@@ -61,8 +61,8 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
 
           // Sort the products array by the 'alert_on' field
           formattedProducts.sort((a:any, b:any) => {
-            const alertOnA = formatAlertDate(a.alert_on)
-            const alertOnB = formatAlertDate(b.alert_on)
+            const alertOnA = formatAlertDate((a.alerted_amount && a.alert_amount_enabled) || (a.alerted_date && a.alert_date_enabled))
+            const alertOnB = formatAlertDate((b.alerted_amount && b.alert_amount_enabled) || (b.alerted_date && b.alert_date_enabled))
             if (alertOnA && alertOnB) {
               return alertOnA - alertOnB
             }
