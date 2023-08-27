@@ -33,8 +33,9 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
+import { ColumnData, ColumnDataCustom, ChildProps, UserEditData } from '../types';
 import { UserContext } from '../context/UserContext';
+import { IsLoadingContext } from '../context/IsLoadingContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
@@ -46,6 +47,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
         handleClose(false)
     }
 
+    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
     const[ profileName, setProfileName ] = useState<string>(user.name)
     const[ profileLastName, setProfileLastName ] = useState<string>(user.last_name)
@@ -55,14 +57,70 @@ export default function Profile( { open, handleClose }: ChildProps) {
     const[ showProfilePass, setShowProfilePass ] = useState<boolean>(false)
     const[ profileConfirmPass, setProfileConfirmPass ] = useState<string>(user.pass)
     const[ showProfileConfirmationPass, setShowProfileConfirmationPass ] = useState<boolean>(false)
+    
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const [openErrorModal, setOpenErrorModal] = useState(false);  
+    const [errorData, setErrorData] = useState("");  
     
 
     const handleCloseSaveChanges = (ans?:boolean) => {
-        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+        alert(`user._id:  ${user._id}`)   
+
         if(ans){
-            // setSelectedUsers(selectedUsersTemp)
-            // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
+                const bodyUpdate: UserEditData = {}
+                if(user.name!=profileName)
+                    bodyUpdate.name= profileName
+                if(user.last_name!=profileLastName)
+                    bodyUpdate.last_name = profileLastName
+                if(user.email!=profileEmail)
+                    bodyUpdate.email = profileEmail
+                if(user.user!=profileUser)
+                    bodyUpdate.user = profileUser
+                if(user.pass!=profilePass)
+                    bodyUpdate.pass = profilePass
+
+                const fetchUpdateUser = async () => {
+                let loadingSuccess: boolean = false
+                try {
+                    const response = await fetch(`http://localhost:4000/api/users/${user._id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                            // Add any other requires headers here
+                        },
+    
+                        body:JSON.stringify(bodyUpdate)
+                    })
+    
+                    // Check if the response status is successful
+                    if (response.ok) {
+                        const responseData = await response.json() // parse the response data
+                        console.log('POST request successful: ', responseData)
+                        loadingSuccess = true
+                    } else {
+                        // Handle non-successful responses
+                        console.error('Request failed: ', response.status, response.statusText)
+                        // Handle the error here
+                    }
+                } catch (error: unknown) {
+                    if (typeof error === 'string') {
+                        // 'error' is now narrowed down to type 'string'
+                        console.error('Error:', error)
+                    } else if (error instanceof Error) {
+                        // 'error' is now narrowed down to type 'Error'
+                        console.error('Error object:', error.message)
+                    } else {
+                        // Handle other cases as needed
+                    }
+                } finally {
+                    // setIsLoading(())
+                    setIsLoading((prevLoading: any) => ({
+                        ...prevLoading,
+                        fieldsFetchCreateStock: loadingSuccess,
+                    }));
+                }
+            } 
+            fetchUpdateUser()
             close()
         }
         setOpenSaveChanges(false);

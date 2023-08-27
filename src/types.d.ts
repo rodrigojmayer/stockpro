@@ -2,11 +2,22 @@ export interface UserData {
   id: number;
   id_client: number;
   name: string;
+  last_name?: string;
+  email?: string;
   user: string;
   pass: string;
   deleted: boolean;
   enabled: boolean;
   ordered_fields: array;
+}
+export interface UserEditData {
+  name?: string;
+  last_name?: string;
+  email?: string;
+  user?: string;
+  pass?: string;
+  deleted?: boolean;
+  enabled?: boolean;
 }
 
 export interface MeasuresData {
