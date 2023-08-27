@@ -49,8 +49,8 @@ export default function Profile( { open, handleClose }: ChildProps) {
 
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
-    const[ profileName, setProfileName ] = useState<string>(user.name)
-    const[ profileLastName, setProfileLastName ] = useState<string>(user.last_name)
+    const[ profileName, setProfileName ] = useState<string>('')
+    const[ profileLastName, setProfileLastName ] = useState<string>('')
     const[ profileEmail, setProfileEmail ] = useState<string>(user.email)
     const[ profileUser, setProfileUser ] = useState<string>(user.user)
     const[ profilePass, setProfilePass ] = useState<string>(user.pass)
@@ -155,13 +155,14 @@ export default function Profile( { open, handleClose }: ChildProps) {
     }
 
     useEffect(() => {
-        setProfileName(user.name)
-        setProfileLastName(user.last_name)
-        setProfileEmail(user.email)
-        setProfileUser(user.user)
-        setProfilePass(user.pass)
+        setProfileName(user.name?user.name:'')
+        setProfileLastName(user.last_name?user.last_name:'')
+        setProfileEmail(user.email?user.email:'')
+        setProfileUser(user.user?user.user:'')
+        setProfilePass(user.pass?user.pass:'')
+        setProfileConfirmPass(user.pass?user.pass:'')
         setShowProfilePass(false)
-        setProfileConfirmPass(user.pass)
+        setShowProfileConfirmationPass(false)
     }, [user, open])
     
     return (
