@@ -117,6 +117,7 @@ export default function EditStock(
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false); 
     const [openErrorModal, setOpenErrorModal] = useState(false);  
+    const [messageBeforeSave, setMessageBeforeSave] = useState("");  
     const [errorData, setErrorData] = useState("");  
     const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
    
@@ -270,6 +271,7 @@ export default function EditStock(
         setStockAlertAmountTemp(value)
     }
     const handleStockAlertAmountEnabledChange = (value: boolean) => {
+        console.log("value alerted: ", value)
         setStockAlertAmountEnabledTemp(value)
     }
     const handleStockAlertDateChange = (date:Dayjs | Date | null | string) => {
@@ -355,16 +357,18 @@ export default function EditStock(
     }, [isLoading]) // To know if after save should reload the page
     
     useEffect(() => {
-        // console.log("stockAmountTemp: ", stockAmountTemp)
-        // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
         if(stockAmountTemp <= stockAlertAmountTemp){
-            // console.log("Enter if: ")
             setStockAlertedAmountTemp(true)
+            if (stockAlertAmountEnabledTemp){
+                setMessageBeforeSave("The stock amount will drop below the alert level.");
+            }
+            else 
+                setMessageBeforeSave("");
         }else{
-            // console.log("Enter else: ")
             setStockAlertedAmountTemp(false)
+            setMessageBeforeSave("");
         }
-    }, [stockAmountTemp, stockAlertAmountTemp])
+    }, [stockAmountTemp, stockAlertAmountTemp, stockAlertAmountEnabledTemp])
     
     return (
         <Modal
@@ -376,6 +380,7 @@ export default function EditStock(
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
+                        messageBeforeSave={messageBeforeSave}
                     />
                     <ErrorModal
                         openErrorModal={openErrorModal}

@@ -210,24 +210,20 @@ export default function UpdateAmountStock(
         if (updatedResultVisible) {
             if (Number(productUpdate.alert_amount) >= Number(resultUpdated)) {
                 setAlertedAmount(true);
-                setMessageBeforeSave("The stock amount will drop below the alert level.");
+                if (productUpdate.alert_amount_enabled)
+                    setMessageBeforeSave("The stock amount will drop below the alert level.");
+                else 
+                    setMessageBeforeSave("");
             } else {
                 setAlertedAmount(false);
                 setMessageBeforeSave("");
             }
-            
             setOpenSaveChanges(true);
             setUpdatedResultVisible(false);
         }
     }, [updatedResultVisible, resultUpdated, productUpdate.alert_amount]);
 
-
-
     useEffect(() => {
-        // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
-        // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
-        // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
-
         if(isLoading.fieldsFetchCreateStock){
             // alert("Reload page")
                     // setIsFetching(false)
