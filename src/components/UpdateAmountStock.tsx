@@ -208,14 +208,12 @@ export default function UpdateAmountStock(
     
     useEffect(() => {
         if (updatedResultVisible) {
-            if (productUpdate.alert_amount) {
-                if (Number(productUpdate.alert_amount) >= Number(resultUpdated)) {
-                    setAlertedAmount(true);
-                    setMessageBeforeSave("The stock amount will drop below the alert level.");
-                } else {
-                    setAlertedAmount(false);
-                    setMessageBeforeSave("");
-                }
+            if (Number(productUpdate.alert_amount) >= Number(resultUpdated)) {
+                setAlertedAmount(true);
+                setMessageBeforeSave("The stock amount will drop below the alert level.");
+            } else {
+                setAlertedAmount(false);
+                setMessageBeforeSave("");
             }
             
             setOpenSaveChanges(true);
