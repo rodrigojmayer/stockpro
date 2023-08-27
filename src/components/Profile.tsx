@@ -55,18 +55,9 @@ export default function Profile( { open, handleClose }: ChildProps) {
     const[ showProfilePass, setShowProfilePass ] = useState<boolean>(false)
     const[ profileConfirmPass, setProfileConfirmPass ] = useState<string>(user.pass)
     const[ showProfileConfirmationPass, setShowProfileConfirmationPass ] = useState<boolean>(false)
-    
-    useEffect(() => {
-        setProfileName(user.name)
-        setProfileLastName(user.last_name)
-         setProfileEmail(user.email)
-        setProfileUser(user.user)
-        setProfilePass(user.pass)
-        setShowProfilePass(false)
-        setProfileConfirmPass(user.pass)
-    }, [user])
-
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    
+
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -106,8 +97,14 @@ export default function Profile( { open, handleClose }: ChildProps) {
     }
 
     useEffect(() => {
-        {showProfileConfirmationPass?<VisibilityIcon/>:<VisibilityOffIcon/>}
-    }, [showProfileConfirmationPass])
+        setProfileName(user.name)
+        setProfileLastName(user.last_name)
+        setProfileEmail(user.email)
+        setProfileUser(user.user)
+        setProfilePass(user.pass)
+        setShowProfilePass(false)
+        setProfileConfirmPass(user.pass)
+    }, [user, open])
     
     return (
         <Modal
