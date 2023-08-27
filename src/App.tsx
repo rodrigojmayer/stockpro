@@ -70,13 +70,6 @@ function App() {
   // const openUpdateAmountStock = (newData:ProductUpdateData) => {
   const openUpdateAmountStock = (newData:Data) => {
     setShowUpdateAmountStock(true)
-    // setProductUpdate({
-    //   "id_prod": newData.id_prod,
-    //   "name_prod": newData.name_prod,
-    //   "amount_prod": newData.amount_prod,
-    //   "measure_prod": newData.measure_prod,
-    //   "alert_amount": newData.alert_amount
-    // })
     let dateObject
     let formattedDate
     if(typeof newData.alert_date === 'string'){
@@ -208,11 +201,10 @@ function App() {
                 columnsCustom={filteredColumnsCustom}
             />
             <UpdateAmountStock
-                open={showUpdateAmountStock} 
-                handleClose={handleCloseUpdateAmountStock} 
-
+                open={showUpdateAmountStock}
+                handleClose={handleCloseUpdateAmountStock}
                 columnsCustom={filteredColumnsCustom}
-                productUpdate={productUpdate} 
+                productUpdate={productUpdate}
             />
           </ThemeProvider>
         </div>

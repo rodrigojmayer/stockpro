@@ -10,6 +10,7 @@ import { MenuButton } from './Buttons';
 import MenuOptions from './MenuOptions';
 import Fields from './Fields';
 import Alerts from './Alerts';
+import Profile from './Profile';
 import { ColumnData, DataMenuOptions } from '../types';
 
 const useStyles = makeStyles()({
@@ -115,6 +116,10 @@ export default function Layout(
                  open={openOptions.alerts} 
                  handleClose={handleCloseOptions} 
             /> 
+            <Profile
+                open={openOptions.profile}
+                handleClose={handleCloseOptions} 
+            />
             <AppBar className={classes.appbar}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
                 >  

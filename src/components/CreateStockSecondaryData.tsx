@@ -119,7 +119,6 @@ export default function CreateStockSecondaryData(
                 <Box className={classes.customBoxRow}>
                     <TextField
                         label="Price"
-                        // onChange={ handleEditCustomFieldNew }
                         maxRows={1}
                         size="small"
                         type="number"

@@ -6,6 +6,8 @@ const INITIAL_USER = {
   id: NaN,
   id_client: NaN,
   name: '',
+  last_name: '',
+  email: '',
   user: '',
   pass: '',
   deleted: false,
@@ -33,7 +35,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const fetchUser = async () => {
       try {
         const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`); //User 1 client 2
-        // const response = await fetch(`http://localhost:4000/api/users/64b6c0553204de99e630a0ac`); // User 2 client 3
         
         if (response.ok) {
           const json = await response.json();
@@ -58,44 +59,3 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };
-
-// const [getUser, setGetUser] = useState<UserData>( INITIAL_USER)
-// const fetchUser = async () => {
-// try {
-//     const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`)
-//     if (response.ok) {
-//     const json = await response.json()
-//     // console.log("userjson: ", json)
-//     setGetUser(json)
-//     } else {
-//     // Handle the case where the response is not OK (e.g., show an error message)
-//     }
-// } catch (error) {
-//     setGetUser(INITIAL_USER)
-//     // Handle any network or fetch-related errors
-// } finally {
-//     // setIsLoading((prevLoading) => ({
-//     // ...prevLoading,
-//     // user: false,
-//     // }));
-// }
-// }
-
-// fetchUser();
-// // }, [])
-
-
-// // export const UserContext = createContext< any >({
-// //     user: getUser
-//     // user:{
-//     //     id: 1, 
-//     //     id_client: 2, 
-//     //     name: "Rodrigo", 
-//     //     user: "rmayer", 
-//     //     pass: "123", 
-//     //     deleted: false, 
-//     //     enabled: true, 
-//     //     ordered_fields:[5, 1,2,3, 4]
-//     //   },
-//     //   setUser: () =>{}
-//     // })
