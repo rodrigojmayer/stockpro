@@ -115,7 +115,7 @@ export default function CreateStockSecondaryData(
         hidden= {hiddenPanel}
         >
             <Typography align='center' variant='h6'>Secondary data</Typography>
-            <Box className={classes.customBoxColumn}>
+            <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
                 <Box className={classes.customBoxRow}>
                     <TextField
                         label="Price"

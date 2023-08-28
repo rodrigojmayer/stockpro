@@ -13,6 +13,8 @@ const INITIAL_USER = {
   deleted: false,
   enabled: true,
   ordered_fields: [],
+  language: NaN,
+  background_color: NaN,
 };
 
 type UserContextType = {

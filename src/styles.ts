@@ -45,8 +45,10 @@ export const useStylesGlobal = makeStyles()({
         display: "flex",
         flexDirection: "column",
         width: "90%",
-        minHeight: "330px",
         gap: 8,
+    },
+    customBoxColumnStockOptions: {
+        minHeight: "330px",
     },
     updateBoxColumn: {
         marginTop: "16px",
@@ -209,7 +211,7 @@ export const modalStyleExternal = {
     overflowX: "hidden",
 };
 export const modalStyleInternal = {
-    top: 74,
+    // top: 74,
     maxWidth: "700px",
     width: "calc(100% - 32px)",
     // height: "520px",
@@ -217,7 +219,7 @@ export const modalStyleInternal = {
     // minHeight: "490px",
     backgroundColor: "rgb(45,72, 91, 1)",
     borderRadius: "10px",
-    margin: "auto",
+    // margin: "auto",
     padding: "3px",
     color: "white",
     overflow: "scroll",

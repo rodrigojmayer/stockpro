@@ -172,7 +172,7 @@ export default function CreateStockMainData(
         // className={classes.testt}
         >
             <Typography align='center' variant='h6'>Main data</Typography>
-            <Box className={classes.customBoxColumn}>
+            <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
                 <Box className={classes.customBoxRow}>
                     <TextField
                         label="Name*"

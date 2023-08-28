@@ -317,8 +317,8 @@ export default function CreateStockCustomFields(
         hidden= {hiddenPanel}
         >
             <Typography align='center' variant='h6'>Custom fields</Typography>
-            <Box className={classes.customBoxColumn}>
-                
+            <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
+                                
                 {customFieldsNewTemp.map((cusField: ColumnDataCustom) => {
                     if (!cusField.deleted) {
                         return (

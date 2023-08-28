@@ -12,6 +12,7 @@ import Fields from './Fields';
 import Alerts from './Alerts';
 import Profile from './Profile';
 import { ColumnData, DataMenuOptions } from '../types';
+import Preferences from './Preferences';
 
 const useStyles = makeStyles()({
     appbar: {
@@ -118,6 +119,10 @@ export default function Layout(
             /> 
             <Profile
                 open={openOptions.profile}
+                handleClose={handleCloseOptions} 
+            />
+            <Preferences
+                open={openOptions.preferences}
                 handleClose={handleCloseOptions} 
             />
             <AppBar className={classes.appbar}

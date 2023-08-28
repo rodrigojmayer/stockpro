@@ -38,6 +38,7 @@ import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import ErrorModal from './ErrorModal';
 
 
 export default function Profile( { open, handleClose }: ChildProps) {
@@ -64,6 +65,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
     
 
     const handleCloseSaveChanges = (ans?:boolean) => {
+        console.log("profileLastName: ", profileLastName)
         alert(`user._id:  ${user._id}`)   
 
         if(ans){
@@ -125,7 +127,25 @@ export default function Profile( { open, handleClose }: ChildProps) {
         }
         setOpenSaveChanges(false);
     }
-    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
+    
+    const handleCloseErrorModal = () => {
+        setOpenErrorModal(false)
+    }
+
+    const handleOpenSaveChanges = () => {
+        // console.log("stockNameTemp: ", stockNameTemp)
+
+        if(profileUser===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_data_user")
+        }else if(profilePass!==profileConfirmPass){
+            setOpenErrorModal(true)
+            setErrorData("not_confirmed_pass")
+        }
+        else{
+            setOpenSaveChanges(true);
+        }
+    };
 
     const handleEditName = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log("engtradsagf")
@@ -176,17 +196,15 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
                     />
+                    <ErrorModal
+                        openErrorModal={openErrorModal}
+                        closeErrorModal={handleCloseErrorModal}
+                        errorData={errorData} 
+                    />
                     <Typography align="center" variant="h5">
                         Profile
                     </Typography>
                     <Box className={classes.customBoxColumn}>
-                        {/* <FormControl 
-                        className={classes.formControlUsers}
-                                    size="small"
-                        >
-                            <InputLabel 
-                            className={classes.inputLabelUsers} >Users</InputLabel>  
-                        </FormControl> */}
                         <Box className={classes.customBoxRow}>
                             <TextField
                                 label="Name"
@@ -225,7 +243,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Alias"
+                                label="Alias*"
                                 maxRows={1}
                                 size="small"
                                 type="text"
@@ -237,7 +255,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Password"
+                                label="Password*"
                                 maxRows={1}
                                 size="small"
                                 type={showProfilePass ? "text" : "password"}
@@ -257,7 +275,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Confirm password"
+                                label="Confirm password*"
                                 maxRows={1}
                                 size="small"
                                 type={showProfileConfirmationPass ? "text" : "password"}

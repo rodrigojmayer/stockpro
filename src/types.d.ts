@@ -9,6 +9,8 @@ export interface UserData {
   deleted: boolean;
   enabled: boolean;
   ordered_fields: array;
+  language: number;
+  background_color: number;
 }
 export interface UserEditData {
   name?: string;
@@ -18,6 +20,10 @@ export interface UserEditData {
   pass?: string;
   deleted?: boolean;
   enabled?: boolean;
+}
+export interface PreferencesEditData {
+  language?: number;
+  background_color?: number;
 }
 
 export interface MeasuresData {

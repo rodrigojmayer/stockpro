@@ -29,7 +29,13 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (props.errorData === "negative_amount"){
         title="Shortfall"
         subTitle=`The amount cannot be negative`
-    }
+    } else if (props.errorData === "missing_data_user"){
+        title="Missing required data"
+        subTitle=`Alias`
+    } else if (props.errorData === "not_confirmed_pass"){
+        // title="Not confirmed password"
+        subTitle=`The password confirmation does not match`
+}
 
     return (
         <Modal

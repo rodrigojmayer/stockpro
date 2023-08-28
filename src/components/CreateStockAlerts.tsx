@@ -177,7 +177,7 @@ export default function CreateStockAlerts(
         hidden= {hiddenPanel}
         >
             <Typography align='center' variant='h6'>Alerts</Typography>
-            <Box className={classes.customBoxColumn}>
+            <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
                 {/* <Box className={classes.customBoxRow}>
                     <Typography align="center" variant="h6">
                         
