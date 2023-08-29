@@ -6,6 +6,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import ControlPointRoundedIcon from '@mui/icons-material/ControlPointRounded';
 import { makeStyles } from 'tss-react/mui';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -99,6 +100,17 @@ const useStyles = makeStyles()({
       backgroundColor: theme.palette.neutral.contrastText,
       "& > *": {
         color:theme.palette.neutral.dark,
+      }
+    },
+  },
+  btnAdd: {
+    backgroundColor: theme.palette.neutral.contrastText,
+    '&:hover': {
+      borderColor: theme.palette.neutral.dark,
+      backgroundColor: theme.palette.neutral.contrastText,
+      "& > *": {
+        color:theme.palette.neutral.dark,
+        stroke: theme.palette.neutral.dark
       }
     },
   },
@@ -341,6 +353,58 @@ export function DeleteButton({ sizeIco, roundedIco, cusField, clicked, submitOk 
   )
 }
 
+export function AddButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: ButtonProps ) {
+
+  const { classes } = useStyles()
+  const colorNeutral = theme.palette.neutral.main
+  
+  const colorCancel = theme.palette.warning.main
+
+  let fontIco = 35, noPadding, bor = 5, borRad
+  if(sizeIco) {
+    fontIco = (parseInt(sizeIco) - 12)
+    bor = 3
+  }
+  if(roundedIco){
+    noPadding=0
+    borRad="50px !important"
+  } 
+  const handleClick:any = (() => {
+    if(cusField)
+      clicked(cusField.id, cusField.value)
+    else
+      clicked()
+  })
+
+  return (  
+    <ThemeProvider theme={theme}>
+      <Button 
+        variant="outlined"
+        color="neutral"
+        className={`${classes.btnCommonStyle} ${classes.btnAdd}`}
+        sx={{  
+          border: bor, 
+          padding:noPadding, 
+          paddingTop:0,  
+          paddingBottom:0, 
+          // minWidth: sizeIco, 
+          width: 74.6, 
+          // height: sizeIco,
+          borderRadius: borRad,
+        }}
+        onClick={handleClick}
+        >
+          <AddRoundedIcon 
+            sx={{ 
+              fontSize: fontIco, 
+              stroke: colorNeutral, 
+              strokeWidth: 1.7,
+            }}>
+          </AddRoundedIcon>
+      </Button>
+    </ThemeProvider>
+  )
+}
 
 
 interface ChildProps {

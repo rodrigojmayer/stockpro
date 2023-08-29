@@ -463,13 +463,13 @@ export default function EditStock(
                     />
                     <Box className={classes.finishButtons}>
                         <DeleteButton
-                        clicked={() => handleDeleteProduct()}
+                            clicked={() => handleDeleteProduct()}
                         /> 
                         <CancelButton
-                        clicked={() => close()}
+                            clicked={() => close()}
                         />
                         <OkButton
-                        clicked={() => handleOpenSaveChanges()}
+                            clicked={() => handleOpenSaveChanges()}
                         />
                     </Box> 
                 </Box>
