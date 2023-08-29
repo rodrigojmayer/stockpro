@@ -131,6 +131,19 @@ export const useStylesGlobal = makeStyles()({
         alignItems: "center",
         
     },
+    btnCommonStyle: {
+        borderRadius: "10px",
+        transition: ".5s",
+        "& > *": {
+        transition: ".5s",
+        },
+        '&:hover': {
+        borderWidth: "5px",
+        "& > *": {
+            transition: ".5s",
+        }
+        }
+    },
     page: {
         display: "inline-block",
         margin: "2%",

@@ -43,6 +43,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 
 
+
 export default function Users( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -54,12 +55,30 @@ export default function Users( { open, handleClose }: ChildProps) {
         {"id": 0,
         "name": "Pepe",
         "user": "Pepito"},
-         {"id": 1,
-          "name": "Raul",
-          "user": "Raulsito"},
-          {"id": 2,
-           "name": "Carlos",
-           "user": "Carl"},
+        {"id": 1,
+        "name": "Raul",
+        "user": "Raulsito"},
+        {"id": 2,
+        "name": "Carlos",
+        "user": "Carl"},
+        {"id": 3,
+        "name": "Pepe",
+        "user": "Pepito"},
+        {"id": 4,
+        "name": "Raul",
+        "user": "Raulsito"},
+        {"id": 5,
+        "name": "Carlos",
+        "user": "Carl"},
+        {"id": 6,
+        "name": "Pepe",
+        "user": "Pepito"},
+        {"id": 7,
+        "name": "Raul",
+        "user": "Raulsito"},
+        {"id": 8,
+        "name": "Carlos",
+        "user": "Carl"},
     ]
 
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
@@ -256,6 +275,7 @@ export default function Users( { open, handleClose }: ChildProps) {
                                 <Stack className={classes.customBoxColumn} key={user.id}  spacing={2} direction="row">
 
                                                                     <Button
+                                                                    className={classes.btnCommonStyle} 
                                                                         variant="contained"
                                                                         // maxRows={1}
                                                                         size="small"
