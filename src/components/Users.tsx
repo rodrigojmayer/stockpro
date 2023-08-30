@@ -41,6 +41,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
+import CreateUser from './CreateUser';
 
 
 
@@ -83,6 +84,9 @@ export default function Users( { open, handleClose }: ChildProps) {
 
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
+    const [ showCreateUser, setShowCreateUser ] = useState(false)  
+    const handleCloseCreateUser = () => setShowCreateUser(false)
+    const openCreateUser = () => setShowCreateUser(true)
     // const[ profileName, setProfileName ] = useState<string>('')
     // const[ profileLastName, setProfileLastName ] = useState<string>('')
     // const[ profileEmail, setProfileEmail ] = useState<string>(user.email)
@@ -290,16 +294,21 @@ export default function Users( { open, handleClose }: ChildProps) {
                                 )
                             // }
                         })}
-                        
-                        
-                        
-                        
-                        
-                    
                     </Box>
+
+                    <CreateUser
+                        
+                open={showCreateUser} 
+                handleClose={handleCloseCreateUser} 
+                // data={filteredData}
+                // columnsCustom={filteredColumnsCustom}
+
+
+                    />
+
                     <Box className={classes.finishButtons}>
                         <AddButton 
-                            clicked={() => alert("adddd")}
+                            clicked={ openCreateUser}
                         /> 
                         <CancelButton
                         clicked={() => close()}
