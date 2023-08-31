@@ -13,6 +13,7 @@ import { Box,
          FormControl,
          Stack,
          Chip,
+         Switch,
         } from '@mui/material';
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
@@ -49,9 +50,9 @@ interface mainData {
     id: number;
     name: string;
   }
-  interface emailsAlertData {
+  interface accessLevelData {
       id: number;
-      email: string;
+      access: string;
     }
 
 
@@ -86,10 +87,10 @@ interface Category {
     sub_categories: string[];
 }
 
-const emailsAlert: emailsAlertData[] = [
-    { id: 1, email: 'email1@test.com' },
-    { id: 2, email: 'email2@test.com'  },
-    { id: 3, email: 'email3@test.com'},
+const accessLevels: accessLevelData[] = [
+    { id: 1, access: 'Admin' },
+    { id: 2, access: 'Manager'  },
+    { id: 3, access: 'User'},
 ];
 
 const INITIAL_CREATESTOCK_OPTIONS = {
@@ -127,23 +128,14 @@ export default function CreateUser(
 
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-    const [stockNameTemp, setStockNameTemp] = useState('');
-    const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(0);
-    const [stockMeasureTemp, setStockMeasureTemp] = useState('');
-    const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
-    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
-    const [stockPriceTemp, setStockPriceTemp] = useState<number | string>('');
-    const [stockCodeTemp, setStockCodeTemp] = useState('');
-    const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
-    const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(0);
-    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(true);
-    const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(true);
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
-    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(true);
-    const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(true);
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
-    
+    const [userAccessLevel, setUserAccessLevel] = useState('');
+    const [userName, setUserName] = useState<string>('');
+    const [userLastName, setUserLastName] = useState<string>('');
+    const [userUser, setUserUser] = useState<string>('');
+    const [userDeleted, setUserDeleted] = useState<boolean>(false);
+    const [userEnabled, setUserEnabled] = useState<boolean>(true);
+    const [userPassword, setUserPassword] = useState<string>('');
+
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -166,7 +158,7 @@ export default function CreateUser(
             // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
 
             // const stockAlertDateTemp2 = new Date()
-            const fetchCreateStockProduct = async () => {
+            const fetchCreateUser = async () => {
                 let loadingSuccess: boolean = false
                 try {
                     const response = await fetch(`http://localhost:4000/api/products/`, {
@@ -176,28 +168,17 @@ export default function CreateUser(
                             // Add any other requires headers here
                         },
                         body:JSON.stringify({
-                                // "id": 7,
-                            "product": stockNameTemp,
-                            "id_client": user.id_client,
-                            "amount": stockAmountTemp,
-                            "measure": stockMeasureTemp,
-                            "category": stockCategoryTemp && stockCategoryTemp.name,
-                            "sub_category": stockSubCategoryTemp,
-                            "custom_fields": stockCustomValuesTemp,
-                            "deleted": false,
+                            // "id": 7,
+                            "access_level": userAccessLevel,
+                            "id_client": userName,
+                            "name": userName,
+                            "last_name": userLastName,
+                            "user": userUser,
+                            "email": userAccessLevel,
+                            "deleted": userDeleted,
+                            "enabled": userEnabled,
+                            "password": userPassword,
 
-                            "price": stockPriceTemp,
-                            "code": stockCodeTemp,
-                            "description": stockDescriptionTemp,
-                            "url_image": stockImageUrlTemp,
-
-                            "alert_amount": stockAlertAmountTemp,
-                            "alert_amount:enabled": stockAlertAmountEnabledTemp,
-                            "alerted_amount": stockAlertedAmountTemp,
-                            
-                            "alert_date": stockAlertDateTemp,
-                            "alert_date_enabled": stockAlertDateEnabledTemp,
-                            "alerted_date": stockAlertedDateTemp,
                             
                         })
                     })
@@ -238,7 +219,7 @@ export default function CreateUser(
                     }));
                 }
             } 
-            // fetchCreateStockProduct()
+            // fetchCreateUser()
 
 
             // setSelectedUsers(selectedUsersTemp)
@@ -252,18 +233,18 @@ export default function CreateUser(
     }
 
     const handleOpenSaveChanges = () => {
-        console.log("stockNameTemp: ", stockNameTemp)
+        // console.log("stockNameTemp: ", stockNameTemp)
 
-        if(stockNameTemp===""){
-            setOpenErrorModal(true)
-            setErrorData("missing_data")
-        }else if(Number(stockAmountTemp)<0){
-            setOpenErrorModal(true)
-            setErrorData("negative_amount")
-        }
-        else{
-            setOpenSaveChanges(true);
-        }
+        // if(stockNameTemp===""){
+        //     setOpenErrorModal(true)
+        //     setErrorData("missing_data")
+        // }else if(Number(stockAmountTemp)<0){
+        //     setOpenErrorModal(true)
+        //     setErrorData("negative_amount")
+        // }
+        // else{
+        //     setOpenSaveChanges(true);
+        // }
     }
 
     const handleOpenOptionsCreate = (newData:  string) => {
@@ -274,105 +255,37 @@ export default function CreateUser(
         }
         setOpenOptionsCreate(updatedOptions);
     }
-    
-    const handleStockNameChange = (value: string) => {
-        console.log("Name value: ", value)
-        setStockNameTemp(value)
+
+    const handleUserAccessLevel = (value: string) => {
+        console.log("setUserName value: ", value)
+        setUserAccessLevel(value)
     }
-    const handleStockAmountChange = (value: number | string) => {
-        console.log("Amount value: ", value)
-        setStockAmountTemp(value)
+    const handleUserName = (value: string) => {
+        console.log("setUserName value: ", value)
+        setUserName(value)
     }
-    const handleStockMeasureChange = (value: string) => {
-    // const handleStockMeasureChange = (event: any) => {
-        console.log("Measure value: ", value)
-        // console.log("Measure event: ", event)
-        setStockMeasureTemp(value)
+    const handleUserLastName = (value: string) => {
+        console.log("setUserLastName value: ", value)
+        setUserLastName(value)
+    }
+    const handleUserUser = (value: string) => {
+        console.log("setUserUser value: ", value)
+        setUserUser(value)
+    }
+    const handleUserDeleted = (value: boolean) => {
+        console.log("setUserDeleted value: ", value)
+        setUserDeleted(value)
+    }
+    const handleUserEnabled = (value: boolean) => {
+        console.log("setUserEnabled value: ", value)
+        setUserEnabled(value)
+    }
+    const handleUserPassword = (value: string) => {
+        console.log("setUserPassword value: ", value)
+        setUserPassword(value)
     }
     // const handleStockCategoryChange = (value: string) => {
-    const handleStockCategoryChange = (id: number) => {
-        // console.log("Category value: ", value)
-        // const selectedCategoryId = event.target.value as number;
-        const selectedCategory = categories.find((category: any) => category.id === id) || null;
     
-        console.log("Category value: ", id)
-        console.log("selectedCategory: ", selectedCategory)
-        // setStockCategoryTemp(value)
-        setStockCategoryTemp(selectedCategory)
-        setStockSubCategoryTemp('')
-
-    }
-    const handleStockSubCategoryChange = (value: string) => {
-        console.log("SubCategory value: ", value)
-        setStockSubCategoryTemp(value)
-    }
-    const handleStockPriceChange = (value: number | string) => {
-        console.log("Price value: ", value)
-        setStockPriceTemp(value)
-    }
-    const handleStockCodeChange = (value: string) => {
-        console.log("Code value: ", value)
-        setStockCodeTemp(value)
-    }
-    const handleStockDescriptionChange = (value: string) => {
-        console.log("Description value: ", value)
-        setStockDescriptionTemp(value)
-    }
-    const handleSetImageUrl = (value: string) => {
-    console.log("handleSetImageUrl value: ", value)
-    setStockImageUrlTemp(value)
-    }
-    const handleStockAlertAmountChange = (value: number | string) => {
-        // console.log("handleSetAlertAmount value: ", value)
-        setStockAlertAmountTemp(value)
-    }
-    const handleStockAlertAmountEnabledChange = (value: boolean) => {
-        // console.log("handleSetAlertAmount value: ", value)
-        setStockAlertAmountEnabledTemp(value)
-    }
-    handleStockAlertAmountEnabledChange
-    // const handleStockAlertDateChange = (value: string) => {
-    const handleStockAlertDateChange = (date:Date | null) => {
-        console.log("handleSetAlertDate value: ", date)
-        // if(date)
-        //     setStockAlertDateTemp(date)
-        if (date) {
-            // const formattedDate = date.toISOString();
-            // const formattedDate = date;
-            console.log("date: ", date)
-            // setStockAlertDateTemp(formattedDate);
-            setStockAlertDateTemp(date);
-        } else {
-            // setStockAlertDateTemp('');
-            setStockAlertDateTemp(null);
-        }
-    }
-    const handleStockAlertDateEnabledChange = (value: boolean) => {
-        // console.log("handleSetAlertAmount value: ", value)
-        setStockAlertDateEnabledTemp(value)
-    }
-    const handleStockCustomValuesTemp = (value: string, dataKey: string) => {
-        // console.log("Custom value: ", value)
-        // console.log("Custom dataKey: ", dataKey)
-        // const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState('');
-    
-        // const updateCustomValuesTemp = [...stockCustomValuesTemp, {[dataKey]:value}]
-        // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-        //     updateFieldsNew[index].okButtonShow = true
-        // else
-        //     updateFieldsNew[index].okButtonShow = false
-        
-        setStockCustomValuesTemp((prevCustomValues: object) => ({
-            ...prevCustomValues,
-            [dataKey]:value,
-        }));
-        // console.log("updateCustomValuesTemp: ", updateCustomValuesTemp)
-
-        // setStockCustomValuesTemp(updateCustomValuesTemp)
-    }
 
     
     useEffect(() => {
@@ -411,17 +324,17 @@ export default function CreateUser(
     }, [ open, openOptionsCreate])
     
 
-    useEffect(() => {
-        // console.log("stockAmountTemp: ", stockAmountTemp)
-        // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
-        if(stockAmountTemp <= stockAlertAmountTemp){
-            // console.log("Enter if: ")
-            setStockAlertedAmountTemp(true)
-        }else{
-            // console.log("Enter else: ")
-            setStockAlertedAmountTemp(false)
-        }
-    }, [stockAmountTemp, stockAlertAmountTemp])
+    // useEffect(() => {
+    //     // console.log("stockAmountTemp: ", stockAmountTemp)
+    //     // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
+    //     if(stockAmountTemp <= stockAlertAmountTemp){
+    //         // console.log("Enter if: ")
+    //         setStockAlertedAmountTemp(true)
+    //     }else{
+    //         // console.log("Enter else: ")
+    //         setStockAlertedAmountTemp(false)
+    //     }
+    // }, [stockAmountTemp, stockAlertAmountTemp])
     // useEffect(() => {        ///////////////// Continue date alert//////////////////////////////////
     //     if(stockAmountTemp <= stockAlertAmountTemp)
     //         setStockAlertedAmountTemp(true)
@@ -447,6 +360,114 @@ export default function CreateUser(
                     />
                     <Typography align='center' variant="h5">Create user</Typography>
                     
+                    
+                    <Box className={classes.customBoxColumn}>
+                        <Box className={classes.customBoxRow}>
+                            <TextField 
+                                label="Access"
+                                size="small"
+                                select
+                                className={classes.inputMainData}
+                                InputProps={{className: classes.inputClassName}}
+                                value={userAccessLevel}
+                                // onChange={ (event) => onStockMeasureChange(event) }
+                                onChange={ (event) => handleUserAccessLevel(event.target.value) }
+                                >
+                                    {accessLevels.map((accessLevel) => (
+                                        <MenuItem 
+                                            className={classes.menuItemUsers}
+                                            key={accessLevel.id} 
+                                            value={accessLevel.access}
+                                            sx={{ justifyContent: "space-between" }}
+                                        >
+                                            {accessLevel.access}
+                                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                        </MenuItem>
+                                    ))}
+                            </TextField>
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Name"
+                                value={userName}
+                                onChange={ (event) => handleUserName(event.target.value) }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                    style: {
+                                    // height:"36px"
+                                    // borderRadius: 10,
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Last name"
+                                value={userLastName}
+                                onChange={ (event) => handleUserLastName(event.target.value) }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                    style: {
+                                    // height:"36px"
+                                    // borderRadius: 10,
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="User"
+                                value={userUser}
+                                onChange={ (event) => handleUserUser(event.target.value) }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                    style: {
+                                    // height:"36px"
+                                    // borderRadius: 10,
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Password"
+                                value={userPassword}
+                                onChange={ (event) => handleUserPassword(event.target.value) }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                    style: {
+                                    // height:"36px"
+                                    // borderRadius: 10,
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <Typography >{(userEnabled)?'Enabled':'Disabled'}</Typography>
+                            <Switch 
+                                    color='success' 
+                                    // defaultChecked 
+                                    checked={userEnabled}
+                                    onChange={(event) => {
+                                        handleUserEnabled(event.target.checked)
+                                        // console.log("event: ", event.target.checked)
+                                    }}
+                                />  
+                        </Box>
+                    </Box>
+
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}

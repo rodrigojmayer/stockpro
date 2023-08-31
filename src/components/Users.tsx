@@ -71,15 +71,6 @@ export default function Users( { open, handleClose }: ChildProps) {
         {"id": 5,
         "name": "Carlos",
         "user": "Carl"},
-        {"id": 6,
-        "name": "Pepe",
-        "user": "Pepito"},
-        {"id": 7,
-        "name": "Raul",
-        "user": "Raulsito"},
-        {"id": 8,
-        "name": "Carlos",
-        "user": "Carl"},
     ]
 
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
