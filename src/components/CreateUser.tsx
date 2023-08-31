@@ -119,10 +119,6 @@ export default function CreateUser(
         handleClose(false)
     } 
 
-    const { categories } = useContext<any>(CategoriesContext) 
-    const categoryArray = categories
-    const { measures } = useContext<any>(MeasuresContext)
-    const measureArray = measures
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
@@ -132,6 +128,7 @@ export default function CreateUser(
     const [userName, setUserName] = useState<string>('');
     const [userLastName, setUserLastName] = useState<string>('');
     const [userUser, setUserUser] = useState<string>('');
+    const [userEmail, setUserEmail] = useState<string>('');
     const [userDeleted, setUserDeleted] = useState<boolean>(false);
     const [userEnabled, setUserEnabled] = useState<boolean>(true);
     const [userPassword, setUserPassword] = useState<string>('');
@@ -144,24 +141,21 @@ export default function CreateUser(
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            // console.log("stockNameTemp: ", stockNameTemp)
-            // console.log("stockAmountTemp: ", stockAmountTemp)
-            // console.log("stockMeasureTemp: ", stockMeasureTemp)
-            // console.log("stockCategoryTemp: ", stockCategoryTemp)
-            // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
-            // console.log("stockPriceTemp: ", stockPriceTemp)
-            // console.log("stockCodeTemp: ", stockCodeTemp)
-            // console.log("stockDescriptionTemp: ", stockDescriptionTemp)
-            // console.log("stockImageUrlTemp: ", stockImageUrlTemp)
-            // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
-            // console.log("stockAlertDateTemp: ", stockAlertDateTemp)
-            // console.log("stockCustomValuesTemp: ", stockCustomValuesTemp)
+            console.log("user.id_client: ", user.id_client)
+            console.log("userAccessLevel: ", userAccessLevel)
+            console.log("userName: ", userName)
+            console.log("userLastName: ", userLastName)
+            console.log("userUser: ", userUser)
+            console.log("userEmail: ", userEmail)
+            console.log("userDeleted: ", userDeleted)
+            console.log("userEnabled: ", userEnabled)
+            console.log("userPassword: ", userPassword)
 
             // const stockAlertDateTemp2 = new Date()
             const fetchCreateUser = async () => {
                 let loadingSuccess: boolean = false
                 try {
-                    const response = await fetch(`http://localhost:4000/api/products/`, {
+                    const response = await fetch(`http://localhost:4000/api/users/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -170,14 +164,14 @@ export default function CreateUser(
                         body:JSON.stringify({
                             // "id": 7,
                             "access_level": userAccessLevel,
-                            "id_client": userName,
+                            "id_client": user.id_client,
                             "name": userName,
                             "last_name": userLastName,
                             "user": userUser,
                             "email": userAccessLevel,
                             "deleted": userDeleted,
                             "enabled": userEnabled,
-                            "password": userPassword,
+                            "pass": userPassword,
 
                             
                         })
@@ -233,18 +227,18 @@ export default function CreateUser(
     }
 
     const handleOpenSaveChanges = () => {
-        // console.log("stockNameTemp: ", stockNameTemp)
+        console.log("userName: ", userName)
 
-        // if(stockNameTemp===""){
-        //     setOpenErrorModal(true)
-        //     setErrorData("missing_data")
+        if(userName===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_data")
         // }else if(Number(stockAmountTemp)<0){
         //     setOpenErrorModal(true)
         //     setErrorData("negative_amount")
-        // }
-        // else{
-        //     setOpenSaveChanges(true);
-        // }
+        }
+        else{
+            setOpenSaveChanges(true);
+        }
     }
 
     const handleOpenOptionsCreate = (newData:  string) => {
@@ -271,6 +265,10 @@ export default function CreateUser(
     const handleUserUser = (value: string) => {
         console.log("setUserUser value: ", value)
         setUserUser(value)
+    }
+    const handleUserEmail = (value: string) => {
+        console.log("setUserUser value: ", value)
+        setUserEmail(value)
     }
     const handleUserDeleted = (value: boolean) => {
         console.log("setUserDeleted value: ", value)
@@ -324,24 +322,6 @@ export default function CreateUser(
     }, [ open, openOptionsCreate])
     
 
-    // useEffect(() => {
-    //     // console.log("stockAmountTemp: ", stockAmountTemp)
-    //     // console.log("stockAlertAmountTemp: ", stockAlertAmountTemp)
-    //     if(stockAmountTemp <= stockAlertAmountTemp){
-    //         // console.log("Enter if: ")
-    //         setStockAlertedAmountTemp(true)
-    //     }else{
-    //         // console.log("Enter else: ")
-    //         setStockAlertedAmountTemp(false)
-    //     }
-    // }, [stockAmountTemp, stockAlertAmountTemp])
-    // useEffect(() => {        ///////////////// Continue date alert//////////////////////////////////
-    //     if(stockAmountTemp <= stockAlertAmountTemp)
-    //         setStockAlertedAmountTemp(true)
-
-
-    //     setStockAlertedDateTemp
-    // }, [stockAlertDateTemp])
     return (
         <Modal
         open={open} 
@@ -408,6 +388,23 @@ export default function CreateUser(
                                 label="Last name"
                                 value={userLastName}
                                 onChange={ (event) => handleUserLastName(event.target.value) }
+                                maxRows={1}
+                                size="small"
+                                className={classes.inputMainData}
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                    style: {
+                                    // height:"36px"
+                                    // borderRadius: 10,
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Email"
+                                value={userEmail}
+                                onChange={ (event) => handleUserEmail(event.target.value) }
                                 maxRows={1}
                                 size="small"
                                 className={classes.inputMainData}
