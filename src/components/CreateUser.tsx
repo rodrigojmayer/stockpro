@@ -42,6 +42,7 @@ import { Data, DataCreateStockOptions, ColumnData } from '../types';
 
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
+import { AccessLevelsContext } from '../context/AccessLevelsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import ErrorModal from './ErrorModal';
@@ -87,11 +88,12 @@ interface Category {
     sub_categories: string[];
 }
 
-const accessLevels: accessLevelData[] = [
-    { id: 1, access: 'Admin' },
-    { id: 2, access: 'Manager'  },
-    { id: 3, access: 'User'},
-];
+// const accessLevels: accessLevelData[] = [
+//     { id: 1, access: 'Super admin' },
+//     { id: 2, access: 'Admin' },
+//     { id: 3, access: 'Manager'  },
+//     { id: 4, access: 'User'},
+// ];
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -120,11 +122,13 @@ export default function CreateUser(
     } 
 
     const { user } = useContext<any>(UserContext)
+    const { accessLevels } = useContext<any>(AccessLevelsContext)
+    
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-    const [userAccessLevel, setUserAccessLevel] = useState('');
+    const [userAccessLevel, setUserAccessLevel] = useState<number|null>(null);
     const [userName, setUserName] = useState<string>('');
     const [userLastName, setUserLastName] = useState<string>('');
     const [userUser, setUserUser] = useState<string>('');
@@ -163,7 +167,7 @@ export default function CreateUser(
                         },
                         body:JSON.stringify({
                             // "id": 7,
-                            "access_level": userAccessLevel,
+                            "id_access_level": userAccessLevel,
                             "id_client": user.id_client,
                             "name": userName,
                             "last_name": userLastName,
@@ -250,7 +254,7 @@ export default function CreateUser(
         setOpenOptionsCreate(updatedOptions);
     }
 
-    const handleUserAccessLevel = (value: string) => {
+    const handleUserAccessLevel = (value: number) => {
         console.log("setUserName value: ", value)
         setUserAccessLevel(value)
     }
@@ -349,18 +353,18 @@ export default function CreateUser(
                                 select
                                 className={classes.inputMainData}
                                 InputProps={{className: classes.inputClassName}}
-                                value={userAccessLevel}
+                                value={userAccessLevel ? userAccessLevel : '' }
                                 // onChange={ (event) => onStockMeasureChange(event) }
-                                onChange={ (event) => handleUserAccessLevel(event.target.value) }
+                                onChange={ (event) => handleUserAccessLevel(Number(event.target.value)) }
                                 >
-                                    {accessLevels.map((accessLevel) => (
+                                    {accessLevels.map((accessLevel: any) => (
                                         <MenuItem 
                                             className={classes.menuItemUsers}
                                             key={accessLevel.id} 
-                                            value={accessLevel.access}
+                                            value={accessLevel.id}
                                             sx={{ justifyContent: "space-between" }}
                                         >
-                                            {accessLevel.access}
+                                            {accessLevel.name}
                                             {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
                                         </MenuItem>
                                     ))}

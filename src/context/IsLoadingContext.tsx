@@ -14,6 +14,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
     products: true,
     user: true,
     measures: true,
+    accessLevels: true,
     categories: true,
     fieldsFetchEditCustomColumn: false,
     fieldsFetchCreateCustomColumn: false,

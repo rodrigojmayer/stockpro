@@ -32,6 +32,11 @@ export interface MeasuresData {
   deleted: boolean;
 };
 
+export interface AccessLevelsData {
+  id: number;
+  name: string;
+};
+
 export interface CategoriesData {
   id: number;
   name: string;
