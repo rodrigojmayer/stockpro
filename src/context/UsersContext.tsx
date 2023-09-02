@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { UserData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 
-const INITIAL_USER = {
+const INITIAL_USERS = [{
   _id: NaN,
   id: NaN,
   id_client: NaN,
@@ -16,38 +16,38 @@ const INITIAL_USER = {
   ordered_fields: [],
   language: NaN,
   background_color: NaN,
-};
+}];
 
-type UserContextType = {
-  user: UserData;
-//   setUser: UserData;
-};
+// type UsersContextType = {
+  // user: UserData;
+//   setUsers: UserData;
+// };
 
 // export const UserContext = createContext<UserContextType | undefined>(undefined);
-export const UserContext = createContext<object | undefined>(undefined);
+export const UsersContext = createContext<object | undefined>(undefined);
 
-type UserProviderProps = {
+type UsersProviderProps = {
   children: React.ReactNode;
 };
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserData>(INITIAL_USER);
+export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
+  const [users, setUsers] = useState<UserData[]>(INITIAL_USERS);
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`); //User 1 client 2
+        const response = await fetch(`http://localhost:4000/api/users/`); 
         
         if (response.ok) {
           const json = await response.json();
-          setUser(json);
+          setUsers(json);
         } else {
-          setUser(INITIAL_USER);
+          setUsers(INITIAL_USERS);
           // Handle the case where the response is not OK (e.g., show an error message)
         }
       } catch (error) {
-        setUser(INITIAL_USER);
+        setUsers(INITIAL_USERS);
         // Handle any network or fetch-related errors
       } finally {
             setIsLoading((prevLoading:any) => ({
@@ -60,5 +60,5 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     fetchUser();
   }, []);
 
-  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
+  return <UsersContext.Provider value={{ users, setUsers }}>{children}</UsersContext.Provider>;
 };

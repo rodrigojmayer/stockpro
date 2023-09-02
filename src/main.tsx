@@ -6,6 +6,7 @@ import './index.css'
 // import { UserContext } from './context/UserContext'
 // import { UserData } from './types'
 import { UserProvider } from './context/UserContext';
+import { UsersProvider } from './context/UsersContext';
 import { CategoriesProvider } from './context/CategoriesContext';
 import { MeasuresProvider } from './context/MeasuresContext';
 import { AccessLevelsProvider } from './context/AccessLevelsContext';
@@ -30,17 +31,19 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
     <IsLoadingProvider >
       <UserProvider >
-        <MeasuresProvider >
-          <AccessLevelsProvider>
-            <CategoriesProvider >
-              <ColumnsProvider >
-                <ProductsProvider >
-                  <App />
-                </ProductsProvider>
-              </ColumnsProvider>
-            </CategoriesProvider>
-          </AccessLevelsProvider>
-        </MeasuresProvider>
+        <UsersProvider >
+          <MeasuresProvider >
+            <AccessLevelsProvider>
+              <CategoriesProvider >
+                <ColumnsProvider >
+                  <ProductsProvider >
+                    <App />
+                  </ProductsProvider>
+                </ColumnsProvider>
+              </CategoriesProvider>
+            </AccessLevelsProvider>
+          </MeasuresProvider>
+        </UsersProvider>
       </UserProvider>
     </IsLoadingProvider>
   // </React.StrictMode>, 

@@ -46,6 +46,7 @@ import { AccessLevelsContext } from '../context/AccessLevelsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import ErrorModal from './ErrorModal';
+import { UsersContext } from '../context/UsersContext';
 
 interface mainData {
     id: number;
@@ -122,6 +123,7 @@ export default function CreateUser(
     } 
 
     const { user } = useContext<any>(UserContext)
+    const { users } = useContext<any>(UsersContext)
     const { accessLevels } = useContext<any>(AccessLevelsContext)
     
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
@@ -176,6 +178,8 @@ export default function CreateUser(
                             "deleted": userDeleted,
                             "enabled": userEnabled,
                             "pass": userPassword,
+                            "language": user.language,
+                            "background_color": user.background_color,
 
                             
                         })
@@ -217,7 +221,7 @@ export default function CreateUser(
                     }));
                 }
             } 
-            // fetchCreateUser()
+            fetchCreateUser()
 
 
             // setSelectedUsers(selectedUsersTemp)

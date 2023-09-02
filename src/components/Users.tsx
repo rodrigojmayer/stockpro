@@ -42,6 +42,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 import CreateUser from './CreateUser';
+import { UsersContext } from '../context/UsersContext';
 
 
 
@@ -52,29 +53,32 @@ export default function Users( { open, handleClose }: ChildProps) {
         handleClose(false)
     }
     
-    const usersArray = [
-        {"id": 0,
-        "name": "Pepe",
-        "user": "Pepito"},
-        {"id": 1,
-        "name": "Raul",
-        "user": "Raulsito"},
-        {"id": 2,
-        "name": "Carlos",
-        "user": "Carl"},
-        {"id": 3,
-        "name": "Pepe",
-        "user": "Pepito"},
-        {"id": 4,
-        "name": "Raul",
-        "user": "Raulsito"},
-        {"id": 5,
-        "name": "Carlos",
-        "user": "Carl"},
-    ]
+    // const usersArray = [
+    //     {"id": 0,
+    //     "name": "Pepe",
+    //     "user": "Pepito"},
+    //     {"id": 1,
+    //     "name": "Raul",
+    //     "user": "Raulsito"},
+    //     {"id": 2,
+    //     "name": "Carlos",
+    //     "user": "Carl"},
+    //     {"id": 3,
+    //     "name": "Pepe",
+    //     "user": "Pepito"},
+    //     {"id": 4,
+    //     "name": "Raul",
+    //     "user": "Raulsito"},
+    //     {"id": 5,
+    //     "name": "Carlos",
+    //     "user": "Carl"},
+    // ]
 
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
+    const { users } = useContext<any>(UsersContext)
+    const usersArray = users
+    console.log("usersArray: ", usersArray)
     const [ showCreateUser, setShowCreateUser ] = useState(false)  
     const handleCloseCreateUser = () => setShowCreateUser(false)
     const openCreateUser = () => setShowCreateUser(true)
@@ -263,11 +267,11 @@ export default function Users( { open, handleClose }: ChildProps) {
                         Users
                     </Typography>
                     <Box className={classes.customBoxColumn}>
-                    {usersArray.map((user) => {
+                    {Array.isArray(usersArray) && usersArray.map((user:any) => {
                             // if (!cusField.deleted) {
                                 return (
                                         
-                                <Stack className={classes.customBoxColumn} key={user.id}  spacing={2} direction="row">
+                                <Stack className={classes.customBoxColumn} key={user._id}  spacing={2} direction="row">
 
                                                                     <Button
                                                                     className={classes.btnCommonStyle} 
