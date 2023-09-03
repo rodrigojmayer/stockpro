@@ -5,7 +5,7 @@ import { IsLoadingContext } from './IsLoadingContext';
 const INITIAL_USER = {
   _id: NaN,
   id: NaN,
-  id_client: NaN,
+  id_client: 0,
   name: '',
   last_name: '',
   email: '',
@@ -37,7 +37,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`); //User 1 client 2
+        const response = await fetch(`http://localhost:4000/api/users/64f39d7973d98cad83d4593f`); //User 1 client 2
         
         if (response.ok) {
           const json = await response.json();

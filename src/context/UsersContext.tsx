@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { UserData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
+import { UserContext } from './UserContext';
 
 const INITIAL_USERS = [{
   _id: NaN,
@@ -32,12 +33,13 @@ type UsersProviderProps = {
 
 export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
   const [users, setUsers] = useState<UserData[]>(INITIAL_USERS);
+  const { user } = useContext<any>(UserContext)
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/users/`); 
+        const response = await fetch(`http://localhost:4000/api/users/client/${user.id_client}`); 
         
         if (response.ok) {
           const json = await response.json();
@@ -58,7 +60,7 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
     };
 
     fetchUser();
-  }, []);
+  }, [user]);
 
   return <UsersContext.Provider value={{ users, setUsers }}>{children}</UsersContext.Provider>;
 };

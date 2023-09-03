@@ -139,6 +139,7 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
   const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
 
   const columns = columnsUserOrder
+  // console.log("columns: ", columns)
   
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
