@@ -114,7 +114,7 @@ export default function Layout(
                 open={openOptions.fields} 
                 handleClose={handleCloseOptions}  
             /> 
-            <Alerts
+            <Alerts 
                  open={openOptions.alerts} 
                  handleClose={handleCloseOptions} 
             /> 

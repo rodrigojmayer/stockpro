@@ -180,6 +180,7 @@ export default function CreateUser(
                             "pass": userPassword,
                             "language": user.language,
                             "background_color": user.background_color,
+                            "ordered_fields": [1, 6, 2, 3]
 
                             
                         })

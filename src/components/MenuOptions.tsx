@@ -1,4 +1,5 @@
 import React from 'react'
+import { useContext } from 'react';
 import { makeStyles } from 'tss-react/mui';
 // import MenuList from '@mui/material/MenuList/MenuList';
 // import Box from '@mui/material/Box';
@@ -6,8 +7,8 @@ import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { UserContext } from '../context/UserContext';
 
 
 const useStyles = makeStyles()({
@@ -25,7 +26,6 @@ const style = {
     position: 'absolute',
     bottom: 64,
     width: "100%",
-    height: "70%",
     backgroundColor: "rgb(18, 35, 46, 1)",
     '&  > :nth-of-type(1)': {
         width: "100%",
@@ -51,6 +51,7 @@ interface ChildProps {
 export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
 
     const { classes } = useStyles()
+    const { user } = useContext<any>(UserContext)
     const close = () => {
         handleClose(false)
     }
@@ -68,22 +69,27 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
             // openOptionA(["alerts", true])
         handleClose(false)
     }
-
+    
     const  buttons = [
         <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
-        <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>,
         <Button value="massive-upload" key="massive-upload" variant="text" onClick={selOp}>Massive upload</Button>,
-        <Button value="users" key="users" variant="text" onClick={selOp}>Users</Button>,
         <Button value="profile" key="profile" variant="text" onClick={selOp}>Profile</Button>,
         <Button value="preferences" key="preferences" variant="text" onClick={selOp}>Preferences</Button>,
     ];
+ 
+    let height_box = "50%"
+    if(user.id_access_level <4){
+        buttons.splice(1, 0, <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>)
+        buttons.splice(3, 0, <Button value="users" key="users" variant="text" onClick={selOp}>Users</Button>)
+        height_box = "70%"
+    }
 
     return (
         <Modal
             open={open} 
             onClose={close}
             > 
-            <Box sx={style}>
+            <Box sx={style} height={height_box}>
                 <ButtonGroup 
                     orientation="vertical"
                     // variant="text"    
