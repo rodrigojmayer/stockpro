@@ -10,6 +10,7 @@ const INITIAL_USERS = [{
   name: '',
   last_name: '',
   email: '',
+  id_access_level: NaN,
   user: '',
   pass: '',
   deleted: false,
@@ -49,7 +50,8 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
             // console.log("item.id", item.id)
             // console.log("user ", user)
             // console.log("user id", user.id_access_level)
-            return item.id !== user.id})
+            return (item.id !== user.id && item.id_access_level > user.id_access_level)
+            })
           setUsers(json_filtered);
         } else {
           setUsers(INITIAL_USERS);

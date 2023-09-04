@@ -5,6 +5,7 @@ export interface UserData {
   name: string;
   last_name?: string;
   email?: string;
+  id_access_level: number;
   user: string;
   pass: string;
   deleted: boolean;
