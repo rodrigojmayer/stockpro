@@ -15,6 +15,8 @@ export interface UserData {
   background_color: number;
 }
 export interface UserEditData {
+  _id?: number;
+  id_access_level?: number|null;
   name?: string;
   last_name?: string;
   email?: string;

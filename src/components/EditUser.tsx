@@ -38,7 +38,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { Data, DataCreateStockOptions, ColumnData } from '../types';
+import { Data, DataCreateStockOptions, ColumnData, UserEditData } from '../types';
 
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
@@ -58,18 +58,6 @@ interface mainData {
     }
 
 
-// const measureArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Unit'},
-//     { id: 2, name: 'Kg'},
-//     { id: 3, name: 'Lts'},
-// ]; 
-// const categoryArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Kitchens'},
-//     { id: 2, name: 'Food'},
-//     { id: 3, name: 'Furniture'},
-// ];
 const subCategoryArray: mainData[] = [
     { id: 0, name: '-'},
     { id: 1, name: 'Cutlery'},
@@ -106,14 +94,14 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    // data: Data[]
+    dataEditUser: UserEditData
     // columnsCustom: ColumnData[] 
 }
 
-export default function CreateUser( 
+export default function EditUser( 
     {   open, 
         handleClose, 
-        // data,
+        dataEditUser,
         // columnsCustom,
     }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
@@ -121,6 +109,8 @@ export default function CreateUser(
     const close = () => {
         handleClose(false)
     } 
+
+    // console.log("data edit user: ", dataEditUser)
 
     const { user } = useContext<any>(UserContext)
     const { users } = useContext<any>(UsersContext)
@@ -146,44 +136,33 @@ export default function CreateUser(
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
-            
-            // console.log("user.id_client: ", user.id_client)
-            // console.log("userAccessLevel: ", userAccessLevel)
-            // console.log("userName: ", userName)
-            // console.log("userLastName: ", userLastName)
-            // console.log("userUser: ", userUser)
-            // console.log("userEmail: ", userEmail)
-            // console.log("userDeleted: ", userDeleted)
-            // console.log("userEnabled: ", userEnabled)
-            // console.log("userPassword: ", userPassword)
+            const bodyUpdate: UserEditData = {}
+            if(dataEditUser.id_access_level != userAccessLevel)
+                bodyUpdate.id_access_level = userAccessLevel
+            if(dataEditUser.name != userName)
+                bodyUpdate.name = userName
+            if(dataEditUser.last_name != userLastName)
+                bodyUpdate.last_name = userLastName
+            if(dataEditUser.user != userUser)
+                bodyUpdate.user = userUser
+            if(dataEditUser.email != userEmail)
+                bodyUpdate.email = userEmail
+            if(dataEditUser.enabled != userEnabled)
+                bodyUpdate.enabled = userEnabled
+            if(dataEditUser.pass != userPassword)
+                bodyUpdate.pass = userPassword                
 
             // const stockAlertDateTemp2 = new Date()
-            const fetchCreateUser = async () => {
+            const fetchEditUser = async () => {
                 let loadingSuccess: boolean = false
                 try {
-                    const response = await fetch(`http://localhost:4000/api/users/`, {
-                        method: 'POST',
+                    const response = await fetch(`http://localhost:4000/api/users/${dataEditUser._id}`, {
+                        method: 'PATCH',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
-                        body:JSON.stringify({
-                            // "id": 7,
-                            "id_access_level": userAccessLevel,
-                            "id_client": user.id_client,
-                            "name": userName,
-                            "last_name": userLastName,
-                            "user": userUser,
-                            "email": userAccessLevel,
-                            "deleted": userDeleted,
-                            "enabled": userEnabled,
-                            "pass": userPassword,
-                            "language": user.language,
-                            "background_color": user.background_color,
-                            "ordered_fields": [1, 6, 2, 3]
-
-                            
-                        })
+                        body:JSON.stringify(bodyUpdate)
                     })
 
                     // Check if the response status is successful
@@ -222,7 +201,7 @@ export default function CreateUser(
                     }));
                 }
             } 
-            fetchCreateUser()
+            fetchEditUser()
 
 
             // setSelectedUsers(selectedUsersTemp)
@@ -236,7 +215,7 @@ export default function CreateUser(
     }
 
     const handleOpenSaveChanges = () => {
-        console.log("userName: ", userName)
+        // console.log("userName: ", userName)
 
         if(userName===""){
             setOpenErrorModal(true)
@@ -327,7 +306,21 @@ export default function CreateUser(
         // setStockCategoryTemp(category)
         // setStockSubCategoryTemp(subCategory)
         // console.log("stockMeasureTemp: ", stockMeasureTemp)
-
+        if(dataEditUser.id_access_level)
+            setUserAccessLevel(dataEditUser.id_access_level)
+        if(dataEditUser.name)
+            setUserName(dataEditUser.name)
+        if(dataEditUser.last_name)
+            setUserLastName(dataEditUser.last_name)
+        if(dataEditUser.user)
+            setUserUser(dataEditUser.user)
+        if(dataEditUser.email)
+            setUserEmail(dataEditUser.email)
+        if(dataEditUser.enabled)
+            setUserEnabled(dataEditUser.enabled)
+        if(dataEditUser.pass)
+            setUserPassword(dataEditUser.pass)
+    
     }, [ open, openOptionsCreate])
     
 
@@ -347,7 +340,7 @@ export default function CreateUser(
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
                     />
-                    <Typography align='center' variant="h5">Create user</Typography>
+                    <Typography align='center' variant="h5">Edit user</Typography>
                     
                     
                     <Box className={classes.customBoxColumn}>

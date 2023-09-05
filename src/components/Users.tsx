@@ -43,6 +43,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 import CreateUser from './CreateUser';
 import { UsersContext } from '../context/UsersContext';
+import EditUser from './EditUser';
 
 
 
@@ -78,10 +79,21 @@ export default function Users( { open, handleClose }: ChildProps) {
     const { user, setUser } = useContext<any>(UserContext); 
     const { users } = useContext<any>(UsersContext)
     const usersArray = users
-    console.log("usersArray: ", usersArray)
-    const [ showCreateUser, setShowCreateUser ] = useState(false)  
+    // console.log("usersArray: ", usersArray)
+    const [ showCreateUser, setShowCreateUser ] = useState(false) 
     const handleCloseCreateUser = () => setShowCreateUser(false)
     const openCreateUser = () => setShowCreateUser(true)
+
+    const [ showEditUser, setShowEditUser ] = useState(false)  
+    const [ userEditData, setUserEditData ] = useState<UserEditData>({})  
+    const selectEditUser = (user:UserEditData) => {
+        // console.log("user to edit: ", user)
+        setUserEditData(user)
+    }
+    const handleCloseEditUser = () => {
+        setUserEditData({})  
+        setShowEditUser(false)
+    }
     // const[ profileName, setProfileName ] = useState<string>('')
     // const[ profileLastName, setProfileLastName ] = useState<string>('')
     // const[ profileEmail, setProfileEmail ] = useState<string>(user.email)
@@ -237,6 +249,8 @@ export default function Users( { open, handleClose }: ChildProps) {
     // }
 
     useEffect(() => {
+        if (Object.keys(userEditData).length !== 0) 
+            setShowEditUser(true)
         // setProfileName(user.name?user.name:'')
         // setProfileLastName(user.last_name?user.last_name:'')
         // setProfileEmail(user.email?user.email:'')
@@ -245,7 +259,7 @@ export default function Users( { open, handleClose }: ChildProps) {
         // setProfileConfirmPass(user.pass?user.pass:'')
         // setShowProfilePass(false)
         // setShowProfileConfirmationPass(false)
-    }, [user, open])
+    }, [userEditData])
     
     return (
         <Modal
@@ -267,38 +281,42 @@ export default function Users( { open, handleClose }: ChildProps) {
                         Users
                     </Typography>
                     <Box className={classes.customBoxColumn}>
-                    {Array.isArray(usersArray) && usersArray.map((user:any) => {
-                            // if (!cusField.deleted) {
-                                return (
-                                        
-                                <Stack className={classes.customBoxColumn} key={user._id}  spacing={2} direction="row">
+                        {Array.isArray(usersArray) && usersArray.map((user:any) => {
+                            return (
+                                <Stack 
+                                    className={classes.customBoxColumn} 
+                                    key={user._id}  
+                                    spacing={2} 
+                                    direction="row"
+                                >
 
-                                                                    <Button
-                                                                    className={classes.btnCommonStyle} 
-                                                                        variant="contained"
-                                                                        // maxRows={1}
-                                                                        size="small"
-                                                                        // color="neutral"
-                                                                    >
-                                                                        <Typography >
-                                                                            {user.user}
-                                                                        </Typography>  
-                                                                    </Button>
+                                    <Button
+                                        className={classes.btnCommonStyle} 
+                                        variant="contained"
+                                        onClick={() => selectEditUser(user)}
+                                        // maxRows={1}
+                                        size="small"
+                                        // color="neutral"
+                                    >
+                                        <Typography >
+                                            {user.user}
+                                        </Typography>  
+                                    </Button>
                                 </Stack>
-
-                                )
-                            // }
+                            )
                         })}
                     </Box>
-
                     <CreateUser
-                        
-                open={showCreateUser} 
-                handleClose={handleCloseCreateUser} 
-                // data={filteredData}
-                // columnsCustom={filteredColumnsCustom}
-
-
+                        open={showCreateUser} 
+                        handleClose={handleCloseCreateUser} 
+                        // data={filteredData}
+                        // columnsCustom={filteredColumnsCustom}
+                    />
+                    <EditUser
+                        open={showEditUser} 
+                        handleClose={handleCloseEditUser} 
+                        dataEditUser={userEditData}
+                        // columnsCustom={filteredColumnsCustom}
                     />
 
                     <Box className={classes.finishButtons}>
