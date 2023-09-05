@@ -35,7 +35,19 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (props.errorData === "not_confirmed_pass"){
         // title="Not confirmed password"
         subTitle=`The password confirmation does not match`
-}
+    } else if (props.errorData === "missing_user_name"){
+        title="Missing required data"
+        subTitle="Name*"
+    } else if (props.errorData === "missing_user_access_level"){
+        title="Missing required data"
+        subTitle=`Acess level*`
+    } else if (props.errorData === "missing_user_user"){
+        title="Missing required data"
+        subTitle=`User*`
+    } else if (props.errorData === "missing_user_password"){
+        title="Missing required data"
+        subTitle=`Password*`
+    }
 
     return (
         <Modal

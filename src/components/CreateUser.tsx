@@ -240,10 +240,19 @@ export default function CreateUser(
 
         if(userName===""){
             setOpenErrorModal(true)
-            setErrorData("missing_data")
-        // }else if(Number(stockAmountTemp)<0){
-        //     setOpenErrorModal(true)
-        //     setErrorData("negative_amount")
+            setErrorData("missing_user_name")
+        }
+        else if(!userAccessLevel){
+            setOpenErrorModal(true)
+            setErrorData("missing_user_access_level")
+        }
+        else if(userUser===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_user_user")
+        }
+        else if(userPassword===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_user_password")
         }
         else{
             setOpenSaveChanges(true);
@@ -296,39 +305,15 @@ export default function CreateUser(
 
     
     useEffect(() => {
-        // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
-        // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
-        // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
-        // console.log("isLoading.fieldsFetchCreateStock", isLoading.fieldsFetchCreateStock)
-
         if(isLoading.fieldsFetchCreateStock){
-            // alert("Reload page")
-                    // setIsFetching(false)
             window.location.reload();
         }
     }, [isLoading]) // To know if after save should reload the page
-    // alert by AlertAmount
-    // alert by AlertDate
-    // custom fields???
-
-    // const customeante = stockCustomValuesTemp.map((value) => ({
-    //     label: value.label,
-    //     newField: "new value",
-    // }))
 
     
-    useEffect(() => {
-        // stockCustomValuesTemp.map((value) => {
-        //     console.log(value)
-        // })
-        // console.log("openOptionsCreate: ", openOptionsCreate)
-        // setSelectedUsersTemp(selectedUsers)
-        // setStockMeasureTemp(measure)
-        // setStockCategoryTemp(category)
-        // setStockSubCategoryTemp(subCategory)
-        // console.log("stockMeasureTemp: ", stockMeasureTemp)
+    // useEffect(() => {
 
-    }, [ open, openOptionsCreate])
+    // }, [ open, openOptionsCreate])
     
 
     return (
@@ -353,7 +338,7 @@ export default function CreateUser(
                     <Box className={classes.customBoxColumn}>
                         <Box className={classes.customBoxRow}>
                             <TextField 
-                                label="Access"
+                                label="Access level*"
                                 size="small"
                                 select
                                 className={classes.inputMainData}
@@ -377,7 +362,7 @@ export default function CreateUser(
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Name"
+                                label="Name*"
                                 value={userName}
                                 onChange={ (event) => handleUserName(event.target.value) }
                                 maxRows={1}
@@ -428,7 +413,7 @@ export default function CreateUser(
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="User"
+                                label="User*"
                                 value={userUser}
                                 onChange={ (event) => handleUserUser(event.target.value) }
                                 maxRows={1}
@@ -445,7 +430,7 @@ export default function CreateUser(
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Password"
+                                label="Password*"
                                 value={userPassword}
                                 onChange={ (event) => handleUserPassword(event.target.value) }
                                 maxRows={1}

@@ -51,12 +51,11 @@ import { UsersContext } from '../context/UsersContext';
 interface mainData {
     id: number;
     name: string;
-  }
-  interface accessLevelData {
-      id: number;
-      access: string;
-    }
-
+}
+interface accessLevelData {
+    id: number;
+    access: string;
+}
 
 const subCategoryArray: mainData[] = [
     { id: 0, name: '-'},
@@ -110,14 +109,13 @@ export default function EditUser(
         handleClose(false)
     } 
 
-    // console.log("data edit user: ", dataEditUser)
+    console.log("data edit user: ", dataEditUser)
 
     const { user } = useContext<any>(UserContext)
     const { users } = useContext<any>(UsersContext)
     const { accessLevels } = useContext<any>(AccessLevelsContext)
     
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
-
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [userAccessLevel, setUserAccessLevel] = useState<number|null>(null);
@@ -128,7 +126,6 @@ export default function EditUser(
     const [userDeleted, setUserDeleted] = useState<boolean>(false);
     const [userEnabled, setUserEnabled] = useState<boolean>(true);
     const [userPassword, setUserPassword] = useState<string>('');
-
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -147,12 +144,12 @@ export default function EditUser(
                 bodyUpdate.user = userUser
             if(dataEditUser.email != userEmail)
                 bodyUpdate.email = userEmail
-            if(dataEditUser.enabled != userEnabled)
+            if(dataEditUser.enabled !== userEnabled){
                 bodyUpdate.enabled = userEnabled
+            }
             if(dataEditUser.pass != userPassword)
                 bodyUpdate.pass = userPassword                
 
-            // const stockAlertDateTemp2 = new Date()
             const fetchEditUser = async () => {
                 let loadingSuccess: boolean = false
                 try {
@@ -202,8 +199,6 @@ export default function EditUser(
                 }
             } 
             fetchEditUser()
-
-
             // setSelectedUsers(selectedUsersTemp)
             // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             // close()
@@ -215,14 +210,23 @@ export default function EditUser(
     }
 
     const handleOpenSaveChanges = () => {
-        // console.log("userName: ", userName)
+        console.log("userName: ", userName)
 
         if(userName===""){
             setOpenErrorModal(true)
-            setErrorData("missing_data")
-        // }else if(Number(stockAmountTemp)<0){
-        //     setOpenErrorModal(true)
-        //     setErrorData("negative_amount")
+            setErrorData("missing_user_name")
+        }
+        else if(!userAccessLevel){
+            setOpenErrorModal(true)
+            setErrorData("missing_user_access_level")
+        }
+        else if(userUser===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_user_user")
+        }
+        else if(userPassword===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_user_password")
         }
         else{
             setOpenSaveChanges(true);
@@ -316,8 +320,9 @@ export default function EditUser(
             setUserUser(dataEditUser.user)
         if(dataEditUser.email)
             setUserEmail(dataEditUser.email)
-        if(dataEditUser.enabled)
+        if(dataEditUser.enabled!==undefined){
             setUserEnabled(dataEditUser.enabled)
+        }
         if(dataEditUser.pass)
             setUserPassword(dataEditUser.pass)
     
@@ -346,7 +351,7 @@ export default function EditUser(
                     <Box className={classes.customBoxColumn}>
                         <Box className={classes.customBoxRow}>
                             <TextField 
-                                label="Access"
+                                label="Access level*"
                                 size="small"
                                 select
                                 className={classes.inputMainData}
@@ -370,7 +375,7 @@ export default function EditUser(
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Name"
+                                label="Name*"
                                 value={userName}
                                 onChange={ (event) => handleUserName(event.target.value) }
                                 maxRows={1}
@@ -421,7 +426,7 @@ export default function EditUser(
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="User"
+                                label="User*"
                                 value={userUser}
                                 onChange={ (event) => handleUserUser(event.target.value) }
                                 maxRows={1}
@@ -438,7 +443,7 @@ export default function EditUser(
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Password"
+                                label="Password*"
                                 value={userPassword}
                                 onChange={ (event) => handleUserPassword(event.target.value) }
                                 maxRows={1}
@@ -458,7 +463,7 @@ export default function EditUser(
                             <Switch 
                                     color='success' 
                                     // defaultChecked 
-                                    checked={userEnabled}
+                                    checked={userEnabled?true:false}
                                     onChange={(event) => {
                                         handleUserEnabled(event.target.checked)
                                         // console.log("event: ", event.target.checked)
