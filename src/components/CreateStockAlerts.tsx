@@ -310,8 +310,8 @@ export default function CreateStockAlerts(
                         <div className={classes.customBoxCenter}>
                             <Typography align="right" sx={{ width: "95px" }}>Custom fields</Typography>
                             <UpButton
-                            direction="right"
-                            clicked={() => handleHiddenOptions("customFields")}
+                                direction="right"
+                                clicked={() => handleHiddenOptions("customFields")}
                             />
                         </div>
                 </Box>

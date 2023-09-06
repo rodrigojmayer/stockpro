@@ -212,6 +212,34 @@ export const useStylesGlobal = makeStyles()({
 
     alert_on : {
         color: "red",
+    },
+    text_field_error: {
+        // color:"blue",
+        borderColor: "red",
+        '& label': {
+            color: 'red !important',
+          },
+          '& .MuiInput-underline:after': {
+            // borderBottomColor: 'green',
+            color: 'red',
+          },
+          '& .MuiOutlinedInput-root': {
+            // color: 'red',
+            borderColor: 'red',
+            '& fieldset': {
+                borderWidth: "2px",
+              borderColor: 'red',
+              color: 'red',
+            },
+            '&:hover fieldset': {
+              borderColor: 'red',
+              color: 'red',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'red',
+              color: 'red',
+            },
+          },
     }
 })
 

@@ -14,6 +14,7 @@ import { Box,
          Stack,
          Chip,
          Switch,
+         Button,
         } from '@mui/material';
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
@@ -126,10 +127,26 @@ export default function EditUser(
     const [userDeleted, setUserDeleted] = useState<boolean>(false);
     const [userEnabled, setUserEnabled] = useState<boolean>(true);
     const [userPassword, setUserPassword] = useState<string>('');
+    const [errorTextFields, setErrorTextFields] = useState({
+            "access_level": false,
+            "name": false,
+            "email": false,
+            "user": false,
+        });
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
+    const [error, setError] = useState(false);
+    
+    const handleSubmit = () => {
+        if (userName.trim() === '') {
+        setError(true);
+        } else {
+        // Handle the form submission
+        setError(false);
+        }
+    };
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -211,24 +228,41 @@ export default function EditUser(
 
     const handleOpenSaveChanges = () => {
         console.log("userName: ", userName)
-
+        
+        let save_changes_allowed: boolean = true
         if(userName===""){
             setOpenErrorModal(true)
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                name: true,
+            }));
             setErrorData("missing_user_name")
+            save_changes_allowed=false
         }
-        else if(!userAccessLevel){
+        if(!userAccessLevel){
             setOpenErrorModal(true)
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                access_level: true,
+            }));
             setErrorData("missing_user_access_level")
+            save_changes_allowed=false
         }
-        else if(userUser===""){
+        if(userUser===""){
             setOpenErrorModal(true)
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                user: true,
+            }));
             setErrorData("missing_user_user")
+            save_changes_allowed=false
         }
-        else if(userPassword===""){
+        if(userPassword===""){
             setOpenErrorModal(true)
             setErrorData("missing_user_password")
+            save_changes_allowed=false
         }
-        else{
+        if(save_changes_allowed){
             setOpenSaveChanges(true);
         }
     }
@@ -354,7 +388,9 @@ export default function EditUser(
                                 label="Access level*"
                                 size="small"
                                 select
-                                className={classes.inputMainData}
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.access_level ? classes.text_field_error : ""} ${classes.inputMainData} `}
+
                                 InputProps={{className: classes.inputClassName}}
                                 value={userAccessLevel ? userAccessLevel : '' }
                                 // onChange={ (event) => onStockMeasureChange(event) }
@@ -380,13 +416,17 @@ export default function EditUser(
                                 onChange={ (event) => handleUserName(event.target.value) }
                                 maxRows={1}
                                 size="small"
-                                className={classes.inputMainData}
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.name ? classes.text_field_error : ""} ${classes.inputMainData} `}
+
                                 InputProps={{
-                                    className: classes.inputClassName,
-                                    style: {
-                                    // height:"36px"
-                                    // borderRadius: 10,
-                                    },
+                                    className: `${classes.inputClassName} `,
+                                    // {cusField.okButtonShow ? classes.show : classes.hide}></TextField>
+                                    // style: helperTextStyle 
+                                    // {
+                                    // // height:"36px"
+                                    // // borderRadius: 10,
+                                    // },
                                 }}
                             />
                         </Box>
@@ -431,7 +471,8 @@ export default function EditUser(
                                 onChange={ (event) => handleUserUser(event.target.value) }
                                 maxRows={1}
                                 size="small"
-                                className={classes.inputMainData}
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,
                                     style: {

@@ -137,10 +137,10 @@ export default function CreateStock(
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(0);
-    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(true);
+    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(false);
     const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(true);
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<Date | null>(null);
-    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(true);
+    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(false);
     const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(true);
     const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
     

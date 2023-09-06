@@ -138,6 +138,12 @@ export default function CreateUser(
     const [userDeleted, setUserDeleted] = useState<boolean>(false);
     const [userEnabled, setUserEnabled] = useState<boolean>(true);
     const [userPassword, setUserPassword] = useState<string>('');
+    const [errorTextFields, setErrorTextFields] = useState({
+            "access_level": false,
+            "name": false,
+            "email": false,
+            "user": false,
+        });
 
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -244,6 +250,10 @@ export default function CreateUser(
         }
         else if(!userAccessLevel){
             setOpenErrorModal(true)
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                access_level: true,
+            }));
             setErrorData("missing_user_access_level")
         }
         else if(userUser===""){
@@ -341,7 +351,8 @@ export default function CreateUser(
                                 label="Access level*"
                                 size="small"
                                 select
-                                className={classes.inputMainData}
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.access_level ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{className: classes.inputClassName}}
                                 value={userAccessLevel ? userAccessLevel : '' }
                                 // onChange={ (event) => onStockMeasureChange(event) }
