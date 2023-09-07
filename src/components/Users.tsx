@@ -44,6 +44,7 @@ import ErrorModal from './ErrorModal';
 import CreateUser from './CreateUser';
 import { UsersContext } from '../context/UsersContext';
 import EditUser from './EditUser';
+import ManageUser from './ManageUser';
 
 
 
@@ -80,20 +81,35 @@ export default function Users( { open, handleClose }: ChildProps) {
     const { users } = useContext<any>(UsersContext)
     const usersArray = users
     console.log("usersArray test: ", usersArray)
-    const [ showCreateUser, setShowCreateUser ] = useState(false) 
-    const handleCloseCreateUser = () => setShowCreateUser(false)
-    const openCreateUser = () => setShowCreateUser(true)
 
-    const [ showEditUser, setShowEditUser ] = useState(false)  
+    // const [ showCreateUser, setShowCreateUser ] = useState(false) 
+    // const handleCloseCreateUser = () => setShowCreateUser(false)
+    // const openCreateUser = () => setShowCreateUser(true)
+
+    // const [ showEditUser, setShowEditUser ] = useState(false)  
+    // const [ userEditData, setUserEditData ] = useState<UserEditData>({})  
+    // const selectEditUser = (user:UserEditData) => {
+    //     // console.log("user to edit: ", user)
+    //     setUserEditData(user)
+    // }
+    // const handleCloseEditUser = () => {
+    //     setUserEditData({})  
+    //     setShowEditUser(false)
+    // }
+
+    const [ showManageUser, setShowManageUser ] = useState(false) 
+    const handleCloseManageUser = () => {
+        setUserEditData({})  
+        setShowManageUser(false)
+    }
+    
+    const openManageUser = () => setShowManageUser(true)
+    
     const [ userEditData, setUserEditData ] = useState<UserEditData>({})  
     const selectEditUser = (user:UserEditData) => {
         // console.log("user to edit: ", user)
         setUserEditData(user)
-    }
-    const handleCloseEditUser = () => {
-        setUserEditData({})  
-        setShowEditUser(false)
-    }
+    }  
     // const[ profileName, setProfileName ] = useState<string>('')
     // const[ profileLastName, setProfileLastName ] = useState<string>('')
     // const[ profileEmail, setProfileEmail ] = useState<string>(user.email)
@@ -249,16 +265,11 @@ export default function Users( { open, handleClose }: ChildProps) {
     // }
 
     useEffect(() => {
+        // if (Object.keys(userEditData).length !== 0) 
+        //     setShowEditUser(true)
         if (Object.keys(userEditData).length !== 0) 
-            setShowEditUser(true)
-        // setProfileName(user.name?user.name:'')
-        // setProfileLastName(user.last_name?user.last_name:'')
-        // setProfileEmail(user.email?user.email:'')
-        // setProfileUser(user.user?user.user:'')
-        // setProfilePass(user.pass?user.pass:'')
-        // setProfileConfirmPass(user.pass?user.pass:'')
-        // setShowProfilePass(false)
-        // setShowProfileConfirmationPass(false)
+            setShowManageUser(true)
+        
     }, [userEditData])
     
     return (
@@ -306,7 +317,7 @@ export default function Users( { open, handleClose }: ChildProps) {
                             )
                         })}
                     </Box>
-                    <CreateUser
+                    {/* <CreateUser
                         open={showCreateUser} 
                         handleClose={handleCloseCreateUser} 
                         // data={filteredData}
@@ -317,11 +328,18 @@ export default function Users( { open, handleClose }: ChildProps) {
                         handleClose={handleCloseEditUser} 
                         dataEditUser={userEditData}
                         // columnsCustom={filteredColumnsCustom}
+                    /> */}
+                    <ManageUser
+                        open={showManageUser} 
+                        handleClose={handleCloseManageUser} 
+                        dataEditUser={userEditData}
+                        // columnsCustom={filteredColumnsCustom}
                     />
 
                     <Box className={classes.finishButtons}>
                         <AddButton 
-                            clicked={ openCreateUser}
+                            // clicked={ openCreateUser}
+                            clicked={ openManageUser}
                         /> 
                         <CancelButton
                         clicked={() => close()}

@@ -132,6 +132,7 @@ export default function EditUser(
             "name": false,
             "email": false,
             "user": false,
+            "password": false,
         });
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -139,14 +140,14 @@ export default function EditUser(
     const [errorData, setErrorData] = useState("");  
     const [error, setError] = useState(false);
     
-    const handleSubmit = () => {
-        if (userName.trim() === '') {
-        setError(true);
-        } else {
-        // Handle the form submission
-        setError(false);
-        }
-    };
+    // const handleSubmit = () => {
+    //     if (userName.trim() === '') {
+    //     setError(true);
+    //     } else {
+    //     // Handle the form submission
+    //     setError(false);
+    //     }
+    // };
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -227,34 +228,34 @@ export default function EditUser(
     }
 
     const handleOpenSaveChanges = () => {
-        console.log("userName: ", userName)
+        // console.log("userName: ", userName)
         
         let save_changes_allowed: boolean = true
         if(userName===""){
             setOpenErrorModal(true)
+            setErrorData("missing_user_name")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 name: true,
             }));
-            setErrorData("missing_user_name")
             save_changes_allowed=false
         }
         if(!userAccessLevel){
             setOpenErrorModal(true)
+            setErrorData("missing_user_access_level")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 access_level: true,
             }));
-            setErrorData("missing_user_access_level")
             save_changes_allowed=false
         }
         if(userUser===""){
             setOpenErrorModal(true)
+            setErrorData("missing_user_user")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 user: true,
             }));
-            setErrorData("missing_user_user")
             save_changes_allowed=false
         }
         if(userPassword===""){

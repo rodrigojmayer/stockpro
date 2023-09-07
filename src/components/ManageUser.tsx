@@ -38,7 +38,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { Data, DataCreateStockOptions, ColumnData } from '../types';
+import { Data, DataCreateStockOptions, ColumnData, UserEditData } from '../types';
 
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
@@ -47,54 +47,6 @@ import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import ErrorModal from './ErrorModal';
 import { UsersContext } from '../context/UsersContext';
-
-interface mainData {
-    id: number;
-    name: string;
-  }
-  interface accessLevelData {
-      id: number;
-      access: string;
-    }
-
-
-// const measureArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Unit'},
-//     { id: 2, name: 'Kg'},
-//     { id: 3, name: 'Lts'},
-// ]; 
-// const categoryArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Kitchens'},
-//     { id: 2, name: 'Food'},
-//     { id: 3, name: 'Furniture'},
-// ];
-const subCategoryArray: mainData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Cutlery'},
-    { id: 2, name: 'Fruits'},
-    { id: 3, name: 'Chairs'},
-];
-
-
-interface Category {
-    _id: string;
-    id: number;
-    name: string;
-    deleted: boolean;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-    sub_categories: string[];
-}
-
-// const accessLevels: accessLevelData[] = [
-//     { id: 1, access: 'Super admin' },
-//     { id: 2, access: 'Admin' },
-//     { id: 3, access: 'Manager'  },
-//     { id: 4, access: 'User'},
-// ];
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -106,15 +58,15 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
+    dataEditUser: UserEditData
     // data: Data[]
     // columnsCustom: ColumnData[] 
 }
 
-export default function CreateUser( 
+export default function ManageUser( 
     {   open, 
         handleClose, 
-        // data,
-        // columnsCustom,
+        dataEditUser,
     }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
@@ -122,6 +74,8 @@ export default function CreateUser(
         handleClose(false)
     } 
 
+    console.log("data edit user: ", dataEditUser)
+    const edition = (Object.keys(dataEditUser).length !== 0 ? true : false)
     const { user } = useContext<any>(UserContext)
     const { users } = useContext<any>(UsersContext)
     const { accessLevels } = useContext<any>(AccessLevelsContext)
@@ -139,64 +93,54 @@ export default function CreateUser(
     const [userEnabled, setUserEnabled] = useState<boolean>(true);
     const [userPassword, setUserPassword] = useState<string>('');
     const [errorTextFields, setErrorTextFields] = useState({
-            "access_level": false,
-            "name": false,
-            "email": false,
-            "user": false,
-            "password": false,
-        });
-
+        "access_level": false,
+        "name": false,
+        "email": false,
+        "user": false,
+        "password": false,
+    });
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
+
     const handleCloseSaveChanges = (ans?:boolean) => {
-        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            // console.log("user.id_client: ", user.id_client)
-            // console.log("userAccessLevel: ", userAccessLevel)
-            // console.log("userName: ", userName)
-            // console.log("userLastName: ", userLastName)
-            // console.log("userUser: ", userUser)
-            // console.log("userEmail: ", userEmail)
-            // console.log("userDeleted: ", userDeleted)
-            // console.log("userEnabled: ", userEnabled)
-            // console.log("userPassword: ", userPassword)
+            const bodyUpdate: UserEditData = {}
+            if(!edition || dataEditUser.id_access_level != userAccessLevel)
+                bodyUpdate.id_access_level = userAccessLevel
+            if(!edition || dataEditUser.name != userName)
+                bodyUpdate.name = userName
+            if(!edition || dataEditUser.last_name != userLastName)
+                bodyUpdate.last_name = userLastName
+            if(!edition || dataEditUser.user != userUser)
+                bodyUpdate.user = userUser
+            if(!edition || dataEditUser.email != userEmail)
+                bodyUpdate.email = userEmail
+            if(!edition || dataEditUser.enabled !== userEnabled)
+                bodyUpdate.enabled = userEnabled
+            if(!edition || dataEditUser.pass != userPassword)
+                bodyUpdate.pass = userPassword 
 
-            // const stockAlertDateTemp2 = new Date()
-            const fetchCreateUser = async () => {
+            const fetchManageUser = async () => {
                 let loadingSuccess: boolean = false
                 try {
-                    const response = await fetch(`http://localhost:4000/api/users/`, {
-                        method: 'POST',
+                    const manage_user = (edition ? dataEditUser._id : "")
+                    const manage_method = (edition ? 'PATCH' : 'POST')
+                    const response = await fetch(`http://localhost:4000/api/users/${manage_user}`, {
+                        method: manage_method,
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
-                        body:JSON.stringify({
-                            // "id": 7,
-                            "id_access_level": userAccessLevel,
-                            "id_client": user.id_client,
-                            "name": userName,
-                            "last_name": userLastName,
-                            "user": userUser,
-                            "email": userAccessLevel,
-                            "deleted": userDeleted,
-                            "enabled": userEnabled,
-                            "pass": userPassword,
-                            "language": user.language,
-                            "background_color": user.background_color,
-                            "ordered_fields": [1, 6, 2, 3]
-
-                            
-                        })
+                        body:JSON.stringify(bodyUpdate)
                     })
 
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
-                        console.log('POST request successful: ', responseData)
+                        console.log(`${manage_method} request successful: `, responseData)
                         loadingSuccess = true
                     } else if (response.status === 400) {
                         // Handle non-successful responses
@@ -229,7 +173,7 @@ export default function CreateUser(
                     }));
                 }
             } 
-            fetchCreateUser()
+            fetchManageUser()
 
 
             // setSelectedUsers(selectedUsersTemp)
@@ -376,7 +320,8 @@ export default function CreateUser(
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
                     />
-                    <Typography align='center' variant="h5">Create user</Typography>
+                    {/* <Typography align='center' variant="h5">Create user</Typography> */}
+                    <Typography align='center' variant="h5">{edition ? 'Edit ' : 'Create '} user</Typography>
                     
                     
                     <Box className={classes.customBoxColumn}>
