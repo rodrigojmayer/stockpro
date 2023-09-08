@@ -68,7 +68,6 @@ export default function ManageUser(
         handleClose, 
         dataEditUser,
     }: ChildProps) {
-    // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
         handleClose(false)
@@ -165,7 +164,6 @@ export default function ManageUser(
                         // Handle other cases as needed
                     }
                 } finally {
-                    // setIsLoading(())
                     console.log("loadingSuccess: ", loadingSuccess)
                     setIsLoading((prevLoading: any) => ({
                         ...prevLoading,
@@ -174,11 +172,6 @@ export default function ManageUser(
                 }
             } 
             fetchManageUser()
-
-
-            // setSelectedUsers(selectedUsersTemp)
-            // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
-            // close()
         }
         setOpenSaveChanges(false);
     }
@@ -187,8 +180,6 @@ export default function ManageUser(
     }
 
     const handleOpenSaveChanges = () => {
-        // console.log("userName: ", userName)
-
         let save_changes_allowed: boolean = true
         if(userName===""){
             setOpenErrorModal(true)
@@ -288,8 +279,6 @@ export default function ManageUser(
             password: false,
         }));
     }
-    // const handleStockCategoryChange = (value: string) => {
-    
 
     
     useEffect(() => {
@@ -299,10 +288,23 @@ export default function ManageUser(
     }, [isLoading]) // To know if after save should reload the page
 
     
-    // useEffect(() => {
-
-    // }, [ open, openOptionsCreate])
+    useEffect(() => {
+        if(dataEditUser.id_access_level)
+            setUserAccessLevel(dataEditUser.id_access_level)
+        if(dataEditUser.name)
+            setUserName(dataEditUser.name)
+        if(dataEditUser.last_name)
+            setUserLastName(dataEditUser.last_name)
+        if(dataEditUser.user)
+            setUserUser(dataEditUser.user)
+        if(dataEditUser.email)
+            setUserEmail(dataEditUser.email)
+        if(dataEditUser.enabled!==undefined)
+            setUserEnabled(dataEditUser.enabled)
+        if(dataEditUser.pass)
+            setUserPassword(dataEditUser.pass)
     
+    }, [ open, openOptionsCreate])
 
     return (
         <Modal
@@ -320,21 +322,16 @@ export default function ManageUser(
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
                     />
-                    {/* <Typography align='center' variant="h5">Create user</Typography> */}
                     <Typography align='center' variant="h5">{edition ? 'Edit ' : 'Create '} user</Typography>
-                    
-                    
                     <Box className={classes.customBoxColumn}>
                         <Box className={classes.customBoxRow}>
                             <TextField 
                                 label="Access level*"
                                 size="small"
                                 select
-                                // className={classes.inputMainData}
                                 className= {`${errorTextFields.access_level ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{className: classes.inputClassName}}
                                 value={userAccessLevel ? userAccessLevel : '' }
-                                // onChange={ (event) => onStockMeasureChange(event) }
                                 onChange={ (event) => handleUserAccessLevel(Number(event.target.value)) }
                                 >
                                     {accessLevels.map((accessLevel: any) => (
@@ -345,7 +342,6 @@ export default function ManageUser(
                                             sx={{ justifyContent: "space-between" }}
                                         >
                                             {accessLevel.name}
-                                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
                                         </MenuItem>
                                     ))}
                             </TextField>
@@ -357,14 +353,9 @@ export default function ManageUser(
                                 onChange={ (event) => handleUserName(event.target.value) }
                                 maxRows={1}
                                 size="small"
-                                // className={classes.inputMainData}
                                 className= {`${errorTextFields.name ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,
-                                    style: {
-                                    // height:"36px"
-                                    // borderRadius: 10,
-                                    },
                                 }}
                             />
                         </Box>
@@ -378,10 +369,6 @@ export default function ManageUser(
                                 className={classes.inputMainData}
                                 InputProps={{
                                     className: classes.inputClassName,
-                                    style: {
-                                    // height:"36px"
-                                    // borderRadius: 10,
-                                    },
                                 }}
                             />
                         </Box>
@@ -395,10 +382,6 @@ export default function ManageUser(
                                 className={classes.inputMainData}
                                 InputProps={{
                                     className: classes.inputClassName,
-                                    style: {
-                                    // height:"36px"
-                                    // borderRadius: 10,
-                                    },
                                 }}
                             />
                         </Box>
@@ -409,14 +392,9 @@ export default function ManageUser(
                                 onChange={ (event) => handleUserUser(event.target.value) }
                                 maxRows={1}
                                 size="small"
-                                // className={classes.inputMainData}
                                 className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,
-                                    style: {
-                                    // height:"36px"
-                                    // borderRadius: 10,
-                                    },
                                 }}
                             />
                         </Box>
@@ -427,26 +405,19 @@ export default function ManageUser(
                                 onChange={ (event) => handleUserPassword(event.target.value) }
                                 maxRows={1}
                                 size="small"
-                                // className={classes.inputMainData}
                                 className= {`${errorTextFields.password ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,
-                                    style: {
-                                    // height:"36px"
-                                    // borderRadius: 10,
-                                    },
                                 }}
                             />
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <Typography >{(userEnabled)?'Enabled':'Disabled'}</Typography>
                             <Switch 
-                                    color='success' 
-                                    // defaultChecked 
+                                    color='success'  
                                     checked={userEnabled}
                                     onChange={(event) => {
                                         handleUserEnabled(event.target.checked)
-                                        // console.log("event: ", event.target.checked)
                                     }}
                                 />  
                         </Box>
