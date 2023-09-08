@@ -80,7 +80,7 @@ export default function Users( { open, handleClose }: ChildProps) {
     const { user, setUser } = useContext<any>(UserContext); 
     const { users } = useContext<any>(UsersContext)
     const usersArray = users
-    console.log("usersArray test: ", usersArray)
+    // console.log("usersArray test: ", usersArray)
 
     // const [ showCreateUser, setShowCreateUser ] = useState(false) 
     // const handleCloseCreateUser = () => setShowCreateUser(false)

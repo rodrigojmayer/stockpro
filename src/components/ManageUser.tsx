@@ -295,19 +295,39 @@ export default function ManageUser(
     useEffect(() => {
         if(dataEditUser.id_access_level)
             setUserAccessLevel(dataEditUser.id_access_level)
+        else
+            setUserAccessLevel(null)
         if(dataEditUser.name)
             setUserName(dataEditUser.name)
+        else
+            setUserName('')
         if(dataEditUser.last_name)
             setUserLastName(dataEditUser.last_name)
+        else
+            setUserLastName('')
         if(dataEditUser.user)
             setUserUser(dataEditUser.user)
+        else
+            setUserUser('')
         if(dataEditUser.email)
             setUserEmail(dataEditUser.email)
+        else
+            setUserEmail('')
         if(dataEditUser.enabled!==undefined)
             setUserEnabled(dataEditUser.enabled)
+        else
+            setUserEnabled(true)
         if(dataEditUser.pass)
             setUserPassword(dataEditUser.pass)
-    
+        else
+            setUserPassword('')
+        setErrorTextFields({
+            "access_level": false,
+            "name": false,
+            "email": false,
+            "user": false,
+            "password": false,
+        });
     }, [ open, openOptionsCreate])
 
     return (

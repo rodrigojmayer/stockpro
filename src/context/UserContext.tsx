@@ -64,9 +64,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     fetchUser();
   }, []);
 
-  useEffect(() => {
-    console.log("UserContext.tsx user.id_client: ", user)
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("UserContext.tsx user.id_client: ", user)
+  // }, [user]);
 
   return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };
