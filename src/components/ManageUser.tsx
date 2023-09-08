@@ -23,7 +23,8 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { OkButton,
          CancelButton, 
          PlusButton,
-         UpButton
+         UpButton,
+         DeleteButton
         } from './Buttons';
 import  CreateStockMainData  from './CreateStockMainData'
 import  CreateStockSecondaryData  from './CreateStockSecondaryData'
@@ -47,6 +48,7 @@ import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import ErrorModal from './ErrorModal';
 import { UsersContext } from '../context/UsersContext';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -102,6 +104,7 @@ export default function ManageUser(
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
+
 
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
@@ -330,6 +333,64 @@ export default function ManageUser(
         });
     }, [ open, openOptionsCreate])
 
+    
+    const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
+   
+    const handleDeleteProduct = () => {
+        setOpenConfirmDeleteModal(true)
+    }
+    const handleCloseConfirmDeleteModal = () => {
+        setOpenConfirmDeleteModal(false)
+    }
+    const handleConfirmDelete = () => {
+        console.log("dataEditUser._id: ", dataEditUser._id)
+        const fetchDeleteStockProduct = async () => {
+            let loadingSuccess: boolean = false
+            try {
+                const response = await fetch(`http://localhost:4000/api/users/${dataEditUser._id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                        // Add any other requires headers here
+                    },
+
+                    body:JSON.stringify({
+                        "deleted": true,
+                    })
+                })
+
+                // Check if the response status is successful
+                if (response.ok) {
+                    const responseData = await response.json() // parse the response data
+                    console.log('POST request successful: ', responseData)
+                    loadingSuccess = true
+                } else {
+                    // Handle non-successful responses
+                    console.error('Request failed: ', response.status, response.statusText)
+                    // Handle the error here
+                }
+            } catch (error: unknown) {
+                if (typeof error === 'string') {
+                    // 'error' is now narrowed down to type 'string'
+                    console.error('Error:', error)
+                } else if (error instanceof Error) {
+                    // 'error' is now narrowed down to type 'Error'
+                    console.error('Error object:', error.message)
+                } else {
+                    // Handle other cases as needed
+                }
+            } finally {
+                // setIsLoading(())
+                setIsLoading((prevLoading: any) => ({
+                    ...prevLoading,
+                    fieldsFetchCreateStock: loadingSuccess,
+                }));
+            }
+        } 
+        fetchDeleteStockProduct()
+        close()
+    }
+
     return (
         <Modal
         open={open} 
@@ -345,6 +406,13 @@ export default function ManageUser(
                         openErrorModal={openErrorModal}
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
+                    />
+                    <ConfirmDeleteModal
+                        openConfirmDeleteModal={openConfirmDeleteModal}
+                        closeConfirmDeleteModal={handleCloseConfirmDeleteModal}
+                        data={userName} 
+                        confirmDelete={handleConfirmDelete}
+                        
                     />
                     <Typography align='center' variant="h5">{edition ? 'Edit ' : 'Create '} user</Typography>
                     <Box className={classes.customBoxColumn}>
@@ -448,6 +516,9 @@ export default function ManageUser(
                     </Box>
 
                     <Box className={classes.finishButtons}>
+                        <DeleteButton
+                            clicked={() => handleDeleteProduct()}
+                        /> 
                         <CancelButton
                         clicked={() => close()}
                         />
