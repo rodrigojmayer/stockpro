@@ -125,52 +125,12 @@ export default function Users( { open, handleClose }: ChildProps) {
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
     
-    const addInputUser = () => {
-        // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-        
-        // console.log("customFieldsNew: " , customFieldsNew)
-        // console.log("customColumns: " , customColumns)
-        // const lastObj = customFieldsNew[customFieldsNew.length - 1 ]
-        // const lastObj = customColumns[customColumns.length - 1]
-        // console.log("lastObj: " , lastObj)
-
-        // const nextId = lastObj.id + 1
-        // console.log("nextId: " , nextId)
-        // const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
-
-        
-
-        // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew: ", updateFieldsNew)
-        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-        //     updateFieldsNew[index].okButtonShow = true
-        // else
-        //     updateFieldsNew[index].okButtonShow = false
-        
-        // console.log("updateFieldsNew: ", updateFieldsNew)
-
-        // setCustomFields(updateFieldsNew)
-        // setCustomFieldsNew(updateFieldsNew)
-    }
-
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("profileLastName: ", profileLastName)
         alert(`user._id:  ${user._id}`)   
 
         if(ans){ 
                 const bodyUpdate: UserEditData = {}
-                // if(user.name!=profileName)
-                //     bodyUpdate.name= profileName
-                // if(user.last_name!=profileLastName)
-                //     bodyUpdate.last_name = profileLastName
-                // if(user.email!=profileEmail)
-                //     bodyUpdate.email = profileEmail
-                // if(user.user!=profileUser)
-                //     bodyUpdate.user = profileUser
-                // if(user.pass!=profilePass)
-                //     bodyUpdate.pass = profilePass
-
                 const fetchUpdateUser = async () => {
                 let loadingSuccess: boolean = false
                 try {
@@ -222,51 +182,7 @@ export default function Users( { open, handleClose }: ChildProps) {
         setOpenErrorModal(false)
     }
 
-    const handleOpenSaveChanges = () => {
-        // console.log("stockNameTemp: ", stockNameTemp)
-
-        // if(profileUser===""){
-        //     setOpenErrorModal(true)
-        //     setErrorData("missing_data_user")
-        // }else if(profilePass!==profileConfirmPass){
-        //     setOpenErrorModal(true)
-        //     setErrorData("not_confirmed_pass")
-        // }
-        // else{
-        //     setOpenSaveChanges(true);
-        // }
-    };
-
-    // const handleEditName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     console.log("engtradsagf")
-    //     setProfileName(event.target.value)
-    // }
-    // const handleEditLastName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setProfileLastName(event.target.value)
-    // }
-    // const handleEditEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setProfileEmail(event.target.value)
-    // }
-    // const handleEditUser = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setProfileUser(event.target.value)
-    // }
-    // const handleEditPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setProfilePass(event.target.value)
-    // }
-    // const handleEditConfirmPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setProfileConfirmPass(event.target.value)
-    // }
-    
-    // const showProfilePassToggle = () => {
-    //     setShowProfilePass(!showProfilePass)
-    // }
-    // const showProfileConfirmationPassToggle = () => {
-    //     setShowProfileConfirmationPass(!showProfileConfirmationPass)
-    // }
-
     useEffect(() => {
-        // if (Object.keys(userEditData).length !== 0) 
-        //     setShowEditUser(true)
         if (Object.keys(userEditData).length !== 0) 
             setShowManageUser(true)
         
@@ -317,35 +233,18 @@ export default function Users( { open, handleClose }: ChildProps) {
                             )
                         })}
                     </Box>
-                    {/* <CreateUser
-                        open={showCreateUser} 
-                        handleClose={handleCloseCreateUser} 
-                        // data={filteredData}
-                        // columnsCustom={filteredColumnsCustom}
-                    />
-                    <EditUser
-                        open={showEditUser} 
-                        handleClose={handleCloseEditUser} 
-                        dataEditUser={userEditData}
-                        // columnsCustom={filteredColumnsCustom}
-                    /> */}
                     <ManageUser
                         open={showManageUser} 
                         handleClose={handleCloseManageUser} 
                         dataEditUser={userEditData}
-                        // columnsCustom={filteredColumnsCustom}
                     />
 
                     <Box className={classes.finishButtons}>
                         <AddButton 
-                            // clicked={ openCreateUser}
                             clicked={ openManageUser}
                         /> 
                         <CancelButton
                         clicked={() => close()}
-                        />
-                        <OkButton
-                        clicked={() => handleOpenSaveChanges()}
                         />
                     </Box> 
                 </Box>

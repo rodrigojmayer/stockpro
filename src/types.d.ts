@@ -16,6 +16,7 @@ export interface UserData {
 }
 export interface UserEditData {
   _id?: number;
+  id_client?: number;
   id_access_level?: number|null;
   name?: string;
   last_name?: string;
@@ -24,6 +25,8 @@ export interface UserEditData {
   pass?: string;
   deleted?: boolean;
   enabled?: boolean;
+  language?: number;
+  background_color?: number;
 }
 export interface PreferencesEditData {
   language?: number;

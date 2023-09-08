@@ -107,6 +107,10 @@ export default function ManageUser(
         if(ans){
             
             const bodyUpdate: UserEditData = {}
+            bodyUpdate.id_client = user.id_client
+            bodyUpdate.deleted = false
+            bodyUpdate.language =  user.language
+            bodyUpdate.background_color = user.background_color
             if(!edition || dataEditUser.id_access_level != userAccessLevel)
                 bodyUpdate.id_access_level = userAccessLevel
             if(!edition || dataEditUser.name != userName)
