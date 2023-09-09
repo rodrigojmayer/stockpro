@@ -41,9 +41,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
-import CreateUser from './CreateUser';
 import { UsersContext } from '../context/UsersContext';
-import EditUser from './EditUser';
 import ManageUser from './ManageUser';
 
 
@@ -54,48 +52,10 @@ export default function Users( { open, handleClose }: ChildProps) {
     const close = () => {
         handleClose(false)
     }
-    
-    // const usersArray = [
-    //     {"id": 0,
-    //     "name": "Pepe",
-    //     "user": "Pepito"},
-    //     {"id": 1,
-    //     "name": "Raul",
-    //     "user": "Raulsito"},
-    //     {"id": 2,
-    //     "name": "Carlos",
-    //     "user": "Carl"},
-    //     {"id": 3,
-    //     "name": "Pepe",
-    //     "user": "Pepito"},
-    //     {"id": 4,
-    //     "name": "Raul",
-    //     "user": "Raulsito"},
-    //     {"id": 5,
-    //     "name": "Carlos",
-    //     "user": "Carl"},
-    // ]
-
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
     const { users } = useContext<any>(UsersContext)
     const usersArray = users
-    // console.log("usersArray test: ", usersArray)
-
-    // const [ showCreateUser, setShowCreateUser ] = useState(false) 
-    // const handleCloseCreateUser = () => setShowCreateUser(false)
-    // const openCreateUser = () => setShowCreateUser(true)
-
-    // const [ showEditUser, setShowEditUser ] = useState(false)  
-    // const [ userEditData, setUserEditData ] = useState<UserEditData>({})  
-    // const selectEditUser = (user:UserEditData) => {
-    //     // console.log("user to edit: ", user)
-    //     setUserEditData(user)
-    // }
-    // const handleCloseEditUser = () => {
-    //     setUserEditData({})  
-    //     setShowEditUser(false)
-    // }
 
     const [ showManageUser, setShowManageUser ] = useState(false) 
     const handleCloseManageUser = () => {
@@ -110,15 +70,6 @@ export default function Users( { open, handleClose }: ChildProps) {
         // console.log("user to edit: ", user)
         setUserEditData(user)
     }  
-    // const[ profileName, setProfileName ] = useState<string>('')
-    // const[ profileLastName, setProfileLastName ] = useState<string>('')
-    // const[ profileEmail, setProfileEmail ] = useState<string>(user.email)
-    // const[ profileUser, setProfileUser ] = useState<string>(user.user)
-    // const[ profilePass, setProfilePass ] = useState<string>(user.pass)
-    // const[ showProfilePass, setShowProfilePass ] = useState<boolean>(false)
-    // const[ profileConfirmPass, setProfileConfirmPass ] = useState<string>(user.pass)
-    // const[ showProfileConfirmationPass, setShowProfileConfirmationPass ] = useState<boolean>(false)
-    
     const [addButtonShow, setAddButtonShow] = useState<boolean>(true)
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  

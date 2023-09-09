@@ -8,7 +8,8 @@ import { OkButton, CancelButton, PlusButton } from './components/Buttons';
 import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
-import CreateStock from './components/CreateStock';
+// import CreateStock from './components/CreateStock';
+import ManageStock from './components/ManageStock';
 import UpdateAmountStock from './components/UpdateAmountStock';
 import { Data, ColumnData, CustomValueData, UserData, ProductUpdateData } from './types';
 import { UserContext } from './context/UserContext';
@@ -118,7 +119,7 @@ function App() {
   const { products } = useContext<any>(ProductsContext)
   
 
-  const [filteredData, setFilteredData] = useState([])
+  const [filteredData, setFilteredData] = useState<Data[]>([])
     
   useEffect(() => {
     
@@ -162,6 +163,32 @@ function App() {
 
   }, [isLoading])
 
+  
+  useEffect(() => {
+    console.log("showCreateStock-----")
+    setProductUpdate({
+      "_id":0,
+      "id": 0,
+      "id_client": 0,
+      "product": "",
+      "amount": 0,
+      "measure": "",
+      "category": "",
+      "sub_category": "",
+      "code": "",
+      "price": "",
+      "description": "",
+      "url_image": "",
+      "alert_amount": 0,
+      "alert_amount_enabled": true,
+      "alerted_amount": false,
+      "alert_date": "",
+      "alert_date_enabled": true,
+      "alerted_date": false,
+      "custom_fields": [],
+    })
+  }, [showCreateStock])
+
   return (
         <div className="App">
           
@@ -194,10 +221,16 @@ function App() {
               }
               
             </Layout>
-            <CreateStock
+            {/* <CreateStock
                 open={showCreateStock} 
                 handleClose={handleCloseCreateStock} 
                 data={filteredData}
+                columnsCustom={filteredColumnsCustom}
+            /> */}
+            <ManageStock
+                open={showCreateStock} 
+                handleClose={handleCloseCreateStock} 
+                data={productUpdate}
                 columnsCustom={filteredColumnsCustom}
             />
             <UpdateAmountStock

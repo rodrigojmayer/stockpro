@@ -37,7 +37,8 @@ import { Data, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../
 // import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
-import EditStock from './EditStock';
+// import EditStock from './EditStock';
+import ManageStock from './ManageStock';
 import ErrorModal from './ErrorModal';
 
 interface ChildProps {
@@ -319,7 +320,15 @@ export default function UpdateAmountStock(
                         </Grid>
                     </Box>  
                     
-                    <EditStock  ////////////////////////////////////////////// Continue with the edit stock modal here
+                    {/* <EditStock  ////////////////////////////////////////////// Continue with the edit stock modal here
+                        open={openEditStock} 
+                        handleClose={handleCloseEditStock} 
+                        data={productUpdate} 
+                        // columnsCustom={[]} 
+                        columnsCustom={columnsCustom} 
+                                          
+                    /> */}
+                    <ManageStock  ////////////////////////////////////////////// Continue with the edit stock modal here
                         open={openEditStock} 
                         handleClose={handleCloseEditStock} 
                         data={productUpdate} 

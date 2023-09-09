@@ -7,7 +7,7 @@ import { OkButton,
          CancelButton, 
          DeleteButton
         } from './Buttons';
-import  CreateStockMainData  from './ManageStockMainData'
+import  ManageStockMainData  from './ManageStockMainData'
 import  CreateStockSecondaryData  from './CreateStockSecondaryData'
 import  CreateStockAlerts  from './ManageStockAlerts'
 import  CreateStockCustomFields  from './CreateStockCustomFields'
@@ -23,22 +23,22 @@ import dayjs, { Dayjs } from 'dayjs';
 import ErrorModal from './ErrorModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-interface mainData {
+// interface mainData {
+//     id: number;
+//     name: string;
+//   }
+interface emailsAlertData {
     id: number;
-    name: string;
-  }
-  interface emailsAlertData {
-      id: number;
-      email: string;
-    }
+    email: string;
+}
 
 
-const subCategoryArray: mainData[] = [
-    { id: 0, name: '-'},
-    { id: 1, name: 'Cutlery'},
-    { id: 2, name: 'Fruits'},
-    { id: 3, name: 'Chairs'},
-];
+// const subCategoryArray: mainData[] = [
+//     { id: 0, name: '-'},
+//     { id: 1, name: 'Cutlery'},
+//     { id: 2, name: 'Fruits'},
+//     { id: 3, name: 'Chairs'},
+// ];
 
 
 interface Category {
@@ -52,11 +52,11 @@ interface Category {
     sub_categories: string[];
 }
 
-const emailsAlert: emailsAlertData[] = [
-    { id: 1, email: 'email1@test.com' },
-    { id: 2, email: 'email2@test.com'  },
-    { id: 3, email: 'email3@test.com'},
-];
+// const emailsAlert: emailsAlertData[] = [
+//     { id: 1, email: 'email1@test.com' },
+//     { id: 2, email: 'email2@test.com'  },
+//     { id: 3, email: 'email3@test.com'},
+// ];
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -68,23 +68,20 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    // data: ProductUpdateData
     data: Data
     columnsCustom: ColumnData[] 
 }
 
-export default function EditStock( 
+export default function ManageStock( 
     {   open, 
         handleClose, 
         data,
         columnsCustom,
     }: ChildProps) {
-    // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
         handleClose(false)
     } 
-
     
     const { categories } = useContext<any>(CategoriesContext) 
     const categoryArray = categories
@@ -93,27 +90,34 @@ export default function EditStock(
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
 
+    console.log("data edit user: ", data)
+    // console.log("categoryArray: ", categoryArray)
+    const edition = (data._id!==0 ? true : false)
+    
+    const [titleStat, setTitleStat] = useState<string>("Edit ");
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
+    // const [stockNameTemp, setStockNameTemp] = useState('');
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
-    const [stockCodeTemp, setStockCodeTemp] = useState<string>(data.code?data.code:'');
+    const [stockCodeTemp, setStockCodeTemp] = useState<any>(data.code);
     const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount);
-    const [stockMeasureTemp, setStockMeasureTemp] = useState<any>(data.measure?data.measure:'');
-
-    const selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
+    const [stockMeasureTemp, setStockMeasureTemp] = useState<string>(data.measure);
+    let selectedCategory
+    if(edition)
+        selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
+    // const selectedCategory = categoryArray && categoryArray.name ? categoryArray.name : null;
+    // console.log("selectedCategory: ", selectedCategory)
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
-
-
-    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category?data.sub_category:'');
-    const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
-    const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
-    const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:0);
-    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(data.alert_amount_enabled?data.alert_amount_enabled:false);
-    const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(data.alerted_amount?data.alerted_amount:false);
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>(data.alert_date?dayjs(data.alert_date):'');
-    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(data.alert_date_enabled?data.alert_date_enabled:false);
-    const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(data.alerted_date?data.alerted_date:false);
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>(data.custom_fields?data.custom_fields:{});
+    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category); 
+    const [stockPriceTemp, setStockPriceTemp] = useState<number | string>('');
+    const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>('');
+    const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>('');
+    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(0);
+    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(false);
+    const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(false);
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>('');
+    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(false);
+    const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(false);
+    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false); 
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -123,49 +127,51 @@ export default function EditStock(
    
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
-            // console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
-            // console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
-            // console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
-
             const bodyUpdate: ProductEditData = {}
-            if(data.product!=stockNameTemp)
+            bodyUpdate.id_client = user.id_client
+            bodyUpdate.deleted = false
+            if(!edition || data.product!=stockNameTemp)
                 bodyUpdate.product= stockNameTemp
-            if(data.code!=stockCodeTemp)
+            if(!edition || data.code!=stockCodeTemp)
                 bodyUpdate.code = stockCodeTemp
-            if(data.amount!=stockAmountTemp)
+            if(!edition || data.amount!=stockAmountTemp)
                 bodyUpdate.amount = stockAmountTemp
-            if(data.measure!=stockMeasureTemp)
+            if(!edition || data.measure!=stockMeasureTemp)
                 bodyUpdate.measure = stockMeasureTemp
             if(stockCategoryTemp && data.category!=stockCategoryTemp.name)
                 bodyUpdate.category = stockCategoryTemp.name
-            if(data.sub_category!=stockSubCategoryTemp)
+            if(!edition || data.sub_category!=stockSubCategoryTemp)
                 bodyUpdate.sub_category = stockSubCategoryTemp
-            if(data.custom_fields!=stockCustomValuesTemp)
+            if(!edition || data.custom_fields!=stockCustomValuesTemp)
                 bodyUpdate.custom_fields = stockCustomValuesTemp
-            if(data.price!=stockPriceTemp)
+            if(!edition || data.price!=stockPriceTemp)
                 bodyUpdate.price = stockPriceTemp
-            if(data.description!=stockDescriptionTemp)
+            if(!edition || data.description!=stockDescriptionTemp)
                 bodyUpdate.description = stockDescriptionTemp
-            if(data.url_image!=stockImageUrlTemp)
+            if(!edition || data.url_image!=stockImageUrlTemp)
                 bodyUpdate.url_image = stockImageUrlTemp
-            if(data.alert_amount!=stockAlertAmountTemp)
+            if(!edition || data.alert_amount!=stockAlertAmountTemp)
                 bodyUpdate.alert_amount = stockAlertAmountTemp
-            if(data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
+            if(!edition || data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
                 bodyUpdate.alert_amount_enabled = stockAlertAmountEnabledTemp
-            if(data.alerted_amount!=stockAlertedAmountTemp)
+            if(!edition || data.alerted_amount!=stockAlertedAmountTemp)
                 bodyUpdate.alerted_amount = stockAlertedAmountTemp
-            if(data.alert_date!=stockAlertDateTemp)
+            if(!edition || data.alert_date!=stockAlertDateTemp)
                 bodyUpdate.alert_date = stockAlertDateTemp
-            if(data.alert_date_enabled!=stockAlertDateEnabledTemp)
+            if(!edition || data.alert_date_enabled!=stockAlertDateEnabledTemp)
                 bodyUpdate.alert_date_enabled = stockAlertDateEnabledTemp
-            if(data.alerted_date!=stockAlertedDateTemp)
+            if(!edition || data.alerted_date!=stockAlertedDateTemp)
                 bodyUpdate.alerted_date = stockAlertedDateTemp
                 
-            const fetchEditStockProduct = async () => {
+            const fetchManageStockProduct = async () => {
                 let loadingSuccess: boolean = false
                 try {
-                    const response = await fetch(`http://localhost:4000/api/products/${data._id}`, {
-                        method: 'PATCH',
+                    
+                    const manage_stock = (edition ? data._id : "")
+                    const manage_method = (edition ? 'PATCH' : 'POST')
+                    const response = await fetch(`http://localhost:4000/api/products/${manage_stock}`, {
+                        // method: 'PATCH',
+                        method: manage_method,
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
@@ -177,7 +183,8 @@ export default function EditStock(
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
-                        console.log('POST request successful: ', responseData)
+                        // console.log('POST request successful: ', responseData)
+                        console.log(`${manage_method} request successful: `, responseData)
                         loadingSuccess = true
                     } else {
                         // Handle non-successful responses
@@ -202,7 +209,7 @@ export default function EditStock(
                     }));
                 }
             } 
-            fetchEditStockProduct()
+            fetchManageStockProduct()
             close()
         }
         setOpenSaveChanges(false);
@@ -369,6 +376,17 @@ export default function EditStock(
             setMessageBeforeSave("");
         }
     }, [stockAmountTemp, stockAlertAmountTemp, stockAlertAmountEnabledTemp])
+
+    
+    useEffect(() => {
+        // console.log("data._id: ", data._id)
+        console.log("open: ", open)
+        // console.log("close: ", close)
+        if(!edition){
+            setStockNameTemp("")
+            setTitleStat("Create ")
+        }
+}, [open])
     
     return (
         <Modal
@@ -395,8 +413,9 @@ export default function EditStock(
                         confirmDelete={handleConfirmDelete}
                         
                     />
-                    <Typography align='center' variant="h5">Edit stock</Typography>
-                    <CreateStockMainData 
+                    {/* <Typography align='center' variant="h5">{edition ?'Editetete ' : 'Createtete '} stock</Typography> */}
+                    <Typography align='center' variant="h5">{titleStat} stock</Typography>
+                    <ManageStockMainData 
                         hiddenPanel={openOptionsCreate.mainData}
                         openOptionsCreate={handleOpenOptionsCreate}
                         

@@ -26,9 +26,9 @@ import { OkButton,
          UpButton,
          DeleteButton
         } from './Buttons';
-import  CreateStockMainData  from './CreateStockMainData'
+import  CreateStockMainData  from './ManageStockMainData'
 import  CreateStockSecondaryData  from './CreateStockSecondaryData'
-import  CreateStockAlerts  from './CreateStockAlerts'
+import  CreateStockAlerts  from './ManageStockAlerts'
 import  CreateStockCustomFields  from './CreateStockCustomFields'
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';

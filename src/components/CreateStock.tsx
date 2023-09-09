@@ -1,41 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Box,
-         Container,
-         Grid,
-         IconButton,
          Modal, 
-         TextField,
          Typography,
-         OutlinedInput,
-         InputLabel,
-         MenuItem,
-         Select ,
-         FormControl,
-         Stack,
-         Chip,
         } from '@mui/material';
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckIcon from "@mui/icons-material/Check";
-import Paper from '@mui/material/Paper/Paper';
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
-
 import { OkButton,
          CancelButton, 
-         PlusButton,
-         UpButton
         } from './Buttons';
-import  CreateStockMainData  from './CreateStockMainData'
+import  CreateStockMainData  from './ManageStockMainData'
 import  CreateStockSecondaryData  from './CreateStockSecondaryData'
-import  CreateStockAlerts  from './CreateStockAlerts'
+import  CreateStockAlerts  from './ManageStockAlerts'
 import  CreateStockCustomFields  from './CreateStockCustomFields'
-import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
-import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
-import EditIcon from '@mui/icons-material/Edit';
-import List from '@mui/material/List/List';
-import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData } from '../types';
 
@@ -128,12 +103,12 @@ export default function CreateStock(
 
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState('');
+    const [stockCodeTemp, setStockCodeTemp] = useState('');
     const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(0);
     const [stockMeasureTemp, setStockMeasureTemp] = useState('');
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(null);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState('');
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>('');
-    const [stockCodeTemp, setStockCodeTemp] = useState('');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState('');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState('');
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(0);
@@ -144,7 +119,6 @@ export default function CreateStock(
     const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(true);
     const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
     
-
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
@@ -467,7 +441,7 @@ export default function CreateStock(
                         stockCategoryTemp={stockCategoryTemp}
                         onStockCategoryChange={handleStockCategoryChange}
                         
-                        subCategoryArray={subCategoryArray}
+                        // subCategoryArray={subCategoryArray}
                         stockSubCategoryTemp={stockSubCategoryTemp}
                         onStockSubCategoryChange={handleStockSubCategoryChange}
                     />
