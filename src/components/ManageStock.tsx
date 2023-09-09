@@ -108,16 +108,16 @@ export default function ManageStock(
     // console.log("selectedCategory: ", selectedCategory)
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category); 
-    const [stockPriceTemp, setStockPriceTemp] = useState<number | string>('');
-    const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>('');
-    const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>('');
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(0);
-    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(false);
-    const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(false);
-    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>('');
-    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(false);
-    const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(false);
-    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>({});
+    const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
+    const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
+    const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');
+    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:0);
+    const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(data.alert_amount_enabled?data.alert_amount_enabled:false);
+    const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(data.alerted_amount?data.alerted_amount:false);
+    const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>(data.alert_date?data.alert_date:'');
+    const [stockAlertDateEnabledTemp, setStockAlertDateEnabledTemp] = useState<boolean>(data.alert_date_enabled?data.alert_date_enabled:false);
+    const [stockAlertedDateTemp, setStockAlertedDateTemp] = useState<boolean>(data.alerted_date?data.alerted_date:false);
+    const [stockCustomValuesTemp, setStockCustomValuesTemp] = useState<object | any>(data.custom_fields?data.custom_fields:{});
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false); 
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -384,6 +384,23 @@ export default function ManageStock(
         // console.log("close: ", close)
         if(!edition){
             setStockNameTemp("")
+            
+    setStockCodeTemp('')
+    setStockAmountTemp(0)
+    setStockMeasureTemp('')
+    setStockCategoryTemp(null)
+    setStockSubCategoryTemp('')
+    setStockPriceTemp('')
+    setStockDescriptionTemp('')
+    setStockImageUrlTemp('')
+    setStockAlertAmountTemp(0)
+    setStockAlertAmountEnabledTemp(false)
+    setStockAlertedAmountTemp(false)
+    setStockAlertDateTemp('')
+    setStockAlertDateEnabledTemp(false)
+    setStockAlertedDateTemp(false);
+    setStockCustomValuesTemp({});
+
             setTitleStat("Create ")
         }
 }, [open])
