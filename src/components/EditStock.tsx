@@ -390,6 +390,7 @@ export default function EditStock(
                     <ConfirmDeleteModal
                         openConfirmDeleteModal={openConfirmDeleteModal}
                         closeConfirmDeleteModal={handleCloseConfirmDeleteModal}
+                        source={"stock"}
                         data={stockNameTemp} 
                         confirmDelete={handleConfirmDelete}
                         

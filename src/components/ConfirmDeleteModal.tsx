@@ -42,13 +42,15 @@ const PrettoSlider = styled(Slider)({
 type ConfirmDeleteModalProps = {
     openConfirmDeleteModal: boolean;
     closeConfirmDeleteModal: (newData?: boolean) => void;
+    source: string
     data: string
     confirmDelete: (newData?: boolean) => void
 }
 export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     const { openConfirmDeleteModal, closeConfirmDeleteModal } = props;
     const { classes } = useStylesGlobal();
-    let subTitle = `Swipe to confirm the deletion of stock "${props.data}"`
+    console.log("props: ", props)
+    let subTitle = `Swipe to confirm ${props.source} "${props.data}" deletion`
 
 
 
