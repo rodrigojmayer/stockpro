@@ -8,9 +8,9 @@ import { OkButton,
          DeleteButton
         } from './Buttons';
 import  CreateStockMainData  from './ManageStockMainData'
-import  CreateStockSecondaryData  from './CreateStockSecondaryData'
+import  CreateStockSecondaryData  from './ManageStockSecondaryData'
 import  CreateStockAlerts  from './ManageStockAlerts'
-import  CreateStockCustomFields  from './CreateStockCustomFields'
+import  CreateStockCustomFields  from './ManageStockCustomFields'
 import SaveChanges from './SaveChanges';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData, ProductEditData } from '../types';
@@ -177,7 +177,7 @@ export default function EditStock(
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
-                        console.log('POST request successful: ', responseData)
+                        // console.log('POST request successful: ', responseData)
                         loadingSuccess = true
                     } else {
                         // Handle non-successful responses
@@ -213,7 +213,7 @@ export default function EditStock(
     }
 
     const handleOpenSaveChanges = () => {
-        console.log("stockNameTemp: ", stockNameTemp)
+        // console.log("stockNameTemp: ", stockNameTemp)
 
         if(stockNameTemp===""){
             setOpenErrorModal(true)
@@ -271,11 +271,11 @@ export default function EditStock(
         setStockAlertAmountTemp(value)
     }
     const handleStockAlertAmountEnabledChange = (value: boolean) => {
-        console.log("value alerted: ", value)
+        // console.log("value alerted: ", value)
         setStockAlertAmountEnabledTemp(value)
     }
     const handleStockAlertDateChange = (date:Dayjs | Date | null | string) => {
-        console.log("handleSetAlertDate value: ", date)
+        // console.log("handleSetAlertDate value: ", date)
         if (date) {
             setStockAlertDateTemp(date);
         } else {

@@ -607,8 +607,8 @@ export function SelectImageButton( { imageUrl, setImageUrl } : SelectImageButton
 
   useEffect(() => {
     if(selectedImage){
-      console.log("selectedImage: ", selectedImage)
-      console.log("URL: ", URL.createObjectURL(selectedImage))
+      // console.log("selectedImage: ", selectedImage)
+      // console.log("URL: ", URL.createObjectURL(selectedImage))
       setImageUrl(URL.createObjectURL(selectedImage))
 
     }

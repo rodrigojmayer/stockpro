@@ -102,7 +102,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
-                        console.log('POST request successful: ', responseData)
+                        // console.log('POST request successful: ', responseData)
                         loadingSuccess = true
                     } else {
                         // Handle non-successful responses

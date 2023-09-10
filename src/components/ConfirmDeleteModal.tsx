@@ -49,7 +49,7 @@ type ConfirmDeleteModalProps = {
 export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     const { openConfirmDeleteModal, closeConfirmDeleteModal } = props;
     const { classes } = useStylesGlobal();
-    console.log("props: ", props)
+    // console.log("props: ", props)
     let subTitle = `Swipe to confirm ${props.source} "${props.data}" deletion`
 
 
@@ -71,7 +71,7 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
         const value = typeof newValue === 'number' ? newValue : newValue[activeThumb];
          if (isThumbPressed) {
             if(valueSlider-20 <= value && value <= valueSlider+35){
-                console.log('Thumb pressed:', value);
+                // console.log('Thumb pressed:', value);
                 setValueSlider(value)
             }
         } else {

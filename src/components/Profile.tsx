@@ -65,7 +65,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
     
 
     const handleCloseSaveChanges = (ans?:boolean) => {
-        console.log("profileLastName: ", profileLastName)
+        // console.log("profileLastName: ", profileLastName)
         alert(`user._id:  ${user._id}`)   
 
         if(ans){
@@ -97,7 +97,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
-                        console.log('POST request successful: ', responseData)
+                        // console.log('POST request successful: ', responseData)
                         loadingSuccess = true
                     } else {
                         // Handle non-successful responses
@@ -148,7 +148,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
     };
 
     const handleEditName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("engtradsagf")
+        // console.log("engtradsagf")
         setProfileName(event.target.value)
     }
     const handleEditLastName = (event: React.ChangeEvent<HTMLInputElement>) => {

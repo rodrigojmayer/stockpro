@@ -26,9 +26,9 @@ import { OkButton,
          UpButton
         } from './Buttons';
 import  CreateStockMainData  from './ManageStockMainData'
-import  CreateStockSecondaryData  from './CreateStockSecondaryData'
+import  CreateStockSecondaryData  from './ManageStockSecondaryData'
 import  CreateStockAlerts  from './ManageStockAlerts'
-import  CreateStockCustomFields  from './CreateStockCustomFields'
+import  CreateStockCustomFields  from './ManageStockCustomFields'
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
@@ -196,7 +196,7 @@ export default function CreateUser(
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
-                        console.log('POST request successful: ', responseData)
+                        // console.log('POST request successful: ', responseData)
                         loadingSuccess = true
                     } else if (response.status === 400) {
                         // Handle non-successful responses
@@ -222,7 +222,7 @@ export default function CreateUser(
                     }
                 } finally {
                     // setIsLoading(())
-                    console.log("loadingSuccess: ", loadingSuccess)
+                    // console.log("loadingSuccess: ", loadingSuccess)
                     setIsLoading((prevLoading: any) => ({
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
@@ -297,7 +297,7 @@ export default function CreateUser(
     }
 
     const handleUserAccessLevel = (value: number) => {
-        console.log("setUserAccessLevel value: ", value)
+        // console.log("setUserAccessLevel value: ", value)
         setUserAccessLevel(value)
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
@@ -305,7 +305,7 @@ export default function CreateUser(
         }));
     }
     const handleUserName = (value: string) => {
-        console.log("setUserName value: ", value)
+        // console.log("setUserName value: ", value)
         setUserName(value)
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
@@ -313,11 +313,11 @@ export default function CreateUser(
         }));
     }
     const handleUserLastName = (value: string) => {
-        console.log("setUserLastName value: ", value)
+        // console.log("setUserLastName value: ", value)
         setUserLastName(value)
     }
     const handleUserUser = (value: string) => {
-        console.log("setUserUser value: ", value)
+        // console.log("setUserUser value: ", value)
         setUserUser(value)
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
@@ -325,19 +325,19 @@ export default function CreateUser(
         }));
     }
     const handleUserEmail = (value: string) => {
-        console.log("setUserUser value: ", value)
+        // console.log("setUserUser value: ", value)
         setUserEmail(value)
     }
     const handleUserDeleted = (value: boolean) => {
-        console.log("setUserDeleted value: ", value)
+        // console.log("setUserDeleted value: ", value)
         setUserDeleted(value)
     }
     const handleUserEnabled = (value: boolean) => {
-        console.log("setUserEnabled value: ", value)
+        // console.log("setUserEnabled value: ", value)
         setUserEnabled(value)
     }
     const handleUserPassword = (value: string) => {
-        console.log("setUserPassword value: ", value)
+        // console.log("setUserPassword value: ", value)
         setUserPassword(value)
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,

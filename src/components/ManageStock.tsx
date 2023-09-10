@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Box,
          Modal, 
          Typography,
@@ -8,13 +8,12 @@ import { OkButton,
          DeleteButton
         } from './Buttons';
 import  ManageStockMainData  from './ManageStockMainData'
-import  CreateStockSecondaryData  from './CreateStockSecondaryData'
-import  CreateStockAlerts  from './ManageStockAlerts'
-import  CreateStockCustomFields  from './CreateStockCustomFields'
-import SaveChanges from './SaveChanges';
+import  ManageStockSecondaryData  from './ManageStockSecondaryData'
+import  ManageStockAlerts  from './ManageStockAlerts'
+import  ManageStockCustomFields  from './ManageStockCustomFields'
+import  SaveChanges from './SaveChanges';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData, ProductEditData } from '../types';
-
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
@@ -22,24 +21,6 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import dayjs, { Dayjs } from 'dayjs';
 import ErrorModal from './ErrorModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
-
-// interface mainData {
-//     id: number;
-//     name: string;
-//   }
-interface emailsAlertData {
-    id: number;
-    email: string;
-}
-
-
-// const subCategoryArray: mainData[] = [
-//     { id: 0, name: '-'},
-//     { id: 1, name: 'Cutlery'},
-//     { id: 2, name: 'Fruits'},
-//     { id: 3, name: 'Chairs'},
-// ];
-
 
 interface Category {
     _id: string;
@@ -51,12 +32,6 @@ interface Category {
     __v: number;
     sub_categories: string[];
 }
-
-// const emailsAlert: emailsAlertData[] = [
-//     { id: 1, email: 'email1@test.com' },
-//     { id: 2, email: 'email2@test.com'  },
-//     { id: 3, email: 'email3@test.com'},
-// ];
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -89,14 +64,9 @@ export default function ManageStock(
     const measureArray = measures
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
-
-    console.log("data edit user: ", data)
-    // console.log("categoryArray: ", categoryArray)
     const edition = (data._id!==0 ? true : false)
-    
     const [titleStat, setTitleStat] = useState<string>("Edit ");
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-    // const [stockNameTemp, setStockNameTemp] = useState('');
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
     const [stockCodeTemp, setStockCodeTemp] = useState<any>(data.code);
     const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount);
@@ -104,8 +74,6 @@ export default function ManageStock(
     let selectedCategory
     if(edition)
         selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
-    // const selectedCategory = categoryArray && categoryArray.name ? categoryArray.name : null;
-    // console.log("selectedCategory: ", selectedCategory)
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category); 
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
@@ -170,21 +138,18 @@ export default function ManageStock(
                     const manage_stock = (edition ? data._id : "")
                     const manage_method = (edition ? 'PATCH' : 'POST')
                     const response = await fetch(`http://localhost:4000/api/products/${manage_stock}`, {
-                        // method: 'PATCH',
                         method: manage_method,
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
-
                         body:JSON.stringify(bodyUpdate)
                     })
-
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
                         // console.log('POST request successful: ', responseData)
-                        console.log(`${manage_method} request successful: `, responseData)
+                        // console.log(`${manage_method} request successful: `, responseData)
                         loadingSuccess = true
                     } else {
                         // Handle non-successful responses
@@ -220,7 +185,7 @@ export default function ManageStock(
     }
 
     const handleOpenSaveChanges = () => {
-        console.log("stockNameTemp: ", stockNameTemp)
+        // console.log("stockNameTemp: ", stockNameTemp)
 
         if(stockNameTemp===""){
             setOpenErrorModal(true)
@@ -254,8 +219,6 @@ export default function ManageStock(
     }
     const handleStockCategoryChange = (id: number) => {
         const selectedCategory = categories.find((category: any) => category.id === id) || null;
-    
-        // setStockCategoryTemp(value)
         setStockCategoryTemp(selectedCategory)
         setStockSubCategoryTemp('')
     }
@@ -278,11 +241,11 @@ export default function ManageStock(
         setStockAlertAmountTemp(value)
     }
     const handleStockAlertAmountEnabledChange = (value: boolean) => {
-        console.log("value alerted: ", value)
+        // console.log("value alerted: ", value)
         setStockAlertAmountEnabledTemp(value)
     }
     const handleStockAlertDateChange = (date:Dayjs | Date | null | string) => {
-        console.log("handleSetAlertDate value: ", date)
+        // console.log("handleSetAlertDate value: ", date)
         if (date) {
             setStockAlertDateTemp(date);
         } else {
@@ -307,7 +270,6 @@ export default function ManageStock(
         setOpenConfirmDeleteModal(false)
     }
     const handleConfirmDelete = () => {
-
         const fetchDeleteStockProduct = async () => {
             let loadingSuccess: boolean = false
             try {
@@ -326,7 +288,7 @@ export default function ManageStock(
                 // Check if the response status is successful
                 if (response.ok) {
                     const responseData = await response.json() // parse the response data
-                    console.log('POST request successful: ', responseData)
+                    // console.log('POST request successful: ', responseData)
                     loadingSuccess = true
                 } else {
                     // Handle non-successful responses
@@ -344,7 +306,6 @@ export default function ManageStock(
                     // Handle other cases as needed
                 }
             } finally {
-                // setIsLoading(())
                 setIsLoading((prevLoading: any) => ({
                     ...prevLoading,
                     fieldsFetchCreateStock: loadingSuccess,
@@ -357,8 +318,6 @@ export default function ManageStock(
     
     useEffect(() => {
         if(isLoading.fieldsFetchCreateStock){
-            // alert("Reload page")
-                    // setIsFetching(false)
             window.location.reload();
         }
     }, [isLoading]) // To know if after save should reload the page
@@ -379,31 +338,26 @@ export default function ManageStock(
 
     
     useEffect(() => {
-        // console.log("data._id: ", data._id)
-        console.log("open: ", open)
-        // console.log("close: ", close)
         if(!edition){
             setStockNameTemp("")
-            
-    setStockCodeTemp('')
-    setStockAmountTemp(0)
-    setStockMeasureTemp('')
-    setStockCategoryTemp(null)
-    setStockSubCategoryTemp('')
-    setStockPriceTemp('')
-    setStockDescriptionTemp('')
-    setStockImageUrlTemp('')
-    setStockAlertAmountTemp(0)
-    setStockAlertAmountEnabledTemp(false)
-    setStockAlertedAmountTemp(false)
-    setStockAlertDateTemp('')
-    setStockAlertDateEnabledTemp(false)
-    setStockAlertedDateTemp(false);
-    setStockCustomValuesTemp({});
-
+            setStockCodeTemp('')
+            setStockAmountTemp(0)
+            setStockMeasureTemp('')
+            setStockCategoryTemp(null)
+            setStockSubCategoryTemp('')
+            setStockPriceTemp('')
+            setStockDescriptionTemp('')
+            setStockImageUrlTemp('')
+            setStockAlertAmountTemp(0)
+            setStockAlertAmountEnabledTemp(false)
+            setStockAlertedAmountTemp(false)
+            setStockAlertDateTemp('')
+            setStockAlertDateEnabledTemp(false)
+            setStockAlertedDateTemp(false);
+            setStockCustomValuesTemp({});
             setTitleStat("Create ")
         }
-}, [open])
+    }, [open])
     
     return (
         <Modal
@@ -457,7 +411,7 @@ export default function ManageStock(
                         stockSubCategoryTemp={stockSubCategoryTemp}
                         onStockSubCategoryChange={handleStockSubCategoryChange}
                     />
-                    <CreateStockSecondaryData 
+                    <ManageStockSecondaryData 
                         hiddenPanel={openOptionsCreate.secondaryData}
                         openOptionsCreate={handleOpenOptionsCreate} 
                         
@@ -470,7 +424,7 @@ export default function ManageStock(
                         imageUrl={stockImageUrlTemp}
                         onSetImageUrl={handleSetImageUrl}
                     />
-                    <CreateStockAlerts 
+                    <ManageStockAlerts 
                         hiddenPanel={openOptionsCreate.alerts}
                         openOptionsCreate={handleOpenOptionsCreate}
                         
@@ -489,7 +443,7 @@ export default function ManageStock(
                         onStockAlertDateEnabledChange={handleStockAlertDateEnabledChange}
  
                     />
-                    <CreateStockCustomFields
+                    <ManageStockCustomFields
                         hiddenPanel={openOptionsCreate.customFields}
                         openOptionsCreate={handleOpenOptionsCreate}
                         

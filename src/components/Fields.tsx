@@ -201,9 +201,9 @@ export default function Fields(
         // }
     }
     const saveCustomField = (_id:number, id:number, label: string) => {
-        console.log("_id: ", _id)
-        console.log("label: ", label)
-        console.log("label: ", label)
+        // console.log("_id: ", _id)
+        // console.log("label: ", label)
+        // console.log("label: ", label)
         // const updateFields = [...customFieldsTemp]
         const updateFields = [...customFields.map(obj => ({ ...obj }))]
         // const updateFieldsNew = [...customFieldsNewTemp]
@@ -346,7 +346,7 @@ export default function Fields(
                 if(obj._id) {
                     // console.log("obj._id: ", obj._id)
                     if(obj.edited) {
-                        console.log("Object to edit: ", obj)
+                        // console.log("Object to edit: ", obj)
                         const fetchEditCustomColumn = async () => {
                             let loadingSuccess: boolean = false
                             try {
@@ -361,11 +361,11 @@ export default function Fields(
                                     })
                                 })
                                 if (response) {
-                                    console.log('Update successful:', response);
+                                    // console.log('Update successful:', response);
                                     // setCustomColumns(customFieldsNew)
                                     loadingSuccess = true
                                 } else {
-                                    console.log('Update failed.');
+                                    // console.log('Update failed.');
                                   }
                             }catch (error) {
                                 // Handle the case where the response is not OK (e.g., show an error message)
@@ -381,7 +381,7 @@ export default function Fields(
                         fetchEditCustomColumn()
                     } 
                 } else if(!obj.deleted){    // To avoid fields created and deleted in the moment
-                    console.log("Obj to create: ", obj)
+                    // console.log("Obj to create: ", obj)
 
                     const fetchCreateCustomColumn = async () => {
                         let loadingSuccess: boolean = false
@@ -405,7 +405,7 @@ export default function Fields(
                             // Check if the response status is successful (2xx range)
                             if (response.ok) {
                                 const responseData = await response.json() // parse the response data
-                                console.log('POST request successful: ', responseData)
+                                // console.log('POST request successful: ', responseData)
                                 loadingSuccess = true
                                 // setCustomColumns(customFieldsNew)
                                 // Handle the response data here
@@ -437,11 +437,11 @@ export default function Fields(
             
             
             // console.log("save user: ", user)
-            console.log("save user ordered_fields: ", user.ordered_fields)
-            console.log("save array orderedFields: ", orderedFields.map((col) => col.id))
+            // console.log("save user ordered_fields: ", user.ordered_fields)
+            // console.log("save array orderedFields: ", orderedFields.map((col) => col.id))
             const array_ordered_fields = orderedFields.map((col)=>col.id)
             if(JSON.stringify(user.ordered_fields) !== JSON.stringify(array_ordered_fields)){
-                console.log("Different arrays")
+                // console.log("Different arrays")
                 const fetchEditUsersFieldsOrder = async () => {
                     let loadingSuccess: boolean = false
                     // setIsFetching(true)
@@ -456,7 +456,7 @@ export default function Fields(
                             })
                         })
                         if (response) {
-                            console.log('Update successfull')
+                            // console.log('Update successfull')
                             loadingSuccess = true
                             // const updateUser = user
                             // updateUser.ordered_fields = array_ordered_fields
@@ -464,12 +464,12 @@ export default function Fields(
                             // setColumnsUserOrder(columnsUserOrder)       //////////////////////////////////////////// Check if I should update the user first
                             // setUser(updateUser)       //////////////////////////////////////////// Check if I should update the user first
                         } else {
-                            console.log('Update failed.')
+                            // console.log('Update failed.')
                         }
                     } catch (error) {
                         // Handle the case where the response is not OK (e.g., show an error message)
                     } finally {
-                        console.log('setIsLoading?')
+                        // console.log('setIsLoading?')
 
                         setIsLoading((prevLoading: any) => ({
                             ...prevLoading,

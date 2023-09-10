@@ -1,48 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Box,
-         Container,
-         Grid,
-         IconButton,
          Modal, 
          TextField,
          Typography,
-         OutlinedInput,
-         InputLabel,
          MenuItem,
-         Select ,
-         FormControl,
-         Stack,
-         Chip,
          Switch,
         } from '@mui/material';
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckIcon from "@mui/icons-material/Check";
-import Paper from '@mui/material/Paper/Paper';
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
-
 import { OkButton,
          CancelButton, 
-         PlusButton,
-         UpButton,
          DeleteButton
         } from './Buttons';
-import  CreateStockMainData  from './ManageStockMainData'
-import  CreateStockSecondaryData  from './CreateStockSecondaryData'
-import  CreateStockAlerts  from './ManageStockAlerts'
-import  CreateStockCustomFields  from './CreateStockCustomFields'
-import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
-import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
-import EditIcon from '@mui/icons-material/Edit';
-import List from '@mui/material/List/List';
-import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { Data, DataCreateStockOptions, ColumnData, UserEditData } from '../types';
-
-import { CategoriesContext } from '../context/CategoriesContext';
-import { MeasuresContext } from '../context/MeasuresContext';
+import { DataCreateStockOptions, ColumnData, UserEditData } from '../types';
 import { AccessLevelsContext } from '../context/AccessLevelsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
@@ -61,8 +31,6 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     dataEditUser: UserEditData
-    // data: Data[]
-    // columnsCustom: ColumnData[] 
 }
 
 export default function ManageUser( 
@@ -74,16 +42,11 @@ export default function ManageUser(
     const close = () => {
         handleClose(false)
     } 
-
-    console.log("data edit user: ", dataEditUser)
     const edition = (Object.keys(dataEditUser).length !== 0 ? true : false)
     const { user } = useContext<any>(UserContext)
     const { users } = useContext<any>(UsersContext)
     const { accessLevels } = useContext<any>(AccessLevelsContext)
-    
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
-
-
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [userAccessLevel, setUserAccessLevel] = useState<number|null>(null);
     const [userName, setUserName] = useState<string>('');
@@ -100,15 +63,11 @@ export default function ManageUser(
         "user": false,
         "password": false,
     });
-
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
-
-
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
-            
             const bodyUpdate: UserEditData = {}
             bodyUpdate.id_client = user.id_client
             bodyUpdate.deleted = false
@@ -146,7 +105,7 @@ export default function ManageUser(
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
-                        console.log(`${manage_method} request successful: `, responseData)
+                        // console.log(`${manage_method} request successful: `, responseData)
                         loadingSuccess = true
                     } else if (response.status === 400) {
                         // Handle non-successful responses
@@ -157,7 +116,6 @@ export default function ManageUser(
                         if (errorData.errorCode === 'duplicate_product') {
                             setOpenErrorModal(true) // Open the modal for duplicate product error
                             setErrorData(errorData.errorCode)
-                        
                         }
                     }
                 } catch (error: unknown) {
@@ -171,7 +129,7 @@ export default function ManageUser(
                         // Handle other cases as needed
                     }
                 } finally {
-                    console.log("loadingSuccess: ", loadingSuccess)
+                    // console.log("loadingSuccess: ", loadingSuccess)
                     setIsLoading((prevLoading: any) => ({
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
@@ -185,7 +143,6 @@ export default function ManageUser(
     const handleCloseErrorModal = () => {
         setOpenErrorModal(false)
     }
-
     const handleOpenSaveChanges = () => {
         let save_changes_allowed: boolean = true
         if(userName===""){
@@ -239,7 +196,7 @@ export default function ManageUser(
     }
 
     const handleUserAccessLevel = (value: number) => {
-        console.log("setUserAccessLevel value: ", value)
+        // console.log("setUserAccessLevel value: ", value)
         setUserAccessLevel(value)
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
@@ -247,7 +204,7 @@ export default function ManageUser(
         }));
     }
     const handleUserName = (value: string) => {
-        console.log("setUserName value: ", value)
+        // console.log("setUserName value: ", value)
         setUserName(value)
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
@@ -255,11 +212,11 @@ export default function ManageUser(
         }));
     }
     const handleUserLastName = (value: string) => {
-        console.log("setUserLastName value: ", value)
+        // console.log("setUserLastName value: ", value)
         setUserLastName(value)
     }
     const handleUserUser = (value: string) => {
-        console.log("setUserUser value: ", value)
+        // console.log("setUserUser value: ", value)
         setUserUser(value)
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
@@ -267,19 +224,19 @@ export default function ManageUser(
         }));
     }
     const handleUserEmail = (value: string) => {
-        console.log("setUserUser value: ", value)
+        // console.log("setUserUser value: ", value)
         setUserEmail(value)
     }
     const handleUserDeleted = (value: boolean) => {
-        console.log("setUserDeleted value: ", value)
+        // console.log("setUserDeleted value: ", value)
         setUserDeleted(value)
     }
     const handleUserEnabled = (value: boolean) => {
-        console.log("setUserEnabled value: ", value)
+        // console.log("setUserEnabled value: ", value)
         setUserEnabled(value)
     }
     const handleUserPassword = (value: string) => {
-        console.log("setUserPassword value: ", value)
+        // console.log("setUserPassword value: ", value)
         setUserPassword(value)
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
@@ -287,13 +244,11 @@ export default function ManageUser(
         }));
     }
 
-    
     useEffect(() => {
         if(isLoading.fieldsFetchCreateStock){
             window.location.reload();
         }
     }, [isLoading]) // To know if after save should reload the page
-
     
     useEffect(() => {
         if(dataEditUser.id_access_level)
@@ -332,7 +287,6 @@ export default function ManageUser(
             "password": false,
         });
     }, [ open, openOptionsCreate])
-
     
     const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
    
@@ -343,7 +297,6 @@ export default function ManageUser(
         setOpenConfirmDeleteModal(false)
     }
     const handleConfirmDelete = () => {
-        console.log("dataEditUser._id: ", dataEditUser._id)
         const fetchDeleteStockProduct = async () => {
             let loadingSuccess: boolean = false
             try {
@@ -362,7 +315,7 @@ export default function ManageUser(
                 // Check if the response status is successful
                 if (response.ok) {
                     const responseData = await response.json() // parse the response data
-                    console.log('POST request successful: ', responseData)
+                    // console.log('POST request successful: ', responseData)
                     loadingSuccess = true
                 } else {
                     // Handle non-successful responses
@@ -393,8 +346,8 @@ export default function ManageUser(
 
     return (
         <Modal
-        open={open} 
-        onClose={close}
+            open={open} 
+            onClose={close}
         > 
             <Box sx={modalStyleExternal}>
                 <Box sx={modalStyleInternal}>
@@ -413,7 +366,6 @@ export default function ManageUser(
                         source={"user"}
                         data={userName} 
                         confirmDelete={handleConfirmDelete}
-                        
                     />
                     <Typography align='center' variant="h5">{edition ? 'Edit ' : 'Create '} user</Typography>
                     <Box className={classes.customBoxColumn}>
@@ -495,6 +447,7 @@ export default function ManageUser(
                             <TextField
                                 label="Password*"
                                 value={userPassword}
+                                type="password"
                                 onChange={ (event) => handleUserPassword(event.target.value) }
                                 maxRows={1}
                                 size="small"
@@ -515,7 +468,6 @@ export default function ManageUser(
                                 />  
                         </Box>
                     </Box>
-
                     <Box className={classes.finishButtons}>
                         <DeleteButton
                             clicked={() => handleDeleteProduct()}

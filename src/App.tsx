@@ -165,7 +165,6 @@ function App() {
 
   
   useEffect(() => {
-    console.log("showCreateStock-----")
     setProductUpdate({
       "_id":0,
       "id": 0,
