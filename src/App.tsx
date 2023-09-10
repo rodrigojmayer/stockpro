@@ -202,6 +202,7 @@ function App() {
               columnsDefault={defaultColumns} 
               columnsCustom={customColumns}
               idColumnsTableOrder={idColumnsTableOrder} 
+              data={filteredData}
             >
               <Container maxWidth="md" style={{padding: "0"}} >
                 <Grid container>

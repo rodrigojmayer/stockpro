@@ -11,9 +11,10 @@ import MenuOptions from './MenuOptions';
 import Fields from './Fields';
 import Alerts from './Alerts';
 import Profile from './Profile';
-import { ColumnData, DataMenuOptions } from '../types';
+import { ColumnData, Data, DataMenuOptions } from '../types';
 import Preferences from './Preferences';
 import Users from './Users';
+import MassiveUploadStock from './MassiveUploadStock';
 
 const useStyles = makeStyles()({
     appbar: {
@@ -64,6 +65,7 @@ interface LayoutProps {
     columnsDefault: ColumnData[]
     columnsCustom: ColumnData[]
     idColumnsTableOrder: Number[]
+    data: Data[]
     // columnsHiddenFields: ColumnData[]
     children: React.ReactNode
     // showCreataddButtonShoweStock: boolean
@@ -75,7 +77,8 @@ export default function Layout(
     {   children, 
         columnsDefault, 
         columnsCustom, 
-        idColumnsTableOrder
+        idColumnsTableOrder,
+        data
     }: LayoutProps) {
     // export default function Layout( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -118,16 +121,21 @@ export default function Layout(
                  open={openOptions.alerts} 
                  handleClose={handleCloseOptions} 
             /> 
+            <MassiveUploadStock
+                open={openOptions.massive}
+                handleClose={handleCloseOptions} 
+                data={data} 
+            />
+            <Users
+                open={openOptions.users}
+                handleClose={handleCloseOptions} 
+            />
             <Profile
                 open={openOptions.profile}
                 handleClose={handleCloseOptions} 
             />
             <Preferences
                 open={openOptions.preferences}
-                handleClose={handleCloseOptions} 
-            />
-            <Users
-                open={openOptions.users}
                 handleClose={handleCloseOptions} 
             />
             <AppBar className={classes.appbar}

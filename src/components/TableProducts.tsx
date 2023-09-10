@@ -27,24 +27,6 @@ const INITIAL_STATE = {
   // id_custom_field_product: NaN,
 }
 
-// const additionalFields = {
-//   custom_fields: {},
-// }
-// const mergedInitialState = {
-//   ...INITIAL_STATE,
-//   ...additionalFields,
-// }
-// interface DataMerged {
-//   id: number;
-//   product: string;
-//   amount: number;
-//   measure: string;
-//   category: string;
-//   sub_category: string;
-//   [key: string]: any;
-//   custom_fields: object;
-// }
-
 const VirtuosoTableComponents: TableComponents<Data> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Paper} {...props} ref={ref} />
@@ -59,23 +41,21 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   )),
 };
 
-
-
 // const { classes } = useStylesGlobal()
 // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void) {
+function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void) {
 
-      let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
+  let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
-      if (newRow.custom_fields) {
-        for (const key in newRow.custom_fields) {
-          newRow = {
-                ...newRow,
-                ...newRow.custom_fields
-              }
-        }
-      }
+  if (newRow.custom_fields) {
+    for (const key in newRow.custom_fields) {
+      newRow = {
+            ...newRow,
+            ...newRow.custom_fields
+          }
+    }
+  }
 
   return (
     <React.Fragment >
@@ -125,7 +105,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
           </div>
 
         </TableCell>
-))}
+      ))}
     </React.Fragment>
   );
 }

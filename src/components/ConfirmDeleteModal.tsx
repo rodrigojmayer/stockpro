@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Box,
+import { useState, useEffect } from 'react';
+import { Box, 
          Modal, 
-         Typography,
+         Typography, 
         } from '@mui/material';
-import { 
-         CancelButton, 
-        } from './Buttons';
+import { CancelButton } from './Buttons';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorModalInternal } from '../Styles'
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
