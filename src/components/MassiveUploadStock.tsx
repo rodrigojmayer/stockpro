@@ -12,7 +12,9 @@ import { Box,
          TextField
         } from '@mui/material';
 import { OkButton,
-         CancelButton
+         CancelButton,
+         PlusButton,
+         MinusButton
         } from './Buttons';
 import  SaveChanges from './SaveChanges';
 import { useStylesGlobal as globalClasses, 
@@ -90,7 +92,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
       <React.Fragment >
         {columns.map((column) => (
           <TableCell
-            key={column.id}
+            key={column._id}
             align='center'
             className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
             style={{ 
@@ -148,21 +150,62 @@ export default function MassiveUploadStock(
     const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
     // const modifiedColumns  = defaultColumns
     const columns  = defaultColumns
-        .filter((column:any) => column.dataKey=="product" || column.dataKey=="amount" || column.dataKey=="measure" )
-        .map((column:any) => ({...column, width:3 }))
+        .filter((column:any) => column.dataKey=="product" || column.dataKey=="amount"  )
+        .map((column:any) => ({...column, width:column.width }))
 
     // const columns = [...modifiedColumns , { label: "fs"}]
 
     columns.push({ 
-        label: "fc" , 
-    dataKey: "fc",
-    width: 3});
+        _id: 0,
+        label: "plus_minus" , 
+        dataKey: "plus_minus",
+        width: 30
+    },{ 
+        _id: 1,
+        label: "update_amount" , 
+        dataKey: "update_amount",
+        width: 50
+    });
 
     // columns.
     // const columns = [""]
     // console.log("columns: ", columns.find((column:any) => { column.dataKey=="amount"}))
     console.log("defaultColumns: ", defaultColumns)
     console.log("columns: ", columns)
+
+    const ColumnLabel = (item:any) => {
+        // console.log("column: ", column)
+        let lab
+        if (item.column._id === 0){
+            lab = ""
+        } else if (item.column._id === 1){
+            lab =   <>
+                        <PlusButton 
+                            clicked={()=>alert("holis")} 
+                            sizeIco={"40px !important"}
+                        />
+                        {/* <MinusButton 
+                            clicked={()=>alert("holis")} 
+                            sizeIco={"30px !important"}
+                        />  */}
+                    </> 
+        } else {
+            lab = item.column.label
+
+        }
+        return(
+            <Typography noWrap
+                sx={{
+                    padding: "0 4px ",
+                }}
+            >
+                {lab}
+            </Typography>
+        )
+    }
+    
+
+
     const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
     const [filteredData, setFilteredData] = useState(data)
 
@@ -300,7 +343,7 @@ export default function MassiveUploadStock(
                     <Typography align='center' variant="h5">Massive upload</Typography>
                     
 
-                    <Paper style={{ height: `calc(100vh - ${(breakpointLG?"375px":"313px")})`, width: '87vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
+                    <Paper style={{ height: `calc(100vh - ${(breakpointLG?"375px":"295px")})`, width: '87vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
                         <TableVirtuoso 
                             data={filteredData}
                             // data={data}
@@ -311,7 +354,7 @@ export default function MassiveUploadStock(
                                 <TableRow>
                                     {columns.map((column:any) => (
                                     <TableCell
-                                        key={column.id}
+                                        key={column._id}
                                         variant="head"
                                         align='center'
                                         style={{ 
@@ -325,15 +368,22 @@ export default function MassiveUploadStock(
                                         }}
                                     >
                                     {/* {filters[0].dataKey} */}
-                                        
+                                    {/*                                         
                                         <Typography noWrap
                                             sx={{
                                             padding: "0 4px ",
                                             }}
                                         >
                                             {column.label}
-                                        </Typography>
-                                        <TextField
+                                        </Typography> */}
+
+                                        <ColumnLabel
+                                            column={column}
+                                        />
+                                        {/* </ColumnLabel> */}
+
+
+                                        {/* <TextField
                                             // id={column.dataKey}
                                             id={column.dataKey.toString()}
                                             // id="filled-multiline-flexible"
@@ -351,7 +401,7 @@ export default function MassiveUploadStock(
                                                 height:"36px",
                                             },
                                             }}
-                                        />
+                                        /> */}
                                     </TableCell>
                                     ))}
                                 </TableRow>
