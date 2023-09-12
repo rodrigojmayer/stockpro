@@ -87,6 +87,44 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             }
       }
     }
+
+    const RowContent = (item:any) => {
+        console.log("item.column: ", item.column)
+        let lab
+        if (item.column._id === 0){
+            return(
+                <Typography noWrap 
+                    sx={{
+                        // paddingLeft: "-5px",
+                        margin: "-5px",
+                    }}>
+                   <PlusButton 
+                            clicked={()=>alert("holis")} 
+                            sizeIco={"30px !important"}
+                        />
+                </Typography>
+            )
+        } else if (item.column._id === 1){
+            return(
+                <Typography noWrap 
+                    sx={{
+                        padding: "0 4px ",
+                    }}>
+                        {/* INPUT HERE */}
+                </Typography>
+            )
+        } else {
+            return(
+                <Typography noWrap 
+                    sx={{
+                        padding: "0 4px ",
+                    }}>
+                        { ( newRow[item.column.dataKey] || newRow[item.column.dataKey] === 0 ) ? newRow[item.column.dataKey] : "-"}
+                  </Typography>
+            )
+
+        }
+    }
    
     return (
       <React.Fragment >
@@ -106,13 +144,16 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             <div 
               className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.alert_on  : "" } ${classes.rows}`}
             >
-              <Typography noWrap 
-              sx={{
-                padding: "0 4px ",
-              }}>
-                { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
-  
-              </Typography>
+              <RowContent column={column} />
+
+              {/* </RowContent> */}
+              {/* <Typography noWrap 
+                sx={{
+                    padding: "0 4px ",
+                }}>
+                    { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
+              </Typography> */}
+
             </div>
   
           </TableCell>
