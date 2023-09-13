@@ -91,20 +91,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
     const RowContent = (item:any) => {
         console.log("item.column: ", item.column)
         let lab
-        if (item.column._id === 0){
-            return(
-                <Typography noWrap 
-                    sx={{
-                        // paddingLeft: "-5px",
-                        margin: "-5px",
-                    }}>
-                   <PlusButton 
-                            clicked={()=>alert("holis")} 
-                            sizeIco={"30px !important"}
-                        />
-                </Typography>
-            )
-        } else if (item.column._id === 1){
+        if (item.column._id === 1){
             return(
                 <Typography noWrap 
                     sx={{
@@ -197,11 +184,11 @@ export default function MassiveUploadStock(
     // const columns = [...modifiedColumns , { label: "fs"}]
 
     columns.push({ 
-        _id: 0,
-        label: "plus_minus" , 
-        dataKey: "plus_minus",
-        width: 30
-    },{ 
+    //     _id: 0,
+    //     label: "plus_minus" , 
+    //     dataKey: "plus_minus",
+    //     width: 30
+    // },{ 
         _id: 1,
         label: "update_amount" , 
         dataKey: "update_amount",
