@@ -5,10 +5,12 @@ import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
 import { Data, DataTable, ColumnData, ProductUpdateData } from '../types';
 import { UserContext } from '../context/UserContext'
 import { ColumnsContext } from '../context/ColumnsContext'
 import { tableStyles, useStylesGlobal } from '../Styles';
+import { blueGrey } from '@material-ui/core/colors';
 // import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
 
 
@@ -94,7 +96,22 @@ function rowContent(_index: number, row: Data, columns: ColumnData[], classes: a
         >
           <div 
             className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.alert_on  : "" } ${classes.rows}`}
-          >
+          > 
+          { ( column.dataKey === "check_stock" ) ? 
+            <Checkbox 
+              onClick={(e)=> {
+                e.stopPropagation() // Prevent the click event from propagating to the parent cell
+                alert()
+              }}
+              // sx={{
+              //   color: blueGrey[50],
+              //   '&.Mui-checked': {
+              //     color: blueGrey[50],
+              //   },
+              // }}
+              color="default"
+            />
+          :
             <Typography noWrap 
             sx={{
               padding: "0 4px ",
@@ -102,6 +119,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[], classes: a
               { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
 
             </Typography>
+          }
           </div>
 
         </TableCell>
@@ -118,8 +136,14 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
   const { user } = useContext<any>(UserContext);
   const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
 
-  const columns = columnsUserOrder
-  // console.log("columns: ", columns)
+  // const columns = columnsUserOrder
+  const columns2 = columnsUserOrder
+  const elementToAdd = {dataKey: "check_stock", id: 0, width: 40,}
+  // const columns2 = columns
+  // columns2.unshift({1: "1"})
+  const columns = [elementToAdd, ...columns2];
+  // console.log("newArray: ", newArray)
+  console.log("columns: ", columns)
   
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
@@ -200,25 +224,42 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
                       >
                         {column.label}
                       </Typography>
-                      <TextField
-                        // id={column.dataKey}
-                        id={column.dataKey.toString()}
-                        // id="filled-multiline-flexible"
-                        // value={filters[0].dataKey}
-                        onChange={handleFilterChange}
-                        maxRows={1}
-                        size="small"
-                        sx={{
-                          backgroundColor: "white",
-                          borderRadius: 1,
-                          margin: "8px",
-                        }}
-                        InputProps={{
-                          style: {
-                            height:"36px",
-                          },
-                        }}
-                      />
+                       
+                      { ( column.dataKey === "check_stock" ) ? 
+                        <Checkbox  
+                          onClick={(e)=> {
+                            e.stopPropagation() // Prevent the click event from propagating to the parent cell
+                            alert()
+                          }} 
+                          sx={{
+                            color: blueGrey[50],
+                            '&.Mui-checked': {
+                              color: blueGrey[50],
+                            },
+                          }}
+                          // color="default"
+                        />
+                      :
+                          <TextField
+                            // id={column.dataKey}
+                            id={column.dataKey.toString()}
+                            // id="filled-multiline-flexible"
+                            // value={filters[0].dataKey}
+                            onChange={handleFilterChange}
+                            maxRows={1}
+                            size="small"
+                            sx={{
+                              backgroundColor: "white",
+                              borderRadius: 1,
+                              margin: "8px",
+                            }}
+                            InputProps={{
+                              style: {
+                                height:"36px",
+                              },
+                            }}
+                          />
+                        }
                   </TableCell>
                 ))}
               </TableRow>

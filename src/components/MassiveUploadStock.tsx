@@ -89,7 +89,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
     }
 
     const RowContent = (item:any) => {
-        console.log("item.column: ", item.column)
+        // console.log("item.column: ", item.column)
         let lab
         if (item.column._id === 1){
             return(
@@ -198,8 +198,8 @@ export default function MassiveUploadStock(
     // columns.
     // const columns = [""]
     // console.log("columns: ", columns.find((column:any) => { column.dataKey=="amount"}))
-    console.log("defaultColumns: ", defaultColumns)
-    console.log("columns: ", columns)
+    // console.log("defaultColumns: ", defaultColumns)
+    // console.log("columns: ", columns)
 
     const ColumnLabel = (item:any) => {
         // console.log("column: ", column)
@@ -237,8 +237,8 @@ export default function MassiveUploadStock(
     const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
     const [filteredData, setFilteredData] = useState(data)
 
-    console.log("INITIAL_STATE: ", INITIAL_STATE)
-    console.log("data: ", data)
+    // console.log("INITIAL_STATE: ", INITIAL_STATE)
+    // console.log("data: ", data)
 
 
     const close = () => {
