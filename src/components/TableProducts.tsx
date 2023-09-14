@@ -46,7 +46,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 // const { classes } = useStylesGlobal()
 // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void) {
+function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void, checkingRow:(id_row: any) => void) {
 
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
@@ -101,14 +101,20 @@ function rowContent(_index: number, row: Data, columns: ColumnData[], classes: a
             <Checkbox 
               onClick={(e)=> {
                 e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                alert()
+                // console.log("newRow: ", newRow._id)
+                checkingRow(newRow._id)
               }}
-              // sx={{
-              //   color: blueGrey[50],
-              //   '&.Mui-checked': {
-              //     color: blueGrey[50],
-              //   },
-              // }}
+              sx={{
+                // color: blueGrey[50],
+                // '&.Mui-checked': {
+                //   color: blueGrey[50],
+                // },
+                  padding: 0,
+              //   '& .MuiSvgIcon-root': { 
+              //     fontSize: 30,
+              //     margin: 0
+              //  }
+              }}
               color="default"
             />
           :
@@ -137,16 +143,45 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
   const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
 
   // const columns = columnsUserOrder
-  const columns2 = columnsUserOrder
   const elementToAdd = {dataKey: "check_stock", id: 0, width: 40,}
-  // const columns2 = columns
-  // columns2.unshift({1: "1"})
-  const columns = [elementToAdd, ...columns2];
-  // console.log("newArray: ", newArray)
-  console.log("columns: ", columns)
-  
+  const columns = [elementToAdd, ...columnsUserOrder];
+  // console.log("columns: ", columns)
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
+
+  const [checkStock, setCheckStock] = useState<any[]>([])
+  const checkingRow = (id_row:any) => {
+    // console.log("checkingRow _id: ", id_row)
+    const updatedCheckStock = checkStock.includes(id_row)
+    ? checkStock.filter((item) => item !== id_row)
+    : [...checkStock, id_row];
+    setCheckStock(updatedCheckStock)
+  }
+  const checkingAll = () => {
+    const all_ids = filteredData.map((data) => {
+      return data._id
+      // console.log("filteredData: ", all_ids)
+    })
+    if (all_ids.every((id) => checkStock.includes(id))) {
+      // If all IDs are already in checkStock, remove them
+      const updatedCheckStock = checkStock.filter((id) => !all_ids.includes(id));
+      setCheckStock(updatedCheckStock);
+    } else {
+      // If not all IDs are in checkStock, add the missing ones
+      const missingIds = all_ids.filter((id) => !checkStock.includes(id));
+      const updatedCheckStock = [...checkStock, ...missingIds];
+      setCheckStock(updatedCheckStock);
+    }
+    // const updatedCheckStock = checkStock.includes(all_ids)
+    // ? checkStock.filter((item) => item !== all_ids)
+    // : [...checkStock, all_ids];
+    // setCheckStock(updatedCheckStock)
+    // console.log("filteredData: ", all_ids)
+    // setCheckStock()
+  }
+  useEffect(()=> {
+    console.log("checkStock: ", checkStock)
+  }, [checkStock])
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   
@@ -229,10 +264,11 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
                         <Checkbox  
                           onClick={(e)=> {
                             e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                            alert()
+                            checkingAll()
                           }} 
                           sx={{
                             color: blueGrey[50],
+                            padding: 0,
                             '&.Mui-checked': {
                               color: blueGrey[50],
                             },
@@ -267,7 +303,7 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
           }}
         // itemContent={rowContent}
         itemContent={(index: number) =>
-          rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock) 
+          rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock, checkingRow) 
           // rowContent(index, filteredData[index], columns)
         }
         style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
