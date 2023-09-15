@@ -46,7 +46,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 // const { classes } = useStylesGlobal()
 // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void, checkingRow:(id_row: any) => void) {
+function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void, checkStock:any, checkingRow:(id_row: any) => void) {
 
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
@@ -99,6 +99,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[], classes: a
           > 
           { ( column.dataKey === "check_stock" ) ? 
             <Checkbox 
+              checked={checkStock.includes(newRow._id)? true : false}
               onClick={(e)=> {
                 e.stopPropagation() // Prevent the click event from propagating to the parent cell
                 // console.log("newRow: ", newRow._id)
@@ -164,7 +165,9 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
     })
     if (all_ids.every((id) => checkStock.includes(id))) {
       // If all IDs are already in checkStock, remove them
-      const updatedCheckStock = checkStock.filter((id) => !all_ids.includes(id));
+      // console.log("all_ids[0]: ", all_ids[0])
+      // console.log("typeof id: ", typeof all_ids[0])
+      const updatedCheckStock = checkStock.filter((stockId) => !all_ids.includes(stockId));
       setCheckStock(updatedCheckStock);
     } else {
       // If not all IDs are in checkStock, add the missing ones
@@ -172,12 +175,6 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
       const updatedCheckStock = [...checkStock, ...missingIds];
       setCheckStock(updatedCheckStock);
     }
-    // const updatedCheckStock = checkStock.includes(all_ids)
-    // ? checkStock.filter((item) => item !== all_ids)
-    // : [...checkStock, all_ids];
-    // setCheckStock(updatedCheckStock)
-    // console.log("filteredData: ", all_ids)
-    // setCheckStock()
   }
   useEffect(()=> {
     console.log("checkStock: ", checkStock)
@@ -262,6 +259,7 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
                        
                       { ( column.dataKey === "check_stock" ) ? 
                         <Checkbox  
+                          checked={checkStock.length===data.length? true : false}
                           onClick={(e)=> {
                             e.stopPropagation() // Prevent the click event from propagating to the parent cell
                             checkingAll()
@@ -303,7 +301,7 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
           }}
         // itemContent={rowContent}
         itemContent={(index: number) =>
-          rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock, checkingRow) 
+          rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock, checkStock, checkingRow) 
           // rowContent(index, filteredData[index], columns)
         }
         style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
