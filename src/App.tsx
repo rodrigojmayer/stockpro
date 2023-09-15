@@ -122,20 +122,20 @@ function App() {
   const [filteredData, setFilteredData] = useState<Data[]>([])
     
   useEffect(() => {
-    
-  
       setFilteredData(
         products.filter((item:any) => {
+          console.log("item: ", item)
           const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 
             columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
           )
           return (
             defaultColumns.some((column:any) => 
-              item[column.dataKey] &&
+              (item[column.dataKey] || item[column.dataKey]===0) &&
               item[column.dataKey]
                 .toString()
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase()) 
+            
             ) || (
               item.custom_fields &&
               filteredColumnsCustomUser
@@ -150,7 +150,6 @@ function App() {
           )
         })
       );
-
   }, [searchQuery, columns, products]) 
 
 

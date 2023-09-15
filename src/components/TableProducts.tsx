@@ -189,14 +189,28 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
       let vals = true
       Object.keys(filteredRows).forEach((arg)=> {
         const str = arg as string;
+
+        // console.log("filteredRows: ", filteredRows)
         let value = filteredRows[str as keyof typeof filteredRows]
+        if(arg=== "amount") {
+          // console.log("item: ", item)
+          // console.log("item.amount: ", item.amount)
+          // console.log("arg: ", arg)
+          // console.log("value: ", value)
+          // console.log("isNaN(value): ", isNaN(value))
+        }
 
         if (typeof value == "string")
+        // if (typeof value == "string" || value===0)
           value = value.toString().toLowerCase()
+        // else if (isNaN(value))
         else if (isNaN(value))
           value = ""
         if (value !== "" ){
-          if(item[str as keyof typeof item]){
+          console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
+
+          if(item[str as keyof typeof item] || item[str as keyof typeof item] === 0){
+            console.log("item.amount2: ", item.amount)
 
             if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
               vals = false
