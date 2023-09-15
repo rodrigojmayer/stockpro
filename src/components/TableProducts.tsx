@@ -273,7 +273,7 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
                        
                       { ( column.dataKey === "check_stock" ) ? 
                         <Checkbox  
-                          checked={checkStock.length===data.length? true : false}
+                          checked={(checkStock.length===data.length && data.length!==0 )? true : false}
                           onClick={(e)=> {
                             e.stopPropagation() // Prevent the click event from propagating to the parent cell
                             checkingAll()
