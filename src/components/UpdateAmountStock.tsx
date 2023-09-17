@@ -333,14 +333,17 @@ export default function UpdateAmountStock(
                         handleClose={handleCloseEditStock} 
                         data={productUpdate} 
                         // columnsCustom={[]} 
-                        columnsCustom={columnsCustom} 
-                                          
+                        columnsCustom={columnsCustom}               
                     />
                     
                     <Box className={classes.finishButtons}>
-                        <EditButton
-                        clicked={() => handleOpenEditStock()}
-                        />
+                        {user.id_access_level === 4 ? 
+                                "" 
+                            : 
+                                <EditButton
+                                    clicked={() => handleOpenEditStock()}
+                                />
+                        } 
                         <CancelButton
                         clicked={() => close()}
                         />
