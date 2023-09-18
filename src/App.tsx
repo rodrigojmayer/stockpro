@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { OkButton, CancelButton, PlusButton } from './components/Buttons';
+import { OkButton, CancelButton, PlusButton, UpdateButton } from './components/Buttons';
 import Layout from './components/Layout';
 import MainSearch from './components/MainSearch';
 import TableProducts from './components/TableProducts';
@@ -205,7 +205,11 @@ function App() {
             >
               <Container maxWidth="md" style={{padding: "0"}} >
                 <Grid container>
-                  <Grid item xs={10} >
+                  <Grid item xs={2} >
+                  <UpdateButton
+                    clicked={()=>alert("update")}/>
+                  </Grid>
+                  <Grid item xs={8} >
                     <MainSearch setSearchQuery={setSearchQuery} />
                   </Grid>
                   <Grid item xs={2} >

@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import EditIcon from '@mui/icons-material/Edit';
 import IonTrash from "../assets/ion_trash.svg";
+import UpdateArrowCircle from "../assets/akar-icons_arrow-cycle.svg";
 
 const theme = createTheme({
   palette: {
@@ -644,3 +645,71 @@ export function SelectImageButton( { imageUrl, setImageUrl } : SelectImageButton
   )
 }
 
+
+
+export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: ButtonProps ) {
+
+  const { classes } = useStyles()
+  const colorOk = theme.palette.neutral.main
+  
+  let fontIco = 28, noPadding, bor = 5, borRad
+  // if(sizeIco) {
+  //   fontIco = (parseInt(sizeIco) - 12)
+  //   bor = 3
+  // }
+  // if(roundedIco){
+    noPadding=0
+    borRad="50px !important"
+  // } 
+  const handleClick:any = (() => {
+    if(cusField)
+      clicked(cusField.id, cusField.value)
+    else
+      clicked()
+  })
+
+  return (  
+    <ThemeProvider theme={theme}>
+      <Button 
+      // className={classes.plusIcon}
+        // variant="text"
+        // color="success"
+        // className={`${classes.btnCommonStyle} `}
+        // className={`${classes.btnCommonStyle} ${classes.btnEdit}`}
+        sx={{  
+          // border: bor, 
+          // padding:noPadding, 
+          // paddingTop:0,  
+          // height: sizeIco,
+          borderRadius: borRad,
+
+          
+          // border: bor, 
+          // padding:2,  
+          minWidth: 40, 
+          minHeight: 40, 
+          // width: 10, 
+          // height: 30,
+
+
+        }}
+        onClick={handleClick}
+        >
+
+          <img 
+            src={UpdateArrowCircle} 
+            alt="Update"
+            // style={{ filter: "brightness(0) invert(100%)" }}  
+            
+          width= {38}   
+          />
+
+
+        {/* <EditIcon 
+        sx={{ 
+          fontSize: fontIco,
+        }}></EditIcon> */}
+      </Button>
+    </ThemeProvider>
+  )
+}
