@@ -135,7 +135,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[], classes: a
   );
 }
 
-export default function TableProducts({ data, openUpdateAmountStock }:  DataTable ) {
+export default function TableProducts({ data, openUpdateAmountStock, handleDisabledUpdateButton }:  DataTable ) {
 
   const  {classes} = tableStyles()
   const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -178,6 +178,10 @@ export default function TableProducts({ data, openUpdateAmountStock }:  DataTabl
   }
   useEffect(()=> {
     console.log("checkStock: ", checkStock)
+    if(checkStock.length>0)
+      handleDisabledUpdateButton(false)
+    else
+      handleDisabledUpdateButton(true)
   }, [checkStock])
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {

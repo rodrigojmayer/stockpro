@@ -105,6 +105,7 @@ export interface DataTable {
   // openUpdateAmountStock: (id_prod: Number, name_prod: String, amount_prod: Number) => void
   // openUpdateAmountStock: (newData: ProductUpdateData) => void
   openUpdateAmountStock: (newData: Data) => void
+  handleDisabledUpdateButton: (newData: boolean) => void
 }
 
 export interface ColumnData {

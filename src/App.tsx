@@ -113,6 +113,11 @@ function App() {
     })
   }  
 
+  const [ disabledUpdateButton, setDisabledUpdateButton ] = useState<boolean>(true)
+  const handleDisabledUpdateButton = (value_disable:boolean) => {
+    
+    setDisabledUpdateButton(value_disable)
+  }
   const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
@@ -189,13 +194,12 @@ function App() {
 
   return (
         <div className="App">
-          
           <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={openBackdrop}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={openBackdrop}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
           <ThemeProvider theme={theme}>
             <Layout 
               columnsDefault={defaultColumns} 
@@ -206,23 +210,24 @@ function App() {
               <Container maxWidth="md" style={{padding: "0"}} >
                 <Grid container>
                   <Grid item xs={2} >
-                  <UpdateButton
-                    clicked={()=>alert("update")}/>
+                    <UpdateButton
+                      clicked={()=>alert("update")}
+                      disabled={disabledUpdateButton}
+                    />
                   </Grid>
                   <Grid item xs={8} >
                     <MainSearch setSearchQuery={setSearchQuery} />
                   </Grid>
                   <Grid item xs={2} >
                     <PlusButton
-                      clicked={openCreateStock} 
+                      clicked={openCreateStock}
                     />
                   </Grid>
                 </Grid>
               </Container>
               {openBackdrop ? "": 
-                <TableProducts data={filteredData} columns={columnsUserOrder} openUpdateAmountStock={openUpdateAmountStock} />
+                <TableProducts data={filteredData} columns={columnsUserOrder} openUpdateAmountStock={openUpdateAmountStock} handleDisabledUpdateButton={handleDisabledUpdateButton} />
               }
-              
             </Layout>
             {/* <CreateStock
                 open={showCreateStock} 
