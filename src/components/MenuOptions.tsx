@@ -72,7 +72,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     
     const  buttons = [
         <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
-        <Button value="massive" key="massive" variant="text" onClick={selOp}>Massive upload</Button>,
+        // <Button value="massive" key="massive" variant="text" onClick={selOp}>Massive upload</Button>,
         <Button value="profile" key="profile" variant="text" onClick={selOp}>Profile</Button>,
         <Button value="preferences" key="preferences" variant="text" onClick={selOp}>Preferences</Button>,
     ];

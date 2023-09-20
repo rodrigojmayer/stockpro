@@ -16,6 +16,7 @@ import { UserContext } from './context/UserContext';
 import { IsLoadingContext } from './context/IsLoadingContext';
 import { ColumnsContext } from './context/ColumnsContext';
 import { ProductsContext } from './context/ProductsContext';
+import MassiveUploadStock from './components/MassiveUploadStock';
 
 
 const theme = createTheme({
@@ -115,9 +116,36 @@ function App() {
 
   const [ disabledUpdateButton, setDisabledUpdateButton ] = useState<boolean>(true)
   const handleDisabledUpdateButton = (value_disable:boolean) => {
-    
     setDisabledUpdateButton(value_disable)
   }
+  
+  const [ massiveUpaload, setMassiveUpaload] = useState<Data[]>([{
+    "_id":0,
+    "id": 0,
+    "id_client": 0,
+    "product": "",
+    "amount": 0,
+    "measure": "",
+    "category": "",
+    "sub_category": "",
+    "code": "",
+    "price": "",
+    "description": "",
+    "url_image": "",
+    "alert_amount": 0,
+    "alert_amount_enabled": true,
+    "alerted_amount": false,
+    "alert_date": "",
+    "alert_date_enabled": true,
+    "alerted_date": false,
+    "custom_fields": [],
+  }])
+  const [ showMassiveUploadStock, setShowMassiveUploadStock ] = useState(false)
+  const handleMassiveUploadStock = () => setShowMassiveUploadStock(false)
+  const openMassiveUploadStoc = (newData:String) => {
+    setShowMassiveUploadStock(true)
+  }
+
   const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
@@ -211,7 +239,7 @@ function App() {
                 <Grid container>
                   <Grid item xs={2} >
                     <UpdateButton
-                      clicked={()=>alert("update")}
+                      clicked={()=>openMassiveUploadStoc("update")}
                       disabled={disabledUpdateButton}
                     />
                   </Grid>
@@ -246,6 +274,14 @@ function App() {
                 handleClose={handleCloseUpdateAmountStock}
                 columnsCustom={filteredColumnsCustom}
                 productUpdate={productUpdate}
+            />
+            <MassiveUploadStock
+                // open={openOptions.massive}
+                open={showMassiveUploadStock}
+                // handleClose={handleCloseOptions} 
+                handleClose={handleMassiveUploadStock}
+                // data={data} 
+                data={massiveUpaload}
             />
           </ThemeProvider>
         </div>
