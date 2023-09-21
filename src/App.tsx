@@ -32,6 +32,12 @@ const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
     
 
 function App() {
+  
+  const { user } = useContext<any>(UserContext);
+  const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
+  const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+  const { products } = useContext<any>(ProductsContext)
+
   const [ searchQuery, setSearchQuery ] = useState("")
   
   
@@ -114,12 +120,13 @@ function App() {
     })
   }  
 
+  const [checkStock, setCheckStock] = useState<any[]>([])
   const [ disabledUpdateButton, setDisabledUpdateButton ] = useState<boolean>(true)
   const handleDisabledUpdateButton = (value_disable:boolean) => {
     setDisabledUpdateButton(value_disable)
   }
   
-  const [ massiveUpaload, setMassiveUpaload] = useState<Data[]>([{
+  const [ massiveUpload, setMassiveUpload] = useState<Data[]>([{
     "_id":0,
     "id": 0,
     "id_client": 0,
@@ -144,12 +151,18 @@ function App() {
   const handleMassiveUploadStock = () => setShowMassiveUploadStock(false)
   const openMassiveUploadStoc = (newData:String) => {
     setShowMassiveUploadStock(true)
+    // console.log("checkStock: ", checkStock)
+    setMassiveUpload(
+      products.filter((item:any) => {
+        // console.log("item: ", item._id)
+        return (
+          checkStock.includes(item._id)
+        )
+      })
+    );
   }
+  
 
-  const { user } = useContext<any>(UserContext);
-  const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
-  const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
-  const { products } = useContext<any>(ProductsContext)
   
 
   const [filteredData, setFilteredData] = useState<Data[]>([])
@@ -157,7 +170,7 @@ function App() {
   useEffect(() => {
       setFilteredData(
         products.filter((item:any) => {
-          console.log("item: ", item)
+          // console.log("item: ", item)
           const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 
             columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
           )
@@ -254,7 +267,7 @@ function App() {
                 </Grid>
               </Container>
               {openBackdrop ? "": 
-                <TableProducts data={filteredData} columns={columnsUserOrder} openUpdateAmountStock={openUpdateAmountStock} handleDisabledUpdateButton={handleDisabledUpdateButton} />
+                <TableProducts data={filteredData} columns={columnsUserOrder} openUpdateAmountStock={openUpdateAmountStock} handleDisabledUpdateButton={handleDisabledUpdateButton} checkStock={checkStock} setCheckStock={setCheckStock} />
               }
             </Layout>
             {/* <CreateStock
@@ -281,7 +294,7 @@ function App() {
                 // handleClose={handleCloseOptions} 
                 handleClose={handleMassiveUploadStock}
                 // data={data} 
-                data={massiveUpaload}
+                data={massiveUpload}
             />
           </ThemeProvider>
         </div>

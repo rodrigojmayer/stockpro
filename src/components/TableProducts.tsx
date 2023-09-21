@@ -135,7 +135,7 @@ function rowContent(_index: number, row: Data, columns: ColumnData[], classes: a
   );
 }
 
-export default function TableProducts({ data, openUpdateAmountStock, handleDisabledUpdateButton }:  DataTable ) {
+export default function TableProducts({ data, openUpdateAmountStock, handleDisabledUpdateButton, checkStock, setCheckStock }:  DataTable ) {
 
   const  {classes} = tableStyles()
   const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -150,11 +150,11 @@ export default function TableProducts({ data, openUpdateAmountStock, handleDisab
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
 
-  const [checkStock, setCheckStock] = useState<any[]>([])
+  // const [checkStock, setCheckStock] = useState<any[]>([])
   const checkingRow = (id_row:any) => {
     // console.log("checkingRow _id: ", id_row)
     const updatedCheckStock = checkStock.includes(id_row)
-    ? checkStock.filter((item) => item !== id_row)
+    ? checkStock.filter((item: any) => item !== id_row)
     : [...checkStock, id_row];
     setCheckStock(updatedCheckStock)
   }
@@ -167,7 +167,7 @@ export default function TableProducts({ data, openUpdateAmountStock, handleDisab
       // If all IDs are already in checkStock, remove them
       // console.log("all_ids[0]: ", all_ids[0])
       // console.log("typeof id: ", typeof all_ids[0])
-      const updatedCheckStock = checkStock.filter((stockId) => !all_ids.includes(stockId));
+      const updatedCheckStock = checkStock.filter((stockId: any) => !all_ids.includes(stockId));
       setCheckStock(updatedCheckStock);
     } else {
       // If not all IDs are in checkStock, add the missing ones
@@ -177,7 +177,7 @@ export default function TableProducts({ data, openUpdateAmountStock, handleDisab
     }
   }
   useEffect(()=> {
-    console.log("checkStock: ", checkStock)
+    // console.log("checkStock: ", checkStock)
     if(checkStock.length>0)
       handleDisabledUpdateButton(false)
     else
@@ -211,10 +211,10 @@ export default function TableProducts({ data, openUpdateAmountStock, handleDisab
         else if (isNaN(value))
           value = ""
         if (value !== "" ){
-          console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
+          // console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
 
           if(item[str as keyof typeof item] || item[str as keyof typeof item] === 0){
-            console.log("item.amount2: ", item.amount)
+            // console.log("item.amount2: ", item.amount)
 
             if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
               vals = false
