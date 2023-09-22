@@ -36,6 +36,7 @@ import ErrorModal from './ErrorModal';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ColumnsContext } from '../context/ColumnsContext'
+import { Grid } from '@material-ui/core';
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -200,6 +201,23 @@ export default function MassiveUploadStock(
     // console.log("columns: ", columns.find((column:any) => { column.dataKey=="amount"}))
     // console.log("defaultColumns: ", defaultColumns)
     // console.log("columns: ", columns)
+    const [ valueUpdate, setValueUpdate ] = useState<number>(-1)
+    let ButtonOperator:any
+    let buttonOperatorColor:any
+    if (valueUpdate > 0 ){
+        ButtonOperator = PlusButton 
+        buttonOperatorColor = "rgb(100, 200, 100)"
+    } else {
+        ButtonOperator = MinusButton       
+        buttonOperatorColor = "rgb(250, 100, 100)"
+
+    }
+    const swapOperator = () => {
+        let newValue = -valueUpdate
+        // if(-productUpdate.amount > newValue)
+        //     newValue = -productUpdate.amount
+        setValueUpdate(newValue)
+    }
 
     const ColumnLabel = (item:any) => {
         // console.log("column: ", column)
@@ -207,16 +225,28 @@ export default function MassiveUploadStock(
         if (item.column._id === 0){
             lab = ""
         } else if (item.column._id === 1){
-            lab =   <>
-                        <PlusButton 
-                            clicked={()=>alert("holis")} 
-                            sizeIco={"40px !important"}
-                        />
-                        {/* <MinusButton 
-                            clicked={()=>alert("holis")} 
-                            sizeIco={"30px !important"}
-                        />  */}
-                    </> 
+            lab = 
+                    // <>
+                    //     <PlusButton 
+                    //         clicked={()=>alert("toggle plus by minus")} 
+                    //         sizeIco={"40px !important"}
+                    //     />
+                    //     {/* <MinusButton 
+                    //         clicked={()=>alert("holis")} 
+                    //         sizeIco={"30px !important"}
+                    //     />  */}
+                    // </> 
+
+                    
+                  // <Grid item xs={3} md={8} display="flex" justifyContent="center" > 
+                  <ButtonOperator
+                      sizeIcoExt="35px !important"
+                      sizeIcoInt="42px !important"
+                      // colorIco = "white"  // Fix color
+                      colorIco = {buttonOperatorColor}
+                      clicked={() => swapOperator()}
+                  />
+                  // </Grid>
         } else {
             lab = item.column.label
 
@@ -381,56 +411,56 @@ export default function MassiveUploadStock(
                                 return (
                                 <TableRow>
                                     {columns.map((column:any) => (
-                                    <TableCell
-                                        key={column._id}
-                                        variant="head"
-                                        align='center'
-                                        style={{ 
-                                        width: column.width, 
-                                        backgroundColor:"rgb(25, 54, 72)", 
-                                        border:0
-                                        }}
-                                        sx={{
-                                        color: "white",
-                                        padding: "8px 0",
-                                        }}
-                                    >
-                                    {/* {filters[0].dataKey} */}
-                                    {/*                                         
-                                        <Typography noWrap
-                                            sx={{
-                                            padding: "0 4px ",
-                                            }}
-                                        >
-                                            {column.label}
-                                        </Typography> */}
+                                      <TableCell
+                                          key={column._id}
+                                          variant="head"
+                                          align='center'
+                                          style={{ 
+                                          width: column.width, 
+                                          backgroundColor:"rgb(25, 54, 72)", 
+                                          border:0
+                                          }}
+                                          sx={{
+                                          color: "white",
+                                          padding: "8px 0",
+                                          }}
+                                      >
+                                      {/* {filters[0].dataKey} */}
+                                      {/*                                         
+                                          <Typography noWrap
+                                              sx={{
+                                              padding: "0 4px ",
+                                              }}
+                                          >
+                                              {column.label}
+                                          </Typography> */}
 
-                                        <ColumnLabel
-                                            column={column}
-                                        />
-                                        {/* </ColumnLabel> */}
+                                          <ColumnLabel
+                                              column={column}
+                                          />
+                                          {/* </ColumnLabel> */}
 
 
-                                        {/* <TextField
-                                            // id={column.dataKey}
-                                            id={column.dataKey.toString()}
-                                            // id="filled-multiline-flexible"
-                                            // value={filters[0].dataKey}
-                                            // onChange={handleFilterChange}
-                                            maxRows={1}
-                                            size="small"
-                                            sx={{
-                                            backgroundColor: "white",
-                                            borderRadius: 1,
-                                            margin: "8px",
-                                            }}
-                                            InputProps={{
-                                            style: {
-                                                height:"36px",
-                                            },
-                                            }}
-                                        /> */}
-                                    </TableCell>
+                                          {/* <TextField
+                                              // id={column.dataKey}
+                                              id={column.dataKey.toString()}
+                                              // id="filled-multiline-flexible"
+                                              // value={filters[0].dataKey}
+                                              // onChange={handleFilterChange}
+                                              maxRows={1}
+                                              size="small"
+                                              sx={{
+                                              backgroundColor: "white",
+                                              borderRadius: 1,
+                                              margin: "8px",
+                                              }}
+                                              InputProps={{
+                                              style: {
+                                                  height:"36px",
+                                              },
+                                              }}
+                                          /> */}
+                                      </TableCell>
                                     ))}
                                 </TableRow>
                                 );
