@@ -76,7 +76,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   // const { classes } = useStylesGlobal()
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
     // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any) {
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, tableClassNames: any, valueUpdate:any, writeValue:any) {
   
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
   
@@ -94,12 +94,26 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         let lab
         if (item.column._id === 1){
             return(
-                <Typography noWrap 
-                    sx={{
-                        padding: "0 4px ",
-                    }}>
-                        {/* INPUT HERE */}
-                </Typography>
+                    <TextField
+                    sx= {{
+                      margin: "0 auto",
+                      width: "90% !important",
+                    }}
+                      maxRows={1}
+                      size="small"
+                      type="number"
+                      className={`${classes.inputMainData} `}
+                      value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
+                      onChange={ (event) => writeValue(event) }
+                      InputProps={{
+                          className: classes.inputClassName,
+                          inputProps: {
+                              style: { 
+                                textAlign: "center", 
+                              },
+                          },
+                      }}
+                    />
             )
         } else {
             return(
@@ -120,7 +134,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
           <TableCell
             key={column._id}
             align='center'
-            className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
+            className={`${ _index%2 ? tableClassNames.row_odd  : tableClassNames.row_even }`}
             style={{ 
                border:0,
             }}
@@ -130,7 +144,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             }}
           >
             <div 
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.alert_on  : "" } ${classes.rows}`}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? tableClassNames.alert_on  : "" } ${tableClassNames.rows}`}
             >
               <RowContent column={column} />
 
@@ -201,10 +215,10 @@ export default function MassiveUploadStock(
     // console.log("columns: ", columns.find((column:any) => { column.dataKey=="amount"}))
     // console.log("defaultColumns: ", defaultColumns)
     // console.log("columns: ", columns)
-    const [ valueUpdate, setValueUpdate ] = useState<number>(-1)
+    const [ valueUpdate, setValueUpdate ] = useState<number|null>(null)
     let ButtonOperator:any
     let buttonOperatorColor:any
-    if (valueUpdate > 0 ){
+    if (Number(valueUpdate) > 0 ){
         ButtonOperator = PlusButton 
         buttonOperatorColor = "rgb(100, 200, 100)"
     } else {
@@ -213,11 +227,22 @@ export default function MassiveUploadStock(
 
     }
     const swapOperator = () => {
-        let newValue = -valueUpdate
+        let newValue = -Number(valueUpdate)
         // if(-productUpdate.amount > newValue)
         //     newValue = -productUpdate.amount
         setValueUpdate(newValue)
     }
+
+    // useEffect(() => {
+    //   console.log("valueUpdate: ", valueUpdate)
+    // }, [valueUpdate])
+
+    const writeValue = (e:any) => {
+      let newValue = (Number(e.target.value)) 
+      // if(-productUpdate.amount > newValue)
+      //     newValue = -productUpdate.amount
+      setValueUpdate(newValue)
+  }
 
     const ColumnLabel = (item:any) => {
         // console.log("column: ", column)
@@ -361,16 +386,16 @@ export default function MassiveUploadStock(
                   vals = false
                 }
               } 
-              else if(item.custom_fields ){
-                if(item.custom_fields[str as keyof typeof item] || item.custom_fields[str as keyof typeof item] == ""){
-                  if(!item.custom_fields[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
-                    vals = false
-                  }
-                }
-                else{
-                  vals = false
-                }
-              }
+              // else if(item.custom_fields ){
+              //   if(item.custom_fields[str as keyof typeof item] || item.custom_fields[str as keyof typeof item] == ""){
+              //     if(!item.custom_fields[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
+              //       vals = false
+              //     }
+              //   }
+              //   else{
+              //     vals = false
+              //   }
+              // }
               else{
                 vals = false
               }
@@ -468,7 +493,7 @@ export default function MassiveUploadStock(
                             // itemContent={rowContent}
                             itemContent={(index: number) =>
                             // rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock) 
-                            rowContent(index, filteredData[index], columns, tableClassNames) 
+                            rowContent(index, filteredData[index], columns, classes, tableClassNames, valueUpdate, writeValue) 
                             // rowContent(index, filteredData[index], columns)
                             }
                             style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
