@@ -48,13 +48,13 @@ const INITIAL_CREATESTOCK_OPTIONS = {
 
 const INITIAL_STATE = {
     _id: NaN,
-    id: NaN,
-    id_client: NaN,
+    // id: NaN,
+    // id_client: NaN,
     product: "",
     amount: NaN,
-    measure: "",
-    category: "",
-    sub_category: "",
+    // measure: "",
+    // category: "",
+    // sub_category: "",
     // custom_fields: [],
     // id_custom_field_product: NaN,
   }
@@ -76,21 +76,25 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   // const { classes } = useStylesGlobal()
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
     // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, tableClassNames: any, valueUpdate:any, writeValue:any) {
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, tableClassNames: any, writeValue:any) {
   
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
+    // console.log("newRow: ", newRow)
   
-    if (newRow.custom_fields) {
-      for (const key in newRow.custom_fields) {
-        newRow = {
-              ...newRow,
-              ...newRow.custom_fields
-            }
-      }
-    }
+    // if (newRow.custom_fields) {
+      // for (const key in newRow) {
+      //   // console.log("key: ", key)
+      //   newRow.update_amount = ""
+      // }
+    // }
+    // console.log("newRow2: ", newRow)
 
     const RowContent = (item:any) => {
         // console.log("item.column: ", item.column)
+        // console.log("item.column: ", item.column)
+        // console.log("item.column.dataKey: ", item.column.dataKey)
+        // console.log("newRow[item.column.dataKey]: ", newRow[item.column.dataKey])
+        
         let lab
         if (item.column._id === 1){
             return(
@@ -103,8 +107,9 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                       size="small"
                       type="number"
                       className={`${classes.inputMainData} `}
-                      value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
-                      onChange={ (event) => writeValue(event) }
+                      // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
+                      value={newRow[item.column.dataKey]}
+                      onChange={ (event) => writeValue(event, newRow._id) }
                       InputProps={{
                           className: classes.inputClassName,
                           inputProps: {
@@ -112,8 +117,20 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                                 textAlign: "center", 
                               },
                           },
-                      }}
-                    />
+                      }}>
+                        {/* "TextField" */}
+                        {/* item.column.dataKey */}
+                      </TextField>
+
+                      // <Typography noWrap 
+                      // sx={{
+                      //     padding: "0 4px ",
+                      // }}>
+                      //     {newRow.update_amount}
+                      //     {/* {item.column} */}
+                      // </Typography>
+
+
             )
         } else {
             return(
@@ -210,15 +227,22 @@ export default function MassiveUploadStock(
         width: 50
     });
 
+    // const productsValueUpdate = data.map((item) => {
+    //   return {_id:item._id, value_update:"e"}
+    // })
+    
+    // console.log("productsValueUpdate: ", productsValueUpdate[0].value_update)
     // columns.
     // const columns = [""]
     // console.log("columns: ", columns.find((column:any) => { column.dataKey=="amount"}))
     // console.log("defaultColumns: ", defaultColumns)
     // console.log("columns: ", columns)
-    const [ valueUpdate, setValueUpdate ] = useState<number|null>(null)
+    const [ signUpdate, setSignUpdate ] = useState<number>(-1)
+    // const [ valueUpdate, setValueUpdate ] = useState<number|null>(null)
+    // const [ valueUpdate, setValueUpdate ] = useState<Object[]>(productsValueUpdate)
     let ButtonOperator:any
     let buttonOperatorColor:any
-    if (Number(valueUpdate) > 0 ){
+    if (Number(signUpdate) > 0 ){
         ButtonOperator = PlusButton 
         buttonOperatorColor = "rgb(100, 200, 100)"
     } else {
@@ -227,43 +251,51 @@ export default function MassiveUploadStock(
 
     }
     const swapOperator = () => {
-        let newValue = -Number(valueUpdate)
+        let newValue = -Number(signUpdate)
         // if(-productUpdate.amount > newValue)
         //     newValue = -productUpdate.amount
-        setValueUpdate(newValue)
+        setSignUpdate(newValue)
     }
 
     // useEffect(() => {
     //   console.log("valueUpdate: ", valueUpdate)
     // }, [valueUpdate])
 
-    const writeValue = (e:any) => {
+    const writeValue = (e:any, _id: string) => {
       let newValue = (Number(e.target.value)) 
+      console.log("newValue: ", newValue)
       // if(-productUpdate.amount > newValue)
       //     newValue = -productUpdate.amount
-      setValueUpdate(newValue)
+      // setValueUpdate(newValue)
+      // productsValueUpdate["64f5e58873d98cad83d45eac"]["value_update"]
+      // Create a copy of the current filteredData array
+      // const updatedData = [...filteredData];
+
+      // // Loop through the array and update the "update_amount" property
+      // updatedData.forEach((item) => {
+      //   item.update_amount = newValue;
+      // });
+
+      const updatedData = filteredData.map((item:any) => {
+        if (item._id === _id) {
+          return { ...item, update_amount: newValue };
+        }
+        return item;
+      });
+
+      // setFilteredData((prevValueUpdate: any) => ({
+      //   ...prevValueUpdate,
+      //   update_amount: newValue,
+      // }));
+      setFilteredData(updatedData);
   }
 
     const ColumnLabel = (item:any) => {
-        // console.log("column: ", column)
         let lab
         if (item.column._id === 0){
             lab = ""
         } else if (item.column._id === 1){
             lab = 
-                    // <>
-                    //     <PlusButton 
-                    //         clicked={()=>alert("toggle plus by minus")} 
-                    //         sizeIco={"40px !important"}
-                    //     />
-                    //     {/* <MinusButton 
-                    //         clicked={()=>alert("holis")} 
-                    //         sizeIco={"30px !important"}
-                    //     />  */}
-                    // </> 
-
-                    
-                  // <Grid item xs={3} md={8} display="flex" justifyContent="center" > 
                   <ButtonOperator
                       sizeIcoExt="35px !important"
                       sizeIcoInt="42px !important"
@@ -271,10 +303,8 @@ export default function MassiveUploadStock(
                       colorIco = {buttonOperatorColor}
                       clicked={() => swapOperator()}
                   />
-                  // </Grid>
         } else {
             lab = item.column.label
-
         }
         return(
             <Typography noWrap
@@ -289,10 +319,29 @@ export default function MassiveUploadStock(
     
 
 
-    const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
-    const [filteredData, setFilteredData] = useState(data)
+    const [filteredRows, setFilteredRows] = useState<any>(INITIAL_STATE);
+    // console.log("data: ", data[0].id)
+    const filteredFields = data.map((item) => {
 
-    // console.log("INITIAL_STATE: ", INITIAL_STATE)
+    
+      console.log("item: ", item)
+      return {
+      
+      _id: item._id,
+      product: item.product,
+      amount: item.amount,
+      update_amount: ''
+    }})
+    // const filteredFields = data.map(({ _id, product, otherField }) => ({
+    //   _id,
+    //   product,
+    //   otherField, // Add any other fields you want to include here
+    // }));
+    // console.log("data: ", data)
+    // console.log("filteredFields: ", filteredFields)
+
+    const [filteredData, setFilteredData] = useState<any>(filteredFields)
+
     // console.log("data: ", data)
 
 
@@ -300,16 +349,9 @@ export default function MassiveUploadStock(
         handleClose(false)
     } 
     
-    const { categories } = useContext<any>(CategoriesContext) 
-    const categoryArray = categories
-    const { measures } = useContext<any>(MeasuresContext)
-    const measureArray = measures
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
-    // const edition = (data._id!==0 ? true : false)
-    const [titleStat, setTitleStat] = useState<string>("Edit ");
-    const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
-   
+
     const [openSaveChanges, setOpenSaveChanges] = useState(false); 
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [messageBeforeSave, setMessageBeforeSave] = useState("");  
@@ -347,18 +389,6 @@ export default function MassiveUploadStock(
         // }
     }
 
-    const handleOpenOptionsCreate = (newData:  string) => {
-        const updatedOptions = { ...openOptionsCreate };
-        for (const key in updatedOptions) {
-            if (Object.prototype.hasOwnProperty.call(updatedOptions, key)) 
-            updatedOptions[key as keyof typeof updatedOptions] = (newData===key ? false : true );
-        }
-        setOpenOptionsCreate(updatedOptions);
-    }
-    
-    const handleDeleteProduct = () => {
-        setOpenConfirmDeleteModal(true)
-    }
     const handleCloseConfirmDeleteModal = () => {
         setOpenConfirmDeleteModal(false)
     }
@@ -369,41 +399,8 @@ export default function MassiveUploadStock(
         }
     }, [isLoading]) // To know if after save should reload the page
     useEffect(() => {
-        setFilteredData(data.filter((item) => {
-          let vals = true
-          Object.keys(filteredRows).forEach((arg)=> {
-            const str = arg as string;
-            let value = filteredRows[str as keyof typeof filteredRows]
-    
-            if (typeof value == "string")
-              value = value.toString().toLowerCase()
-            else if (isNaN(value))
-              value = ""
-            if (value !== "" ){
-              if(item[str as keyof typeof item]){
-    
-                if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
-                  vals = false
-                }
-              } 
-              // else if(item.custom_fields ){
-              //   if(item.custom_fields[str as keyof typeof item] || item.custom_fields[str as keyof typeof item] == ""){
-              //     if(!item.custom_fields[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
-              //       vals = false
-              //     }
-              //   }
-              //   else{
-              //     vals = false
-              //   }
-              // }
-              else{
-                vals = false
-              }
-            }
-          })
-          return vals
-        }))
-      }, [ filteredRows, data]);
+        setFilteredData(filteredFields)
+      }, [ open]);
     
     
     return (
@@ -493,7 +490,7 @@ export default function MassiveUploadStock(
                             // itemContent={rowContent}
                             itemContent={(index: number) =>
                             // rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock) 
-                            rowContent(index, filteredData[index], columns, classes, tableClassNames, valueUpdate, writeValue) 
+                            rowContent(index, filteredData[index], columns, classes, tableClassNames, writeValue) 
                             // rowContent(index, filteredData[index], columns)
                             }
                             style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
