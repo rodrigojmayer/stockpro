@@ -99,6 +99,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         if (item.column._id === 1){
             return(
                     <TextField
+                    key={newRow._id} 
                     sx= {{
                       margin: "0 auto",
                       width: "90% !important",
@@ -117,10 +118,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                                 textAlign: "center", 
                               },
                           },
-                      }}>
-                        {/* "TextField" */}
-                        {/* item.column.dataKey */}
-                      </TextField>
+                      }}/>
+                       
 
                       // <Typography noWrap 
                       // sx={{
