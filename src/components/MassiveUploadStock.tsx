@@ -99,7 +99,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         if (item.column._id === 1){
             return(
                     <TextField
-                    key={newRow._id} 
+                    // key="password"
                     sx= {{
                       margin: "0 auto",
                       width: "90% !important",
@@ -162,7 +162,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             <div 
               className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? tableClassNames.alert_on  : "" } ${tableClassNames.rows}`}
             >
-              <RowContent column={column} />
+                {/* <RowContent column={column} /> */}
+                {RowContent({column: column})}
 
               {/* </RowContent> */}
               {/* <Typography noWrap 
