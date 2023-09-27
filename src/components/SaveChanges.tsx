@@ -16,6 +16,7 @@ type SaveChangesProps = {
 export default function SaveChanges( props: SaveChangesProps) {
     const { openSaveChanges, closeSaveChanges, messageBeforeSave } = props;
     const { classes } = useStylesGlobal();
+    console.log("props: ", props)
 
     return (
         <Modal

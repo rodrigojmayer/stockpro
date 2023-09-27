@@ -324,7 +324,7 @@ export default function MassiveUploadStock(
     const filteredFields = data.map((item) => {
 
     
-      console.log("item: ", item)
+    //   console.log("item: ", item)
       return {
       
       _id: item._id,
@@ -359,6 +359,12 @@ export default function MassiveUploadStock(
     const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
    
     const handleCloseSaveChanges = (ans?:boolean) => {
+        console.log("ans close Save: ", ans)
+        
+        
+        ///////////////////  Make the put here!!!!!!!!!!!!!!!!!!
+
+
         if(ans){
             const bodyUpdate: ProductEditData = {}
             bodyUpdate.id_client = user.id_client
@@ -375,8 +381,9 @@ export default function MassiveUploadStock(
     }
 
     const handleOpenSaveChanges = () => {
-        // console.log("stockNameTemp: ", stockNameTemp)
-
+        console.log("signUpdate: ", signUpdate)
+        console.log("filteredData: ", filteredData)
+        
         // if(stockNameTemp===""){
         //     setOpenErrorModal(true)
         //     setErrorData("missing_data")
@@ -385,7 +392,7 @@ export default function MassiveUploadStock(
         //     setErrorData("negative_amount")
         // }
         // else{
-        //     setOpenSaveChanges(true);
+            setOpenSaveChanges(true);
         // }
     }
 
@@ -447,47 +454,14 @@ export default function MassiveUploadStock(
                                           padding: "8px 0",
                                           }}
                                       >
-                                      {/* {filters[0].dataKey} */}
-                                      {/*                                         
-                                          <Typography noWrap
-                                              sx={{
-                                              padding: "0 4px ",
-                                              }}
-                                          >
-                                              {column.label}
-                                          </Typography> */}
-
                                           <ColumnLabel
                                               column={column}
                                           />
-                                          {/* </ColumnLabel> */}
-
-
-                                          {/* <TextField
-                                              // id={column.dataKey}
-                                              id={column.dataKey.toString()}
-                                              // id="filled-multiline-flexible"
-                                              // value={filters[0].dataKey}
-                                              // onChange={handleFilterChange}
-                                              maxRows={1}
-                                              size="small"
-                                              sx={{
-                                              backgroundColor: "white",
-                                              borderRadius: 1,
-                                              margin: "8px",
-                                              }}
-                                              InputProps={{
-                                              style: {
-                                                  height:"36px",
-                                              },
-                                              }}
-                                          /> */}
                                       </TableCell>
                                     ))}
                                 </TableRow>
                                 );
                             }}
-                            // itemContent={rowContent}
                             itemContent={(index: number) =>
                             // rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock) 
                             rowContent(index, filteredData[index], columns, classes, tableClassNames, writeValue) 
