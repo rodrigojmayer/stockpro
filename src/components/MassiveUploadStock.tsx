@@ -109,7 +109,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                       type="number"
                       className={`${classes.inputMainData} `}
                       // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
-                      value={newRow[item.column.dataKey]}
+                      value={newRow[item.column.dataKey]==="" ? newRow[item.column.dataKey] : Math.abs(newRow[item.column.dataKey])}
                       onChange={ (event) => writeValue(event, newRow._id) }
                       InputProps={{
                           className: classes.inputClassName,
@@ -262,33 +262,33 @@ export default function MassiveUploadStock(
     // }, [valueUpdate])
 
     const writeValue = (e:any, _id: string) => {
-      let newValue = (Number(e.target.value)) 
-      console.log("newValue: ", newValue)
-      // if(-productUpdate.amount > newValue)
-      //     newValue = -productUpdate.amount
-      // setValueUpdate(newValue)
-      // productsValueUpdate["64f5e58873d98cad83d45eac"]["value_update"]
-      // Create a copy of the current filteredData array
-      // const updatedData = [...filteredData];
+        let newValue = (Number(e.target.value)) 
+        // console.log("newValue: ", newValue)
+        // if(-productUpdate.amount > newValue)
+        //     newValue = -productUpdate.amount
+        // setValueUpdate(newValue)
+        // productsValueUpdate["64f5e58873d98cad83d45eac"]["value_update"]
+        // Create a copy of the current filteredData array
+        // const updatedData = [...filteredData];
 
-      // // Loop through the array and update the "update_amount" property
-      // updatedData.forEach((item) => {
-      //   item.update_amount = newValue;
-      // });
+        // // Loop through the array and update the "update_amount" property
+        // updatedData.forEach((item) => {
+        //   item.update_amount = newValue;
+        // });
 
-      const updatedData = filteredData.map((item:any) => {
-        if (item._id === _id) {
-          return { ...item, update_amount: newValue };
-        }
-        return item;
-      });
+        const updatedData = filteredData.map((item:any) => {
+            if (item._id === _id) {
+            return { ...item, update_amount: newValue };
+            }
+            return item;
+        });
 
-      // setFilteredData((prevValueUpdate: any) => ({
-      //   ...prevValueUpdate,
-      //   update_amount: newValue,
-      // }));
-      setFilteredData(updatedData);
-  }
+        // setFilteredData((prevValueUpdate: any) => ({
+        //   ...prevValueUpdate,
+        //   update_amount: newValue,
+        // }));
+        setFilteredData(updatedData);
+    }
 
     const ColumnLabel = (item:any) => {
         let lab
@@ -322,11 +322,8 @@ export default function MassiveUploadStock(
     const [filteredRows, setFilteredRows] = useState<any>(INITIAL_STATE);
     // console.log("data: ", data[0].id)
     const filteredFields = data.map((item) => {
-
-    
     //   console.log("item: ", item)
       return {
-      
       _id: item._id,
       product: item.product,
       amount: item.amount,
@@ -359,16 +356,74 @@ export default function MassiveUploadStock(
     const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
    
     const handleCloseSaveChanges = (ans?:boolean) => {
-        console.log("ans close Save: ", ans)
+        // console.log("ans close Save: ", ans)
+        // console.log("filteredData close Save: ", filteredData)
         
         
         ///////////////////  Make the put here!!!!!!!!!!!!!!!!!!
 
 
         if(ans){
-            const bodyUpdate: ProductEditData = {}
-            bodyUpdate.id_client = user.id_client
-            bodyUpdate.deleted = false
+            // const bodyUpdate: ProductEditData = {}
+            // bodyUpdate.id_client = user.id_client
+            // bodyUpdate.deleted = false
+            filteredData.forEach((stock:any) => {
+                
+                if(stock.update_amount){
+                    // console.log("enter to element close Save: ", stock)
+                    console.log("(stock.update_amount * signUpdate) + stock.amount: ", (stock.update_amount * signUpdate) + stock.amount)
+                    
+                    const fetchMassiveUpdateStock = async () => {
+                        let loadingSuccess: boolean = false
+                        try {
+                            const response = await fetch(`http://localhost:4000/api/products/${stock._id}`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                                    // Add any other requires headers here
+                                },
+                                body:JSON.stringify({
+                                    "amount": (stock.update_amount * signUpdate) + stock.amount,
+                                    // "alerted_amount": alertedAmount
+                                })
+                            })
+        
+                            // Check if the response status is successful
+                            if (response.ok) {
+                                const responseData = await response.json() // parse the response data
+                                // console.log('POST request successful: ', responseData)
+                                loadingSuccess = true
+                            } else {
+                                // Handle non-successful responses
+                                console.error('Request failed: ', response.status, response.statusText)
+                                // Handle the error here
+                            }
+                        } catch (error: unknown) {
+                            if (typeof error === 'string') {
+                                // 'error' is now narrowed down to type 'string'
+                                console.error('Error:', error)
+                            } else if (error instanceof Error) {
+                                // 'error' is now narrowed down to type 'Error'
+                                console.error('Error object:', error.message)
+                            } else {
+                                // Handle other cases as needed
+                            }
+                        } finally {
+                            // setIsLoading(())
+                            setIsLoading((prevLoading: any) => ({
+                                ...prevLoading,
+                                fieldsFetchCreateStock: loadingSuccess,
+                            }));
+                        }
+                    } 
+                    fetchMassiveUpdateStock()        //////////Change the name for update
+                }
+                
+
+
+
+            });
+
 
 
             close()
