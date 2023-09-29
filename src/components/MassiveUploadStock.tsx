@@ -105,11 +105,12 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                     }}
                       maxRows={1}
                       size="small"
-                      type="number"
+                    //   type="number"
                       className={`${classes.inputMainData} `}
                       // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
                       value={newRow[item.column.dataKey]==="" ? newRow[item.column.dataKey] : Math.abs(newRow[item.column.dataKey])}
                       onChange={ (event) => writeValue(event, newRow._id) }
+                    //   onChange={ () => console.log("testin") }
                       InputProps={{
                           className: classes.inputClassName,
                           inputProps: {
@@ -261,32 +262,20 @@ export default function MassiveUploadStock(
     // }, [valueUpdate])
 
     const writeValue = (e:any, _id: string) => {
-        let newValue = (Number(e.target.value)) 
-        // console.log("newValue: ", newValue)
-        // if(-productUpdate.amount > newValue)
-        //     newValue = -productUpdate.amount
-        // setValueUpdate(newValue)
-        // productsValueUpdate["64f5e58873d98cad83d45eac"]["value_update"]
-        // Create a copy of the current filteredData array
-        // const updatedData = [...filteredData];
-
-        // // Loop through the array and update the "update_amount" property
-        // updatedData.forEach((item) => {
-        //   item.update_amount = newValue;
-        // });
-
-        const updatedData = filteredData.map((item:any) => {
-            if (item._id === _id) {
-            return { ...item, update_amount: newValue };
-            }
-            return item;
-        });
-
-        // setFilteredData((prevValueUpdate: any) => ({
-        //   ...prevValueUpdate,
-        //   update_amount: newValue,
-        // }));
-        setFilteredData(updatedData);
+        let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
+        if(e.target.value==="")
+            newValue = 0
+        if(!isNaN(newValue)){
+            if(newValue>999)
+                newValue = 999
+            const updatedData = filteredData.map((item:any) => {
+                if (item._id === _id) {
+                return { ...item, update_amount: newValue };
+                }
+                return item;
+            });
+            setFilteredData(updatedData);
+        }
     }
 
     const ColumnLabel = (item:any) => {
