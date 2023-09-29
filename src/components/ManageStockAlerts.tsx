@@ -1,3 +1,4 @@
+import dayjs, { Dayjs } from 'dayjs';// Import dayjs
 import { useState } from 'react';
 import { Box,
          Grid,
@@ -134,7 +135,7 @@ export default function ManageStockAlerts(
                                 <DatePickerComponent
                                     label="By date"
                                     format="DD/MM/YYYY"
-                                    defaultValue = { stockAlertDateTemp? stockAlertDateTemp : null}
+                                    defaultValue = { stockAlertDateTemp? dayjs(stockAlertDateTemp) : null}
                                     disabled={!stockAlertDateEnabledTemp}
                                     onChange={ (newDate) => handleDatePickerChange(newDate) }
                                     slotProps={{

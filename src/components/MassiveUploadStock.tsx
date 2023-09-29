@@ -31,7 +31,6 @@ import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
-import dayjs, { Dayjs } from 'dayjs';
 import ErrorModal from './ErrorModal';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import useMediaQuery from '@mui/material/useMediaQuery';
