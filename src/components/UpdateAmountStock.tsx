@@ -72,11 +72,7 @@ export default function UpdateAmountStock(
         const productAmount = Number(productUpdate.amount)
         let newSign = -(signUpdate)
         let newValue
-        const topValue = 9999 - productAmount
-        console.log("valueUpdate: ",valueUpdate)
-        console.log("productAmount: ",productAmount)
-        console.log("topValue: ",topValue)
-        console.log("newSign: ",newSign)
+        const topValue = 999 - productAmount
         if(valueUpdate > productAmount && newSign < 0){
             newValue = productAmount
             setValueUpdate(newValue)
@@ -93,17 +89,13 @@ export default function UpdateAmountStock(
     const upValue = () => {
         const productAmount = Number(productUpdate.amount)
         let newValue
-        const topValue = 9999 - productAmount
+        const topValue = 999 - productAmount
         if ( signUpdate < 0 ){
             newValue = valueUpdate-1
 
         } else {
             newValue = valueUpdate+1
         }
-        console.log("valueUpdate: ", valueUpdate)
-        console.log("newValue: ", newValue)
-        console.log("topValue: ", topValue)
-        console.log("signUpdate: ", signUpdate)
         if(newValue > topValue && signUpdate > 0){
             if(topValue !== 0)
                 setSignUpdate(1)
@@ -137,7 +129,7 @@ export default function UpdateAmountStock(
     const writeValue = (e:any) => {
         const productAmount = Number(productUpdate.amount)
         let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
-        const topValue = 9999 - productAmount
+        const topValue = 999 - productAmount
         if(e.target.value==="")
             newValue = 0
         if(!isNaN(newValue)){

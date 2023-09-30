@@ -212,6 +212,7 @@ export default function ManageStock(
         setStockNameTemp(value)
     }
     const handleStockAmountChange = (value: number | string) => {
+        
         setStockAmountTemp(value)
     }
     const handleStockMeasureChange = (value: string) => {

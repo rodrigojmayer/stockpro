@@ -251,38 +251,44 @@ export default function MassiveUploadStock(
 
     }
     const swapOperator = () => {
-        let newSignValue = -(signUpdate)
-        // if(-productUpdate.amount > newValue)
-        //     newValue = -productUpdate.amount
-        setSignUpdate(newSignValue)
-        if(newSignValue < 0){
+        let newSign = -(signUpdate)
+        if(newSign < 0){
             const updatedData = filteredData.map((item:any) => {
                 if (item.update_amount > item.amount) {
-                return { 
-                    ...item,
-                    update_amount: item.amount
-                };
+                    return { 
+                        ...item,
+                        update_amount: item.amount
+                    };
+                }
+                return item;
+            });
+            setFilteredData(updatedData);
+        }else{
+            const updatedData = filteredData.map((item:any) => {
+                const topValue = 999 - item.amount
+                if (item.update_amount > topValue) {
+                    return { 
+                        ...item,
+                        update_amount: topValue
+                    };
                 }
                 return item;
             });
             setFilteredData(updatedData);
         }
+        setSignUpdate(newSign)
     }
-
-    // useEffect(() => {
-    //   console.log("valueUpdate: ", valueUpdate)
-    // }, [valueUpdate])
-
     const writeValue = (e:any, _id: string) => {
         const productAmount = filteredData.filter((item:any) => item._id===_id)[0].amount
+        const topValue = 999 - productAmount
         let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
         if(e.target.value==="")
             newValue = 0
         if(!isNaN(newValue)){
             if(newValue > productAmount && signUpdate < 0){
                 newValue = productAmount
-            }else if(newValue>999){
-                newValue = 999
+            }else if(newValue > topValue && signUpdate > 0){
+                newValue = topValue
             }
             const updatedData = filteredData.map((item:any) => {
                 if (item._id === _id) {
