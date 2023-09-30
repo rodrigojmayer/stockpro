@@ -70,30 +70,51 @@ export default function UpdateAmountStock(
     
     const swapOperator = () => {
         const productAmount = Number(productUpdate.amount)
-        const sign = -(signUpdate)
+        let newSign = -(signUpdate)
         let newValue
-        if(valueUpdate > productAmount && sign < 0){
+        const topValue = 9999 - productAmount
+        console.log("valueUpdate: ",valueUpdate)
+        console.log("productAmount: ",productAmount)
+        console.log("topValue: ",topValue)
+        console.log("newSign: ",newSign)
+        if(valueUpdate > productAmount && newSign < 0){
             newValue = productAmount
             setValueUpdate(newValue)
+        } else if(valueUpdate > topValue && newSign > 0){
+            
+            if(topValue !== 0){
+                newValue = topValue
+                setValueUpdate(newValue)
+            } else if(newSign > 0)
+                newSign = -1
         }
-        setSignUpdate(sign)
+        setSignUpdate(newSign)
     }
     const upValue = () => {
+        const productAmount = Number(productUpdate.amount)
         let newValue
+        const topValue = 9999 - productAmount
         if ( signUpdate < 0 ){
             newValue = valueUpdate-1
 
         } else {
             newValue = valueUpdate+1
-
         }
-        if(newValue>999)
-            newValue = 999
-        else if(newValue===0){
-            setSignUpdate(1)
+        console.log("valueUpdate: ", valueUpdate)
+        console.log("newValue: ", newValue)
+        console.log("topValue: ", topValue)
+        console.log("signUpdate: ", signUpdate)
+        if(newValue > topValue && signUpdate > 0){
+            if(topValue !== 0)
+                setSignUpdate(1)
+            newValue = topValue
+        }
+        if(newValue===0){
+            if(topValue !== 0)
+                setSignUpdate(1)
             newValue = 1
         }
-        setValueUpdate(newValue)
+        setValueUpdate(Math.abs(newValue))
     }
     const downValue = () => {
         const productAmount = Number(productUpdate.amount)
@@ -105,24 +126,25 @@ export default function UpdateAmountStock(
         }
         console.log("valueUpdate: ", valueUpdate)
         console.log("newValue: ", newValue)
-        if(newValue===0){
+        if(newValue === 0 || newValue === -1){
             setSignUpdate(-1)
             newValue = 1
         }
         if(productAmount < newValue && signUpdate < 0)
             newValue = productAmount
-        setValueUpdate(newValue)
+        setValueUpdate(Math.abs(newValue))
     }
     const writeValue = (e:any) => {
         const productAmount = Number(productUpdate.amount)
         let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
+        const topValue = 9999 - productAmount
         if(e.target.value==="")
             newValue = 0
         if(!isNaN(newValue)){
             if(newValue > productAmount && signUpdate < 0){
                 newValue = productAmount
-            }else if(newValue>999)
-                newValue = 999
+            }else if(newValue > topValue && signUpdate > 0)
+                newValue = topValue
             setValueUpdate(newValue);
         }
     }
@@ -325,7 +347,8 @@ export default function UpdateAmountStock(
                                     size="small"
                                     // type="number"
                                     className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
-                                    value={Math.abs(valueUpdate)}
+                                    // value={Math.abs(valueUpdate)}
+                                    value={valueUpdate}
                                     onChange={ (event) => writeValue(event) }
                                     style= {{
                                         textAlign: 'center',
