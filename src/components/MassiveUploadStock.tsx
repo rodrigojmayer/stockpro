@@ -251,10 +251,22 @@ export default function MassiveUploadStock(
 
     }
     const swapOperator = () => {
-        let newValue = -Number(signUpdate)
+        let newSignValue = -(signUpdate)
         // if(-productUpdate.amount > newValue)
         //     newValue = -productUpdate.amount
-        setSignUpdate(newValue)
+        setSignUpdate(newSignValue)
+        if(newSignValue < 0){
+            const updatedData = filteredData.map((item:any) => {
+                if (item.update_amount > item.amount) {
+                return { 
+                    ...item,
+                    update_amount: item.amount
+                };
+                }
+                return item;
+            });
+            setFilteredData(updatedData);
+        }
     }
 
     // useEffect(() => {
@@ -262,15 +274,22 @@ export default function MassiveUploadStock(
     // }, [valueUpdate])
 
     const writeValue = (e:any, _id: string) => {
+        const productAmount = filteredData.filter((item:any) => item._id===_id)[0].amount
         let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
         if(e.target.value==="")
             newValue = 0
         if(!isNaN(newValue)){
-            if(newValue>999)
+            if(newValue > productAmount && signUpdate < 0){
+                newValue = productAmount
+            }else if(newValue>999){
                 newValue = 999
+            }
             const updatedData = filteredData.map((item:any) => {
                 if (item._id === _id) {
-                return { ...item, update_amount: newValue };
+                    return { 
+                        ...item, 
+                        update_amount: newValue 
+                    };
                 }
                 return item;
             });

@@ -62,47 +62,81 @@ export default function UpdateAmountStock(
 
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
-
-    const [ valueUpdate, setValueUpdate ] = useState<number>(-1)
+    
+    const [ signUpdate, setSignUpdate ] = useState<number>(-1)
+    const [ valueUpdate, setValueUpdate ] = useState<number>(1)
     const [ resultUpdated, setResultUpdated ] = useState<number | string>(productUpdate.amount)
     const [ alertedAmount, setAlertedAmount ] = useState(false)
-
+    
+    const swapOperator = () => {
+        const productAmount = Number(productUpdate.amount)
+        const sign = -(signUpdate)
+        let newValue
+        if(valueUpdate > productAmount && sign < 0){
+            newValue = productAmount
+            setValueUpdate(newValue)
+        }
+        setSignUpdate(sign)
+    }
     const upValue = () => {
-        let newValue = valueUpdate+1
-        if(newValue===0)
+        let newValue
+        if ( signUpdate < 0 ){
+            newValue = valueUpdate-1
+
+        } else {
+            newValue = valueUpdate+1
+
+        }
+        if(newValue>999)
+            newValue = 999
+        else if(newValue===0){
+            setSignUpdate(1)
             newValue = 1
+        }
         setValueUpdate(newValue)
     }
     const downValue = () => {
-        let newValue = valueUpdate-1
-        if(newValue===0)
-            newValue = -1
-        if(-productUpdate.amount > newValue)
-            newValue = -productUpdate.amount
+        const productAmount = Number(productUpdate.amount)
+        let newValue
+        if ( signUpdate < 0 ){
+            newValue = valueUpdate+1
+        } else {
+            newValue = valueUpdate-1
+        }
+        console.log("valueUpdate: ", valueUpdate)
+        console.log("newValue: ", newValue)
+        if(newValue===0){
+            setSignUpdate(-1)
+            newValue = 1
+        }
+        if(productAmount < newValue && signUpdate < 0)
+            newValue = productAmount
         setValueUpdate(newValue)
     }
     const writeValue = (e:any) => {
-        let newValue = (Number(e.target.value)) 
-        if(-productUpdate.amount > newValue)
-            newValue = -productUpdate.amount
-        setValueUpdate(newValue)
+        const productAmount = Number(productUpdate.amount)
+        let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
+        if(e.target.value==="")
+            newValue = 0
+        if(!isNaN(newValue)){
+            if(newValue > productAmount && signUpdate < 0){
+                newValue = productAmount
+            }else if(newValue>999)
+                newValue = 999
+            setValueUpdate(newValue);
+        }
     }
 
     let ButtonOperator
     let buttonOperatorColor
-    if (valueUpdate > 0 ){
+    // if (valueUpdate > 0 ){
+    if (Number(signUpdate) > 0 ){
         ButtonOperator = PlusButton 
         buttonOperatorColor = "rgb(100, 200, 100)"
     } else {
         ButtonOperator = MinusButton       
         buttonOperatorColor = "rgb(250, 100, 100)"
 
-    }
-    const swapOperator = () => {
-        let newValue = -valueUpdate
-        if(-productUpdate.amount > newValue)
-            newValue = -productUpdate.amount
-        setValueUpdate(newValue)
     }
 
     const [updatedResultVisible, setUpdatedResultVisible] = useState(false);
@@ -121,7 +155,8 @@ export default function UpdateAmountStock(
 
 
     useEffect(() => {
-        setValueUpdate(productUpdate.amount==0?1:-1)
+        // setValueUpdate(productUpdate.amount==0?1:-1)
+        setValueUpdate(1)
         setAlertedAmount(false);
         setMessageBeforeSave("");
     // }, [handleClose])
@@ -191,7 +226,10 @@ export default function UpdateAmountStock(
     }
     
     const handleOpenSaveChanges = () => {
-        const updatedResult = Number(productUpdate.amount) + valueUpdate;
+        console.log("valueUpdate: ", valueUpdate)
+        console.log("signUpdate: ", signUpdate)
+        console.log("Number(productUpdate.amount): ", Number(productUpdate.amount))
+        const updatedResult = (valueUpdate * signUpdate) + Number(productUpdate.amount);
         setResultUpdated(updatedResult);
         setUpdatedResultVisible(true);
     }
@@ -285,7 +323,7 @@ export default function UpdateAmountStock(
                                 <TextField
                                     maxRows={1}
                                     size="small"
-                                    type="number"
+                                    // type="number"
                                     className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
                                     value={Math.abs(valueUpdate)}
                                     onChange={ (event) => writeValue(event) }
