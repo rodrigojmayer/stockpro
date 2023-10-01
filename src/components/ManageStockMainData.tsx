@@ -112,7 +112,7 @@ export default function ManageStockMainData(
                         onChange={ (event) => onStockAmountChange(Number(event.target.value)) }
                         maxRows={1}
                         size="small"
-                        type="number"
+                        // type="number"
                         className={classes.inputMainData}
                         InputProps={{  className: classes.inputClassName }}
                     />

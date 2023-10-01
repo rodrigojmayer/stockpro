@@ -170,6 +170,8 @@ export default function UpdateAmountStock(
 
     useEffect(() => {
         // setValueUpdate(productUpdate.amount==0?1:-1)
+        if(Number(productUpdate.amount)===0)
+            setSignUpdate(1)
         setValueUpdate(1)
         setAlertedAmount(false);
         setMessageBeforeSave("");

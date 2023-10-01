@@ -212,8 +212,17 @@ export default function ManageStock(
         setStockNameTemp(value)
     }
     const handleStockAmountChange = (value: number | string) => {
-        
-        setStockAmountTemp(value)
+        console.log("value: ", value)
+        console.log("typeof value: ", typeof value)
+        const topValue = 999
+        // let newValue = parseInt(value.replace(/[+\-e]/g, ''), 10);
+        if(typeof value === 'number'){
+            if(isNaN(value)){
+                value = stockAmountTemp
+            } else if(value > topValue)
+                value = topValue
+        }
+        setStockAmountTemp(value) 
     }
     const handleStockMeasureChange = (value: string) => {
         setStockMeasureTemp(value)
@@ -342,14 +351,14 @@ export default function ManageStock(
         if(!edition){
             setStockNameTemp("")
             setStockCodeTemp('')
-            setStockAmountTemp(0)
+            setStockAmountTemp('')
             setStockMeasureTemp('')
             setStockCategoryTemp(null)
             setStockSubCategoryTemp('')
             setStockPriceTemp('')
             setStockDescriptionTemp('')
             setStockImageUrlTemp('')
-            setStockAlertAmountTemp(0)
+            setStockAlertAmountTemp('')
             setStockAlertAmountEnabledTemp(false)
             setStockAlertedAmountTemp(false)
             setStockAlertDateTemp('')
