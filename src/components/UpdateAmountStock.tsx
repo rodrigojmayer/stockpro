@@ -73,16 +73,20 @@ export default function UpdateAmountStock(
         let newSign = -(signUpdate)
         let newValue
         const topValue = 999 - productAmount
-        if(valueUpdate > productAmount && newSign < 0){
-            newValue = productAmount
-            setValueUpdate(newValue)
-        } else if(valueUpdate > topValue && newSign > 0){
-            
-            if(topValue !== 0){
-                newValue = topValue
+        if(productAmount===0)
+            newSign = 1
+        else{
+            if(valueUpdate > productAmount && newSign < 0){
+                newValue = productAmount
                 setValueUpdate(newValue)
-            } else if(newSign > 0)
-                newSign = -1
+            } else if(valueUpdate > topValue && newSign > 0){
+                
+                if(topValue !== 0){
+                    newValue = topValue
+                    setValueUpdate(newValue)
+                } else if(newSign > 0)
+                    newSign = -1
+            }
         }
         setSignUpdate(newSign)
     }
@@ -116,22 +120,24 @@ export default function UpdateAmountStock(
         } else {
             newValue = valueUpdate-1
         }
-        console.log("valueUpdate: ", valueUpdate)
-        console.log("newValue: ", newValue)
         if(newValue === 0 || newValue === -1){
             setSignUpdate(-1)
             newValue = 1
         }
         if(productAmount < newValue && signUpdate < 0)
             newValue = productAmount
+        if(productAmount===0)
+            setSignUpdate(1)
         setValueUpdate(Math.abs(newValue))
     }
     const writeValue = (e:any) => {
         const productAmount = Number(productUpdate.amount)
         let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
         const topValue = 999 - productAmount
+        if(newValue===0)
+            newValue = 1
         if(e.target.value==="")
-            newValue = 0
+            newValue = 1
         if(!isNaN(newValue)){
             if(newValue > productAmount && signUpdate < 0){
                 newValue = productAmount
