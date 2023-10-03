@@ -463,9 +463,11 @@ export default function ManageStock(
                         onStockCustomValuesTemp={handleStockCustomValuesTemp}
                     />
                     <Box className={classes.finishButtons}>
-                        <DeleteButton
-                            clicked={() => handleDeleteProduct()}
-                        /> 
+                        {edition &&
+                            <DeleteButton
+                                clicked={() => handleDeleteProduct()}
+                            />  
+                        }
                         <CancelButton
                             clicked={() => close()}
                         />
