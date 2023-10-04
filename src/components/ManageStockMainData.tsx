@@ -94,7 +94,7 @@ export default function ManageStockMainData(
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Code*"
+                        label="Code"
                         value={stockCodeTemp}
                         onChange={ (event) => onStockCodeChange(event.target.value) }
                         maxRows={1}
