@@ -95,6 +95,16 @@ export default function ManageStock(
    
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
+            
+            console.log("data.alert_date_enabled: ", data.alert_date_enabled)
+            console.log("stockAlertDateEnabledTemp: ", stockAlertDateEnabledTemp)
+            console.log("data.alerted_date: ", data.alerted_date)
+            console.log("stockAlertedDateTemp: ", stockAlertedDateTemp)
+            // console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
+            // console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
+            // console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
+            alert("stop")
+
             const bodyUpdate: ProductEditData = {}
             bodyUpdate.id_client = user.id_client
             bodyUpdate.deleted = false
@@ -345,6 +355,22 @@ export default function ManageStock(
             setMessageBeforeSave("");
         }
     }, [stockAmountTemp, stockAlertAmountTemp, stockAlertAmountEnabledTemp])
+
+    useEffect(() => {
+        const currentDate = new Date()
+        const alertDate = new Date(stockAlertDateTemp)
+        if(currentDate >= alertDate){
+            setStockAlertedDateTemp(true)
+            if (stockAlertDateEnabledTemp){
+                setMessageBeforeSave("The alert date is before current date.");
+            }
+            else 
+                setMessageBeforeSave("");
+        }else{
+            setStockAlertedDateTemp(false)
+            setMessageBeforeSave("");
+        }
+    }, [stockAlertDateTemp, stockAlertDateEnabledTemp])
 
     
     useEffect(() => {

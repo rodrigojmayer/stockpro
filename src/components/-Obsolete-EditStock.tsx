@@ -123,10 +123,12 @@ export default function EditStock(
    
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
+            console.log("data.alerted_date: ", data.alerted_date)
+            console.log("stockAlertedDateTemp: ", stockAlertedDateTemp)
             // console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
             // console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
             // console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
-
+            alert("stop")
             const bodyUpdate: ProductEditData = {}
             if(data.product!=stockNameTemp)
                 bodyUpdate.product= stockNameTemp
