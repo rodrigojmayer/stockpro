@@ -13,6 +13,7 @@ export interface UserData {
   ordered_fields: array;
   language: number;
   background_color: number;
+  alerts_enabled: boolean;
 }
 export interface UserEditData {
   _id?: number;
@@ -27,6 +28,7 @@ export interface UserEditData {
   enabled?: boolean;
   language?: number;
   background_color?: number;
+  alerts_enabled?: boolean;
 }
 export interface PreferencesEditData {
   language?: number;

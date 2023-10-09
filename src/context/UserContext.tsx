@@ -17,6 +17,7 @@ const INITIAL_USER = {
   ordered_fields: [],
   language: NaN,
   background_color: NaN,
+  alerts_enabled: false,
 };
 
 type UserContextType = {
