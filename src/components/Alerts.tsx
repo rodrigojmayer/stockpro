@@ -105,13 +105,13 @@ export default function Alerts( { open, handleClose }: ChildProps) {
 
     const {users, setUsers} = useContext<any>(UsersContext)
 
-    console.log("users UsersContext: ", users)  // Change usersAlert by users
-    console.log("users usersAlert: ", usersAlert)
+    // console.log("users UsersContext: ", users)  // Change usersAlert by users
+    // console.log("users usersAlert: ", usersAlert)
     
     const usersAlertSelected2 = users.filter((usr:any) => usr.alerts_enabled)
     const [selectedUsersTemp2, setSelectedUsersTemp2] = useState<usersAlertData[]>(usersAlertSelected2);
-    console.log("users usersAlertSelected: ", usersAlertSelected)// Change usersAlertSelected by usersAlertSelected2
-    console.log("users usersAlertSelected2: ", usersAlertSelected2)
+    // console.log("users usersAlertSelected: ", usersAlertSelected)// Change usersAlertSelected by usersAlertSelected2
+    // console.log("users usersAlertSelected2: ", usersAlertSelected2)
     // const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>([]);
     // const [selectedNames, setSelectedNames] = useState([]);
     
@@ -169,9 +169,58 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
-            setSelectedUsers(selectedUsersTemp)
-            setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
-            close()
+            // setSelectedUsers(selectedUsersTemp)
+            // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
+            console.log("users: ", users)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+            console.log("usersAlertSelected2: ", usersAlertSelected2)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+            
+            // users.forEach((stock:any) => {
+                // const fetchUpdateAlerts = async () => {
+            //         let loadingSuccess: boolean = false
+            //         try {
+            //             const response = await fetch(`http://localhost:4000/api/users/${productUpdate._id}`, {
+            //                 method: 'PATCH',
+            //                 headers: {
+            //                     'Content-Type': 'application/json', // Set the appropriate content-type for my API
+            //                     // Add any other requires headers here
+            //                 },
+            //                 body:JSON.stringify({
+            //                     // "amount": resultUpdated,
+            //                     // "alerts_enabled": alertedAmount
+            //                 })
+            //             })
+
+            //             // Check if the response status is successful
+            //             if (response.ok) {
+            //                 const responseData = await response.json() // parse the response data
+            //                 // console.log('POST request successful: ', responseData)
+            //                 loadingSuccess = true
+            //             } else {
+            //                 // Handle non-successful responses
+            //                 console.error('Request failed: ', response.status, response.statusText)
+            //                 // Handle the error here
+            //             }
+            //         } catch (error: unknown) {
+            //             if (typeof error === 'string') {
+            //                 // 'error' is now narrowed down to type 'string'
+            //                 console.error('Error:', error)
+            //             } else if (error instanceof Error) {
+            //                 // 'error' is now narrowed down to type 'Error'
+            //                 console.error('Error object:', error.message)
+            //             } else {
+            //                 // Handle other cases as needed
+            //             }
+            //         } finally {
+            //             // setIsLoading(())
+            //             // setIsLoading((prevLoading: any) => ({
+            //             //     ...prevLoading,
+            //             //     fieldsFetchCreateStock: loadingSuccess,
+            //             // }));
+            //         }
+            //     } 
+            // })
+            // // fetchUpdateAlerts() 
+            close() 
         }
         setOpenSaveChanges(false);
     }
@@ -280,7 +329,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                     {users.map((user:any) => (
                                         <MenuItem 
                                             className={classes.menuItemUsers}
-                                            key={user.id} 
+                                            key={user._id} 
                                             value={user.name}
                                             sx={{ justifyContent: "space-between" }}
                                         >
