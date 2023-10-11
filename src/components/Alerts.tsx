@@ -33,7 +33,7 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
+import { ColumnData, ColumnDataCustom, ChildProps, UserData } from '../types';
 import { UsersContext } from '../context/UsersContext';
 
 // };
@@ -104,10 +104,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
 
     const {users, setUsers} = useContext<any>(UsersContext)
-
-    // console.log("users UsersContext: ", users)  // Change usersAlert by users
-    // console.log("users usersAlert: ", usersAlert)
-    
     const usersAlertSelected2 = users.filter((usr:any) => usr.alerts_enabled)
     const [selectedUsersTemp2, setSelectedUsersTemp2] = useState<usersAlertData[]>(usersAlertSelected2);
     // console.log("users usersAlertSelected: ", usersAlertSelected)// Change usersAlertSelected by usersAlertSelected2
@@ -172,8 +168,17 @@ export default function Alerts( { open, handleClose }: ChildProps) {
             // setSelectedUsers(selectedUsersTemp)
             // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             console.log("users: ", users)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
-            console.log("usersAlertSelected2: ", usersAlertSelected2)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
-            
+            console.log("selectedUsersTemp2: ", selectedUsersTemp2)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+            // const unselectedUsersTemp2 = users.filter((user:any) =>  !selectedUsersTemp2.includes(user) )
+            // console.log("unselectedUsersTemp2: ", unselectedUsersTemp2)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+
+            const updatedUsers = users.map((user:any) => ({
+                ...user,
+                alerts_enabled: selectedUsersTemp2.includes(user)
+            }))
+            //  users.map((user:any) => console.log(selectedUsersTemp2.includes(user)))
+            console.log("updatedUsers: ", updatedUsers)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+
             // users.forEach((stock:any) => {
                 // const fetchUpdateAlerts = async () => {
             //         let loadingSuccess: boolean = false
