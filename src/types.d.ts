@@ -15,6 +15,7 @@ export interface UserData {
   background_color: number;
   alerts_enabled: boolean;
 }
+
 export interface UserEditData {
   _id?: number;
   id_client?: number;
@@ -30,6 +31,13 @@ export interface UserEditData {
   background_color?: number;
   alerts_enabled?: boolean;
 }
+
+export interface EmailData {
+  _id?: number;
+  id_client?: number;
+  email?: string;
+}
+
 export interface PreferencesEditData {
   language?: number;
   background_color?: number;

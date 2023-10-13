@@ -34,6 +34,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { ColumnData, ColumnDataCustom, ChildProps, UserData } from '../types';
+import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
 
 // };
@@ -69,7 +70,12 @@ interface usersAlertData {
   interface emailsAlertData {
       id: number;
       email: string;
+      id_client: number;
     }
+    interface emailsAlertData2 {
+        id_client: number;
+        emails: string[];
+      }
 
 
 const usersAlert: usersAlertData[] = [
@@ -82,10 +88,15 @@ const usersAlert: usersAlertData[] = [
 const idUsersAlertSelected: number[] = [1,  3, 5];
 
 const emailsAlert: emailsAlertData[] = [
-    { id: 1, email: 'email1@test.com' },
-    { id: 2, email: 'email2@test.com'  },
-    { id: 3, email: 'email3@test.com'},
+    { id: 1, email: 'email1@test.com', id_client: 1 },
+    { id: 2, email: 'email2@test.com', id_client: 2 },
+    { id: 3, email: 'email3@test.com', id_client: 1 },
 ];
+// const emailsAlert: emailsAlertData2[] = [
+//     { id_client: 1, emails: ['email1_client1@test.com', 'email2_client1@test.com']},
+//     { id_client: 2, emails: ['email1_client2@test.com', 'email2_client2@test.com']},
+//     { id_client: 3, emails: ['email1_client3@test.com', 'email2_client3@test.com']},
+// ];
 
 
 export default function Alerts( { open, handleClose }: ChildProps) {
@@ -103,18 +114,21 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
     const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
 
+    const {user, setUser} = useContext<any>(UserContext)
     const {users, setUsers} = useContext<any>(UsersContext)
     const usersAlertSelected2 = users.filter((usr:any) => usr.alerts_enabled)
     const [selectedUsersTemp2, setSelectedUsersTemp2] = useState<usersAlertData[]>(usersAlertSelected2);
 
     const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
     const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
+    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData2[]>(emailsAlerts)
 
     const deleteEmailTemp = (id:number) => {
         // console.log("idEmailTemp: ", id)
         const updateEmailsTemp = [...emailsAlertsTemp]
         // const updateFieldsNew = [...customFieldsNew]
         let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
+        // let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id_client === id)
         // console.log("index: ", index)
         // console.log("updateEmailsTemp: ", updateEmailsTemp)
         // if (index !== -1) {
@@ -160,17 +174,17 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
-            const updatedUsers = users.map((user:any) => ({
-                ...user,
-                alerts_enabled: selectedUsersTemp2.includes(user)
+            const updatedUsers = users.map((user_obj:any) => ({
+                ...user_obj,
+                alerts_enabled: selectedUsersTemp2.includes(user_obj)
             })).filter((updatedUser:any, index:number) => {
                 return updatedUser.alerts_enabled !== users[index].alerts_enabled
             })
-            updatedUsers.forEach((user:any) => {
+            updatedUsers.forEach((user_obj:any) => {
                 const fetchUpdateAlerts = async () => {
                     let loadingSuccess: boolean = false
                     try {
-                        const response = await fetch(`http://localhost:4000/api/users/${user._id}`, {
+                        const response = await fetch(`http://localhost:4000/api/users/${user_obj._id}`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -178,7 +192,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             },
                             body:JSON.stringify({
                                 // "amount": resultUpdated,
-                                "alerts_enabled": user.alerts_enabled
+                                "alerts_enabled": user_obj.alerts_enabled
                             })
                         })
 
@@ -224,7 +238,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
         const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
         const nextId = lastObj.id + 1
-        const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: ""}]
+        const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: "", id_client:user.id_client}]
         // updateFieldsNew[index].label = event.currentTarget.value
         // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
         // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
