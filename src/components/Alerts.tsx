@@ -33,9 +33,11 @@ import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { ColumnData, ColumnDataCustom, ChildProps, UserData } from '../types';
+import { ColumnData, ColumnDataCustom, ChildProps, UserData, EmailData } from '../types';
+import { IsLoadingContext } from '../context/IsLoadingContext';
 import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
+import { EmailsContext } from '../context/EmailsContext';
 
 // };
 // type SaveChangesProps = {
@@ -72,10 +74,10 @@ interface usersAlertData {
       email: string;
       id_client: number;
     }
-    interface emailsAlertData2 {
-        id_client: number;
-        emails: string[];
-      }
+    // interface emailsAlertData2 {
+    //     id_client: number;
+    //     emails: string[];
+    //   }
 
 
 const usersAlert: usersAlertData[] = [
@@ -87,11 +89,11 @@ const usersAlert: usersAlertData[] = [
 ]; 
 const idUsersAlertSelected: number[] = [1,  3, 5];
 
-const emailsAlert: emailsAlertData[] = [
-    { id: 1, email: 'email1@test.com', id_client: 1 },
-    { id: 2, email: 'email2@test.com', id_client: 2 },
-    { id: 3, email: 'email3@test.com', id_client: 1 },
-];
+// const emailsAlert: emailsAlertData[] = [
+//     { id: 1, email: 'email1@test.com', id_client: 1 },
+//     { id: 2, email: 'email2@test.com', id_client: 2 },
+//     { id: 3, email: 'email3@test.com', id_client: 1 },
+// ];
 // const emailsAlert: emailsAlertData2[] = [
 //     { id_client: 1, emails: ['email1_client1@test.com', 'email2_client1@test.com']},
 //     { id_client: 2, emails: ['email1_client2@test.com', 'email2_client2@test.com']},
@@ -113,62 +115,68 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     })
     const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
     const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
-
+    
+    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const {user, setUser} = useContext<any>(UserContext)
     const {users, setUsers} = useContext<any>(UsersContext)
+    const {emails, setEmails} = useContext<any>(EmailsContext)
+    // console.log("emails: ", emails)
+    
     const usersAlertSelected2 = users.filter((usr:any) => usr.alerts_enabled)
     const [selectedUsersTemp2, setSelectedUsersTemp2] = useState<usersAlertData[]>(usersAlertSelected2);
 
-    const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
-    const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
+    // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
+    const [emailsAlerts, setEmailsAlerts] = useState(emails)  
+    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
     // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData2[]>(emailsAlerts)
 
-    const deleteEmailTemp = (id:number) => {
+    const deleteEmail = (_id:any) => {
         // console.log("idEmailTemp: ", id)
-        const updateEmailsTemp = [...emailsAlertsTemp]
+        const updateEmails = [...emailsAlerts]
         // const updateFieldsNew = [...customFieldsNew]
-        let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id === id)
+        let index = emailsAlerts.findIndex((email: any) => email._id === _id)
         // let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id_client === id)
         // console.log("index: ", index)
-        // console.log("updateEmailsTemp: ", updateEmailsTemp)
         // if (index !== -1) {
-            // updateFields[index].deleted = true
-        //     // setCustomFields(updateFields)
-        //     updateFieldsNew[index].deleted = true
-        //     // console.log("customFields: ", customFields) 
-        // } else {
-        //     index = customFieldsNew.findIndex(field => field.id === id)
-        updateEmailsTemp.splice(index, 1)
+            updateEmails[index].deleted = true
+            updateEmails[index].edited = true
+            // setCustomFields(updateFields)
+            // updateFieldsNew[index].deleted = true
+            // console.log("customFields: ", customFields) 
+            // } else {
+                // index = customFieldsNew.findIndex(field => field.id === id)
+        console.log("updateEmails before: ", updateEmails)
+        // updateEmails.splice(index, 1)
+        // console.log("updateEmails after: ", updateEmails)
 
         // }
-        setEmailsAlertsTemp(updateEmailsTemp)
+        setEmailsAlerts(updateEmails)
     }
     
-    const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleEditEmailAlertNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log("event.currentTarget.id: ", event.currentTarget.id)
-        // console.log("event.currentTarget.value: ", event.currentTarget.value)
+        console.log("event.currentTarget.value: ", event.currentTarget.value)
         // console.log("isNaN('w'): ", isNaN(NaN))
         // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
-            const index = emailsAlertsTemp.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-            if(index !== -1) {
-                const updateEmailsAlertsTemp = JSON.parse(JSON.stringify(emailsAlertsTemp))
-                updateEmailsAlertsTemp[index].email = event.currentTarget.value
-            //     // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-            //     // console.log("customFields[index].label: ", customFields[index].label)
-            //     if(customFields[index]){
-            //         if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == '')
-            //             updateFieldsNew[index].okButtonShow = false
-            //         else
-            //             updateFieldsNew[index].okButtonShow = true
-            //     }else if(updateFieldsNew[index].label !='' ){
-            //         updateFieldsNew[index].okButtonShow = true
-            //     }else if (updateFieldsNew[index].label ==='' ){
-            //         updateFieldsNew[index].okButtonShow = false
-            //     }
-                // console.log("updateEmailsAlertsTemp2: ", updateEmailsAlertsTemp)
-        
-                setEmailsAlertsTemp(updateEmailsAlertsTemp)
+        const index = emailsAlerts.findIndex((field: { _id: string }) => field._id === event.currentTarget.id)
+        console.log("index: ", index)
+        if(index !== -1) {
+            // console.log("emails[index].email: ", emails[index].email)
+            const updateEmails = JSON.parse(JSON.stringify(emailsAlerts))
+            updateEmails[index].email = event.currentTarget.value
+            if(emails[index]){  // To edit an existing email
+                if(emails[index].email !== event.currentTarget.value)
+                    updateEmails[index].edited = true
+                else
+                    updateEmails[index].edited = false
+            } else {  // To edit a new email
+                if(event.currentTarget.value !== '')
+                    updateEmails[index].edited = true
+                else
+                updateEmails[index].edited = false
             }
+            setEmailsAlerts(updateEmails)
+        }
     }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -181,7 +189,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                 return updatedUser.alerts_enabled !== users[index].alerts_enabled
             })
             updatedUsers.forEach((user_obj:any) => {
-                const fetchUpdateAlerts = async () => {
+                const fetchUpdateUsersAlerts = async () => {
                     let loadingSuccess: boolean = false
                     try {
                         const response = await fetch(`http://localhost:4000/api/users/${user_obj._id}`, {
@@ -192,7 +200,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             },
                             body:JSON.stringify({
                                 // "amount": resultUpdated,
-                                "alerts_enabled": user_obj.alerts_enabled
+                                "alerts_enabled": user_obj.alerts_enabled,
                             })
                         })
 
@@ -222,9 +230,89 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                         //     ...prevLoading,
                         //     fieldsFetchCreateStock: loadingSuccess,
                         // }));
+                        setIsLoading((prevLoading: any) => ({
+                            ...prevLoading,
+                            usersAlert: loadingSuccess,
+                        }))
                     }
                 } 
-                fetchUpdateAlerts() 
+                fetchUpdateUsersAlerts() 
+            })
+
+            emailsAlerts.forEach((email_obj:any) => {
+
+                const fetchCreateEmailAlert = async () => {
+                    let loadingSuccess: boolean = false
+                    try {
+                        const response = await fetch(`http://localhost:4000/api/emails/`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                "email": email_obj.email,
+                                "id_client": email_obj.id_client,
+                                "deleted": email_obj.deleted
+                            })
+                        })
+                        // Check if the response status is successful
+                        if (response.ok) {
+                            loadingSuccess = true
+                        } else {
+                            console.log('Request failed.', response.status, response.statusText)
+                            // Handle the error here
+                        }
+                    } catch (error: unknown) {
+                        if (typeof error === 'string') {
+                            // 'error' is now narrowed down to type 'string'
+                            console.error('Error:', error);
+                        } else if (error instanceof Error) {
+                            // 'error' is now narrowed down to type 'Error'
+                            console.error('Error object:', error.message);
+                        } else {
+                            // Handle other cases as needed
+                        }
+                    } finally {
+                        setIsLoading((prevLoading: any) => ({
+                            ...prevLoading,
+                            emailsAlert: loadingSuccess,
+                        }))
+                    }
+                }
+                const fetchEditEmailAlert = async () => {
+                    let loadingSuccess: boolean = false
+                    try {
+                        const response = await fetch(`http://localhost:4000/api/emails/${email_obj._id}/`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                "email": email_obj.email,
+                                "deleted": email_obj.deleted
+                            })
+                        })
+                        if (response) {
+                            loadingSuccess = true
+                        } else {
+                            console.log('Update failed.')
+                        }
+                    } catch (error) {
+                        // Handle the case where the response is not OK (e.g., show an error message)
+                    } finally {
+                        setIsLoading((prevLoading: any) => ({
+                            ...prevLoading,
+                            emailsAlert: loadingSuccess,
+                        }))
+                    }
+                }
+                if(email_obj.edited){ // To avoid fetch if there hasn't been any change
+                    if(email_obj._id.substring(0,3) === "NEW")
+                        fetchCreateEmailAlert()
+                    else {
+                        fetchEditEmailAlert()
+                    }
+                }
             })
             close() 
         }
@@ -236,9 +324,17 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const addInputCustomField = () => {
         // console.log("holis clickis", customFieldsNewTemp.length)
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-        const lastObj = emailsAlertsTemp[emailsAlertsTemp.length - 1]
-        const nextId = lastObj.id + 1
-        const updateEmailsAlertsTemp = [...emailsAlertsTemp, {id:nextId, email: "", id_client:user.id_client}]
+        // const lastObj = emailsAlerts[emailsAlerts.length - 1]
+        // const randomTemporalId = lastObj.id + 1
+        const randomNumber = Math.round(Math.random() * 10000).toString()
+        const timestamp = new Date().getTime().toString()
+        const randomTemporalId = "NEW" + timestamp + randomNumber   // For the new _id add the NEW chars at the beggining and a random number, this is only temporal to use it as a key in the page until the object is created in the database
+        // console.log("timestamp: ", timestamp)
+        // console.log("randomNumber: ", randomNumber)
+        // console.log("randomTemporalId: ", randomTemporalId)
+        // console.log("randomTemporalId: ", randomTemporalId.substring(0,3))
+        // const updateEmails = [...emailsAlerts, {_id:nextId, email: "", id_client:user.id_client}]
+        const updateEmails = [...emailsAlerts, {_id:randomTemporalId, email: "", id_client:user.id_client, deleted: false, edited: false}]
         // updateFieldsNew[index].label = event.currentTarget.value
         // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
         // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
@@ -249,15 +345,26 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         
         // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
 
-        setEmailsAlertsTemp(updateEmailsAlertsTemp)
+        setEmailsAlerts(updateEmails)
         // setAddButtonShow(false)
     }
+    useEffect(() => {
+        // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
+        // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
+        // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
 
+        // if(isLoading.emailsAlert || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder){
+        if(isLoading.usersAlert || isLoading.emailsAlert ){
+            // alert("Reload page")
+                    // setIsFetching(false)
+            window.location.reload();
+        }
+}, [isLoading])
     useEffect(() => {
         // console.log("useeffect")
         // setSelectedUsersTemp(selectedUsers)
         setSelectedUsersTemp2(usersAlertSelected2)
-        setEmailsAlertsTemp(emailsAlerts)
+        setEmailsAlerts(emails)
     }, [ open])
     
     return (
@@ -276,8 +383,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                     </Typography>
                     <Box className={classes.customBoxColumn}>
                         <FormControl 
-                        className={classes.formControlUsers}
-                                    size="small"
+                            className={classes.formControlUsers}
+                            size="small"
                         >
                             <InputLabel 
                             className={classes.inputLabelUsers} >Users</InputLabel>
@@ -354,20 +461,21 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             className={classes.editIcon}
                             /> */}
                         </Box>
-                            {emailsAlertsTemp.map((emailTemp: emailsAlertData) => {
-                                //  if (!emailNew.deleted) {
+                            {emailsAlerts.map((email: EmailData) => {
+                                 if (!email.deleted) {
                                      return (
                                         <Box className={classes.customBoxRow}
-                                        key={emailTemp.id}
+                                            key={email._id}
                                         >
                                             <TextField
-                                                id={String(emailTemp.id)}
+                                                // id={String(email._id)}
+                                                id={email._id}
                                                 type="email"
                                                 // id={column.dataKey.toString()}
                                                 // id="filled-multiline-flexible"
-                                                value={emailTemp.email}
+                                                value={email.email}
                                                 // onChange={handleFilterChange}
-                                                onChange={ handleEditCustomFieldNew }
+                                                onChange={ handleEditEmailAlertNew }
                                                 maxRows={1}
                                                 size="small"
                                                 className={classes.newEmailField}
@@ -380,10 +488,10 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                             />
                                             <Box className={classes.customBoxCenter}> 
                                                 <IconButton
-                                                className={classes.ionTrash}
-                                                onClick={() => deleteEmailTemp(emailTemp.id)}
-                                                // id="plusButton"
-                                                // value={column.id}
+                                                    className={classes.ionTrash}
+                                                    onClick={() => deleteEmail(email._id)}
+                                                    // id="plusButton"
+                                                    // value={column.id}
                                                 >
                                                     <img 
                                                     src={IonTrash} 
@@ -393,7 +501,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                             </Box>
                                          </Box>
                                     )
-                                // }
+                                }
                             })} 
                         <Box className={classes.customBoxRow}>
                             <PlusButton

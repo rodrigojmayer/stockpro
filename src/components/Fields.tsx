@@ -345,7 +345,6 @@ export default function Fields(
                 // console.log("Custom field new: ", obj)  
                 if(obj._id) {
                     // console.log("obj._id: ", obj._id)
-                    if(obj.edited) {
                         // console.log("Object to edit: ", obj)
                         const fetchEditCustomColumn = async () => {
                             let loadingSuccess: boolean = false
@@ -365,8 +364,8 @@ export default function Fields(
                                     // setCustomColumns(customFieldsNew)
                                     loadingSuccess = true
                                 } else {
-                                    // console.log('Update failed.');
-                                  }
+                                    console.log('Update failed.');
+                                }
                             }catch (error) {
                                 // Handle the case where the response is not OK (e.g., show an error message)
                                     
@@ -378,8 +377,10 @@ export default function Fields(
 
                             }
                         }
-                        fetchEditCustomColumn()
-                    } 
+                   
+                        if(obj.edited) 
+                            fetchEditCustomColumn()
+                     
                 } else if(!obj.deleted){    // To avoid fields created and deleted in the moment
                     // console.log("Obj to create: ", obj)
 
@@ -687,7 +688,7 @@ export default function Fields(
                                 if (!cusField.deleted) {
                                     return (
                                         <Box className={classes.customBoxRow}
-                                        key={cusField.id}
+                                            key={cusField.id}
                                         >
                                             <TextField
                                                 id={String(cusField.id)}

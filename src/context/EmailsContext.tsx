@@ -4,7 +4,7 @@ import { IsLoadingContext } from './IsLoadingContext';
 import { UserContext } from './UserContext';
 
 const INITIAL_EMAILS = [{
-  _id: NaN,
+  _id: '',
   id_client: NaN,
   email: '',
 }];
@@ -41,6 +41,8 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
             // console.log("user id", user.id_access_level)
             // return (item._id !== user._id && !item.deleted && item.id_access_level > user.id_access_level)
             // })
+            // console.log("json ", json)
+
             setEmails(json);
         } else {
           setEmails(INITIAL_EMAILS);

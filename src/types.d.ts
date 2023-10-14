@@ -33,9 +33,11 @@ export interface UserEditData {
 }
 
 export interface EmailData {
-  _id?: number;
+  _id?: string;
   id_client?: number;
   email?: string;
+  deleted?: boolean;
+  edited?: boolean;
 }
 
 export interface PreferencesEditData {
