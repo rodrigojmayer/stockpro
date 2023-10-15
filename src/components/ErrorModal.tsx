@@ -47,6 +47,9 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (props.errorData === "missing_user_password"){
         title="Missing required data"
         subTitle=`Password*`
+    } else if (props.errorData === "invalid_email_format"){
+        title="Invalid email format"
+        subTitle=`Email*`
     }
 
     return (

@@ -648,22 +648,22 @@ export default function Fields(
                         </Grid>
                         <Grid item xs={6} >
                             <List
-                            className={classes.table}
+                                className={classes.table}
                             >
                                 {unsetFields.map((column) => {
                                     if (!column.deleted) {
                                         return (
                                             <Paper
-                                            key={column.id} 
-                                            className={classes.buttonFields}>
+                                                key={column.id} 
+                                                className={classes.buttonFields}>
                                                 <Typography noWrap>
                                                     {column.label}
                                                 </Typography>  
                                                 <IconButton
-                                                className={classes.plusIcon}
-                                                onClick={addField}
-                                                id="plusButton"
-                                                value={column.id}
+                                                    className={classes.plusIcon}
+                                                    onClick={addField}
+                                                    id="plusButton"
+                                                    value={column.id}
                                                 >
                                                     <ControlPointTwoToneIcon/>
                                                 </IconButton>

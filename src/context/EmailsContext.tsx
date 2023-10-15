@@ -7,6 +7,8 @@ const INITIAL_EMAILS = [{
   _id: '',
   id_client: NaN,
   email: '',
+  edited: false,
+  error: '',
 }];
 
 // type UsersContextType = {
@@ -35,15 +37,18 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
         
         if (response.ok) {
           const json = await response.json();
-          // const json_filtered = json.filter((item:EmailData) => { 
+          const json_filtered = json.filter((item:EmailData) => { 
             // console.log("item.id", item.id)
             // console.log("user ", user)
             // console.log("user id", user.id_access_level)
-            // return (item._id !== user._id && !item.deleted && item.id_access_level > user.id_access_level)
-            // })
+            return (!item.deleted)
+            }).map((obj: EmailData) => ({
+              ...obj,
+              error: '',
+            }))
             // console.log("json ", json)
 
-            setEmails(json);
+            setEmails(json_filtered);
         } else {
           setEmails(INITIAL_EMAILS);
           // Handle the case where the response is not OK (e.g., show an error message)

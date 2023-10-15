@@ -34,6 +34,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { ColumnData, ColumnDataCustom, ChildProps, UserData, EmailData } from '../types';
+import ErrorModal from './ErrorModal';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
@@ -120,13 +121,13 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const {user, setUser} = useContext<any>(UserContext)
     const {users, setUsers} = useContext<any>(UsersContext)
     const {emails, setEmails} = useContext<any>(EmailsContext)
-    // console.log("emails: ", emails)
     
     const usersAlertSelected2 = users.filter((usr:any) => usr.alerts_enabled)
     const [selectedUsersTemp2, setSelectedUsersTemp2] = useState<usersAlertData[]>(usersAlertSelected2);
 
     // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
     const [emailsAlerts, setEmailsAlerts] = useState(emails)  
+    // const [errorEmailsAlerts, setErrorEmailsAlerts] = useState('');
     // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
     // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData2[]>(emailsAlerts)
 
@@ -154,10 +155,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     }
     
     const handleEditEmailAlertNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // console.log("event.currentTarget.id: ", event.currentTarget.id)
-        console.log("event.currentTarget.value: ", event.currentTarget.value)
-        // console.log("isNaN('w'): ", isNaN(NaN))
-        // setEmailsAlertsTemp({...emailsAlertsTemp, event.currentTarget.value})
         const index = emailsAlerts.findIndex((field: { _id: string }) => field._id === event.currentTarget.id)
         console.log("index: ", index)
         if(index !== -1) {
@@ -173,13 +170,28 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                 if(event.currentTarget.value !== '')
                     updateEmails[index].edited = true
                 else
-                updateEmails[index].edited = false
+                    updateEmails[index].edited = false
             }
+            if(updateEmails[index].edited && !validateEmail(updateEmails[index].email))
+                updateEmails[index].error = 'Invalid email format'
+            else
+                updateEmails[index].error = ''
+            console.log("updateEmails: ", updateEmails)
             setEmailsAlerts(updateEmails)
         }
     }
+    const validateEmail = (email: string): boolean => {
+        // Regular expression for email validation
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+        return emailRegex.test(email)
+    }
+    // const handleValidate = () => {
+    //     if (validateEmail(email))
+    // }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
+    const [openErrorModal, setOpenErrorModal] = useState(false);    
+    const [errorData, setErrorData] = useState(""); 
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
             const updatedUsers = users.map((user_obj:any) => ({
@@ -318,36 +330,36 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         }
         setOpenSaveChanges(false);
     }
-    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
-
     
-    const addInputCustomField = () => {
-        // console.log("holis clickis", customFieldsNewTemp.length)
-        // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-        // const lastObj = emailsAlerts[emailsAlerts.length - 1]
-        // const randomTemporalId = lastObj.id + 1
+    const handleCloseErrorModal = () => {
+        setOpenErrorModal(false)
+    }
+    const handleOpenSaveChanges = () => {
+        const emailError = emailsAlerts.filter((email:EmailData) => {
+            if(email.error && !email.deleted) return email
+        })
+        console.log("emailError: ", emailError)
+        if(emailError.length>0){
+            setOpenErrorModal(true)
+            setErrorData("invalid_email_format")
+        // }else if(profilePass!==profileConfirmPass){
+        //     setOpenErrorModal(true)
+        //     setErrorData("not_confirmed_pass")
+        }
+        else{
+            setOpenSaveChanges(true);
+        }
+    };
+    
+    const addInputEmail = () => {
         const randomNumber = Math.round(Math.random() * 10000).toString()
         const timestamp = new Date().getTime().toString()
         const randomTemporalId = "NEW" + timestamp + randomNumber   // For the new _id add the NEW chars at the beggining and a random number, this is only temporal to use it as a key in the page until the object is created in the database
-        // console.log("timestamp: ", timestamp)
-        // console.log("randomNumber: ", randomNumber)
-        // console.log("randomTemporalId: ", randomTemporalId)
-        // console.log("randomTemporalId: ", randomTemporalId.substring(0,3))
-        // const updateEmails = [...emailsAlerts, {_id:nextId, email: "", id_client:user.id_client}]
         const updateEmails = [...emailsAlerts, {_id:randomTemporalId, email: "", id_client:user.id_client, deleted: false, edited: false}]
-        // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-        //     updateFieldsNew[index].okButtonShow = true
-        // else
-        //     updateFieldsNew[index].okButtonShow = false
-        
-        // console.log("updateEmailsAlertsTemp: ", updateEmailsAlertsTemp)
-
         setEmailsAlerts(updateEmails)
-        // setAddButtonShow(false)
     }
+        
+    
     useEffect(() => {
         // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
         // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
@@ -374,10 +386,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         > 
             <Box sx={modalStyleExternal}>
                 <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
-                    />
                     <Typography align="center" variant="h5">
                         Alerts
                     </Typography>
@@ -467,31 +475,38 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                         <Box className={classes.customBoxRow}
                                             key={email._id}
                                         >
-                                            <TextField
-                                                // id={String(email._id)}
-                                                id={email._id}
-                                                type="email"
-                                                // id={column.dataKey.toString()}
-                                                // id="filled-multiline-flexible"
-                                                value={email.email}
-                                                // onChange={handleFilterChange}
-                                                onChange={ handleEditEmailAlertNew }
-                                                maxRows={1}
-                                                size="small"
-                                                className={classes.newEmailField}
-                                                InputProps={{
-                                                    style: {
-                                                    // height:"36px",
-                                                    borderRadius: 10,
-                                                    },
-                                                }}
-                                            />
-                                            <Box className={classes.customBoxCenter}> 
+                                                <TextField
+                                                    // id={String(email._id)}
+                                                    id={email._id}
+                                                    type="email"
+                                                    // id={column.dataKey.toString()}
+                                                    // id="filled-multiline-flexible"
+                                                    value={email.email}
+                                                    // value={email.error}
+                                                    // onChange={handleFilterChange}
+                                                    onChange={ handleEditEmailAlertNew }
+                                                    // error={email.error}
+                                                    // error={email.error !== ''}
+                                                    error={email.error !== ''}
+                                                    // FormHelperTextProps={{ className: classes.helperText }}
+                                                    helperText={email.error}
+                                                    maxRows={1}
+                                                    size="small"
+                                                    className={classes.newEmailField}
+                                                    InputProps={{
+                                                        style: {
+                                                            // color: "rgb(100, 147, 147, 1)",
+                                                            borderRadius: 10,
+                                                        },
+                                                    }}
+                                                />
+
+                                            <Box className={classes.customBoxCenter}
+                                                style={{maxHeight:"49px"}}
+                                            > 
                                                 <IconButton
                                                     className={classes.ionTrash}
                                                     onClick={() => deleteEmail(email._id)}
-                                                    // id="plusButton"
-                                                    // value={column.id}
                                                 >
                                                     <img 
                                                     src={IonTrash} 
@@ -506,7 +521,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                         <Box className={classes.customBoxRow}>
                             <PlusButton
                                 sizeIco={"45px !important"}
-                                clicked={addInputCustomField}
+                                clicked={addInputEmail}
                             />
                         </Box>
                     </Box>
@@ -518,6 +533,15 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                         clicked={() => handleOpenSaveChanges()}
                         />
                     </Box> 
+                    <SaveChanges
+                        openSaveChanges={openSaveChanges}
+                        closeSaveChanges={handleCloseSaveChanges} 
+                    />
+                    <ErrorModal
+                        openErrorModal={openErrorModal}
+                        closeErrorModal={handleCloseErrorModal}
+                        errorData={errorData} 
+                    />
                 </Box>
             </Box>
         </Modal>

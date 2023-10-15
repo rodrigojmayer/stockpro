@@ -38,6 +38,7 @@ export interface EmailData {
   email?: string;
   deleted?: boolean;
   edited?: boolean;
+  error?: string;
 }
 
 export interface PreferencesEditData {
