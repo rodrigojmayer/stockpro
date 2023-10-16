@@ -86,20 +86,13 @@ export const useStylesGlobal = makeStyles()({
         maxWidth: "250px",
         "& .MuiOutlinedInput-input": {
             backgroundColor: "white", // Set the outline background to white
-            borderRadius: 10,
-            
+            borderRadius: 10, 
         },
         "& .MuiFormHelperText-root": {
-        //   backgroundColor: "transparent", // Set the helper text background to transparent
-        
           fontSize: "20px",
           color: "rgb(255, 147, 147, 1)",
         },
     },
-    // helperText: {
-    //     fontSize: "20px",
-    //     color: "rgb(255, 147, 147, 1) !important",
-    // },
     ionTrash:{
         color: "rgb(255, 47, 47, 1)",
         padding: "0",

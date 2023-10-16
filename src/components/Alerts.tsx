@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { makeStyles } from 'tss-react/mui';
 import { Box,
-         Container,
-         Grid,
          IconButton,
          Modal, 
          TextField,
@@ -17,52 +14,20 @@ import { Box,
         } from '@mui/material';
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
-import Paper from '@mui/material/Paper/Paper';
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
-
 import { OkButton,
          CancelButton, 
          PlusButton,
         } from './Buttons';
-import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
-import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
-import EditIcon from '@mui/icons-material/Edit';
-import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
-import { ColumnData, ColumnDataCustom, ChildProps, UserData, EmailData } from '../types';
+import { ChildProps, EmailData } from '../types';
 import ErrorModal from './ErrorModal';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
 import { EmailsContext } from '../context/EmailsContext';
-
-// };
-// type SaveChangesProps = {
-//     openSaveChanges: boolean;
-//     closeSaveChanges: (newData?: boolean) => void;
-// }
-// interface ChildProps {
-//     open:  boolean
-//     handleClose: (newData: boolean) => void
-// }
-
  
-// const names = [
-//     "Humaira Sims",
-//     "Santiago Solis",
-//     "Dawid Floyd",
-//     "Mateo Barlow",
-//     "Samia Navarro",
-//     "Kaden Fields",
-//     "Genevieve Watkins",
-//     "Mariah Hickman",
-//     "Rocco Richardson",
-//   "Harris Glenn",
-// ]
 interface usersAlertData {
     id: number;
     name: string;
@@ -70,52 +35,12 @@ interface usersAlertData {
     enabled: boolean;
     deleted: boolean;
   }
-  interface emailsAlertData {
-      id: number;
-      email: string;
-      id_client: number;
-    }
-    // interface emailsAlertData2 {
-    //     id_client: number;
-    //     emails: string[];
-    //   }
-
-
-const usersAlert: usersAlertData[] = [
-    { id: 1, name: 'Humaira Sims', email: 'hsims@mail.com', enabled: true , deleted: false},
-    { id: 2, name: 'Santiago Solis', email: 'ssolis@mail.com', enabled: true, deleted: false  },
-    { id: 3, name: 'Dawid Floyd', email: 'dfloyd@mail.com', enabled: true  , deleted: false},
-    { id: 4, name: 'Mateo Barlow', email: 'mbarlow@mail.com', enabled: true, deleted: false  },
-    { id: 5, name: 'Samia Navarro', email: 'snavarro@mail.com', enabled: true, deleted: false  },
-]; 
-const idUsersAlertSelected: number[] = [1,  3, 5];
-
-// const emailsAlert: emailsAlertData[] = [
-//     { id: 1, email: 'email1@test.com', id_client: 1 },
-//     { id: 2, email: 'email2@test.com', id_client: 2 },
-//     { id: 3, email: 'email3@test.com', id_client: 1 },
-// ];
-// const emailsAlert: emailsAlertData2[] = [
-//     { id_client: 1, emails: ['email1_client1@test.com', 'email2_client1@test.com']},
-//     { id_client: 2, emails: ['email1_client2@test.com', 'email2_client2@test.com']},
-//     { id_client: 3, emails: ['email1_client3@test.com', 'email2_client3@test.com']},
-// ];
-
 
 export default function Alerts( { open, handleClose }: ChildProps) {
-    // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
     const close = () => {
         handleClose(false)
     }
-
-    
-    const usersAlertSelected = usersAlert.filter((usr) => {
-        if(idUsersAlertSelected.includes(usr.id))
-        return usr
-    })
-    const [selectedUsers, setSelectedUsers] = useState<usersAlertData[]>(usersAlertSelected);
-    const [selectedUsersTemp, setSelectedUsersTemp] = useState<usersAlertData[]>(usersAlertSelected);
     
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const {user, setUser} = useContext<any>(UserContext)
@@ -124,41 +49,19 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     
     const usersAlertSelected2 = users.filter((usr:any) => usr.alerts_enabled)
     const [selectedUsersTemp2, setSelectedUsersTemp2] = useState<usersAlertData[]>(usersAlertSelected2);
-
-    // const [emailsAlerts, setEmailsAlerts] = useState(emailsAlert)  
     const [emailsAlerts, setEmailsAlerts] = useState(emails)  
-    // const [errorEmailsAlerts, setErrorEmailsAlerts] = useState('');
-    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData[]>(emailsAlerts)
-    // const [emailsAlertsTemp, setEmailsAlertsTemp] = useState<emailsAlertData2[]>(emailsAlerts)
 
     const deleteEmail = (_id:any) => {
-        // console.log("idEmailTemp: ", id)
         const updateEmails = [...emailsAlerts]
-        // const updateFieldsNew = [...customFieldsNew]
         let index = emailsAlerts.findIndex((email: any) => email._id === _id)
-        // let index = emailsAlertsTemp.findIndex(emailTemp => emailTemp.id_client === id)
-        // console.log("index: ", index)
-        // if (index !== -1) {
             updateEmails[index].deleted = true
             updateEmails[index].edited = true
-            // setCustomFields(updateFields)
-            // updateFieldsNew[index].deleted = true
-            // console.log("customFields: ", customFields) 
-            // } else {
-                // index = customFieldsNew.findIndex(field => field.id === id)
-        console.log("updateEmails before: ", updateEmails)
-        // updateEmails.splice(index, 1)
-        // console.log("updateEmails after: ", updateEmails)
-
-        // }
         setEmailsAlerts(updateEmails)
     }
     
     const handleEditEmailAlertNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         const index = emailsAlerts.findIndex((field: { _id: string }) => field._id === event.currentTarget.id)
-        console.log("index: ", index)
         if(index !== -1) {
-            // console.log("emails[index].email: ", emails[index].email)
             const updateEmails = JSON.parse(JSON.stringify(emailsAlerts))
             updateEmails[index].email = event.currentTarget.value
             if(emails[index]){  // To edit an existing email
@@ -185,9 +88,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
         return emailRegex.test(email)
     }
-    // const handleValidate = () => {
-    //     if (validateEmail(email))
-    // }
 
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);    
@@ -237,11 +137,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             // Handle other cases as needed
                         }
                     } finally {
-                        // setIsLoading(())
-                        // setIsLoading((prevLoading: any) => ({
-                        //     ...prevLoading,
-                        //     fieldsFetchCreateStock: loadingSuccess,
-                        // }));
                         setIsLoading((prevLoading: any) => ({
                             ...prevLoading,
                             usersAlert: loadingSuccess,
@@ -338,13 +233,9 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         const emailError = emailsAlerts.filter((email:EmailData) => {
             if(email.error && !email.deleted) return email
         })
-        console.log("emailError: ", emailError)
         if(emailError.length>0){
             setOpenErrorModal(true)
             setErrorData("invalid_email_format")
-        // }else if(profilePass!==profileConfirmPass){
-        //     setOpenErrorModal(true)
-        //     setErrorData("not_confirmed_pass")
         }
         else{
             setOpenSaveChanges(true);
@@ -358,23 +249,14 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         const updateEmails = [...emailsAlerts, {_id:randomTemporalId, email: "", id_client:user.id_client, deleted: false, edited: false}]
         setEmailsAlerts(updateEmails)
     }
-        
     
     useEffect(() => {
-        // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
-        // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
-        // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
-
-        // if(isLoading.emailsAlert || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder){
         if(isLoading.usersAlert || isLoading.emailsAlert ){
-            // alert("Reload page")
-                    // setIsFetching(false)
             window.location.reload();
         }
-}, [isLoading])
+    }, [isLoading])
+
     useEffect(() => {
-        // console.log("useeffect")
-        // setSelectedUsersTemp(selectedUsers)
         setSelectedUsersTemp2(usersAlertSelected2)
         setEmailsAlerts(emails)
     }, [ open])
@@ -402,22 +284,13 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             borderRadius: "10px",} } }}
                             className={classes.selectUsers}
                                 multiple
-                                // value={selectedUsers}
-                                // value={selectedUsersTemp.map(user => user.name)}
                                 value={selectedUsersTemp2.map(user => user.name)}
-                                // onChange={(e) => {
-                                //     const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
-                                //     console.log("selectedUserIds: ",selectedUserIds[selectedUserIds.length-1] )
-                                // }}
                                 onChange={(e) => {
                                     const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
-                                    // const selectedUsersTemp = usersAlert.filter(user => selectedUserIds.includes(user.name));
                                     const selectedUsersTemp2 = users.filter((user:any) => selectedUserIds.includes(user.name));
                                     
-                                    // setSelectedUsersTemp(selectedUsersTemp);
                                     setSelectedUsersTemp2(selectedUsersTemp2);
                                   }}
-                                // onChange={(e) => setSelectedUsers([... e.target.value])}
                                 input={<OutlinedInput label="Users" className={classes.formControlUsers} />}
                                 renderValue={(selected) => (
                                     <Stack gap={1} direction="row" flexWrap="wrap"
@@ -446,7 +319,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                     </Stack>
                                 )}
                                 >
-                                    {/* {usersAlert.map((user) => ( */}
                                     {users.map((user:any) => (
                                         <MenuItem 
                                             className={classes.menuItemUsers}
@@ -455,7 +327,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                             sx={{ justifyContent: "space-between" }}
                                         >
                                             {user.name}
-                                            {/* {selectedUsersTemp.includes(user) ? <CheckIcon color="info" /> : null} */}
                                             {selectedUsersTemp2.includes(user) ? <CheckIcon color="info" /> : null}
                                         </MenuItem>
                                     ))}
@@ -465,9 +336,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             <Typography variant='h6'  >
                                 External emails
                             </Typography>
-                            {/* <EditIcon 
-                            className={classes.editIcon}
-                            /> */}
                         </Box>
                             {emailsAlerts.map((email: EmailData) => {
                                  if (!email.deleted) {
@@ -476,26 +344,17 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                             key={email._id}
                                         >
                                                 <TextField
-                                                    // id={String(email._id)}
                                                     id={email._id}
                                                     type="email"
-                                                    // id={column.dataKey.toString()}
-                                                    // id="filled-multiline-flexible"
                                                     value={email.email}
-                                                    // value={email.error}
-                                                    // onChange={handleFilterChange}
                                                     onChange={ handleEditEmailAlertNew }
-                                                    // error={email.error}
-                                                    // error={email.error !== ''}
                                                     error={email.error !== ''}
-                                                    // FormHelperTextProps={{ className: classes.helperText }}
                                                     helperText={email.error}
                                                     maxRows={1}
                                                     size="small"
                                                     className={classes.newEmailField}
                                                     InputProps={{
                                                         style: {
-                                                            // color: "rgb(100, 147, 147, 1)",
                                                             borderRadius: 10,
                                                         },
                                                     }}
