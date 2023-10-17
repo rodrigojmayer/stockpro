@@ -241,7 +241,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
             setOpenSaveChanges(true);
         }
     };
-    
     const addInputEmail = () => {
         const randomNumber = Math.round(Math.random() * 10000).toString()
         const timestamp = new Date().getTime().toString()

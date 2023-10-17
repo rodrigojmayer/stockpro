@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, 
          TextField,
          Typography,
@@ -44,6 +44,28 @@ export default function ManageStockSecondaryData(
         openOptionsCreate(changeTo)
     }
 
+    useEffect(() => {
+        // const client = filestack.init(process.env.FILESTACK_API_KEY);
+        const client = filestack.init("AiRJTDVe6Svy6ARdJSX4Fz");
+    
+        // Use a function to open the Filestack picker when the component mounts
+        const openPicker = () => {
+          client.picker().open();
+        };
+    
+        openPicker(); // Call the function to open the picker
+    
+        // Optionally, you can add event listeners to handle the results or other actions
+        client.on('success', (result:any) => {
+          console.log('Filestack upload success', result);
+        });
+    
+        client.on('error', (error:any) => {
+          console.error('Filestack error', error);
+        });
+      }, []); // Ensure this effect runs only once when the component mounts
+
+      
     return (
         <div
             hidden= {hiddenPanel}
