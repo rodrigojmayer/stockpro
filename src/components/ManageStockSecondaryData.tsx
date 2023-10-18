@@ -8,7 +8,12 @@ import { UpButton,
          SelectImageButton
         } from './Buttons';
 import { useStylesGlobal } from '../Styles'
-
+import * as filestack from 'filestack-js';
+// declare module 'filestack' {
+//     const filestack: any; // Replace 'any' with the correct type definitions
+  
+//     export = filestack;
+//   }
 interface ChildProps {
     hiddenPanel:  boolean
     openOptionsCreate: (newData: string )=> void
@@ -43,7 +48,8 @@ export default function ManageStockSecondaryData(
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
-
+    
+    
     useEffect(() => {
         // const client = filestack.init(process.env.FILESTACK_API_KEY);
         const client = filestack.init("AiRJTDVe6Svy6ARdJSX4Fz");
