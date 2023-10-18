@@ -27,6 +27,7 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-virtuoso": "^4.3.5",
+    "ts-node": "^10.9.1",
     "tss-react": "^4.8.3"
   },
   "devDependencies": {
@@ -36,6 +37,7 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
     "typescript": "^4.9.3",
-    "vite": "^4.0.0"
+    "vite": "^4.0.0",
+    "react-error-overlay": "6.0.9"  
   }
 }

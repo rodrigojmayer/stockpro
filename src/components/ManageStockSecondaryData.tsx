@@ -48,11 +48,14 @@ export default function ManageStockSecondaryData(
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
-    
-    
+    // const configValue: string = (process.env.FILESTACK_API_KEY as string);
+    // const configValue : any = process.env.FILESTACK_API_KEY 
+    // console.log("process.env.FILESTACK_API_KEY: ", configValue)
+    const apiKey = import.meta.env.VITE_FILESTACK_API_KEY;
+// console.log("VITE_FILESTACK_API_KEY:", apiKey);
     useEffect(() => {
-        // const client = filestack.init(process.env.FILESTACK_API_KEY);
-        const client = filestack.init("AiRJTDVe6Svy6ARdJSX4Fz");
+        const client = filestack.init(apiKey);
+        // const client = filestack.init("AiRJTDVe6Svy6ARdJSX4Fz");
     
         // Use a function to open the Filestack picker when the component mounts
         const openPicker = () => {
