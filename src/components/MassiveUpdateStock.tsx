@@ -340,7 +340,9 @@ export default function MassiveUpdateStock(
       _id: item._id,
       product: item.product,
       amount: item.amount,
-      update_amount: ''
+      update_amount: '',
+      alert_amount: item.alert_amount,
+      alert_amount_enabled: item.alert_amount_enabled,
     }})
     // const filteredFields = data.map(({ _id, product, otherField }) => ({
     //   _id,
@@ -384,8 +386,13 @@ export default function MassiveUpdateStock(
                 
                 if(stock.update_amount){
                     // console.log("enter to element close Save: ", stock)
-                    console.log("(stock.update_amount * signUpdate) + stock.amount: ", (stock.update_amount * signUpdate) + stock.amount)
-                    
+                    // console.log("(stock.update_amount * signUpdate) + stock.amount: ", (stock.update_amount * signUpdate) + stock.amount)
+                    // console.log("stock.alerted_amount: ", stock.alerted_amount)
+                    // console.log("stock: ", stock)
+                    const newAmount = (stock.update_amount * signUpdate) + stock.amount
+                    const alertedAmount = (stock.alert_amount_enabled && (stock.alert_amount >= newAmount))
+                    // console.log("newAmount: ", newAmount)
+                    // console.log("alertedAmount: ", alertedAmount)
                     const fetchMassiveUpdateStock = async () => {
                         let loadingSuccess: boolean = false
                         try {
@@ -396,8 +403,8 @@ export default function MassiveUpdateStock(
                                     // Add any other requires headers here
                                 },
                                 body:JSON.stringify({
-                                    "amount": (stock.update_amount * signUpdate) + stock.amount,
-                                    // "alerted_amount": alertedAmount
+                                    "amount": newAmount,
+                                    "alerted_amount": alertedAmount
                                 })
                             })
         
