@@ -126,7 +126,7 @@ function App() {
     setDisabledUpdateButton(value_disable)
   }
   
-  const [ massiveUpdate, seMassiveUpdate] = useState<Data[]>([{
+  const [ massiveUpdate, setMassiveUpdate] = useState<Data[]>([{
     "_id":0,
     "id": 0,
     "id_client": 0,
