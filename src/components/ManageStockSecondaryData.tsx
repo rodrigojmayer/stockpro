@@ -8,7 +8,7 @@ import { UpButton,
          SelectImageButton
         } from './Buttons';
 import { useStylesGlobal } from '../Styles'
-import * as filestack from 'filestack-js';
+// import * as filestack from 'filestack-js';
 // declare module 'filestack' {
 //     const filestack: any; // Replace 'any' with the correct type definitions
   
@@ -48,31 +48,31 @@ export default function ManageStockSecondaryData(
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
-    // const configValue: string = (process.env.FILESTACK_API_KEY as string);
-    // const configValue : any = process.env.FILESTACK_API_KEY 
-    // console.log("process.env.FILESTACK_API_KEY: ", configValue)
-    const apiKey = import.meta.env.VITE_FILESTACK_API_KEY;
-// console.log("VITE_FILESTACK_API_KEY:", apiKey);
-    useEffect(() => {
-        const client = filestack.init(apiKey);
-        // const client = filestack.init("AiRJTDVe6Svy6ARdJSX4Fz");
+//     // const configValue: string = (process.env.FILESTACK_API_KEY as string);
+//     // const configValue : any = process.env.FILESTACK_API_KEY 
+//     // console.log("process.env.FILESTACK_API_KEY: ", configValue)
+//     const apiKey = import.meta.env.VITE_FILESTACK_API_KEY;
+// // console.log("VITE_FILESTACK_API_KEY:", apiKey);
+//     useEffect(() => {
+//         const client = filestack.init(apiKey);
+//         // const client = filestack.init("AiRJTDVe6Svy6ARdJSX4Fz");
     
-        // Use a function to open the Filestack picker when the component mounts
-        const openPicker = () => {
-          client.picker().open();
-        };
+//         // Use a function to open the Filestack picker when the component mounts
+//         const openPicker = () => {
+//           client.picker().open();
+//         };
     
-        openPicker(); // Call the function to open the picker
+//         openPicker(); // Call the function to open the picker
     
-        // Optionally, you can add event listeners to handle the results or other actions
-        client.on('success', (result:any) => {
-          console.log('Filestack upload success', result);
-        });
+//         // Optionally, you can add event listeners to handle the results or other actions
+//         client.on('success', (result:any) => {
+//           console.log('Filestack upload success', result);
+//         });
     
-        client.on('error', (error:any) => {
-          console.error('Filestack error', error);
-        });
-      }, []); // Ensure this effect runs only once when the component mounts
+//         client.on('error', (error:any) => {
+//           console.error('Filestack error', error);
+//         });
+//       }, []); // Ensure this effect runs only once when the component mounts
 
       
     return (
