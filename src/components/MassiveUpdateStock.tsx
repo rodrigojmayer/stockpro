@@ -196,7 +196,7 @@ interface ChildProps {
     // columnsCustom: ColumnData[] 
 }
 
-export default function MassiveUploadStock( 
+export default function MassiveUpdateStock( 
     {   open, 
         handleClose, 
         data,

@@ -14,7 +14,7 @@ import Profile from './Profile';
 import { ColumnData, Data, DataMenuOptions } from '../types';
 import Preferences from './Preferences';
 import Users from './Users';
-// import MassiveUploadStock from './MassiveUploadStock';
+// import MassiveUpdateStock from './MassiveUpdateStock';
 
 const useStyles = makeStyles()({
     appbar: {
@@ -121,7 +121,7 @@ export default function Layout(
                  open={openOptions.alerts} 
                  handleClose={handleCloseOptions} 
             /> 
-            {/* <MassiveUploadStock
+            {/* <MassiveUpdateStock
                 open={openOptions.massive}
                 handleClose={handleCloseOptions} 
                 data={data} 

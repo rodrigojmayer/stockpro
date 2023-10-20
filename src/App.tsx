@@ -16,7 +16,7 @@ import { UserContext } from './context/UserContext';
 import { IsLoadingContext } from './context/IsLoadingContext';
 import { ColumnsContext } from './context/ColumnsContext';
 import { ProductsContext } from './context/ProductsContext';
-import MassiveUploadStock from './components/MassiveUploadStock';
+import MassiveUpdateStock from './components/MassiveUpdateStock';
 
 
 const theme = createTheme({
@@ -126,7 +126,7 @@ function App() {
     setDisabledUpdateButton(value_disable)
   }
   
-  const [ massiveUpload, setMassiveUpload] = useState<Data[]>([{
+  const [ massiveUpdate, seMassiveUpdate] = useState<Data[]>([{
     "_id":0,
     "id": 0,
     "id_client": 0,
@@ -147,12 +147,12 @@ function App() {
     "alerted_date": false,
     "custom_fields": [],
   }])
-  const [ showMassiveUploadStock, setShowMassiveUploadStock ] = useState(false)
-  const handleMassiveUploadStock = () => setShowMassiveUploadStock(false)
-  const openMassiveUploadStoc = (newData:String) => {
-    setShowMassiveUploadStock(true)
+  const [ showMassiveUpdateStock, setShowMassiveUpdateStock ] = useState(false)
+  const handleMassiveUpdateStock = () => setShowMassiveUpdateStock(false)
+  const openMassiveUpdateStoc = (newData:String) => {
+    setShowMassiveUpdateStock(true)
     // console.log("checkStock: ", checkStock)
-    setMassiveUpload(
+    setMassiveUpdate(
       products.filter((item:any) => {
         // console.log("item: ", item._id)
         return (
@@ -252,7 +252,7 @@ function App() {
                 <Grid container>
                   <Grid item xs={2} >
                     <UpdateButton
-                      clicked={()=>openMassiveUploadStoc("update")}
+                      clicked={()=>openMassiveUpdateStoc("update")}
                       disabled={disabledUpdateButton}
                     />
                   </Grid>
@@ -288,13 +288,13 @@ function App() {
                 columnsCustom={filteredColumnsCustom}
                 productUpdate={productUpdate}
             />
-            <MassiveUploadStock
+            <MassiveUpdateStock
                 // open={openOptions.massive}
-                open={showMassiveUploadStock}
+                open={showMassiveUpdateStock}
                 // handleClose={handleCloseOptions} 
-                handleClose={handleMassiveUploadStock}
+                handleClose={handleMassiveUpdateStock}
                 // data={data} 
-                data={massiveUpload}
+                data={massiveUpdate}
             />
           </ThemeProvider>
         </div>
