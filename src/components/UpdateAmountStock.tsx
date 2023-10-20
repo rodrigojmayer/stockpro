@@ -176,8 +176,7 @@ export default function UpdateAmountStock(
 
     useEffect(() => {
         // setValueUpdate(productUpdate.amount==0?1:-1)
-        if(Number(productUpdate.amount)===0)
-            setSignUpdate(1)
+        setSignUpdate(Number(productUpdate.amount)===0?1:-1)
         setValueUpdate(1)
         setAlertedAmount(false);
         setMessageBeforeSave("");
@@ -293,7 +292,7 @@ export default function UpdateAmountStock(
     }, [isLoading]) // To know if after save should reload the page
 
     
-    
+    // console.log("signUpdate: ", signUpdate)
     return (
         <Modal
         open={open} 
