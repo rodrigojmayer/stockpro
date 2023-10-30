@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Box, 
+         Button, 
          TextField,
          Typography,
         } from '@mui/material';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import { UpButton,
-         SelectImageButton
+         SelectImageButton,
+         AddImageButton
         } from './Buttons';
 import { useStylesGlobal } from '../Styles'
+import { unstable_gridTabIndexColumnHeaderFilterSelector } from '@mui/x-data-grid-premium';
+import { PickerOverlay } from 'filestack-react';
+
 // import * as filestack from 'filestack-js';
 // declare module 'filestack' {
 //     const filestack: any; // Replace 'any' with the correct type definitions
@@ -48,11 +53,17 @@ export default function ManageStockSecondaryData(
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
+
+    const [showPicker, setShowPicker] = useState(false)
+    const handleShowPicker = () => {
+        console.log("handleShowPicker showPicker: ", showPicker)
+        setShowPicker((prevState) => !prevState)
+    }
 //     // const configValue: string = (process.env.FILESTACK_API_KEY as string);
 //     // const configValue : any = process.env.FILESTACK_API_KEY 
 //     // console.log("process.env.FILESTACK_API_KEY: ", configValue)
-//     const apiKey = import.meta.env.VITE_FILESTACK_API_KEY;
-// // console.log("VITE_FILESTACK_API_KEY:", apiKey);
+    const apiKey = import.meta.env.VITE_FILESTACK_API_KEY;
+//  //  console.log("VITE_FILESTACK_API_KEY:", apiKey);
 //     useEffect(() => {
 //         const client = filestack.init(apiKey);
 //         // const client = filestack.init("AiRJTDVe6Svy6ARdJSX4Fz");
@@ -110,11 +121,20 @@ export default function ManageStockSecondaryData(
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>
-                    <SelectImageButton 
+                    {/* <SelectImageButton 
                         imageUrl = {imageUrl}
                         setImageUrl = {onSetImageUrl}
+                    /> */}
+                    <AddImageButton
+                        clicked={handleShowPicker}
                     />
                 </Box> 
+                {showPicker && (
+                    <PickerOverlay
+                        apikey={apiKey}
+                        onUploadDone={(res) => console.log(res)}
+                    />
+                )}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
                     <div className={classes.customBoxCenter}>
                         <UpButton

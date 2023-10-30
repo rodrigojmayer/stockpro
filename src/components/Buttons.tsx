@@ -646,6 +646,82 @@ export function SelectImageButton( { imageUrl, setImageUrl } : SelectImageButton
   )
 }
 
+// interface AddImageButtonProps{
+//   imageUrl?:string
+//   setImageUrl?:(newData: string) => void
+//   clicked: (id?)
+// }
+export function AddImageButton( { sizeIco, roundedIco, cusField, clicked, submitOk }: ButtonProps ) {
+  const { classes } = useStyles()
+
+  const [selectedImage, setSelectedImage] = useState<File | null>(null)
+
+  let  noPadding, borRad, filterColor = 0, fontIco = 35, bor = 5
+  borRad="50px !important"
+  sizeIco = "50px"
+  roundedIco = true
+  
+  // if(sizeIco) {
+  //   fontIco = (parseInt(sizeIco))
+  //   // bor = 3
+  // }
+  // if(roundedIco){
+  //   noPadding=0
+  //   borRad="50px !important"
+  // } 
+
+  const handleClick = (() => {
+    console.log("Buttons handleClick")
+    // if(cusField)
+    //   clicked(cusField.id, cusField.value)
+    // else
+      clicked()
+  })
+  // useEffect(() => {
+  //   if(selectedImage){
+  //     // console.log("selectedImage: ", selectedImage)
+  //     // console.log("URL: ", URL.createObjectURL(selectedImage))
+  //     // setImageUrl(URL.createObjectURL(selectedImage))
+
+  //   }
+  // }, [selectedImage])
+  return (
+        <ThemeProvider theme={theme}>
+          <Button 
+            variant="outlined"
+            className={`${classes.btnCommonStyle} ${classes.btnEdit}`}
+            color='neutral' 
+            sx={{ 
+              border: bor, 
+              padding:noPadding, 
+              paddingTop:0,  
+              paddingBottom:0, 
+              minWidth: sizeIco, 
+              width: sizeIco, 
+              height: sizeIco,
+              borderRadius: borRad,
+              margin: 1,
+            }}  
+            // onClick={handleClick}
+            onClick={() => clicked()}
+          >
+            {/* { selectedImage ? (
+                  <img 
+                    src={imageUrl} 
+                    alt={selectedImage.name} 
+                    style={{ borderRadius:"3px", height: "100%", width: "100%", objectFit: "contain" }}
+                    
+                  />
+               ) :  */}
+               <AddAPhotoIcon /> 
+              
+               {/* }  */}
+          </Button>
+        </ThemeProvider>
+
+  )
+}
+
 
 
 export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled }: ButtonProps ) {
