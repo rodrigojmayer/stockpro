@@ -125,14 +125,26 @@ export default function ManageStockSecondaryData(
                         imageUrl = {imageUrl}
                         setImageUrl = {onSetImageUrl}
                     /> */}
+                    {imageUrl  || 
                     <AddImageButton
                         clicked={handleShowPicker}
-                    />
+                    />}
                 </Box> 
                 {showPicker && (
                     <PickerOverlay
                         apikey={apiKey}
-                        onUploadDone={(res) => console.log(res)}
+                        // onUploadDone={(res) => console.log(res)}
+                        // onUploadDone={(res: any) => console.log(res.filesUploaded[0].url)}
+                        onUploadDone={(res: any) => {
+                            onSetImageUrl(res.filesUploaded[0].url)
+                            handleShowPicker()
+                            }}
+                        pickerOptions={{
+                            onClose: () => {
+                                handleShowPicker()
+                            }
+                        }}
+
                     />
                 )}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>

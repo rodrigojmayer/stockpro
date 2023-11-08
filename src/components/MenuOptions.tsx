@@ -72,11 +72,9 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     
     const  buttons = [
         <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
-        // <Button value="massive" key="massive" variant="text" onClick={selOp}>Massive upload</Button>,
         <Button value="profile" key="profile" variant="text" onClick={selOp}>Profile</Button>,
         <Button value="preferences" key="preferences" variant="text" onClick={selOp}>Preferences</Button>,
-        <Button value="login" key="login" variant="text" onClick={selOp}>Login?</Button>,
-        <Button value="logout" key="logout" variant="text" onClick={selOp}>Logout?</Button>,
+        <Button value="logout" key="logout" variant="text" onClick={selOp}>Log out</Button>,
     ];
  
     let height_box = "50%"
