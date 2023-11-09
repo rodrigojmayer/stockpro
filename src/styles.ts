@@ -59,6 +59,9 @@ export const useStylesGlobal = makeStyles()({
         justifyContent:  "center",
         gap: 8,
     },
+    customZIndexTop: {
+        zIndex:999,
+    },
     customBoxCenter: {
         display: "flex",
         alignItems: "center", 

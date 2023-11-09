@@ -90,7 +90,7 @@ export default function ManageStockSecondaryData(
         <div
             hidden= {hiddenPanel}
         >
-            <Typography align='center' variant='h6'>Secondary data</Typography>
+            <Typography align='center' variant='h6' >Secondary data</Typography>
             <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
                 <Box className={classes.customBoxRow}>
                     <TextField
@@ -131,21 +131,23 @@ export default function ManageStockSecondaryData(
                     />}
                 </Box> 
                 {showPicker && (
-                    <PickerOverlay
-                        apikey={apiKey}
-                        // onUploadDone={(res) => console.log(res)}
-                        // onUploadDone={(res: any) => console.log(res.filesUploaded[0].url)}
-                        onUploadDone={(res: any) => {
-                            onSetImageUrl(res.filesUploaded[0].url)
-                            handleShowPicker()
+                    <Box className={classes.customZIndexTop}>
+                        <PickerOverlay
+                       
+                            apikey={apiKey}
+                            // onUploadDone={(res) => console.log(res)}
+                            // onUploadDone={(res: any) => console.log(res.filesUploaded[0].url)}
+                            onUploadDone={(res: any) => {
+                                onSetImageUrl(res.filesUploaded[0].url)
+                                // handleShowPicker()
                             }}
-                        pickerOptions={{
-                            onClose: () => {
-                                handleShowPicker()
-                            }
-                        }}
-
-                    />
+                            pickerOptions={{
+                                onClose: () => {
+                                    handleShowPicker()
+                                },
+                            }}
+                        />
+                    </Box>
                 )}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
                     <div className={classes.customBoxCenter}>
@@ -158,8 +160,8 @@ export default function ManageStockSecondaryData(
                     <div className={classes.customBoxCenter}>  
                         <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
                         <UpButton
-                        direction="right"
-                        clicked={() => handleHiddenOptions("alerts")}
+                            direction="right"
+                            clicked={() => handleHiddenOptions("alerts")}
                         />
                     </div>
                 </Box>
