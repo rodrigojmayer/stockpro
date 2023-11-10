@@ -145,6 +145,7 @@ export default function ManageStockSecondaryData(
                                 onClose: () => {
                                     handleShowPicker()
                                 },
+                                lang: "es"
                             }}
                         />
                     </Box>
