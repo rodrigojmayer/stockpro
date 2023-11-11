@@ -121,14 +121,20 @@ export default function ManageStockSecondaryData(
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>
+                    <img src={imageUrl}/>
+                </Box> 
+                <Box className={classes.customBoxRow}>
                     {/* <SelectImageButton 
                         imageUrl = {imageUrl}
                         setImageUrl = {onSetImageUrl}
                     /> */}
-                    {imageUrl  || 
-                    <AddImageButton
-                        clicked={handleShowPicker}
-                    />}
+                    {/* {imageUrl  ||  */}
+                    {/* {   imageUrl ?  */}
+                        {/* :  */}
+                        <AddImageButton
+                            clicked={handleShowPicker}
+                        />
+                    {/* } */}
                 </Box> 
                 {showPicker && (
                     <Box className={classes.customZIndexTop}>
