@@ -13,6 +13,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
     columns: true,
     products: true,
     user: true,
+    filestack: true,
     measures: true,
     accessLevels: true,
     categories: true,

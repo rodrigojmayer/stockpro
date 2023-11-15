@@ -88,29 +88,6 @@ export interface Data {
   alerted_date?: boolean;
 }
 
-// export interface DataManageStock {
-//   _id:number;
-//   id: number;
-//   id_client: number;
-//   product: string;
-//   amount: number | string;
-//   measure: string;
-//   category: string;
-//   sub_category: string;
-//   [key?: string]: any;
-//   custom_fields?: array;
-//   id_custom_field_product?: number;
-//   code?: string;
-//   price?: number | string;
-//   description?: string;
-//   url_image?: string;
-//   alert_amount?: number | string;
-//   alert_amount_enabled?: boolean;
-//   alerted_amount?: boolean;
-//   alert_date?: Date | string;
-//   alert_date_enabled?: boolean;
-//   alerted_date?: boolean;
-// }
 
 export interface DataTable {
   data: Data[] 
@@ -201,4 +178,11 @@ export interface ProductEditData {
   alert_date_enabled?: boolean;
   alerted_date?: boolean;
   deleted?: boolean;
+}
+export interface FilestackData {
+  id_client: number;
+  filestack_email: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  apikey?: string;
 }

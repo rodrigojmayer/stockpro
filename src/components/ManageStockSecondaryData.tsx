@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Box, 
          Button, 
          TextField,
@@ -11,6 +11,7 @@ import { UpButton,
         } from './Buttons';
 import { useStylesGlobal } from '../Styles'
 import { unstable_gridTabIndexColumnHeaderFilterSelector } from '@mui/x-data-grid-premium';
+import { FilestackContext } from '../context/FilestackContext';
 import { PickerOverlay } from 'filestack-react';
 
 // import * as filestack from 'filestack-js';
@@ -42,6 +43,8 @@ export default function ManageStockSecondaryData(
     }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const close = () => {}
+    
+    const { filestack } = useContext<any>(FilestackContext);
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
@@ -62,7 +65,10 @@ export default function ManageStockSecondaryData(
 //     // const configValue: string = (process.env.FILESTACK_API_KEY as string);
 //     // const configValue : any = process.env.FILESTACK_API_KEY 
 //     // console.log("process.env.FILESTACK_API_KEY: ", configValue)
-    const apiKey = import.meta.env.VITE_FILESTACK_API_KEY;
+    // const apiKey = import.meta.env.VITE_FILESTACK_API_KEY;
+    console.log("filestack:", filestack);
+    console.log("filestack.apikey:", filestack[0].apikey);
+    const apiKey = filestack[0].apikey;
 //  //  console.log("VITE_FILESTACK_API_KEY:", apiKey);
 //     useEffect(() => {
 //         const client = filestack.init(apiKey);

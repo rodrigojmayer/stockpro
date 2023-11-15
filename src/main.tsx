@@ -6,6 +6,7 @@ import './index.css'
 // import { UserContext } from './context/UserContext'
 // import { UserData } from './types'
 import { UserProvider } from './context/UserContext';
+import { FilestackProvider } from './context/FilestackContext';
 import { UsersProvider } from './context/UsersContext';
 import { EmailsProvider } from './context/EmailsContext';
 import { CategoriesProvider } from './context/CategoriesContext';
@@ -32,21 +33,23 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
     <IsLoadingProvider >
       <UserProvider >
-        <UsersProvider >
-          <EmailsProvider >
-            <MeasuresProvider >
-              <AccessLevelsProvider>
-                <CategoriesProvider >
-                  <ColumnsProvider >
-                    <ProductsProvider >
-                      <App />
-                    </ProductsProvider>
-                  </ColumnsProvider>
-                </CategoriesProvider>
-              </AccessLevelsProvider>
-            </MeasuresProvider>
-          </EmailsProvider>
-        </UsersProvider>
+        <FilestackProvider >
+          <UsersProvider >
+            <EmailsProvider >
+              <MeasuresProvider >
+                <AccessLevelsProvider>
+                  <CategoriesProvider >
+                    <ColumnsProvider >
+                      <ProductsProvider >
+                        <App />
+                      </ProductsProvider>
+                    </ColumnsProvider>
+                  </CategoriesProvider>
+                </AccessLevelsProvider>
+              </MeasuresProvider>
+            </EmailsProvider>
+          </UsersProvider>
+        </FilestackProvider>
       </UserProvider>
     </IsLoadingProvider>
   // </React.StrictMode>, 
