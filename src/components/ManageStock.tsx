@@ -450,6 +450,8 @@ export default function ManageStock(
                     <ManageStockSecondaryData 
                         hiddenPanel={openOptionsCreate.secondaryData}
                         openOptionsCreate={handleOpenOptionsCreate} 
+
+                        id_product={data._id}
                         
                         stockPriceTemp={stockPriceTemp}
                         onStockPriceChange={handleStockPriceChange}

@@ -185,4 +185,5 @@ export interface FilestackData {
   createdAt: Date | string;
   updatedAt: Date | string;
   apikey?: string;
+  signature?: string;
 }

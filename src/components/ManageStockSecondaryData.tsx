@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { Box, 
-         Button, 
+         Button,
+         IconButton, 
          TextField,
          Typography,
         } from '@mui/material';
@@ -13,6 +14,7 @@ import { useStylesGlobal } from '../Styles'
 import { unstable_gridTabIndexColumnHeaderFilterSelector } from '@mui/x-data-grid-premium';
 import { FilestackContext } from '../context/FilestackContext';
 import { PickerOverlay } from 'filestack-react';
+import IonTrash from "../assets/ion_trash.svg";
 
 // import * as filestack from 'filestack-js';
 // declare module 'filestack' {
@@ -23,6 +25,7 @@ import { PickerOverlay } from 'filestack-react';
 interface ChildProps {
     hiddenPanel:  boolean
     openOptionsCreate: (newData: string )=> void
+    id_product: number
     stockPriceTemp: number | string
     onStockPriceChange: (newData: number | string )=> void
     stockDescriptionTemp: string
@@ -34,6 +37,7 @@ interface ChildProps {
 export default function ManageStockSecondaryData(
     {   hiddenPanel, 
         openOptionsCreate, 
+        id_product,
         stockPriceTemp, 
         onStockPriceChange, 
         stockDescriptionTemp, 
@@ -69,6 +73,8 @@ export default function ManageStockSecondaryData(
     console.log("filestack:", filestack);
     console.log("filestack.apikey:", filestack[0].apikey);
     const apiKey = filestack[0].apikey;
+    const signature = filestack[0].signature;
+    const policy = "eyJleHBpcnkiOjI3NjI0NjAwMDB9"; // The policy is always the same for for all the files for the date 2057-07-16
 //  //  console.log("VITE_FILESTACK_API_KEY:", apiKey);
 //     useEffect(() => {
 //         const client = filestack.init(apiKey);
@@ -90,11 +96,71 @@ export default function ManageStockSecondaryData(
 //           console.error('Filestack error', error);
 //         });
 //       }, []); // Ensure this effect runs only once when the component mounts
-
-      
+    const deleteFilesStock = (imgurl: string) => {
+        console.log("Deleting this filestock imgurl: ", imgurl)
+        console.log("Deleting this filestock apiKey: ", apiKey)
+        const fileHandle = imgurl.split('/')[3];
+        console.log("Deleting apiKey: ", apiKey)
+        console.log("Deleting fileHandle: ", fileHandle)
+        console.log("Deleting policy: ", policy)
+        console.log("Deleting signature: ", signature)
+        // To delete I need:
+        // 1- apiKey OK
+        // 2- fileHandle OK
+        // 3- policy OK
+        // 4- const signature = '60ed5a44f2dc60536c692a0621bff6e6faee11e2206eec1f306e30c7c8111cfe';
+        
+        const url = `https://www.filestackapi.com/api/file/${fileHandle}?key=${apiKey}&policy=${policy}&signature=${signature}`; 
+        const requestOptions = {
+            method: 'DELETE',
+        };
+        fetch(url, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('File deleted successfully');
+        })
+        .catch(error => {
+            console.error('There was a problem deleting the file:', error);
+        });
+        onSetImageUrl("")
+        const fetchDeleteImageProduct = async () => {
+            try {
+                const response = await fetch(`http://localhost:4000/api/products/${id_product}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                    },
+                    body:JSON.stringify({url_image:""})
+                })
+                // Check if the response status is successful
+                if (response.ok) {
+                    // const responseData = await response.json() // parse the response data
+                } else {
+                    // Handle non-successful responses
+                    console.error('Request failed: ', response.status, response.statusText)
+                    // Handle the error here
+                }
+            } catch (error: unknown) {
+                if (typeof error === 'string') {
+                    // 'error' is now narrowed down to type 'string'
+                    console.error('Error:', error)
+                } else if (error instanceof Error) {
+                    // 'error' is now narrowed down to type 'Error'
+                    console.error('Error object:', error.message)
+                } else {
+                    // Handle other cases as needed
+                }
+            } finally {
+            }
+        } 
+        fetchDeleteImageProduct()
+    }
+                
     return (
         <div
-            hidden= {hiddenPanel}
+        hidden= {hiddenPanel}
         >
             <Typography align='center' variant='h6' >Secondary data</Typography>
             <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
@@ -134,9 +200,22 @@ export default function ManageStockSecondaryData(
                         imageUrl = {imageUrl}
                         setImageUrl = {onSetImageUrl}
                     /> */}
-                    {/* {imageUrl  ||  */}
-                    {/* {   imageUrl ?  */}
-                        {/* :  */}
+                    {imageUrl  && 
+                    //   {  imageUrl ?  
+                    //       :  
+                        
+                        <IconButton
+                            className={classes.ionTrash}
+                            onClick={() => deleteFilesStock(imageUrl)}
+                            // id="plusButton"
+                            // value={column.id}
+                            >
+                                <img 
+                                src={IonTrash} 
+                                alt="Trash"
+                                />
+                        </IconButton>
+                     }
                         <AddImageButton
                             clicked={handleShowPicker}
                         />
@@ -148,9 +227,11 @@ export default function ManageStockSecondaryData(
                        
                             apikey={apiKey}
                             // onUploadDone={(res) => console.log(res)}
+                            // onUploadDone={(res filesUploaded) => console.log(res.filesUploaded[0])}
                             // onUploadDone={(res: any) => console.log(res.filesUploaded[0].url)}
                             onUploadDone={(res: any) => {
                                 onSetImageUrl(res.filesUploaded[0].url)
+                                console.log("res.filesUploaded[0]: ", res.filesUploaded[0])
                                 // handleShowPicker()
                             }}
                             pickerOptions={{

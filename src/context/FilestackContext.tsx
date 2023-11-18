@@ -10,6 +10,7 @@ const INITIAL_FILESTACK = {
   createdAt: '',
   updatedAt: '',
   apikey: '',
+  signature: '',
 };
 
 type FilestackContextType = {
