@@ -48,7 +48,7 @@ export default function ManageStockSecondaryData(
     const { classes } = useStylesGlobal();
     const close = () => {}
     
-    const { filestack } = useContext<any>(FilestackContext);
+    const { filestack, deleteFilesStock } = useContext<any>(FilestackContext);
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
@@ -96,66 +96,67 @@ export default function ManageStockSecondaryData(
 //           console.error('Filestack error', error);
 //         });
 //       }, []); // Ensure this effect runs only once when the component mounts
-    const deleteFilesStock = (imgurl: string) => {
-        console.log("Deleting this filestock imgurl: ", imgurl)
-        console.log("Deleting this filestock apiKey: ", apiKey)
-        const fileHandle = imgurl.split('/')[3];
-        console.log("Deleting apiKey: ", apiKey)
-        console.log("Deleting fileHandle: ", fileHandle)
-        console.log("Deleting policy: ", policy)
-        console.log("Deleting signature: ", signature)
-        // To delete I need:
-        // 1- apiKey OK
-        // 2- fileHandle OK
-        // 3- policy OK
-        // 4- const signature = '60ed5a44f2dc60536c692a0621bff6e6faee11e2206eec1f306e30c7c8111cfe';
+    const removeImg = (imgurl: string) => {
+        // console.log("Deleting this filestock imgurl: ", imgurl)
+        // console.log("Deleting this filestock apiKey: ", apiKey)
+        // const fileHandle = imgurl.split('/')[3];
+        // console.log("Deleting apiKey: ", apiKey)
+        // console.log("Deleting fileHandle: ", fileHandle)
+        // console.log("Deleting policy: ", policy)
+        // console.log("Deleting signature: ", signature)
+        // // To delete I need:
+        // // 1- apiKey OK
+        // // 2- fileHandle OK
+        // // 3- policy OK
+        // // 4- const signature = '60ed5a44f2dc60536c692a0621bff6e6faee11e2206eec1f306e30c7c8111cfe';
         
-        const url = `https://www.filestackapi.com/api/file/${fileHandle}?key=${apiKey}&policy=${policy}&signature=${signature}`; 
-        const requestOptions = {
-            method: 'DELETE',
-        };
-        fetch(url, requestOptions)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log('File deleted successfully');
-        })
-        .catch(error => {
-            console.error('There was a problem deleting the file:', error);
-        });
+        deleteFilesStock(id_product, imgurl)
+        // const url = `https://www.filestackapi.com/api/file/${fileHandle}?key=${apiKey}&policy=${policy}&signature=${signature}`; 
+        // const requestOptions = {
+        //     method: 'DELETE',
+        // };
+        // fetch(url, requestOptions)
+        // .then(response => {
+        //     if (!response.ok) {
+        //         throw new Error('Network response was not ok');
+        //     }
+        //     console.log('File deleted successfully');
+        // })
+        // .catch(error => {
+        //     console.error('There was a problem deleting the file:', error);
+        // });
         onSetImageUrl("")
-        const fetchDeleteImageProduct = async () => {
-            try {
-                const response = await fetch(`http://localhost:4000/api/products/${id_product}`, {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json', // Set the appropriate content-type for my API
-                    },
-                    body:JSON.stringify({url_image:""})
-                })
-                // Check if the response status is successful
-                if (response.ok) {
-                    // const responseData = await response.json() // parse the response data
-                } else {
-                    // Handle non-successful responses
-                    console.error('Request failed: ', response.status, response.statusText)
-                    // Handle the error here
-                }
-            } catch (error: unknown) {
-                if (typeof error === 'string') {
-                    // 'error' is now narrowed down to type 'string'
-                    console.error('Error:', error)
-                } else if (error instanceof Error) {
-                    // 'error' is now narrowed down to type 'Error'
-                    console.error('Error object:', error.message)
-                } else {
-                    // Handle other cases as needed
-                }
-            } finally {
-            }
-        } 
-        fetchDeleteImageProduct()
+        // const fetchDeleteImageProduct = async () => {
+        //     try {
+        //         const response = await fetch(`http://localhost:4000/api/products/${id_product}`, {
+        //             method: 'PATCH',
+        //             headers: {
+        //                 'Content-Type': 'application/json', // Set the appropriate content-type for my API
+        //             },
+        //             body:JSON.stringify({url_image:""})
+        //         })
+        //         // Check if the response status is successful
+        //         if (response.ok) {
+        //             // const responseData = await response.json() // parse the response data
+        //         } else {
+        //             // Handle non-successful responses
+        //             console.error('Request failed: ', response.status, response.statusText)
+        //             // Handle the error here
+        //         }
+        //     } catch (error: unknown) {
+        //         if (typeof error === 'string') {
+        //             // 'error' is now narrowed down to type 'string'
+        //             console.error('Error:', error)
+        //         } else if (error instanceof Error) {
+        //             // 'error' is now narrowed down to type 'Error'
+        //             console.error('Error object:', error.message)
+        //         } else {
+        //             // Handle other cases as needed
+        //         }
+        //     } finally {
+        //     }
+        // } 
+        // fetchDeleteImageProduct()
     }
                 
     return (
@@ -206,7 +207,7 @@ export default function ManageStockSecondaryData(
                         
                         <IconButton
                             className={classes.ionTrash}
-                            onClick={() => deleteFilesStock(imageUrl)}
+                            onClick={() => removeImg(imageUrl)}
                             // id="plusButton"
                             // value={column.id}
                             >
