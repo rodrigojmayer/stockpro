@@ -78,7 +78,8 @@ export default function ManageStock(
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category); 
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
-    const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');
+    const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');  
+    const [unsavedImages, setUnsavedImages] = useState<string[]>([])
     const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:0);
     const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(data.alert_amount_enabled?data.alert_amount_enabled:false);
     const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(data.alerted_amount?data.alerted_amount:false);
@@ -96,13 +97,14 @@ export default function ManageStock(
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
             
-            console.log("data.alert_date_enabled: ", data.alert_date_enabled)
-            console.log("stockAlertDateEnabledTemp: ", stockAlertDateEnabledTemp)
-            console.log("data.alerted_date: ", data.alerted_date)
-            console.log("stockAlertedDateTemp: ", stockAlertedDateTemp)
+            // console.log("data.alert_date_enabled: ", data.alert_date_enabled)
+            // console.log("stockAlertDateEnabledTemp: ", stockAlertDateEnabledTemp)
+            // console.log("data.alerted_date: ", data.alerted_date)
+            // console.log("stockAlertedDateTemp: ", stockAlertedDateTemp)
             // console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
             // console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
             // console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
+            console.log("unsavedImages: ", unsavedImages)
             alert("stop")
 
             const bodyUpdate: ProductEditData = {}
@@ -256,6 +258,11 @@ export default function ManageStock(
     }
     const handleSetImageUrl = (value: string) => {
         setStockImageUrlTemp(value)
+    }
+    
+    const handleUnsavedImages = (value: string) => {
+        // setUnsavedImages(value)
+        setUnsavedImages((prevImages: string[]) => [...prevImages, value])
     }
     const handleStockAlertAmountChange = (value: number | string) => {
         setStockAlertAmountTemp(value)
@@ -461,6 +468,9 @@ export default function ManageStock(
                         
                         imageUrl={stockImageUrlTemp}
                         onSetImageUrl={handleSetImageUrl}
+
+                        unsavedImages={unsavedImages}
+                        onHandleUnsavedImages={handleUnsavedImages}
                     />
                     <ManageStockAlerts 
                         hiddenPanel={openOptionsCreate.alerts}

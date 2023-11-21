@@ -32,6 +32,8 @@ interface ChildProps {
     onStockDescriptionChange: (newData: string )=> void
     imageUrl: string
     onSetImageUrl: (newData: string )=> void
+    unsavedImages: string[]
+    onHandleUnsavedImages: (newData: string )=> void
 }
 
 export default function ManageStockSecondaryData(
@@ -43,7 +45,9 @@ export default function ManageStockSecondaryData(
         stockDescriptionTemp, 
         onStockDescriptionChange,
         imageUrl,
-        onSetImageUrl, 
+        onSetImageUrl,
+        unsavedImages,
+        onHandleUnsavedImages 
     }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const close = () => {}
@@ -63,15 +67,15 @@ export default function ManageStockSecondaryData(
 
     const [showPicker, setShowPicker] = useState(false)
     const handleShowPicker = () => {
-        console.log("handleShowPicker showPicker: ", showPicker)
+        // console.log("handleShowPicker showPicker: ", showPicker)
         setShowPicker((prevState) => !prevState)
     }
 //     // const configValue: string = (process.env.FILESTACK_API_KEY as string);
 //     // const configValue : any = process.env.FILESTACK_API_KEY 
 //     // console.log("process.env.FILESTACK_API_KEY: ", configValue)
     // const apiKey = import.meta.env.VITE_FILESTACK_API_KEY;
-    console.log("filestack:", filestack);
-    console.log("filestack.apikey:", filestack[0].apikey);
+    // console.log("filestack:", filestack);
+    // console.log("filestack.apikey:", filestack[0].apikey);
     const apiKey = filestack[0].apikey;
     const signature = filestack[0].signature;
     const policy = "eyJleHBpcnkiOjI3NjI0NjAwMDB9"; // The policy is always the same for for all the files for the date 2057-07-16
@@ -231,8 +235,13 @@ export default function ManageStockSecondaryData(
                             // onUploadDone={(res filesUploaded) => console.log(res.filesUploaded[0])}
                             // onUploadDone={(res: any) => console.log(res.filesUploaded[0].url)}
                             onUploadDone={(res: any) => {
+                                if(imageUrl){
+                                    console.log("There is already the imageUrl: ", imageUrl)
+                                    // setUnsavedImages((prevImages: string[]) => [...prevImages, imageUrl])
+                                    onHandleUnsavedImages(imageUrl)
+                                }
                                 onSetImageUrl(res.filesUploaded[0].url)
-                                console.log("res.filesUploaded[0]: ", res.filesUploaded[0])
+                                // console.log("res.filesUploaded[0]: ", res.filesUploaded[0])
                                 // handleShowPicker()
                             }}
                             pickerOptions={{

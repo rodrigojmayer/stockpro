@@ -26,8 +26,8 @@ type FilestackProviderProps = {
 export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }) => {
   const { user } = useContext<any>(UserContext);
   
-  const [filestack, setFilestack] = useState<FilestackData[]>(INITIAL_FILESTACK);
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
+  const [filestack, setFilestack] = useState<FilestackData[]>(INITIAL_FILESTACK);
 
   const apiKey = filestack[0].apikey;
   const signature = filestack[0].signature;
