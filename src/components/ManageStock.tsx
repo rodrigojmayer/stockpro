@@ -219,14 +219,22 @@ export default function ManageStock(
         }
     }
     const handleCloseWithoutSaveChanges = () => {
-        
+        const deleteImages:string[] = unsavedImages
         if(stockImageUrlTemp && stockImageUrlTemp !== data.url_image) {
-            // handleUnsavedImages(stockImageUrlTemp)
-            deleteFilesStock(data._id, stockImageUrlTemp)
+            deleteImages.push(stockImageUrlTemp)
+            // deleteFilesStock(data._id, stockImageUrlTemp)
+        }
+        if(data.url_image && deleteImages.includes(data.url_image)) {
+            const indexToRemove = deleteImages.indexOf(data.url_image)
+            if ( indexToRemove !== -1){
+                deleteImages.splice(indexToRemove, 1)
+            }
+            // deleteImages.push(stockImageUrlTemp)
+            // deleteFilesStock(data._id, stockImageUrlTemp)
         }
 
-        if(unsavedImages.length>0) {
-            unsavedImages.forEach((unsavedImage) => {
+        if(deleteImages.length>0) {
+            deleteImages.forEach((unsavedImage) => {
                 deleteFilesStock(data._id, unsavedImage)
             })
         }
