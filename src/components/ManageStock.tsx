@@ -21,6 +21,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import dayjs, { Dayjs } from 'dayjs';
 import ErrorModal from './ErrorModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import { FilestackContext } from '../context/FilestackContext';
 
 interface Category {
     _id: string;
@@ -63,7 +64,9 @@ export default function ManageStock(
     const { measures } = useContext<any>(MeasuresContext)
     const measureArray = measures
     const { user } = useContext<any>(UserContext)
-    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
+    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext) 
+    const { filestack, deleteFilesStock } = useContext<any>(FilestackContext);
+   
     const edition = (data._id!==0 ? true : false)
     const [titleStat, setTitleStat] = useState<string>("Edit ");
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
@@ -104,9 +107,14 @@ export default function ManageStock(
             // console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
             // console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
             // console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
-            console.log("unsavedImages: ", unsavedImages)
-            alert("stop")
+            // console.log("unsavedImages: ", unsavedImages)
+            // alert("stop")
 
+            if(unsavedImages.length>0) {
+                unsavedImages.forEach((unsavedImage) => {
+                    deleteFilesStock(data._id, unsavedImage)
+                })
+            }
             const bodyUpdate: ProductEditData = {}
             bodyUpdate.id_client = user.id_client
             bodyUpdate.deleted = false
@@ -144,6 +152,7 @@ export default function ManageStock(
                 bodyUpdate.alerted_date = stockAlertedDateTemp
                 
             const fetchManageStockProduct = async () => {
+                
                 let loadingSuccess: boolean = false
                 try {
                     
@@ -179,7 +188,6 @@ export default function ManageStock(
                         // Handle other cases as needed
                     }
                 } finally {
-                    // setIsLoading(())
                     setIsLoading((prevLoading: any) => ({
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
@@ -209,6 +217,20 @@ export default function ManageStock(
         else{
             setOpenSaveChanges(true);
         }
+    }
+    const handleCloseWithoutSaveChanges = () => {
+        
+        if(stockImageUrlTemp && stockImageUrlTemp !== data.url_image) {
+            // handleUnsavedImages(stockImageUrlTemp)
+            deleteFilesStock(data._id, stockImageUrlTemp)
+        }
+
+        if(unsavedImages.length>0) {
+            unsavedImages.forEach((unsavedImage) => {
+                deleteFilesStock(data._id, unsavedImage)
+            })
+        }
+        close()
     }
 
     const handleOpenOptionsCreate = (newData:  string) => {
@@ -507,7 +529,7 @@ export default function ManageStock(
                             />  
                         }
                         <CancelButton
-                            clicked={() => close()}
+                            clicked={() => handleCloseWithoutSaveChanges()}
                         />
                         <OkButton
                             clicked={() => handleOpenSaveChanges()}
