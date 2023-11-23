@@ -220,17 +220,14 @@ export default function ManageStock(
     }
     const handleCloseWithoutSaveChanges = () => {
         const deleteImages:string[] = unsavedImages
-        if(stockImageUrlTemp && stockImageUrlTemp !== data.url_image) {
+        if(stockImageUrlTemp && stockImageUrlTemp !== data.url_image) { // Delete new image added in filestack that wont be saved in the product
             deleteImages.push(stockImageUrlTemp)
-            // deleteFilesStock(data._id, stockImageUrlTemp)
         }
-        if(data.url_image && deleteImages.includes(data.url_image)) {
+        if(data.url_image && deleteImages.includes(data.url_image)) {   // Avoid delete the image that was already in the product and then was another saved in filestack, but finally it wont be saved in the product
             const indexToRemove = deleteImages.indexOf(data.url_image)
             if ( indexToRemove !== -1){
                 deleteImages.splice(indexToRemove, 1)
             }
-            // deleteImages.push(stockImageUrlTemp)
-            // deleteFilesStock(data._id, stockImageUrlTemp)
         }
 
         if(deleteImages.length>0) {
@@ -327,6 +324,22 @@ export default function ManageStock(
         setOpenConfirmDeleteModal(false)
     }
     const handleConfirmDelete = () => {
+        console.log("handleConfirmDelete data.url_image: ", data.url_image)
+        const deleteImages:string[] = unsavedImages
+        if(stockImageUrlTemp && stockImageUrlTemp !== data.url_image) { // Delete new image added in filestack that wont be saved in the product
+            deleteImages.push(stockImageUrlTemp)
+        }
+        if(data.url_image && !deleteImages.includes(data.url_image)) {
+            console.log("handleConfirmDelete enter if data.url_image: ", data.url_image)   // Delete the image that was already in the product and then was another saved in filestack, but finally it wont be saved in the product
+            deleteImages.push(data.url_image)
+        }
+
+        if(deleteImages.length>0) {
+            deleteImages.forEach((unsavedImage) => {
+                deleteFilesStock(data._id, unsavedImage)
+            })
+        }
+        // alert("stomper")
         const fetchDeleteStockProduct = async () => {
             let loadingSuccess: boolean = false
             try {
