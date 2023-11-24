@@ -108,9 +108,9 @@ export default function ManageStock(
             // console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
             // console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
             // console.log("unsavedImages: ", unsavedImages)
-            console.log(" data.url_image: ",  data.url_image)
-            console.log(" stockImageUrlTemp: ",  stockImageUrlTemp)
-            alert("stop")
+            // console.log(" data.url_image: ",  data.url_image)
+            // console.log(" stockImageUrlTemp: ",  stockImageUrlTemp)
+            // alert("stop")
 
             if(unsavedImages.length>0) {
                 unsavedImages.forEach((unsavedImage) => {

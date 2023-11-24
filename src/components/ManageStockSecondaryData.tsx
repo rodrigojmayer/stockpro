@@ -200,15 +200,19 @@ export default function ManageStockSecondaryData(
                 {  imageUrl ? 
                     <Box className={classes.customImgRow}>
                         <img 
-                            style={{maxWidth: "55%", maxHeight: "130px", flexGrow: 4}} 
+                            style={{
+                                alignItems: "center",
+                                 maxWidth: "55%", 
+                                 maxHeight: "130px", 
+                                 objectFit: 'contain' 
+                            }} 
                             src={imageUrl} 
                             onClick={handleShowPicker} 
                         />
                         <IconButton
                             className={classes.ionTrash}
                             onClick={() => removeImg(imageUrl)}
-                            // id="plusButton"
-                            // value={column.id}
+                            style={{ marginRight: "15px" }} 
                         >
                             <img 
                                 src={IonTrash} 

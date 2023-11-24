@@ -63,7 +63,7 @@ export const useStylesGlobal = makeStyles()({
         display: "flex",
         justifyContent:  "flex-end",
         alignItems: "center", 
-        gap: 35,
+        gap: 30,
     },
     customZIndexTop: {
         zIndex:999,
