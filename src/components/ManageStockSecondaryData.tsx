@@ -197,35 +197,32 @@ export default function ManageStockSecondaryData(
                         InputProps={{  className: classes.inputClassName }}
                     />
                 </Box> 
-                <Box className={classes.customBoxRow}>
-                    <img src={imageUrl}/>
-                </Box> 
-                <Box className={classes.customBoxRow}>
-                    {/* <SelectImageButton 
-                        imageUrl = {imageUrl}
-                        setImageUrl = {onSetImageUrl}
-                    /> */}
-                    {imageUrl  && 
-                    //   {  imageUrl ?  
-                    //       :  
-                        
+                {  imageUrl ? 
+                    <Box className={classes.customImgRow}>
+                        <img 
+                            style={{maxWidth: "55%", maxHeight: "130px", flexGrow: 4}} 
+                            src={imageUrl} 
+                            onClick={handleShowPicker} 
+                        />
                         <IconButton
                             className={classes.ionTrash}
                             onClick={() => removeImg(imageUrl)}
                             // id="plusButton"
                             // value={column.id}
-                            >
-                                <img 
+                        >
+                            <img 
                                 src={IonTrash} 
                                 alt="Trash"
-                                />
+                            />
                         </IconButton>
-                     }
+                    </Box> 
+                    :  
+                    <Box className={classes.customBoxRow}>
                         <AddImageButton
                             clicked={handleShowPicker}
                         />
-                    {/* } */}
-                </Box> 
+                    </Box> 
+                } 
                 {showPicker && (
                     <Box className={classes.customZIndexTop}>
                         <PickerOverlay
@@ -253,6 +250,7 @@ export default function ManageStockSecondaryData(
                         />
                     </Box>
                 )}
+                {/* </Box>  */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
                     <div className={classes.customBoxCenter}>
                         <UpButton

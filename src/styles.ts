@@ -59,6 +59,12 @@ export const useStylesGlobal = makeStyles()({
         justifyContent:  "center",
         gap: 8,
     },
+    customImgRow: {
+        display: "flex",
+        justifyContent:  "flex-end",
+        alignItems: "center", 
+        gap: 35,
+    },
     customZIndexTop: {
         zIndex:999,
     },
