@@ -9,6 +9,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { UserContext } from '../context/UserContext';
+import { NavLink, Outlet, useNavigate } from "react-router-dom"
+
 
 
 const useStyles = makeStyles()({
@@ -69,12 +71,17 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
             // openOptionA(["alerts", true])
         handleClose(false)
     }
+
+    const navigate = useNavigate();
+    const selLogout = () => {
+        navigate('/login')
+    }
     
     const  buttons = [
         <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
         <Button value="profile" key="profile" variant="text" onClick={selOp}>Profile</Button>,
         <Button value="preferences" key="preferences" variant="text" onClick={selOp}>Preferences</Button>,
-        <Button value="logout" key="logout" variant="text" onClick={selOp}>Log out</Button>,
+        <Button value="logout" key="logout" variant="text" onClick={selLogout}>Log out</Button>,
     ];
  
     let height_box = "50%"
