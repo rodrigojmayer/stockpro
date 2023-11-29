@@ -57,6 +57,7 @@ export const useStylesGlobal = makeStyles()({
     customBoxRow: {
         display: "flex",
         justifyContent:  "center",
+        alignItems: "center",
         gap: 8,
     },
     customImgRow: {

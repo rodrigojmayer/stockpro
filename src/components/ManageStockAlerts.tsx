@@ -154,7 +154,7 @@ export default function ManageStockAlerts(
                                             ),
                                             },
                                         },
-                                        }}
+                                    }}
                                     className={classes.inputMainData} 
                                     sx={{ 
                                         marginTop: "-8px !important",
@@ -166,18 +166,18 @@ export default function ManageStockAlerts(
                             </DemoContainer>
                         </LocalizationProvider>
                     </Grid>
-                        <Grid item xs={3} >
-                            <Typography >{(stockAlertDateEnabledTemp)?'Enabled':'Disabled'}</Typography>
-                        </Grid>
-                        <Grid item xs={2} >
-                            <Switch 
-                                color='success' 
-                                checked={stockAlertDateEnabledTemp}
-                                onChange={(event) => {
-                                    onStockAlertDateEnabledChange(event.target.checked)
-                                }}
-                             />   
-                        </Grid>
+                    <Grid item xs={3} >
+                        <Typography >{(stockAlertDateEnabledTemp)?'Enabled':'Disabled'}</Typography>
+                    </Grid>
+                    <Grid item xs={2} >
+                        <Switch 
+                            color='success' 
+                            checked={stockAlertDateEnabledTemp}
+                            onChange={(event) => {
+                                onStockAlertDateEnabledChange(event.target.checked)
+                            }}
+                            />   
+                    </Grid>
                 </Grid>
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
                     <div className={classes.customBoxCenter}>

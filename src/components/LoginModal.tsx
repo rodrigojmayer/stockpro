@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Box,
          Modal, 
+         Grid,
+         IconButton,
          TextField,
          Typography,
          MenuItem,
@@ -10,6 +12,8 @@ import { CancelButton, OkButton } from './Buttons';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorModalInternal } from '../Styles'
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
 const PrettoSlider = styled(Slider)({
@@ -60,6 +64,15 @@ export default function LoginModal() {
     // const [isThumbPressed, setIsThumbPressed] = useState(true);
     const [userNameEmail, setUserNameEmail] = useState("");
     const [passwordUser, setPasswordUser] = useState("");
+    const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
+    const [rememberEnabled, setRememberEnabled] = useState<boolean>(false);
+    
+    const showProfilePassToggle = () => {
+        setShowProfilePass(!showProfilePass)
+    }
+    const rememberEnabledChange = (value: boolean) => {
+        setRememberEnabled(value)
+    }
     
     // const handleThumbMouseDown = () => {
     //   setIsThumbPressed(true);
@@ -122,18 +135,25 @@ export default function LoginModal() {
                                 }}
                             />
                         </Box>
+                        <Box className={classes.customBoxRowLeft}>
+                            <Switch 
+                                color='success' 
+                                checked={rememberEnabled}
+                                onChange={(event) => {
+                                    rememberEnabledChange(event.target.checked)
+                                }}
+                            />Remember me
+                        </Box>
                     </Box>
-                    Remember me   [Button Login]
-
-                    ___Or login using___
-                    Facebook Google
-                    ____________________
-                    Forgon Password? New here? Sign Up
-                    <Box className={classes.finishButtons}>
+                    <Box className={classes.customBoxRow}>
                         <OkButton
                             clicked={() => handleLogin()}
                         />
-                    </Box> 
+                    </Box>
+                    ___Or login using___
+                    Facebook Google
+                    ____________________
+                    Forgon Password? New here? Sign Up 
                 </Box>
             </Box>
         </Modal>
