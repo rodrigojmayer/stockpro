@@ -5,7 +5,7 @@ import { Box,
 import { 
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorModalInternal } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
 // import { useState } from 'react';
  
 
@@ -58,7 +58,7 @@ export default function ErrorModal( props: ErrorModalProps) {
         onClose={() => closeErrorModal()}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleErrorModalInternal}>
+                <Box sx={modalStyleErrorInternal}>
                     <Typography align="center" variant="h6">
                         {title}
                     </Typography>

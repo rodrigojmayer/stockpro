@@ -60,6 +60,18 @@ export const useStylesGlobal = makeStyles()({
         alignItems: "center",
         gap: 8,
     },
+    customBoxRowSpaceBetween: {
+        display: "flex",
+        justifyContent:  "space-between",
+        alignItems: "center",
+        // gap: 8,
+    },
+    customBoxRowSpaceAround: {
+        display: "flex",
+        justifyContent:  "space-around",
+        alignItems: "center",
+        gap: 8,
+    },
     customImgRow: {
         display: "flex",
         justifyContent:  "flex-end",
@@ -258,6 +270,13 @@ export const useStylesGlobal = makeStyles()({
               color: 'red',
             },
           },
+    },
+    customDivider : {
+        borderColor: "white",
+        width: "90%", 
+        size: "320px",
+        margin: "14px",
+
     }
 })
 
@@ -311,7 +330,7 @@ export const modalStyleSaveInternal = {
     overflowX: "hidden",
 };
 
-export const modalStyleErrorModalInternal = {
+export const modalStyleErrorInternal = {
     top: 74,
     width: "270px",
     backgroundColor: "rgb(45,72, 91, 1)",
@@ -321,6 +340,10 @@ export const modalStyleErrorModalInternal = {
     color: "white",
     overflow: "scroll",
     overflowX: "hidden",
+};
+export const modalLoginInternal = {
+    width: "320px",
+    paddingBottom: "20px",
 };
 // export const TableStyles = makeStyles((theme: Theme) => ({
 export const tableStyles = makeStyles()({

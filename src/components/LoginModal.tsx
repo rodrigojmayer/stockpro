@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box,
+        //  Chip,
+         Divider,
          Modal, 
          Grid,
          IconButton,
@@ -7,13 +9,17 @@ import { Box,
          Typography,
          MenuItem,
          Switch,
+         Link,
+         Button,
         } from '@mui/material';
-import { CancelButton, OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorModalInternal } from '../Styles'
+import { CancelButton, GoogleButton, OkButton } from './Buttons';
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal  } from '../Styles'
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+// import { Chip } from 'material-ui';
+// import { Divider } from 'material-ui';
 
 
 const PrettoSlider = styled(Slider)({
@@ -98,7 +104,7 @@ export default function LoginModal() {
         // onClose={() => closeLoginModal()}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleErrorModalInternal}>
+                <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
                     <Typography className={classes.finishButtons} align="center" >
                         Login
                     </Typography> 
@@ -135,25 +141,58 @@ export default function LoginModal() {
                                 }}
                             />
                         </Box>
-                        <Box className={classes.customBoxRowLeft}>
-                            <Switch 
-                                color='success' 
-                                checked={rememberEnabled}
-                                onChange={(event) => {
-                                    rememberEnabledChange(event.target.checked)
-                                }}
-                            />Remember me
+                        <Box className={classes.customBoxRowSpaceBetween}>
+                            <Box>
+                                <Switch 
+                                    color='success' 
+                                    checked={rememberEnabled}
+                                    onChange={(event) => {
+                                        rememberEnabledChange(event.target.checked)
+                                    }}
+                                />Remember me 
+                            </Box>
+                                
+                            <Box>
+                                <OkButton
+                                clicked={() => handleLogin()}
+                            />
+                            </Box>
                         </Box>
                     </Box>
                     <Box className={classes.customBoxRow}>
-                        <OkButton
-                            clicked={() => handleLogin()}
+                        <Divider 
+                            className={classes.customDivider} 
+                            sx={{
+                                "&::before, &::after": {
+                                  borderColor: "white",
+                                },
+                              }}
+                            variant="middle" 
+                            // variant="inset" 
+                        >
+                            Or login using
+                        </Divider>
+                    </Box>
+
+                    <Box className={classes.customBoxRow}>
+                        <GoogleButton
+                            clicked={()=>alert("goooooogel")} />
+                    </Box>
+                    <Box className={classes.customBoxRow}>
+                        <Divider 
+                            className={classes.customDivider} 
+                            variant="middle" 
                         />
                     </Box>
-                    ___Or login using___
-                    Facebook Google
-                    ____________________
-                    Forgon Password? New here? Sign Up 
+                    {/* <Box className={classes.customBoxRow}> */}
+                    <Box className={classes.customBoxRowSpaceAround}>
+                        <Link>
+                            Forgot Password? 
+                        </Link>
+                        <Link>
+                            New here? Sign Up 
+                        </Link>
+                    </Box>
                 </Box>
             </Box>
         </Modal>

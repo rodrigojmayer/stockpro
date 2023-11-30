@@ -785,3 +785,56 @@ export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled 
     </ThemeProvider>
   )
 }
+
+export function GoogleButton({ sizeIco, roundedIco, cusField, clicked, disabled }: ButtonProps ) {
+
+  // const { classes } = useStyles()
+  // const colorOk = theme.palette.neutral.main
+  
+  let  noPadding, borRad, filterColor = 0
+  if(disabled) {
+    // fontIco = (parseInt(sizeIco) - 12)
+    filterColor = 35
+  }
+  // if(roundedIco){
+  noPadding=0
+  borRad="50px !important"
+  // } 
+  const handleClick:any = (() => {
+    if(cusField)
+      clicked(cusField.id, cusField.value)
+    else
+      clicked()
+  })
+
+  return (  
+    <ThemeProvider theme={theme}>
+      <Button 
+      // className={classes.plusIcon}
+        variant="contained"
+        color="error"
+        // className={`${classes.btnCommonStyle} `}
+        // className={`${classes.btnCommonStyle} ${classes.btnEdit}`}
+          disabled={disabled}
+          sx={{  
+            // border: bor, 
+            // padding:noPadding, 
+            // paddingTop:0,  
+            // height: sizeIco,
+            // borderRadius: borRad,
+            // border: bor, 
+            // padding:2,  
+            minWidth: 40, 
+            minHeight: 40, 
+            // width: 10, 
+            // height: 30,
+          }}
+          onClick={handleClick}
+        >
+          Google
+
+
+      </Button>
+    </ThemeProvider>
+  )
+}
