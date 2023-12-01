@@ -792,59 +792,27 @@ export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled 
   )
 }
 
-export function GoogleButton({ sizeIco, roundedIco, cusField, clicked }: ButtonProps ) {
+export function GoogleButton({ clicked }: ButtonProps ) {
 
   const { classes } = useStylesGlobal();
-  // const { classes } = useStyles()
-  // const colorOk = theme.palette.neutral.main
   
-  let  noPadding, borRad, filterColor = 0
-  // if(roundedIco){
-  noPadding=0
-  borRad="50px !important"
-  // } 
   const handleClick:any = (() => {
-    if(cusField)
-      clicked(cusField.id, cusField.value)
-    else
       clicked()
   })
-  const [imageError, setImageError] = useState(false);
-
-  const handleImageError = () => {
-    setImageError(true);
-  };
-
 
   return (  
     <ThemeProvider theme={theme}>
-      
       <Button 
         variant="contained"
         color="error"
         startIcon={
-        <img 
-          // src={GPlusIco} 
-          alt="G"
-          style={{ filter: "brightness(0) invert(100%)" }}  
-          
-        width= {28}   
-        />
-      
-      //   <>
-      //   {!imageError ? (
-      //     <img
-      //     src={GPlusIco} 
-      //       alt="Image Alt Text"
-      //       // onError={"this.style.display='none':any"}
-      //       style={{ display: 'block' }}
-      //     />
-      //   ) : (
-      //     <span style={{ display: 'block' }}>Alternative Text</span>
-      //   )}
-      // </>
-      
-    }
+          <img 
+            src={GPlusIco} 
+            alt="G"
+            style={{ filter: "brightness(0) invert(100%)"}}  
+            width= {20}   
+          />
+        }
         onClick={handleClick}
         >
           <Divider 
