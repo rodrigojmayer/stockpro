@@ -277,6 +277,12 @@ export const useStylesGlobal = makeStyles()({
         size: "320px",
         margin: "14px",
 
+    },
+    customDividerVertical : {
+        borderColor: "white",
+        size: "50px",
+        marginRight: "10px",
+        marginLeft: "1px",
     }
 })
 

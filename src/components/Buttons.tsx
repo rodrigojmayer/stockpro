@@ -1,4 +1,4 @@
-import { Box, Button, IconButton  } from '@mui/material';
+import { Box, Button, IconButton } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -18,6 +18,12 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import EditIcon from '@mui/icons-material/Edit';
 import IonTrash from "../assets/ion_trash.svg";
 import UpdateArrowCircle from "../assets/akar-icons_arrow-cycle.svg";
+import GPlusIco from "../assets/gplus.svg";
+// import Divider from '@mui/material-next/Divider';
+// import Divider from 'material-ui/Divider';
+import Divider from '@mui/material/Divider';
+import { useStylesGlobal } from '../Styles'
+
 
 const theme = createTheme({
   palette: {
@@ -714,7 +720,7 @@ export function AddImageButton( { sizeIco, roundedIco, cusField, clicked, submit
                   />
                ) :  */}
                <AddAPhotoIcon /> 
-              
+               
                {/* }  */}
           </Button>
         </ThemeProvider>
@@ -786,16 +792,13 @@ export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled 
   )
 }
 
-export function GoogleButton({ sizeIco, roundedIco, cusField, clicked, disabled }: ButtonProps ) {
+export function GoogleButton({ sizeIco, roundedIco, cusField, clicked }: ButtonProps ) {
 
+  const { classes } = useStylesGlobal();
   // const { classes } = useStyles()
   // const colorOk = theme.palette.neutral.main
   
   let  noPadding, borRad, filterColor = 0
-  if(disabled) {
-    // fontIco = (parseInt(sizeIco) - 12)
-    filterColor = 35
-  }
   // if(roundedIco){
   noPadding=0
   borRad="50px !important"
@@ -806,34 +809,50 @@ export function GoogleButton({ sizeIco, roundedIco, cusField, clicked, disabled 
     else
       clicked()
   })
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
 
   return (  
     <ThemeProvider theme={theme}>
+      
       <Button 
-      // className={classes.plusIcon}
         variant="contained"
         color="error"
-        // className={`${classes.btnCommonStyle} `}
-        // className={`${classes.btnCommonStyle} ${classes.btnEdit}`}
-          disabled={disabled}
-          sx={{  
-            // border: bor, 
-            // padding:noPadding, 
-            // paddingTop:0,  
-            // height: sizeIco,
-            // borderRadius: borRad,
-            // border: bor, 
-            // padding:2,  
-            minWidth: 40, 
-            minHeight: 40, 
-            // width: 10, 
-            // height: 30,
-          }}
-          onClick={handleClick}
+        startIcon={
+        <img 
+          // src={GPlusIco} 
+          alt="G"
+          style={{ filter: "brightness(0) invert(100%)" }}  
+          
+        width= {28}   
+        />
+      
+      //   <>
+      //   {!imageError ? (
+      //     <img
+      //     src={GPlusIco} 
+      //       alt="Image Alt Text"
+      //       // onError={"this.style.display='none':any"}
+      //       style={{ display: 'block' }}
+      //     />
+      //   ) : (
+      //     <span style={{ display: 'block' }}>Alternative Text</span>
+      //   )}
+      // </>
+      
+    }
+        onClick={handleClick}
         >
+          <Divider 
+            orientation="vertical"  
+            flexItem
+            className={classes.customDividerVertical} 
+          />
           Google
-
-
       </Button>
     </ThemeProvider>
   )
