@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom"
-import { GoogleLogin } from '@react-oauth/google'
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
+// import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
 import { Box,
      Divider,
      Modal, 
@@ -28,6 +29,7 @@ export default function Login () {
         "user": false,
         "password": false,
     });
+    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
     const [userNameEmail, setUserNameEmail] = useState("");
     const [passwordUser, setPasswordUser] = useState("");
     const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
@@ -48,12 +50,21 @@ export default function Login () {
         console.log("Login: ")
     }
 
-    const responseMessage = (response: any) => {
-        console.log(response);
-    };
-    // const onLoginFailure = (error: any) => {
-    //     console.log(error);
-    // };
+
+    
+    
+    // const handleLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    const handleLoginSuccess = (response: any) => {
+        console.log('Login Success:', response);
+        // Handle the successful Google login response here
+      };
+    
+      const handleLoginFailure = (error: any) => {
+        console.error('Login Failure:', error);
+        // Handle the failure/error during Google login here
+      };
+
+
 
     return (
         <div>
@@ -129,7 +140,10 @@ export default function Login () {
                         </Box>
 
                         <Box className={classes.customBoxRow}>
-                            <GoogleButton clicked={()=>alert("goooooogel")} />
+                            <GoogleLogin
+                                onError={() => handleLoginFailure}
+                                onSuccess={handleLoginSuccess}
+                            />
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <Divider 
@@ -148,34 +162,10 @@ export default function Login () {
                                 </Link>
                             </Box>
                         </Box>
+                        <NavLink to="/">Home</NavLink>
                     </Box>
-                    
-            <GoogleLogin 
-                onSuccess={responseMessage} 
-                // onFailure={onLoginFailure}
-                />
-
-                {/* <GoogleLogin
-                
-                render={(renderProps: { onClick: () => void; disabled: boolean | undefined; }) => (
-                    <Button
-                    onClick={() => renderProps.onClick()}
-                    disabled={renderProps.disabled}
-                    // startIcon={<GoogleIcon />}
-                    variant='contained'
-                    disableElevation
-                    >
-                    Ingresar con el correo de google
-                    </Button>
-                )}
-                // onSuccess={(response) => onLoginSuccess(response)}
-                // onFailure={onLoginFailure}
-                cookiePolicy='single_host_origin'
-                /> */}
                 </Box>
-                
             </Modal>  
-            <NavLink to="/">Home</NavLink>
         </div>
     )
 }
