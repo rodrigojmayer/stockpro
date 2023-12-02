@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom"
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
-// import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login'
+import { jwtDecode  } from 'jwt-decode'
 import { Box,
      Divider,
      Modal, 
@@ -18,10 +18,18 @@ import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { UserContext } from '../context/UserContext';
+import { UsersContext } from '../context/UsersContext';
 
 export default function Login () {
 
     const { classes } = useStylesGlobal();
+    const { user, setUser, setGmailUserLogged } = useContext<any>(UserContext); 
+    const { users, setUsers } = useContext<any>(UsersContext); 
+    
+    console.log("all users in login: ", users)
+
+
     const [errorTextFields, setErrorTextFields] = useState({
         "access_level": false,
         "name": false,
@@ -29,7 +37,7 @@ export default function Login () {
         "user": false,
         "password": false,
     });
-    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
+    
     const [userNameEmail, setUserNameEmail] = useState("");
     const [passwordUser, setPasswordUser] = useState("");
     const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
@@ -54,15 +62,45 @@ export default function Login () {
     
     
     // const handleLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    const handleLoginSuccess = (response: any) => {
+    // const handleLoginSuccess = (response: any) => {
+        
+  const handleLoginSuccess = async (response: any) => {
         console.log('Login Success:', response);
         // Handle the successful Google login response here
-      };
-    
-      const handleLoginFailure = (error: any) => {
-        console.error('Login Failure:', error);
-        // Handle the failure/error during Google login here
-      };
+        interface JwtPayload {
+            email: string,
+          }
+          
+        const decodedToken:JwtPayload = jwtDecode(response.credential);
+        console.log('Login decodedToken:', decodedToken);
+        const userEmail = decodedToken.email || "";        
+        console.log('Login userEmail:', userEmail);
+
+
+        setGmailUserLogged(userEmail)
+        // first check if the gmail user already exists using the usersContext
+
+        
+        // if(userEmail==="rodrigojmayer@gmail.com"){
+
+        // }
+        // if exists use the function of userContext to set it
+        
+        // If it doesn't exist create a new user using the data from decodedToken: 
+        // ( id_client=a new one, name=given_name, last_name=family_name, 
+        // user=before the @ of the email, pass=random password, deleted=false, 
+        // enabled=true, email=email, id_access_level=4(user), 
+        // ordered_fields="ordered_fields": [1,2,3,4,5], 
+        // language= Option selected in the login page, 
+        // background_color=0, alerts_enabled= false )
+
+
+    };
+
+    const handleLoginFailure = (error: any) => {
+    console.error('Login Failure:', error);
+    // Handle the failure/error during Google login here
+    };
 
 
 

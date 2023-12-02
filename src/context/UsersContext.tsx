@@ -39,37 +39,40 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
   useEffect(() => {
-    // console.log("UsersContext.tsx user.id_client: ", user.id_client)
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`http://localhost:4000/api/users/client/${user.id_client}`); 
-        // const response = await fetch(`http://localhost:4000/api/users/client/3`); 
-        
-        if (response.ok) {
-          const json = await response.json();
-          const json_filtered = json.filter((item:UserData) => { 
-            // console.log("item.id", item.id)
-            // console.log("user ", user)
-            // console.log("user id", user.id_access_level)
-            return (item._id !== user._id && !item.deleted && item.id_access_level > user.id_access_level)
-            })
-          setUsers(json_filtered);
-        } else {
-          setUsers(INITIAL_USERS);
-          // Handle the case where the response is not OK (e.g., show an error message)
-        }
-      } catch (error) {
-        setUsers(INITIAL_USERS);
-        // Handle any network or fetch-related errors
-      } finally {
-            setIsLoading((prevLoading:any) => ({
-            ...prevLoading,
-            user: false,
-            }));
-        }
-    };
+    if(user.id_client){
 
-    fetchUser();
+      console.log("UsersContext.tsx user.id_client: ", user.id_client)
+      const fetchUser = async () => {
+        try {
+          const response = await fetch(`http://localhost:4000/api/users/client/${user.id_client}`); 
+          // const response = await fetch(`http://localhost:4000/api/users/client/3`); 
+          
+          if (response.ok) {
+            const json = await response.json();
+            const json_filtered = json.filter((item:UserData) => { 
+              // console.log("item.id", item.id)
+              // console.log("user ", user)
+              // console.log("user id", user.id_access_level)
+              return (item._id !== user._id && !item.deleted && item.id_access_level > user.id_access_level)
+              })
+            setUsers(json_filtered);
+          } else {
+            setUsers(INITIAL_USERS);
+            // Handle the case where the response is not OK (e.g., show an error message)
+          }
+        } catch (error) {
+          setUsers(INITIAL_USERS);
+          // Handle any network or fetch-related errors
+        } finally {
+              setIsLoading((prevLoading:any) => ({
+              ...prevLoading,
+              user: false,
+              }));
+          }
+      };
+  
+      fetchUser();
+    }
   }, [user]);
   
   // useEffect(() => {
