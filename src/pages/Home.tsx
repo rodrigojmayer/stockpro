@@ -53,7 +53,7 @@ function Home() {
   //   "alert_amount": 0,
   // })
   const [ productUpdate, setProductUpdate ] = useState<Data>({
-    "_id":0,
+    "_id": "",
     "id": 0,
     "id_client": 0,
     "product": "",
@@ -127,7 +127,7 @@ function Home() {
   }
   
   const [ massiveUpdate, setMassiveUpdate] = useState<Data[]>([{
-    "_id":0,
+    "_id": "",
     "id": 0,
     "id_client": 0,
     "product": "",
@@ -211,7 +211,7 @@ function Home() {
   
   useEffect(() => {
     setProductUpdate({
-      "_id":0,
+      "_id": "",
       "id": 0,
       "id_client": 0,
       "product": "",

@@ -47,7 +47,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
           const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
           if (response.ok) {
             const json = await response.json()
-            // console.log("custom columns json:", json)
+            console.log("custom columns json:", json)
             // console.log(json.filter((val:any) => {val.id_client===2}))
             setCustomColumns(json)
           } else {
@@ -56,10 +56,10 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
         } catch (error) {
           // Handle any network or fetch-related errors
         } finally {
-          // setIsLoading((prevLoading) => ({
-          //   ...prevLoading,
-          //   customColumns: false,
-          // }));
+          setIsLoading((prevLoading:any) => ({
+            ...prevLoading,
+            customColumns: false,
+          }));
         }
       }
 
@@ -84,7 +84,6 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
     }
 
   }, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns, isLoading.products]);
-// }, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns]);
 
   useEffect(() => {
     setColumns(defaultColumns.concat(filteredColumnsCustom));

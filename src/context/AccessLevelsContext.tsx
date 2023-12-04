@@ -25,7 +25,7 @@ export const AccessLevelsProvider: React.FC<AccessLevelsProviderProps> = ({ chil
 
   useEffect(() => {
 
-    user.id_access_level
+    // user.id_access_level
 
     const fetchAccessLevels = async () => {
       try {

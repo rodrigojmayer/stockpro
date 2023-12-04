@@ -73,6 +73,8 @@ export default function ManageUser(
             bodyUpdate.deleted = false
             bodyUpdate.language =  user.language
             bodyUpdate.background_color = user.background_color
+            bodyUpdate.alerts_enabled = user.alerts_enabled
+            bodyUpdate.ordered_fields = [1,2,3,4,5]
             if(!edition || dataEditUser.id_access_level != userAccessLevel)
                 bodyUpdate.id_access_level = userAccessLevel
             if(!edition || dataEditUser.name != userName)

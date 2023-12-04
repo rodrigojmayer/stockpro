@@ -67,7 +67,7 @@ export default function ManageStock(
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext) 
     const { filestack, deleteFilesStock } = useContext<any>(FilestackContext);
    
-    const edition = (data._id!==0 ? true : false)
+    const edition = (data._id!== "" ? true : false)
     const [titleStat, setTitleStat] = useState<string>("Edit ");
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.product);

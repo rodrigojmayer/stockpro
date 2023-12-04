@@ -1,5 +1,5 @@
 export interface UserData {
-  _id: number;
+  _id: string;
   id: number;
   id_client: number;
   name: string;
@@ -17,7 +17,7 @@ export interface UserData {
 }
 
 export interface UserEditData {
-  _id?: number;
+  _id?: string;
   id_client?: number;
   id_access_level?: number|null;
   name?: string;
@@ -27,6 +27,7 @@ export interface UserEditData {
   pass?: string;
   deleted?: boolean;
   enabled?: boolean;
+  ordered_fields?: array;
   language?: number;
   background_color?: number;
   alerts_enabled?: boolean;
@@ -65,8 +66,8 @@ export interface CategoriesData {
 };
 
 export interface Data {
-  _id:number;
-  id: number;
+  _id: string;
+  id?: number;
   id_client: number;
   product: string;
   amount: number | string;

@@ -25,7 +25,7 @@ import IonTrash from "../assets/ion_trash.svg";
 interface ChildProps {
     hiddenPanel:  boolean
     openOptionsCreate: (newData: string )=> void
-    id_product: number
+    id_product: string
     stockPriceTemp: number | string
     onStockPriceChange: (newData: number | string )=> void
     stockDescriptionTemp: string

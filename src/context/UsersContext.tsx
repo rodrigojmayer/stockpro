@@ -4,7 +4,7 @@ import { IsLoadingContext } from './IsLoadingContext';
 import { UserContext } from './UserContext';
 
 const INITIAL_USERS = [{
-  _id: NaN,
+  _id: '',
   id: NaN,
   id_client: NaN,
   name: '',
@@ -39,7 +39,7 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
   useEffect(() => {
-    if(user.id_client){
+    if(user?.id_client){
 
       console.log("UsersContext.tsx user.id_client: ", user.id_client)
       const fetchUser = async () => {
@@ -54,7 +54,7 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
               // console.log("user ", user)
               // console.log("user id", user.id_access_level)
               return (item._id !== user._id && !item.deleted && item.id_access_level > user.id_access_level)
-              })
+            })
             setUsers(json_filtered);
           } else {
             setUsers(INITIAL_USERS);

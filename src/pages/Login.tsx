@@ -69,15 +69,21 @@ export default function Login () {
         // Handle the successful Google login response here
         interface JwtPayload {
             email: string,
+            given_name: string,
+            family_name: string,
           }
           
         const decodedToken:JwtPayload = jwtDecode(response.credential);
         console.log('Login decodedToken:', decodedToken);
-        const userEmail = decodedToken.email || "";        
-        console.log('Login userEmail:', userEmail);
-
-
-        setGmailUserLogged(userEmail)
+        const userEmailData = {
+            "email" : decodedToken.email,       
+            "name" : decodedToken.given_name,        
+            "last_name" : decodedToken.family_name, 
+        }      
+        console.log('Login userEmailData:', userEmailData);
+        console.log('user context before setGmailUserLogged:', user);
+        setGmailUserLogged(userEmailData)
+        console.log('user context after setGmailUserLogged:', user);
         // first check if the gmail user already exists using the usersContext
 
         
@@ -86,13 +92,7 @@ export default function Login () {
         // }
         // if exists use the function of userContext to set it
         
-        // If it doesn't exist create a new user using the data from decodedToken: 
-        // ( id_client=a new one, name=given_name, last_name=family_name, 
-        // user=before the @ of the email, pass=random password, deleted=false, 
-        // enabled=true, email=email, id_access_level=4(user), 
-        // ordered_fields="ordered_fields": [1,2,3,4,5], 
-        // language= Option selected in the login page, 
-        // background_color=0, alerts_enabled= false )
+       
 
 
     };
