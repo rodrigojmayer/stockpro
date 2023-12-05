@@ -103,8 +103,6 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
       }
     }
   
-  
-  
     if (!isLoading.user) {
       // console.log(user.id_client)
       // fetchDefaultColumns();

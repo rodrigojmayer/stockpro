@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { NavLink, Outlet } from "react-router-dom"
+import { useState, useContext, useEffect } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
 import { jwtDecode  } from 'jwt-decode'
 import { Box,
@@ -20,12 +20,17 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
+import useUser from '../hooks/useUser';
+import { IsLoadingContext } from "../context/IsLoadingContext";
+import { UserData } from "../types";
 
 export default function Login () {
 
     const { classes } = useStylesGlobal();
-    const { user, setUser, setGmailUserLogged } = useContext<any>(UserContext); 
+    const { isLogged, login } = useUser()
+    const { INITIAL_USER, user, setUser, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
     const { users, setUsers } = useContext<any>(UsersContext); 
+    const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     
     console.log("all users in login: ", users)
 
@@ -58,8 +63,11 @@ export default function Login () {
         console.log("Login: ")
     }
 
+    const navigate = useNavigate()
 
-    
+    useEffect(() => {
+        if(isLogged) navigate('/')
+    }, [isLogged, navigate])
     
     // const handleLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
     // const handleLoginSuccess = (response: any) => {
@@ -101,6 +109,209 @@ export default function Login () {
     console.error('Login Failure:', error);
     // Handle the failure/error during Google login here
     };
+
+
+
+
+
+    
+
+  useEffect(() => {
+    console.log("_IdUserLogged: ", _IdUserLogged)
+    if(_IdUserLogged){
+      const fetchUser = async () => {
+        try {
+          const response = await fetch(`http://localhost:4000/api/users/${_IdUserLogged}`);
+          // const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`); //User 1 client 2 id_access_level 1 superadmin
+          // const response = await fetch(`http://localhost:4000/api/users/64b6c0553204de99e630a0ac`); //User 2 client 3 id_access_level 2 admin
+          // const response = await fetch(`http://localhost:4000/api/users/64f63b7773d98cad83d45fc2`); //User - test client 3 id_access_level 3 superuser
+          // const response = await fetch(`http://localhost:4000/api/users/64f704d073d98cad83d461c8`); //User - test client 3 id_access_level 4 user
+          
+          console.log("user response: ", response)
+          if (response.ok) {
+            const json = await response.json();
+            // setUser(json);
+            login(json);
+            
+          } else {
+
+            // setUser(INITIAL_USER);
+            // Handle the case where the response is not OK (e.g., show an error message)
+          }
+        } catch (error) {
+        //   setUser(INITIAL_USER);
+          // Handle any network or fetch-related errors
+        } finally {
+              setIsLoading((prevLoading:any) => ({
+              ...prevLoading,
+              user: false,
+              }));
+          }
+      };
+      fetchUser();
+    }
+
+  }, [_IdUserLogged]);
+
+  
+  useEffect(() => {
+    console.log("gmailUserLogged: ", gmailUserLogged)
+    
+    // setIsLoading((prevLoading:any) => ({
+    //   ...prevLoading,
+    //   user: true,
+    // }));
+    if(gmailUserLogged.email){
+      const fetchUserByEmail = async () => {
+        try {
+          const response = await fetch(`http://localhost:4000/api/users/email/${gmailUserLogged.email}`);
+          console.log("user by email response: ", response)
+          if (response.ok) {
+            const json = await response.json();
+            console.log("user by email json: ", json)
+            if(json){
+              // setUser(json);
+              login(json);
+            }
+            else{
+              
+              postClient()
+            }
+          } else {
+            console.log("error email not found?: ")
+          }
+        } catch (error) {
+          console.log("error email not found?: ", error)
+          // setUser(INITIAL_USER);
+          // Handle any network or fetch-related errors
+        } finally {
+          setIsLoading((prevLoading:any) => ({
+            ...prevLoading,
+            user: false,
+          }));
+        }
+      };
+      fetchUserByEmail();
+    }
+  }, [gmailUserLogged]);
+
+  const postClient = async () => {
+    const bodyUser: UserData= {
+      ...INITIAL_USER,
+      "email": gmailUserLogged.email,
+      "name": gmailUserLogged.name,
+      "last_name": gmailUserLogged.last_name,
+      "user": gmailUserLogged.email?.split("@")[0] || "",
+      "pass": "Changethispassforarandompass@2", //////////////////////  FIX
+      "deleted": false, 
+      "enabled": true, 
+      "id_access_level": 4,
+      "ordered_fields": [1,2,3,4,5],
+      "language": 1,  ///////////////////////////////// FIX
+      "background_color": 0,
+      "alerts_enabled": false
+    }
+    // let loadingSuccess: boolean = false
+    try {
+      const response = await fetch(`http://localhost:4000/api/clients/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set the appropriate content-type for my API
+          // Add any other requires headers here
+        },
+        body:JSON.stringify({
+          "deleted": false,
+          "enabled": true
+        })
+      })
+
+      // Check if the response status is successful
+      if (response.ok) {
+        const responseData = await response.json() // parse the response data
+        // loadingSuccess = true
+        console.log('UserContext response ok postClient responseData: ', responseData)
+        console.log('UserContext response ok postClient responseData.id: ', responseData.id)
+        bodyUser.id_client = responseData.id
+      } else if (response.status === 400) {
+        // Handle non-successful responses
+        console.error('Request failed: ', response.status, response.statusText)
+        const errorData = await response.json()
+        console.error('Request failed 2: ', errorData.error)
+        // Handle the error here
+        if (errorData.errorCode === 'duplicate_product') {
+          // setOpenErrorModal(true) // Open the modal for duplicate product error
+          // setErrorData(errorData.errorCode)
+        }
+      }
+    } catch (error: unknown) {
+      if (typeof error === 'string') {
+        // 'error' is now narrowed down to type 'string'
+        console.error('Error:', error)
+      } else if (error instanceof Error) {
+        // 'error' is now narrowed down to type 'Error'
+        console.error('Error object:', error.message)
+      } else {
+        // Handle other cases as needed
+      }
+    } finally {
+      // console.log("loadingSuccess: ", loadingSuccess)
+      // setIsLoading((prevLoading: any) => ({
+      //   ...prevLoading,
+      //   fieldsFetchCreateStock: loadingSuccess,
+      // }));
+      if(bodyUser.id_client)
+        postUser(bodyUser)
+    }
+  } 
+
+
+  const postUser = async (bodyUser:UserData) => {
+    let loadingSuccess: boolean = false
+    try {
+      const response = await fetch(`http://localhost:4000/api/users/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set the appropriate content-type for my API
+          // Add any other requires headers here
+        },
+        body:JSON.stringify(bodyUser)
+      })
+
+      // Check if the response status is successful
+      if (response.ok) {
+        const responseData = await response.json() // parse the response data
+        loadingSuccess = true
+        set_IdUserLogged(responseData._id)
+      } else if (response.status === 400) {
+        // Handle non-successful responses
+        console.error('Request failed: ', response.status, response.statusText)
+        const errorData = await response.json()
+        console.error('Request failed 2: ', errorData.error)
+        // Handle the error here
+        if (errorData.errorCode === 'duplicate_product') {
+          // setOpenErrorModal(true) // Open the modal for duplicate product error
+          // setErrorData(errorData.errorCode)
+        }
+      }
+    } catch (error: unknown) {
+      if (typeof error === 'string') {
+        // 'error' is now narrowed down to type 'string'
+        console.error('Error:', error)
+      } else if (error instanceof Error) {
+        // 'error' is now narrowed down to type 'Error'
+        console.error('Error object:', error.message)
+      } else {
+        // Handle other cases as needed
+      }
+    } finally {
+      // console.log("loadingSuccess: ", loadingSuccess)
+      setIsLoading((prevLoading: any) => ({
+        ...prevLoading,
+        fieldsFetchCreateStock: loadingSuccess,
+      }));
+    }
+  } 
+
 
 
 
