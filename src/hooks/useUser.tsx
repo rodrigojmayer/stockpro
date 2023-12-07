@@ -1,8 +1,10 @@
 import  { useCallback, useContext}  from 'react'
 import { UserContext } from '../context/UserContext';
+import { IsLoadingContext } from '../context/IsLoadingContext';
 
 export default function useUser () {
     const { user, setUser } = useContext<any>(UserContext)
+    const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     const localStorage = window.localStorage
 
     const login = useCallback((response: any) => {

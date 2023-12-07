@@ -51,29 +51,36 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   // const { isLogged, login } = useUser()
   // const [user, setUser] = useState<UserData>(INITIAL_USER);
   const profileString = window.localStorage.getItem('profile');
-  console.log("window.localStorage.getItem('profile'): ", profileString)
+  // console.log("window.localStorage.getItem('profile'): ", profileString)
   if (profileString !== null) {
-    console.log("JSON.parse(window.localStorage.getItem('profile'): ", JSON.parse(profileString))
+    // console.log("JSON.parse(window.localStorage.getItem('profile'): ", JSON.parse(profileString))
     // const profile = JSON.parse(profileString);
     // Use the profile object here
   }
   const [user, setUser] = useState<UserData>(
-    // profileString ? 
-    //   () => JSON.parse(profileString)
-    // :
+    profileString ? 
+      () => JSON.parse(profileString)
+    :
       INITIAL_USER
   )
 
   
-  useEffect(() => {
-    console.log("*-*-*-*-*user: ", user)
-  }, [user]);
 
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const [_IdUserLogged, set_IdUserLogged] = useState<string|number>(INITIAL_USER._id);
   const [gmailUserLogged, setGmailUserLogged] = useState<UserData>(INITIAL_USER);
 
 
+  useEffect(() => {
+    if(profileString) {
+      setUser(JSON.parse(profileString))
+      setIsLoading((prevLoading:any) => ({
+        ...prevLoading,
+        user: false,
+      }));
+    }
+  }, []);
+  
   // useEffect(() => {
   //   console.log("_IdUserLogged: ", _IdUserLogged)
   //   if(_IdUserLogged){

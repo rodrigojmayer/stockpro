@@ -31,7 +31,7 @@ const theme = createTheme({
   },
 })
 
-const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
+// const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
     
 
 function App() {
