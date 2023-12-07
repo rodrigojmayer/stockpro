@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { UserContext } from '../context/UserContext';
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
+import useUser from '../hooks/useUser';
 
 
 
@@ -53,7 +54,8 @@ interface ChildProps {
 export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
 
     const { classes } = useStyles()
-    const { user } = useContext<any>(UserContext)
+    const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
+    const { isLogged, logout } = useUser()
     const close = () => {
         handleClose(false)
     }
@@ -73,8 +75,18 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     }
 
     const navigate = useNavigate();
-    const selLogout = () => {
-        navigate('/login')
+
+    const selLogout = async() => {
+        try {
+            await logout()
+            setUser(INITIAL_USER)
+        } catch (error) {
+            console.error('Logout error: ', error)
+        } finally {
+            navigate('/login')
+
+        }
+
     }
     
     const  buttons = [

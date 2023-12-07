@@ -27,11 +27,12 @@ import { UserData } from "../types";
 export default function Login () {
 
     const { classes } = useStylesGlobal();
-    const { isLogged, login } = useUser()
+    const { isLogged, login, logout } = useUser()
     const { INITIAL_USER, user, setUser, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
     const { users, setUsers } = useContext<any>(UsersContext); 
     const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     
+    // logout()
     console.log("all users in login: ", users)
 
 
@@ -117,8 +118,8 @@ export default function Login () {
     
 
   useEffect(() => {
-    console.log("_IdUserLogged: ", _IdUserLogged)
     if(_IdUserLogged){
+      console.log("_IdUserLogged: ", _IdUserLogged)
       const fetchUser = async () => {
         try {
           const response = await fetch(`http://localhost:4000/api/users/${_IdUserLogged}`);
@@ -155,13 +156,14 @@ export default function Login () {
 
   
   useEffect(() => {
-    console.log("gmailUserLogged: ", gmailUserLogged)
+    console.log("gmailUserLogged: ", gmailUserLogged.email)
+    console.log("user: ", user)
     
     // setIsLoading((prevLoading:any) => ({
     //   ...prevLoading,
     //   user: true,
     // }));
-    if(gmailUserLogged.email){
+    if(gmailUserLogged.email && gmailUserLogged.email !== user.email){
       const fetchUserByEmail = async () => {
         try {
           const response = await fetch(`http://localhost:4000/api/users/email/${gmailUserLogged.email}`);
@@ -189,6 +191,7 @@ export default function Login () {
             ...prevLoading,
             user: false,
           }));
+          setGmailUserLogged(INITIAL_USER)  // Resetting after login to allow later the logout
         }
       };
       fetchUserByEmail();

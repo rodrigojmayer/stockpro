@@ -95,6 +95,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
 
 
   useEffect(() => {
+    // console.log("user: ", user)
   const columns_user_order = user.ordered_fields.map((idField: number) => {
     // console.log("idField: ", idField)
     return columns.find((column) => column.id === idField);

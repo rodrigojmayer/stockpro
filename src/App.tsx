@@ -21,6 +21,7 @@ import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } 
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import useUser from './hooks/useUser';
 
 const theme = createTheme({
   typography: {

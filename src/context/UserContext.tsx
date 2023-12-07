@@ -72,6 +72,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
 
   useEffect(() => {
+    console.log("/*-/*-/*-profileString: ", profileString)
     if(profileString) {
       setUser(JSON.parse(profileString))
       setIsLoading((prevLoading:any) => ({

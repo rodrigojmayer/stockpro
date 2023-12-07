@@ -3,19 +3,22 @@ import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 
 export default function useUser () {
-    const { user, setUser } = useContext<any>(UserContext)
+    const { INITIAL_USER, user, setUser } = useContext<any>(UserContext)
     const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     const localStorage = window.localStorage
 
     const login = useCallback((response: any) => {
-        console.log("useUser.tsx response: ", response)
+        console.log("useUser.tsx login response: ", response)
+        console.log("useUser.tsx login user: ", user)
+        console.log("useUser.tsx login localStorage: ", localStorage)
         localStorage.setItem('profile', JSON.stringify(response))
         setUser(response)
     }, [setUser, localStorage])
 
     const logout = useCallback(() => {
-        setUser(null)
         localStorage.removeItem('profile')
+        console.log("useUser.tsx logout localStorage: ", localStorage)
+        console.log("useUser.tsx logout user: ", user)
     }, [setUser, localStorage])
 
     return {
