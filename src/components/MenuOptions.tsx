@@ -52,10 +52,11 @@ interface ChildProps {
 
 
 export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
-
+    
     const { classes } = useStyles()
     const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
     const { isLogged, logout } = useUser()
+    console.log("UserContext.tsx useUser.isLogged: ", isLogged)
     const close = () => {
         handleClose(false)
     }

@@ -3,17 +3,17 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
 import { jwtDecode  } from 'jwt-decode'
 import { Box,
-     Divider,
-     Modal, 
-     IconButton,
-     TextField,
-     Typography,
-     Switch,
-     Link,
-     Button,
-    } from '@mui/material';
-    import { GoogleButton, OkButton } from '../components/Buttons';
-    import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal  } from '../Styles'
+        Divider,
+        Modal, 
+        IconButton,
+        TextField,
+        Typography,
+        Switch,
+        Link,
+        Button,
+        } from '@mui/material';
+import { GoogleButton, OkButton } from '../components/Buttons';
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal  } from '../Styles'
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -26,100 +26,115 @@ import { UserData } from "../types";
 
 export default function Login () {
 
-    const { classes } = useStylesGlobal();
-    const { isLogged, login, logout } = useUser()
-    const { INITIAL_USER, user, setUser, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
-    const { users, setUsers } = useContext<any>(UsersContext); 
-    const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
-    
-    // logout()
-    console.log("all users in login: ", users)
+  const { classes } = useStylesGlobal();
+  const { isLogged, login, logout } = useUser()
+  const { INITIAL_USER, user, setUser, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
+  const { users, setUsers } = useContext<any>(UsersContext); 
+  const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
+  
+  const [errorTextFields, setErrorTextFields] = useState({
+    "access_level": false,
+    "name": false,
+    "email": false,
+    "user": false,
+    "password": false,
+  });
+  
+  const [userNameEmail, setUserNameEmail] = useState("");
+  const [passwordUser, setPasswordUser] = useState("");
+  const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
+  const [rememberEnabled, setRememberEnabled] = useState<boolean>(false);
+  const showProfilePassToggle = () => {
+    setShowProfilePass(!showProfilePass)
+  }
+  const rememberEnabledChange = (value: boolean) => {
+    setRememberEnabled(value)
+  }
+  const handleUserNameEmail = (value: string) => {
+    setUserNameEmail(value)
+  }
+  const handlePasswordUser = (value: string) => {
+    setPasswordUser(value)
+  }
+  const handleLogin = () => {
+    console.log("Login: ")
 
+    // userNameEmail
+    // passwordUser
+    const urlExt = userNameEmail.includes("@") ? `email` : `user` 
 
-    const [errorTextFields, setErrorTextFields] = useState({
-        "access_level": false,
-        "name": false,
-        "email": false,
-        "user": false,
-        "password": false,
-    });
-    
-    const [userNameEmail, setUserNameEmail] = useState("");
-    const [passwordUser, setPasswordUser] = useState("");
-    const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
-    const [rememberEnabled, setRememberEnabled] = useState<boolean>(false);
-    const showProfilePassToggle = () => {
-        setShowProfilePass(!showProfilePass)
-    }
-    const rememberEnabledChange = (value: boolean) => {
-        setRememberEnabled(value)
-    }
-    const handleUserNameEmail = (value: string) => {
-        setUserNameEmail(value)
-    }
-    const handlePasswordUser = (value: string) => {
-        setPasswordUser(value)
-    }
-    const handleLogin = () => {
-        console.log("Login: ")
-    }
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if(isLogged) navigate('/')
-    }, [isLogged, navigate])
-    
-    // const handleLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    // const handleLoginSuccess = (response: any) => {
-        
-  const handleLoginSuccess = async (response: any) => {
-        console.log('Login Success:', response);
-        // Handle the successful Google login response here
-        interface JwtPayload {
-            email: string,
-            given_name: string,
-            family_name: string,
+    const fetchUser = async () => {
+      try {
+        // const response = await fetch(`http://localhost:4000/api/users/email/${userNameEmail}`);
+        const response = await fetch(`http://localhost:4000/api/users/${urlExt}/${userNameEmail}`);
+        // console.log("user by email response: ", response)
+        if (response.ok) {
+          const json = await response.json();
+          // console.log("user by email json: ", json)
+          if(json){
+            // setUser(json);
+            login(json);
           }
-          
-        const decodedToken:JwtPayload = jwtDecode(response.credential);
-        console.log('Login decodedToken:', decodedToken);
-        const userEmailData = {
-            "email" : decodedToken.email,       
-            "name" : decodedToken.given_name,        
-            "last_name" : decodedToken.family_name, 
-        }      
-        console.log('Login userEmailData:', userEmailData);
-        console.log('user context before setGmailUserLogged:', user);
-        setGmailUserLogged(userEmailData)
-        console.log('user context after setGmailUserLogged:', user);
-        // first check if the gmail user already exists using the usersContext
-
-        
-        // if(userEmail==="rodrigojmayer@gmail.com"){
-
-        // }
-        // if exists use the function of userContext to set it
-        
-       
-
-
+          else{
+            console.log("error email not found 1?: ")
+          }
+        } else {
+          console.log("error email not found 2?: ")
+        }
+      } catch (error) {
+        console.log("error email not found?: ", error)
+        // setUser(INITIAL_USER);
+        // Handle any network or fetch-related errors
+      } finally {
+        setIsLoading((prevLoading:any) => ({
+          ...prevLoading,
+          user: false,
+        }));
+        // setGmailUserLogged(INITIAL_USER)  // Resetting after login to allow later the logout
+      }
     };
+    fetchUser();
 
-    const handleLoginFailure = (error: any) => {
-    console.error('Login Failure:', error);
+  }
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(isLogged) navigate('/')
+  }, [isLogged, navigate])
+  
+  const handleLoginGoogleSuccess = async (response: any) => {
+    // console.log('Login Success:', response);
+    // Handle the successful Google login response here
+    interface JwtPayload {
+      email: string,
+      given_name: string,
+      family_name: string,
+    }
+    const decodedToken:JwtPayload = jwtDecode(response.credential);
+    console.log('Login decodedToken:', decodedToken);
+    const userEmailData = {
+      "email": decodedToken.email,       
+      "name": decodedToken.given_name,        
+      "last_name": decodedToken.family_name, 
+    }      
+    // console.log('Login userEmailData:', userEmailData);
+    // console.log('user context before setGmailUserLogged:', user);
+    setGmailUserLogged(userEmailData)
+    // console.log('user context after setGmailUserLogged:', user);
+    // first check if the gmail user already exists using the usersContext
+    // if(userEmail==="rodrigojmayer@gmail.com"){
+    // }
+    // if exists use the function of userContext to set it
+  };
+  const handleLoginGoogleFailure = (error: any) => {
+    console.error('Login Google Failure:', error);
     // Handle the failure/error during Google login here
-    };
-
-
-
-
-
-    
+  };
 
   useEffect(() => {
     if(_IdUserLogged){
-      console.log("_IdUserLogged: ", _IdUserLogged)
+      // console.log("_IdUserLogged: ", _IdUserLogged)
       const fetchUser = async () => {
         try {
           const response = await fetch(`http://localhost:4000/api/users/${_IdUserLogged}`);
@@ -127,56 +142,45 @@ export default function Login () {
           // const response = await fetch(`http://localhost:4000/api/users/64b6c0553204de99e630a0ac`); //User 2 client 3 id_access_level 2 admin
           // const response = await fetch(`http://localhost:4000/api/users/64f63b7773d98cad83d45fc2`); //User - test client 3 id_access_level 3 superuser
           // const response = await fetch(`http://localhost:4000/api/users/64f704d073d98cad83d461c8`); //User - test client 3 id_access_level 4 user
-          
           console.log("user response: ", response)
           if (response.ok) {
             const json = await response.json();
             // setUser(json);
             login(json);
-            
           } else {
-
             // setUser(INITIAL_USER);
             // Handle the case where the response is not OK (e.g., show an error message)
           }
         } catch (error) {
-        //   setUser(INITIAL_USER);
+          // setUser(INITIAL_USER);
           // Handle any network or fetch-related errors
         } finally {
-              setIsLoading((prevLoading:any) => ({
-              ...prevLoading,
-              user: false,
-              }));
-          }
+          setIsLoading((prevLoading:any) => ({
+          ...prevLoading,
+          user: false,
+          }));
+        }
       };
       fetchUser();
     }
-
   }, [_IdUserLogged]);
-
   
   useEffect(() => {
-    console.log("gmailUserLogged: ", gmailUserLogged.email)
-    console.log("user: ", user)
-    
-    // setIsLoading((prevLoading:any) => ({
-    //   ...prevLoading,
-    //   user: true,
-    // }));
+    // console.log("gmailUserLogged: ", gmailUserLogged.email)
+    // console.log("user: ", user)
     if(gmailUserLogged.email && gmailUserLogged.email !== user.email){
       const fetchUserByEmail = async () => {
         try {
           const response = await fetch(`http://localhost:4000/api/users/email/${gmailUserLogged.email}`);
-          console.log("user by email response: ", response)
+          // console.log("user by email response: ", response)
           if (response.ok) {
             const json = await response.json();
-            console.log("user by email json: ", json)
+            // console.log("user by email json: ", json)
             if(json){
               // setUser(json);
               login(json);
             }
             else{
-              
               postClient()
             }
           } else {
@@ -269,6 +273,7 @@ export default function Login () {
 
 
   const postUser = async (bodyUser:UserData) => {
+    console.error('Login.tsx postUser bodyUser: ', bodyUser)
     let loadingSuccess: boolean = false
     try {
       const response = await fetch(`http://localhost:4000/api/users/`, {
@@ -318,106 +323,106 @@ export default function Login () {
 
 
 
-    return (
-        <div>
-            <Modal open={true} > 
-                <Box sx={modalStyleSaveExternal}>
-                    <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
-                        <Typography className={classes.finishButtons} align="center" variant='h5' >
-                            Login
-                        </Typography> 
-                        <Box className={classes.customBoxColumn}>
-                            <Box className={classes.customBoxRow}>
-                                <TextField
-                                    label="Username or Email"
-                                    value={userNameEmail}
-                                    onChange={ (event) => handleUserNameEmail(event.target.value) }
-                                    maxRows={1}
-                                    size="small"
-                                    className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                    }}
-                                />
-                            </Box>
-                            <Box className={classes.customBoxRow}>
-                                <TextField
-                                    label="Password*"
-                                    maxRows={1}
-                                    size="small"
-                                    value={passwordUser}
-                                    type={ showProfilePass ? "text" : "password" }
-                                    onChange={ (event) => handlePasswordUser(event.target.value) }
-                                    className= {`${errorTextFields.password ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        endAdornment: (
-                                            <IconButton onClick={showProfilePassToggle}>
-                                                {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                            </IconButton>
-                                        ),
-                                    }}
-                                />
-                            </Box>
-                            <Box className={classes.customBoxRowSpaceBetween}>
-                                <Box>
-                                    <Switch 
-                                        color='success' 
-                                        checked={rememberEnabled}
-                                        onChange={(event) => {
-                                            rememberEnabledChange(event.target.checked)
-                                        }}
-                                    />Remember me 
-                                </Box>
-                                    
-                                <Box>
-                                    <OkButton
-                                    clicked={() => handleLogin()}
-                                />
-                                </Box>
-                            </Box>
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <Divider 
-                                className={classes.customDivider} 
-                                sx={{
-                                    "&::before, &::after": {
-                                    borderColor: "white",
-                                    },
-                                }}
-                                variant="middle"  
-                            >
-                                Or login using
-                            </Divider>
-                        </Box>
-
-                        <Box className={classes.customBoxRow}>
-                            <GoogleLogin
-                                onError={() => handleLoginFailure}
-                                onSuccess={handleLoginSuccess}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <Divider 
-                                className={classes.customDivider} 
-                                variant="middle" 
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRowSpaceAround}>
-                            <Link>
-                                Forgot Password? 
-                            </Link>
-                            <Box className={classes.customBoxRow}>
-                                New here? 
-                                <Link>
-                                    Sign Up 
-                                </Link>
-                            </Box>
-                        </Box>
-                        <NavLink to="/">Home</NavLink>
-                    </Box>
+  return (
+    <div>
+      <Modal open={true} > 
+        <Box sx={modalStyleSaveExternal}>
+          <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+            <Typography className={classes.finishButtons} align="center" variant='h5' >
+                Login
+            </Typography> 
+            <Box className={classes.customBoxColumn}>
+              <Box className={classes.customBoxRow}>
+                <TextField
+                  label="Username or Email"
+                  value={userNameEmail}
+                  onChange={ (event) => handleUserNameEmail(event.target.value) }
+                  maxRows={1}
+                  size="small"
+                  className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                  InputProps={{
+                    className: classes.inputClassName,
+                  }}
+                />
+              </Box>
+              <Box className={classes.customBoxRow}>
+                <TextField
+                  label="Password*"
+                  maxRows={1}
+                  size="small"
+                  value={passwordUser}
+                  type={ showProfilePass ? "text" : "password" }
+                  onChange={ (event) => handlePasswordUser(event.target.value) }
+                  className= {`${errorTextFields.password ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                  InputProps={{
+                    className: classes.inputClassName,
+                    endAdornment: (
+                      <IconButton onClick={showProfilePassToggle}>
+                        {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                      </IconButton>
+                    ),
+                  }}
+                />
+              </Box>
+              <Box className={classes.customBoxRowSpaceBetween}>
+                <Box>
+                  <Switch 
+                    color='success' 
+                    checked={rememberEnabled}
+                    onChange={(event) => {
+                      rememberEnabledChange(event.target.checked)
+                    }}
+                  />Remember me 
                 </Box>
-            </Modal>  
-        </div>
-    )
+                    
+                <Box>
+                  <OkButton
+                  clicked={() => handleLogin()}
+                />
+                </Box>
+              </Box>
+            </Box>
+            <Box className={classes.customBoxRow}>
+              <Divider 
+                className={classes.customDivider} 
+                sx={{
+                    "&::before, &::after": {
+                    borderColor: "white",
+                    },
+                }}
+                variant="middle"  
+              >
+                Or login using
+              </Divider>
+            </Box>
+
+            <Box className={classes.customBoxRow}>
+              <GoogleLogin
+                onError={() => handleLoginGoogleFailure}
+                onSuccess={handleLoginGoogleSuccess}
+              />
+            </Box>
+            <Box className={classes.customBoxRow}>
+                <Divider 
+                    className={classes.customDivider} 
+                    variant="middle" 
+                />
+            </Box>
+            <Box className={classes.customBoxRowSpaceAround}>
+                <Link>
+                    Forgot Password? 
+                </Link>
+                <Box className={classes.customBoxRow}>
+                    New here? 
+                    <Link>
+                        Sign Up 
+                    </Link>
+                </Box>
+            </Box>
+            <NavLink to="/">Home</NavLink>
+          </Box>
+        </Box>
+      </Modal>  
+    </div>
+  )
 }
