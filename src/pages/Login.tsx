@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
+import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode  } from 'jwt-decode'
 import { Box,
         Divider,
@@ -10,12 +10,9 @@ import { Box,
         Typography,
         Switch,
         Link,
-        Button,
         } from '@mui/material';
-import { GoogleButton, OkButton } from '../components/Buttons';
+import { OkButton } from '../components/Buttons';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal  } from '../Styles'
-import Slider from '@mui/material/Slider';
-import { styled } from '@mui/material/styles';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { UserContext } from '../context/UserContext';
@@ -41,7 +38,7 @@ export default function Login () {
   });
   
   const [userNameEmail, setUserNameEmail] = useState("");
-  const [passwordUser, setPasswordUser] = useState("");
+  const [userPass, setUserPass] = useState("");
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
   const [rememberEnabled, setRememberEnabled] = useState<boolean>(false);
   const showProfilePassToggle = () => {
@@ -53,26 +50,28 @@ export default function Login () {
   const handleUserNameEmail = (value: string) => {
     setUserNameEmail(value)
   }
-  const handlePasswordUser = (value: string) => {
-    setPasswordUser(value)
+  const handleUserPass = (value: string) => {
+    setUserPass(value)
   }
   const handleLogin = () => {
-    console.log("Login: ")
-
-    // userNameEmail
-    // passwordUser
-    const urlExt = userNameEmail.includes("@") ? `email` : `user` 
-
     const fetchUser = async () => {
       try {
-        // const response = await fetch(`http://localhost:4000/api/users/email/${userNameEmail}`);
-        const response = await fetch(`http://localhost:4000/api/users/${urlExt}/${userNameEmail}`);
-        // console.log("user by email response: ", response)
+        console.log("userNameEmail: ", userNameEmail)
+        console.log("userPass: ", userPass)
+        const response = await fetch(`http://localhost:4000/api/users/login/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Set the appropriate content-type for my API
+            // Add any other requires headers here
+          },
+          body:JSON.stringify({
+            "user_email": userNameEmail,
+            "pass": userPass
+          })
+        });
         if (response.ok) {
           const json = await response.json();
-          // console.log("user by email json: ", json)
           if(json){
-            // setUser(json);
             login(json);
           }
           else{
@@ -94,17 +93,14 @@ export default function Login () {
       }
     };
     fetchUser();
-
   }
 
   const navigate = useNavigate()
-
   useEffect(() => {
     if(isLogged) navigate('/')
   }, [isLogged, navigate])
   
   const handleLoginGoogleSuccess = async (response: any) => {
-    // console.log('Login Success:', response);
     // Handle the successful Google login response here
     interface JwtPayload {
       email: string,
@@ -112,20 +108,8 @@ export default function Login () {
       family_name: string,
     }
     const decodedToken:JwtPayload = jwtDecode(response.credential);
-    console.log('Login decodedToken:', decodedToken);
-    const userEmailData = {
-      "email": decodedToken.email,       
-      "name": decodedToken.given_name,        
-      "last_name": decodedToken.family_name, 
-    }      
-    // console.log('Login userEmailData:', userEmailData);
-    // console.log('user context before setGmailUserLogged:', user);
+    const userEmailData = decodedToken
     setGmailUserLogged(userEmailData)
-    // console.log('user context after setGmailUserLogged:', user);
-    // first check if the gmail user already exists using the usersContext
-    // if(userEmail==="rodrigojmayer@gmail.com"){
-    // }
-    // if exists use the function of userContext to set it
   };
   const handleLoginGoogleFailure = (error: any) => {
     console.error('Login Google Failure:', error);
@@ -134,18 +118,12 @@ export default function Login () {
 
   useEffect(() => {
     if(_IdUserLogged){
-      // console.log("_IdUserLogged: ", _IdUserLogged)
       const fetchUser = async () => {
         try {
           const response = await fetch(`http://localhost:4000/api/users/${_IdUserLogged}`);
-          // const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`); //User 1 client 2 id_access_level 1 superadmin
-          // const response = await fetch(`http://localhost:4000/api/users/64b6c0553204de99e630a0ac`); //User 2 client 3 id_access_level 2 admin
-          // const response = await fetch(`http://localhost:4000/api/users/64f63b7773d98cad83d45fc2`); //User - test client 3 id_access_level 3 superuser
-          // const response = await fetch(`http://localhost:4000/api/users/64f704d073d98cad83d461c8`); //User - test client 3 id_access_level 4 user
           console.log("user response: ", response)
           if (response.ok) {
             const json = await response.json();
-            // setUser(json);
             login(json);
           } else {
             // setUser(INITIAL_USER);
@@ -166,28 +144,24 @@ export default function Login () {
   }, [_IdUserLogged]);
   
   useEffect(() => {
-    // console.log("gmailUserLogged: ", gmailUserLogged.email)
-    // console.log("user: ", user)
     if(gmailUserLogged.email && gmailUserLogged.email !== user.email){
-      const fetchUserByEmail = async () => {
+      const fetchUserByGmail = async () => {
         try {
-          const response = await fetch(`http://localhost:4000/api/users/email/${gmailUserLogged.email}`);
-          // console.log("user by email response: ", response)
+          const response = await fetch(`http://localhost:4000/api/users/logingmail/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(gmailUserLogged)
+          });
           if (response.ok) {
             const json = await response.json();
-            // console.log("user by email json: ", json)
-            if(json){
-              // setUser(json);
-              login(json);
-            }
-            else{
-              postClient()
-            }
+            login(json);
           } else {
-            console.log("error email not found?: ")
+            postClient()
           }
         } catch (error) {
-          console.log("error email not found?: ", error)
+          console.log("error: ", error)
           // setUser(INITIAL_USER);
           // Handle any network or fetch-related errors
         } finally {
@@ -198,7 +172,7 @@ export default function Login () {
           setGmailUserLogged(INITIAL_USER)  // Resetting after login to allow later the logout
         }
       };
-      fetchUserByEmail();
+      fetchUserByGmail();
     }
   }, [gmailUserLogged]);
 
@@ -206,19 +180,11 @@ export default function Login () {
     const bodyUser: UserData= {
       ...INITIAL_USER,
       "email": gmailUserLogged.email,
-      "name": gmailUserLogged.name,
-      "last_name": gmailUserLogged.last_name,
+      "name": gmailUserLogged.given_name,
+      "last_name": gmailUserLogged.family_name,
       "user": gmailUserLogged.email?.split("@")[0] || "",
-      "pass": "Changethispassforarandompass@2", //////////////////////  FIX
-      "deleted": false, 
-      "enabled": true, 
-      "id_access_level": 4,
-      "ordered_fields": [1,2,3,4,5],
       "language": 1,  ///////////////////////////////// FIX
-      "background_color": 0,
-      "alerts_enabled": false
     }
-    // let loadingSuccess: boolean = false
     try {
       const response = await fetch(`http://localhost:4000/api/clients/`, {
         method: 'POST',
@@ -235,13 +201,9 @@ export default function Login () {
       // Check if the response status is successful
       if (response.ok) {
         const responseData = await response.json() // parse the response data
-        // loadingSuccess = true
-        console.log('UserContext response ok postClient responseData: ', responseData)
-        console.log('UserContext response ok postClient responseData.id: ', responseData.id)
         bodyUser.id_client = responseData.id
       } else if (response.status === 400) {
         // Handle non-successful responses
-        console.error('Request failed: ', response.status, response.statusText)
         const errorData = await response.json()
         console.error('Request failed 2: ', errorData.error)
         // Handle the error here
@@ -261,11 +223,6 @@ export default function Login () {
         // Handle other cases as needed
       }
     } finally {
-      // console.log("loadingSuccess: ", loadingSuccess)
-      // setIsLoading((prevLoading: any) => ({
-      //   ...prevLoading,
-      //   fieldsFetchCreateStock: loadingSuccess,
-      // }));
       if(bodyUser.id_client)
         postUser(bodyUser)
     }
@@ -320,9 +277,6 @@ export default function Login () {
     }
   } 
 
-
-
-
   return (
     <div>
       <Modal open={true} > 
@@ -350,9 +304,9 @@ export default function Login () {
                   label="Password*"
                   maxRows={1}
                   size="small"
-                  value={passwordUser}
+                  value={userPass}
                   type={ showProfilePass ? "text" : "password" }
-                  onChange={ (event) => handlePasswordUser(event.target.value) }
+                  onChange={ (event) => handleUserPass(event.target.value) }
                   className= {`${errorTextFields.password ? classes.text_field_error : ""} ${classes.inputMainData} `}
                   InputProps={{
                     className: classes.inputClassName,

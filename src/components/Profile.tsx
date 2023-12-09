@@ -167,12 +167,12 @@ export default function Profile( { open, handleClose }: ChildProps) {
         setProfileConfirmPass(event.target.value)
     }
     
-    const showProfilePassToggle = () => {
-        setShowProfilePass(!showProfilePass)
-    }
-    const showProfileConfirmationPassToggle = () => {
-        setShowProfileConfirmationPass(!showProfileConfirmationPass)
-    }
+    // const showProfilePassToggle = () => {
+    //     setShowProfilePass(!showProfilePass)
+    // }
+    // const showProfileConfirmationPassToggle = () => {
+    //     setShowProfileConfirmationPass(!showProfileConfirmationPass)
+    // }
 
     useEffect(() => {
         setProfileName(user.name?user.name:'')
@@ -262,15 +262,14 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 className={classes.inputMainData}
                                 value={profilePass}
                                 onChange={ handleEditPass }
-                                
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                    endAdornment: (
-                                        <IconButton onClick={showProfilePassToggle}>
-                                            {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                        </IconButton>
-                                    ),
-                                }}
+                                // InputProps={{
+                                //     className: classes.inputClassName,
+                                //     endAdornment: (
+                                //         <IconButton onClick={showProfilePassToggle}>
+                                //             {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                //         </IconButton>
+                                //     ),
+                                // }}
                             />
                         </Box>
                         <Box className={classes.customBoxRow}>
@@ -282,14 +281,14 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 className={classes.inputMainData}
                                 value={profileConfirmPass}
                                 onChange={ handleEditConfirmPass }
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                    endAdornment: (
-                                        <IconButton onClick={showProfileConfirmationPassToggle}>
-                                            {showProfileConfirmationPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                        </IconButton>
-                                    ),
-                                }}
+                                // InputProps={{
+                                //     className: classes.inputClassName,
+                                //     endAdornment: (
+                                //         <IconButton onClick={showProfileConfirmationPassToggle}>
+                                //             {showProfileConfirmationPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                //         </IconButton>
+                                //     ),
+                                // }}
                             />
                         </Box>
                     </Box>
