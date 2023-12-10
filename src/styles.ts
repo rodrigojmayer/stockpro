@@ -91,6 +91,12 @@ export const useStylesGlobal = makeStyles()({
     customBoxRowRight: {
         justifyContent:  "end",
     },
+    customBoxRowEnd: {
+        display: "flex",
+        justifyContent:  "flex-end",
+        marginTop: 7,
+        marginRight: 25
+    },
     customBoxRowArrowButton: {
         marginTop: "auto",
         height: "70px"

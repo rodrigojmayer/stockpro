@@ -357,8 +357,8 @@ export default function Login () {
                   }}
                 />
               </Box>
-              <Box className={classes.customBoxRowSpaceBetween}>
-                <Box>
+              <Box className={classes.customBoxRowEnd}>
+                {/* <Box>
                   <Switch 
                     color='success' 
                     checked={rememberEnabled}
@@ -366,13 +366,15 @@ export default function Login () {
                       rememberEnabledChange(event.target.checked)
                     }}
                   />Remember me 
-                </Box>
+                </Box> */}
                     
-                <Box>
-                  <OkButton
+                {/* <Box > */}
+                {/* <Box > */}
+                <OkButton
                   clicked={() => handleLogin()}
+                  widthIco={100}
                 />
-                </Box>
+                {/* </Box> */}
               </Box>
             </Box>
             <Box className={classes.customBoxRow}>

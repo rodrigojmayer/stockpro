@@ -153,9 +153,10 @@ interface ButtonProps {
   direction?: string
   submitOk?: boolean
   disabled?: boolean
+  widthIco?: number
 }
 
-export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: ButtonProps ) {
+export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk, widthIco }: ButtonProps ) {
 
   const { classes } = useStyles()
   const colorOk = theme.palette.success.main
@@ -188,7 +189,7 @@ export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk }: B
           paddingTop:0,  
           paddingBottom:0, 
           minWidth: sizeIco, 
-          width: sizeIco, 
+          width: widthIco || sizeIco, 
           height: sizeIco,
           borderRadius: borRad,
         }}
