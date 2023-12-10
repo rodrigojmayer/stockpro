@@ -30,6 +30,22 @@ const theme = createTheme({
     ].join(','),
     fontSize: 20,
   },
+  palette: {
+    secondary: {
+      main: '#c1e8fb',
+    },
+  },
+  components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+                    marginTop: 4
+                }
+        },
+      },
+    },
+  },
 })
 
 export default function Login () {
@@ -357,8 +373,9 @@ export default function Login () {
                   }}
                 />
               </Box>
-              <Box className={classes.customBoxRowEnd}>
-                {/* <Box>
+              <Box className={classes.customBoxRowSpaceBetween}>
+              {/* <Box className={classes.customBoxRowEnd}> */}
+                <Box>
                   <Switch 
                     color='success' 
                     checked={rememberEnabled}
@@ -366,7 +383,7 @@ export default function Login () {
                       rememberEnabledChange(event.target.checked)
                     }}
                   />Remember me 
-                </Box> */}
+                </Box>
                     
                 {/* <Box > */}
                 {/* <Box > */}
@@ -403,16 +420,16 @@ export default function Login () {
                     variant="middle" 
                 />
             </Box>
-            <Box className={classes.customBoxRowSpaceAround}>
-                <Link>
+            <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
+                <Link color="secondary">
                     Forgot Password? 
                 </Link>
-                <Box className={classes.customBoxRow}>
-                    New here? 
-                    <Link>
-                        Sign Up 
-                    </Link>
-                </Box>
+                {/* <Box className={classes.customBoxRow}> */}
+                    {/* New here?  */}
+                  <Link color="secondary">
+                      Sign Up 
+                  </Link>
+                {/* </Box> */}
             </Box>
           </Box>
         </Box>

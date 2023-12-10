@@ -26,6 +26,17 @@ const theme = createTheme({
     ].join(','),
     fontSize: 20,
   },
+  components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+                    marginTop: 4
+                }
+        },
+      },
+    },
+  },
 })
 
 const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
