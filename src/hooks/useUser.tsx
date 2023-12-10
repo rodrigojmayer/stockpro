@@ -7,11 +7,14 @@ export default function useUser () {
     const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     const localStorage = window.localStorage
 
-    const login = useCallback((response: any) => {
+    const login = useCallback((response: any, rememberEnabled?: boolean) => {
         console.log("useUser.tsx login response: ", response)
         console.log("useUser.tsx login user: ", user)
         console.log("useUser.tsx login localStorage: ", localStorage)
+        console.log("useUser.tsx login rememberEnabled: ", rememberEnabled)
         localStorage.setItem('profile', JSON.stringify(response))
+        if(rememberEnabled)
+            localStorage.setItem('remember_profile', JSON.stringify(response))
         setUser(response)
     }, [setUser, localStorage])
 

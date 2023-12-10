@@ -129,7 +129,7 @@ export default function Login () {
         if (response.ok) {
           const json = await response.json();
           if(json){
-            login(json);
+            login(json, rememberEnabled);
           }
           else{
             console.log("error email not found 1?: ")
@@ -172,33 +172,6 @@ export default function Login () {
     console.error('Login Google Failure:', error);
     // Handle the failure/error during Google login here
   };
-
-  useEffect(() => {
-    if(_IdUserLogged){
-      const fetchUser = async () => {
-        try {
-          const response = await fetch(`http://localhost:4000/api/users/${_IdUserLogged}`);
-          console.log("user response: ", response)
-          if (response.ok) {
-            const json = await response.json();
-            login(json);
-          } else {
-            // setUser(INITIAL_USER);
-            // Handle the case where the response is not OK (e.g., show an error message)
-          }
-        } catch (error) {
-          // setUser(INITIAL_USER);
-          // Handle any network or fetch-related errors
-        } finally {
-          setIsLoading((prevLoading:any) => ({
-          ...prevLoading,
-          user: false,
-          }));
-        }
-      };
-      fetchUser();
-    }
-  }, [_IdUserLogged]);
   
   useEffect(() => {
     if(gmailUserLogged.email && gmailUserLogged.email !== user.email){
@@ -284,8 +257,6 @@ export default function Login () {
         postUser(bodyUser)
     }
   } 
-
-
   const postUser = async (bodyUser:UserData) => {
     console.error('Login.tsx postUser bodyUser: ', bodyUser)
     let loadingSuccess: boolean = false
@@ -303,7 +274,8 @@ export default function Login () {
       if (response.ok) {
         const responseData = await response.json() // parse the response data
         loadingSuccess = true
-        set_IdUserLogged(responseData._id)
+        // set_IdUserLogged(responseData._id)
+        setGmailUserLogged(responseData)
       } else if (response.status === 400) {
         // Handle non-successful responses
         console.error('Request failed: ', response.status, response.statusText)
@@ -332,7 +304,7 @@ export default function Login () {
         fieldsFetchCreateStock: loadingSuccess,
       }));
     }
-  } 
+  }
 
   return (
     <div>
