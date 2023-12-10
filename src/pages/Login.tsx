@@ -20,6 +20,17 @@ import { UsersContext } from '../context/UsersContext';
 import useUser from '../hooks/useUser';
 import { IsLoadingContext } from "../context/IsLoadingContext";
 import { UserData } from "../types";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      '"Asap Condensed"',
+    ].join(','),
+    fontSize: 20,
+  },
+})
 
 export default function Login () {
 
@@ -30,13 +41,13 @@ export default function Login () {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   
   const [errorTextFields, setErrorTextFields] = useState({
-    "access_level": false,
-    "name": false,
-    "email": false,
-    "user": false,
-    "password": false,
+    "user_name_email": false,
+    "user_pass": false,
   });
-  
+   
+  const [openErrorModal, setOpenErrorModal] = useState(false);  
+  const [errorData, setErrorData] = useState("");  
+
   const [userNameEmail, setUserNameEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
@@ -49,15 +60,42 @@ export default function Login () {
   }
   const handleUserNameEmail = (value: string) => {
     setUserNameEmail(value)
+    setErrorTextFields((prevErrorTextFields: any) => ({
+        ...prevErrorTextFields,
+        user_name_email: false,
+    }));
   }
   const handleUserPass = (value: string) => {
     setUserPass(value)
+    setErrorTextFields((prevErrorTextFields: any) => ({
+        ...prevErrorTextFields,
+        user_pass: false,
+    }));
   }
   const handleLogin = () => {
+    let dataOk: boolean = true
+    if(userNameEmail===""){
+      // setOpenErrorModal(true)
+      // setErrorData("missing_user_name_email")
+      setErrorTextFields((prevErrorTextFields: any) => ({
+          ...prevErrorTextFields,
+          user_name_email: true,
+      }));
+      dataOk = false
+    }
+    if(userPass===""){
+      // setOpenErrorModal(true)
+      // setErrorData("missing_user_pass")
+      setErrorTextFields((prevErrorTextFields: any) => ({
+          ...prevErrorTextFields,
+          user_pass: true,
+      }));
+      dataOk = false
+    }
+    if(!dataOk) return
+
     const fetchUser = async () => {
       try {
-        console.log("userNameEmail: ", userNameEmail)
-        console.log("userPass: ", userPass)
         const response = await fetch(`http://localhost:4000/api/users/login/`, {
           method: 'POST',
           headers: {
@@ -279,6 +317,7 @@ export default function Login () {
 
   return (
     <div>
+    <ThemeProvider theme={theme}>
       <Modal open={true} > 
         <Box sx={modalStyleSaveExternal}>
           <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
@@ -293,7 +332,7 @@ export default function Login () {
                   onChange={ (event) => handleUserNameEmail(event.target.value) }
                   maxRows={1}
                   size="small"
-                  className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                  className= {`${errorTextFields.user_name_email ? classes.text_field_error : ""} ${classes.inputMainData} `}
                   InputProps={{
                     className: classes.inputClassName,
                   }}
@@ -301,13 +340,13 @@ export default function Login () {
               </Box>
               <Box className={classes.customBoxRow}>
                 <TextField
-                  label="Password*"
+                  label="Password"
                   maxRows={1}
                   size="small"
                   value={userPass}
                   type={ showProfilePass ? "text" : "password" }
                   onChange={ (event) => handleUserPass(event.target.value) }
-                  className= {`${errorTextFields.password ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                  className= {`${errorTextFields.user_pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
                   InputProps={{
                     className: classes.inputClassName,
                     endAdornment: (
@@ -373,10 +412,10 @@ export default function Login () {
                     </Link>
                 </Box>
             </Box>
-            <NavLink to="/">Home</NavLink>
           </Box>
         </Box>
       </Modal>  
+      </ThemeProvider>
     </div>
   )
 }
