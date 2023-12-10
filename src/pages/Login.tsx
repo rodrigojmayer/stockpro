@@ -19,9 +19,9 @@ import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
 import useUser from '../hooks/useUser';
 import { IsLoadingContext } from "../context/IsLoadingContext";
-import { UserData } from "../types";
+import { RememberUserData, UserData } from "../types";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
+import ComboBox from "../components/inputs/ComboBox";
 
 const theme = createTheme({
   typography: {
@@ -70,22 +70,65 @@ export default function Login () {
   const [userNameEmail, setUserNameEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
-  const [rememberEnabled, setRememberEnabled] = useState<boolean>(false);
+  const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
+  const [rememberUsers, setRememberUsers] = useState<RememberUserData[]>([]);
+  
+  useEffect(() => {
+    // Get the keys from localStorage
+    const localStorageKeys = Object.keys(localStorage)
+    // Define a filter criterion
+    const filterCriterion = 'remember_profile_'
+    // Filter the localStorage keys based on the criterion
+    const filteredKeys = localStorageKeys.filter(key => {
+      // Check if the key matches your criteria
+      return key.startsWith(filterCriterion)
+    })
+    for(const key of filteredKeys) {
+      console.log("key: ", key)
+      const storedData = localStorage.getItem(key)
+      if (storedData) {
+        const parsedData = JSON.parse(storedData)
+        const storedUserEmail = parsedData.user_email
+        console.log("storedUserEmail: ", storedUserEmail)
+        const storedPass = parsedData.pass
+        console.log("storedPass: ", storedPass)
+      }
+    }
+  }, [])
+
+
   const showProfilePassToggle = () => {
     setShowProfilePass(!showProfilePass)
   }
   const rememberEnabledChange = (value: boolean) => {
-    setRememberEnabled(value)
+    setRememberUser((prevRememberUser: RememberUserData) => ({
+      ...prevRememberUser,
+      enabled: value
+    }))
   }
+  
+  // useEffect(() => {
+  //   console.log("rememberUser: ", rememberUser)
+  // }, [rememberUser])
+
   const handleUserNameEmail = (value: string) => {
-    setUserNameEmail(value)
+    setUserNameEmail(value)  
+    console.log("value: ", value)  
+    setRememberUser((prevRememberUser: RememberUserData) => ({
+      ...prevRememberUser,
+      user_email: value
+    }))
     setErrorTextFields((prevErrorTextFields: any) => ({
         ...prevErrorTextFields,
         user_name_email: false,
     }));
   }
   const handleUserPass = (value: string) => {
-    setUserPass(value)
+    setUserPass(value)   
+    setRememberUser((prevRememberUser: RememberUserData) => ({
+      ...prevRememberUser,
+      pass: value
+    }))
     setErrorTextFields((prevErrorTextFields: any) => ({
         ...prevErrorTextFields,
         user_pass: false,
@@ -129,7 +172,7 @@ export default function Login () {
         if (response.ok) {
           const json = await response.json();
           if(json){
-            login(json, rememberEnabled);
+            login(json, rememberUser);
           }
           else{
             console.log("error email not found 1?: ")
@@ -317,7 +360,19 @@ export default function Login () {
             </Typography> 
             <Box className={classes.customBoxColumn}>
               <Box className={classes.customBoxRow}>
-                <TextField
+
+              <ComboBox
+                // optionsData={[{label: "test"}, {label: "test2"}]}
+                optionsData={[{label: "test"}, {label: "test2"}]}
+                
+                comboLabel="Username or Email"
+                comboValue={userNameEmail}
+                comboHandleValue={handleUserNameEmail}
+                errorTextField={errorTextFields.user_name_email}
+                />
+
+
+                {/* <TextField
                   label="Username or Email"
                   value={userNameEmail}
                   onChange={ (event) => handleUserNameEmail(event.target.value) }
@@ -327,7 +382,7 @@ export default function Login () {
                   InputProps={{
                     className: classes.inputClassName,
                   }}
-                />
+                /> */}
               </Box>
               <Box className={classes.customBoxRow}>
                 <TextField
@@ -353,7 +408,7 @@ export default function Login () {
                 <Box>
                   <Switch 
                     color='success' 
-                    checked={rememberEnabled}
+                    checked={rememberUser.enabled}
                     onChange={(event) => {
                       rememberEnabledChange(event.target.checked)
                     }}

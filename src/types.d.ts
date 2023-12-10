@@ -188,3 +188,8 @@ export interface FilestackData {
   apikey?: string;
   signature?: string;
 }
+export interface RememberUserData {
+  enabled?: boolean;
+  user_email?: string;
+  pass?: string;
+}

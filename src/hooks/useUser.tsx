@@ -1,20 +1,27 @@
 import  { useCallback, useContext}  from 'react'
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
+import { RememberUserData } from '../types';
 
 export default function useUser () {
     const { INITIAL_USER, user, setUser } = useContext<any>(UserContext)
     const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     const localStorage = window.localStorage
 
-    const login = useCallback((response: any, rememberEnabled?: boolean) => {
+    const login = useCallback((response: any, rememberUser?: RememberUserData) => {
         console.log("useUser.tsx login response: ", response)
         console.log("useUser.tsx login user: ", user)
         console.log("useUser.tsx login localStorage: ", localStorage)
-        console.log("useUser.tsx login rememberEnabled: ", rememberEnabled)
-        localStorage.setItem('profile', JSON.stringify(response))
-        if(rememberEnabled)
-            localStorage.setItem('remember_profile', JSON.stringify(response))
+        console.log("useUser.tsx login rememberUser: ", rememberUser)
+        localStorage.setItem('profile', JSON.stringify(response.user))
+        if(rememberUser){
+            const { user_email, pass } = rememberUser
+            const selectedFields = { user_email, pass}
+            if(rememberUser.enabled)
+                localStorage.setItem(`remember_profile_${rememberUser.user_email}`, JSON.stringify(selectedFields))
+            else
+                localStorage.removeItem(`remember_profile_${rememberUser.user_email}`)
+        }
         setUser(response)
     }, [setUser, localStorage])
 
@@ -30,5 +37,4 @@ export default function useUser () {
         login,
         logout
     }
-
 }
