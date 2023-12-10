@@ -31,8 +31,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused': {
-                    marginTop: 4
-                }
+            marginTop: 4
+          },
+          '&.MuiInputLabel-shrink': {
+            marginTop: 4
+          },
         },
       },
     },
