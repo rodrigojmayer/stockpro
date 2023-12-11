@@ -19,7 +19,7 @@ import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
 import useUser from '../hooks/useUser';
 import { IsLoadingContext } from "../context/IsLoadingContext";
-import { RememberUserData, UserData } from "../types";
+import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData } from "../types";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ComboBox from "../components/inputs/ComboBox";
 
@@ -71,7 +71,8 @@ export default function Login () {
   const [userPass, setUserPass] = useState("");
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
   const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
-  const [rememberUsers, setRememberUsers] = useState<RememberUserData[]>([]);
+  const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[] | any>();
+  const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
   
   useEffect(() => {
     // Get the keys from localStorage
@@ -92,10 +93,17 @@ export default function Login () {
         console.log("storedUserEmail: ", storedUserEmail)
         const storedPass = parsedData.pass
         console.log("storedPass: ", storedPass)
+        setRememberLabelUsers((prevRememberUsers: RememberLabelUsersData) => ({
+          ...prevRememberUsers,
+          label: parsedData.user_email,
+        })) 
+        setRememberUsersPass((prevRememberUsers: RememberUsersPassData) => ({
+          ...prevRememberUsers,
+          label: parsedData.user_email,
+        })) 
       }
     }
   }, [])
-
 
   const showProfilePassToggle = () => {
     setShowProfilePass(!showProfilePass)
@@ -113,7 +121,8 @@ export default function Login () {
 
   const handleUserNameEmail = (value: string) => {
     setUserNameEmail(value)  
-    console.log("value: ", value)  
+    console.log("vvvvvvvvalue: ", value)  
+    console.log("Object.keys(rememberUsers): ", Object.keys(rememberUsers))  
     setRememberUser((prevRememberUser: RememberUserData) => ({
       ...prevRememberUser,
       user_email: value
@@ -362,8 +371,8 @@ export default function Login () {
               <Box className={classes.customBoxRow}>
 
               <ComboBox
-                // optionsData={[{label: "test"}, {label: "test2"}]}
                 optionsData={[{label: "test"}, {label: "test2"}]}
+                // optionsData={rememberUsers}
                 
                 comboLabel="Username or Email"
                 comboValue={userNameEmail}

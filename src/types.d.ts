@@ -193,3 +193,9 @@ export interface RememberUserData {
   user_email?: string;
   pass?: string;
 }
+export interface RememberLabelUsersData {
+  label: string;
+}
+export interface RememberUsersPassData {
+  [username: string]: string;
+}

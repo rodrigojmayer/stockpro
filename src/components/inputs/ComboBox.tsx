@@ -5,7 +5,10 @@ import AutoComplete from '@mui/material/Autocomplete'
 import { useStylesGlobal } from '../../Styles';
 
 interface Option {
-    label: string
+    label: string,
+    user_email?: string,
+    pass?: string,
+
 }
 
 interface ComboBoxProps {
