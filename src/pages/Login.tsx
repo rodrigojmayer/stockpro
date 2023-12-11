@@ -84,24 +84,29 @@ export default function Login () {
       // Check if the key matches your criteria
       return key.startsWith(filterCriterion)
     })
+    let storedUserEmail=[]
     for(const key of filteredKeys) {
       console.log("key: ", key)
       const storedData = localStorage.getItem(key)
+  
       if (storedData) {
         const parsedData = JSON.parse(storedData)
-        const storedUserEmail = parsedData.user_email
+        storedUserEmail.push({"label": parsedData.user_email})
         console.log("storedUserEmail: ", storedUserEmail)
         const storedPass = parsedData.pass
         console.log("storedPass: ", storedPass)
-        setRememberLabelUsers((prevRememberUsers: RememberLabelUsersData) => ({
-          ...prevRememberUsers,
-          label: parsedData.user_email,
-        })) 
-        setRememberUsersPass((prevRememberUsers: RememberUsersPassData) => ({
-          ...prevRememberUsers,
-          label: parsedData.user_email,
-        })) 
+       
       }
+      console.log("storedUserEmail: ", storedUserEmail)
+      // setRememberLabelUsers((prevRememberUsers: RememberLabelUsersData) => ({
+      //   ...prevRememberUsers,
+      //   label: parsedData.user_email,
+      // })) 
+      setRememberLabelUsers(storedUserEmail) 
+      // setRememberUsersPass((prevRememberUsers: RememberUsersPassData) => ({
+      //   ...prevRememberUsers,
+      //   label: parsedData.user_email,
+      // })) 
     }
   }, [])
 
@@ -122,7 +127,7 @@ export default function Login () {
   const handleUserNameEmail = (value: string) => {
     setUserNameEmail(value)  
     console.log("vvvvvvvvalue: ", value)  
-    console.log("Object.keys(rememberUsers): ", Object.keys(rememberUsers))  
+    // console.log("Object.keys(rememberUsers): ", Object.keys(rememberLabelUsers))  
     setRememberUser((prevRememberUser: RememberUserData) => ({
       ...prevRememberUser,
       user_email: value
@@ -371,8 +376,8 @@ export default function Login () {
               <Box className={classes.customBoxRow}>
 
               <ComboBox
-                optionsData={[{label: "test"}, {label: "test2"}]}
-                // optionsData={rememberUsers}
+                // optionsData={[{label: "test"}, {label: "test2"}]}
+                optionsData={rememberLabelUsers}
                 
                 comboLabel="Username or Email"
                 comboValue={userNameEmail}

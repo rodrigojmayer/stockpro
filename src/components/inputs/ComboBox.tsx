@@ -6,8 +6,8 @@ import { useStylesGlobal } from '../../Styles';
 
 interface Option {
     label: string,
-    user_email?: string,
-    pass?: string,
+    // user_email?: string,
+    // pass?: string,
 
 }
 
@@ -23,7 +23,7 @@ interface ComboBoxProps {
     export default function ComboBox({ optionsData, comboLabel, comboValue, comboHandleValue, errorTextField }: ComboBoxProps) {
    
     const { classes } = useStylesGlobal();
-      
+      console.log("optionsData: ", optionsData)
     // const [errorTextFields, setErrorTextFields] = useState({
     //     "user_name_email": false,
     //     "user_pass": false,
@@ -43,10 +43,13 @@ interface ComboBoxProps {
     //     }
     // }, [comboValue]);
     React.useEffect(() => {
-        const foundOption = optionsData.find((option) => isOptionEqualToValue(option, selectedValue));
-        if (comboValue && !foundOption) {
-            setInputValue(comboValue);
-            setSelectedValue(null);
+        if(optionsData){
+
+            const foundOption = optionsData.find((option) => isOptionEqualToValue(option, selectedValue));
+            if (comboValue && !foundOption) {
+                setInputValue(comboValue);
+                setSelectedValue(null);
+            }
         }
     }, [comboValue, selectedValue, isOptionEqualToValue]);
 
@@ -54,7 +57,7 @@ interface ComboBoxProps {
         <AutoComplete
             disablePortal
             id="combo-box-demo"
-            options={optionsData}
+            options={optionsData || [{"label": ""}]}
             sx={{ width: 300 }}
             // isOptionEqualToValue={(label, comboValue) => label === comboValue}
             // isOptionEqualToValue={(option: any, value: any) => option.label === value.label}
