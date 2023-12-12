@@ -57,7 +57,8 @@ interface ComboBoxProps {
         <AutoComplete
             disablePortal
             id="combo-box-demo"
-            options={optionsData || [{"label": ""}]}
+            // options={optionsData || [{"label": ""}]}
+            options={optionsData}
             sx={{ width: 300 }}
             // isOptionEqualToValue={(label, comboValue) => label === comboValue}
             // isOptionEqualToValue={(option: any, value: any) => option.label === value.label}
@@ -96,6 +97,9 @@ interface ComboBoxProps {
         />
     )
 }
+
+
+
 
 // const optionsData = [
 //     {label: 'The Shawshank Redemption'},
