@@ -23,7 +23,7 @@ interface ComboBoxProps {
     export default function ComboBox({ optionsData, comboLabel, comboValue, comboHandleValue, errorTextField }: ComboBoxProps) {
    
     const { classes } = useStylesGlobal();
-      console.log("optionsData: ", optionsData)
+    //   console.log("optionsData: ", optionsData)
     // const [errorTextFields, setErrorTextFields] = useState({
     //     "user_name_email": false,
     //     "user_pass": false,
@@ -33,7 +33,7 @@ interface ComboBoxProps {
     // const handleInput = (value: string) => {
     //     setInputText
     // }
-    const [selectedValue, setSelectedValue] = React.useState<{ label: string } | null>(null);
+    const [selectedValue, setSelectedValue] = React.useState<{ label: string }>({label:""});
     const [inputValue, setInputValue] = React.useState('');
 
     const isOptionEqualToValue = (option: any, value: any) => option.label === value?.label;
@@ -48,7 +48,7 @@ interface ComboBoxProps {
             const foundOption = optionsData.find((option) => isOptionEqualToValue(option, selectedValue));
             if (comboValue && !foundOption) {
                 setInputValue(comboValue);
-                setSelectedValue(null);
+                setSelectedValue({label:""});
             }
         }
     }, [comboValue, selectedValue, isOptionEqualToValue]);
@@ -56,6 +56,7 @@ interface ComboBoxProps {
     return (
         <AutoComplete
             disablePortal
+            disableClearable={true}
             id="combo-box-demo"
             // options={optionsData || [{"label": ""}]}
             options={optionsData}
@@ -69,7 +70,7 @@ interface ComboBoxProps {
                 setSelectedValue(newValue);
                 console.log("newValue: ", newValue)
                 if (newValue) {
-                    console.log("newValue.label: ", newValue.label)
+                    // console.log("newValue.label: ", newValue.label)
                     comboHandleValue(newValue.label);
                 }
             }}

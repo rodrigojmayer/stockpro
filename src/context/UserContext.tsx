@@ -43,7 +43,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [gmailUserLogged, setGmailUserLogged] = useState<UserData>(INITIAL_USER);
 
   useEffect(() => {
-    console.log("/*-/*-/*-profileString: ", profileString)
+    // console.log("/*-/*-/*-profileString: ", profileString)
     if(profileString) {
       setUser(JSON.parse(profileString))
       setIsLoading((prevLoading:any) => ({

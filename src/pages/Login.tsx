@@ -71,7 +71,7 @@ export default function Login () {
   const [userPass, setUserPass] = useState("");
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
   const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
-  const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[] | any>([]);
+  const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
   const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
   
   useEffect(() => {
@@ -85,33 +85,14 @@ export default function Login () {
       return key.startsWith(filterCriterion)
     })
     let storedUserEmail=[]
-    // console.log("filteredKeys: ", filteredKeys)
-    // if(filteredKeys.length>0){
-      for(const key of filteredKeys) {
-        console.log("key: ", key)
-        const storedData = localStorage.getItem(key)
-    
-        if (storedData) {
-          const parsedData = JSON.parse(storedData)
-          storedUserEmail.push({"label": parsedData.user_email})
-          // console.log("storedUserEmail: ", storedUserEmail)
-          const storedPass = parsedData.pass
-          console.log("storedPass: ", storedPass)
-         
-        }
-        console.log("storedUserEmail: ", storedUserEmail)
-        // setRememberLabelUsers((prevRememberUsers: RememberLabelUsersData) => ({
-        //   ...prevRememberUsers,
-        //   label: parsedData.user_email,
-        // })) 
-        setRememberLabelUsers(storedUserEmail) 
-        // setRememberUsersPass((prevRememberUsers: RememberUsersPassData) => ({
-        //   ...prevRememberUsers,
-        //   label: parsedData.user_email,
-        // })) 
-    //   }
-    // } else {
-
+    for(const key of filteredKeys) {
+      const storedData = localStorage.getItem(key)
+      if (storedData) {
+        const parsedData = JSON.parse(storedData)
+        storedUserEmail.push({"label": parsedData.user_email})
+        const storedPass = parsedData.pass
+      }
+      setRememberLabelUsers(storedUserEmail) 
     }
   }, [])
 
