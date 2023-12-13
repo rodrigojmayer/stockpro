@@ -72,27 +72,40 @@ export default function Login () {
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
   const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
   const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
-  const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
+  // const [rememberUsersPass1, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
   
+   
+  // Get the keys from localStorage
+  let localStorageKeys = Object.keys(localStorage)
+  let rememberUsersPass: any[] = []
+
   useEffect(() => {
     // Get the keys from localStorage
-    const localStorageKeys = Object.keys(localStorage)
+    // const localStorageKeys = Object.keys(localStorage)
     // Define a filter criterion
     const filterCriterion = 'remember_profile_'
     // Filter the localStorage keys based on the criterion
     const filteredKeys = localStorageKeys.filter(key => {
+    // filteredKeys = localStorageKeys.filter(key => {
       // Check if the key matches your criteria
       return key.startsWith(filterCriterion)
     })
     let storedUserEmail=[]
+    // let storedUsersPass=[]
     for(const key of filteredKeys) {
       const storedData = localStorage.getItem(key)
+      console.log("storedData: ", typeof(storedData))
+      // if(storedData)
+      //   rememberUsersPass.push(storedData) 
       if (storedData) {
         const parsedData = JSON.parse(storedData)
         storedUserEmail.push({"label": parsedData.user_email})
-        const storedPass = parsedData.pass
+        rememberUsersPass.push(parsedData) 
+
+        // storedUsersPass.push({[parsedData.user_email]: parsedData.pass})
       }
       setRememberLabelUsers(storedUserEmail) 
+      // setRememberUsersPass(storedUsersPass)
     }
   }, [])
 
@@ -106,13 +119,34 @@ export default function Login () {
     }))
   }
   
-  // useEffect(() => {
-  //   console.log("rememberUser: ", rememberUser)
-  // }, [rememberUser])
+  useEffect(() => {
+  //   const passSelected = rememberUsersPass.filter(person => 
+  //   // person.user_email == userNameEmail
+  //   {
+      
+  //   console.log("Type of person.user_email: ", typeof person.user_email);
+  //   console.log("Type of userNameEmail: ", typeof userNameEmail);
+  //   return person.user_email === userNameEmail;}
+  //   // person.user_email.toLowerCase() == userNameEmail.toLowerCase().trim()
+  //   )
+  
+  
+  const passSelected = rememberUsersPass.filter(person => {
+    const cleanPersonEmail = person.user_email.trim().toLowerCase();
+    const cleanUserNameEmail = userNameEmail.trim().toLowerCase();
+    console.log("Clean person.user_email:", cleanPersonEmail);
+    console.log("Clean userNameEmail:", cleanUserNameEmail);
+    console.log("Length person.user_email:", cleanPersonEmail.length);
+    console.log("Length userNameEmail:", cleanUserNameEmail.length);
+    return cleanPersonEmail === cleanUserNameEmail;
+  });
+  console.log("passSelected: ", passSelected)
+  }, [userNameEmail, rememberUsersPass])
+
 
   const handleUserNameEmail = (value: string) => {
     setUserNameEmail(value)  
-    console.log("vvvvvvvvalue: ", value)  
+    // console.log("vvvvvvvvalue: ", value)  
     // console.log("Object.keys(rememberUsers): ", Object.keys(rememberLabelUsers))  
     setRememberUser((prevRememberUser: RememberUserData) => ({
       ...prevRememberUser,
