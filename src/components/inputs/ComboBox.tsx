@@ -30,8 +30,8 @@ interface ComboBoxProps {
     React.useEffect(() => {
         if(optionsData){
 
-            const foundOption = optionsData.find((option) => isOptionEqualToValue(option, selectedValue));
-            if (comboValue && !foundOption) {
+            // const foundOption = optionsData.find((option) => isOptionEqualToValue(option, selectedValue));
+            if (comboValue ) {
                 setInputValue(comboValue);
                 setSelectedValue({label:""});
             }
@@ -49,7 +49,7 @@ interface ComboBoxProps {
             inputValue={inputValue}
             onChange={(event, newValue:any) => {
                 setSelectedValue(newValue);
-                console.log("newValue: ", newValue)
+                // console.log("newValue: ", newValue)
                 if (newValue) {
                     comboHandleValue(newValue.label);
                 }

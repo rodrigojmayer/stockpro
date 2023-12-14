@@ -70,47 +70,40 @@ export default function Login () {
   const [userNameEmail, setUserNameEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
+  const [allowShowProfilePass, setAllowShowProfilePass] = useState<boolean>(true);
   const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
   const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
-  // const [rememberUsersPass1, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
+  const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
   
    
   // Get the keys from localStorage
   let localStorageKeys = Object.keys(localStorage)
-  let rememberUsersPass: any[] = []
+  let varrememberUsersPass: any[] = []
 
   useEffect(() => {
-    // Get the keys from localStorage
-    // const localStorageKeys = Object.keys(localStorage)
     // Define a filter criterion
     const filterCriterion = 'remember_profile_'
     // Filter the localStorage keys based on the criterion
     const filteredKeys = localStorageKeys.filter(key => {
-    // filteredKeys = localStorageKeys.filter(key => {
       // Check if the key matches your criteria
       return key.startsWith(filterCriterion)
     })
     let storedUserEmail=[]
-    // let storedUsersPass=[]
     for(const key of filteredKeys) {
       const storedData = localStorage.getItem(key)
-      console.log("storedData: ", typeof(storedData))
-      // if(storedData)
-      //   rememberUsersPass.push(storedData) 
       if (storedData) {
         const parsedData = JSON.parse(storedData)
         storedUserEmail.push({"label": parsedData.user_email})
-        rememberUsersPass.push(parsedData) 
-
-        // storedUsersPass.push({[parsedData.user_email]: parsedData.pass})
+        varrememberUsersPass.push(parsedData) 
       }
       setRememberLabelUsers(storedUserEmail) 
-      // setRememberUsersPass(storedUsersPass)
+      setRememberUsersPass(varrememberUsersPass)
     }
   }, [])
 
   const showProfilePassToggle = () => {
-    setShowProfilePass(!showProfilePass)
+    if(allowShowProfilePass)
+      setShowProfilePass(!showProfilePass)
   }
   const rememberEnabledChange = (value: boolean) => {
     setRememberUser((prevRememberUser: RememberUserData) => ({
@@ -119,42 +112,43 @@ export default function Login () {
     }))
   }
   
-  useEffect(() => {
-  //   const passSelected = rememberUsersPass.filter(person => 
-  //   // person.user_email == userNameEmail
-  //   {
-      
-  //   console.log("Type of person.user_email: ", typeof person.user_email);
-  //   console.log("Type of userNameEmail: ", typeof userNameEmail);
-  //   return person.user_email === userNameEmail;}
-  //   // person.user_email.toLowerCase() == userNameEmail.toLowerCase().trim()
-  //   )
-  
-  
-  const passSelected = rememberUsersPass.filter(person => {
-    const cleanPersonEmail = person.user_email.trim().toLowerCase();
-    const cleanUserNameEmail = userNameEmail.trim().toLowerCase();
-    console.log("Clean person.user_email:", cleanPersonEmail);
-    console.log("Clean userNameEmail:", cleanUserNameEmail);
-    console.log("Length person.user_email:", cleanPersonEmail.length);
-    console.log("Length userNameEmail:", cleanUserNameEmail.length);
-    return cleanPersonEmail === cleanUserNameEmail;
-  });
-  console.log("passSelected: ", passSelected)
-  }, [userNameEmail, rememberUsersPass])
+  useEffect(() => {  
+    if(rememberUsersPass) {
+      const passSelected = rememberUsersPass.filter((person: { user_email: string; }) => {
+        const cleanPersonEmail = person.user_email.trim().toLowerCase();
+        const cleanUserNameEmail = userNameEmail.trim().toLowerCase();
+        return cleanPersonEmail === cleanUserNameEmail;
+      });
+      if(passSelected.length > 0){
+        setUserPass(passSelected[0].pass)
+        setAllowShowProfilePass(false)
+        setShowProfilePass(false)
+        setRememberUser((prevRememberUser: RememberUserData) => ({
+          ...prevRememberUser,
+          enabled: true
+        }))
+        
+      } else {
+        setAllowShowProfilePass(true)
+        setUserPass("")
+        setRememberUser((prevRememberUser: RememberUserData) => ({
+          ...prevRememberUser,
+          enabled: false
+        }))
+      }
+    }
+  }, [userNameEmail])
 
 
   const handleUserNameEmail = (value: string) => {
-    setUserNameEmail(value)  
-    // console.log("vvvvvvvvalue: ", value)  
-    // console.log("Object.keys(rememberUsers): ", Object.keys(rememberLabelUsers))  
+    setUserNameEmail(value)    
     setRememberUser((prevRememberUser: RememberUserData) => ({
       ...prevRememberUser,
       user_email: value
     }))
     setErrorTextFields((prevErrorTextFields: any) => ({
-        ...prevErrorTextFields,
-        user_name_email: false,
+      ...prevErrorTextFields,
+      user_name_email: false,
     }));
   }
   const handleUserPass = (value: string) => {
@@ -171,8 +165,6 @@ export default function Login () {
   const handleLogin = () => {
     let dataOk: boolean = true
     if(userNameEmail===""){
-      // setOpenErrorModal(true)
-      // setErrorData("missing_user_name_email")
       setErrorTextFields((prevErrorTextFields: any) => ({
           ...prevErrorTextFields,
           user_name_email: true,
@@ -180,8 +172,6 @@ export default function Login () {
       dataOk = false
     }
     if(userPass===""){
-      // setOpenErrorModal(true)
-      // setErrorData("missing_user_pass")
       setErrorTextFields((prevErrorTextFields: any) => ({
           ...prevErrorTextFields,
           user_pass: true,
@@ -431,7 +421,7 @@ export default function Login () {
                     className: classes.inputClassName,
                     endAdornment: (
                       <IconButton onClick={showProfilePassToggle}>
-                        {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                        {(allowShowProfilePass && showProfilePass) ? <VisibilityIcon /> : <VisibilityOffIcon />}
                       </IconButton>
                     ),
                   }}
