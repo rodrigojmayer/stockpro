@@ -17,6 +17,7 @@ export default function useUser () {
         if(rememberUser){
             const { user_email, pass } = rememberUser
             const selectedFields = { user_email, pass}
+            console.log("useUser selectedFields: ", selectedFields)
             if(rememberUser.enabled)
                 localStorage.setItem(`remember_profile_${rememberUser.user_email}`, JSON.stringify(selectedFields))
             else

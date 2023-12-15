@@ -120,17 +120,16 @@ export default function Login () {
         return cleanPersonEmail === cleanUserNameEmail;
       });
       if(passSelected.length > 0){
-        setUserPass(passSelected[0].pass)
+        handleUserPass(passSelected[0].pass)
         setAllowShowProfilePass(false)
         setShowProfilePass(false)
         setRememberUser((prevRememberUser: RememberUserData) => ({
           ...prevRememberUser,
           enabled: true
         }))
-        
       } else {
         setAllowShowProfilePass(true)
-        setUserPass("")
+        handleUserPass("")
         setRememberUser((prevRememberUser: RememberUserData) => ({
           ...prevRememberUser,
           enabled: false
@@ -139,6 +138,9 @@ export default function Login () {
     }
   }, [userNameEmail])
 
+  useEffect(() => {
+    console.log("useEffect userPass: ", userPass)
+  }, [userPass])
 
   const handleUserNameEmail = (value: string) => {
     setUserNameEmail(value)    
