@@ -58,13 +58,15 @@ export default function SignUp () {
     const [errorTextFields, setErrorTextFields] = useState({
         "user": false,
         "email": false,
-        "pass": false
+        "pass": false,
+        "confirmPass": false
     });
     const [openErrorModal, setOpenErrorModal] = useState(false);
     const [errorData, setErrorData] = useState("");
     const [user, setUser] = useState("");
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    const [confirmPass, setConfirmPass] = useState("");
     const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
     const [showProfileConfirmPass, setShowProfileConfirmPass] = useState<boolean>(false);
     const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
@@ -123,6 +125,17 @@ export default function SignUp () {
             user: false,
         }));
     }
+    const handleEmail = (value: string) => {
+        setEmail(value)
+        setRememberUser((prevRememberUser: RememberUserData) => ({
+            ...prevRememberUser,
+            email: value
+        }))
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            email: false,
+        }));
+    }
     const handlePass = (value: string) => {
         setPass(value)
         // setRememberUser((prevRememberUser: RememberUserData) => ({
@@ -132,6 +145,17 @@ export default function SignUp () {
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
             pass: false,
+        }));
+    }
+    const handleConfirmPass = (value: string) => {
+        setConfirmPass(value)
+        // setRememberUser((prevRememberUser: RememberUserData) => ({
+        //     ...prevRememberUser,
+        //     pass: value
+        // }))
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            confirmPass: false,
         }));
     }
     
@@ -153,6 +177,27 @@ export default function SignUp () {
                                         label="Username"
                                         value={user}
                                         onChange={ (event) => handleUser(event.target.value)}
+                                        maxRows={1}
+                                        size="small"
+                                        type="text"
+                                        className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                        InputProps={{
+                                          className: classes.inputClassName,
+                                        }}
+                                    />
+                                </Box>
+                                <Box className={classes.customBoxRow}>
+                                    <TextField
+                                        label="Email"
+                                        value={email}
+                                        onChange={ (event) => handleEmail(event.target.value)}
+                                        maxRows={1}
+                                        size="small"
+                                        type="email"
+                                        className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                        InputProps={{
+                                          className: classes.inputClassName,
+                                        }}
                                     />
                                 </Box>
                                 <Box className={classes.customBoxRow}>
@@ -169,6 +214,25 @@ export default function SignUp () {
                                         endAdornment: (
                                         <IconButton onClick={showProfilePassToggle}>
                                             {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                        </IconButton>
+                                        ),
+                                    }}
+                                    />
+                                </Box>
+                                <Box className={classes.customBoxRow}>
+                                    <TextField
+                                    label="Confirm password"
+                                    maxRows={1}
+                                    size="small"
+                                    value={confirmPass}
+                                    type={ showProfileConfirmPass ? "text" : "password" }
+                                    onChange={ (event) => handleConfirmPass(event.target.value) }
+                                    className= {`${errorTextFields.confirmPass ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        endAdornment: (
+                                        <IconButton onClick={showProfileConfirmPassToggle}>
+                                            {showProfileConfirmPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                         </IconButton>
                                         ),
                                     }}
