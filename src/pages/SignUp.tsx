@@ -159,9 +159,42 @@ export default function SignUp () {
         }));
     }
     
+    const handleSignUp = () => {
+        alert("sign upppp")
+        let dataOk: boolean = true
+        if(user===""){
+          setErrorTextFields((prevErrorTextFields: any) => ({
+              ...prevErrorTextFields,
+              user: true,
+          }));
+          dataOk = false
+        }
+        if(email===""){
+          setErrorTextFields((prevErrorTextFields: any) => ({
+              ...prevErrorTextFields,
+              email: true,
+          }));
+          dataOk = false
+        }
+        if(pass===""){
+          setErrorTextFields((prevErrorTextFields: any) => ({
+              ...prevErrorTextFields,
+              pass: true,
+          }));
+          dataOk = false
+        }
+        if(confirmPass===""){
+          setErrorTextFields((prevErrorTextFields: any) => ({
+              ...prevErrorTextFields,
+              confirmPass: true,
+          }));
+          dataOk = false
+        }
+        if(!dataOk) return
+    
+    }
 
-
-
+/////////// AAAAAAAAAAADDDDDDDDDDEmail format error 
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -236,6 +269,21 @@ export default function SignUp () {
                                         </IconButton>
                                         ),
                                     }}
+                                    />
+                                </Box>
+                                <Box className={classes.customBoxRowSpaceBetween}>
+                                    <Box>
+                                        <Switch 
+                                            color='success' 
+                                            checked={rememberUser.enabled}
+                                            onChange={(event) => {
+                                            rememberEnabledChange(event.target.checked)
+                                            }}
+                                        />Remember me 
+                                    </Box>
+                                    <OkButton
+                                        clicked={() => handleSignUp()}
+                                        widthIco={100}
                                     />
                                 </Box>
                             </Box>
