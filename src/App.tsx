@@ -20,6 +20,7 @@ import MassiveUpdateStock from './components/MassiveUpdateStock';
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import useUser from './hooks/useUser';
 
@@ -43,6 +44,7 @@ function App() {
       <Route>
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
         {/* ... etc. */}
       </Route>
     )
