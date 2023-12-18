@@ -310,21 +310,24 @@ export default function SignUp () {
                                     }}
                                     />
                                 </Box>
-                                <Box>
-                                    By creating an account you agree to our 
-                                    <br/>
-                                    <NavLink 
-                                        style={{ color: theme.palette.secondary.main }}
-                                        to="/login"
-                                    >
-                                        Terms & Privacy
-                                    </NavLink>
-                                    <Switch 
-                                        color='success' 
-                                        className= {`${errorTextFields.termsAndPrivacy ? classes.switch_error : ""} `}
-                                        checked={termsAndPrivacy}
-                                        onChange={termsAndPrivacyEnabledChange}
-                                    /> 
+                                {/* <Box> */}
+                                <Box className={classes.customBoxRow} >
+                                    <Box>
+                                        By creating an account you agree to our 
+                                        <br/>
+                                        <NavLink 
+                                            style={{ color: theme.palette.secondary.main }}
+                                            to="/login"
+                                        >
+                                            Terms & Privacy
+                                        </NavLink>
+                                        <Switch 
+                                            color='success' 
+                                            className= {`${errorTextFields.termsAndPrivacy ? classes.switch_error : ""} `}
+                                            checked={termsAndPrivacy}
+                                            onChange={termsAndPrivacyEnabledChange}
+                                        /> 
+                                    </Box>
                                 </Box>
                                 <Box className={classes.customBoxRowSpaceBetween}>
                                     <Box>
@@ -340,6 +343,22 @@ export default function SignUp () {
                                         clicked={() => handleSignUp()}
                                         widthIco={100}
                                     />
+                                </Box>
+                                <Box className={classes.customBoxRow}>
+                                    <Divider 
+                                        className={classes.customDivider} 
+                                        variant="middle" 
+                                    />
+                                </Box>
+                                <Box className={classes.customBoxRow} sx={{ typography: 'subtitle2' }}>
+                                {/* <Box  */}
+                                    Already have an account?
+                                    <NavLink 
+                                        style={{ color: theme.palette.secondary.main }}
+                                        to="/login"
+                                    >
+                                        Login
+                                    </NavLink> 
                                 </Box>
                             </Box>
                         </Box>
