@@ -252,28 +252,36 @@ export const useStylesGlobal = makeStyles()({
         borderColor: "red",
         '& label': {
             color: 'red !important',
-          },
-          '& .MuiInput-underline:after': {
+        },
+        '& .MuiInput-underline:after': {
             // borderBottomColor: 'green',
             color: 'red',
-          },
-          '& .MuiOutlinedInput-root': {
+        },
+        '& .MuiOutlinedInput-root': {
             // color: 'red',
             borderColor: 'red',
             '& fieldset': {
                 borderWidth: "2px",
-              borderColor: 'red',
-              color: 'red',
+                borderColor: 'red',
+                color: 'red',
             },
             '&:hover fieldset': {
-              borderColor: 'red',
-              color: 'red',
+                borderColor: 'red',
+                color: 'red',
             },
             '&.Mui-focused fieldset': {
-              borderColor: 'red',
-              color: 'red',
+                borderColor: 'red',
+                color: 'red',
             },
-          },
+        },
+    },
+    switch_error: {
+        "& .MuiSwitch-thumb": {
+            backgroundColor: 'red', // Change this color to your desired thumb color
+        },
+        '& .MuiSwitch-track': {
+            backgroundColor: 'red', // Change this color to your desired track color
+        },
     },
     customDivider : {
         borderColor: "white",
@@ -281,7 +289,6 @@ export const useStylesGlobal = makeStyles()({
         size: "320px",
         margin: "14px",
         marginTop: "20px",
-
     },
     customDividerVertical : {
         borderColor: "white",
@@ -313,7 +320,6 @@ export const modalStyleInternal = {
     color: "white",
     overflow: "scroll",
     overflowX: "hidden",
-
 };
 
 

@@ -1,5 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, 
+        NavLink 
+        } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { Box,
         Divider,
@@ -8,7 +10,7 @@ import { Box,
         TextField,
         Typography,
         Switch,
-        Link
+        // Link
         } from "@mui/material";
 import { OkButton } from "../components/Buttons";
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal } from "../Styles";
@@ -33,6 +35,9 @@ const theme = createTheme({
         secondary: {
             main: '#c1e8fb',
         },
+        action: {
+            disabled: 'red',
+        }
     },
     components: {
         MuiInputLabel: {
@@ -47,6 +52,26 @@ const theme = createTheme({
                 },
             },
         },
+        // MuiSwitch: {
+        //     styleOverrides: {
+        //       root: {
+        //         '& .MuiSwitch-thumb': {
+        //           backgroundColor: 'red', // Change this color to your desired thumb color
+        //         },
+        //         '& .MuiSwitch-track': {
+        //           backgroundColor: 'red', // Change this color to your desired track color
+        //         },
+        //         // '&.Mui-disabled': {
+        //         //   '& .MuiSwitch-thumb': {
+        //         //     backgroundColor: 'red', // Change this color to your desired disabled thumb color
+        //         //   },
+        //         //   '& .MuiSwitch-track': {
+        //         //     backgroundColor: 'red', // Change this color to your desired disabled track color
+        //         //   },
+        //         // },
+        //       },
+        //     },
+        // },
     },
 })
 
@@ -59,7 +84,8 @@ export default function SignUp () {
         "user": false,
         "email": false,
         "pass": false,
-        "confirmPass": false
+        "confirmPass": false,
+        "termsAndPrivacy": false
     });
     const [openErrorModal, setOpenErrorModal] = useState(false);
     const [errorData, setErrorData] = useState("");
@@ -69,6 +95,7 @@ export default function SignUp () {
     const [confirmPass, setConfirmPass] = useState("");
     const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
     const [showProfileConfirmPass, setShowProfileConfirmPass] = useState<boolean>(false);
+    const [termsAndPrivacy, setTermsAndPrivacy] = useState<boolean>(false);
     const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
     const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
     const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
@@ -106,6 +133,13 @@ export default function SignUp () {
     }
     const showProfileConfirmPassToggle = () => {
         setShowProfileConfirmPass(!showProfileConfirmPass)
+    }
+    const termsAndPrivacyEnabledChange = () => {
+        setTermsAndPrivacy(!termsAndPrivacy)
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            termsAndPrivacy: false,
+        }));
     }
     const rememberEnabledChange = (value: boolean) => {
         setRememberUser((prevRememberUser: RememberUserData) => ({
@@ -160,7 +194,6 @@ export default function SignUp () {
     }
     
     const handleSignUp = () => {
-        alert("sign upppp")
         let dataOk: boolean = true
         if(user===""){
           setErrorTextFields((prevErrorTextFields: any) => ({
@@ -190,8 +223,14 @@ export default function SignUp () {
           }));
           dataOk = false
         }
+        if(!termsAndPrivacy){
+          setErrorTextFields((prevErrorTextFields: any) => ({
+              ...prevErrorTextFields,
+              termsAndPrivacy: true,
+          }));
+          dataOk = false
+        }
         if(!dataOk) return
-    
     }
 
 /////////// AAAAAAAAAAADDDDDDDDDDEmail format error 
@@ -270,6 +309,22 @@ export default function SignUp () {
                                         ),
                                     }}
                                     />
+                                </Box>
+                                <Box>
+                                    By creating an account you agree to our 
+                                    <br/>
+                                    <NavLink 
+                                        style={{ color: theme.palette.secondary.main }}
+                                        to="/login"
+                                    >
+                                        Terms & Privacy
+                                    </NavLink>
+                                    <Switch 
+                                        color='success' 
+                                        className= {`${errorTextFields.termsAndPrivacy ? classes.switch_error : ""} `}
+                                        checked={termsAndPrivacy}
+                                        onChange={termsAndPrivacyEnabledChange}
+                                    /> 
                                 </Box>
                                 <Box className={classes.customBoxRowSpaceBetween}>
                                     <Box>

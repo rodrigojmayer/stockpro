@@ -9,7 +9,6 @@ import { Box,
         TextField,
         Typography,
         Switch,
-        Link,
         } from '@mui/material';
 import { OkButton } from '../components/Buttons';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal  } from '../Styles'
@@ -477,14 +476,20 @@ export default function Login () {
                 />
             </Box>
             <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
-                <Link color="secondary">
-                    Forgot Password? 
-                </Link>
+                <NavLink 
+                  style={{ color: theme.palette.secondary.main }}
+                  to="/signup"
+                >
+                  Forgot Password? 
+                </NavLink>
                 {/* <Box className={classes.customBoxRow}> */}
                     {/* New here?  */}
-                  <Link color="secondary">
-                      Sign Up 
-                  </Link>
+                  <NavLink 
+                    style={{ color: theme.palette.secondary.main }}
+                    to="/signup"
+                  >
+                    Sign Up 
+                  </NavLink>
                 {/* </Box> */}
             </Box>
           </Box>
