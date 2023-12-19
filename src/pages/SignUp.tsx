@@ -20,7 +20,7 @@ import { UserContext } from "../context/UserContext";
 import { UsersContext } from "../context/UsersContext";
 import useUser from "../hooks/useUser";
 import { IsLoadingContext } from "../context/IsLoadingContext";
-import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData } from "../types";
+import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData, UserEditData } from "../types";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 // import ComboBox from "../components/inputs/ComboBox";
 
@@ -52,26 +52,6 @@ const theme = createTheme({
                 },
             },
         },
-        // MuiSwitch: {
-        //     styleOverrides: {
-        //       root: {
-        //         '& .MuiSwitch-thumb': {
-        //           backgroundColor: 'red', // Change this color to your desired thumb color
-        //         },
-        //         '& .MuiSwitch-track': {
-        //           backgroundColor: 'red', // Change this color to your desired track color
-        //         },
-        //         // '&.Mui-disabled': {
-        //         //   '& .MuiSwitch-thumb': {
-        //         //     backgroundColor: 'red', // Change this color to your desired disabled thumb color
-        //         //   },
-        //         //   '& .MuiSwitch-track': {
-        //         //     backgroundColor: 'red', // Change this color to your desired disabled track color
-        //         //   },
-        //         // },
-        //       },
-        //     },
-        // },
     },
 })
 
@@ -192,6 +172,7 @@ export default function SignUp () {
             confirmPass: false,
         }));
     }
+
     
     const handleSignUp = () => {
         let dataOk: boolean = true
@@ -231,7 +212,86 @@ export default function SignUp () {
           dataOk = false
         }
         if(!dataOk) return
+
+        const bodyCreate: UserEditData = {}
+
+        const fetchLastUser = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/api/users/lastuser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify({
+                        "id_client_assigned": true
+                    })
+                })
+                if (response.ok) {
+                    const json = await response.json()
+                    bodyCreate.id_client = json[0].id_client+1
+                } else {
+                    console.error("error last user")
+                }
+            } catch (error) {
+                console.log("error last user not found?: ", error)
+            } finally{
+                fetchCreateUser()
+            }
+        }
+
+        fetchLastUser()
+        bodyCreate.deleted = false
+        bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
+        bodyCreate.background_color = 0
+        bodyCreate.alerts_enabled = false
+        bodyCreate.ordered_fields = [1,2,3,4,5]
+        bodyCreate.id_access_level = 4
+        bodyCreate.user = user
+        bodyCreate.email = email
+        bodyCreate.enabled = true
+        bodyCreate.pass = pass
+
+        const fetchCreateUser = async () => {
+            let loadingSuccess: boolean = false
+            try {
+                const response = await fetch(`http://localhost:4000/api/users/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify(bodyCreate)
+                })
+                if (response.ok) {
+                    const responseData = await response.json()
+                    loadingSuccess = true
+                } else if (response.status === 400) {
+                    console.error('Request f: ', response)
+                    console.error('Request failed: ', response.status, response.statusText)
+                    const errorData = await response.json()
+                    console.error('Request failed 2: ', errorData.error)
+                    if (errorData.errorCode === 'duplicate_product') {
+                        setOpenErrorModal(true)
+                        setErrorData(errorData.errorCode)
+                    }
+                }
+            } catch (error: unknown) {
+                if (typeof error === 'string') {
+                    console.error('Error: ', error)
+                } else if (error instanceof Error) {
+                    console.error('Error object: ', error.message)
+                } else {
+                    // Handle other cases as needed
+                }
+            } finally {
+                setIsLoading((prevLoading: any) => ({
+                    ...prevLoading,
+                    fieldsFetchCreateStock: loadingSuccess
+                }))
+            }
+        }
     }
+
+
 
 /////////// AAAAAAAAAAADDDDDDDDDDEmail format error 
     return (
