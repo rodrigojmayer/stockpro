@@ -22,6 +22,7 @@ import useUser from "../hooks/useUser";
 import { IsLoadingContext } from "../context/IsLoadingContext";
 import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData, UserEditData } from "../types";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import useAddUser from "../hooks/addUser";
 // import ComboBox from "../components/inputs/ComboBox";
 
 const theme = createTheme({
@@ -56,6 +57,9 @@ const theme = createTheme({
 })
 
 export default function SignUp () {
+    const addUser = useAddUser(); 
+
+    
 
     const { classes } = useStylesGlobal();
     // const { isLogged, login }
@@ -213,11 +217,29 @@ export default function SignUp () {
         }
         if(!dataOk) return
 
+
+
+        console.log("testing addUser1")
+
+        // useEffect(() => {
+            const createUser = async () => {
+                // Call the addUser function
+                console.log("testing addUser2")
+
+                await addUser();
+              };
+          
+              createUser();
+          //   }, []);
+
+
+
+
         const bodyCreate: UserEditData = {}
 
-        const fetchLastUser = async () => {
+        const postClient = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/users/lastuser', {
+                const response = await fetch('http://localhost:4000/api/clients/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -239,7 +261,7 @@ export default function SignUp () {
             }
         }
 
-        fetchLastUser()
+        // postClient()
         bodyCreate.deleted = false
         bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
         bodyCreate.background_color = 0
