@@ -63,6 +63,7 @@ export default function SignUp () {
 
     const { classes } = useStylesGlobal();
     // const { isLogged, login }
+    const { INITIAL_USER, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
     const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     const [errorTextFields, setErrorTextFields] = useState({
         "user": false,
@@ -221,47 +222,8 @@ export default function SignUp () {
 
         console.log("testing addUser1")
 
-        // useEffect(() => {
-            const createUser = async () => {
-                // Call the addUser function
-                console.log("testing addUser2")
-
-                await addUser();
-              };
-          
-              createUser();
-          //   }, []);
-
-
-
-
-        const bodyCreate: UserEditData = {}
-
-        const postClient = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/api/clients/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body:JSON.stringify({
-                        "id_client_assigned": true
-                    })
-                })
-                if (response.ok) {
-                    const json = await response.json()
-                    bodyCreate.id_client = json[0].id_client+1
-                } else {
-                    console.error("error last user")
-                }
-            } catch (error) {
-                console.log("error last user not found?: ", error)
-            } finally{
-                fetchCreateUser()
-            }
-        }
-
         // postClient()
+        const bodyCreate: UserEditData = {}
         bodyCreate.deleted = false
         bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
         bodyCreate.background_color = 0
@@ -273,44 +235,76 @@ export default function SignUp () {
         bodyCreate.enabled = true
         bodyCreate.pass = pass
 
-        const fetchCreateUser = async () => {
-            let loadingSuccess: boolean = false
-            try {
-                const response = await fetch(`http://localhost:4000/api/users/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body:JSON.stringify(bodyCreate)
-                })
-                if (response.ok) {
-                    const responseData = await response.json()
-                    loadingSuccess = true
-                } else if (response.status === 400) {
-                    console.error('Request f: ', response)
-                    console.error('Request failed: ', response.status, response.statusText)
-                    const errorData = await response.json()
-                    console.error('Request failed 2: ', errorData.error)
-                    if (errorData.errorCode === 'duplicate_product') {
-                        setOpenErrorModal(true)
-                        setErrorData(errorData.errorCode)
-                    }
-                }
-            } catch (error: unknown) {
-                if (typeof error === 'string') {
-                    console.error('Error: ', error)
-                } else if (error instanceof Error) {
-                    console.error('Error object: ', error.message)
-                } else {
-                    // Handle other cases as needed
-                }
-            } finally {
-                setIsLoading((prevLoading: any) => ({
-                    ...prevLoading,
-                    fieldsFetchCreateStock: loadingSuccess
-                }))
-            }
-        }
+        // addUser(bodyCreate);
+
+        const createUser = async () => {
+            await addUser(bodyCreate);
+        };
+        createUser();
+
+
+        // const postClient = async () => {
+        //     try {
+        //         const response = await fetch('http://localhost:4000/api/clients/', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //             },
+        //             body:JSON.stringify({
+        //                 "id_client_assigned": true
+        //             })
+        //         })
+        //         if (response.ok) {
+        //             const json = await response.json()
+        //             bodyCreate.id_client = json[0].id_client+1
+        //         } else {
+        //             console.error("error last user")
+        //         }
+        //     } catch (error) {
+        //         console.log("error last user not found?: ", error)
+        //     } finally{
+        //         fetchCreateUser()
+        //     }
+        // }
+
+        // const fetchCreateUser = async () => {
+        //     let loadingSuccess: boolean = false
+        //     try {
+        //         const response = await fetch(`http://localhost:4000/api/users/`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json'
+        //             },
+        //             body:JSON.stringify(bodyCreate)
+        //         })
+        //         if (response.ok) {
+        //             const responseData = await response.json()
+        //             loadingSuccess = true
+        //         } else if (response.status === 400) {
+        //             console.error('Request f: ', response)
+        //             console.error('Request failed: ', response.status, response.statusText)
+        //             const errorData = await response.json()
+        //             console.error('Request failed 2: ', errorData.error)
+        //             if (errorData.errorCode === 'duplicate_product') {
+        //                 setOpenErrorModal(true)
+        //                 setErrorData(errorData.errorCode)
+        //             }
+        //         }
+        //     } catch (error: unknown) {
+        //         if (typeof error === 'string') {
+        //             console.error('Error: ', error)
+        //         } else if (error instanceof Error) {
+        //             console.error('Error object: ', error.message)
+        //         } else {
+        //             // Handle other cases as needed
+        //         }
+        //     } finally {
+        //         setIsLoading((prevLoading: any) => ({
+        //             ...prevLoading,
+        //             fieldsFetchCreateStock: loadingSuccess
+        //         }))
+        //     }
+        // }
     }
 
 

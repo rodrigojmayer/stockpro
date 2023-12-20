@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { UserData } from "../types"
+import { UserData, UserEditData } from "../types"
 import { IsLoadingContext } from "../context/IsLoadingContext";
 import { UserContext } from "../context/UserContext";
 
@@ -11,15 +11,18 @@ export default function useAddUser () {
     // console.log("testing addUser")
 
 
-    const addUser  = async () => {
-        const bodyUser: UserData= {
-        ...INITIAL_USER,
-        "email": gmailUserLogged.email,
-        "name": gmailUserLogged.given_name,
-        "last_name": gmailUserLogged.family_name,
-        "user": gmailUserLogged.email?.split("@")[0] || "",
-        "language": 1,  ///////////////////////////////// FIX
-        }
+    const addUser  = async (bodyUser: UserEditData) => {
+    console.log("testing addUser bodyUser:", bodyUser)
+
+        // const bodyUser: UserData= {
+        // ...INITIAL_USER,
+        // // "email": gmailUserLogged.email,
+        // "email": "gmailUserLogged.email",
+        // "name": "gmailUserLogged.given_name",
+        // "last_name": "gmailUserLogged.family_name",
+        // "user": 'gmailUserLogged.email?.split("@")[0] || ""',
+        // "language": 1,  ///////////////////////////////// FIX
+        // }
         try {
             console.log("testing addUser")
 
@@ -64,8 +67,8 @@ export default function useAddUser () {
             postUser(bodyUser)
         }
     } 
-    const postUser = async (bodyUser:UserData) => {
-        console.error('Login.tsx postUser bodyUser: ', bodyUser)
+    const postUser = async (bodyUser:UserEditData) => {
+        console.log('addUser.tsx postUser bodyUser: ', bodyUser)
         let loadingSuccess: boolean = false
         try {
         const response = await fetch(`http://localhost:4000/api/users/`, {
