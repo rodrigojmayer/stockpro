@@ -44,17 +44,24 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
       }
       const fetchCustomColumns = async () => {
         try {
+          console.log("fetchCustomColumns user.id_client: ", user.id_client)
           const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
+          console.log("fetchCustomColumns response:", response)
+          
           if (response.ok) {
             const json = await response.json()
             console.log("custom columns json:", json)
             // console.log(json.filter((val:any) => {val.id_client===2}))
             setCustomColumns(json)
           } else {
+            console.error("fetchCustomColumns else: ")
           // Handle the case where the response is not OK (e.g., show an error message)
         }
         } catch (error) {
           // Handle any network or fetch-related errors
+          debugger;
+          console.error("fetchCustomColumns error: ", error)
+          // alert("alert")
         } finally {
           setIsLoading((prevLoading:any) => ({
             ...prevLoading,

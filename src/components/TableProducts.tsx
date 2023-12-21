@@ -17,7 +17,7 @@ import { blueGrey } from '@material-ui/core/colors';
 // type TableClasses = ReturnType<typeof useStyles>;
 
 const INITIAL_STATE = {
-  _id: NaN,
+  _id: "",
   id: NaN,
   id_client: NaN,
   product: "",

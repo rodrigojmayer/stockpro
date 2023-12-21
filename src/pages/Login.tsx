@@ -271,6 +271,7 @@ export default function Login () {
               bodyCreate.name= gmailUserLogged.given_name,
               bodyCreate.last_name= gmailUserLogged.family_name,
               bodyCreate.enabled = true
+              bodyCreate.gmail_autocreate = true
               // bodyCreate.pass = pass
               // addUser(bodyCreate);
               const createUser = async () => {

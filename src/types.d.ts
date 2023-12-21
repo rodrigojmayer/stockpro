@@ -31,6 +31,7 @@ export interface UserEditData {
   language?: number;
   background_color?: number;
   alerts_enabled?: boolean;
+  gmail_autocreate?: boolean;
 }
 
 export interface EmailData {
