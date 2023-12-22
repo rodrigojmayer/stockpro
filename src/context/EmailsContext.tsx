@@ -29,7 +29,7 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
   useEffect(() => {
-    console.log("EmailsContext.tsx user.id_client: ", user.id_client)
+    // console.log("EmailsContext.tsx user.id_client: ", user.id_client)
 
     const fetchEmailsClient = async () => {
       try {

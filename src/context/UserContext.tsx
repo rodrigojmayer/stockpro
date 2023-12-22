@@ -31,25 +31,59 @@ type UserProviderProps = {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   // const [user, setUser] = useState<UserData>(INITIAL_USER);
   const profileString = window.localStorage.getItem('profile');
-  const [user, setUser] = useState<UserData>(
-    profileString ? 
-      () => JSON.parse(profileString)
-    :
-      INITIAL_USER
-  )
+  if(profileString){
+    
+  }
+  console.log("profileString: ", profileString)
+  // const [user, setUser] = useState<UserData>(
+  //   profileString ? 
+  //     () => JSON.parse(profileString)
+  //   :
+  //     INITIAL_USER
+  // )  
+  const [user, setUser] = useState<UserData>(INITIAL_USER)
 
   const { setIsLoading } = useContext<any>(IsLoadingContext);
   const [_IdUserLogged, set_IdUserLogged] = useState<string|number>(INITIAL_USER._id);
   const [gmailUserLogged, setGmailUserLogged] = useState<UserData>(INITIAL_USER);
 
+
+
   useEffect(() => {
-    // console.log("/*-/*-/*-profileString: ", profileString)
+    console.log("/*-/*-/*-profileString: ", profileString)
+    // console.log("/*-/*-/*-user: ", user)
     if(profileString) {
-      setUser(JSON.parse(profileString))
-      setIsLoading((prevLoading:any) => ({
-        ...prevLoading,
-        user: false,
-      }));
+      const fetchUserByUser = async () => {
+        try {
+          const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
+          const response = await fetch(`http://localhost:4000/api/users/user/${profileStringWithoutQuotes}`)
+          if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+          }
+          const json = await response.json();
+          console.log("/*-/*-/*-json: ", json)
+          console.log("/*-/*-/*-response: ", response)
+          setUser(json);
+
+          // if (response.ok) {
+          //   const json = await response.json()
+          //   setUser(json)
+          // } else {
+          //   console.error("UserContext.tsx fetchUserByUser else: ")
+          // // Handle the case where the response is not OK (e.g., show an error message)
+          // }
+        } catch (error: any) {
+          // Handle any network or fetch-related errors
+          console.error("UserContext.tsx fetchUserByUser error.message: ", error.message)
+          console.error("UserContext.tsx  fetchUserByUser error.stack: ", error.stack)
+        } finally {
+          setIsLoading((prevLoading:any) => ({
+            ...prevLoading,
+            user: false,
+          }));
+        }
+      }
+      fetchUserByUser()      
     }
   }, []); 
 

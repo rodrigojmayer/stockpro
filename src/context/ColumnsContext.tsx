@@ -40,16 +40,15 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
         //   } else {
         //   // Handle the case where the response is not OK (e.g., show an error message)
         // }
-          alert("alert1")
+          // alert("alert1")
         } catch (error: any) {
           // Handle any network or fetch-related errors
           console.error("fetchDefaultColumns error.message: ", error.message)
           
           console.error("fetchDefaultColumns error.stack: ", error.stack)
-          alert("alert2")
+          // alert("alert2")
 
         } finally {
-          fetchCustomColumns();
           setIsLoading((prevLoading: any) => ({
             ...prevLoading,
             defaultColumns: false,
@@ -76,24 +75,24 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
           // debugger;
           console.error("fetchCustomColumns error.message: ", error.message)
           console.error("fetchCustomColumns error.stack: ", error.stack)
-          alert("alert3")
+          // alert("alert3")
         } finally {
-          console.error("fetchCustomColumns finally--**-- ")
           setIsLoading((prevLoading:any) => ({
             ...prevLoading,
             customColumns: false,
           }));
         }
       }
-      console.log("ColumnsContext.tsx user.id_client1: ", user.id_client)
-      console.log("ColumnsContext.tsx _IdUserLogged: ", _IdUserLogged)
-      console.log("ColumnsContext.tsx gmailUserLogged: ", gmailUserLogged)
+      // console.log("ColumnsContext.tsx user.id_client1: ", user.id_client)
+      // console.log("ColumnsContext.tsx _IdUserLogged: ", _IdUserLogged)
+      // console.log("ColumnsContext.tsx gmailUserLogged: ", gmailUserLogged)
       
-      alert("alert4")
+      // alert("alert4")
       if (!isLoading.user) {
         console.log("ColumnsContext.tsx user.id_client2: ", user.id_client)
-        alert("alert5")
+        // alert("alert5")
         fetchDefaultColumns();
+        fetchCustomColumns();
       }
 
   }, [user]);
@@ -123,13 +122,17 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
 
   useEffect(() => {
     // console.log("user: ", user)
-  const columns_user_order = user.ordered_fields.map((idField: number) => {
-    // console.log("idField: ", idField)
-    return columns.find((column) => column.id === idField);
-  }).filter(Boolean) as ColumnData[];
-  // console.log("columns_user_order: ", columns_user_order)
-  setColumnsUserOrder(columns_user_order)
-  }, [columns]);
+    if(user.ordered_fields){
+    console.log("ColumnsContext.tsx user: ", user)
+
+      const columns_user_order = user.ordered_fields.map((idField: number) => {
+        // console.log("idField: ", idField)
+        return columns.find((column) => column.id === idField);
+      }).filter(Boolean) as ColumnData[];
+      // console.log("columns_user_order: ", columns_user_order)
+      setColumnsUserOrder(columns_user_order)
+    }
+  }, [columns, user]);
 
   useEffect(() => {
 
