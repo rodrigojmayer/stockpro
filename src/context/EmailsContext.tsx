@@ -29,8 +29,9 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
   useEffect(() => {
-    // console.log("UsersContext.tsx user.id_client: ", user.id_client)
-    const fetchUser = async () => {
+    console.log("EmailsContext.tsx user.id_client: ", user.id_client)
+
+    const fetchEmailsClient = async () => {
       try {
         const response = await fetch(`http://localhost:4000/api/emails/client/${user.id_client}`); 
         // const response = await fetch(`http://localhost:4000/api/users/client/3`); 
@@ -63,8 +64,9 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
             }));
         }
     };
-
-    fetchUser();
+    if(user.id_client){
+      fetchEmailsClient();
+    }
   }, [user]);
   
   // useEffect(() => {

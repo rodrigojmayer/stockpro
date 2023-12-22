@@ -12,7 +12,7 @@ type ColumnsProviderProps = {
 
 export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) => {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
-  const { user } = useContext<any>(UserContext);
+  const { user, _IdUserLogged, gmailUserLogged } = useContext<any>(UserContext);
 
   
   const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
@@ -27,15 +27,29 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
       const fetchDefaultColumns = async () => {
         try {
           const response = await fetch('http://localhost:4000/api/defaultColumns/')
-          if (response.ok) {
-            const json = await response.json()
-            setDefaultColumns(json)
-          } else {
-          // Handle the case where the response is not OK (e.g., show an error message)
-        }
-        } catch (error) {
+          console.log("fetchDefaultColumns response:", response)
+          console.log("fetchDefaultColumns response.Access-Control-Allow-Origin:", response.headers)
+          if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+          }
+          const json = await response.json();
+          setDefaultColumns(json);
+        //   if (response.ok) {
+        //     const json = await response.json()
+        //     setDefaultColumns(json)
+        //   } else {
+        //   // Handle the case where the response is not OK (e.g., show an error message)
+        // }
+          alert("alert1")
+        } catch (error: any) {
           // Handle any network or fetch-related errors
+          console.error("fetchDefaultColumns error.message: ", error.message)
+          
+          console.error("fetchDefaultColumns error.stack: ", error.stack)
+          alert("alert2")
+
         } finally {
+          fetchCustomColumns();
           setIsLoading((prevLoading: any) => ({
             ...prevLoading,
             defaultColumns: false,
@@ -47,33 +61,39 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
           console.log("fetchCustomColumns user.id_client: ", user.id_client)
           const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
           console.log("fetchCustomColumns response:", response)
-          
           if (response.ok) {
             const json = await response.json()
             console.log("custom columns json:", json)
             // console.log(json.filter((val:any) => {val.id_client===2}))
             setCustomColumns(json)
+            // setCustomColumns([])
           } else {
             console.error("fetchCustomColumns else: ")
           // Handle the case where the response is not OK (e.g., show an error message)
-        }
-        } catch (error) {
+          }
+        } catch (error: any) {
           // Handle any network or fetch-related errors
-          debugger;
-          console.error("fetchCustomColumns error: ", error)
-          // alert("alert")
+          // debugger;
+          console.error("fetchCustomColumns error.message: ", error.message)
+          console.error("fetchCustomColumns error.stack: ", error.stack)
+          alert("alert3")
         } finally {
+          console.error("fetchCustomColumns finally--**-- ")
           setIsLoading((prevLoading:any) => ({
             ...prevLoading,
             customColumns: false,
           }));
         }
       }
-
+      console.log("ColumnsContext.tsx user.id_client1: ", user.id_client)
+      console.log("ColumnsContext.tsx _IdUserLogged: ", _IdUserLogged)
+      console.log("ColumnsContext.tsx gmailUserLogged: ", gmailUserLogged)
+      
+      alert("alert4")
       if (!isLoading.user) {
-        // console.log(user.id_client)
+        console.log("ColumnsContext.tsx user.id_client2: ", user.id_client)
+        alert("alert5")
         fetchDefaultColumns();
-        fetchCustomColumns();
       }
 
   }, [user]);
