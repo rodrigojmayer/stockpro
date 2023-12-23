@@ -31,16 +31,7 @@ type UserProviderProps = {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   // const [user, setUser] = useState<UserData>(INITIAL_USER);
   const profileString = window.localStorage.getItem('profile');
-  if(profileString){
-    
-  }
-  console.log("profileString: ", profileString)
-  // const [user, setUser] = useState<UserData>(
-  //   profileString ? 
-  //     () => JSON.parse(profileString)
-  //   :
-  //     INITIAL_USER
-  // )  
+
   const [user, setUser] = useState<UserData>(INITIAL_USER)
 
   const { setIsLoading } = useContext<any>(IsLoadingContext);
@@ -56,6 +47,12 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       const fetchUserByUser = async () => {
         try {
           const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
+
+
+          // loginUser(userNameEmail, userPass, rememberUser)
+
+
+
           const response = await fetch(`http://localhost:4000/api/users/user/${profileStringWithoutQuotes}`)
           if (!response.ok) {
             throw new Error(`Request failed with status: ${response.status}`);

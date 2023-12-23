@@ -55,7 +55,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     
     const { classes } = useStyles()
     const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
-    const { isLogged, logout } = useUser()
+    const { isLogged, logoutLocalStorage } = useUser()
     console.log("UserContext.tsx useUser.isLogged: ", isLogged)
     const close = () => {
         handleClose(false)
@@ -79,7 +79,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
 
     const selLogout = async() => {
         try {
-            await logout()
+            await logoutLocalStorage()
             setUser(INITIAL_USER)
         } catch (error) {
             console.error('Logout error: ', error)

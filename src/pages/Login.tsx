@@ -55,7 +55,7 @@ export default function Login () {
 
   const addUser = useAddUser(); 
   const { classes } = useStylesGlobal();
-  const { isLogged, login, logout } = useUser()
+  const { isLogged, loginLocalStorage, loginUser } = useUser()
   const { INITIAL_USER, user, setUser, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
   const { users, setUsers } = useContext<any>(UsersContext); 
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
@@ -139,9 +139,9 @@ export default function Login () {
     }
   }, [userNameEmail])
 
-  useEffect(() => {
-    console.log("useEffect userPass: ", userPass)
-  }, [userPass])
+  // useEffect(() => {
+  //   console.log("useEffect userPass: ", userPass)
+  // }, [userPass])
 
   const handleUserNameEmail = (value: string) => {
     setUserNameEmail(value)    
@@ -183,43 +183,8 @@ export default function Login () {
     }
     if(!dataOk) return
 
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`http://localhost:4000/api/users/login/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json', // Set the appropriate content-type for my API
-            // Add any other requires headers here
-          },
-          body:JSON.stringify({
-            "user_email": userNameEmail,
-            "pass": userPass
-          })
-        });
-        if (response.ok) {
-          const json = await response.json();
-          if(json){
-            login(json, rememberUser);
-          }
-          else{
-            console.log("error email not found 1?: ")
-          }
-        } else {
-          console.log("error email not found 2?: ")
-        }
-      } catch (error) {
-        console.log("error email not found?: ", error)
-        // setUser(INITIAL_USER);
-        // Handle any network or fetch-related errors
-      } finally {
-        setIsLoading((prevLoading:any) => ({
-          ...prevLoading,
-          user: false,
-        }));
-        // setGmailUserLogged(INITIAL_USER)  // Resetting after login to allow later the logout
-      }
-    };
-    fetchUser();
+    loginUser(userNameEmail, userPass, rememberUser)
+
   }
 
   const navigate = useNavigate()
@@ -280,7 +245,7 @@ export default function Login () {
               createUser();
             }
             else{
-            login(json);
+              loginLocalStorage(json);
             }
           }
         } catch (error) {
@@ -298,106 +263,6 @@ export default function Login () {
       fetchUserByGmail();
     }
   }, [gmailUserLogged]);
-
-  // const postClient = async () => {
-  //   const bodyUser: UserData= {
-  //     ...INITIAL_USER,
-  //     "email": gmailUserLogged.email,
-  //     "name": gmailUserLogged.given_name,
-  //     "last_name": gmailUserLogged.family_name,
-  //     "user": gmailUserLogged.email?.split("@")[0] || "",
-  //     "language": 1,  ///////////////////////////////// FIX
-  //   }
-  //   try {
-  //     const response = await fetch(`http://localhost:4000/api/clients/`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json', // Set the appropriate content-type for my API
-  //         // Add any other requires headers here
-  //       },
-  //       body:JSON.stringify({
-  //         "deleted": false,
-  //         "enabled": true
-  //       })
-  //     })
-
-  //     // Check if the response status is successful
-  //     if (response.ok) {
-  //       const responseData = await response.json() // parse the response data
-  //       bodyUser.id_client = responseData.id
-  //     } else if (response.status === 400) {
-  //       // Handle non-successful responses
-  //       const errorData = await response.json()
-  //       console.error('Request failed 2: ', errorData.error)
-  //       // Handle the error here
-  //       if (errorData.errorCode === 'duplicate_product') {
-  //         // setOpenErrorModal(true) // Open the modal for duplicate product error
-  //         // setErrorData(errorData.errorCode)
-  //       }
-  //     }
-  //   } catch (error: unknown) {
-  //     if (typeof error === 'string') {
-  //       // 'error' is now narrowed down to type 'string'
-  //       console.error('Error:', error)
-  //     } else if (error instanceof Error) {
-  //       // 'error' is now narrowed down to type 'Error'
-  //       console.error('Error object:', error.message)
-  //     } else {
-  //       // Handle other cases as needed
-  //     }
-  //   } finally {
-  //     if(bodyUser.id_client)
-  //       postUser(bodyUser)
-  //   }
-  // } 
-  // const postUser = async (bodyUser:UserData) => {
-  //   // console.log('Login.tsx postUser bodyUser: ', bodyUser)
-  //   let loadingSuccess: boolean = false
-  //   try {
-  //     const response = await fetch(`http://localhost:4000/api/users/`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json', // Set the appropriate content-type for my API
-  //         // Add any other requires headers here
-  //       },
-  //       body:JSON.stringify(bodyUser)
-  //     })
-
-  //     // Check if the response status is successful
-  //     if (response.ok) {
-  //       const responseData = await response.json() // parse the response data
-  //       loadingSuccess = true
-  //       // set_IdUserLogged(responseData._id)
-  //       setGmailUserLogged(responseData)
-  //     } else if (response.status === 400) {
-  //       // Handle non-successful responses
-  //       console.error('Request failed: ', response.status, response.statusText)
-  //       const errorData = await response.json()
-  //       console.error('Request failed 2: ', errorData.error)
-  //       // Handle the error here
-  //       if (errorData.errorCode === 'duplicate_product') {
-  //         // setOpenErrorModal(true) // Open the modal for duplicate product error
-  //         // setErrorData(errorData.errorCode)
-  //       }
-  //     }
-  //   } catch (error: unknown) {
-  //     if (typeof error === 'string') {
-  //       // 'error' is now narrowed down to type 'string'
-  //       console.error('Error:', error)
-  //     } else if (error instanceof Error) {
-  //       // 'error' is now narrowed down to type 'Error'
-  //       console.error('Error object:', error.message)
-  //     } else {
-  //       // Handle other cases as needed
-  //     }
-  //   } finally {
-  //     // console.log("loadingSuccess: ", loadingSuccess)
-  //     setIsLoading((prevLoading: any) => ({
-  //       ...prevLoading,
-  //       fieldsFetchCreateStock: loadingSuccess,
-  //     }));
-  //   }
-  // }
 
   return (
     <div>
@@ -421,18 +286,6 @@ export default function Login () {
                 errorTextField={errorTextFields.user_name_email}
                 />
 
-
-                {/* <TextField
-                  label="Username or Email"
-                  value={userNameEmail}
-                  onChange={ (event) => handleUserNameEmail(event.target.value) }
-                  maxRows={1}
-                  size="small"
-                  className= {`${errorTextFields.user_name_email ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                  InputProps={{
-                    className: classes.inputClassName,
-                  }}
-                /> */}
               </Box>
               <Box className={classes.customBoxRow}>
                 <TextField

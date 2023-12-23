@@ -1,14 +1,14 @@
 import  { useCallback, useContext}  from 'react'
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
-import { RememberUserData } from '../types';
+import { RememberUserData, UserEditData } from '../types';
 
 export default function useUser () {
     const { INITIAL_USER, user, setUser } = useContext<any>(UserContext)
     const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     const localStorage = window.localStorage
 
-    const login = useCallback((response: any, rememberUser?: RememberUserData) => {
+    const loginLocalStorage = useCallback((response: any, rememberUser?: RememberUserData) => {
         console.log("useUser.tsx login response: ", response)
         console.log("useUser.tsx login user: ", user)
         console.log("useUser.tsx login localStorage: ", localStorage)
@@ -26,16 +26,55 @@ export default function useUser () {
         setUser(response)
     }, [setUser, localStorage])
 
-    const logout = useCallback(() => {
+    const logoutLocalStorage = useCallback(() => {
         localStorage.removeItem('profile')
         console.log("useUser.tsx logout localStorage: ", localStorage)
         console.log("useUser.tsx logout user: ", user)
     }, [setUser, localStorage])
 
+    const loginUser = async (userNameEmail: string, userPass: string, rememberUser?: RememberUserData) => {
+        try {
+          const response = await fetch(`http://localhost:4000/api/users/login/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json', // Set the appropriate content-type for my API
+              // Add any other requires headers here
+            },
+            body:JSON.stringify({
+              "user_email": userNameEmail,
+              "pass": userPass
+            })
+          });
+          if (response.ok) {
+            const json = await response.json();
+            if(json){
+                loginLocalStorage(json, rememberUser);
+            }
+            else{
+              console.log("error email not found 1?: ")
+            }
+          } else {
+            console.log("error email not found 2?: ")
+          }
+        } catch (error) {
+          console.log("error email not found?: ", error)
+          // setUser(INITIAL_USER);
+          // Handle any network or fetch-related errors
+        } finally {
+          setIsLoading((prevLoading:any) => ({
+            ...prevLoading,
+            user: false,
+          }));
+          // setGmailUserLogged(INITIAL_USER)  // Resetting after login to allow later the logout
+        }
+      };
+    //   fetchUser();
+
     return {
         isLogged: Boolean(user._id),
         user: user,
-        login,
-        logout
+        loginLocalStorage,
+        logoutLocalStorage,
+        loginUser
     }
 }
