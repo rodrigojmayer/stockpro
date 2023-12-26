@@ -75,6 +75,7 @@ export default function useAddUser () {
             // bodyUser.pass="testpassss"
             const response = await fetch(`http://localhost:4000/api/users/`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json', // Set the appropriate content-type for my API
                     // Add any other requires headers here

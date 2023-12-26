@@ -28,7 +28,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
   
   useEffect(() => {
     // console.log("*-*-*-*-*user: ", user)
-    console.log("*-*-*-*-*isLoading: ", isLoading)
+    // console.log("*-*-*-*-*isLoading: ", isLoading)
     if(isLoading.products){
       setIsLoading((prevLoading:any) => ({
           ...prevLoading,

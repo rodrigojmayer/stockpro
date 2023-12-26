@@ -17,7 +17,7 @@ import { IsLoadingContext } from './context/IsLoadingContext';
 import { ColumnsContext } from './context/ColumnsContext';
 import { ProductsContext } from './context/ProductsContext';
 import MassiveUpdateStock from './components/MassiveUpdateStock';
-import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider, Navigate   } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -34,15 +34,33 @@ const theme = createTheme({
 })
 
 // const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
-    
 
 function App() {
   const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
+  const { user } = useContext<any>(UserContext);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  useEffect(() => {
+//     // Check if JWT exists in cookies
 
+    console.log("user._id: ", user._id)
+    if (user._id != "") {
+      console.log("setIsAuthenticated")
+
+//         // Validate the token if needed
+        setIsAuthenticated(true)
+    } else {
+      setIsAuthenticated(false)
+
+    }
+}, [user])
+
+  
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route index element={<Home />} />
+        <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
+        
+        {/* <Route index element={<Home />} /> */}
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
         {/* ... etc. */}

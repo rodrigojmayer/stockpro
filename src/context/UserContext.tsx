@@ -42,7 +42,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   useEffect(() => {
     console.log("/*-/*-/*-profileString: ", profileString)
-    // console.log("/*-/*-/*-user: ", user)
+    console.log("/*-/*-/*-user: ", user)
     if(profileString) {
       const fetchUserByUser = async () => {
         try {

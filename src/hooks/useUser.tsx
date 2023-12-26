@@ -36,6 +36,7 @@ export default function useUser () {
         try {
           const response = await fetch(`http://localhost:4000/api/users/login/`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
               'Content-Type': 'application/json', // Set the appropriate content-type for my API
               // Add any other requires headers here
@@ -54,7 +55,7 @@ export default function useUser () {
               console.log("error email not found 1?: ")
             }
           } else {
-            console.log("error email not found 2?: ")
+            console.log("error email not found 2?: ", response)
           }
         } catch (error) {
           console.log("error email not found?: ", error)

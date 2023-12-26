@@ -89,7 +89,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
       
       // alert("alert4")
       if (!isLoading.user) {
-        console.log("ColumnsContext.tsx user.id_client2: ", user.id_client)
+        // console.log("ColumnsContext.tsx user.id_client2: ", user.id_client)
         // alert("alert5")
         fetchDefaultColumns();
         fetchCustomColumns();
@@ -123,7 +123,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
   useEffect(() => {
     // console.log("user: ", user)
     if(user.ordered_fields){
-    console.log("ColumnsContext.tsx user: ", user)
+    // console.log("ColumnsContext.tsx user: ", user)
 
       const columns_user_order = user.ordered_fields.map((idField: number) => {
         // console.log("idField: ", idField)

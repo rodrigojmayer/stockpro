@@ -202,7 +202,7 @@ export default function SignUp () {
           }));
           dataOk = false
         }
-        if(confirmPass===""){
+        if(confirmPass==="" || confirmPass !== pass){
           setErrorTextFields((prevErrorTextFields: any) => ({
               ...prevErrorTextFields,
               confirmPass: true,
