@@ -19,6 +19,7 @@ export interface UserData {
 export interface UserEditData {
   _id?: string;
   id_client?: number;
+  _idClient?: number;
   id_access_level?: number|null;
   name?: string;
   last_name?: string;

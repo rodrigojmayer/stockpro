@@ -24,6 +24,9 @@ import SignUp from './pages/SignUp';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import useUser from './hooks/useUser';
 
+import Cookies from 'js-cookie';
+
+
 const theme = createTheme({
   typography: {
     fontFamily: [
@@ -53,6 +56,17 @@ function App() {
 
     }
 }, [user])
+
+
+useEffect(() => {
+  const token = Cookies.get('jwt');
+  console.log("token: ", token)
+  if (token) {
+    setIsAuthenticated(true);
+  }
+}, []);
+
+
 
   
   const router = createBrowserRouter(

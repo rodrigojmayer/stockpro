@@ -10,6 +10,15 @@ export default function useAddUser () {
 
     // console.log("testing addUser")
 
+    const deleteClient = async (_idClient: number) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/clients/${_idClient}`, {
+                method: 'DELETE'
+            });
+        } catch (error: unknown) {
+            console.error('Error:', error)
+        }
+    }
 
     const addUser  = async (bodyUser: UserEditData) => {
     console.log("testing addUser bodyUser:", bodyUser)
@@ -42,6 +51,7 @@ export default function useAddUser () {
             if (response.ok) {
                 const responseData = await response.json() // parse the response data
                 bodyUser.id_client = responseData.id
+                bodyUser._idClient = responseData._id
             } else if (response.status === 400) {
                 // Handle non-successful responses
                 const errorData = await response.json()
@@ -92,15 +102,19 @@ export default function useAddUser () {
                 setGmailUserLogged(responseData)
                 setUser(responseData)
                 
-            } else if (response.status === 400) {
-                // Handle non-successful responses
-                console.error('Request failed: ', response.status, response.statusText)
-                const errorData = await response.json()
-                console.error('Request failed 2: ', errorData.error)
-                // Handle the error here
-                if (errorData.errorCode === 'duplicate_product') {
-                // setOpenErrorModal(true) // Open the modal for duplicate product error
-                // setErrorData(errorData.errorCode)
+            } else {
+                // if(bodyUser._idClient)
+                //     deleteClient(bodyUser._idClient)
+                if (response.status === 400) {
+                    // Handle non-successful responses
+                    console.error('Request failed: ', response.status, response.statusText)
+                    const errorData = await response.json()
+                    console.error('Request failed 2: ', errorData.error)
+                    // Handle the error here
+                    if (errorData.errorCode === 'duplicate_product') {
+                    // setOpenErrorModal(true) // Open the modal for duplicate product error
+                    // setErrorData(errorData.errorCode)
+                    }
                 }
             }
         } catch (error: unknown) {
@@ -124,6 +138,7 @@ export default function useAddUser () {
     }
 
     // postClient()
+
 
     return  addUser  ;
 }
