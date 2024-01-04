@@ -424,7 +424,7 @@ export function MenuButton({ onDataChanged }: ChildProps) {
 
   const { classes } = useStyles()
  
-  const handleClick = () => {
+  const handleClick:any = () => {
     onDataChanged(true)
   }
 

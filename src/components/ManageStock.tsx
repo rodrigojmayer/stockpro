@@ -34,7 +34,7 @@ interface Category {
     sub_categories: string[];
 }
 
-const INITIAL_CREATESTOCK_OPTIONS = {
+const INITIAL_CREATESTOCK_OPTIONS:DataCreateStockOptions = {
     mainData: false,  
     secondaryData: true,
     alerts: true,    
@@ -157,7 +157,6 @@ export default function ManageStock(
                 
                 let loadingSuccess: boolean = false
                 try {
-                    
                     const manage_stock = (edition ? data._id : "")
                     const manage_method = (edition ? 'PATCH' : 'POST')
                     const response = await fetch(`http://localhost:4000/api/products/${manage_stock}`, {

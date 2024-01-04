@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { UserData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 import useUser from '../hooks/useUser';
+import axios from '../api/axios'
 
 const INITIAL_USER = {
   _id: "",
@@ -38,6 +39,31 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [_IdUserLogged, set_IdUserLogged] = useState<string|number>(INITIAL_USER._id);
   const [gmailUserLogged, setGmailUserLogged] = useState<UserData>(INITIAL_USER);
 
+
+
+  useEffect(() => {
+    let isMounted = true
+    const controller = new AbortController()
+    
+    const getUsers = async () => {
+      try {
+        const response = await axios.get('/users', {
+          signal: controller.signal
+        })
+        console.log(response.data)
+        isMounted && setUser(response.data)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    getUsers()
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }, [])
 
 
   useEffect(() => {

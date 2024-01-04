@@ -34,7 +34,8 @@ export default function useUser () {
 
     const loginUser = async (userNameEmail: string, userPass: string, rememberUser?: RememberUserData) => {
         try {
-          const response = await fetch(`http://localhost:4000/api/users/login/`, {
+          // const response = await fetch(`http://localhost:4000/api/users/login/`, {
+          const response = await fetch(`http://localhost:4000/api/auth/`, {
             method: 'POST',
             credentials: 'include',
             headers: {
