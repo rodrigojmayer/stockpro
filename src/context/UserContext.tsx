@@ -50,7 +50,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         const response = await axios.get('/users', {
           signal: controller.signal
         })
-        console.log(response.data)
+        console.log("axios response.data: ", response.data)
         isMounted && setUser(response.data)
       } catch (err) {
         console.error(err)
