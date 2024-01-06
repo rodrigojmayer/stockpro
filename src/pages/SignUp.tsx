@@ -220,7 +220,7 @@ export default function SignUp () {
 
 
 
-        console.log("testing addUser1")
+        // console.log("testing addUser1")
 
         // postClient()
         const bodyCreate: UserEditData = {}
