@@ -1,17 +1,15 @@
-import { useEffect, useState, useContext, useCallback } from 'react'
-import { Container, Typography, Grid } from '@mui/material'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useEffect, useState, useContext } from 'react'
+import { Container, Grid } from '@mui/material'
+// import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
-
-import { OkButton, CancelButton, PlusButton, UpdateButton } from '../components/Buttons';
-import Layout from '../components/Layout';
+import { PlusButton, UpdateButton } from '../components/Buttons';
+import ModalsGroup from '../components/ModalsGroup';
 import MainSearch from '../components/MainSearch';
 import TableProducts from '../components/TableProducts';
-// import CreateStock from './components/CreateStock';
 import ManageStock from '../components/ManageStock';
 import UpdateAmountStock from '../components/UpdateAmountStock';
-import { Data, ColumnData, CustomValueData, UserData, ProductUpdateData } from '../types';
+import { Data } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import { ColumnsContext } from '../context/ColumnsContext';
@@ -19,28 +17,28 @@ import { ProductsContext } from '../context/ProductsContext';
 import MassiveUpdateStock from '../components/MassiveUpdateStock';
 
 
-const theme = createTheme({
-  typography: {
-    fontFamily: [
-      '"Asap Condensed"',
-    ].join(','),
-    fontSize: 20,
-  },
-  components: {
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          '&.Mui-focused': {
-            marginTop: 4
-          },
-          '&.MuiInputLabel-shrink': {
-            marginTop: 4
-          },
-        },
-      },
-    },
-  },
-})
+// const theme = createTheme({
+//   typography: {
+//     fontFamily: [
+//       '"Asap Condensed"',
+//     ].join(','),
+//     fontSize: 20,
+//   },
+//   components: {
+//     MuiInputLabel: {
+//       styleOverrides: {
+//         root: {
+//           '&.Mui-focused': {
+//             marginTop: 4
+//           },
+//           '&.MuiInputLabel-shrink': {
+//             marginTop: 4
+//           },
+//         },
+//       },
+//     },
+//   },
+// })
 
 const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
     
@@ -249,14 +247,14 @@ function Home() {
 
   return (
         <div className="App">
+        {/* <ThemeProvider theme={theme}> */}
           <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={openBackdrop}
           >
             <CircularProgress color="inherit" />
           </Backdrop>
-          <ThemeProvider theme={theme}>
-            <Layout 
+            <ModalsGroup 
               columnsDefault={defaultColumns} 
               columnsCustom={customColumns}
               idColumnsTableOrder={idColumnsTableOrder} 
@@ -283,7 +281,7 @@ function Home() {
               {openBackdrop ? "": 
                 <TableProducts data={filteredData} columns={columnsUserOrder} openUpdateAmountStock={openUpdateAmountStock} handleDisabledUpdateButton={handleDisabledUpdateButton} checkStock={checkStock} setCheckStock={setCheckStock} />
               }
-            </Layout>
+            </ModalsGroup>
             {/* <CreateStock
                 open={showCreateStock} 
                 handleClose={handleCloseCreateStock} 
@@ -310,7 +308,7 @@ function Home() {
                 // data={data} 
                 data={massiveUpdate}
             />
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
         </div>
   )
 }

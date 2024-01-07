@@ -5,6 +5,7 @@ import App from './App'
 import './index.css'
 // import { UserContext } from './context/UserContext'
 // import { UserData } from './types'
+import { AuthProvider } from './context/AuthProvider';
 import { UserProvider } from './context/UserContext';
 import { FilestackProvider } from './context/FilestackContext';
 import { UsersProvider } from './context/UsersContext';
@@ -15,43 +16,37 @@ import { AccessLevelsProvider } from './context/AccessLevelsContext';
 import { IsLoadingProvider } from './context/IsLoadingContext';
 import { ColumnsProvider } from './context/ColumnsContext';
 import { ProductsProvider } from './context/ProductsContext';
-
-// const contextValue: UserData = {
-//     id: 1, 
-//     id_client: 2, 
-//     name: "Rodrigo", 
-//     user: "rmayer", 
-//     pass: "123", 
-//     deleted: false, 
-//     enabled: true, 
-//     ordered_fields:[1,2,3]
-//   }
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
  
-
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
-    <IsLoadingProvider >
-      <UserProvider >
-        <FilestackProvider >
-          <UsersProvider >
-            <EmailsProvider >
-              <MeasuresProvider >
-                <AccessLevelsProvider>
-                  <CategoriesProvider >
-                    <ColumnsProvider >
-                      <ProductsProvider >
-                        <App />
-                      </ProductsProvider>
-                    </ColumnsProvider>
-                  </CategoriesProvider>
-                </AccessLevelsProvider>
-              </MeasuresProvider>
-            </EmailsProvider>
-          </UsersProvider>
-        </FilestackProvider>
-      </UserProvider>
-    </IsLoadingProvider>
+    <BrowserRouter>
+      <IsLoadingProvider >
+        <AuthProvider>
+          <UserProvider >
+            <FilestackProvider >
+              <UsersProvider >
+                <EmailsProvider >
+                  <MeasuresProvider >
+                    <AccessLevelsProvider>
+                      <CategoriesProvider >
+                        <ColumnsProvider >
+                          <ProductsProvider >
+                            <Routes>
+                            <Route path="/*" element={<App />} />
+                            </Routes>
+                          </ProductsProvider>
+                        </ColumnsProvider>
+                      </CategoriesProvider>
+                    </AccessLevelsProvider>
+                  </MeasuresProvider>
+                </EmailsProvider>
+              </UsersProvider>
+            </FilestackProvider>
+          </UserProvider>
+        </AuthProvider>
+      </IsLoadingProvider>
+    </BrowserRouter>
   // </React.StrictMode>, 
 )
 

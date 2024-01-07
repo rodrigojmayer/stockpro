@@ -69,10 +69,12 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   useEffect(() => {
     console.log("/*-/*-/*-profileString: ", profileString)
     console.log("/*-/*-/*-user: ", user)
-    if(profileString) {
+    // if(profileString) {
+      
       const fetchUserByUser = async () => {
         try {
-          const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
+          // const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
+          const profileStringWithoutQuotes = user.user.replace(/['"]+/g, '');
 
 
           // loginUser(userNameEmail, userPass, rememberUser)
@@ -107,7 +109,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         }
       }
       fetchUserByUser()      
-    }
+    // }
   }, []); 
 
   return <UserContext.Provider value={{ INITIAL_USER, user, setUser, setGmailUserLogged, gmailUserLogged, _IdUserLogged, set_IdUserLogged  }}>{children}</UserContext.Provider>;

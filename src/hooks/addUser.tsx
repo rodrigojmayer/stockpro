@@ -144,7 +144,7 @@ export default function useAddUser () {
                     withCredentials: true
                 }
             )
-            console.log(response.data)
+            console.log(JSON.stringify(response?.data))
             // console.log(response.accessToken)
             // console.log(JSON.stringify(response))
             // console.log('response: ', response)

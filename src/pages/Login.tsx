@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom"
+import { NavLink, useNavigate, useLocation } from "react-router-dom"
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode  } from 'jwt-decode'
 import { Box,
@@ -23,33 +23,13 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ComboBox from "../components/inputs/ComboBox";
 import useAddUser from "../hooks/addUser";
 
-const theme = createTheme({
-  typography: {
-    fontFamily: [
-      '"Asap Condensed"',
-    ].join(','),
-    fontSize: 20,
-  },
-  palette: {
-    secondary: {
-      main: '#c1e8fb',
-    },
-  },
-  components: {
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          '&.Mui-focused': {
-            marginTop: 4
-          },
-          '&.MuiInputLabel-shrink': {
-            marginTop: 4
-          },
-        },
-      },
-    },
-  },
-})
+// const theme = createTheme({
+//   palette: {
+//     secondary: {
+//       main: '#c1e8fb',
+//     },
+//   },
+// })
 
 export default function Login () {
 
@@ -75,32 +55,39 @@ export default function Login () {
   const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
   const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
   const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
-  
    
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  
   // Get the keys from localStorage
-  let localStorageKeys = Object.keys(localStorage)
-  let varrememberUsersPass: any[] = []
+  // let localStorageKeys = Object.keys(localStorage)
+  // let varrememberUsersPass: any[] = []
 
-  useEffect(() => {
-    // Define a filter criterion
-    const filterCriterion = 'remember_profile_'
-    // Filter the localStorage keys based on the criterion
-    const filteredKeys = localStorageKeys.filter(key => {
-      // Check if the key matches your criteria
-      return key.startsWith(filterCriterion)
-    })
-    let storedUserEmail=[]
-    for(const key of filteredKeys) {
-      const storedData = localStorage.getItem(key)
-      if (storedData) {
-        const parsedData = JSON.parse(storedData)
-        storedUserEmail.push({"label": parsedData.user_email})
-        varrememberUsersPass.push(parsedData) 
-      }
-      setRememberLabelUsers(storedUserEmail) 
-      setRememberUsersPass(varrememberUsersPass)
-    }
-  }, [])
+  // useEffect(() => {
+  //   // Define a filter criterion
+  //   const filterCriterion = 'remember_profile_'
+  //   // Filter the localStorage keys based on the criterion
+  //   const filteredKeys = localStorageKeys.filter(key => {
+  //     // Check if the key matches your criteria
+  //     return key.startsWith(filterCriterion)
+  //   })
+  //   let storedUserEmail=[]
+  //   for(const key of filteredKeys) {
+  //     const storedData = localStorage.getItem(key)
+  //     if (storedData) {
+  //       const parsedData = JSON.parse(storedData)
+  //       storedUserEmail.push({"label": parsedData.user_email})
+  //       varrememberUsersPass.push(parsedData) 
+  //     }
+  //     setRememberLabelUsers(storedUserEmail) 
+  //     setRememberUsersPass(varrememberUsersPass)
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   userRef.current.focus()
+  // }, [])
 
   const showProfilePassToggle = () => {
     if(allowShowProfilePass)
@@ -139,10 +126,6 @@ export default function Login () {
     }
   }, [userNameEmail])
 
-  // useEffect(() => {
-  //   console.log("useEffect userPass: ", userPass)
-  // }, [userPass])
-
   const handleUserNameEmail = (value: string) => {
     setUserNameEmail(value)    
     setRememberUser((prevRememberUser: RememberUserData) => ({
@@ -165,7 +148,8 @@ export default function Login () {
         user_pass: false,
     }));
   }
-  const handleLogin = () => {
+  
+  const handleLogin = async () => {
     let dataOk: boolean = true
     if(userNameEmail===""){
       setErrorTextFields((prevErrorTextFields: any) => ({
@@ -183,14 +167,13 @@ export default function Login () {
     }
     if(!dataOk) return
 
-    loginUser(userNameEmail, userPass, rememberUser)
-
+    await loginUser(userNameEmail, userPass, rememberUser)
+    // navigate(from, { replace: true });
   }
 
-  const navigate = useNavigate()
-  useEffect(() => {
-    if(isLogged) navigate('/')
-  }, [isLogged, navigate])
+  // useEffect(() => {
+  //   if(isLogged) navigate('/')
+  // }, [isLogged, navigate])
   
   const handleLoginGoogleSuccess = async (response: any) => {
     // Handle the successful Google login response here
@@ -265,8 +248,6 @@ export default function Login () {
   }, [gmailUserLogged]);
 
   return (
-    <div>
-    <ThemeProvider theme={theme}>
       <Modal open={true} > 
         <Box sx={modalStyleSaveExternal}>
           <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
@@ -355,15 +336,15 @@ export default function Login () {
             </Box>
             <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
                 <NavLink 
-                  style={{ color: theme.palette.secondary.main }}
-                  to="/signup"
+                  style={{ color: '#c1e8fb' }}
+                  to="/forgotpass"
                 >
                   Forgot Password? 
                 </NavLink>
                 {/* <Box className={classes.customBoxRow}> */}
                     {/* New here?  */}
                   <NavLink 
-                    style={{ color: theme.palette.secondary.main }}
+                    style={{ color: '#c1e8fb' }}
                     to="/signup"
                   >
                     Sign Up 
@@ -373,7 +354,5 @@ export default function Login () {
           </Box>
         </Box>
       </Modal>  
-      </ThemeProvider>
-    </div>
   )
 }

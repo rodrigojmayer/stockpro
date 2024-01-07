@@ -1,66 +1,24 @@
 import { useState, useContext, useEffect } from "react";
-import { useNavigate, 
-        NavLink 
-        } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { NavLink } from "react-router-dom";
 import { Box,
         Divider,
         Modal,
         IconButton,
         TextField,
         Typography,
-        Switch,
-        // Link
+        Switch
         } from "@mui/material";
 import { OkButton } from "../components/Buttons";
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal } from "../Styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { UserContext } from "../context/UserContext";
-import { UsersContext } from "../context/UsersContext";
-import useUser from "../hooks/useUser";
 import { IsLoadingContext } from "../context/IsLoadingContext";
 import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData, UserEditData } from "../types";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import useAddUser from "../hooks/addUser";
-// import ComboBox from "../components/inputs/ComboBox";
-
-const theme = createTheme({
-    typography: {
-        fontFamily: [
-            '"Asap Condensed"',
-        ].join(','),
-        fontSize: 20,
-    },
-    palette: {
-        secondary: {
-            main: '#c1e8fb',
-        },
-        action: {
-            disabled: 'red',
-        }
-    },
-    components: {
-        MuiInputLabel: {
-            styleOverrides: {
-                root: {
-                    '&.Mui-focused': {
-                        marginTop: 4
-                    },
-                    '&.MuiInputLabel-shrink': {
-                        marginTop: 4
-                    },
-                },
-            },
-        },
-    },
-})
 
 export default function SignUp () {
     const addUser = useAddUser(); 
-
-    
-
     const { classes } = useStylesGlobal();
     // const { isLogged, login }
     const { INITIAL_USER, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
@@ -157,10 +115,6 @@ export default function SignUp () {
     }
     const handlePass = (value: string) => {
         setPass(value)
-        // setRememberUser((prevRememberUser: RememberUserData) => ({
-        //     ...prevRememberUser,
-        //     pass: value
-        // }))
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
             pass: false,
@@ -168,17 +122,12 @@ export default function SignUp () {
     }
     const handleConfirmPass = (value: string) => {
         setConfirmPass(value)
-        // setRememberUser((prevRememberUser: RememberUserData) => ({
-        //     ...prevRememberUser,
-        //     pass: value
-        // }))
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
             confirmPass: false,
         }));
     }
 
-    
     const handleSignUp = () => {
         let dataOk: boolean = true
         if(user===""){
@@ -235,212 +184,143 @@ export default function SignUp () {
         bodyCreate.enabled = true
         bodyCreate.pass = pass
 
-        // addUser(bodyCreate);
-
         const createUser = async () => {
             await addUser(bodyCreate);
         };
         createUser();
-
-
-        // const postClient = async () => {
-        //     try {
-        //         const response = await fetch('http://localhost:4000/api/clients/', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //             },
-        //             body:JSON.stringify({
-        //                 "id_client_assigned": true
-        //             })
-        //         })
-        //         if (response.ok) {
-        //             const json = await response.json()
-        //             bodyCreate.id_client = json[0].id_client+1
-        //         } else {
-        //             console.error("error last user")
-        //         }
-        //     } catch (error) {
-        //         console.log("error last user not found?: ", error)
-        //     } finally{
-        //         fetchCreateUser()
-        //     }
-        // }
-
-        // const fetchCreateUser = async () => {
-        //     let loadingSuccess: boolean = false
-        //     try {
-        //         const response = await fetch(`http://localhost:4000/api/users/`, {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json'
-        //             },
-        //             body:JSON.stringify(bodyCreate)
-        //         })
-        //         if (response.ok) {
-        //             const responseData = await response.json()
-        //             loadingSuccess = true
-        //         } else if (response.status === 400) {
-        //             console.error('Request f: ', response)
-        //             console.error('Request failed: ', response.status, response.statusText)
-        //             const errorData = await response.json()
-        //             console.error('Request failed 2: ', errorData.error)
-        //             if (errorData.errorCode === 'duplicate_product') {
-        //                 setOpenErrorModal(true)
-        //                 setErrorData(errorData.errorCode)
-        //             }
-        //         }
-        //     } catch (error: unknown) {
-        //         if (typeof error === 'string') {
-        //             console.error('Error: ', error)
-        //         } else if (error instanceof Error) {
-        //             console.error('Error object: ', error.message)
-        //         } else {
-        //             // Handle other cases as needed
-        //         }
-        //     } finally {
-        //         setIsLoading((prevLoading: any) => ({
-        //             ...prevLoading,
-        //             fieldsFetchCreateStock: loadingSuccess
-        //         }))
-        //     }
-        // }
     }
-
 
 
 /////////// AAAAAAAAAAADDDDDDDDDDEmail format error 
     return (
-        <div>
-            <ThemeProvider theme={theme}>
-                <Modal open={true} >
-                    <Box sx={modalStyleSaveExternal}>
-                        <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
-                            <Typography className={classes.finishButtons} align="center" variant='h5'>
-                                Sign Up
-                            </Typography>
-                            <Box className={classes.customBoxColumn}>
-                                <Box className={classes.customBoxRow}>
-                                    <TextField
-                                        label="Username"
-                                        value={user}
-                                        onChange={ (event) => handleUser(event.target.value)}
-                                        maxRows={1}
-                                        size="small"
-                                        type="text"
-                                        className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                        InputProps={{
-                                          className: classes.inputClassName,
-                                        }}
-                                    />
-                                </Box>
-                                <Box className={classes.customBoxRow}>
-                                    <TextField
-                                        label="Email"
-                                        value={email}
-                                        onChange={ (event) => handleEmail(event.target.value)}
-                                        maxRows={1}
-                                        size="small"
-                                        type="email"
-                                        className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                        InputProps={{
-                                          className: classes.inputClassName,
-                                        }}
-                                    />
-                                </Box>
-                                <Box className={classes.customBoxRow}>
-                                    <TextField
-                                    label="Password"
-                                    maxRows={1}
-                                    size="small"
-                                    value={pass}
-                                    type={ showProfilePass ? "text" : "password" }
-                                    onChange={ (event) => handlePass(event.target.value) }
-                                    className= {`${errorTextFields.pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        endAdornment: (
-                                        <IconButton onClick={showProfilePassToggle}>
-                                            {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                        </IconButton>
-                                        ),
-                                    }}
-                                    />
-                                </Box>
-                                <Box className={classes.customBoxRow}>
-                                    <TextField
-                                    label="Confirm password"
-                                    maxRows={1}
-                                    size="small"
-                                    value={confirmPass}
-                                    type={ showProfileConfirmPass ? "text" : "password" }
-                                    onChange={ (event) => handleConfirmPass(event.target.value) }
-                                    className= {`${errorTextFields.confirmPass ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        endAdornment: (
-                                        <IconButton onClick={showProfileConfirmPassToggle}>
-                                            {showProfileConfirmPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                        </IconButton>
-                                        ),
-                                    }}
-                                    />
-                                </Box>
-                                {/* <Box> */}
-                                <Box className={classes.customBoxRow} >
-                                    <Box>
-                                        By creating an account you agree to our 
-                                        <br/>
-                                        <NavLink 
-                                            style={{ color: theme.palette.secondary.main }}
-                                            to="/login"
-                                        >
-                                            Terms & Privacy
-                                        </NavLink>
-                                        <Switch 
-                                            color='success' 
-                                            className= {`${errorTextFields.termsAndPrivacy ? classes.switch_error : ""} `}
-                                            checked={termsAndPrivacy}
-                                            onChange={termsAndPrivacyEnabledChange}
-                                        /> 
-                                    </Box>
-                                </Box>
-                                <Box className={classes.customBoxRowSpaceBetween}>
-                                    <Box>
-                                        <Switch 
-                                            color='success' 
-                                            checked={rememberUser.enabled}
-                                            onChange={(event) => {
-                                            rememberEnabledChange(event.target.checked)
-                                            }}
-                                        />Remember me 
-                                    </Box>
-                                    <OkButton
-                                        clicked={() => handleSignUp()}
-                                        widthIco={100}
-                                    />
-                                </Box>
-                                <Box className={classes.customBoxRow}>
-                                    <Divider 
-                                        className={classes.customDivider} 
-                                        variant="middle" 
-                                    />
-                                </Box>
-                                <Box className={classes.customBoxRow} sx={{ typography: 'subtitle2' }}>
-                                {/* <Box  */}
-                                    Already have an account?
-                                    <NavLink 
-                                        style={{ color: theme.palette.secondary.main }}
-                                        to="/login"
-                                    >
-                                        Login
-                                    </NavLink> 
-                                </Box>
+        <Modal open={true} >
+            <Box sx={modalStyleSaveExternal}>
+                <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+                    <Typography className={classes.finishButtons} align="center" variant='h5'>
+                        Sign Up
+                    </Typography>
+                    <Box className={classes.customBoxColumn}>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Username"
+                                value={user}
+                                onChange={ (event) => handleUser(event.target.value)}
+                                maxRows={1}
+                                size="small"
+                                type="text"
+                                className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                }}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Email"
+                                value={email}
+                                onChange={ (event) => handleEmail(event.target.value)}
+                                maxRows={1}
+                                size="small"
+                                type="email"
+                                className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                InputProps={{
+                                    className: classes.inputClassName,
+                                }}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                            label="Password"
+                            maxRows={1}
+                            size="small"
+                            value={pass}
+                            type={ showProfilePass ? "text" : "password" }
+                            onChange={ (event) => handlePass(event.target.value) }
+                            className= {`${errorTextFields.pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                            InputProps={{
+                                className: classes.inputClassName,
+                                endAdornment: (
+                                <IconButton onClick={showProfilePassToggle}>
+                                    {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                </IconButton>
+                                ),
+                            }}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                            label="Confirm password"
+                            maxRows={1}
+                            size="small"
+                            value={confirmPass}
+                            type={ showProfileConfirmPass ? "text" : "password" }
+                            onChange={ (event) => handleConfirmPass(event.target.value) }
+                            className= {`${errorTextFields.confirmPass ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                            InputProps={{
+                                className: classes.inputClassName,
+                                endAdornment: (
+                                <IconButton onClick={showProfileConfirmPassToggle}>
+                                    {showProfileConfirmPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                </IconButton>
+                                ),
+                            }}
+                            />
+                        </Box>
+                        {/* <Box> */}
+                        <Box className={classes.customBoxRow} >
+                            <Box>
+                                By creating an account you agree to our 
+                                <br/>
+                                <NavLink 
+                                    // style={{ color: theme.palette.secondary.main }}
+                                    style={{ color: '#c1e8fb' }}
+                                    to="/login"
+                                >
+                                    Terms & Privacy
+                                </NavLink>
+                                <Switch 
+                                    color='success' 
+                                    className= {`${errorTextFields.termsAndPrivacy ? classes.switch_error : ""} `}
+                                    checked={termsAndPrivacy}
+                                    onChange={termsAndPrivacyEnabledChange}
+                                /> 
                             </Box>
                         </Box>
+                        <Box className={classes.customBoxRowSpaceBetween}>
+                            <Box>
+                                <Switch 
+                                    color='success' 
+                                    checked={rememberUser.enabled}
+                                    onChange={(event) => {
+                                    rememberEnabledChange(event.target.checked)
+                                    }}
+                                />Remember me 
+                            </Box>
+                            <OkButton
+                                clicked={() => handleSignUp()}
+                                widthIco={100}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <Divider 
+                                className={classes.customDivider} 
+                                variant="middle" 
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow} sx={{ typography: 'subtitle2' }}>
+                        {/* <Box  */}
+                            Already have an account?
+                            <NavLink 
+                                // style={{ color: theme.palette.secondary.main }}
+                                style={{ color: '#c1e8fb' }}
+                                to="/login"
+                            >
+                                Login
+                            </NavLink> 
+                        </Box>
                     </Box>
-                </Modal>
-            </ThemeProvider>
-        </div>
+                </Box>
+            </Box>
+        </Modal>
     )
 }

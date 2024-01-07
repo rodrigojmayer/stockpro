@@ -8,7 +8,9 @@ export const useStylesGlobal = makeStyles()({
         gap: 20,
         margin: "20px",
     },
-
+    palette: {
+        color: '#c1e8fb',
+    },
     formControlUsers: {
         width: "300px",
         backgroundColor: "rgb(255,255, 255, .1)",

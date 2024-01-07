@@ -17,12 +17,13 @@ import { IsLoadingContext } from './context/IsLoadingContext';
 import { ColumnsContext } from './context/ColumnsContext';
 import { ProductsContext } from './context/ProductsContext';
 import MassiveUpdateStock from './components/MassiveUpdateStock';
-import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider, Navigate   } from 'react-router-dom';
+import RequireAuth from './components/RequireAuth';
+// import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider, Navigate   } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import useUser from './hooks/useUser';
 
 import Cookies from 'js-cookie';
 
@@ -67,24 +68,40 @@ useEffect(() => {
 }, []);
 
 
-
-  
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route>
-        <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
+  // const router = createBrowserRouter(
+  //   createRoutesFromElements(
+  //     <Route>
+  //       <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
         
-        {/* <Route index element={<Home />} /> */}
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<SignUp />} />
-        {/* ... etc. */}
-      </Route>
-    )
-  );
+  //       {/* <Route index element={<Home />} /> */}
+  //       <Route path="login" element={<Login />} />
+  //       <Route path="signup" element={<SignUp />} />
+  //       {/* ... etc. */}
+  //     </Route>
+  //   )
+  // );
 
+  // return(
+  //   <GoogleOAuthProvider clientId={CLIENT_ID}>
+  //     <RouterProvider router={router} />
+  //   </GoogleOAuthProvider>
+  // )
   return(
     <GoogleOAuthProvider clientId={CLIENT_ID}>
-      <RouterProvider router={router} />
+      <Routes>
+        <Route path="/" element={<Layout />} >
+          {/* public routes */}
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+
+          {/* we want to protext these routes */}
+          <Route element={<RequireAuth />} >
+            <Route path="/" element={<Home />} />
+          </Route>
+          {/* catch all */}
+          {/* <Route path="*" element={<Missing />}  /> */}
+        </Route>
+      </Routes>
     </GoogleOAuthProvider>
   )
 }

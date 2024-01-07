@@ -78,7 +78,10 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     const navigate = useNavigate();
 
     const selLogout = async() => {
+        console.log("prev logoutLocalStorage()")
+
         try {
+            // console.log("prev logoutLocalStorage()")
             await logoutLocalStorage()
             setUser(INITIAL_USER)
         } catch (error) {
