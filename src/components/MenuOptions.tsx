@@ -88,9 +88,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
             console.error('Logout error: ', error)
         } finally {
             navigate('/login')
-
         }
-
     }
     
     const  buttons = [

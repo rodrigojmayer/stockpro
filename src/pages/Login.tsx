@@ -183,9 +183,12 @@ export default function Login () {
       family_name: string,
     }
     const decodedToken:JwtPayload = jwtDecode(response.credential);
+    console.log("handleLoginGoogleSuccess response.credential: ", response.credential)
+    console.log("handleLoginGoogleSuccess decodedToken: ", decodedToken)
     const userEmailData = decodedToken
     setGmailUserLogged(userEmailData)
   };
+
   const handleLoginGoogleFailure = (error: any) => {
     console.error('Login Google Failure:', error);
     // Handle the failure/error during Google login here
@@ -228,7 +231,8 @@ export default function Login () {
               createUser();
             }
             else{
-              loginLocalStorage(json);
+              // loginLocalStorage(json);
+
             }
           }
         } catch (error) {

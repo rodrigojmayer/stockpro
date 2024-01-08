@@ -18,6 +18,7 @@ import { ColumnsContext } from './context/ColumnsContext';
 import { ProductsContext } from './context/ProductsContext';
 import MassiveUpdateStock from './components/MassiveUpdateStock';
 import RequireAuth from './components/RequireAuth';
+import PersistLogin from './components/PersistLogin';
 // import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider, Navigate   } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -67,6 +68,14 @@ useEffect(() => {
   }
 }, []);
 
+useEffect(() => {
+  const token = Cookies.get('jwt');
+  console.log("token: ", token)
+  if (token) {
+    setIsAuthenticated(true);
+  }
+}, []);
+
 
   // const router = createBrowserRouter(
   //   createRoutesFromElements(
@@ -95,11 +104,14 @@ useEffect(() => {
           <Route path="signup" element={<SignUp />} />
 
           {/* we want to protext these routes */}
-          <Route element={<RequireAuth />} >
-            <Route path="/" element={<Home />} />
+          <Route element={<PersistLogin />} >
+            <Route element={<RequireAuth />} >
+              <Route path="/" element={<Home />} />
+            </Route>
+
+            {/* catch all */}
+            {/* <Route path="*" element={<Missing />}  /> */}
           </Route>
-          {/* catch all */}
-          {/* <Route path="*" element={<Missing />}  /> */}
         </Route>
       </Routes>
     </GoogleOAuthProvider>

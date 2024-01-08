@@ -104,10 +104,10 @@ export default function useUser () {
       )
       console.log(JSON.stringify(response?.data))
       // console.log(JSON.stringify(response))
-      const accToken = response?.data.accToken
+      const accessToken = response?.data.accessToken
       // const roles = response?.data.roles
-      // setAuth({ userNameEmail, userPass, roles, accToken})
-      setAuth({ userNameEmail, userPass, accToken})
+      // setAuth({ userNameEmail, userPass, roles, accessToken})
+      setAuth({ userNameEmail, userPass, accessToken})
       // console.log(JSON.stringify(response))
       // if (response.ok) {
       //       const json = await response.json();

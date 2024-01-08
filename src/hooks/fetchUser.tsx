@@ -14,7 +14,7 @@ export default function useAddUser () {
 
 
     const addUser  = async (bodyUser: UserEditData) => {
-    console.log("testing addUser bodyUser:", bodyUser)
+        console.log("testing addUser bodyUser:", bodyUser)
 
         // const bodyUser: UserData= {
         // ...INITIAL_USER,
@@ -71,6 +71,7 @@ export default function useAddUser () {
                 postUser(bodyUser)
         }
     }
+    
     const postUser = async (bodyUser:UserEditData) => {
         console.log('addUser.tsx postUser bodyUser: ', bodyUser)
         let loadingSuccess: boolean = false

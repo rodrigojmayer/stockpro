@@ -11,10 +11,10 @@ export default function useRefreshToken() {
         })
         setAuth((prev:any) => {
             console.log(JSON.stringify(prev))
-            console.log(response.data.accToken)
-            return{ ...prev, accToken: response.data.accToken }
+            console.log(response.data.accessToken)
+            return{ ...prev, accessToken: response.data.accessToken }
         })
-        return response.data.accToken
+        return response.data.accessToken
     }
     return refresh
     
