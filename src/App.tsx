@@ -108,10 +108,10 @@ useEffect(() => {
             <Route element={<RequireAuth />} >
               <Route path="/" element={<Home />} />
             </Route>
+          </Route>
 
             {/* catch all */}
             {/* <Route path="*" element={<Missing />}  /> */}
-          </Route>
         </Route>
       </Routes>
     </GoogleOAuthProvider>

@@ -11,6 +11,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import { UserContext } from '../context/UserContext';
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import useUser from '../hooks/useUser';
+import useLogout from '../hooks/useLogout';
 
 
 
@@ -56,6 +57,8 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     const { classes } = useStyles()
     const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
     const { isLogged, logoutLocalStorage } = useUser()
+    const logout = useLogout();
+
     console.log("UserContext.tsx useUser.isLogged: ", isLogged)
     const close = () => {
         handleClose(false)
@@ -78,11 +81,12 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     const navigate = useNavigate();
 
     const selLogout = async() => {
-        console.log("prev logoutLocalStorage()")
+        // console.log("prev logoutLocalStorage()")
 
         try {
             // console.log("prev logoutLocalStorage()")
-            await logoutLocalStorage()
+            // await logoutLocalStorage()
+            await logout()
             setUser(INITIAL_USER)
         } catch (error) {
             console.error('Logout error: ', error)
