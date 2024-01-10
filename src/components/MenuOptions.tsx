@@ -80,7 +80,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
 
     const navigate = useNavigate();
 
-    const selLogout = async() => {
+    const signOut = async() => {
         // console.log("prev logoutLocalStorage()")
 
         try {
@@ -99,7 +99,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
         <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
         <Button value="profile" key="profile" variant="text" onClick={selOp}>Profile</Button>,
         <Button value="preferences" key="preferences" variant="text" onClick={selOp}>Preferences</Button>,
-        <Button value="logout" key="logout" variant="text" onClick={selLogout}>Log out</Button>,
+        <Button value="logout" key="logout" variant="text" onClick={signOut}>Log out</Button>,
     ];
  
     let height_box = "50%"
