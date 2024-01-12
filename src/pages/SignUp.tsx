@@ -16,6 +16,7 @@ import { UserContext } from "../context/UserContext";
 import { IsLoadingContext } from "../context/IsLoadingContext";
 import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData, UserEditData } from "../types";
 import useAddUser from "../hooks/addUser";
+import ConfirmCreatedUserModal from "../components/ConfirmCreatedUserModal";
 
 export default function SignUp () {
     const addUser = useAddUser(); 
@@ -42,7 +43,8 @@ export default function SignUp () {
     const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
     const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
     const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
-    
+    const [openConfirmCreatedUserModal, setOpenConfirmCreatedUserModal] = useState<any>(true);
+    const [stockNameTemp, setStockNameTemp] = useState<any>();
      
     // Get the keys from localStorage
     let localStorageKeys = Object.keys(localStorage)
@@ -191,6 +193,10 @@ export default function SignUp () {
     }
 
 
+    const handleCloseConfirmCreatedUserModal = () => {
+        setOpenConfirmCreatedUserModal(false)
+    }
+    
 /////////// AAAAAAAAAAADDDDDDDDDDEmail format error 
 /////////// AAAAAAAAAAADDDDDDDDDD ConfirmCreatedUserModal
 
@@ -198,6 +204,14 @@ export default function SignUp () {
         <Modal open={true} >
             <Box sx={modalStyleSaveExternal}>
                 <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+                    <ConfirmCreatedUserModal
+                        openConfirmCreatedUserModal={openConfirmCreatedUserModal}
+                        closeConfirmCreatedUserModal={handleCloseConfirmCreatedUserModal}
+                        source={"Confirm created user"}
+                        data={stockNameTemp} 
+                        // confirmCreatedUser={handleConfirmDelete}
+                        
+                    />
                     <Typography className={classes.finishButtons} align="center" variant='h5'>
                         Sign Up
                     </Typography>
@@ -323,6 +337,7 @@ export default function SignUp () {
                     </Box>
                 </Box>
             </Box>
+
         </Modal>
     )
 }

@@ -41,8 +41,8 @@ type ConfirmCreatedUserModalProps = {
     openConfirmCreatedUserModal: boolean;
     closeConfirmCreatedUserModal: (newData?: boolean) => void;
     source: string
-    data: string
-    confirmCreatedUser: (newData?: boolean) => void
+    data?: string
+    // confirmCreatedUser: (newData?: boolean) => void
 }
 export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalProps) {
     const { openConfirmCreatedUserModal, closeConfirmCreatedUserModal } = props;
@@ -77,11 +77,11 @@ export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalP
         }
     };
 
-    useEffect(() => {
-        if(valueSlider===100 && !isThumbPressed){
-            props.confirmCreatedUser(true)
-        }
-    }, [valueSlider, isThumbPressed])
+    // useEffect(() => {
+    //     if(valueSlider===100 && !isThumbPressed){
+    //         props.confirmCreatedUser(true)
+    //     }
+    // }, [valueSlider, isThumbPressed])
 
     
     return (
