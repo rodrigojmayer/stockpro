@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { Data, ColumnData, CustomValueData,UserData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 import { UserContext } from './UserContext';
+import AuthContext from "../context/AuthProvider"
 
 
 export const ColumnsContext = createContext<object | undefined>(undefined);
@@ -13,7 +14,7 @@ type ColumnsProviderProps = {
 export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) => {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const { user, _IdUserLogged, gmailUserLogged } = useContext<any>(UserContext);
-
+  const { auth } = useContext(AuthContext)
   
   const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
   const [customColumns, setCustomColumns] = useState<ColumnData[]>([])
@@ -26,8 +27,8 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
 
       const fetchDefaultColumns = async () => {
         try {
+          console.log("fetchDefaultColumns prev fetch:")
           const response = await fetch('http://localhost:4000/api/defaultColumns/')
-          console.log("fetchDefaultColumns response:", response)
           console.log("fetchDefaultColumns response.Access-Control-Allow-Origin:", response.headers)
           if (!response.ok) {
             throw new Error(`Request failed with status: ${response.status}`);
@@ -57,8 +58,9 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
       }
       const fetchCustomColumns = async () => {
         try {
-          console.log("fetchCustomColumns user.id_client: ", user.id_client)
-          const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
+          // console.log("fetchCustomColumns user.id_client: ", user.id_client)
+          console.log("fetchCustomColumns auth.id_client: ", auth.id_client)
+          const response = await fetch(`http://localhost:4000/api/customColumns/client/${auth.id_client}`)
           console.log("fetchCustomColumns response:", response)
           if (response.ok) {
             const json = await response.json()
@@ -88,7 +90,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
       // console.log("ColumnsContext.tsx gmailUserLogged: ", gmailUserLogged)
       
       // alert("alert4")
-      if (!isLoading.user) {
+      if (!isLoading.auth) {
         // console.log("ColumnsContext.tsx user.id_client2: ", user.id_client)
         // alert("alert5")
         fetchDefaultColumns();

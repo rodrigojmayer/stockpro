@@ -41,76 +41,76 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
 
 
-  useEffect(() => {
-    let isMounted = true
-    const controller = new AbortController()
+  // useEffect(() => {
+  //   let isMounted = true
+  //   const controller = new AbortController()
     
-    const getUsers = async () => {
-      try {
-        const response = await axios.get('/users', {
-          signal: controller.signal
-        })
-        console.log("axios response.data: ", response.data)
-        isMounted && setUser(response.data)
-      } catch (err) {
-        console.error(err)
-      }
-    }
+  //   const getUsers = async () => {
+  //     try {
+  //       const response = await axios.get('/users', {
+  //         signal: controller.signal
+  //       })
+  //       console.log("axios response.data: ", response.data)
+  //       isMounted && setUser(response.data)
+  //     } catch (err) {
+  //       console.error(err)
+  //     }
+  //   }
 
-    getUsers()
+  //   getUsers()
 
-    return () => {
-      isMounted = false
-      controller.abort()
-    }
-  }, [])
+  //   return () => {
+  //     isMounted = false
+  //     controller.abort()
+  //   }
+  // }, [])
 
 
-  useEffect(() => {
-    console.log("/*-/*-/*-profileString: ", profileString)
-    console.log("/*-/*-/*-user: ", user)
-    // if(profileString) {
+  // useEffect(() => {
+  //   console.log("/*-/*-/*-profileString: ", profileString)
+  //   console.log("/*-/*-/*-user: ", user)
+  //   // if(profileString) {
       
-      const fetchUserByUser = async () => {
-        try {
-          // const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
-          const profileStringWithoutQuotes = user.user.replace(/['"]+/g, '');
+  //     const fetchUserByUser = async () => {
+  //       try {
+  //         // const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
+  //         const profileStringWithoutQuotes = user.user.replace(/['"]+/g, '');
 
 
-          // loginUser(userNameEmail, userPass, rememberUser)
+  //         // loginUser(userNameEmail, userPass, rememberUser)
 
 
 
-          const response = await fetch(`http://localhost:4000/api/users/user/${profileStringWithoutQuotes}`)
-          if (!response.ok) {
-            throw new Error(`Request failed with status: ${response.status}`);
-          }
-          const json = await response.json();
-          console.log("/*-/*-/*-json: ", json)
-          console.log("/*-/*-/*-response: ", response)
-          setUser(json);
+  //         const response = await fetch(`http://localhost:4000/api/users/user/${profileStringWithoutQuotes}`)
+  //         if (!response.ok) {
+  //           throw new Error(`Request failed with status: ${response.status}`);
+  //         }
+  //         const json = await response.json();
+  //         console.log("/*-/*-/*-json: ", json)
+  //         console.log("/*-/*-/*-response: ", response)
+  //         setUser(json);
 
-          // if (response.ok) {
-          //   const json = await response.json()
-          //   setUser(json)
-          // } else {
-          //   console.error("UserContext.tsx fetchUserByUser else: ")
-          // // Handle the case where the response is not OK (e.g., show an error message)
-          // }
-        } catch (error: any) {
-          // Handle any network or fetch-related errors
-          console.error("UserContext.tsx fetchUserByUser error.message: ", error.message)
-          console.error("UserContext.tsx  fetchUserByUser error.stack: ", error.stack)
-        } finally {
-          setIsLoading((prevLoading:any) => ({
-            ...prevLoading,
-            user: false,
-          }));
-        }
-      }
-      fetchUserByUser()      
-    // }
-  }, []); 
+  //         // if (response.ok) {
+  //         //   const json = await response.json()
+  //         //   setUser(json)
+  //         // } else {
+  //         //   console.error("UserContext.tsx fetchUserByUser else: ")
+  //         // // Handle the case where the response is not OK (e.g., show an error message)
+  //         // }
+  //       } catch (error: any) {
+  //         // Handle any network or fetch-related errors
+  //         console.error("UserContext.tsx fetchUserByUser error.message: ", error.message)
+  //         console.error("UserContext.tsx  fetchUserByUser error.stack: ", error.stack)
+  //       } finally {
+  //         setIsLoading((prevLoading:any) => ({
+  //           ...prevLoading,
+  //           user: false,
+  //         }));
+  //       }
+  //     }
+  //     fetchUserByUser()      
+  //   // }
+  // }, []); 
 
   return <UserContext.Provider value={{ INITIAL_USER, user, setUser, setGmailUserLogged, gmailUserLogged, _IdUserLogged, set_IdUserLogged  }}>{children}</UserContext.Provider>;
 };

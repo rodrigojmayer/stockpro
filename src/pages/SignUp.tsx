@@ -19,7 +19,9 @@ import useAddUser from "../hooks/addUser";
 import ConfirmCreatedUserModal from "../components/ConfirmCreatedUserModal";
 
 export default function SignUp () {
-    const addUser = useAddUser(); 
+    // const addUser = useAddUser(); 
+    const postUser = useAddUser(); 
+    
     const { classes } = useStylesGlobal();
     // const { isLogged, login }
     const { INITIAL_USER, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
@@ -43,7 +45,7 @@ export default function SignUp () {
     const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
     const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
     const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
-    const [openConfirmCreatedUserModal, setOpenConfirmCreatedUserModal] = useState<any>(true);
+    const [openConfirmCreatedUserModal, setOpenConfirmCreatedUserModal] = useState<any>(false);
     const [stockNameTemp, setStockNameTemp] = useState<any>();
      
     // Get the keys from localStorage
@@ -186,10 +188,12 @@ export default function SignUp () {
         bodyCreate.enabled = true
         bodyCreate.pass = pass
 
-        const createUser = async () => {
-            await addUser(bodyCreate);
+        const createUser = async() => {
+            const rta = await postUser(bodyCreate);
+            setOpenConfirmCreatedUserModal(true);
         };
         createUser();
+        
     }
 
 

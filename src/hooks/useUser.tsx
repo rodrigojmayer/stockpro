@@ -91,6 +91,8 @@ export default function useUser () {
     // }
   
     try {
+      console.log("useUser before response userNameEmail: ", userNameEmail)
+
       const response = await axios.post('/auth',
         // JSON.stringify({userNameEmail, userPass}),
         JSON.stringify({
@@ -102,12 +104,15 @@ export default function useUser () {
           withCredentials: true
         }
       )
-      console.log(JSON.stringify(response?.data))
+      console.log("useUser response: ", response)
+      console.log("useUser JSON.stringify(response): ", JSON.stringify(response))
+      console.log("useUser JSON.stringify(response?.data): ", JSON.stringify(response?.data))
       // console.log(JSON.stringify(response))
       const accessToken = response?.data.accessToken
+      const id_client = response?.data.id_client
       // const roles = response?.data.roles
       // setAuth({ userNameEmail, userPass, roles, accessToken})
-      setAuth({ userNameEmail, userPass, accessToken})
+      setAuth({ userNameEmail, userPass, accessToken, id_client})
       // console.log(JSON.stringify(response))
       // if (response.ok) {
       //       const json = await response.json();
@@ -139,6 +144,11 @@ export default function useUser () {
       }
     } finally {
       // navigate('/')
+      
+      setIsLoading((prevLoading:any) => ({
+        ...prevLoading,
+        user: true,
+    }));
     navigate(from, { replace: true });
     }
 

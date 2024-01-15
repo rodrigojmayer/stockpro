@@ -6,6 +6,26 @@ type IsLoadingProviderProps = {
   children: React.ReactNode;
 };
 
+// export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }) => {
+//   const [isLoading, setIsLoading] = useState({
+//     accessLevels: true,
+//     categories: true,
+//     columns: true,
+//     customColumns: true,
+//     // customColumns: false,
+//     defaultColumns: true,
+//     emailsAlert: false,
+//     fieldsFetchCreateCustomColumn: false,
+//     fieldsFetchCreateStock: false,
+//     fieldsFetchEditCustomColumn: false,
+//     fieldsFetchEditUsersFieldsOrder: false,
+//     filestack: true,
+//     measures: true,
+//     products: true,
+//     user: true,
+//     usersAlert: false,
+//   }); // New state for loading status
+  
 export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState({
     accessLevels: true,
@@ -70,6 +90,9 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
   // console.log("realoading isLoadingContext???")
   const [openBackdrop, setOpenBackdrop] = useState(true)
   // console.log("openBackdrop", openBackdrop)
-  
+  useEffect(() => {
+    console.log("isLoading: ", isLoading)
+  }, [isLoading])
+
   return <IsLoadingContext.Provider value={{ isLoading, setIsLoading, openBackdrop, setOpenBackdrop }}>{children}</IsLoadingContext.Provider>;
 };
