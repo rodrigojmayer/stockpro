@@ -109,10 +109,13 @@ export default function useUser () {
       console.log("useUser JSON.stringify(response?.data): ", JSON.stringify(response?.data))
       // console.log(JSON.stringify(response))
       const accessToken = response?.data.accessToken
-      const id_client = response?.data.id_client
+      const _id = response?.data._id
+      // const id_client = response?.data._id
+      // const ordered_fields = response?.data.ordered_fields
       // const roles = response?.data.roles
       // setAuth({ userNameEmail, userPass, roles, accessToken})
-      setAuth({ userNameEmail, userPass, accessToken, id_client})
+      // setAuth({ userNameEmail, userPass, accessToken, id_client, ordered_fields})
+      setAuth({ userNameEmail, accessToken, _id})
       // console.log(JSON.stringify(response))
       // if (response.ok) {
       //       const json = await response.json();

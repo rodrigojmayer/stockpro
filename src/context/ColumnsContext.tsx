@@ -2,7 +2,6 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { Data, ColumnData, CustomValueData,UserData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 import { UserContext } from './UserContext';
-import AuthContext from "../context/AuthProvider"
 
 
 export const ColumnsContext = createContext<object | undefined>(undefined);
@@ -14,7 +13,7 @@ type ColumnsProviderProps = {
 export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) => {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const { user, _IdUserLogged, gmailUserLogged } = useContext<any>(UserContext);
-  const { auth } = useContext(AuthContext)
+
   
   const [defaultColumns, setDefaultColumns] = useState<ColumnData[]>([])
   const [customColumns, setCustomColumns] = useState<ColumnData[]>([])
@@ -58,9 +57,8 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
       }
       const fetchCustomColumns = async () => {
         try {
-          // console.log("fetchCustomColumns user.id_client: ", user.id_client)
-          console.log("fetchCustomColumns auth.id_client: ", auth.id_client)
-          const response = await fetch(`http://localhost:4000/api/customColumns/client/${auth.id_client}`)
+          console.log("fetchCustomColumns user.id_client: ", user.id_client)
+          const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
           console.log("fetchCustomColumns response:", response)
           if (response.ok) {
             const json = await response.json()
@@ -90,7 +88,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
       // console.log("ColumnsContext.tsx gmailUserLogged: ", gmailUserLogged)
       
       // alert("alert4")
-      if (!isLoading.auth) {
+      if (!isLoading.user) {
         // console.log("ColumnsContext.tsx user.id_client2: ", user.id_client)
         // alert("alert5")
         fetchDefaultColumns();
