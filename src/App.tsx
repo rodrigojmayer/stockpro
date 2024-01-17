@@ -47,7 +47,7 @@ function App() {
   useEffect(() => {
 //     // Check if JWT exists in cookies
 
-    console.log("user._id: ", user._id)
+    // console.log("user._id: ", user._id)
     if (user._id != "") {
       console.log("setIsAuthenticated")
 
@@ -62,7 +62,7 @@ function App() {
 
 useEffect(() => {
   const token = Cookies.get('jwt');
-  console.log("token: ", token)
+  // console.log("token: ", token)
   if (token) {
     setIsAuthenticated(true);
   }
@@ -70,7 +70,7 @@ useEffect(() => {
 
 useEffect(() => {
   const token = Cookies.get('jwt');
-  console.log("token: ", token)
+  // console.log("token: ", token)
   if (token) {
     setIsAuthenticated(true);
   }
@@ -103,7 +103,7 @@ useEffect(() => {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
 
-          {/* we want to protext these routes */}
+          {/* we want to protect these routes */}
           <Route element={<PersistLogin />} >
             <Route element={<RequireAuth />} >
               <Route path="/" element={<Home />} />

@@ -90,9 +90,9 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
   // console.log("realoading isLoadingContext???")
   const [openBackdrop, setOpenBackdrop] = useState(true)
   // console.log("openBackdrop", openBackdrop)
-  useEffect(() => {
-    console.log("isLoading: ", isLoading)
-  }, [isLoading])
+  // useEffect(() => {
+  //   console.log("isLoading: ", isLoading)
+  // }, [isLoading])
 
   return <IsLoadingContext.Provider value={{ isLoading, setIsLoading, openBackdrop, setOpenBackdrop }}>{children}</IsLoadingContext.Provider>;
 };

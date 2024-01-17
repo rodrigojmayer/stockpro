@@ -11,8 +11,14 @@ export default function useRefreshToken() {
         })
         setAuth((prev:any) => {
             console.log(JSON.stringify(prev))
-            console.log(response.data.accessToken)
-            return{ ...prev, accessToken: response.data.accessToken }
+            console.log("response.data: ", response.data)
+            console.log("response.data._id: ", response.data._id)
+            console.log("response.data.accessToken: ", response.data.accessToken)
+            return{ 
+                ...prev, 
+                _id: response.data._id , 
+                accessToken: response.data.accessToken 
+            }
         })
         return response.data.accessToken
     }

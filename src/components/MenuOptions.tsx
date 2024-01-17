@@ -59,7 +59,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     const { isLogged, logoutLocalStorage } = useUser()
     const logout = useLogout();
 
-    console.log("UserContext.tsx useUser.isLogged: ", isLogged)
+    // console.log("UserContext.tsx useUser.isLogged: ", isLogged)
     const close = () => {
         handleClose(false)
     }

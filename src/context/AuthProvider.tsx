@@ -12,9 +12,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [persist, setPersist] = useState<boolean>(
         persistedValue ? JSON.parse(persistedValue) : false
     );
-    useEffect(() => {
-        console.log("AuthProvider auth: ", auth)
-    }, [auth])
+    // useEffect(() => {
+    //     console.log("AuthProvider auth: ", auth)
+    // }, [auth])
     return (
         <AuthContext.Provider value={{ auth, setAuth, persist, setPersist }}>
             {children}

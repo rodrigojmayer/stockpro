@@ -69,10 +69,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
 
   useEffect(() => {
-    console.log("/*-/*-/*-profileString: ", profileString)
-    console.log("/*-/*-/*-user: ", user)
-    console.log("/*-/*-/*-auth: ", auth)
-    // if(profileString) {
+    // console.log("/*-/*-/*-profileString: ", profileString)
+    // console.log("/*-/*-/*-user: ", user)
+    console.log("/*-/*-/*-auth._id: ", auth._id)
+    console.log("/*-/*-/*-auth.accessToken: ", auth.accessToken)
+    if(auth.accessToken) {
       
       const fetchUserByUser = async () => {
         try {
@@ -90,8 +91,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             throw new Error(`Request failed with status: ${response.status}`);
           }
           const json = await response.json();
-          console.log("/*-/*-/*-json: ", json)
-          console.log("/*-/*-/*-response: ", response)
+          // console.log("/*-/*-/*-json: ", json)
+          // console.log("/*-/*-/*-response: ", response)
           setUser(json);
 
           // if (response.ok) {
@@ -113,7 +114,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         }
       }
       fetchUserByUser()      
-    // }
+    }
   }, [auth]); 
 
   return <UserContext.Provider value={{ INITIAL_USER, user, setUser, setGmailUserLogged, gmailUserLogged, _IdUserLogged, set_IdUserLogged  }}>{children}</UserContext.Provider>;

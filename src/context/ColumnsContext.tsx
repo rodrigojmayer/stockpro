@@ -26,9 +26,9 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
 
       const fetchDefaultColumns = async () => {
         try {
-          console.log("fetchDefaultColumns prev fetch:")
+          // console.log("fetchDefaultColumns prev fetch:")
           const response = await fetch('http://localhost:4000/api/defaultColumns/')
-          console.log("fetchDefaultColumns response.Access-Control-Allow-Origin:", response.headers)
+          // console.log("fetchDefaultColumns response.Access-Control-Allow-Origin:", response.headers)
           if (!response.ok) {
             throw new Error(`Request failed with status: ${response.status}`);
           }
@@ -57,9 +57,9 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
       }
       const fetchCustomColumns = async () => {
         try {
-          console.log("fetchCustomColumns user.id_client: ", user.id_client)
+          // console.log("fetchCustomColumns user.id_client: ", user.id_client)
           const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
-          console.log("fetchCustomColumns response:", response)
+          // console.log("fetchCustomColumns response:", response)
           if (response.ok) {
             const json = await response.json()
             console.log("custom columns json:", json)
