@@ -56,7 +56,8 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     
     const { classes } = useStyles()
     const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
-    const { isLogged, logoutLocalStorage } = useUser()
+    // const { isLogged, logoutLocalStorage } = useUser()
+    const { isLogged } = useUser()
     const logout = useLogout();
 
     // console.log("UserContext.tsx useUser.isLogged: ", isLogged)

@@ -35,7 +35,8 @@ export default function Login () {
 
   const addUser = useAddUser(); 
   const { classes } = useStylesGlobal();
-  const { isLogged, loginLocalStorage, loginUser } = useUser()
+  // const { isLogged, loginLocalStorage, loginUser } = useUser()
+  const { isLogged, loginUser } = useUser()
   const { INITIAL_USER, user, setUser, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
   const { users, setUsers } = useContext<any>(UsersContext); 
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);

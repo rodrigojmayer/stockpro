@@ -27,6 +27,7 @@ import SignUp from './pages/SignUp';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import Cookies from 'js-cookie';
+import useAuth from './hooks/useAuth';
 
 
 const theme = createTheme({
@@ -42,38 +43,42 @@ const theme = createTheme({
 
 function App() {
   const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
-  const { user } = useContext<any>(UserContext);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
-  useEffect(() => {
-//     // Check if JWT exists in cookies
+  // const { user } = useContext<any>(UserContext);
+  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const { auth, persist } = useAuth();
+//   useEffect(() => {
+// //     // Check if JWT exists in cookies
 
-    // console.log("user._id: ", user._id)
-    if (user._id != "") {
-      console.log("setIsAuthenticated")
+//     // console.log("user._id: ", user._id)
+//     if (user._id != "") {
+//       console.log("setIsAuthenticated")
 
-//         // Validate the token if needed
-        setIsAuthenticated(true)
-    } else {
-      setIsAuthenticated(false)
+// //         // Validate the token if needed
+//         setIsAuthenticated(true)
+//     } else {
+//       setIsAuthenticated(false)
 
-    }
-}, [user])
+//     }
+// }, [user])
 
 
+// useEffect(() => {
+//   const token = Cookies.get('jwt');
+//   // console.log("token: ", token)
+//   if (token) {
+//     setIsAuthenticated(true);
+//   }
+// }, []);
+
+// useEffect(() => {
+//   const token = Cookies.get('jwt');
+//   // console.log("token: ", token)
+//   if (token) {
+//     setIsAuthenticated(true);
+//   }
+// }, []);
 useEffect(() => {
-  const token = Cookies.get('jwt');
-  // console.log("token: ", token)
-  if (token) {
-    setIsAuthenticated(true);
-  }
-}, []);
-
-useEffect(() => {
-  const token = Cookies.get('jwt');
-  // console.log("token: ", token)
-  if (token) {
-    setIsAuthenticated(true);
-  }
+  console.log("App persist: ", persist) 
 }, []);
 
 
@@ -99,6 +104,7 @@ useEffect(() => {
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <Routes>
         <Route path="/" element={<Layout />} >
+          
           {/* public routes */}
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />

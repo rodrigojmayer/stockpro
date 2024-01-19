@@ -33,7 +33,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                         <ColumnsProvider >
                           <ProductsProvider >
                             <Routes>
-                            <Route path="/*" element={<App />} />
+                              <Route path="/*" element={<App />} />
                             </Routes>
                           </ProductsProvider>
                         </ColumnsProvider>

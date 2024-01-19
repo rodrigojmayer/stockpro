@@ -15,42 +15,42 @@ export default function useUser () {
   const { setAuth } = useContext(AuthContext)
   const { INITIAL_USER, user, setUser } = useContext<any>(UserContext)
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
-  const localStorage = window.localStorage
+  // const localStorage = window.localStorage
 
-  const loginLocalStorage = useCallback((response: any, rememberUser?: RememberUserData) => {
-      console.log("useUser.tsx login response: ", response)
-      console.log("useUser.tsx login user: ", user)
-      console.log("useUser.tsx login localStorage: ", localStorage)
-      console.log("useUser.tsx login rememberUser: ", rememberUser)
-      localStorage.setItem('profile', JSON.stringify(response.user))
-      if(rememberUser){
-          const { user_email, pass } = rememberUser
-          const selectedFields = { user_email, pass}
-          console.log("useUser selectedFields: ", selectedFields)
-          if(rememberUser.enabled)
-              localStorage.setItem(`remember_profile_${rememberUser.user_email}`, JSON.stringify(selectedFields))
-          else
-              localStorage.removeItem(`remember_profile_${rememberUser.user_email}`)
-      }
-      setUser(response)
-  }, [setUser, localStorage])
+  // const loginLocalStorage = useCallback((response: any, rememberUser?: RememberUserData) => {
+  //     console.log("useUser.tsx login response: ", response)
+  //     console.log("useUser.tsx login user: ", user)
+  //     // console.log("useUser.tsx login localStorage: ", localStorage)
+  //     // console.log("useUser.tsx login rememberUser: ", rememberUser)
+  //     localStorage.setItem('profile', JSON.stringify(response.user))
+  //     if(rememberUser){
+  //         const { user_email, pass } = rememberUser
+  //         const selectedFields = { user_email, pass}
+  //         console.log("useUser selectedFields: ", selectedFields)
+  //         if(rememberUser.enabled)
+  //             localStorage.setItem(`remember_profile_${rememberUser.user_email}`, JSON.stringify(selectedFields))
+  //         else
+  //             localStorage.removeItem(`remember_profile_${rememberUser.user_email}`)
+  //     }
+  //     setUser(response)
+  // }, [setUser, localStorage])
 
-  const logoutLocalStorage = async  () => {
-      // localStorage.removeItem('profile')
-      // console.log("useUser.tsx logout localStorage: ", localStorage)
-      // console.log("useUser.tsx logout user: ", user)
-      try {
-        const response = await axios.get('/logout', {
-          withCredentials: true
-        })
-        // console.log("response: ", response)
-      } catch (err:any) {
-        console.log("error: ", err)
-      // } finally {
-        // navigate('/')
-      // navigate(from, { replace: true });
-      }
-  }
+  // const logoutLocalStorage = async  () => {
+  //     // localStorage.removeItem('profile')
+  //     // console.log("useUser.tsx logout localStorage: ", localStorage)
+  //     // console.log("useUser.tsx logout user: ", user)
+  //     try {
+  //       const response = await axios.get('/logout', {
+  //         withCredentials: true
+  //       })
+  //       // console.log("response: ", response)
+  //     } catch (err:any) {
+  //       console.log("error: ", err)
+  //     // } finally {
+  //       // navigate('/')
+  //     // navigate(from, { replace: true });
+  //     }
+  // }
 
   const loginUser = async (userNameEmail: string, userPass: string, rememberUser?: RememberUserData) => {
     // try {
@@ -116,6 +116,7 @@ export default function useUser () {
       // setAuth({ userNameEmail, userPass, roles, accessToken})
       // setAuth({ userNameEmail, userPass, accessToken, id_client, ordered_fields})
       setAuth({ userNameEmail, accessToken, _id})
+      navigate(from, { replace: true });
       // console.log(JSON.stringify(response))
       // if (response.ok) {
       //       const json = await response.json();
@@ -151,8 +152,7 @@ export default function useUser () {
       setIsLoading((prevLoading:any) => ({
         ...prevLoading,
         user: true,
-    }));
-    navigate(from, { replace: true });
+      }));
     }
 
   };
@@ -160,8 +160,8 @@ export default function useUser () {
   return {
     isLogged: Boolean(user._id),
     user: user,
-    loginLocalStorage,
-    logoutLocalStorage,
+    // loginLocalStorage,
+    // logoutLocalStorage,
     loginUser
   }
 }

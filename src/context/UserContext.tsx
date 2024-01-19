@@ -33,7 +33,7 @@ type UserProviderProps = {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   // const [user, setUser] = useState<UserData>(INITIAL_USER);
   const { auth } = useContext(AuthContext)
-  const profileString = window.localStorage.getItem('profile');
+  // const profileString = window.localStorage.getItem('profile');
 
   const [user, setUser] = useState<UserData>(INITIAL_USER)
 
