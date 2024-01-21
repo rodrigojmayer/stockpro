@@ -182,7 +182,7 @@ export default function SignUp () {
         bodyCreate.background_color = 0
         bodyCreate.alerts_enabled = false
         bodyCreate.ordered_fields = [1,2,3,4,5]
-        bodyCreate.id_access_level = 4
+        bodyCreate.id_access_level = 3
         bodyCreate.user = user
         bodyCreate.email = email
         bodyCreate.enabled = true
