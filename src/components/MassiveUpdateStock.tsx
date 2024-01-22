@@ -477,7 +477,8 @@ export default function MassiveUpdateStock(
     
     useEffect(() => {
         if(isLoading.fieldsFetchCreateStock){
-            window.location.reload();
+            alert("MassiveUpdateStock.tsx here used to be a window.location.reload()")
+            // window.location.reload();
         }
     }, [isLoading]) // To know if after save should reload the page
     useEffect(() => {

@@ -40,6 +40,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 // import EditStock from './EditStock';
 import ManageStock from './ManageStock';
 import ErrorModal from './ErrorModal';
+import { useNavigate } from 'react-router-dom';
 
 interface ChildProps {
     open:  boolean
@@ -244,10 +245,15 @@ export default function UpdateAmountStock(
             close()
         }
         setOpenSaveChanges(false);
+        setIsLoading((prevLoading: any) => ({
+            ...prevLoading,
+            fieldsFetchCreateStock: false,
+        }));
+
     }
     
     const handleOpenSaveChanges = () => {
-        console.log("valueUpdate: ", valueUpdate)
+        console.log("valueUpdateasd: ", valueUpdate)
         console.log("signUpdate: ", signUpdate)
         console.log("Number(productUpdate.amount): ", Number(productUpdate.amount))
         const updatedResult = (valueUpdate * signUpdate) + Number(productUpdate.amount);
@@ -284,10 +290,14 @@ export default function UpdateAmountStock(
     }, [updatedResultVisible, resultUpdated, productUpdate.alert_amount]);
 
     useEffect(() => {
-        if(isLoading.fieldsFetchCreateStock){
+        console.log("UpdateAmoungStock.tsx useEffect isLoading.fieldsFetchCreateStock: ", isLoading.fieldsFetchCreateStock)
+        console.log("UpdateAmoungStock.tsx useEffect updatedResultVisible: ", updatedResultVisible)
+
+        if(isLoading.fieldsFetchCreateStock && updatedResultVisible){
             // alert("Reload page")
                     // setIsFetching(false)
-            window.location.reload();
+            alert("UpdateAmoungStock.tsx here used to be a window.location.reload()")
+            // window.location.reload();
         }
     }, [isLoading]) // To know if after save should reload the page
 

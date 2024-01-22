@@ -251,7 +251,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     
     useEffect(() => {
         if(isLoading.usersAlert || isLoading.emailsAlert ){
-            window.location.reload();
+            alert("Alerts.tsx here used to be a window.location.reload()")
+            // window.location.reload();
         }
     }, [isLoading])
 

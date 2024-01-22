@@ -501,7 +501,8 @@ export default function Fields(
             if(isLoading.fieldsFetchEditCustomColumn || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder){
                 // alert("Reload page")
                         // setIsFetching(false)
-                window.location.reload();
+                alert("Fields.tsx here used to be a window.location.reload()")
+                // window.location.reload();
             }
     }, [isLoading]) // To know if after save should reload the page
 

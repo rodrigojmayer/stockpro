@@ -24,6 +24,9 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
   useEffect(() => {
 
     const fetchProducts = async () => {
+      
+      console.log("Fetching products isLoading.fieldsFetchCreateStock:", isLoading.fieldsFetchCreateStock)
+
       try {
         const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)
         if (response.ok) {
@@ -109,7 +112,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
       // fetchCustomColumns();
       fetchProducts();
     }
-  }, [user ])
+  }, [user, isLoading.fieldsFetchCreateStock ])
   
 
 
