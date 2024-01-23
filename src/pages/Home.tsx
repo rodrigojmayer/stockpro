@@ -293,12 +293,14 @@ function Home() {
                 handleClose={handleCloseCreateStock} 
                 data={productUpdate}
                 columnsCustom={filteredColumnsCustom}
+                setCheckStock={setCheckStock}  
             />
             <UpdateAmountStock
                 open={showUpdateAmountStock}
                 handleClose={handleCloseUpdateAmountStock}
                 columnsCustom={filteredColumnsCustom}
                 productUpdate={productUpdate}
+                setCheckStock={setCheckStock}
             />
             <MassiveUpdateStock
                 // open={openOptions.massive}
@@ -307,6 +309,7 @@ function Home() {
                 handleClose={handleMassiveUpdateStock}
                 // data={data} 
                 data={massiveUpdate}
+                setCheckStock={setCheckStock}
             />
           {/* </ThemeProvider> */}
         </div>

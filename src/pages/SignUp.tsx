@@ -312,7 +312,7 @@ export default function SignUp () {
                                     color='success' 
                                     checked={rememberUser.enabled}
                                     onChange={(event) => {
-                                    rememberEnabledChange(event.target.checked)
+                                        rememberEnabledChange(event.target.checked)
                                     }}
                                 />Remember me 
                             </Box>

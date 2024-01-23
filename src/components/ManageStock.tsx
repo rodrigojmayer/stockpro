@@ -46,6 +46,7 @@ interface ChildProps {
     handleClose: (newData: boolean) => void
     data: Data
     columnsCustom: ColumnData[] 
+    setCheckStock: any
 }
 
 export default function ManageStock( 
@@ -53,6 +54,7 @@ export default function ManageStock(
         handleClose, 
         data,
         columnsCustom,
+        setCheckStock
     }: ChildProps) {
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -193,6 +195,8 @@ export default function ManageStock(
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
+                    
+                    setCheckStock([])
                 }
             } 
             fetchManageStockProduct()

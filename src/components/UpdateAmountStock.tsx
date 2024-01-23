@@ -48,6 +48,7 @@ interface ChildProps {
     columnsCustom:  ColumnData[] 
     // productUpdate:  ProductUpdateData 
     productUpdate:  Data 
+    setCheckStock:any
 }
 
 export default function UpdateAmountStock( 
@@ -55,6 +56,7 @@ export default function UpdateAmountStock(
         handleClose, 
         columnsCustom,
         productUpdate,
+        setCheckStock,
     }: ChildProps) {
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -235,6 +237,8 @@ export default function UpdateAmountStock(
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
+                    
+                    setCheckStock([])
                 }
             } 
             fetchUpdateStockProduct()        //////////Change the name for update
@@ -289,17 +293,17 @@ export default function UpdateAmountStock(
         }
     }, [updatedResultVisible, resultUpdated, productUpdate.alert_amount]);
 
-    useEffect(() => {
-        console.log("UpdateAmoungStock.tsx useEffect isLoading.fieldsFetchCreateStock: ", isLoading.fieldsFetchCreateStock)
-        console.log("UpdateAmoungStock.tsx useEffect updatedResultVisible: ", updatedResultVisible)
+    // useEffect(() => {
+    //     console.log("UpdateAmoungStock.tsx useEffect isLoading.fieldsFetchCreateStock: ", isLoading.fieldsFetchCreateStock)
+    //     console.log("UpdateAmoungStock.tsx useEffect updatedResultVisible: ", updatedResultVisible)
 
-        if(isLoading.fieldsFetchCreateStock && updatedResultVisible){
-            // alert("Reload page")
-                    // setIsFetching(false)
-            alert("UpdateAmoungStock.tsx here used to be a window.location.reload()")
-            // window.location.reload();
-        }
-    }, [isLoading]) // To know if after save should reload the page
+    //     if(isLoading.fieldsFetchCreateStock && updatedResultVisible){
+    //         // alert("Reload page")
+    //                 // setIsFetching(false)
+    //         alert("UpdateAmoungStock.tsx here used to be a window.location.reload()")
+    //         // window.location.reload();
+    //     }
+    // }, [isLoading]) // To know if after save should reload the page
 
     
     // console.log("signUpdate: ", signUpdate)
@@ -403,7 +407,8 @@ export default function UpdateAmountStock(
                         handleClose={handleCloseEditStock} 
                         data={productUpdate} 
                         // columnsCustom={[]} 
-                        columnsCustom={columnsCustom}               
+                        columnsCustom={columnsCustom} 
+                        setCheckStock={setCheckStock}              
                     />
                     
                     <Box className={classes.finishButtons}>

@@ -37,7 +37,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const [user, setUser] = useState<UserData>(INITIAL_USER)
 
-  const { setIsLoading } = useContext<any>(IsLoadingContext);
+  const { isLoading,  setIsLoading } = useContext<any>(IsLoadingContext);
   const [_IdUserLogged, set_IdUserLogged] = useState<string|number>(INITIAL_USER._id);
   const [gmailUserLogged, setGmailUserLogged] = useState<UserData>(INITIAL_USER);
 
@@ -66,56 +66,63 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   //     controller.abort()
   //   }
   // }, [])
+  const fetchUserByUser = async () => {
+    try {
+      // const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
+      // const profileStringWithoutQuotes = user.user.replace(/['"]+/g, '');
 
+
+      // loginUser(userNameEmail, userPass, rememberUser)
+
+
+
+      // const response = await fetch(`http://localhost:4000/api/users/user/${profileStringWithoutQuotes}`)
+      const response = await fetch(`http://localhost:4000/api/users/${auth._id}`)
+      if (!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+      const json = await response.json();
+      // console.log("/*-/*-/*-json: ", json)
+      // console.log("/*-/*-/*-response: ", response)
+      setUser(json);
+
+      // if (response.ok) {
+      //   const json = await response.json()
+      //   setUser(json)
+      // } else {
+      //   console.error("UserContext.tsx fetchUserByUser else: ")
+      // // Handle the case where the response is not OK (e.g., show an error message)
+      // }
+    } catch (error: any) {
+      // Handle any network or fetch-related errors
+      console.error("UserContext.tsx fetchUserByUser error.message: ", error.message)
+      console.error("UserContext.tsx  fetchUserByUser error.stack: ", error.stack)
+    } finally {
+      setIsLoading((prevLoading:any) => ({
+        ...prevLoading,
+        user: false,
+      }));
+    }
+  }
 
   useEffect(() => {
-    // console.log("/*-/*-/*-profileString: ", profileString)
-    // console.log("/*-/*-/*-user: ", user)
     console.log("/*-/*-/*-auth._id: ", auth._id)
     console.log("/*-/*-/*-auth.accessToken: ", auth.accessToken)
     if(auth.accessToken) {
-      
-      const fetchUserByUser = async () => {
-        try {
-          // const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
-          // const profileStringWithoutQuotes = user.user.replace(/['"]+/g, '');
-
-
-          // loginUser(userNameEmail, userPass, rememberUser)
-
-
-
-          // const response = await fetch(`http://localhost:4000/api/users/user/${profileStringWithoutQuotes}`)
-          const response = await fetch(`http://localhost:4000/api/users/${auth._id}`)
-          if (!response.ok) {
-            throw new Error(`Request failed with status: ${response.status}`);
-          }
-          const json = await response.json();
-          // console.log("/*-/*-/*-json: ", json)
-          // console.log("/*-/*-/*-response: ", response)
-          setUser(json);
-
-          // if (response.ok) {
-          //   const json = await response.json()
-          //   setUser(json)
-          // } else {
-          //   console.error("UserContext.tsx fetchUserByUser else: ")
-          // // Handle the case where the response is not OK (e.g., show an error message)
-          // }
-        } catch (error: any) {
-          // Handle any network or fetch-related errors
-          console.error("UserContext.tsx fetchUserByUser error.message: ", error.message)
-          console.error("UserContext.tsx  fetchUserByUser error.stack: ", error.stack)
-        } finally {
-          setIsLoading((prevLoading:any) => ({
-            ...prevLoading,
-            user: false,
-          }));
-        }
-      }
       fetchUserByUser()      
     }
   }, [auth]); 
+
+  useEffect(() => {
+    console.log("/*-/*-/*-Loading.fieldsFetchEditUsersFieldsOrder: ", isLoading.fieldsFetchEditUsersFieldsOrder)
+    if(auth.accessToken && isLoading.fieldsFetchEditUsersFieldsOrder) {
+      fetchUserByUser()   
+        setIsLoading((prevLoading: any) => ({
+          ...prevLoading,
+          fieldsFetchEditUsersFieldsOrder: false,
+      }));   
+    }
+  }, [isLoading.fieldsFetchEditUsersFieldsOrder]); 
 
   return <UserContext.Provider value={{ INITIAL_USER, user, setUser, setGmailUserLogged, gmailUserLogged, _IdUserLogged, set_IdUserLogged  }}>{children}</UserContext.Provider>;
 };

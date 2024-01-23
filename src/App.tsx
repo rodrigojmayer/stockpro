@@ -1,22 +1,22 @@
 import { useEffect, useState, useContext, useCallback } from 'react'
-import { Container, Typography, Grid } from '@mui/material'
+// import { Container, Typography, Grid } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Backdrop from '@mui/material/Backdrop'
-import CircularProgress from '@mui/material/CircularProgress'
+// import Backdrop from '@mui/material/Backdrop'
+// import CircularProgress from '@mui/material/CircularProgress'
 
 import { OkButton, CancelButton, PlusButton, UpdateButton } from './components/Buttons';
 import Layout from './components/Layout';
-import MainSearch from './components/MainSearch';
-import TableProducts from './components/TableProducts';
+// import MainSearch from './components/MainSearch';
+// import TableProducts from './components/TableProducts';
 // import CreateStock from './components/CreateStock';
-import ManageStock from './components/ManageStock';
-import UpdateAmountStock from './components/UpdateAmountStock';
-import { Data, ColumnData, CustomValueData, UserData, ProductUpdateData } from './types';
-import { UserContext } from './context/UserContext';
-import { IsLoadingContext } from './context/IsLoadingContext';
-import { ColumnsContext } from './context/ColumnsContext';
-import { ProductsContext } from './context/ProductsContext';
-import MassiveUpdateStock from './components/MassiveUpdateStock';
+// import ManageStock from './components/ManageStock';
+// import UpdateAmountStock from './components/UpdateAmountStock';
+// import { Data, ColumnData, CustomValueData, UserData, ProductUpdateData } from './types';
+// import { UserContext } from './context/UserContext';
+// import { IsLoadingContext } from './context/IsLoadingContext';
+// import { ColumnsContext } from './context/ColumnsContext';
+// import { ProductsContext } from './context/ProductsContext';
+// import MassiveUpdateStock from './components/MassiveUpdateStock';
 import RequireAuth from './components/RequireAuth';
 import PersistLogin from './components/PersistLogin';
 // import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider, Navigate   } from 'react-router-dom';
@@ -26,7 +26,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import useAuth from './hooks/useAuth';
 
 

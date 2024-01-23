@@ -193,6 +193,7 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     data: Data[]
+    setCheckStock: any
     // columnsCustom: ColumnData[] 
 }
 
@@ -200,6 +201,7 @@ export default function MassiveUpdateStock(
     {   open, 
         handleClose, 
         data,
+        setCheckStock,
         // columnsCustom,
     }: ChildProps) {
 
@@ -434,14 +436,11 @@ export default function MassiveUpdateStock(
                                 ...prevLoading,
                                 fieldsFetchCreateStock: loadingSuccess,
                             }));
+                            setCheckStock([])
                         }
                     } 
                     fetchMassiveUpdateStock()        //////////Change the name for update
                 }
-                
-
-
-
             });
 
 
@@ -475,12 +474,12 @@ export default function MassiveUpdateStock(
         setOpenConfirmDeleteModal(false)
     }
     
-    useEffect(() => {
-        if(isLoading.fieldsFetchCreateStock){
-            alert("MassiveUpdateStock.tsx here used to be a window.location.reload()")
-            // window.location.reload();
-        }
-    }, [isLoading]) // To know if after save should reload the page
+    // useEffect(() => {
+    //     if(isLoading.fieldsFetchCreateStock){
+    //         alert("MassiveUpdateStock.tsx here used to be a window.location.reload()")
+    //         // window.location.reload();
+    //     }
+    // }, [isLoading]) // To know if after save should reload the page
     useEffect(() => {
         setFilteredData(filteredFields)
       }, [ open]);

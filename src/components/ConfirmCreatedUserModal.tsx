@@ -37,7 +37,7 @@ const PrettoSlider = styled(Slider)({
         display: 'none',
       },
     },
-  });
+});
 
 type ConfirmCreatedUserModalProps = {
     openConfirmCreatedUserModal: boolean;

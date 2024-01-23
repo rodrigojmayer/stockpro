@@ -438,7 +438,7 @@ export default function Fields(
             
             
             // console.log("save user: ", user)
-            // console.log("save user ordered_fields: ", user.ordered_fields)
+            console.log("save user ordered_fields: ", user.ordered_fields)
             // console.log("save array orderedFields: ", orderedFields.map((col) => col.id))
             const array_ordered_fields = orderedFields.map((col)=>col.id)
             if(JSON.stringify(user.ordered_fields) !== JSON.stringify(array_ordered_fields)){
@@ -484,27 +484,28 @@ export default function Fields(
             // else
             //     console.log("Equal arrays")
 
-            setIsLoading((prevLoading: any) => ({
-                ...prevLoading,
-            }));
             
             close()
             // setOpenBackdrop(true)
         }
         setOpenSaveChanges(false);
+        // setIsLoading((prevLoading: any) => ({
+        //     ...prevLoading,
+        //     fieldsFetchEditUsersFieldsOrder: false,
+        // }));
     }
-    useEffect(() => {
-            // console.log("isLoading.fieldsFetchEditCustomColumn", isLoading.fieldsFetchEditCustomColumn)
-            // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
-            // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
+    // useEffect(() => {
+    //         console.log("isLoading", isLoading)
+    //         // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
+    //         // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
 
-            if(isLoading.fieldsFetchEditCustomColumn || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder){
-                // alert("Reload page")
-                        // setIsFetching(false)
-                alert("Fields.tsx here used to be a window.location.reload()")
-                // window.location.reload();
-            }
-    }, [isLoading]) // To know if after save should reload the page
+    //         if(isLoading.fieldsFetchEditCustomColumn || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder){
+    //             // alert("Reload page")
+    //                     // setIsFetching(false)
+    //             alert("Fields.tsx here used to be a window.location.reload()")
+    //             // window.location.reload();
+    //         }
+    // }, [isLoading]) // To know if after save should reload the page
 
     // useEffect(() => {
     //     // When 'isFetching' becomes 'true', show the backdrop

@@ -152,7 +152,7 @@ export default function TableProducts({ data, openUpdateAmountStock, handleDisab
 
   // const [checkStock, setCheckStock] = useState<any[]>([])
   const checkingRow = (id_row:any) => {
-    // console.log("checkingRow _id: ", id_row)
+    console.log("checkingRow _id: ", id_row)
     const updatedCheckStock = checkStock.includes(id_row)
     ? checkStock.filter((item: any) => item !== id_row)
     : [...checkStock, id_row];
