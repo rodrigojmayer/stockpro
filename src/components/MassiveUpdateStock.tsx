@@ -36,6 +36,7 @@ import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ColumnsContext } from '../context/ColumnsContext'
 import { Grid } from '@material-ui/core';
+import { CheckListStockContext } from '../context/CheckListStockContext';
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -193,16 +194,12 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     data: Data[]
-    setCheckStock: any
-    // columnsCustom: ColumnData[] 
 }
 
 export default function MassiveUpdateStock( 
     {   open, 
         handleClose, 
         data,
-        setCheckStock,
-        // columnsCustom,
     }: ChildProps) {
 
     const { classes } = globalClasses();
@@ -210,6 +207,7 @@ export default function MassiveUpdateStock(
 
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     // const modifiedColumns  = defaultColumns
     const columns  = defaultColumns
         .filter((column:any) => column.dataKey=="product" || column.dataKey=="amount"  )
@@ -436,7 +434,7 @@ export default function MassiveUpdateStock(
                                 ...prevLoading,
                                 fieldsFetchCreateStock: loadingSuccess,
                             }));
-                            setCheckStock([])
+                            setCheckListStock([])
                         }
                     } 
                     fetchMassiveUpdateStock()        //////////Change the name for update

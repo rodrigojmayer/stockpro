@@ -25,6 +25,7 @@ import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styl
 import { ColumnsContext } from '../context/ColumnsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext'
+import { CheckListStockContext } from '../context/CheckListStockContext';
 
 
 export default function Fields(
@@ -41,6 +42,7 @@ export default function Fields(
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
     const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     
      
     // const columns: ColumnData[] = defaultColumns.concat(customColumns);
@@ -476,6 +478,8 @@ export default function Fields(
                             ...prevLoading,
                             fieldsFetchEditUsersFieldsOrder: loadingSuccess,
                         }));
+                        
+                        setCheckListStock([])
                     }
                 }
                 fetchEditUsersFieldsOrder()

@@ -22,6 +22,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import ErrorModal from './ErrorModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import { FilestackContext } from '../context/FilestackContext';
+import { CheckListStockContext } from '../context/CheckListStockContext';
 
 interface Category {
     _id: string;
@@ -46,7 +47,6 @@ interface ChildProps {
     handleClose: (newData: boolean) => void
     data: Data
     columnsCustom: ColumnData[] 
-    setCheckStock: any
 }
 
 export default function ManageStock( 
@@ -54,7 +54,6 @@ export default function ManageStock(
         handleClose, 
         data,
         columnsCustom,
-        setCheckStock
     }: ChildProps) {
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -68,6 +67,7 @@ export default function ManageStock(
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext) 
     const { filestack, deleteFilesStock } = useContext<any>(FilestackContext);
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
    
     const edition = (data._id!== "" ? true : false)
     const [titleStat, setTitleStat] = useState<string>("Edit ");
@@ -196,7 +196,7 @@ export default function ManageStock(
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
                     
-                    setCheckStock([])
+                    setCheckListStock([])
                 }
             } 
             fetchManageStockProduct()

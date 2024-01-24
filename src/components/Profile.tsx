@@ -39,6 +39,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
+import { CheckListStockContext } from '../context/CheckListStockContext';
 
 
 export default function Profile( { open, handleClose }: ChildProps) {
@@ -58,6 +59,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
     const[ showProfilePass, setShowProfilePass ] = useState<boolean>(false)
     const[ profileConfirmPass, setProfileConfirmPass ] = useState<string>(user.pass)
     const[ showProfileConfirmationPass, setShowProfileConfirmationPass ] = useState<boolean>(false)
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -120,6 +122,8 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
+
+                    setCheckListStock([]);
                 }
             } 
             fetchUpdateUser()

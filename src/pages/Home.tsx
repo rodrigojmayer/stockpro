@@ -15,6 +15,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import { ColumnsContext } from '../context/ColumnsContext';
 import { ProductsContext } from '../context/ProductsContext';
 import MassiveUpdateStock from '../components/MassiveUpdateStock';
+import { CheckListStockContext } from '../context/CheckListStockContext';
 
 
 // const theme = createTheme({
@@ -49,6 +50,7 @@ function Home() {
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   const { products } = useContext<any>(ProductsContext)
+  const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
 
   const [ searchQuery, setSearchQuery ] = useState("")
   
@@ -132,7 +134,6 @@ function Home() {
     })
   }  
 
-  const [checkStock, setCheckStock] = useState<any[]>([])
   const [ disabledUpdateButton, setDisabledUpdateButton ] = useState<boolean>(true)
   const handleDisabledUpdateButton = (value_disable:boolean) => {
     setDisabledUpdateButton(value_disable)
@@ -163,12 +164,11 @@ function Home() {
   const handleMassiveUpdateStock = () => setShowMassiveUpdateStock(false)
   const openMassiveUpdateStoc = (newData:String) => {
     setShowMassiveUpdateStock(true)
-    // console.log("checkStock: ", checkStock)
     setMassiveUpdate(
       products.filter((item:any) => {
         // console.log("item: ", item._id)
         return (
-          checkStock.includes(item._id)
+          checkListStock.includes(item._id)
         )
       })
     );
@@ -279,7 +279,12 @@ function Home() {
                 </Grid>
               </Container>
               {openBackdrop ? "": 
-                <TableProducts data={filteredData} columns={columnsUserOrder} openUpdateAmountStock={openUpdateAmountStock} handleDisabledUpdateButton={handleDisabledUpdateButton} checkStock={checkStock} setCheckStock={setCheckStock} />
+                <TableProducts 
+                  data={filteredData} 
+                  columns={columnsUserOrder} 
+                  openUpdateAmountStock={openUpdateAmountStock} 
+                  handleDisabledUpdateButton={handleDisabledUpdateButton} 
+                />
               }
             </ModalsGroup>
             {/* <CreateStock
@@ -293,14 +298,12 @@ function Home() {
                 handleClose={handleCloseCreateStock} 
                 data={productUpdate}
                 columnsCustom={filteredColumnsCustom}
-                setCheckStock={setCheckStock}  
             />
             <UpdateAmountStock
                 open={showUpdateAmountStock}
                 handleClose={handleCloseUpdateAmountStock}
                 columnsCustom={filteredColumnsCustom}
                 productUpdate={productUpdate}
-                setCheckStock={setCheckStock}
             />
             <MassiveUpdateStock
                 // open={openOptions.massive}
@@ -309,7 +312,6 @@ function Home() {
                 handleClose={handleMassiveUpdateStock}
                 // data={data} 
                 data={massiveUpdate}
-                setCheckStock={setCheckStock}
             />
           {/* </ThemeProvider> */}
         </div>

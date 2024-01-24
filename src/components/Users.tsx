@@ -43,6 +43,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 import { UsersContext } from '../context/UsersContext';
 import ManageUser from './ManageUser';
+import { CheckListStockContext } from '../context/CheckListStockContext';
 
 
 
@@ -55,6 +56,7 @@ export default function Users( { open, handleClose }: ChildProps) {
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
     const { users } = useContext<any>(UsersContext)
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     const usersArray = users
 
     const [ showManageUser, setShowManageUser ] = useState(false) 
@@ -121,6 +123,8 @@ export default function Users( { open, handleClose }: ChildProps) {
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
+                    
+                    setCheckListStock([]);
                 }
             } 
             // fetchUpdateUser()

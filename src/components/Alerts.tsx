@@ -27,6 +27,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
 import { EmailsContext } from '../context/EmailsContext';
+import { CheckListStockContext } from '../context/CheckListStockContext';
  
 interface usersAlertData {
     id: number;
@@ -46,6 +47,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     const {user, setUser} = useContext<any>(UserContext)
     const {users, setUsers} = useContext<any>(UsersContext)
     const {emails, setEmails} = useContext<any>(EmailsContext)
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     
     const usersAlertSelected2 = users.filter((usr:any) => usr.alerts_enabled)
     const [selectedUsersTemp2, setSelectedUsersTemp2] = useState<usersAlertData[]>(usersAlertSelected2);
@@ -141,6 +143,8 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             ...prevLoading,
                             usersAlert: loadingSuccess,
                         }))
+                        
+                        setCheckListStock([]);
                     }
                 } 
                 fetchUpdateUsersAlerts() 

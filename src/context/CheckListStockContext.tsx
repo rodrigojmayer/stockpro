@@ -7,7 +7,7 @@ type CheckListStockProviderProps = {
 };
   
 export const CheckListStockProvider: React.FC<CheckListStockProviderProps> = ({ children }) => {
-  const [checkListStock, setCheckListStock] = useState([]); // New state for loading status
+  const [checkListStock, setCheckListStock] = useState([]); 
   
 
   return (

@@ -39,6 +39,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
+import { CheckListStockContext } from '../context/CheckListStockContext';
 
 
 export default function Preferences( { open, handleClose }: ChildProps) {
@@ -67,6 +68,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
     ]
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     const[ languagePref, setLanguagePref ] = useState<number>(0)
     const[ backgroundColorPref, setBackgroundColorPref ] = useState<number>(0)
     
@@ -125,6 +127,8 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
+
+                    setCheckListStock([]);
                 }
             } 
             fetchUpdatePreferences()

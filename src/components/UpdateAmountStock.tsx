@@ -41,6 +41,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import ManageStock from './ManageStock';
 import ErrorModal from './ErrorModal';
 import { useNavigate } from 'react-router-dom';
+import { CheckListStockContext } from '../context/CheckListStockContext';
 
 interface ChildProps {
     open:  boolean
@@ -48,7 +49,6 @@ interface ChildProps {
     columnsCustom:  ColumnData[] 
     // productUpdate:  ProductUpdateData 
     productUpdate:  Data 
-    setCheckStock:any
 }
 
 export default function UpdateAmountStock( 
@@ -56,7 +56,6 @@ export default function UpdateAmountStock(
         handleClose, 
         columnsCustom,
         productUpdate,
-        setCheckStock,
     }: ChildProps) {
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -65,6 +64,7 @@ export default function UpdateAmountStock(
 
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     
     const [ signUpdate, setSignUpdate ] = useState<number>(-1)
     const [ valueUpdate, setValueUpdate ] = useState<number>(1)
@@ -238,10 +238,10 @@ export default function UpdateAmountStock(
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
                     
-                    setCheckStock([])
+                    setCheckListStock([]);
                 }
             } 
-            fetchUpdateStockProduct()        //////////Change the name for update
+            fetchUpdateStockProduct();       //////////Change the name for update
 
 
             // setSelectedUsers(selectedUsersTemp)
@@ -406,9 +406,7 @@ export default function UpdateAmountStock(
                         open={openEditStock} 
                         handleClose={handleCloseEditStock} 
                         data={productUpdate} 
-                        // columnsCustom={[]} 
                         columnsCustom={columnsCustom} 
-                        setCheckStock={setCheckStock}              
                     />
                     
                     <Box className={classes.finishButtons}>
