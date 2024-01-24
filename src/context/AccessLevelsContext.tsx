@@ -57,5 +57,9 @@ export const AccessLevelsProvider: React.FC<AccessLevelsProviderProps> = ({ chil
     fetchAccessLevels();
   }, [user]);
 
-  return <AccessLevelsContext.Provider value={{ accessLevels, setAccessLevels }}>{children}</AccessLevelsContext.Provider>;
+  return (
+    <AccessLevelsContext.Provider value={{ accessLevels, setAccessLevels }}>
+      {children}
+    </AccessLevelsContext.Provider>
+  )
 };

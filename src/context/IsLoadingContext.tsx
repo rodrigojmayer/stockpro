@@ -5,26 +5,6 @@ export const IsLoadingContext = createContext<Object | undefined>(undefined);
 type IsLoadingProviderProps = {
   children: React.ReactNode;
 };
-
-// export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }) => {
-//   const [isLoading, setIsLoading] = useState({
-//     accessLevels: true,
-//     categories: true,
-//     columns: true,
-//     customColumns: true,
-//     // customColumns: false,
-//     defaultColumns: true,
-//     emailsAlert: false,
-//     fieldsFetchCreateCustomColumn: false,
-//     fieldsFetchCreateStock: false,
-//     fieldsFetchEditCustomColumn: false,
-//     fieldsFetchEditUsersFieldsOrder: false,
-//     filestack: true,
-//     measures: true,
-//     products: true,
-//     user: true,
-//     usersAlert: false,
-//   }); // New state for loading status
   
 export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState({
@@ -55,18 +35,6 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
           products: false,
       }));
     }
-    // if(isLoading.filestack){
-    //   setIsLoading((prevLoading:any) => ({
-    //       ...prevLoading,
-    //       filestack: false,
-    //   }));
-    // }
-    // if(isLoading.defaultColumns){
-    //   setIsLoading((prevLoading:any) => ({
-    //       ...prevLoading,
-    //       defaultColumns: false,
-    //   }));
-    // }
     if(isLoading.categories){
       setIsLoading((prevLoading:any) => ({
           ...prevLoading,
@@ -94,5 +62,8 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
   //   console.log("isLoading: ", isLoading)
   // }, [isLoading])
 
-  return <IsLoadingContext.Provider value={{ isLoading, setIsLoading, openBackdrop, setOpenBackdrop }}>{children}</IsLoadingContext.Provider>;
+  return  (
+    <IsLoadingContext.Provider value={{ isLoading, setIsLoading, openBackdrop, setOpenBackdrop }}>
+      {children}
+    </IsLoadingContext.Provider>)
 };

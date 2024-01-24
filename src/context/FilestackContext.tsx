@@ -119,5 +119,9 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
     }
   }, [user]);
 
-  return <FilestackContext.Provider value={{ filestack, setFilestack, deleteFilesStock }}>{children}</FilestackContext.Provider>;
+  return (
+    <FilestackContext.Provider value={{ filestack, setFilestack, deleteFilesStock }}>
+      {children}
+    </FilestackContext.Provider>
+  )
 };

@@ -115,5 +115,9 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
     // console.log("UsersContext.tsx users: ", users)
 // }, [users]);
 
-  return <UsersContext.Provider value={{ users, setUsers }}>{children}</UsersContext.Provider>;
+  return (
+    <UsersContext.Provider value={{ users, setUsers }}>
+      {children}
+    </UsersContext.Provider>
+  )
 };

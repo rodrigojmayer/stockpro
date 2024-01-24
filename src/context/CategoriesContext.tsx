@@ -51,7 +51,11 @@ export const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children
     fetchCategories();
   }, []);
 
-  return <CategoriesContext.Provider value={{ categories, setCategories }}>{children}</CategoriesContext.Provider>;
+  return ( 
+    <CategoriesContext.Provider value={{ categories, setCategories }}>
+      {children}
+    </CategoriesContext.Provider>
+  )
 };
 
 // const [getUser, setGetUser] = useState<UserData>( INITIAL_USER)

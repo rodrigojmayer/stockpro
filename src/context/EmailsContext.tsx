@@ -73,5 +73,9 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
     // console.log("UsersContext.tsx users: ", users)
 // }, [users]);
 
-  return <EmailsContext.Provider value={{ emails, setEmails }}>{children}</EmailsContext.Provider>;
+  return (
+    <EmailsContext.Provider value={{ emails, setEmails }}>
+      {children}
+    </EmailsContext.Provider>
+  )
 };

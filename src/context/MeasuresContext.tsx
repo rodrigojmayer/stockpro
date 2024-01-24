@@ -48,5 +48,9 @@ export const MeasuresProvider: React.FC<MeasuresProviderProps> = ({ children }) 
     fetchMeasures();
   }, []);
 
-  return <MeasuresContext.Provider value={{ measures, setMeasures }}>{children}</MeasuresContext.Provider>;
+  return (
+    <MeasuresContext.Provider value={{ measures, setMeasures }}>
+      {children}
+    </MeasuresContext.Provider>
+  )
 };

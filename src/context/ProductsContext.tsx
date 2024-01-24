@@ -121,5 +121,9 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
   
 
 
-  return <ProductsContext.Provider value={{ products }}>{children}</ProductsContext.Provider>;
+  return (
+    <ProductsContext.Provider value={{ products }}>
+      {children}
+    </ProductsContext.Provider>
+  )
 };
