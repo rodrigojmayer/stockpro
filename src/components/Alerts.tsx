@@ -253,12 +253,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         setEmailsAlerts(updateEmails)
     }
     
-    useEffect(() => {
-        if(isLoading.usersAlert || isLoading.emailsAlert ){
-            alert("Alerts.tsx here used to be a window.location.reload()")
-            // window.location.reload();
-        }
-    }, [isLoading])
 
     useEffect(() => {
         setSelectedUsersTemp2(usersAlertSelected2)

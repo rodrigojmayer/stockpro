@@ -392,13 +392,6 @@ export default function ManageStock(
     }
     
     useEffect(() => {
-        if(isLoading.fieldsFetchCreateStock){
-            alert("ManageStock.tsx here used to be a window.location.reload()")
-            // window.location.reload();
-        }
-    }, [isLoading]) // To know if after save should reload the page
-    
-    useEffect(() => {
         if(stockAmountTemp <= stockAlertAmountTemp){
             setStockAlertedAmountTemp(true)
             if (stockAlertAmountEnabledTemp){

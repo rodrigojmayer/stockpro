@@ -2,7 +2,7 @@ import { useLocation, Navigate, useNavigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 
-const RequireAuth = () => {
+const Redirect = () => {
     const { auth, persist } = useAuth();
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(true);
@@ -16,9 +16,9 @@ const RequireAuth = () => {
         if(auth || secondLoad){
             if (auth._id ){
                 
-                console.log("!!!!!!!!!!!!!!navigate: ")
+                console.log("!!!!!!!!!!!!!!Redirect navigate: ")
                 navigate('/')
-            }
+            } 
             setIsLoading(false)
         } else {
             setSecondLoad(true)
@@ -39,8 +39,8 @@ const RequireAuth = () => {
             isLoading
                     ? <p>Loadinggggggggg</p>
                     : auth?._id 
-                        ? <Outlet />
-                        : <Navigate to="/login" state={{ from: location }} replace />
+                        ? <Navigate to="/" state={{ from: location }} replace />
+                        : <Outlet />
                         
               
 
@@ -56,4 +56,4 @@ const RequireAuth = () => {
     )
 }
 
-export default RequireAuth;
+export default Redirect;

@@ -19,8 +19,9 @@ import Layout from './components/Layout';
 // import MassiveUpdateStock from './components/MassiveUpdateStock';
 import RequireAuth from './components/RequireAuth';
 import PersistLogin from './components/PersistLogin';
+import Redirect from './components/Redirect';
 // import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider, Navigate   } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation  } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -46,6 +47,14 @@ function App() {
   // const { user } = useContext<any>(UserContext);
   // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const { auth, persist } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { hash, pathname, search } = location;
+  console.log("hash: ", hash)
+  console.log("pathname: ", pathname)
+  console.log("search: ", search)
+
+  // navigate('/home')
 //   useEffect(() => {
 // //     // Check if JWT exists in cookies
 
@@ -79,9 +88,21 @@ function App() {
 // }, []);
 useEffect(() => {
   console.log("App persist: ", persist) 
-}, []);
+  console.log("App auth?._id: ", auth?._id) 
+  if (auth._id ){
+                
+    console.log("!!!!!!!!!!!!!!navigate: ")
+    navigate('/')
+  } else if(pathname === "/signup"){
+    navigate('/signup')
+  } else {
+    navigate('/login')
+  }
+}, [auth]);
 
-
+// if (auth?._id) {
+//   return <Navigate to="/" replace />;
+// }
   // const router = createBrowserRouter(
   //   createRoutesFromElements(
   //     <Route>
@@ -104,20 +125,27 @@ useEffect(() => {
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <Routes>
         <Route path="/" element={<Layout />} >
-          
-          {/* public routes */}
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<SignUp />} />
 
           {/* we want to protect these routes */}
           <Route element={<PersistLogin />} >
             <Route element={<RequireAuth />} >
-              <Route path="/" element={<Home />} />
+              <Route path="" element={<Home />} />
+              <Route path="*" element={<Home />} />
+              <Route path="/*" element={<Home />} />
+              {/* <Route path="login" element={<Home />} />
+              <Route path="signup" element={<Home />} /> */}
             </Route>
-          </Route>
 
+
+          
+          {/* public routes */}
+            <Route element={<Redirect />} >
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<SignUp />} />
+              </Route>
+          </Route>
             {/* catch all */}
-            {/* <Route path="*" element={<Missing />}  /> */}
+            {/* <Route path="*" element={<Login />}  /> */}
         </Route>
       </Routes>
     </GoogleOAuthProvider>
