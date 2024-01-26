@@ -10,13 +10,11 @@ const RequireAuth = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("RequireAuth auth: ", auth)
-        console.log("RequireAuth _id: ", auth._id)
-        console.log("RequireAuth auth userNameEmail: ", auth?.userNameEmail)
+        // console.log("RequireAuth auth: ", auth)
+        // console.log("RequireAuth _id: ", auth._id)
+        // console.log("RequireAuth auth userNameEmail: ", auth?.userNameEmail)
         if(auth || secondLoad){
             if (auth._id ){
-                
-                console.log("!!!!!!!!!!!!!!navigate: ")
                 navigate('/')
             }
             setIsLoading(false)
@@ -24,33 +22,18 @@ const RequireAuth = () => {
             setSecondLoad(true)
         }
     }, [auth])
-    useEffect(() => {
-        console.log("RequireAuth persist: ", persist)
-    }, [persist])
+    // useEffect(() => {
+    //     console.log("RequireAuth persist: ", persist)
+    // }, [persist])
 
     return (
         <>
         {
-            // auth?._id
-            //     ? <Outlet />
-            //     : <Navigate to="/login" state={{ from: location }} replace />
-
-
             isLoading
                     ? <p>Loadinggggggggg</p>
                     : auth?._id 
                         ? <Outlet />
                         : <Navigate to="/login" state={{ from: location }} replace />
-                        
-              
-
-                
-            // auth?._id
-            //     ? auth._id
-            //         ? <Outlet />
-            //         : <Navigate to="/login" state={{ from: location }} replace />
-            //     : <></>
-
         }
         </>
     )

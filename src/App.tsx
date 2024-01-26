@@ -86,19 +86,19 @@ function App() {
 //     setIsAuthenticated(true);
 //   }
 // }, []);
-useEffect(() => {
-  console.log("App persist: ", persist) 
-  console.log("App auth?._id: ", auth?._id) 
-  if (auth._id ){
+// useEffect(() => {
+//   // console.log("App persist: ", persist) 
+//   // console.log("App auth?._id: ", auth?._id) 
+//   if (auth._id ){
                 
-    console.log("!!!!!!!!!!!!!!navigate: ")
-    navigate('/')
-  } else if(pathname === "/signup"){
-    navigate('/signup')
-  } else {
-    navigate('/login')
-  }
-}, [auth]);
+//     console.log("!!!!!!!!!!!!!!navigate: ")
+//     navigate('/')
+//   } else if(pathname === "/signup"){
+//     navigate('/signup')
+//   } else {
+//     navigate('/login')
+//   }
+// }, [auth]);
 
 // if (auth?._id) {
 //   return <Navigate to="/" replace />;

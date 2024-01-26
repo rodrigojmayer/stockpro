@@ -22,7 +22,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
   }
   const fetchProducts = async () => {
       
-    console.log("Fetching products isLoading.fieldsFetchCreateStock:", isLoading.fieldsFetchCreateStock)
+    // console.log("Fetching products isLoading.fieldsFetchCreateStock:", isLoading.fieldsFetchCreateStock)
 
     try {
       const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)

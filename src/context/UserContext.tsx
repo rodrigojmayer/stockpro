@@ -106,8 +106,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log("/*-/*-/*-auth._id: ", auth._id)
-    console.log("/*-/*-/*-auth.accessToken: ", auth.accessToken)
+    // console.log("/*-/*-/*-auth._id: ", auth._id)
+    // console.log("/*-/*-/*-auth.accessToken: ", auth.accessToken)
     if(auth.accessToken) {
       fetchUserByUser()      
     }

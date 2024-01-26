@@ -151,6 +151,9 @@ export default function Login () {
   }
   
   const handleLogin = async () => {
+    console.log("handleLogin userNameEmail: ", userNameEmail)
+    console.log("handleLogin userPass: ", userPass)
+    console.log("handleLogin rememberUser: ", rememberUser)
     let dataOk: boolean = true
     if(userNameEmail===""){
       setErrorTextFields((prevErrorTextFields: any) => ({
@@ -171,10 +174,6 @@ export default function Login () {
     await loginUser(userNameEmail, userPass, rememberUser)
     // navigate(from, { replace: true });
   }
-
-  // useEffect(() => {
-  //   if(isLogged) navigate('/')
-  // }, [isLogged, navigate])
   
   const handleLoginGoogleSuccess = async (response: any) => {
     // Handle the successful Google login response here
@@ -188,6 +187,8 @@ export default function Login () {
     console.log("handleLoginGoogleSuccess decodedToken: ", decodedToken)
     const userEmailData = decodedToken
     setGmailUserLogged(userEmailData)
+
+    handleLogin()
   };
 
   const handleLoginGoogleFailure = (error: any) => {
