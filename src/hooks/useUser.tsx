@@ -1,7 +1,7 @@
 import  { useCallback, useContext}  from 'react'
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
-import { RememberUserData, UserEditData } from '../types';
+import { RememberUserData, UserEditData, JwtPayload } from '../types';
 import AuthContext from "../context/AuthProvider"
 import axios from '../api/axios'
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -52,7 +52,7 @@ export default function useUser () {
   //     }
   // }
 
-  const loginUser = async (userNameEmail: string, userPass: string, rememberUser?: RememberUserData) => {
+  const loginUser = async (userNameEmail: string, userPass: string, rememberUser?: RememberUserData, googleDecodedToken?: JwtPayload) => {
     // try {
     //   // const response = await fetch(`http://localhost:4000/api/users/login/`, {
     //   const response = await fetch(`http://localhost:4000/api/auth/`, {
@@ -97,7 +97,8 @@ export default function useUser () {
         // JSON.stringify({userNameEmail, userPass}),
         JSON.stringify({
           "user_email": userNameEmail,
-          "pass": userPass
+          "pass": userPass,
+          "googleDecodedToken": googleDecodedToken
         }),
         {
           headers: { 'Content-Type': 'application/json'},

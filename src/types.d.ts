@@ -199,3 +199,10 @@ export interface RememberLabelUsersData {
 export interface RememberUsersPassData {
   [username: string]: string;
 }
+
+export interface JwtPayload {
+  email: string,
+  given_name: string,
+  family_name: string,
+  email_verified: string,
+}

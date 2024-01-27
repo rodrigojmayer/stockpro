@@ -18,7 +18,7 @@ import { UserContext } from '../context/UserContext';
 import { UsersContext } from '../context/UsersContext';
 import useUser from '../hooks/useUser';
 import { IsLoadingContext } from "../context/IsLoadingContext";
-import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData, UserEditData } from "../types";
+import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData, UserEditData, JwtPayload } from "../types";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ComboBox from "../components/inputs/ComboBox";
 import useAddUser from "../hooks/addUser";
@@ -177,18 +177,13 @@ export default function Login () {
   
   const handleLoginGoogleSuccess = async (response: any) => {
     // Handle the successful Google login response here
-    interface JwtPayload {
-      email: string,
-      given_name: string,
-      family_name: string,
-    }
-    const decodedToken:JwtPayload = jwtDecode(response.credential);
+    const googleDecodedToken:JwtPayload = jwtDecode(response.credential);
     console.log("handleLoginGoogleSuccess response.credential: ", response.credential)
-    console.log("handleLoginGoogleSuccess decodedToken: ", decodedToken)
-    const userEmailData = decodedToken
-    setGmailUserLogged(userEmailData)
+    console.log("handleLoginGoogleSuccess googleDecodedToken: ", googleDecodedToken)
+    const userEmailData = googleDecodedToken
+    setGmailUserLogged(userEmailData)     //////////// check for what is this
 
-    handleLogin()
+    await loginUser(googleDecodedToken.email, "", {}, googleDecodedToken)
   };
 
   const handleLoginGoogleFailure = (error: any) => {
