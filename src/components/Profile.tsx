@@ -68,22 +68,28 @@ export default function Profile( { open, handleClose }: ChildProps) {
 
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("profileLastName: ", profileLastName)
-        alert(`user._id:  ${user._id}`)   
+        // alert(`user._id:  ${user._id}`)   
 
         if(ans){
-                const bodyUpdate: UserEditData = {}
-                if(user.name!=profileName)
-                    bodyUpdate.name= profileName
-                if(user.last_name!=profileLastName)
-                    bodyUpdate.last_name = profileLastName
-                if(user.email!=profileEmail)
-                    bodyUpdate.email = profileEmail
-                if(user.user!=profileUser)
-                    bodyUpdate.user = profileUser
-                if(user.pass!=profilePass)
-                    bodyUpdate.pass = profilePass
+            const bodyUpdate: UserEditData = {};
+            if(user.name!=profileName)
+                bodyUpdate.name= profileName;
+            if(user.last_name!=profileLastName)
+                bodyUpdate.last_name = profileLastName;
+            if(user.email!=profileEmail)
+                bodyUpdate.email = profileEmail;
+            if(user.user!=profileUser)
+                bodyUpdate.user = profileUser;
+            if(user.pass!=profilePass)
+                bodyUpdate.pass = profilePass;
 
-                const fetchUpdateUser = async () => {
+            let changed = false;
+            if(Object.keys(bodyUpdate).length)
+                changed = true;
+            console.log("changed: ", changed)
+            // console.log("Object.keys(bodyUpdate).length: ", Object.keys(bodyUpdate).length)
+
+            const fetchUpdateUser = async () => {
                 let loadingSuccess: boolean = false
                 try {
                     const response = await fetch(`http://localhost:4000/api/users/${user._id}`, {
@@ -92,27 +98,35 @@ export default function Profile( { open, handleClose }: ChildProps) {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
-    
                         body:JSON.stringify(bodyUpdate)
                     })
     
                     // Check if the response status is successful
                     if (response.ok) {
-                        const responseData = await response.json() // parse the response data
+                        const responseData = await response.json(); // parse the response data
                         // console.log('POST request successful: ', responseData)
-                        loadingSuccess = true
+                        loadingSuccess = true;
+                        // setUser((prevUser: any) => ({
+                        //     ...prevUser,
+                        //     bodyUpdate
+                        // }))
+                        const updatedUser = {
+                            ...user,
+                            ...bodyUpdate
+                        }
+                        setUser(updatedUser)
                     } else {
                         // Handle non-successful responses
-                        console.error('Request failed: ', response.status, response.statusText)
+                        console.error('Request failed: ', response.status, response.statusText);
                         // Handle the error here
                     }
                 } catch (error: unknown) {
                     if (typeof error === 'string') {
                         // 'error' is now narrowed down to type 'string'
-                        console.error('Error:', error)
+                        console.error('Error:', error);
                     } else if (error instanceof Error) {
                         // 'error' is now narrowed down to type 'Error'
-                        console.error('Error object:', error.message)
+                        console.error('Error object:', error.message);
                     } else {
                         // Handle other cases as needed
                     }
@@ -122,29 +136,27 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
-
                     setCheckListStock([]);
                 }
             } 
-            fetchUpdateUser()
-            close()
+            if (changed)
+                fetchUpdateUser();
+            close();
         }
         setOpenSaveChanges(false);
     }
     
     const handleCloseErrorModal = () => {
-        setOpenErrorModal(false)
+        setOpenErrorModal(false);
     }
 
     const handleOpenSaveChanges = () => {
-        // console.log("stockNameTemp: ", stockNameTemp)
-
         if(profileUser===""){
-            setOpenErrorModal(true)
-            setErrorData("missing_data_user")
+            setOpenErrorModal(true);
+            setErrorData("missing_data_user");
         }else if(profilePass!==profileConfirmPass){
-            setOpenErrorModal(true)
-            setErrorData("not_confirmed_pass")
+            setOpenErrorModal(true);
+            setErrorData("not_confirmed_pass");
         }
         else{
             setOpenSaveChanges(true);
@@ -152,23 +164,22 @@ export default function Profile( { open, handleClose }: ChildProps) {
     };
 
     const handleEditName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // console.log("engtradsagf")
-        setProfileName(event.target.value)
+        setProfileName(event.target.value);
     }
     const handleEditLastName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProfileLastName(event.target.value)
+        setProfileLastName(event.target.value);
     }
     const handleEditEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProfileEmail(event.target.value)
+        setProfileEmail(event.target.value);
     }
     const handleEditUser = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProfileUser(event.target.value)
+        setProfileUser(event.target.value);
     }
     const handleEditPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProfilePass(event.target.value)
+        setProfilePass(event.target.value);
     }
     const handleEditConfirmPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProfileConfirmPass(event.target.value)
+        setProfileConfirmPass(event.target.value);
     }
     
     // const showProfilePassToggle = () => {
@@ -179,14 +190,14 @@ export default function Profile( { open, handleClose }: ChildProps) {
     // }
 
     useEffect(() => {
-        setProfileName(user.name?user.name:'')
-        setProfileLastName(user.last_name?user.last_name:'')
-        setProfileEmail(user.email?user.email:'')
-        setProfileUser(user.user?user.user:'')
-        setProfilePass(user.pass?user.pass:'')
-        setProfileConfirmPass(user.pass?user.pass:'')
-        setShowProfilePass(false)
-        setShowProfileConfirmationPass(false)
+        setProfileName(user.name?user.name:'');
+        setProfileLastName(user.last_name?user.last_name:'');
+        setProfileEmail(user.email?user.email:'');
+        setProfileUser(user.user?user.user:'');
+        setProfilePass(user.pass?user.pass:'');
+        setProfileConfirmPass(user.pass?user.pass:'');
+        setShowProfilePass(false);
+        setShowProfileConfirmationPass(false);
     }, [user, open])
     
     return (

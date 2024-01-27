@@ -199,7 +199,7 @@ export default function TableProducts(
       Object.keys(filteredRows).forEach((arg)=> {
         const str = arg as string;
 
-        console.log("filteredRows: ", filteredRows)
+        // console.log("filteredRows: ", filteredRows)
         let value = filteredRows[str as keyof typeof filteredRows]
         if(arg=== "amount") {
           // console.log("item: ", item)
