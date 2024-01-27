@@ -57,7 +57,7 @@ export default function Users( { open, handleClose }: ChildProps) {
     const { user, setUser } = useContext<any>(UserContext); 
     const { users } = useContext<any>(UsersContext)
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
-    const usersArray = users
+    // const usersArray = users
 
     const [ showManageUser, setShowManageUser ] = useState(false) 
     const handleCloseManageUser = () => {
@@ -78,60 +78,60 @@ export default function Users( { open, handleClose }: ChildProps) {
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
     
-    const handleCloseSaveChanges = (ans?:boolean) => {
-        // console.log("profileLastName: ", profileLastName)
-        alert(`user._id:  ${user._id}`)   
+    // const handleCloseSaveChanges = (ans?:boolean) => {
+    //     // console.log("profileLastName: ", profileLastName)
+    //     alert(`user._id:  ${user._id}`)   
 
-        if(ans){ 
-                const bodyUpdate: UserEditData = {}
-                const fetchUpdateUser = async () => {
-                let loadingSuccess: boolean = false
-                try {
-                    const response = await fetch(`http://localhost:4000/api/users/${user._id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json', // Set the appropriate content-type for my API
-                            // Add any other requires headers here
-                        },
+    //     if(ans){ 
+    //             const bodyUpdate: UserEditData = {}
+    //             const fetchUpdateUser = async () => {
+    //             let loadingSuccess: boolean = false
+    //             try {
+    //                 const response = await fetch(`http://localhost:4000/api/users/${user._id}`, {
+    //                     method: 'PATCH',
+    //                     headers: {
+    //                         'Content-Type': 'application/json', // Set the appropriate content-type for my API
+    //                         // Add any other requires headers here
+    //                     },
     
-                        body:JSON.stringify(bodyUpdate)
-                    })
+    //                     body:JSON.stringify(bodyUpdate)
+    //                 })
     
-                    // Check if the response status is successful
-                    if (response.ok) {
-                        const responseData = await response.json() // parse the response data
-                        console.log('POST request successful: ', responseData)
-                        loadingSuccess = true
-                    } else {
-                        // Handle non-successful responses
-                        console.error('Request failed: ', response.status, response.statusText)
-                        // Handle the error here
-                    }
-                } catch (error: unknown) {
-                    if (typeof error === 'string') {
-                        // 'error' is now narrowed down to type 'string'
-                        console.error('Error:', error)
-                    } else if (error instanceof Error) {
-                        // 'error' is now narrowed down to type 'Error'
-                        console.error('Error object:', error.message)
-                    } else {
-                        // Handle other cases as needed
-                    }
-                } finally {
-                    // setIsLoading(())
-                    setIsLoading((prevLoading: any) => ({
-                        ...prevLoading,
-                        fieldsFetchCreateStock: loadingSuccess,
-                    }));
+    //                 // Check if the response status is successful
+    //                 if (response.ok) {
+    //                     const responseData = await response.json() // parse the response data
+    //                     console.log('POST request successful: ', responseData)
+    //                     loadingSuccess = true
+    //                 } else {
+    //                     // Handle non-successful responses
+    //                     console.error('Request failed: ', response.status, response.statusText)
+    //                     // Handle the error here
+    //                 }
+    //             } catch (error: unknown) {
+    //                 if (typeof error === 'string') {
+    //                     // 'error' is now narrowed down to type 'string'
+    //                     console.error('Error:', error)
+    //                 } else if (error instanceof Error) {
+    //                     // 'error' is now narrowed down to type 'Error'
+    //                     console.error('Error object:', error.message)
+    //                 } else {
+    //                     // Handle other cases as needed
+    //                 }
+    //             } finally {
+    //                 // setIsLoading(())
+    //                 setIsLoading((prevLoading: any) => ({
+    //                     ...prevLoading,
+    //                     fieldsFetchCreateStock: loadingSuccess,
+    //                 }));
                     
-                    setCheckListStock([]);
-                }
-            } 
-            // fetchUpdateUser()
-            close()
-        }
-        setOpenSaveChanges(false);
-    }
+    //                 setCheckListStock([]);
+    //             }
+    //         } 
+    //         // fetchUpdateUser()
+    //         close()
+    //     }
+    //     setOpenSaveChanges(false);
+    // }
     
     const handleCloseErrorModal = () => {
         setOpenErrorModal(false)
@@ -150,10 +150,10 @@ export default function Users( { open, handleClose }: ChildProps) {
         > 
             <Box sx={modalStyleExternal}>
                 <Box sx={modalStyleInternal}>
-                    <SaveChanges
+                    {/* <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
-                    />
+                    /> */}
                     <ErrorModal
                         openErrorModal={openErrorModal}
                         closeErrorModal={handleCloseErrorModal}
@@ -163,7 +163,8 @@ export default function Users( { open, handleClose }: ChildProps) {
                         Users
                     </Typography>
                     <Box className={classes.customBoxColumn}>
-                        {Array.isArray(usersArray) && usersArray.map((user:any) => {
+                        {/* {Array.isArray(usersArray) && usersArray.map((user:any) => { */}
+                        {Array.isArray(users) && users.map((user:any) => {
                             return (
                                 <Stack 
                                     className={classes.customBoxColumn} 

@@ -19,6 +19,7 @@ import { IsLoadingContext } from '../context/IsLoadingContext';
 import ErrorModal from './ErrorModal';
 import { UsersContext } from '../context/UsersContext';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+// import useAddUser from '../hooks/addUser';   //      To do next
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -42,9 +43,10 @@ export default function ManageUser(
     const close = () => {
         handleClose(false)
     } 
+    // const postUser = useAddUser(); 
     const edition = (Object.keys(dataEditUser).length !== 0 ? true : false)
     const { user } = useContext<any>(UserContext)
-    const { users } = useContext<any>(UsersContext)
+    const { users, setUsers } = useContext<any>(UsersContext)
     const { accessLevels } = useContext<any>(AccessLevelsContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
@@ -69,12 +71,6 @@ export default function ManageUser(
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
             const bodyUpdate: UserEditData = {}
-            bodyUpdate.id_client = user.id_client
-            bodyUpdate.deleted = false
-            bodyUpdate.language =  user.language
-            bodyUpdate.background_color = user.background_color
-            bodyUpdate.alerts_enabled = user.alerts_enabled
-            bodyUpdate.ordered_fields = [1,2,3,4,5]
             if(!edition || dataEditUser.id_access_level != userAccessLevel)
                 bodyUpdate.id_access_level = userAccessLevel
             if(!edition || dataEditUser.name != userName)
@@ -89,9 +85,14 @@ export default function ManageUser(
                 bodyUpdate.enabled = userEnabled
             if(!edition || dataEditUser.pass != userPassword)
                 bodyUpdate.pass = userPassword 
+            let changed = false
+            if(Object.keys(bodyUpdate).length>0)
+                changed = true;
 
             const fetchManageUser = async () => {
                 let loadingSuccess: boolean = false
+                bodyUpdate.id_client = user.id_client
+                bodyUpdate.language =  user.language
                 try {
                     const manage_user = (edition ? dataEditUser._id : "")
                     const manage_method = (edition ? 'PATCH' : 'POST')
@@ -109,6 +110,32 @@ export default function ManageUser(
                         const responseData = await response.json() // parse the response data
                         // console.log(`${manage_method} request successful: `, responseData)
                         loadingSuccess = true
+                        
+                        // console.log("ManageUser.tsx responseData: ", responseData)
+                        // console.log("ManageUser.tsx users: ", users)
+                        // console.log("ManageUser.tsx bodyUpdate: ", bodyUpdate)
+                        const updatedUsers = users.map((currentUser: any) => {
+                            // Find the user by comparing some unique identifies, like _id
+                            // console.log("ManageUser.tsx currentUser._id: ", currentUser._id)
+                            // console.log("ManageUser.tsx user._id: ", user._id)
+                            // console.log("ManageUser.tsx users._id: ", users._id)
+                            // console.log("ManageUser.tsx bodyUpdate._id: ", users._id)
+                            
+                            if (currentUser._id === responseData._id) {
+                                // Update only the properties from bodyUpdate
+                                return {
+                                    ...currentUser,
+                                    ...bodyUpdate
+                                };
+                            }
+                            // For other users, keep them unchanged
+                            return currentUser;
+                        })
+                        console.log("ManageUser.tsx updatedUsers: ", updatedUsers)
+
+                        setUsers(updatedUsers)
+
+
                     } else if (response.status === 400) {
                         // Handle non-successful responses
                         console.error('Request failed: ', response.status, response.statusText)
@@ -138,10 +165,15 @@ export default function ManageUser(
                     }));
                 }
             } 
-            fetchManageUser()
+            if (changed)
+                fetchManageUser()
+            close();
         }
+        
+        console.log("setOpenSaveChanges: ", false)
         setOpenSaveChanges(false);
     }
+
     const handleCloseErrorModal = () => {
         setOpenErrorModal(false)
     }

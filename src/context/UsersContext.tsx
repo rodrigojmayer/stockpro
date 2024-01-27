@@ -111,9 +111,9 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
     }
   }, [user]);
   
-  // useEffect(() => {
-    // console.log("UsersContext.tsx users: ", users)
-// }, [users]);
+  useEffect(() => {
+    console.log("UsersContext.tsx users: ", users)
+}, [users]);
 
   return (
     <UsersContext.Provider value={{ users, setUsers }}>
