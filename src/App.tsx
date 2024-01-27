@@ -50,9 +50,9 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const { hash, pathname, search } = location;
-  console.log("hash: ", hash)
-  console.log("pathname: ", pathname)
-  console.log("search: ", search)
+  // console.log("hash: ", hash)
+  // console.log("pathname: ", pathname)
+  // console.log("search: ", search)
 
   // navigate('/home')
 //   useEffect(() => {

@@ -44,7 +44,7 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
   useEffect(() => {
     if(user?.id_client){
 
-      console.log("UsersContext.tsx user.id_client: ", user.id_client)
+      // console.log("UsersContext.tsx user.id_client: ", user.id_client)
       // const fetchUser = async () => {
       //   try {
       //     const response = await fetch(`http://localhost:4000/api/users/client/${user.id_client}`); 

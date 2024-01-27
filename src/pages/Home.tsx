@@ -212,7 +212,20 @@ function Home() {
 
 
   useEffect(() => {
-    if ( isLoading.columns || isLoading.products || isLoading.customColumns || isLoading.fieldsFetchEditCustomColumn || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder) {
+    if (  
+          isLoading.user || 
+          isLoading.measures || 
+          isLoading.filestack || 
+          isLoading.accessLevels || 
+          isLoading.categories || 
+          isLoading.defaultColumns || 
+          isLoading.columns || 
+          isLoading.products || 
+          isLoading.customColumns || 
+          isLoading.fieldsFetchEditCustomColumn || 
+          isLoading.fieldsFetchCreateCustomColumn || 
+          isLoading.fieldsFetchEditUsersFieldsOrder
+    ) {
       setOpenBackdrop(true)
     } else {
       setOpenBackdrop(false)

@@ -28,7 +28,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
       const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)
       if (response.ok) {
         const json = await response.json()
-        // console.log("productsContext json: ", json)
+        console.log("productsContext json: ", json)
         
         // if(json.lenght>0){
           // Map through the products array and edit the date format
@@ -57,38 +57,6 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
         // console.log("productsContext here is ok: ------------------")
 
           setProducts(formattedProducts)
-        // }
-        // else{
-
-        //   setProducts([ {
-        //     "_id": "64f753ab73d98cad83d464d4",
-        //     "id_client": 3,
-        //     "product": "Leche",
-        //     "amount": 2,
-        //     "measure": "Kgs",
-        //     "category": "Food",
-        //     "sub_category": "Seasoning",
-        //     "code": "",
-        //     "price": 5,
-        //     "description": "",
-        //     "url_image": "",
-        //     "alert_amount": 4,
-        //     "alerted_amount": true,
-        //     "alert_date": "2023-09-30T00:00:00.000Z",
-        //     "alert_date_enabled": false,
-        //     "alerted_date": true,
-        //     "deleted": false,
-        //     "createdAt": "2023-09-05T16:13:31.996Z",
-        //     "updatedAt": "2023-11-24T23:23:05.086Z",
-        //     "__v": 0,
-        //     "alert_amount_enabled": true,
-        //     "custom_fields": {
-        //         "ret": "0",
-        //         "campo personal": "Loco"
-        //     }
-        //   }])
-        // formattedProducts
-        // }
       } else {
         // Handle the case where the response is not OK (e.g., show an error message)
       }
@@ -104,8 +72,10 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
   }
 
   useEffect(() => {
-    if (!isLoading.user) {
+    if (user._id) {
       fetchProducts();
+    } else {
+      setProducts([])
     }
   }, [user])
   
@@ -117,7 +87,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
           fieldsFetchCreateStock: false,
       }));
     }
-  }, [isLoading.fieldsFetchCreateStock ])
+  }, [isLoading.fieldsFetchCreateStock, user ])
   
 
 

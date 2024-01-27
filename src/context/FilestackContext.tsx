@@ -93,9 +93,9 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
   useEffect(() => {
     const fetchFilestack = async () => {
       try {
-        console.log("user.id_client: ", user.id_client)
+        // console.log("user.id_client: ", user.id_client)
         const response = await fetch(`http://localhost:4000/api/filestackEmails/client/${user.id_client}`); 
-        console.log("filestack response: ", response)
+        // console.log("filestack response: ", response)
         if (response.ok) {
           const json = await response.json();
           setFilestack(json);

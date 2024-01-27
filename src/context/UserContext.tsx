@@ -114,7 +114,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [auth]); 
 
   useEffect(() => {
-    console.log("/*-/*-/*-Loading.fieldsFetchEditUsersFieldsOrder: ", isLoading.fieldsFetchEditUsersFieldsOrder)
+    // console.log("/*-/*-/*-Loading.fieldsFetchEditUsersFieldsOrder: ", isLoading.fieldsFetchEditUsersFieldsOrder)
     if(auth.accessToken && isLoading.fieldsFetchEditUsersFieldsOrder) {
       fetchUserByUser()   
         setIsLoading((prevLoading: any) => ({

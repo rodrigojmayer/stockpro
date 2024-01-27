@@ -62,7 +62,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
           // console.log("fetchCustomColumns response:", response)
           if (response.ok) {
             const json = await response.json()
-            console.log("custom columns json:", json)
+            // console.log("custom columns json:", json)
             // console.log(json.filter((val:any) => {val.id_client===2}))
             setCustomColumns(json)
             // setCustomColumns([])
