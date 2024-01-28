@@ -58,6 +58,7 @@ export default function Users( { open, handleClose }: ChildProps) {
     const { users } = useContext<any>(UsersContext)
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     // const usersArray = users
+    const [usersArray, setUsersArray] = useState<any>(users); 
 
     const [ showManageUser, setShowManageUser ] = useState(false) 
     const handleCloseManageUser = () => {
@@ -142,6 +143,11 @@ export default function Users( { open, handleClose }: ChildProps) {
             setShowManageUser(true)
         
     }, [userEditData])
+
+    useEffect(() => {
+        // console.log("Users.tsx: ", users)
+        setUsersArray(users)
+    }, [users])
     
     return (
         <Modal
@@ -163,8 +169,8 @@ export default function Users( { open, handleClose }: ChildProps) {
                         Users
                     </Typography>
                     <Box className={classes.customBoxColumn}>
-                        {/* {Array.isArray(usersArray) && usersArray.map((user:any) => { */}
-                        {Array.isArray(users) && users.map((user:any) => {
+                        {Array.isArray(usersArray) && usersArray.map((user:any) => {
+                        {/* {Array.isArray(users) && users.map((user:any) => { */}
                             return (
                                 <Stack 
                                     className={classes.customBoxColumn} 

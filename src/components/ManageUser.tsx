@@ -112,28 +112,35 @@ export default function ManageUser(
                         loadingSuccess = true
                         
                         // console.log("ManageUser.tsx responseData: ", responseData)
+                        // console.log("ManageUser.tsx responseData._id: ", responseData._id)
                         // console.log("ManageUser.tsx users: ", users)
                         // console.log("ManageUser.tsx bodyUpdate: ", bodyUpdate)
-                        const updatedUsers = users.map((currentUser: any) => {
-                            // Find the user by comparing some unique identifies, like _id
-                            // console.log("ManageUser.tsx currentUser._id: ", currentUser._id)
-                            // console.log("ManageUser.tsx user._id: ", user._id)
-                            // console.log("ManageUser.tsx users._id: ", users._id)
-                            // console.log("ManageUser.tsx bodyUpdate._id: ", users._id)
+                        let updatedUsers
+                        if (edition){
+                            updatedUsers = users.map((currentUser: any) => {
+                                // Find the user by comparing some unique identifies, like _id
+                                // console.log("ManageUser.tsx currentUser._id: ", currentUser._id)
+                                // console.log("ManageUser.tsx user._id: ", user._id)
+                                // console.log("ManageUser.tsx users._id: ", users._id)
+                                // console.log("ManageUser.tsx bodyUpdate._id: ", users._id)
+                                if (currentUser._id === responseData._id) {
+                                    // Update only the properties from bodyUpdate
+                                    return {
+                                        ...currentUser,
+                                        ...bodyUpdate
+                                    };
+                                }
+                                // For other users, keep them unchanged
+                                return currentUser;
+                            })
+                            console.log("ManageUser.tsx updatedUsers: ", updatedUsers)
+                        } else {
+                            const newUser = responseData
+                            updatedUsers = [...users, newUser]
                             
-                            if (currentUser._id === responseData._id) {
-                                // Update only the properties from bodyUpdate
-                                return {
-                                    ...currentUser,
-                                    ...bodyUpdate
-                                };
-                            }
-                            // For other users, keep them unchanged
-                            return currentUser;
-                        })
-                        console.log("ManageUser.tsx updatedUsers: ", updatedUsers)
-
+                        }
                         setUsers(updatedUsers)
+
 
 
                     } else if (response.status === 400) {
