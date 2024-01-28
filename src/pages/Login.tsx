@@ -22,6 +22,7 @@ import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserDa
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ComboBox from "../components/inputs/ComboBox";
 import useAddUser from "../hooks/addUser";
+import { CheckListStockContext } from "../context/CheckListStockContext";
 
 // const theme = createTheme({
 //   palette: {
@@ -40,6 +41,7 @@ export default function Login () {
   const { INITIAL_USER, user, setUser, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
   const { users, setUsers } = useContext<any>(UsersContext); 
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
+  const { setCheckListStock } = useContext<any>(CheckListStockContext);
   
   const [errorTextFields, setErrorTextFields] = useState({
     "user_name_email": false,
@@ -247,6 +249,10 @@ export default function Login () {
       fetchUserByGmail();
     }
   }, [gmailUserLogged]);
+
+  useEffect(() => {
+    setCheckListStock([]) 
+  }, [])
 
   return (
       <Modal open={true} > 

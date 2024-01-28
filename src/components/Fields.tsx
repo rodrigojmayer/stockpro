@@ -43,45 +43,7 @@ export default function Fields(
     const { user, setUser } = useContext<any>(UserContext); 
     const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
-    
-     
-    // const columns: ColumnData[] = defaultColumns.concat(customColumns);
-    // const columnsprev: ColumnData[] = columnsDefault.concat(columnsCustom);
 
-    // console.log("customColumns: ", customColumns)
-    // console.log("filteredColumnsCustom: ", filteredColumnsCustom)
-    // console.log("columns: ", columns)
-    // console.log("columnsCustom prev: ", columnsCustom)
-    // console.log("customColumns: ", customColumns)
-    // console.log("idColumnsTableOrder prev: ", idColumnsTableOrder)
-    // console.log("columnsUserOrder: ", columnsUserOrder)
-    // const columnsTableOrder = columnsUserOrder
-    // const columnsTableOrder = columns.filter((col: any) => {
-    //     if(idColumnsTableOrder.includes(col.id))
-    //         return col
-    // })
-    // console.log("columnsUserOrder: ", columnsUserOrder)
-    // console.log("columnsTableOrder: ", columnsTableOrder)
-    // const columnsHiddenFields =  columns.filter((col: any) => {
-    //     if(!columnsTableOrder.includes(col))
-    //         return col
-    // })
-
-    // console.log("columnsHiddenFields: ", columnsHiddenFields)
-    // console.log("columnsTableOrder : ", columnsTableOrder)
-    // console.log("columnsHiddenFields: ", columnsHiddenFields)
-    // const columnsCustomNew = JSON.parse(JSON.stringify(columnsCustom))
-    // const columnsCustomNew: ColumnDataCustom[] = customColumns
-    // .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
-    // const filteredColumnsCustomNew: ColumnDataCustom[] = filteredColumnsCustom
-    // .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
-    // console.log("columnsCustomNew: ", columnsCustomNew)
-    // console.log("filteredColumnsCustomNew: ", filteredColumnsCustomNew)
-    // const columnsCustomNew: ColumnDataCustom[] = customColumns
-    // .filter((obj) => !(obj.deleted))
-    // .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false}));
-
-    // const columnsCustomNew: ColumnData[]= [...columnsCustom]
     const [orderedFields, setOrderedFields] = useState<ColumnData[]>([]) 
     // const [orderedFieldsTemp, setOrderedFieldsTemp] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState<ColumnData[]>([]) 
@@ -311,20 +273,6 @@ export default function Fields(
         const nextId = lastObj.id + 1
         // console.log("nextId: " , nextId)
         const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
-
-        
-
-        // updateFieldsNew[index].label = event.currentTarget.value
-        // console.log("updateFieldsNew: ", updateFieldsNew)
-        // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-        // if(updateFieldsNew[index].label != customFieldsTemp[index].label)
-        //     updateFieldsNew[index].okButtonShow = true
-        // else
-        //     updateFieldsNew[index].okButtonShow = false
-        
-        // console.log("updateFieldsNew: ", updateFieldsNew)
-
-        // setCustomFields(updateFieldsNew)
         setCustomFieldsNew(updateFieldsNew)
     }
 
@@ -348,40 +296,46 @@ export default function Fields(
                 if(obj._id) {
                     // console.log("obj._id: ", obj._id)
                         // console.log("Object to edit: ", obj)
-                        const fetchEditCustomColumn = async () => {
-                            let loadingSuccess: boolean = false
-                            try {
-                                const response = await fetch(`http://localhost:4000/api/customColumns/${obj._id}/`, {
-                                    method: 'PATCH',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        label: obj.label,
-                                        deleted: obj.deleted
-                                    })
+                    const fetchEditCustomColumn = async () => {
+                        let loadingSuccess: boolean = false
+                        try {
+                            const response = await fetch(`http://localhost:4000/api/customColumns/${obj._id}/`, {
+                                method: 'PATCH',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    label: obj.label,
+                                    deleted: obj.deleted
                                 })
-                                if (response) {
-                                    // console.log('Update successful:', response);
-                                    // setCustomColumns(customFieldsNew)
-                                    loadingSuccess = true
-                                } else {
-                                    console.log('Update failed.');
-                                }
-                            }catch (error) {
-                                // Handle the case where the response is not OK (e.g., show an error message)
-                                    
-                            } finally {
-                                setIsLoading((prevLoading: any) => ({
-                                    ...prevLoading,
-                                    fieldsFetchEditCustomColumn: loadingSuccess,
-                                }));
-
+                            })
+                            if (response.ok) {
+                                const responseData = await response.json()
+                                console.log('Update successful responseData:', responseData);
+                                // setCustomColumns(customFieldsNew)
+                                loadingSuccess = true
+                                const updatedCustomColumns = customColumns.filter((customColumn:any) => {
+                                    if(customColumn._id !== responseData._id)
+                                    return customColumn;
+                                })
+                                setCustomColumns(updatedCustomColumns)
+                            } else {
+                                console.log('Update failed.');
                             }
+                        }catch (error) {
+                            // Handle the case where the response is not OK (e.g., show an error message)
+                                
+                        } finally {
+                            // setIsLoading((prevLoading: any) => ({
+                            //     ...prevLoading,
+                            //     fieldsFetchEditCustomColumn: loadingSuccess,
+                            // }));
+
                         }
-                   
-                        if(obj.edited) 
-                            fetchEditCustomColumn()
+                    }
+                
+                    if(obj.edited) 
+                        fetchEditCustomColumn()
                      
                 } else if(!obj.deleted){    // To avoid fields created and deleted in the moment
                     // console.log("Obj to create: ", obj)
@@ -412,6 +366,13 @@ export default function Fields(
                                 loadingSuccess = true
                                 // setCustomColumns(customFieldsNew)
                                 // Handle the response data here
+                                // setCustomColumns
+                                console.log("customFieldsNew: ", customFieldsNew)
+                                console.log("responseData: ", responseData)
+                                console.log("customColumns: ", customColumns)
+                                const updatedCustomColumns = [...customColumns, responseData]
+                                setCustomColumns(updatedCustomColumns)
+
                             } else {
                                 // Handle non-successful responses (e.g., 4xx or 5xx status codes)
                                 console.error('Request failed: ', response.status, response.statusText)
@@ -428,14 +389,17 @@ export default function Fields(
                                 // Handle other cases as needed
                             }
                         } finally {
-                            setIsLoading((prevLoading: any) => ({
-                                ...prevLoading,
-                                fieldsFetchCreateCustomColumn: loadingSuccess,
-                            }));
+
+                            // console.log("isLoading: ", isLoading)
+                            // setIsLoading((prevLoading: any) => ({
+                            //     ...prevLoading,
+                            //     fieldsFetchCreateCustomColumn: loadingSuccess,
+                            // }));
                         }
                     }
                     fetchCreateCustomColumn()
                 }
+                // close()
             })
             
             
@@ -498,29 +462,6 @@ export default function Fields(
         //     fieldsFetchEditUsersFieldsOrder: false,
         // }));
     }
-    // useEffect(() => {
-    //         console.log("isLoading", isLoading)
-    //         // console.log("isLoading.fieldsFetchCreateCustomColumn", isLoading.fieldsFetchCreateCustomColumn)
-    //         // console.log("isLoading.fieldsFetchEditUsersFieldsOrder", isLoading.fieldsFetchEditUsersFieldsOrder)
-
-    //         if(isLoading.fieldsFetchEditCustomColumn || isLoading.fieldsFetchCreateCustomColumn || isLoading.fieldsFetchEditUsersFieldsOrder){
-    //             // alert("Reload page")
-    //                     // setIsFetching(false)
-    //             alert("Fields.tsx here used to be a window.location.reload()")
-    //             // window.location.reload();
-    //         }
-    // }, [isLoading]) // To know if after save should reload the page
-
-    // useEffect(() => {
-    //     // When 'isFetching' becomes 'true', show the backdrop
-    //     if (isFetching) {
-    //         setOpenBackdrop(true)
-    //     } else {
-    //         // When 'isFetching' becomes 'false', hise the backdrop
-    //         setOpenBackdrop(false)
-    //     }
-    // }, [isFetching]) // To wait with backdrop while the fetchs are loading
-
     const handleOpenSaveChanges = () => {
         // setOpenBackdrop(true)
         // setIsLoading((prevLoading: any) => ({
