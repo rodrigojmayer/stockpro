@@ -350,8 +350,17 @@ export default function ManageUser(
                 // Check if the response status is successful
                 if (response.ok) {
                     const responseData = await response.json() // parse the response data
-                    // console.log('POST request successful: ', responseData)
+                    console.log('POST request successful: ', responseData)
                     loadingSuccess = true
+                    const updatedUsers = users.filter((user: any) => {
+                        // Find the user by comparing to delete, like _id
+                        console.log("delete user._id: ", user._id)
+                        console.log("delete responseData._id: ", responseData._id)
+                        if(user._id !== responseData._id)
+                            return user;
+                    })
+                    console.log("delete updatedUsers: ", updatedUsers)
+                    setUsers(updatedUsers)
                 } else {
                     // Handle non-successful responses
                     console.error('Request failed: ', response.status, response.statusText)
@@ -377,6 +386,7 @@ export default function ManageUser(
         } 
         fetchDeleteStockProduct()
         close()
+        setOpenConfirmDeleteModal(false)
     }
 
     return (
