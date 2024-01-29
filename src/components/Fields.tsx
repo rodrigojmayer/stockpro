@@ -327,7 +327,6 @@ export default function Fields(
                                     })
                                     setCustomColumns(updatedCustomColumns)
                                 } else {
-                                    console
                                     updatedCustomColumns = customColumns.map((customColumn:any) => {
                                         if(customColumn._id === responseData._id)
                                             return responseData
