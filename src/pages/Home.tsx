@@ -41,7 +41,7 @@ import { CheckListStockContext } from '../context/CheckListStockContext';
 //   },
 // })
 
-const idColumnsTableOrder: Number[] = [1, 2, 3, 4]
+const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
     
 
 function Home() {

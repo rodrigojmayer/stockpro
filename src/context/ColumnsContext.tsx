@@ -122,6 +122,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
 
   useEffect(() => {
     // console.log("user: ", user)
+    console.log("columns: ", columns)
     if(user.ordered_fields){
     // console.log("ColumnsContext.tsx user: ", user)
 

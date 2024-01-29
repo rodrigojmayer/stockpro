@@ -74,7 +74,7 @@ export default function Fields(
             unsetArray.push(fieldToRemove)
         }
         setOrderedFields(orderedArray)
-        unsetArray.sort((a,b) => (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0))
+        unsetArray.sort((a,b) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
         setUnsetFields(unsetArray)
     }
     const addField = (e: React.MouseEvent<HTMLButtonElement>)  => {
@@ -90,7 +90,7 @@ export default function Fields(
             orderedArray.push(fieldToAdd)
         }
         setOrderedFields(orderedArray)
-        unsetArray.sort((a,b) => (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0))
+        unsetArray.sort((a,b) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
         setUnsetFields(unsetArray)
     }
     const handleDragEnd = (result: any) => {
@@ -191,6 +191,7 @@ export default function Fields(
             }
             if(indexUnset !== -1){
                 updateUnsetFields[indexUnset].label = label
+                updateUnsetFields.sort((a,b) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
                 setUnsetFields(updateUnsetFields)
             }
         }else{
@@ -204,6 +205,8 @@ export default function Fields(
             fieldsToOmit.forEach(field => delete newObj[field as keyof ColumnDataCustom])
             updateFields.push(newObj)
             updateUnsetFields.push(newObj)
+            updateUnsetFields.sort((a,b) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
+        
             setUnsetFields(updateUnsetFields)
             // setUnsetFieldsTemp([...unsetFieldsTemp, newObj])
             // console.log("updateFields: ", updateFields)
@@ -265,12 +268,12 @@ export default function Fields(
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
         
         // console.log("customFieldsNew: " , customFieldsNew)
-        // console.log("customColumns: " , customColumns)
+        console.log("customColumns: " , customColumns)
         // const lastObj = customFieldsNew[customFieldsNew.length - 1 ]
         const lastObj = customColumns[customColumns.length - 1]
-        // console.log("lastObj: " , lastObj)
+        console.log("lastObj: " , lastObj)
 
-        const nextId = lastObj.id + 1
+        const nextId = lastObj? lastObj.id + 1 : 1
         // console.log("nextId: " , nextId)
         const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
         setCustomFieldsNew(updateFieldsNew)
@@ -311,14 +314,28 @@ export default function Fields(
                             })
                             if (response.ok) {
                                 const responseData = await response.json()
+                                
+                                console.log('Update successful obj.label:', obj.label);
                                 console.log('Update successful responseData:', responseData);
                                 // setCustomColumns(customFieldsNew)
                                 loadingSuccess = true
-                                const updatedCustomColumns = customColumns.filter((customColumn:any) => {
-                                    if(customColumn._id !== responseData._id)
-                                    return customColumn;
-                                })
-                                setCustomColumns(updatedCustomColumns)
+                                let updatedCustomColumns
+                                if (obj.deleted){
+                                    updatedCustomColumns = customColumns.filter((customColumn:any) => {
+                                        if(customColumn._id !== responseData._id)
+                                        return customColumn;
+                                    })
+                                    setCustomColumns(updatedCustomColumns)
+                                } else {
+                                    console
+                                    updatedCustomColumns = customColumns.map((customColumn:any) => {
+                                        if(customColumn._id === responseData._id)
+                                            return responseData
+                                        else
+                                            return customColumn
+                                    })
+                                    setCustomColumns(updatedCustomColumns)
+                                }
                             } else {
                                 console.log('Update failed.');
                             }
@@ -482,15 +499,16 @@ export default function Fields(
         // console.log("customFieldsNewEffect: ", customFieldsNew)
         // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
         // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
+        console.log("columnsUserOrder: ", columnsUserOrder)
         const columnsHiddenFields =  columns.filter((col: any) => {
             if(!columnsUserOrder.includes(col))
             return col
         })
-
         const ColumnsCustom: ColumnDataCustom[] = filteredColumnsCustom
         .map((obj:any) => ({...obj, okButtonShow: false, fieldRepeatedShow: false, pre_saved: true}));
-
+        
         setOrderedFields(columnsUserOrder)
+        columnsHiddenFields.sort((a:any,b:any) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
         setUnsetFields(columnsHiddenFields)
         setCustomFields(ColumnsCustom)
         setCustomFieldsNew(ColumnsCustom)
