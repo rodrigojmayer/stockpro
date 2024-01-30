@@ -107,11 +107,15 @@ export default function Fields(
         // console.log("isNaN('w'): ", isNaN(NaN))
         // setCustomFieldsTemp({...customFieldsTemp, event.currentTarget.value})
         
+        console.log("customFieldsNew: ", customFieldsNew)
+
         const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
         // if(index !== -1) {
             const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
             updateFieldsNew[index].label = event.currentTarget.value
-            // console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
+            console.log("index: ", index)
+            console.log("updateFieldsNew[index]: ", updateFieldsNew[index])
+            console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
             // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
             
             const updateDefectFieldsRepeated = columns.filter((col: any) => {
