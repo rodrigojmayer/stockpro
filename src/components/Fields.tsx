@@ -169,7 +169,7 @@ export default function Fields(
         // }
     }
     const saveCustomField = (_id:number, id:number, label: string) => {
-        // console.log("_id: ", _id)
+        console.log("_id: ", _id)
         // console.log("label: ", label)
         // console.log("label: ", label)
         // const updateFields = [...customFieldsTemp]
@@ -224,6 +224,9 @@ export default function Fields(
         updateFieldsNew[index].pre_saved = true
         if(_id)
             updateFieldsNew[index].edited = true
+        
+        console.log("before to set updateFieldsNew: ", updateFieldsNew)
+        // setCustomColumns([...customColumns, updateFieldsNew[updateFieldsNew.length-1]])
         setCustomFieldsNew(updateFieldsNew)
     }
 
@@ -274,7 +277,9 @@ export default function Fields(
         // console.log("customFieldsNew: " , customFieldsNew)
         console.log("customColumns: " , customColumns)
         // const lastObj = customFieldsNew[customFieldsNew.length - 1 ]
-        const lastObj = customColumns[customColumns.length - 1]
+        // const lastObj = customColumns[customColumns.length - 1]
+        const lastObj = customFieldsNew ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
+        
         console.log("lastObj: " , lastObj)
 
         const nextId = lastObj? lastObj.id + 1 : 1
