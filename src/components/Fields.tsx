@@ -26,6 +26,7 @@ import { ColumnsContext } from '../context/ColumnsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext'
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import { gridFilterActiveItemsLookupSelector } from '@mui/x-data-grid-premium';
 
 
 export default function Fields(
@@ -103,56 +104,32 @@ export default function Fields(
     }
     
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // console.log("event.currentTarget.id: ", event.currentTarget.id)
-        // console.log("event.currentTarget.value: ", event.currentTarget.value)
-        // console.log("isNaN('w'): ", isNaN(NaN))
-        // setCustomFieldsTemp({...customFieldsTemp, event.currentTarget.value})
-        
-        console.log("customFieldsNew: ", customFieldsNew)
-
         const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
-        // if(index !== -1) {
+        if(index !== -1) {
             const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNew))
             updateFieldsNew[index].label = event.currentTarget.value
-            console.log("index: ", index)
-            console.log("updateFieldsNew[index]: ", updateFieldsNew[index])
-            console.log("updateFieldsNew[index].label: ", updateFieldsNew[index].label)
-            // console.log("customFieldsTemp[index].label: ", customFieldsTemp[index].label)
-            
             const updateDefectFieldsRepeated = columns.filter((col: any) => {
-                // console.log("col: ", col)
                     if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
                     // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                         return col
             }) 
             const updateCustomFieldsRepeated = customFieldsNew.filter((col) => {
-                // console.log("col2: ", col)
                 if(!col.deleted){
                     if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
                     // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                         return col
                 }
             })
-            // const updateCustomFieldsTempRepeated = customFieldsNew.filter((col) => {
-            //     if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
-            //     // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
-            //         return col
-            // })
-            // if(updateDefectFieldsRepeated[0] || updateCustomFieldsRepeated[0] || updateCustomFieldsTempRepeated[0]){
             if(updateDefectFieldsRepeated[0] || updateCustomFieldsRepeated[0] ){
-                // console.log("updateDefectFieldsRepeated: ", updateDefectFieldsRepeated)
-                // console.log("updateCustomFieldsRepeated: ", updateCustomFieldsRepeated)
                 updateFieldsNew[index].fieldRepeatedShow = true
                 updateFieldsNew[index].okButtonShow = false
-                updateFieldsNew[index].pre_saved = false
-                // console.log("updateFieldsNew repeated: ", updateFieldsNew)
+                updateFieldsNew[index].pre_saved = gridFilterActiveItemsLookupSelector
             } else {
                 updateFieldsNew[index].fieldRepeatedShow = false
                 if(customFields[index]){
                     if(updateFieldsNew[index].label == customFields[index].label || updateFieldsNew[index].label == ''){
                         updateFieldsNew[index].okButtonShow = false
                         updateFieldsNew[index].pre_saved = false
-                        // console.log("updateFieldsNew repeated: ", updateFieldsNew)
                         setAddButtonShow(true)
                     }
                     else{
@@ -167,29 +144,22 @@ export default function Fields(
                 }
             }
             setCustomFieldsNew(updateFieldsNew)
-        // }
+        }
     }
 
-    const saveCustomField = (_id:number, id:number, label: string) => {
-        console.log("_id: ", _id)
-        // console.log("label: ", label)
-        // console.log("label: ", label)
-        // const updateFields = [...customFieldsTemp]
+    const preSaveCustomField = (_id:number, id:number, label: string) => {
         const updateFields = [...customFields.map(obj => ({ ...obj }))]
-        // const updateFieldsNew = [...customFieldsNewTemp]
         const updateFieldsNew = [...customFieldsNew.map(obj => ({ ...obj }))]
-        // const updateOrderedFieldsTemp = [...orderedFieldsTemp]
         const updateOrderedFieldsTemp = [...orderedFields.map((obj: any) => ({ ...obj }))]
-        // const updateUnsetFieldsTemp = [...unsetFieldsTemp]
         const updateUnsetFields = [...unsetFields.map(obj => ({ ...obj }))]
         let index = customFields.findIndex(field => field.id === id)
         let indexOrdered = orderedFields.findIndex((field: any) => field.id === id)
         let indexUnset = unsetFields.findIndex(field => field.id === id)
-        // console.log("index: ", index)
-        // console.log("updateFields: ", updateFields)
+        console.log("_id: ", _id)
+        console.log("index: ", index)
+        console.log("indexOrdered: ", indexOrdered)
+        console.log("indexUnset: ", indexUnset)
         if(index !== -1){
-            
-            // console.log("updateFields[index].label: ", updateFields[index].label)
             updateFields[index].label = label
             if(indexOrdered !== -1){
                 updateOrderedFieldsTemp[indexOrdered].label = label
@@ -202,8 +172,8 @@ export default function Fields(
             }
         }else{
             index = customFieldsNew.findIndex(field => field.id === id)
-            // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
-            // console.log("index2: ", index)
+            console.log("customFieldsNew: ", customFieldsNew)
+            console.log("index2: ", index)
             // console.log("id: ", id)
             const fieldsToOmit = ['okButtonShow']
             const newObj = Object.assign({}, customFieldsNew[index])
@@ -229,8 +199,8 @@ export default function Fields(
         
         console.log("before to set updateFieldsNew: ", updateFieldsNew)
         // setCustomColumns([...customColumns, updateFieldsNew[updateFieldsNew.length-1]])
-        // setCustomFieldsNew(updateFieldsNew)
-        setCustomFieldsNew([...customFieldsNew, updateFieldsNew[updateFieldsNew.length-1]])
+        setCustomFieldsNew(updateFieldsNew)
+        // setCustomFieldsNew([...customFieldsNew, updateFieldsNew[updateFieldsNew.length-1]])
     }
 
     const deleteField = (_id:any, id:number) => {
@@ -276,21 +246,8 @@ export default function Fields(
     }
 
     const addInputCustomField = () => {
-        // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
-        
-        console.log("customFieldsNew: " , customFieldsNew)
-        console.log("filteredColumnsCustom: " , filteredColumnsCustom)
-        // const lastObj = customFieldsNew[customFieldsNew.length - 1 ]
-        // const lastObj = customColumns[customColumns.length - 1]
-        if(customFieldsNew.length)
-            console.error("customFieldsNew true")
         const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
-        // const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : filteredColumnsCustom[filteredColumnsCustom.length - 1]
-        
-        console.log("lastObj: " , lastObj)
-
         const nextId = lastObj? lastObj.id + 1 : 1
-        // console.log("nextId: " , nextId)
         const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
         setCustomFieldsNew(updateFieldsNew)
     }
@@ -708,7 +665,7 @@ export default function Fields(
                                                     sizeIco={"34px"}
                                                     roundedIco={true}
                                                     cusField = {{id: cusField.id, value: cusField.label}}
-                                                    clicked={() => saveCustomField(cusField._id, cusField.id, cusField.label)}
+                                                    clicked={() => preSaveCustomField(cusField._id, cusField.id, cusField.label)}
                                                     />
                                                 </div>
                                                 <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>

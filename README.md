@@ -27,26 +27,34 @@ Documentation:
                     setUser (not used)
                 ColumnsContext:
                     columns
+                        Contains the default columns and the filtered custom columns
                     defaultColumns (not used)
                     customColumns
+                        Contains all the custom columns saved in the database (also the deleted ones)
                     setCustomColumns
-                    columnsUserOrder
+                    columnsUserOrder 
+                        Contains the order of the columns for the user logged
                     setColumnsUserOrder (not used)
                     filteredColumnsCustom
+                        Contains the custom columns saved in the database except the deleted ones
                 CheckListStockContext:
                     checkListStock (not used)
                     setCheckListStock
             States:
                 orderedFields <ColumnData[]> setOrderedFields
-                unsetFields <ColumnData[]>
-                setUnsetFields
-                customFields <ColumnDataCustom[]>
-                setCustomFields
-                customFieldsNew <ColumnDataCustom[]>
-                setCustomFieldsNew
+
+                unsetFields <ColumnData[]> setUnsetFields
+
+                customFields <ColumnDataCustom[]> setCustomFields
+                    Saves the temporary array of all the custom fields before to save.
+                customFieldsNew <ColumnDataCustom[]> setCustomFieldsNew
+                    Saves the temporary array of custom fields added before to save.
                 addButtonShow <boolean>
+
                 isFetching (not used)
+
                 openSaveChanges <boolean>
+
     
         Functions:
             removeField (event)
@@ -59,17 +67,19 @@ Documentation:
 
 
             handleEditCustomFieldNew (event)
+                For each event key that we press updates the customFieldsNew label.
+                Checks that is not repeated with the previous collumns.
 
 
-            saveCustomField (_id, id, label)
-
+            preSaveCustomField (_id, id, label)
+                
 
             deleteField (_id, id)
 
 
             addInputCustomField ()
-
-
+                Takes the id from the last custom field to use the next id in the new custom field
+                setCustomFieldsNew(updateFieldsNew)
             handleCloseSaveChanges (ans: Boolean)
 
 
@@ -87,11 +97,13 @@ Documentation:
         Use cases:
             Create custom field:
                 1. Press the plus button:
-                    Run- function addInputCustomField
+                    Runs function addInputCustomField
                     The plus button will become hidden
-
+                    Shows the input custom field and the delete button
                 2. Write the name of the custom field
+                    Runs function handleEditCustomFieldNew 
                 3. Press the small ok button
+                    Runs function preSaveCustomField
                 4. Press the big ok button
 
             Edit custom field:
