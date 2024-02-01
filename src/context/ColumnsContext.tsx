@@ -112,6 +112,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
   }, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns, isLoading.products]);
 
   useEffect(() => {
+    console.log("filteredColumnsCustom: ", filteredColumnsCustom)
     setColumns(defaultColumns.concat(filteredColumnsCustom));
     setIsLoading((prevLoading: any) => ({
       ...prevLoading,

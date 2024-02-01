@@ -56,6 +56,7 @@ export default function Fields(
     // const [customFieldsNewTemp, setCustomFieldsNewTemp] = useState<ColumnDataCustom[]>(columnsCustomNew)
     const [addButtonShow, setAddButtonShow] = useState<boolean>(true)
     const [isFetching, setIsFetching] = useState(false)
+    const [openSaveChanges, setOpenSaveChanges] = useState<boolean>(false);  
     
     // console.log("orderedFields: ", orderedFields)
     // console.log("columnsTableOrder: ", columnsTableOrder)
@@ -168,6 +169,7 @@ export default function Fields(
             setCustomFieldsNew(updateFieldsNew)
         // }
     }
+
     const saveCustomField = (_id:number, id:number, label: string) => {
         console.log("_id: ", _id)
         // console.log("label: ", label)
@@ -227,7 +229,8 @@ export default function Fields(
         
         console.log("before to set updateFieldsNew: ", updateFieldsNew)
         // setCustomColumns([...customColumns, updateFieldsNew[updateFieldsNew.length-1]])
-        setCustomFieldsNew(updateFieldsNew)
+        // setCustomFieldsNew(updateFieldsNew)
+        setCustomFieldsNew([...customFieldsNew, updateFieldsNew[updateFieldsNew.length-1]])
     }
 
     const deleteField = (_id:any, id:number) => {
@@ -271,14 +274,18 @@ export default function Fields(
             updateFieldsNew[index].edited = true
         setCustomFieldsNew(updateFieldsNew)
     }
+
     const addInputCustomField = () => {
         // const updateFieldsNew = JSON.parse(JSON.stringify(customFieldsNewTemp))
         
-        // console.log("customFieldsNew: " , customFieldsNew)
-        console.log("customColumns: " , customColumns)
+        console.log("customFieldsNew: " , customFieldsNew)
+        console.log("filteredColumnsCustom: " , filteredColumnsCustom)
         // const lastObj = customFieldsNew[customFieldsNew.length - 1 ]
         // const lastObj = customColumns[customColumns.length - 1]
-        const lastObj = customFieldsNew ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
+        if(customFieldsNew.length)
+            console.error("customFieldsNew true")
+        const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
+        // const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : filteredColumnsCustom[filteredColumnsCustom.length - 1]
         
         console.log("lastObj: " , lastObj)
 
@@ -288,7 +295,6 @@ export default function Fields(
         setCustomFieldsNew(updateFieldsNew)
     }
 
-    const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
 
