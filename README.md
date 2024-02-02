@@ -35,7 +35,7 @@ Documentation:
                     columnsUserOrder 
                         Contains the order of the columns for the user logged
                     setColumnsUserOrder (not used)
-                    filteredColumnsCustom
+                    filteredColumnsCustom setFilteredColumnsCustom
                         Contains the custom columns saved in the database except the deleted ones
                 CheckListStockContext:
                     checkListStock (not used)
@@ -72,7 +72,7 @@ Documentation:
 
 
             preSaveCustomField (_id, id, label)
-                
+
 
             deleteField (_id, id)
 

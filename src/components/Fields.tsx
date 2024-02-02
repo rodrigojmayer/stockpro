@@ -42,7 +42,7 @@ export default function Fields(
     // const columns= allColumns.filter(column => !(column.deleted));
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
-    const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+    const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom, setFilteredColumnsCustom  } = useContext<any>(ColumnsContext);
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
 
     const [orderedFields, setOrderedFields] = useState<ColumnData[]>([]) 
@@ -267,7 +267,7 @@ export default function Fields(
 ////////////// Should I check if there have been any changes in the custom columns before or is it already checking that?
 
             customFieldsNew.forEach((obj) => {
-                // console.log("Custom field new: ", obj)  
+                console.log("Custom field new: ", obj)  
                 if(obj._id) {
                     // console.log("obj._id: ", obj._id)
                         // console.log("Object to edit: ", obj)
@@ -482,7 +482,8 @@ export default function Fields(
         columnsHiddenFields.sort((a:any,b:any) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
         setUnsetFields(columnsHiddenFields)
         setCustomFields(ColumnsCustom)
-        setCustomFieldsNew(ColumnsCustom)
+        // setCustomFieldsNew(ColumnsCustom)
+        setCustomFieldsNew(ColumnsCustom.sort((a:any,b:any) => ((b.id > a.id) ? -1 : 0)))
     // }, [open, customFields, customFieldsNew])
     }, [open])
 
