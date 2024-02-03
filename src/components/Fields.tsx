@@ -314,11 +314,12 @@ export default function Fields(
                             // Handle the case where the response is not OK (e.g., show an error message)
                                 
                         } finally {
-                            // setIsLoading((prevLoading: any) => ({
-                            //     ...prevLoading,
-                            //     fieldsFetchEditCustomColumn: loadingSuccess,
-                            // }));
-
+                            setIsLoading((prevLoading: any) => ({
+                                ...prevLoading,
+                                fieldsFetchEditCustomColumn: loadingSuccess,
+                            }));
+                            
+                            setCheckListStock([])
                         }
                     }
                 
@@ -377,12 +378,13 @@ export default function Fields(
                                 // Handle other cases as needed
                             }
                         } finally {
-
-                            // console.log("isLoading: ", isLoading)
-                            // setIsLoading((prevLoading: any) => ({
-                            //     ...prevLoading,
-                            //     fieldsFetchCreateCustomColumn: loadingSuccess,
-                            // }));
+                            
+                            setIsLoading((prevLoading: any) => ({
+                                ...prevLoading,
+                                fieldsFetchCreateCustomColumn: loadingSuccess,
+                            }));
+                            
+                            setCheckListStock([])
                         }
                     }
                     fetchCreateCustomColumn()

@@ -56,6 +56,8 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
         }
       }
       const fetchCustomColumns = async () => {
+       
+        // if (isLoading.user ||  isLoading.fieldsFetchCreateCustomColumn) {
         try {
           // console.log("fetchCustomColumns user.id_client: ", user.id_client)
           const response = await fetch(`http://localhost:4000/api/customColumns/client/${user.id_client}`)
@@ -80,6 +82,8 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
           setIsLoading((prevLoading:any) => ({
             ...prevLoading,
             customColumns: false,
+            fieldsFetchCreateCustomColumn: false,
+            fieldsFetchEditCustomColumn: false
           }));
         }
       }
@@ -94,8 +98,9 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
         fetchDefaultColumns();
         fetchCustomColumns();
       }
+    // }
 
-  }, [user]);
+  }, [user, isLoading.fieldsFetchCreateCustomColumn, isLoading.fieldsFetchEditCustomColumn]);
 
   
   useEffect(() => {
