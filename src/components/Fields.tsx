@@ -38,33 +38,19 @@ export default function Fields(
     const close = () => {
         handleClose(false)
     } 
-    // const columns: ColumnData[] = columnsDefault.concat(columnsCustom).filter(column => !(column.deleted));
-    // const columns= allColumns.filter(column => !(column.deleted));
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
     const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom, setFilteredColumnsCustom  } = useContext<any>(ColumnsContext);
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
 
     const [orderedFields, setOrderedFields] = useState<ColumnData[]>([]) 
-    // const [orderedFieldsTemp, setOrderedFieldsTemp] = useState(columnsTableOrder)
     const [unsetFields, setUnsetFields] = useState<ColumnData[]>([]) 
-    // const [unsetFieldsTemp, setUnsetFieldsTemp] = useState<ColumnData[]>([])  
-
     const [customFields, setCustomFields] = useState<ColumnDataCustom[]>([]) 
-    
-    // const [customFieldsTemp, setCustomFieldsTemp] = useState<ColumnDataCustom[]>(columnsCustomNew) 
     const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>([])
-    // const [customFieldsNewTemp, setCustomFieldsNewTemp] = useState<ColumnDataCustom[]>(columnsCustomNew)
     const [addButtonShow, setAddButtonShow] = useState<boolean>(true)
     const [isFetching, setIsFetching] = useState(false)
     const [openSaveChanges, setOpenSaveChanges] = useState<boolean>(false);  
-    
-    // console.log("orderedFields: ", orderedFields)
-    // console.log("columnsTableOrder: ", columnsTableOrder)
-    // const [okButtonShow, setOkButtonShow] = useState(okButton)  
-
- 
-                                 
+                              
     const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
         let orderedArray = Array.from(orderedFields)
         const unsetArray = Array.from(unsetFields)
@@ -82,8 +68,6 @@ export default function Fields(
     const addField = (e: React.MouseEvent<HTMLButtonElement>)  => {
         const orderedArray = Array.from(orderedFields)
         let unsetArray = Array.from(unsetFields)
-        // console.log("parseInt: ", String(1.01) )
-        // console.log("Number: ", Boolean("2.2"))
         const fieldToAdd = unsetArray.find(o => o.id == parseInt(e.currentTarget.value))
         if (fieldToAdd) {
             unsetArray = unsetArray.filter(function(item) {
@@ -110,13 +94,11 @@ export default function Fields(
             updateFieldsNew[index].label = event.currentTarget.value
             const updateDefectFieldsRepeated = columns.filter((col: any) => {
                     if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
-                    // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                         return col
             }) 
             const updateCustomFieldsRepeated = customFieldsNew.filter((col) => {
                 if(!col.deleted){
                     if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && col.id !== updateFieldsNew[index].id)
-                    // if(((col.label).toLowerCase()) == (event.currentTarget.value).toLowerCase() && !col.deleted && col.id !== updateFieldsNew[index].id)
                         return col
                 }
             })
@@ -155,10 +137,6 @@ export default function Fields(
         let index = customFields.findIndex(field => field.id === id)
         let indexOrdered = orderedFields.findIndex((field: any) => field.id === id)
         let indexUnset = unsetFields.findIndex(field => field.id === id)
-        console.log("_id: ", _id)
-        console.log("index: ", index)
-        console.log("indexOrdered: ", indexOrdered)
-        console.log("indexUnset: ", indexUnset)
         if(index !== -1){
             updateFields[index].label = label
             if(indexOrdered !== -1){
@@ -172,46 +150,26 @@ export default function Fields(
             }
         }else{
             index = customFieldsNew.findIndex(field => field.id === id)
-            console.log("customFieldsNew: ", customFieldsNew)
-            console.log("index2: ", index)
-            // console.log("id: ", id)
             const fieldsToOmit = ['okButtonShow']
             const newObj = Object.assign({}, customFieldsNew[index])
-            // console.log("newObj: ", newObj)
             fieldsToOmit.forEach(field => delete newObj[field as keyof ColumnDataCustom])
             updateFields.push(newObj)
             updateUnsetFields.push(newObj)
             updateUnsetFields.sort((a,b) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
-        
             setUnsetFields(updateUnsetFields)
-            // setUnsetFieldsTemp([...unsetFieldsTemp, newObj])
-            // console.log("updateFields: ", updateFields)
         }
-
-        // console.log("updateFields: ", updateFields)
-            
-        // console.log("customFieldsNewTemp[index].label: ", updateFields[index].label)
         setCustomFields(updateFields)
         updateFieldsNew[index].okButtonShow = false
         updateFieldsNew[index].pre_saved = true
         if(_id)
             updateFieldsNew[index].edited = true
-        
-        console.log("before to set updateFieldsNew: ", updateFieldsNew)
-        // setCustomColumns([...customColumns, updateFieldsNew[updateFieldsNew.length-1]])
         setCustomFieldsNew(updateFieldsNew)
-        // setCustomFieldsNew([...customFieldsNew, updateFieldsNew[updateFieldsNew.length-1]])
     }
 
     const deleteField = (_id:any, id:number) => {
-        // console.log("customFieldsNew in deletedField1: ", customFieldsNew)
-        // const updateFields = [...customFieldsTemp]
         const updateFields = [...customFields.map(obj => ({ ...obj }))]
-        // const updateFieldsNew = [...customFieldsNewTemp]
         const updateFieldsNew = [...customFieldsNew.map(obj => ({ ...obj }))]
-        // const updateOrderedFieldsTemp = [...orderedFieldsTemp]
         const updateOrderedFieldsTemp = [...orderedFields.map((obj: any) => ({ ...obj }))]
-        // const updateUnsetFieldsTemp = [...unsetFieldsTemp]
         const updateUnsetFieldsTemp = [...unsetFields.map(obj => ({ ...obj }))]
         let index = customFields.findIndex(field => field.id === id)
         let indexOrdered = orderedFields.findIndex((field: any) => field.id === id)
@@ -220,26 +178,19 @@ export default function Fields(
             updateFields[index].deleted = true
             setCustomFields(updateFields)
             updateFieldsNew[index].deleted = true
-            // console.log("customFieldsTemp: ", customFieldsTemp) 
             if(indexOrdered !== -1){
                 updateOrderedFieldsTemp[indexOrdered].deleted = true
                 setOrderedFields(updateOrderedFieldsTemp)
             }
             if(indexUnset !== -1){
-                // console.log("unsetFieldsDelete5: ", unsetFields[2].deleted)
                 updateUnsetFieldsTemp[indexUnset].deleted = true
-                // console.log("unsetFieldsDelete4: ", unsetFields[2].deleted)
                 setUnsetFields(updateUnsetFieldsTemp)
-                // console.log("unsetFieldsDelete3: ", unsetFields[2].deleted)
             }
-            // console.log("unsetFieldsDelete2: ", unsetFields[2].deleted)
         } else {
             index = customFieldsNew.findIndex(field => field.id === id)
             updateFieldsNew.splice(index, 1)
 
         }
-        // console.log("unsetFieldsDelete1: ", unsetFields[2].deleted)
-        
         if(_id)
             updateFieldsNew[index].edited = true
         setCustomFieldsNew(updateFieldsNew)
@@ -253,24 +204,10 @@ export default function Fields(
     }
 
     const handleCloseSaveChanges = (ans?:boolean) => {
-        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
-
-        if(ans){
-            // // setOpenBackdrop(true)
-            // setOrderedFields(orderedFields)
-            // setUnsetFields(unsetFields)
-            // setCustomFields(customFields)
-            // setCustomFieldsNew(customFieldsNewTemp)
-            // console.log("save customFields: ", customFields)  orderedFields
-            // console.log("save customFieldsNew: ", customFieldsNew)  
-            
-////////////// Should I check if there have been any changes in the custom columns before or is it already checking that?
-
-            customFieldsNew.forEach((obj) => {
-                console.log("Custom field new: ", obj)  
+        if(ans){            
+        /////////// Should I check if there have been any changes in the custom columns before or is it already checking that?
+            customFieldsNew.forEach((obj) => { 
                 if(obj._id) {
-                    // console.log("obj._id: ", obj._id)
-                        // console.log("Object to edit: ", obj)
                     const fetchEditCustomColumn = async () => {
                         let loadingSuccess: boolean = false
                         try {
@@ -285,30 +222,9 @@ export default function Fields(
                                 })
                             })
                             if (response.ok) {
-                                const responseData = await response.json()
-                                
-                                console.log('Update successful obj.label:', obj.label);
-                                console.log('Update successful responseData:', responseData);
-                                // setCustomColumns(customFieldsNew)
                                 loadingSuccess = true
-                                let updatedCustomColumns
-                                if (obj.deleted){
-                                    updatedCustomColumns = customColumns.filter((customColumn:any) => {
-                                        if(customColumn._id !== responseData._id)
-                                        return customColumn;
-                                    })
-                                    setCustomColumns(updatedCustomColumns)
-                                } else {
-                                    updatedCustomColumns = customColumns.map((customColumn:any) => {
-                                        if(customColumn._id === responseData._id)
-                                            return responseData
-                                        else
-                                            return customColumn
-                                    })
-                                    setCustomColumns(updatedCustomColumns)
-                                }
                             } else {
-                                console.log('Update failed.');
+                                console.error('Update failed.');
                             }
                         }catch (error) {
                             // Handle the case where the response is not OK (e.g., show an error message)
@@ -327,8 +243,6 @@ export default function Fields(
                         fetchEditCustomColumn()
                      
                 } else if(!obj.deleted){    // To avoid fields created and deleted in the moment
-                    // console.log("Obj to create: ", obj)
-
                     const fetchCreateCustomColumn = async () => {
                         let loadingSuccess: boolean = false
                         try {
@@ -350,18 +264,7 @@ export default function Fields(
 
                             // Check if the response status is successful (2xx range)
                             if (response.ok) {
-                                const responseData = await response.json() // parse the response data
-                                // console.log('POST request successful: ', responseData)
                                 loadingSuccess = true
-                                // setCustomColumns(customFieldsNew)
-                                // Handle the response data here
-                                // setCustomColumns
-                                console.log("customFieldsNew: ", customFieldsNew)
-                                console.log("responseData: ", responseData)
-                                console.log("customColumns: ", customColumns)
-                                const updatedCustomColumns = [...customColumns, responseData]
-                                setCustomColumns(updatedCustomColumns)
-
                             } else {
                                 // Handle non-successful responses (e.g., 4xx or 5xx status codes)
                                 console.error('Request failed: ', response.status, response.statusText)
@@ -378,7 +281,6 @@ export default function Fields(
                                 // Handle other cases as needed
                             }
                         } finally {
-                            
                             setIsLoading((prevLoading: any) => ({
                                 ...prevLoading,
                                 fieldsFetchCreateCustomColumn: loadingSuccess,
@@ -392,16 +294,10 @@ export default function Fields(
                 // close()
             })
             
-            
-            // console.log("save user: ", user)
-            console.log("save user ordered_fields: ", user.ordered_fields)
-            // console.log("save array orderedFields: ", orderedFields.map((col) => col.id))
             const array_ordered_fields = orderedFields.map((col)=>col.id)
             if(JSON.stringify(user.ordered_fields) !== JSON.stringify(array_ordered_fields)){
-                // console.log("Different arrays")
                 const fetchEditUsersFieldsOrder = async () => {
                     let loadingSuccess: boolean = false
-                    // setIsFetching(true)
                     try {
                         const response = await fetch(`http://localhost:4000/api/users/${user._id}/`, {
                             method: 'PATCH',
@@ -413,21 +309,13 @@ export default function Fields(
                             })
                         })
                         if (response) {
-                            // console.log('Update successfull')
                             loadingSuccess = true
-                            // const updateUser = user
-                            // updateUser.ordered_fields = array_ordered_fields
-                            // console.log("updateUser: ", updateUser)
-                            // setColumnsUserOrder(columnsUserOrder)       //////////////////////////////////////////// Check if I should update the user first
-                            // setUser(updateUser)       //////////////////////////////////////////// Check if I should update the user first
                         } else {
-                            // console.log('Update failed.')
+                            console.error('Update failed.')
                         }
                     } catch (error) {
                         // Handle the case where the response is not OK (e.g., show an error message)
                     } finally {
-                        // console.log('setIsLoading?')
-
                         setIsLoading((prevLoading: any) => ({
                             ...prevLoading,
                             fieldsFetchEditUsersFieldsOrder: loadingSuccess,
@@ -439,40 +327,15 @@ export default function Fields(
                 fetchEditUsersFieldsOrder()
 
             }
-            // else
-            //     console.log("Equal arrays")
-
-            
             close()
-            // setOpenBackdrop(true)
         }
         setOpenSaveChanges(false);
-        // setIsLoading((prevLoading: any) => ({
-        //     ...prevLoading,
-        //     fieldsFetchEditUsersFieldsOrder: false,
-        // }));
     }
     const handleOpenSaveChanges = () => {
-        // setOpenBackdrop(true)
-        // setIsLoading((prevLoading: any) => ({
-        //     ...prevLoading,
-        // }));
         setOpenSaveChanges(true);
     }
 
     useEffect(() => {
-
-        // console.log("orderedFieldsEffect: ", orderedFields)
-        // console.log("orderedFieldsTempEffect: ", orderedFields)
-
-        // console.log("unsetFieldsEffect: ", unsetFields)
-        // console.log("unsetFieldsDelete: ", unsetFields[2].deleted)
-
-        // console.log("customFieldsEffect: ", customFields)
-        // console.log("customFieldsNewEffect: ", customFieldsNew)
-        // console.log("idColumnsTableOrder: ", idColumnsTableOrder)
-        // console.log("customFieldsNewTemp: ", customFieldsNewTemp)
-        console.log("columnsUserOrder: ", columnsUserOrder)
         const columnsHiddenFields =  columns.filter((col: any) => {
             if(!columnsUserOrder.includes(col))
             return col
@@ -484,21 +347,15 @@ export default function Fields(
         columnsHiddenFields.sort((a:any,b:any) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
         setUnsetFields(columnsHiddenFields)
         setCustomFields(ColumnsCustom)
-        // setCustomFieldsNew(ColumnsCustom)
         setCustomFieldsNew(ColumnsCustom.sort((a:any,b:any) => ((b.id > a.id) ? -1 : 0)))
-    // }, [open, customFields, customFieldsNew])
     }, [open])
 
     useEffect(() => {
-        // console.log("customFieldsNewEffect: ", customFieldsNew)
         if(customFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
             setAddButtonShow(false)
         } else {
             setAddButtonShow(true)
         }
-
-        // setAddButtonShow(false)
-        // setAddButtonShow(true)
     }, [customFieldsNew])
 
     return (
@@ -537,7 +394,6 @@ export default function Fields(
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
                                             {orderedFields.map((column: any, index: any) => {
-                                                // console.log("index: ", index)
                                                 if (index === 0)
                                                     return ( 
                                                         <Paper

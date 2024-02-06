@@ -1,9 +1,12 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext, useRef } from 'react';
 import { UserData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 import useUser from '../hooks/useUser';
 import axios from '../api/axios'
 import AuthContext from "../context/AuthProvider"
+
+import useWebSocket from 'react-use-websocket'
+import useLogout from '../hooks/useLogout';
 
 const INITIAL_USER = {
   _id: "",
@@ -32,7 +35,8 @@ type UserProviderProps = {
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   // const [user, setUser] = useState<UserData>(INITIAL_USER);
-  const { auth } = useContext(AuthContext)
+  const { auth, setAuth } = useContext(AuthContext)
+  const logout = useLogout();
   // const profileString = window.localStorage.getItem('profile');
 
   const [user, setUser] = useState<UserData>(INITIAL_USER)
@@ -41,41 +45,22 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [_IdUserLogged, set_IdUserLogged] = useState<string|number>(INITIAL_USER._id);
   const [gmailUserLogged, setGmailUserLogged] = useState<UserData>(INITIAL_USER);
 
+  const WS_URL = import.meta.env.VITE_WS_URL
+  console.log("user.user: ", user.user)
+  const { sendJsonMessage, lastJsonMessage } = useWebSocket<any>(WS_URL, {
+      queryParams: { username: user.user }
+  })
+  // const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL)
 
+  useEffect(() => {
+    console.log("lastJsonMessage: ",  lastJsonMessage)
+    if(lastJsonMessage?.forceLogout )
+      logout()
 
-  // useEffect(() => {
-  //   let isMounted = true
-  //   const controller = new AbortController()
-    
-  //   const getUsers = async () => {
-  //     try {
-  //       const response = await axios.get('/users', {
-  //         signal: controller.signal
-  //       })
-  //       console.log("axios response.data: ", response.data)
-  //       isMounted && setUser(response.data)
-  //     } catch (err) {
-  //       console.error(err)
-  //     }
-  //   }
+  }, [lastJsonMessage?.forceLogout])
 
-  //   getUsers()
-
-  //   return () => {
-  //     isMounted = false
-  //     controller.abort()
-  //   }
-  // }, [])
   const fetchUserByUser = async () => {
     try {
-      // const profileStringWithoutQuotes = profileString.replace(/['"]+/g, '');
-      // const profileStringWithoutQuotes = user.user.replace(/['"]+/g, '');
-
-
-      // loginUser(userNameEmail, userPass, rememberUser)
-
-
-
       // const response = await fetch(`http://localhost:4000/api/users/user/${profileStringWithoutQuotes}`)
       const response = await fetch(`http://localhost:4000/api/users/${auth._id}`)
       if (!response.ok) {
@@ -125,7 +110,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [isLoading.fieldsFetchEditUsersFieldsOrder]); 
 
   return (
-    <UserContext.Provider value={{ INITIAL_USER, user, setUser, setGmailUserLogged, gmailUserLogged, _IdUserLogged, set_IdUserLogged  }}>
+    <UserContext.Provider value={{ INITIAL_USER, user, setUser, setGmailUserLogged, gmailUserLogged, _IdUserLogged, set_IdUserLogged, sendJsonMessage, lastJsonMessage  }}>
       {children}
     </UserContext.Provider>
   )

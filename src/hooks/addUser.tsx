@@ -88,7 +88,7 @@ export default function useAddUser () {
                     withCredentials: true
                 }
             )
-            console.log(JSON.stringify(response?.data))
+            console.log("JSON.stringify(response?.data): ", JSON.stringify(response?.data))
             // console.log(response.accessToken)
             // console.log(JSON.stringify(response))
             // console.log('response: ', response)
@@ -123,6 +123,7 @@ export default function useAddUser () {
                 console.error('Error object:', err.message)
             } else {
                 // Handle other cases as needed
+                console.error('Registration Failed!!!!!!!!!!!!!!!!!!')
             }
             if (!err?.response) {
                 console.error('No Server Response')
@@ -135,6 +136,7 @@ export default function useAddUser () {
                 // setErrMsg('Registration Failed')
             }
             // errRef.current.focus()
+            console.error('Registration Failed!!!!!!!!!!!!!!!!!!')
         } finally {
             // console.log("isLoading: ", isLoading)
             // alert("alert")

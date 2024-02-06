@@ -45,7 +45,7 @@ export default function ManageUser(
     } 
     // const postUser = useAddUser(); 
     const edition = (Object.keys(dataEditUser).length !== 0 ? true : false)
-    const { user } = useContext<any>(UserContext)
+    const { user, sendJsonMessage, lastJsonMessage } = useContext<any>(UserContext)
     const { users, setUsers } = useContext<any>(UsersContext)
     const { accessLevels } = useContext<any>(AccessLevelsContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
@@ -68,6 +68,7 @@ export default function ManageUser(
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
+
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
             const bodyUpdate: UserEditData = {}
@@ -140,6 +141,16 @@ export default function ManageUser(
                             
                         }
                         setUsers(updatedUsers)
+                        if(!updatedUsers[0].enabled){
+                            sendJsonMessage({
+                                disable: updatedUsers[0].user
+                            })
+                            console.log("disabled")
+                            console.log("lastJsonMessage: ", lastJsonMessage)
+
+                            
+
+                        }
 
 
 

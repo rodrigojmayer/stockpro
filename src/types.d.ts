@@ -4,7 +4,7 @@ export interface UserData {
   id_client: number;
   name: string;
   last_name?: string;
-  email?: string;
+  email?: string|null;
   id_access_level: number;
   user: string;
   pass: string;
@@ -23,7 +23,7 @@ export interface UserEditData {
   id_access_level?: number|null;
   name?: string;
   last_name?: string;
-  email?: string;
+  email?: string|null;
   user?: string;
   pass?: string;
   deleted?: boolean;
@@ -190,7 +190,7 @@ export interface FilestackData {
 }
 export interface RememberUserData {
   enabled?: boolean;
-  user_email?: string;
+  user_email?: string|null;
   pass?: string;
 }
 export interface RememberLabelUsersData {
