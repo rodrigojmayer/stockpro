@@ -21,7 +21,7 @@ export default function ErrorModal( props: ErrorModalProps) {
     let subTitle = ""
 
     // Mising, invalid format, duplicated
-    
+
     if(errorData === "missing_data"){
         title="Missing required data"
         subTitle="Name*"
@@ -72,21 +72,29 @@ export default function ErrorModal( props: ErrorModalProps) {
         open={openErrorModal} 
         onClose={() => closeErrorModal()}
         > 
-            <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleErrorInternal}>
-                    <Typography align="center" variant="h6">
-                        {title}
-                    </Typography>
-                    <Typography align="center" >
-                        {subTitle}
-                    </Typography>
-                    <Box className={classes.finishButtons}>
-                        <CancelButton
-                        clicked={() => closeErrorModal(false)}
-                        />
-                    </Box> 
+            <form
+                onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.code === "Space") {
+                        closeErrorModal(false); 
+                    }
+                }}
+            >
+                <Box sx={modalStyleSaveExternal}>
+                    <Box sx={modalStyleErrorInternal}>
+                        <Typography align="center" variant="h6">
+                            {title}
+                        </Typography>
+                        <Typography align="center" >
+                            {subTitle}
+                        </Typography>
+                        <Box className={classes.finishButtons}>
+                            <CancelButton
+                            clicked={() => closeErrorModal(false)}
+                            />
+                        </Box> 
+                    </Box>
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }

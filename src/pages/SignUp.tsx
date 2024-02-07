@@ -215,12 +215,12 @@ export default function SignUp () {
 
             const createUser = async() => {
                 const rta = await postUser(bodyCreate);
-                console.log("rta: ", rta)
+                // console.log("rta: ", rta)
                 if(rta.loadingSuccess)
                     setOpenConfirmCreatedUserModal(true);
                 else{
-                    console.error(rta.errorCode)
-                    console.error(rta.field)
+                    // console.error(rta.errorCode)
+                    // console.error(rta.field)
                     setOpenErrorModal(true) // Open the modal for duplicate product error
                     setErrorData(rta.errorCode)
                     setErrorTextFields((prevErrorTextFields: any) => ({
@@ -269,127 +269,135 @@ export default function SignUp () {
                     <Typography className={classes.finishButtons} align="center" variant='h5'>
                         Sign Up
                     </Typography>
-                    <Box className={classes.customBoxColumn}>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Username"
-                                value={user}
-                                onChange={ (event) => handleUser(event.target.value)}
+                    <form
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                handleOpenSaveChanges(); 
+                            }
+                        }}
+                    >
+                        <Box className={classes.customBoxColumn}>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Username"
+                                    value={user}
+                                    onChange={ (event) => handleUser(event.target.value)}
+                                    maxRows={1}
+                                    size="small"
+                                    type="text"
+                                    className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Email"
+                                    value={email}
+                                    onChange={ (event) => handleEmail(event.target.value)}
+                                    maxRows={1}
+                                    size="small"
+                                    type="email"
+                                    className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                label="Password"
                                 maxRows={1}
                                 size="small"
-                                type="text"
-                                className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                value={pass}
+                                type={ showProfilePass ? "text" : "password" }
+                                onChange={ (event) => handlePass(event.target.value) }
+                                className= {`${errorTextFields.pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,
+                                    endAdornment: (
+                                    <IconButton onClick={showProfilePassToggle}>
+                                        {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                    </IconButton>
+                                    ),
                                 }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Email"
-                                value={email}
-                                onChange={ (event) => handleEmail(event.target.value)}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                label="Confirm password"
                                 maxRows={1}
                                 size="small"
-                                type="email"
-                                className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                value={confirmPass}
+                                type={ showProfileConfirmPass ? "text" : "password" }
+                                onChange={ (event) => handleConfirmPass(event.target.value) }
+                                className= {`${errorTextFields.confirmPass ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,
+                                    endAdornment: (
+                                    <IconButton onClick={showProfileConfirmPassToggle}>
+                                        {showProfileConfirmPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                    </IconButton>
+                                    ),
                                 }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                            label="Password"
-                            maxRows={1}
-                            size="small"
-                            value={pass}
-                            type={ showProfilePass ? "text" : "password" }
-                            onChange={ (event) => handlePass(event.target.value) }
-                            className= {`${errorTextFields.pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                            InputProps={{
-                                className: classes.inputClassName,
-                                endAdornment: (
-                                <IconButton onClick={showProfilePassToggle}>
-                                    {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                </IconButton>
-                                ),
-                            }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                            label="Confirm password"
-                            maxRows={1}
-                            size="small"
-                            value={confirmPass}
-                            type={ showProfileConfirmPass ? "text" : "password" }
-                            onChange={ (event) => handleConfirmPass(event.target.value) }
-                            className= {`${errorTextFields.confirmPass ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                            InputProps={{
-                                className: classes.inputClassName,
-                                endAdornment: (
-                                <IconButton onClick={showProfileConfirmPassToggle}>
-                                    {showProfileConfirmPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                </IconButton>
-                                ),
-                            }}
-                            />
-                        </Box>
-                        {/* <Box> */}
-                        <Box className={classes.customBoxRow} >
-                            <Box>
-                                By creating an account you agree to our 
-                                <br/>
+                                />
+                            </Box>
+                            {/* <Box> */}
+                            <Box className={classes.customBoxRow} >
+                                <Box>
+                                    By creating an account you agree to our 
+                                    <br/>
+                                    <NavLink 
+                                        // style={{ color: theme.palette.secondary.main }}
+                                        style={{ color: '#c1e8fb' }}
+                                        to="/login"
+                                    >
+                                        Terms & Privacy
+                                    </NavLink>
+                                    <Switch 
+                                        color='success' 
+                                        className= {`${errorTextFields.termsAndPrivacy ? classes.switch_error : ""} `}
+                                        checked={termsAndPrivacy}
+                                        onChange={termsAndPrivacyEnabledChange}
+                                    /> 
+                                </Box>
+                            </Box>
+                            <Box className={classes.customBoxRowSpaceBetween}>
+                                <Box>
+                                    <Switch 
+                                        color='success' 
+                                        checked={rememberUser.enabled}
+                                        onChange={(event) => {
+                                            rememberEnabledChange(event.target.checked)
+                                        }}
+                                    />Remember me 
+                                </Box>
+                                <OkButton
+                                    // clicked={() => handleSignUp()}
+                                    clicked={() => handleOpenSaveChanges()}
+                                    widthIco={100}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <Divider 
+                                    className={classes.customDivider} 
+                                    variant="middle" 
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow} sx={{ typography: 'subtitle2' }}>
+                            {/* <Box  */}
+                                Already have an account?
                                 <NavLink 
                                     // style={{ color: theme.palette.secondary.main }}
                                     style={{ color: '#c1e8fb' }}
                                     to="/login"
                                 >
-                                    Terms & Privacy
-                                </NavLink>
-                                <Switch 
-                                    color='success' 
-                                    className= {`${errorTextFields.termsAndPrivacy ? classes.switch_error : ""} `}
-                                    checked={termsAndPrivacy}
-                                    onChange={termsAndPrivacyEnabledChange}
-                                /> 
+                                    Login
+                                </NavLink> 
                             </Box>
                         </Box>
-                        <Box className={classes.customBoxRowSpaceBetween}>
-                            <Box>
-                                <Switch 
-                                    color='success' 
-                                    checked={rememberUser.enabled}
-                                    onChange={(event) => {
-                                        rememberEnabledChange(event.target.checked)
-                                    }}
-                                />Remember me 
-                            </Box>
-                            <OkButton
-                                // clicked={() => handleSignUp()}
-                                clicked={() => handleOpenSaveChanges()}
-                                widthIco={100}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <Divider 
-                                className={classes.customDivider} 
-                                variant="middle" 
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow} sx={{ typography: 'subtitle2' }}>
-                        {/* <Box  */}
-                            Already have an account?
-                            <NavLink 
-                                // style={{ color: theme.palette.secondary.main }}
-                                style={{ color: '#c1e8fb' }}
-                                to="/login"
-                            >
-                                Login
-                            </NavLink> 
-                        </Box>
-                    </Box>
+                    </form>
                 </Box>
             </Box>
 
