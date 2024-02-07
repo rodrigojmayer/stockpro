@@ -153,9 +153,10 @@ export default function Login () {
   }
   
   const handleLogin = async () => {
-    console.log("handleLogin userNameEmail: ", userNameEmail)
-    console.log("handleLogin userPass: ", userPass)
-    console.log("handleLogin rememberUser: ", rememberUser)
+    // console.log("handleLogin userNameEmail: ", userNameEmail)
+    // console.log("handleLogin userPass: ", userPass)
+    // console.log("handleLogin rememberUser: ", rememberUser)
+    // alert("login submit success")
     let dataOk: boolean = true
     if(userNameEmail===""){
       setErrorTextFields((prevErrorTextFields: any) => ({
@@ -261,60 +262,74 @@ export default function Login () {
             <Typography className={classes.finishButtons} align="center" variant='h5' >
                 Login
             </Typography> 
-            <Box className={classes.customBoxColumn}>
-              <Box className={classes.customBoxRow}>
+            <form
+              // onSubmit={(e) => {
+              //   e.preventDefault()
+              //   handleLogin()
+              // }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); // Prevent default form submission
+                    handleLogin(); // Call your login function
+                  }
+                }}
+              >
+              <Box className={classes.customBoxColumn}>
+                <Box className={classes.customBoxRow}>
 
-              <ComboBox
-                // optionsData={[{label: "test"}, {label: "test2"}]}
-                optionsData={rememberLabelUsers}
-                
-                comboLabel="Username or Email"
-                comboValue={userNameEmail}
-                comboHandleValue={handleUserNameEmail}
-                errorTextField={errorTextFields.user_name_email}
-                />
-
-              </Box>
-              <Box className={classes.customBoxRow}>
-                <TextField
-                  label="Password"
-                  maxRows={1}
-                  size="small"
-                  value={userPass}
-                  type={ showProfilePass ? "text" : "password" }
-                  onChange={ (event) => handleUserPass(event.target.value) }
-                  className= {`${errorTextFields.user_pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                  InputProps={{
-                    className: classes.inputClassName,
-                    endAdornment: (
-                      <IconButton onClick={showProfilePassToggle}>
-                        {(allowShowProfilePass && showProfilePass) ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </Box>
-              <Box className={classes.customBoxRowSpaceBetween}>
-              {/* <Box className={classes.customBoxRowEnd}> */}
-                <Box>
-                  <Switch 
-                    color='success' 
-                    checked={rememberUser.enabled}
-                    onChange={(event) => {
-                      rememberEnabledChange(event.target.checked)
-                    }}
-                  />Remember me 
-                </Box>
+                  <ComboBox
+                    // optionsData={[{label: "test"}, {label: "test2"}]}
+                    optionsData={rememberLabelUsers}
                     
-                {/* <Box > */}
-                {/* <Box > */}
-                <OkButton
-                  clicked={() => handleLogin()}
-                  widthIco={100}
-                />
-                {/* </Box> */}
+                    comboLabel="Username or Email"
+                    comboValue={userNameEmail}
+                    comboHandleValue={handleUserNameEmail}
+                    errorTextField={errorTextFields.user_name_email}
+                  />
+
+                </Box>
+                <Box className={classes.customBoxRow}>
+                  <TextField
+                    label="Password"
+                    maxRows={1}
+                    size="small"
+                    value={userPass}
+                    type={ showProfilePass ? "text" : "password" }
+                    onChange={ (event) => handleUserPass(event.target.value) }
+                    className= {`${errorTextFields.user_pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                    InputProps={{
+                      className: classes.inputClassName,
+                      endAdornment: (
+                        <IconButton onClick={showProfilePassToggle}>
+                          {(allowShowProfilePass && showProfilePass) ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                        </IconButton>
+                      ),
+                    }}
+                  />
+                </Box>
+                <Box className={classes.customBoxRowSpaceBetween}>
+                {/* <Box className={classes.customBoxRowEnd}> */}
+                  <Box>
+                    <Switch 
+                      color='success' 
+                      checked={rememberUser.enabled}
+                      onChange={(event) => {
+                        rememberEnabledChange(event.target.checked)
+                      }}
+                    />Remember me 
+                  </Box>
+                      
+                  {/* <Box > */}
+                  {/* <Box > */}
+                  <OkButton
+                    clicked={() => handleLogin()}
+                    widthIco={100}
+                    // type="submit"
+                  />
+                  {/* </Box> */}
+                </Box>
               </Box>
-            </Box>
+            </form>
             <Box className={classes.customBoxRow}>
               <Divider 
                 className={classes.customDivider} 

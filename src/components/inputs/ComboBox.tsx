@@ -57,7 +57,7 @@ interface ComboBoxProps {
             onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
             }}
-            getOptionLabel={(option: any) => option.label}
+            getOptionLabel={(option: any) => option.label || inputValue}
             isOptionEqualToValue={isOptionEqualToValue}
             freeSolo 
             renderInput={(params: any) => 
