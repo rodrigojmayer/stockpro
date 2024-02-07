@@ -15,45 +15,53 @@ type ErrorModalProps = {
     errorData: string
 }
 export default function ErrorModal( props: ErrorModalProps) {
-    const { openErrorModal, closeErrorModal } = props;
+    const { openErrorModal, closeErrorModal, errorData } = props;
     const { classes } = useStylesGlobal();
     let title = ""
     let subTitle = ""
 
-    if(props.errorData === "missing_data"){
+    // Mising, invalid format, duplicated
+    
+    if(errorData === "missing_data"){
         title="Missing required data"
         subTitle="Name*"
-    } else if (props.errorData === "duplicate_product"){
-        title="Duplicated data"
-        subTitle=`This product already exists`
-    } else if (props.errorData === "negative_amount"){
+    } else if (errorData === "negative_amount"){
         title="Shortfall"
         subTitle=`The amount cannot be negative`
-    } else if (props.errorData === "missing_data_user"){
+    } else if (errorData === "missing_data_user"){
         title="Missing required data"
         subTitle=`Alias`
-    } else if (props.errorData === "not_confirmed_pass"){
+    } else if (errorData === "not_confirmed_pass"){
         // title="Not confirmed password"
         subTitle=`The password confirmation does not match`
-    } else if (props.errorData === "missing_user_name"){
+    } else if (errorData === "missing_user_name"){
         title="Missing required data"
         subTitle="Name*"
-    } else if (props.errorData === "missing_user_access_level"){
+    } else if (errorData === "missing_user_access_level"){
         title="Missing required data"
         subTitle=`Acess level*`
-    } else if (props.errorData === "missing_user_user"){
+    } else if (errorData === "missing_user_user"){
         title="Missing required data"
         subTitle=`User*`
-    } else if (props.errorData === "missing_user_password"){
+    } else if (errorData === "missing_user_password"){
         title="Missing required data"
         subTitle=`Password*`
-    } else if (props.errorData === "invalid_email_format"){
+    } else if (errorData === "missing_email"){
+        title="Missing required data"
+        subTitle=`Email*`
+    } else if (errorData === "confirm_password_must_match"){
+        title="Confirm password must match"
+        subTitle=`Confirm password*`
+    } else if (errorData === "missing_terms_and_privacy"){
+        title="Must accept terms and privacy"
+        subTitle=`Terms and privacy*`
+    } else if (errorData === "invalid_email_format"){
         title="Invalid email format"
         subTitle=`Email*`
-    } else if (props.errorData === "email_duplicated"){
+    } else if (errorData === "email_duplicated"){
         title=""
         subTitle=`Email address already in use`
-    } else if (props.errorData === "user_duplicated"){
+    } else if (errorData === "user_duplicated"){
         title=""
         subTitle=`User already in use`
     } 

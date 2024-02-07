@@ -79,7 +79,7 @@ export default function useAddUser () {
     // }
     const postUser = async (bodyUser:UserEditData) => {
         console.log('addUser.tsx postUser bodyUser: ', bodyUser)
-        let loadingSuccess: boolean = false        
+        const rta = {loadingSuccess: false, errorCode: "", field: ""}        
         try {
             const response = await axios.post('/register',
                 JSON.stringify(bodyUser),
@@ -91,15 +91,18 @@ export default function useAddUser () {
             console.log("JSON.stringify(response?.data): ", JSON.stringify(response?.data))
             // console.log(response.accessToken)
             // console.log(JSON.stringify(response))
-            // console.log('response: ', response)
+            console.log('response: ', response)
             // if (response.ok) {
             //     const responseData = await response.json() // parse the response data
-            //     loadingSuccess = true
+            rta.loadingSuccess = true
             //     // set_IdUserLogged(responseData._id)
             //     setGmailUserLogged(responseData)
             //     setUser(responseData)
                 
-            // } else {
+
+            // } else if (response.status === 400) {
+
+
             //     // if(bodyUser._idClient)
             //     //     deleteClient(bodyUser._idClient)
             //     if (response.status === 400) {
@@ -114,7 +117,23 @@ export default function useAddUser () {
             //         }
             //     }
             // }
+            // const errorData = await response.json()
+            
+            //  if (err.response?.status === 400) {
+            // console.error('Registration Duplicated fields!!!!!!!!!!!!!!!!!!')
+            // rta.errorCode = err.errorCode
+            // rta.field = err.field
+            // }
         } catch (err:any) {
+            if (err.response?.status === 400) {
+
+                // console.error('Registration Duplicated fields!!!!!!!!!!!!!!!!!!: ', err)
+                // console.error('err: ', err)
+                // console.error('err.response: ', err.response)
+                // console.error('err.response.data: ', err.response.data)
+                rta.errorCode = err.response.data.errorCode
+                rta.field = err.response.data.field
+            }
             if (typeof err === 'string') {
                 // 'error' is now narrowed down to type 'string'
                 console.error('Error:', err)
@@ -142,8 +161,10 @@ export default function useAddUser () {
             // alert("alert")
             setIsLoading((prevLoading: any) => ({
                 ...prevLoading,
-                fieldsFetchCreateStock: loadingSuccess,
+                fieldsFetchCreateStock: rta.loadingSuccess,
             }));
+            
+            return rta
         }
     }
 

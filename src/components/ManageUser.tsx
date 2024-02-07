@@ -93,7 +93,6 @@ export default function ManageUser(
             if(Object.keys(bodyUpdate).length>0)
                 changed = true;
 
-            
             const fetchManageUser = async () => {
                 bodyUpdate.id_client = user.id_client
                 bodyUpdate.language =  user.language
@@ -142,13 +141,7 @@ export default function ManageUser(
                             })
                             console.log("disabled")
                             console.log("lastJsonMessage: ", lastJsonMessage)
-
-                            
-
                         }
-
-
-
                     } else if (response.status === 400) {
                         // Handle non-successful responses
                         // console.error('Request failed: ', response.status, response.statusText)
@@ -194,8 +187,6 @@ export default function ManageUser(
             if (changed)
                 fetchManageUser()
         }
-        
-        console.log("setOpenSaveChanges: ", false)
         setOpenSaveChanges(false);
     }
 

@@ -9,6 +9,8 @@ import { Box,
         Switch
         } from "@mui/material";
 import { OkButton } from "../components/Buttons";
+import SaveChanges from '../components/SaveChanges';
+import ErrorModal from '../components/ErrorModal';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal } from "../Styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -33,6 +35,7 @@ export default function SignUp () {
         "confirmPass": false,
         "termsAndPrivacy": false
     });
+    const [openSaveChanges, setOpenSaveChanges] = useState(false);
     const [openErrorModal, setOpenErrorModal] = useState(false);
     const [errorData, setErrorData] = useState("");
     const [user, setUser] = useState("");
@@ -131,83 +134,129 @@ export default function SignUp () {
             confirmPass: false,
         }));
     }
+    
 
-    const handleSignUp = () => {
+    // const handleSignUp = () => {
+    const handleOpenSaveChanges = () => {
         let dataOk: boolean = true
+        setErrorTextFields({
+            "user": false,
+            "email": false,
+            "pass": false,
+            "confirmPass": false,
+            "termsAndPrivacy": false
+        });
         if(user===""){
-          setErrorTextFields((prevErrorTextFields: any) => ({
-              ...prevErrorTextFields,
-              user: true,
-          }));
-          dataOk = false
+            setOpenErrorModal(true)
+            setErrorData("missing_user_name")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                user: true,
+            }));
+            dataOk = false
         }
         if(email===""){
-          setErrorTextFields((prevErrorTextFields: any) => ({
-              ...prevErrorTextFields,
-              email: true,
-          }));
-          dataOk = false
+            setOpenErrorModal(true)
+            setErrorData("missing_email")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                email: true,
+            }));
+            dataOk = false
         }
         if(pass===""){
-          setErrorTextFields((prevErrorTextFields: any) => ({
-              ...prevErrorTextFields,
-              pass: true,
-          }));
-          dataOk = false
+            setOpenErrorModal(true)
+            setErrorData("missing_user_password")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                pass: true,
+            }));
+            dataOk = false
         }
         if(confirmPass==="" || confirmPass !== pass){
-          setErrorTextFields((prevErrorTextFields: any) => ({
-              ...prevErrorTextFields,
-              confirmPass: true,
-          }));
-          dataOk = false
+            setOpenErrorModal(true)
+            setErrorData("confirm_password_must_match")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                confirmPass: true,
+            }));
+            dataOk = false
         }
         if(!termsAndPrivacy){
-          setErrorTextFields((prevErrorTextFields: any) => ({
-              ...prevErrorTextFields,
-              termsAndPrivacy: true,
-          }));
-          dataOk = false
+            setOpenErrorModal(true)
+            setErrorData("missing_terms_and_privacy")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                termsAndPrivacy: true,
+            }));
+            dataOk = false
         }
-        if(!dataOk) return
+        // if(!dataOk) return
 
-
-
-        // console.log("testing addUser1")
-
-        // postClient()
-        const bodyCreate: UserEditData = {}
-        bodyCreate.deleted = false
-        bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
-        bodyCreate.background_color = 0
-        bodyCreate.alerts_enabled = false
-        bodyCreate.ordered_fields = [-1,-2,-3,-4,-5]
-        bodyCreate.id_access_level = 3
-        bodyCreate.user = user
-        bodyCreate.email = email
-        bodyCreate.enabled = true
-        bodyCreate.pass = pass
-
-        const createUser = async() => {
-            const rta = await postUser(bodyCreate);
-            setOpenConfirmCreatedUserModal(true);
-        };
-        createUser();
-        
+        if(dataOk){
+            setOpenSaveChanges(true);
+        }
     }
 
+    const handleCloseSaveChanges = (ans?:boolean) => {
+        if(ans){
+            // postClient()
+            const bodyCreate: UserEditData = {}
+            bodyCreate.deleted = false
+            bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
+            bodyCreate.background_color = 0
+            bodyCreate.alerts_enabled = false
+            bodyCreate.ordered_fields = [-1,-2,-3,-4,-5]
+            bodyCreate.id_access_level = 3
+            bodyCreate.user = user
+            bodyCreate.email = email
+            bodyCreate.enabled = true
+            bodyCreate.pass = pass
+
+            const createUser = async() => {
+                const rta = await postUser(bodyCreate);
+                console.log("rta: ", rta)
+                if(rta.loadingSuccess)
+                    setOpenConfirmCreatedUserModal(true);
+                else{
+                    console.error(rta.errorCode)
+                    console.error(rta.field)
+                    
+                setErrorTextFields((prevErrorTextFields: any) => ({
+                    ...prevErrorTextFields,
+                    [rta.field]: true,
+                }));
+                }
+            };
+            createUser();
+        }
+        setOpenSaveChanges(false);
+    }
+
+    const handleCloseErrorModal = () => {
+        setOpenErrorModal(false)
+    }
 
     const handleCloseConfirmCreatedUserModal = () => {
         setOpenConfirmCreatedUserModal(false)
     }
     
 /////////// AAAAAAAAAAADDDDDDDDDDEmail format error 
-/////////// AAAAAAAAAAADDDDDDDDDD ConfirmCreatedUserModal
+/////////// AAAAAAAAAAADDDDDDDDDD ConfirmCreatedUserModal send email of confirmation before to enable the user, and if is not confirmated in the next 15 minutes should delete the user an the client creates(?)
 
     return (
         <Modal open={true} >
             <Box sx={modalStyleSaveExternal}>
                 <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+                    <SaveChanges
+                        openSaveChanges={openSaveChanges}
+                        closeSaveChanges={handleCloseSaveChanges} 
+                    />
+                    <ErrorModal
+                        openErrorModal={openErrorModal}
+                        closeErrorModal={handleCloseErrorModal}
+                        errorData={errorData} 
+                    />
                     <ConfirmCreatedUserModal
                         openConfirmCreatedUserModal={openConfirmCreatedUserModal}
                         closeConfirmCreatedUserModal={handleCloseConfirmCreatedUserModal}
@@ -317,7 +366,8 @@ export default function SignUp () {
                                 />Remember me 
                             </Box>
                             <OkButton
-                                clicked={() => handleSignUp()}
+                                // clicked={() => handleSignUp()}
+                                clicked={() => handleOpenSaveChanges()}
                                 widthIco={100}
                             />
                         </Box>
