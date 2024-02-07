@@ -221,11 +221,12 @@ export default function SignUp () {
                 else{
                     console.error(rta.errorCode)
                     console.error(rta.field)
-                    
-                setErrorTextFields((prevErrorTextFields: any) => ({
-                    ...prevErrorTextFields,
-                    [rta.field]: true,
-                }));
+                    setOpenErrorModal(true) // Open the modal for duplicate product error
+                    setErrorData(rta.errorCode)
+                    setErrorTextFields((prevErrorTextFields: any) => ({
+                        ...prevErrorTextFields,
+                        [rta.field]: true,
+                    }));
                 }
             };
             createUser();
