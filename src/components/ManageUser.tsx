@@ -80,8 +80,18 @@ export default function ManageUser(
                 bodyUpdate.last_name = userLastName
             if(!edition || dataEditUser.user != userUser)
                 bodyUpdate.user = userUser
-            if(!edition || dataEditUser.email != userEmail)
+            if(userEmail===""){
+                bodyUpdate.email = null
+            }else if(!edition || dataEditUser.email != userEmail){
+                // console.log("edition: ", edition)
+                // console.log("dataEditUser.email: ", dataEditUser.email)
+                // console.log("userEmail: ", userEmail)
                 bodyUpdate.email = userEmail
+            }
+            
+            // console.log("OUT edition: ", edition)
+            // console.log("OUT dataEditUser.email: ", dataEditUser.email)
+            // console.log("OUT userEmail: ", userEmail)
             if(!edition || dataEditUser.enabled !== userEnabled)
                 bodyUpdate.enabled = userEnabled
             if(!edition || dataEditUser.pass != userPassword)
