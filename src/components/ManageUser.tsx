@@ -83,15 +83,8 @@ export default function ManageUser(
             if(userEmail===""){
                 bodyUpdate.email = null
             }else if(!edition || dataEditUser.email != userEmail){
-                // console.log("edition: ", edition)
-                // console.log("dataEditUser.email: ", dataEditUser.email)
-                // console.log("userEmail: ", userEmail)
                 bodyUpdate.email = userEmail
             }
-            
-            // console.log("OUT edition: ", edition)
-            // console.log("OUT dataEditUser.email: ", dataEditUser.email)
-            // console.log("OUT userEmail: ", userEmail)
             if(!edition || dataEditUser.enabled !== userEnabled)
                 bodyUpdate.enabled = userEnabled
             if(!edition || dataEditUser.pass != userPassword)
@@ -100,10 +93,11 @@ export default function ManageUser(
             if(Object.keys(bodyUpdate).length>0)
                 changed = true;
 
+            
             const fetchManageUser = async () => {
-                let loadingSuccess: boolean = false
                 bodyUpdate.id_client = user.id_client
                 bodyUpdate.language =  user.language
+                let loadingSuccess: boolean = false
                 try {
                     const manage_user = (edition ? dataEditUser._id : "")
                     const manage_method = (edition ? 'PATCH' : 'POST')
@@ -121,19 +115,10 @@ export default function ManageUser(
                         const responseData = await response.json() // parse the response data
                         // console.log(`${manage_method} request successful: `, responseData)
                         loadingSuccess = true
-                        
-                        // console.log("ManageUser.tsx responseData: ", responseData)
-                        // console.log("ManageUser.tsx responseData._id: ", responseData._id)
-                        // console.log("ManageUser.tsx users: ", users)
-                        // console.log("ManageUser.tsx bodyUpdate: ", bodyUpdate)
                         let updatedUsers
                         if (edition){
                             updatedUsers = users.map((currentUser: any) => {
                                 // Find the user by comparing some unique identifies, like _id
-                                // console.log("ManageUser.tsx currentUser._id: ", currentUser._id)
-                                // console.log("ManageUser.tsx user._id: ", user._id)
-                                // console.log("ManageUser.tsx users._id: ", users._id)
-                                // console.log("ManageUser.tsx bodyUpdate._id: ", users._id)
                                 if (currentUser._id === responseData._id) {
                                     // Update only the properties from bodyUpdate
                                     return {
@@ -166,14 +151,22 @@ export default function ManageUser(
 
                     } else if (response.status === 400) {
                         // Handle non-successful responses
-                        console.error('Request failed: ', response.status, response.statusText)
+                        // console.error('Request failed: ', response.status, response.statusText)
                         const errorData = await response.json()
-                        console.error('Request failed 2: ', errorData.error)
+                        // console.error('errorData: ', errorData)
+                        // console.error('errorData.error: ', errorData.error)
+                        // console.error('errorData.errorCode: ', errorData.errorCode)
                         // Handle the error here
-                        if (errorData.errorCode === 'duplicate_product') {
-                            setOpenErrorModal(true) // Open the modal for duplicate product error
-                            setErrorData(errorData.errorCode)
-                        }
+                        setOpenErrorModal(true) // Open the modal for duplicate product error
+                        setErrorData(errorData.errorCode)
+                        setErrorTextFields((prevErrorTextFields: any) => ({
+                            ...prevErrorTextFields,
+                            [errorData.field]: true,
+                        }));
+                    } else {
+                        console.error('Request failed: ', response.status, response.statusText)
+                        console.error('response: ', response)
+                        console.error('response.: ', response)
                     }
                 } catch (error: unknown) {
                     if (typeof error === 'string') {
@@ -181,9 +174,11 @@ export default function ManageUser(
                         console.error('Error:', error)
                     } else if (error instanceof Error) {
                         // 'error' is now narrowed down to type 'Error'
+                        console.error('Errrrrrror object:')
                         console.error('Error object:', error.message)
                     } else {
                         // Handle other cases as needed
+                        console.error('Error??? object:')
                     }
                 } finally {
                     // console.log("loadingSuccess: ", loadingSuccess)
@@ -191,11 +186,13 @@ export default function ManageUser(
                         ...prevLoading,
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
+                    console.log("loadingSuccess: ", loadingSuccess)
+                    if(loadingSuccess)
+                        close();
                 }
             } 
             if (changed)
                 fetchManageUser()
-            close();
         }
         
         console.log("setOpenSaveChanges: ", false)
@@ -207,6 +204,13 @@ export default function ManageUser(
     }
     const handleOpenSaveChanges = () => {
         let save_changes_allowed: boolean = true
+        setErrorTextFields({
+            "access_level": false,
+            "name": false,
+            "email": false,
+            "user": false,
+            "password": false,
+        });
         if(userName===""){
             setOpenErrorModal(true)
             setErrorData("missing_user_name")
@@ -490,7 +494,8 @@ export default function ManageUser(
                                 onChange={ (event) => handleUserEmail(event.target.value) }
                                 maxRows={1}
                                 size="small"
-                                className={classes.inputMainData}
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,
                                 }}

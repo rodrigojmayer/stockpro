@@ -50,7 +50,14 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (props.errorData === "invalid_email_format"){
         title="Invalid email format"
         subTitle=`Email*`
-    }
+    } else if (props.errorData === "email_duplicated"){
+        title=""
+        subTitle=`Email address already in use`
+    } else if (props.errorData === "user_duplicated"){
+        title=""
+        subTitle=`User already in use`
+    } 
+    
 
     return (
         <Modal
