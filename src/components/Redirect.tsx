@@ -35,7 +35,7 @@ const Redirect = () => {
 
 
             isLoading
-                    ? <p>Loadinggggggggg</p>
+                    ? <p></p>
                     : auth?._id 
                         ? <Navigate to="/" state={{ from: location }} replace />
                         : <Outlet />

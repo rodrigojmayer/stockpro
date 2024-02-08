@@ -129,19 +129,16 @@ export default function ManageUser(
                                 // For other users, keep them unchanged
                                 return currentUser;
                             })
-                            console.log("ManageUser.tsx updatedUsers: ", updatedUsers)
                         } else {
                             const newUser = responseData
                             updatedUsers = [...users, newUser]
                             
                         }
                         setUsers(updatedUsers)
-                        if(!updatedUsers[0].enabled){
+                        if(!responseData.enabled){
                             sendJsonMessage({
-                                disable: updatedUsers[0].user
+                                disable: responseData.user
                             })
-                            console.log("disabled")
-                            console.log("lastJsonMessage: ", lastJsonMessage)
                         }
                     } else if (response.status === 400) {
                         // Handle non-successful responses
@@ -371,13 +368,13 @@ export default function ManageUser(
                     loadingSuccess = true
                     const updatedUsers = users.filter((user: any) => {
                         // Find the user by comparing to delete, like _id
-                        console.log("delete user._id: ", user._id)
-                        console.log("delete responseData._id: ", responseData._id)
                         if(user._id !== responseData._id)
                             return user;
                     })
-                    console.log("delete updatedUsers: ", updatedUsers)
                     setUsers(updatedUsers)
+                    sendJsonMessage({
+                        delete: responseData.user
+                    })
                 } else {
                     // Handle non-successful responses
                     console.error('Request failed: ', response.status, response.statusText)

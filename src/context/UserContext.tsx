@@ -53,9 +53,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   // const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL)
 
   useEffect(() => {
-    console.log("lastJsonMessage: ",  lastJsonMessage)
-    if(lastJsonMessage?.forceLogout )
+    if(lastJsonMessage?.forceLogout ){
       logout()
+      lastJsonMessage.forceLogout = false
+    }
 
   }, [lastJsonMessage?.forceLogout])
 
