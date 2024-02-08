@@ -49,6 +49,9 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (errorData === "missing_email"){
         title="Missing required data"
         subTitle=`Email*`
+    } else if (errorData === "missing_user_name_email"){
+        title="Missing required data"
+        subTitle=`Username or email*`
     } else if (errorData === "confirm_password_must_match"){
         title="Confirm password must match"
         subTitle=`Confirm password*`
@@ -64,6 +67,15 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (errorData === "user_duplicated"){
         title=""
         subTitle=`User already in use`
+    } else if (errorData === "user_deleted"){
+        title=""
+        subTitle=`User deleted`
+    }  else if (errorData === "user_disabled"){
+        title=""
+        subTitle=`User disabled`
+    } else if (errorData === "login_failed"){
+        title="Login failed"
+        subTitle=`User or password incorrect`
     } 
     
 

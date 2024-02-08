@@ -85,8 +85,9 @@ export default function ManageUser(
             }else if(!edition || dataEditUser.email != userEmail){
                 bodyUpdate.email = userEmail
             }
-            if(!edition || dataEditUser.enabled !== userEnabled)
+            if(!edition || dataEditUser.enabled !== userEnabled){
                 bodyUpdate.enabled = userEnabled
+            }
             if(!edition || dataEditUser.pass != userPassword)
                 bodyUpdate.pass = userPassword 
             let changed = false
@@ -289,7 +290,7 @@ export default function ManageUser(
         setUserDeleted(value)
     }
     const handleUserEnabled = (value: boolean) => {
-        // console.log("setUserEnabled value: ", value)
+        console.log("setUserEnabled value: ", value)
         setUserEnabled(value)
     }
     const handleUserPassword = (value: string) => {

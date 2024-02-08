@@ -11,6 +11,7 @@ import { Box,
         Switch,
         } from '@mui/material';
 import { OkButton } from '../components/Buttons';
+import ErrorModal from '../components/ErrorModal';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal  } from '../Styles'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -158,7 +159,13 @@ export default function Login () {
     // console.log("handleLogin rememberUser: ", rememberUser)
     // alert("login submit success")
     let dataOk: boolean = true
+    setErrorTextFields({
+      "user_name_email": false,
+      "user_pass": false,
+  });
     if(userNameEmail===""){
+      setOpenErrorModal(true)
+      setErrorData("missing_user_name_email")
       setErrorTextFields((prevErrorTextFields: any) => ({
           ...prevErrorTextFields,
           user_name_email: true,
@@ -166,6 +173,8 @@ export default function Login () {
       dataOk = false
     }
     if(userPass===""){
+      setOpenErrorModal(true)
+      setErrorData("missing_user_password")
       setErrorTextFields((prevErrorTextFields: any) => ({
           ...prevErrorTextFields,
           user_pass: true,
@@ -174,7 +183,13 @@ export default function Login () {
     }
     if(!dataOk) return
 
-    await loginUser(userNameEmail, userPass, rememberUser)
+    const rta = await loginUser(userNameEmail, userPass, rememberUser)
+    setOpenErrorModal(true) // Open the modal for duplicate product error
+    setErrorData(rta.errorCode)
+    setErrorTextFields((prevErrorTextFields: any) => ({
+        ...prevErrorTextFields,
+        [rta.field]: true,
+    }));
     // navigate(from, { replace: true });
   }
   
@@ -194,6 +209,10 @@ export default function Login () {
     // Handle the failure/error during Google login here
   };
   
+  const handleCloseErrorModal = () => {
+    setOpenErrorModal(false)
+  }
+
   useEffect(() => {
     if(gmailUserLogged.email && gmailUserLogged.email !== user.email){
       const fetchUserByGmail = async () => {
@@ -259,17 +278,17 @@ export default function Login () {
       <Modal open={true} > 
         <Box sx={modalStyleSaveExternal}>
           <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+            <ErrorModal
+              openErrorModal={openErrorModal}
+              closeErrorModal={handleCloseErrorModal}
+              errorData={errorData} 
+            />            
             <Typography className={classes.finishButtons} align="center" variant='h5' >
                 Login
             </Typography> 
             <form
-              // onSubmit={(e) => {
-              //   e.preventDefault()
-              //   handleLogin()
-              // }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    e.preventDefault(); // Prevent default form submission
                     handleLogin(); // Call your login function
                   }
                 }}

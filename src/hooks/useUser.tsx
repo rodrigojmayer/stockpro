@@ -53,6 +53,7 @@ export default function useUser () {
   // }
 
   const loginUser = async (userNameEmail: string, userPass: string, rememberUser?: RememberUserData, googleDecodedToken?: JwtPayload) => {
+    const rta = {loadingSuccess: false, errorCode: "", field: ""}        
     // try {
     //   // const response = await fetch(`http://localhost:4000/api/users/login/`, {
     //   const response = await fetch(`http://localhost:4000/api/auth/`, {
@@ -118,6 +119,7 @@ export default function useUser () {
       // setAuth({ userNameEmail, userPass, accessToken, id_client, ordered_fields})
       setAuth({ userNameEmail, accessToken, _id})
       navigate(from, { replace: true });
+      rta.loadingSuccess = true
       // console.log(JSON.stringify(response))
       // if (response.ok) {
       //       const json = await response.json();
@@ -138,13 +140,19 @@ export default function useUser () {
         console.error('No Server Response')
         // setErrMsg('No Server Response')
       } else if (err.response?.status === 400) {
-        console.error('Missing Username or Password')
+        // console.error('err.response.data.error: ', err.response.data.error)
         // setErrMsg('Missing Username or Password')
+        
+        rta.errorCode = err.response.data.error
+        // rta.field = err.response.data.field
       } else if (err.response?.status === 401) {
         console.error('Unauthorized')
         // setErrMsg('Unauthorized')
       } else {
-        console.error('Login Failed')
+        // console.error('Login Failed')
+        // console.error('err: ', err)
+        rta.errorCode = "login_failed"
+        // console.error('Missing Username or Password')
         // setErrMsg('Login Failed')
       }
     } finally {
@@ -152,8 +160,10 @@ export default function useUser () {
       
       setIsLoading((prevLoading:any) => ({
         ...prevLoading,
-        user: true,
+        // user: true,
+        user: rta.loadingSuccess,
       }));
+      return rta
     }
 
   };
