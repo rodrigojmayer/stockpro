@@ -308,12 +308,6 @@ export const modalStyleExternal = {
     width: "100%",
     overflowX: "hidden",
 };
-export const modalStyleDisabled = {
-    pointerEvents: "none",
-};
-export const modalStyleEnabled = {
-    pointerEvents: "auto"
-};
 export const modalStyleInternal = {
     // top: 74,
     maxWidth: "700px",
