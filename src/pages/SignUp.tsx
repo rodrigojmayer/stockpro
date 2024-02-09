@@ -138,7 +138,6 @@ export default function SignUp () {
 
     // const handleSignUp = () => {
     const handleOpenSaveChanges = () => {
-        let dataOk: boolean = true
         setErrorTextFields({
             "user": false,
             "email": false,
@@ -153,47 +152,35 @@ export default function SignUp () {
                 ...prevErrorTextFields,
                 user: true,
             }));
-            dataOk = false
-        }
-        if(email===""){
+        }else if(email===""){
             setOpenErrorModal(true)
             setErrorData("missing_email")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 email: true,
             }));
-            dataOk = false
-        }
-        if(pass===""){
+        }else if(pass===""){
             setOpenErrorModal(true)
             setErrorData("missing_user_password")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 pass: true,
             }));
-            dataOk = false
-        }
-        if(confirmPass==="" || confirmPass !== pass){
+        }else if(confirmPass==="" || confirmPass !== pass){
             setOpenErrorModal(true)
             setErrorData("confirm_password_must_match")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 confirmPass: true,
             }));
-            dataOk = false
-        }
-        if(!termsAndPrivacy){
+        }else if(!termsAndPrivacy){
             setOpenErrorModal(true)
             setErrorData("missing_terms_and_privacy")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 termsAndPrivacy: true,
             }));
-            dataOk = false
-        }
-        // if(!dataOk) return
-
-        if(dataOk){
+        }else{
             setOpenSaveChanges(true);
         }
     }
@@ -272,7 +259,9 @@ export default function SignUp () {
                     <form
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
+                                e.preventDefault();
                                 handleOpenSaveChanges(); 
+                                e.stopPropagation() 
                             }
                         }}
                     >

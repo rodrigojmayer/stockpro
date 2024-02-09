@@ -23,24 +23,35 @@ export default function SaveChanges( props: SaveChangesProps) {
         open={openSaveChanges} 
         onClose={() => closeSaveChanges()}
         > 
-            <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleSaveInternal}>
-                    <Typography align="center" variant="h6">
-                        Save changes?
-                    </Typography>
-                    <Typography align="center" >
-                        {messageBeforeSave}
-                    </Typography>
-                    <Box className={classes.finishButtons}>
-                        <CancelButton
-                        clicked={() => closeSaveChanges(false)}
-                        />
-                        <OkButton
-                        clicked={() => closeSaveChanges(true)}
-                        />
-                    </Box> 
+            <form
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        
+                        e.preventDefault();
+                        closeSaveChanges(true); // Call your save function
+                        e.stopPropagation()
+                    }
+                }}
+            >
+                <Box sx={modalStyleSaveExternal}>
+                    <Box sx={modalStyleSaveInternal}>
+                        <Typography align="center" variant="h6">
+                            Save changes?
+                        </Typography>
+                        <Typography align="center" >
+                            {messageBeforeSave}
+                        </Typography>
+                        <Box className={classes.finishButtons}>
+                            <CancelButton
+                            clicked={() => closeSaveChanges(false)}
+                            />
+                            <OkButton
+                            clicked={() => closeSaveChanges(true)}
+                            />
+                        </Box> 
+                    </Box>
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }

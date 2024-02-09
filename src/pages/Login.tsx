@@ -289,7 +289,9 @@ export default function Login () {
             <form
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
+                    e.preventDefault();
                     handleLogin(); // Call your login function
+                    e.stopPropagation() 
                   }
                 }}
               >

@@ -11,7 +11,7 @@ import { OkButton,
          DeleteButton
         } from './Buttons';
 import SaveChanges from './SaveChanges';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, modalStyleDisabled, modalStyleEnabled } from '../Styles'
 import { DataCreateStockOptions, ColumnData, UserEditData } from '../types';
 import { AccessLevelsContext } from '../context/AccessLevelsContext';
 import { UserContext } from '../context/UserContext';
@@ -60,7 +60,6 @@ export default function ManageUser(
     const [userPassword, setUserPassword] = useState<string>('');
     const [errorTextFields, setErrorTextFields] = useState({
         "access_level": false,
-        "name": false,
         "email": false,
         "user": false,
         "password": false,
@@ -70,6 +69,7 @@ export default function ManageUser(
     const [errorData, setErrorData] = useState("");  
 
     const handleCloseSaveChanges = (ans?:boolean) => {
+        alert(ans)
         if(ans){
             const bodyUpdate: UserEditData = {}
             if(!edition || dataEditUser.id_access_level != userAccessLevel)
@@ -93,11 +93,12 @@ export default function ManageUser(
             let changed = false
             if(Object.keys(bodyUpdate).length>0)
                 changed = true;
+            
+            let loadingSuccess: boolean = false
 
             const fetchManageUser = async () => {
                 bodyUpdate.id_client = user.id_client
                 bodyUpdate.language =  user.language
-                let loadingSuccess: boolean = false
                 try {
                     const manage_user = (edition ? dataEditUser._id : "")
                     const manage_method = (edition ? 'PATCH' : 'POST')
@@ -142,7 +143,6 @@ export default function ManageUser(
                         }
                     } else if (response.status === 400) {
                         // Handle non-successful responses
-                        // console.error('Request failed: ', response.status, response.statusText)
                         const errorData = await response.json()
                         // console.error('errorData: ', errorData)
                         // console.error('errorData.error: ', errorData.error)
@@ -178,12 +178,14 @@ export default function ManageUser(
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
                     console.log("loadingSuccess: ", loadingSuccess)
-                    if(loadingSuccess)
-                        close();
+                    //  
                 }
             } 
             if (changed)
                 fetchManageUser()
+            if(loadingSuccess || !changed)
+                close();
+           
         }
         setOpenSaveChanges(false);
     }
@@ -192,23 +194,12 @@ export default function ManageUser(
         setOpenErrorModal(false)
     }
     const handleOpenSaveChanges = () => {
-        let save_changes_allowed: boolean = true
         setErrorTextFields({
             "access_level": false,
-            "name": false,
             "email": false,
             "user": false,
             "password": false,
         });
-        if(userName===""){
-            setOpenErrorModal(true)
-            setErrorData("missing_user_name")
-            setErrorTextFields((prevErrorTextFields: any) => ({
-                ...prevErrorTextFields,
-                name: true,
-            }));
-            save_changes_allowed=false
-        }
         if(!userAccessLevel){
             setOpenErrorModal(true)
             setErrorData("missing_user_access_level")
@@ -216,27 +207,28 @@ export default function ManageUser(
                 ...prevErrorTextFields,
                 access_level: true,
             }));
-            save_changes_allowed=false
-        }
-        if(userUser===""){
+        }else if(userUser===""){
             setOpenErrorModal(true)
             setErrorData("missing_user_user")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 user: true,
             }));
-            save_changes_allowed=false
-        }
-        if(userPassword===""){
+        }else if(userEmail===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_email")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                email: true,
+            }));
+        }else if(userPassword===""){
             setOpenErrorModal(true)
             setErrorData("missing_user_password")
             setErrorTextFields((prevErrorTextFields: any) => ({
                 ...prevErrorTextFields,
                 password: true,
             }));
-            save_changes_allowed=false
-        }
-        if(save_changes_allowed){
+        }else{
             setOpenSaveChanges(true);
         }
     }
@@ -261,10 +253,6 @@ export default function ManageUser(
     const handleUserName = (value: string) => {
         // console.log("setUserName value: ", value)
         setUserName(value)
-        setErrorTextFields((prevErrorTextFields: any) => ({
-            ...prevErrorTextFields,
-            name: false,
-        }));
     }
     const handleUserLastName = (value: string) => {
         // console.log("setUserLastName value: ", value)
@@ -330,7 +318,6 @@ export default function ManageUser(
             setUserPassword('')
         setErrorTextFields({
             "access_level": false,
-            "name": false,
             "email": false,
             "user": false,
             "password": false,
@@ -427,107 +414,117 @@ export default function ManageUser(
                         confirmDelete={handleConfirmDelete}
                     />
                     <Typography align='center' variant="h5">{edition ? 'Edit ' : 'Create '} user</Typography>
-                    <Box className={classes.customBoxColumn}>
-                        <Box className={classes.customBoxRow}>
-                            <TextField 
-                                label="Access level*"
-                                size="small"
-                                select
-                                className= {`${errorTextFields.access_level ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                InputProps={{className: classes.inputClassName}}
-                                value={userAccessLevel ? userAccessLevel : '' }
-                                onChange={ (event) => handleUserAccessLevel(Number(event.target.value)) }
-                                >
-                                    {accessLevels.map((accessLevel: any) => (
-                                        <MenuItem 
-                                            className={classes.menuItemUsers}
-                                            key={accessLevel.id} 
-                                            value={accessLevel.id}
-                                            sx={{ justifyContent: "space-between" }}
-                                        >
-                                            {accessLevel.name}
-                                        </MenuItem>
-                                    ))}
-                            </TextField>
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Name*"
-                                value={userName}
-                                onChange={ (event) => handleUserName(event.target.value) }
-                                maxRows={1}
-                                size="small"
-                                className= {`${errorTextFields.name ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Last name"
-                                value={userLastName}
-                                onChange={ (event) => handleUserLastName(event.target.value) }
-                                maxRows={1}
-                                size="small"
-                                className={classes.inputMainData}
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Email"
-                                value={userEmail}
-                                onChange={ (event) => handleUserEmail(event.target.value) }
-                                maxRows={1}
-                                size="small"
-                                // className={classes.inputMainData}
-                                className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="User*"
-                                value={userUser}
-                                onChange={ (event) => handleUserUser(event.target.value) }
-                                maxRows={1}
-                                size="small"
-                                className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Password*"
-                                value={userPassword}
-                                type="password"
-                                onChange={ (event) => handleUserPassword(event.target.value) }
-                                maxRows={1}
-                                size="small"
-                                className= {`${errorTextFields.password ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <Typography >{(userEnabled)?'Enabled':'Disabled'}</Typography>
-                            <Switch 
-                                    color='success'  
-                                    checked={userEnabled}
-                                    onChange={(event) => {
-                                        handleUserEnabled(event.target.checked)
+                    <form
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                handleOpenSaveChanges(); // Call your save function
+                                e.stopPropagation() 
+                            }
+                        }}
+                    >
+                        <Box className={classes.customBoxColumn}>
+                            <Box className={classes.customBoxRow}>
+                                <TextField 
+                                    label="Access level*"
+                                    size="small"
+                                    select
+                                    className= {`${errorTextFields.access_level ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    InputProps={{className: classes.inputClassName}}
+                                    value={userAccessLevel ? userAccessLevel : '' }
+                                    onChange={ (event) => handleUserAccessLevel(Number(event.target.value)) }
+                                    >
+                                        {accessLevels.map((accessLevel: any) => (
+                                            <MenuItem 
+                                                className={classes.menuItemUsers}
+                                                key={accessLevel.id} 
+                                                value={accessLevel.id}
+                                                sx={{ justifyContent: "space-between" }}
+                                            >
+                                                {accessLevel.name}
+                                            </MenuItem>
+                                        ))}
+                                </TextField>
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="User*"
+                                    value={userUser}
+                                    onChange={ (event) => handleUserUser(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    InputProps={{
+                                        className: classes.inputClassName,
                                     }}
-                                />  
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Email*"
+                                    value={userEmail}
+                                    onChange={ (event) => handleUserEmail(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    // className={classes.inputMainData}
+                                    className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Password*"
+                                    value={userPassword}
+                                    type="password"
+                                    onChange={ (event) => handleUserPassword(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className= {`${errorTextFields.password ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Name"
+                                    value={userName}
+                                    onChange={ (event) => handleUserName(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className= {classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Last name"
+                                    value={userLastName}
+                                    onChange={ (event) => handleUserLastName(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <Typography >{(userEnabled)?'Enabled':'Disabled'}</Typography>
+                                <Switch 
+                                        color='success'  
+                                        checked={userEnabled}
+                                        onChange={(event) => {
+                                            handleUserEnabled(event.target.checked)
+                                        }}
+                                    />  
+                            </Box>
                         </Box>
-                    </Box>
+                    </form>
                     <Box className={classes.finishButtons}>
                         <DeleteButton
                             clicked={() => handleDeleteProduct()}

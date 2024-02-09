@@ -4,7 +4,7 @@ import { Box,
          Container,
          Grid,
          IconButton,
-         Modal, 
+         Modal,
          TextField,
          Typography,
          OutlinedInput,
@@ -34,7 +34,7 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, modalStyleDisabled, modalStyleEnabled } from '../Styles'
 import { ColumnData, ColumnDataCustom, ChildProps, UserEditData } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
@@ -58,6 +58,7 @@ export default function Users( { open, handleClose }: ChildProps) {
     const { users } = useContext<any>(UsersContext)
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     // const usersArray = users
+    const [ modalDisabled, setModalDisabled ]= useState<boolean>(false); 
     const [usersArray, setUsersArray] = useState<any>(users); 
 
     const [ showManageUser, setShowManageUser ] = useState(false) 
@@ -148,18 +149,14 @@ export default function Users( { open, handleClose }: ChildProps) {
         // console.log("Users.tsx: ", users)
         setUsersArray(users)
     }, [users])
-    
+
     return (
         <Modal
-        open={open} 
-        onClose={close}
+            open={open} 
+            onClose={close}
         > 
-            <Box sx={modalStyleExternal}>
+            <Box sx={modalStyleExternal }>
                 <Box sx={modalStyleInternal}>
-                    {/* <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
-                    /> */}
                     <ErrorModal
                         openErrorModal={openErrorModal}
                         closeErrorModal={handleCloseErrorModal}
@@ -171,6 +168,7 @@ export default function Users( { open, handleClose }: ChildProps) {
                     <Box className={classes.customBoxColumn}>
                         {Array.isArray(usersArray) && usersArray.map((user:any) => {
                         {/* {Array.isArray(users) && users.map((user:any) => { */}
+                        
                             return (
                                 <Stack 
                                     className={classes.customBoxColumn} 

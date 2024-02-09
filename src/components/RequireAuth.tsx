@@ -30,7 +30,7 @@ const RequireAuth = () => {
         <>
         {
             isLoading
-                    ? <p>Loadinggggggggg</p>
+                    ? <p></p>
                     : auth?._id 
                         ? <Outlet />
                         : <Navigate to="/login" state={{ from: location }} replace />

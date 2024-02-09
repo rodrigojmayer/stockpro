@@ -60,7 +60,7 @@ export default function ErrorModal( props: ErrorModalProps) {
         subTitle=`Terms and privacy*`
     } else if (errorData === "invalid_email_format"){
         title="Invalid email format"
-        subTitle=`Email*`
+        subTitle=``
     } else if (errorData === "email_duplicated"){
         title=""
         subTitle=`Email address already in use`
@@ -87,7 +87,9 @@ export default function ErrorModal( props: ErrorModalProps) {
             <form
                 onKeyDown={(e) => {
                     if (e.key === "Enter" || e.code === "Space") {
-                        closeErrorModal(false); 
+                        e.preventDefault();
+                        closeErrorModal(false);
+                        e.stopPropagation() 
                     }
                 }}
             >

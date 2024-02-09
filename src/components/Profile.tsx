@@ -50,6 +50,12 @@ export default function Profile( { open, handleClose }: ChildProps) {
     }
 
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
+    const [errorTextFields, setErrorTextFields] = useState({
+        "user": false,
+        "email": false,
+        "pass": false,
+        "confirmPass": false,
+    });
     const { user, setUser } = useContext<any>(UserContext); 
     const[ profileName, setProfileName ] = useState<string>('')
     const[ profileLastName, setProfileLastName ] = useState<string>('')
@@ -100,16 +106,12 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         },
                         body:JSON.stringify(bodyUpdate)
                     })
-    
+
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json(); // parse the response data
                         // console.log('POST request successful: ', responseData)
                         loadingSuccess = true;
-                        // setUser((prevUser: any) => ({
-                        //     ...prevUser,
-                        //     bodyUpdate
-                        // }))
                         const updatedUser = {
                             ...user,
                             ...bodyUpdate
@@ -117,8 +119,17 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         setUser(updatedUser)
                     } else {
                         // Handle non-successful responses
+                        const errorData = await response.json()
+                        console.error('Request failed errorData: ', errorData);
+                        console.error('Request failed response: ', response);
                         console.error('Request failed: ', response.status, response.statusText);
                         // Handle the error here
+                        setOpenErrorModal(true) // Open the modal for duplicate product error
+                        setErrorData(errorData.errorCode)
+                        setErrorTextFields((prevErrorTextFields: any) => ({
+                            ...prevErrorTextFields,
+                            [errorData.field]: true,
+                        }));
                     }
                 } catch (error: unknown) {
                     if (typeof error === 'string') {
@@ -137,11 +148,12 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
                     setCheckListStock([]);
+                    if(loadingSuccess)
+                        close();
                 }
             } 
             if (changed)
                 fetchUpdateUser();
-            close();
         }
         setOpenSaveChanges(false);
     }
@@ -151,9 +163,22 @@ export default function Profile( { open, handleClose }: ChildProps) {
     }
 
     const handleOpenSaveChanges = () => {
+        setErrorTextFields({
+            "user": false,
+            "email": false,
+            "pass": false,
+            "confirmPass": false,
+        });
         if(profileUser===""){
             setOpenErrorModal(true);
             setErrorData("missing_data_user");
+        } else if (profileEmail===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_email")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                email: true,
+            }));
         }else if(profilePass!==profileConfirmPass){
             setOpenErrorModal(true);
             setErrorData("not_confirmed_pass");
@@ -171,9 +196,17 @@ export default function Profile( { open, handleClose }: ChildProps) {
     }
     const handleEditEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
         setProfileEmail(event.target.value);
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            email: false,
+        }));
     }
     const handleEditUser = (event: React.ChangeEvent<HTMLInputElement>) => {
         setProfileUser(event.target.value);
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            user: false,
+        }));
     }
     const handleEditPass = (event: React.ChangeEvent<HTMLInputElement>) => {
         setProfilePass(event.target.value);
@@ -246,11 +279,12 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         </Box>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Email"
+                                label="Email*"
                                 maxRows={1}
                                 size="small"
                                 type="email"
-                                className={classes.inputMainData}
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 value={profileEmail}
                                 onChange={ handleEditEmail }
                                 InputProps={{className: classes.inputClassName,}}
@@ -262,7 +296,8 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 maxRows={1}
                                 size="small"
                                 type="text"
-                                className={classes.inputMainData}
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 value={profileUser}
                                 onChange={ handleEditUser }
                                 InputProps={{className: classes.inputClassName,}}
