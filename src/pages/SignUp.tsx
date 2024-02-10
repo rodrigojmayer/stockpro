@@ -16,7 +16,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { UserContext } from "../context/UserContext";
 import { IsLoadingContext } from "../context/IsLoadingContext";
-import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData, UserEditData } from "../types";
+// import { RememberLabelUsersData, RememberUserData, RememberUsersPassData, UserData, UserEditData } from "../types";
+import { UserData, UserEditData } from "../types";
 import useAddUser from "../hooks/addUser";
 import ConfirmCreatedUserModal from "../components/ConfirmCreatedUserModal";
 
@@ -45,36 +46,36 @@ export default function SignUp () {
     const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
     const [showProfileConfirmPass, setShowProfileConfirmPass] = useState<boolean>(false);
     const [termsAndPrivacy, setTermsAndPrivacy] = useState<boolean>(false);
-    const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
-    const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
-    const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
+    // const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
+    // const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
+    // const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
     const [openConfirmCreatedUserModal, setOpenConfirmCreatedUserModal] = useState<any>(false);
     const [stockNameTemp, setStockNameTemp] = useState<any>();
      
     // Get the keys from localStorage
     let localStorageKeys = Object.keys(localStorage)
-    let varrememberUsersPass: any[] = []
+    // let varrememberUsersPass: any[] = []
   
-    useEffect(() => {
-      // Define a filter criterion
-      const filterCriterion = 'remember_profile_'
-      // Filter the localStorage keys based on the criterion
-      const filteredKeys = localStorageKeys.filter(key => {
-        // Check if the key matches your criteria
-        return key.startsWith(filterCriterion)
-      })
-      let storedUserEmail=[]
-      for(const key of filteredKeys) {
-        const storedData = localStorage.getItem(key)
-        if (storedData) {
-          const parsedData = JSON.parse(storedData)
-          storedUserEmail.push({"label": parsedData.user_email})
-          varrememberUsersPass.push(parsedData) 
-        }
-        setRememberLabelUsers(storedUserEmail) 
-        setRememberUsersPass(varrememberUsersPass)
-      }
-    }, [])
+    // useEffect(() => {
+    //   // Define a filter criterion
+    //   const filterCriterion = 'remember_profile_'
+    //   // Filter the localStorage keys based on the criterion
+    //   const filteredKeys = localStorageKeys.filter(key => {
+    //     // Check if the key matches your criteria
+    //     return key.startsWith(filterCriterion)
+    //   })
+    //   let storedUserEmail=[]
+    //   for(const key of filteredKeys) {
+    //     const storedData = localStorage.getItem(key)
+    //     if (storedData) {
+    //       const parsedData = JSON.parse(storedData)
+    //       storedUserEmail.push({"label": parsedData.user_email})
+    //       varrememberUsersPass.push(parsedData) 
+    //     }
+    //     setRememberLabelUsers(storedUserEmail) 
+    //     setRememberUsersPass(varrememberUsersPass)
+    //   }
+    // }, [])
   
 
 
@@ -91,19 +92,19 @@ export default function SignUp () {
             termsAndPrivacy: false,
         }));
     }
-    const rememberEnabledChange = (value: boolean) => {
-        setRememberUser((prevRememberUser: RememberUserData) => ({
-            ...prevRememberUser,
-            enabled: value
-        }))
-    }
+    // const rememberEnabledChange = (value: boolean) => {
+    //     setRememberUser((prevRememberUser: RememberUserData) => ({
+    //         ...prevRememberUser,
+    //         enabled: value
+    //     }))
+    // }
     
     const handleUser = (value: string) => {
         setUser(value)
-        setRememberUser((prevRememberUser: RememberUserData) => ({
-            ...prevRememberUser,
-            user: value
-        }))
+        // setRememberUser((prevRememberUser: RememberUserData) => ({
+        //     ...prevRememberUser,
+        //     user: value
+        // }))
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
             user: false,
@@ -111,10 +112,10 @@ export default function SignUp () {
     }
     const handleEmail = (value: string) => {
         setEmail(value)
-        setRememberUser((prevRememberUser: RememberUserData) => ({
-            ...prevRememberUser,
-            email: value
-        }))
+        // setRememberUser((prevRememberUser: RememberUserData) => ({
+        //     ...prevRememberUser,
+        //     email: value
+        // }))
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
             email: false,
@@ -352,8 +353,9 @@ export default function SignUp () {
                                     /> 
                                 </Box>
                             </Box>
-                            <Box className={classes.customBoxRowSpaceBetween}>
-                                <Box>
+                            <Box className={classes.customBoxRow} >
+                            {/* <Box className={classes.customBoxRowSpaceBetween}> */}
+                                {/* <Box>
                                     <Switch 
                                         color='success' 
                                         checked={rememberUser.enabled}
@@ -361,7 +363,7 @@ export default function SignUp () {
                                             rememberEnabledChange(event.target.checked)
                                         }}
                                     />Remember me 
-                                </Box>
+                                </Box> */}
                                 <OkButton
                                     // clicked={() => handleSignUp()}
                                     clicked={() => handleOpenSaveChanges()}
