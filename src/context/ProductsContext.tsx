@@ -28,7 +28,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
       const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)
       if (response.ok) {
         const json = await response.json()
-        console.log("productsContext json: ", json)
+        // console.log("productsContext json: ", json)
         
         // if(json.lenght>0){
           // Map through the products array and edit the date format

@@ -52,7 +52,7 @@ export default function useUser () {
   //     }
   // }
 
-  const loginUser = async (userNameEmail: string, userPass: string, rememberUser?: RememberUserData, googleDecodedToken?: JwtPayload) => {
+  const loginUser = async (userNameEmail: string, userPass: string, rememberUser: boolean, googleDecodedToken?: JwtPayload) => {
     const rta = {loadingSuccess: false, errorCode: "", field: ""}        
     // try {
     //   // const response = await fetch(`http://localhost:4000/api/users/login/`, {
@@ -99,7 +99,8 @@ export default function useUser () {
         JSON.stringify({
           "user_email": userNameEmail,
           "pass": userPass,
-          "googleDecodedToken": googleDecodedToken
+          "rememberUser": rememberUser,          
+          "googleDecodedToken": googleDecodedToken,
         }),
         {
           headers: { 'Content-Type': 'application/json'},
@@ -145,9 +146,6 @@ export default function useUser () {
         
         rta.errorCode = err.response.data.error
         // rta.field = err.response.data.field
-      } else if (err.response?.status === 401) {
-        console.error('Unauthorized')
-        // setErrMsg('Unauthorized')
       } else {
         // console.error('Login Failed')
         // console.error('err: ', err)

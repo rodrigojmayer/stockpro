@@ -117,7 +117,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
   }, [defaultColumns, customColumns, isLoading.defaultColumns, isLoading.customColumns, isLoading.products]);
 
   useEffect(() => {
-    console.log("filteredColumnsCustom: ", filteredColumnsCustom)
+    // console.log("filteredColumnsCustom: ", filteredColumnsCustom)
     setColumns(defaultColumns.concat(filteredColumnsCustom));
     setIsLoading((prevLoading: any) => ({
       ...prevLoading,
@@ -128,7 +128,7 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
 
   useEffect(() => {
     // console.log("user: ", user)
-    console.log("columns: ", columns)
+    // console.log("columns: ", columns)
     if(user.ordered_fields){
     // console.log("ColumnsContext.tsx user: ", user)
 

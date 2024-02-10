@@ -24,6 +24,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ComboBox from "../components/inputs/ComboBox";
 import useAddUser from "../hooks/addUser";
 import { CheckListStockContext } from "../context/CheckListStockContext";
+import Cookies from 'js-cookie';
 
 // const theme = createTheme({
 //   palette: {
@@ -56,10 +57,10 @@ export default function Login () {
   const [userPass, setUserPass] = useState("");
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
   const [allowShowProfilePass, setAllowShowProfilePass] = useState<boolean>(true);
-  const [rememberUser, setRememberUser] = useState<RememberUserData>({enabled:false});
+  const [rememberUser, setRememberUser] = useState<boolean>(false);
   const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
   const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
-   
+  
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -98,44 +99,63 @@ export default function Login () {
       setShowProfilePass(!showProfilePass)
   }
   const rememberEnabledChange = (value: boolean) => {
-    setRememberUser((prevRememberUser: RememberUserData) => ({
-      ...prevRememberUser,
-      enabled: value
-    }))
+    setRememberUser(value)
+    // setRememberUser((prevRememberUser: RememberUserData) => ({
+    //   ...prevRememberUser,
+    //   enabled: value
+    // }))
   }
   
   useEffect(() => {  
     if(rememberUsersPass) {
-      const passSelected = rememberUsersPass.filter((person: { user_email: string; }) => {
-        const cleanPersonEmail = person.user_email.trim().toLowerCase();
+      // const passSelected = rememberUsersPass.filter((person: { user_email: string; }) => {
+      const passSelected = rememberUsersPass.filter((person: any) => {
+        const key = Object.keys(person)[0];
+        // console.log("key: ", key);
+        // console.log("person[key]: ", person[key]);
+        const cleanPersonEmail = key.trim().toLowerCase();
         const cleanUserNameEmail = userNameEmail.trim().toLowerCase();
+        // console.log("cleanPersonEmail: ", cleanPersonEmail);
+        // console.log("cleanUserNameEmail: ", cleanUserNameEmail);
         return cleanPersonEmail === cleanUserNameEmail;
+        // const cleanPersonEmail = person.user_email.trim().toLowerCase();
+        // const cleanUserNameEmail = userNameEmail.trim().toLowerCase();
+        // return cleanPersonEmail === cleanUserNameEmail;
       });
+      // console.log("passSelected: ", passSelected);
+      
       if(passSelected.length > 0){
-        handleUserPass(passSelected[0].pass)
+        const key = Object.keys(passSelected[0])[0];
+        // console.log("key: ", key);
+        // console.log("passSelected[0]: ", passSelected[0]);
+        // console.log("passSelected[0][key]: ", passSelected[0][key]);
+        handleUserPass(passSelected[0][key])
+        // handleUserPass(passSelected[0].pass)
         setAllowShowProfilePass(false)
         setShowProfilePass(false)
-        setRememberUser((prevRememberUser: RememberUserData) => ({
-          ...prevRememberUser,
-          enabled: true
-        }))
+        setRememberUser(true)
+        // setRememberUser((prevRememberUser: RememberUserData) => ({
+        //   ...prevRememberUser,
+        //   enabled: true
+        // }))
       } else {
         setAllowShowProfilePass(true)
         handleUserPass("")
-        setRememberUser((prevRememberUser: RememberUserData) => ({
-          ...prevRememberUser,
-          enabled: false
-        }))
+        setRememberUser(false)
+        // setRememberUser((prevRememberUser: RememberUserData) => ({
+        //   ...prevRememberUser,
+        //   enabled: false
+        // }))
       }
     }
   }, [userNameEmail])
 
   const handleUserNameEmail = (value: string) => {
-    setUserNameEmail(value)    
-    setRememberUser((prevRememberUser: RememberUserData) => ({
-      ...prevRememberUser,
-      user_email: value
-    }))
+    setUserNameEmail(value) 
+    // setRememberUser((prevRememberUser: RememberUserData) => ({
+      // ...prevRememberUser,
+    //   user_email: value
+    // }))
     setErrorTextFields((prevErrorTextFields: any) => ({
       ...prevErrorTextFields,
       user_name_email: false,
@@ -143,10 +163,10 @@ export default function Login () {
   }
   const handleUserPass = (value: string) => {
     setUserPass(value)   
-    setRememberUser((prevRememberUser: RememberUserData) => ({
-      ...prevRememberUser,
-      pass: value
-    }))
+    // setRememberUser((prevRememberUser: RememberUserData) => ({
+    //   ...prevRememberUser,
+    //   pass: value
+    // }))
     setErrorTextFields((prevErrorTextFields: any) => ({
         ...prevErrorTextFields,
         user_pass: false,
@@ -201,7 +221,7 @@ export default function Login () {
     const userEmailData = googleDecodedToken
     setGmailUserLogged(userEmailData)     //////////// check for what is this
 
-    await loginUser(googleDecodedToken.email, "", {}, googleDecodedToken)
+    await loginUser(googleDecodedToken.email, "", false, googleDecodedToken)
   };
 
   const handleLoginGoogleFailure = (error: any) => {
@@ -272,6 +292,28 @@ export default function Login () {
 
   useEffect(() => {
     setCheckListStock([]) 
+
+    const rmb = Cookies.get('rmb')
+    if (rmb) {
+      console.log("rmb: ", rmb)
+      console.log("Array?: ", Array.isArray(rmb))
+      console.log("Array?: ", JSON.parse(rmb))
+      console.log("Array now?: ",  Array.isArray(JSON.parse(rmb)))
+      let rmbU: RememberLabelUsersData[] = []
+      let rmbP: RememberUsersPassData[] = []
+      JSON.parse(rmb).forEach((obj:any) => {
+      console.log("obj.u: ",  obj.u)
+      console.log("obj.p: ",  obj.p)
+
+        rmbU.push({label: obj.u})
+        rmbP.push({[obj.u]: obj.p})
+      })
+      console.log("rmbU: ", rmbU)
+      console.log("rmbP: ", rmbP)
+      setRememberLabelUsers(rmbU)
+      setRememberUsersPass(rmbP)
+    }
+    
   }, [])
 
   return (
@@ -333,7 +375,7 @@ export default function Login () {
                   <Box>
                     <Switch 
                       color='success' 
-                      checked={rememberUser.enabled}
+                      checked={rememberUser}
                       onChange={(event) => {
                         rememberEnabledChange(event.target.checked)
                       }}

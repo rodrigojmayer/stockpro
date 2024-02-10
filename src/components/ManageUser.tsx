@@ -69,7 +69,6 @@ export default function ManageUser(
     const [errorData, setErrorData] = useState("");  
 
     const handleCloseSaveChanges = (ans?:boolean) => {
-        alert(ans)
         if(ans){
             const bodyUpdate: UserEditData = {}
             if(!edition || dataEditUser.id_access_level != userAccessLevel)
@@ -178,13 +177,14 @@ export default function ManageUser(
                         fieldsFetchCreateStock: loadingSuccess,
                     }));
                     console.log("loadingSuccess: ", loadingSuccess)
-                    //  
+                    if(loadingSuccess || !changed)
+                        close();
                 }
             } 
             if (changed)
                 fetchManageUser()
-            if(loadingSuccess || !changed)
-                close();
+            else
+                close()
            
         }
         setOpenSaveChanges(false);

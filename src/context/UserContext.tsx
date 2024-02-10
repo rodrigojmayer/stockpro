@@ -46,7 +46,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [gmailUserLogged, setGmailUserLogged] = useState<UserData>(INITIAL_USER);
 
   const WS_URL = import.meta.env.VITE_WS_URL
-  console.log("user.user: ", user.user)
+  // console.log("user.user: ", user.user)
   const { sendJsonMessage, lastJsonMessage } = useWebSocket<any>(WS_URL, {
       queryParams: { username: user.user }
   })

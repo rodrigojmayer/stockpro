@@ -85,7 +85,7 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
           // const response = await axiosPrivate.get(`/users/client/${user.id_client}`, {
             signal: controller.signal
           })
-          console.log(response.data)
+          // console.log(response.data)
           const json = await response.data;
           const json_filtered = json.filter((item:UserData) => { 
             return (item._id !== user._id && !item.deleted && item.id_access_level > user.id_access_level)
