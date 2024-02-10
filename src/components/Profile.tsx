@@ -14,6 +14,7 @@ import { Box,
          FormControl,
          Stack,
          Chip,
+         Button,
         } from '@mui/material';
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
@@ -40,6 +41,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import ChangePassModal from './ChangePassModal';
 
 
 export default function Profile( { open, handleClose }: ChildProps) {
@@ -53,24 +55,25 @@ export default function Profile( { open, handleClose }: ChildProps) {
     const [errorTextFields, setErrorTextFields] = useState({
         "user": false,
         "email": false,
-        "pass": false,
-        "confirmPass": false,
+        // "pass": false,
+        // "confirmPass": false,
     });
     const { user, setUser } = useContext<any>(UserContext); 
-    const[ profileName, setProfileName ] = useState<string>('')
-    const[ profileLastName, setProfileLastName ] = useState<string>('')
+    const[ profileName, setProfileName ] = useState<string>(user.name)
+    const[ profileLastName, setProfileLastName ] = useState<string>(user.last_name)
     const[ profileEmail, setProfileEmail ] = useState<string>(user.email)
     const[ profileUser, setProfileUser ] = useState<string>(user.user)
     const[ profilePass, setProfilePass ] = useState<string>(user.pass)
-    const[ showProfilePass, setShowProfilePass ] = useState<boolean>(false)
+    // const[ showProfilePass, setShowProfilePass ] = useState<boolean>(false)
     const[ profileConfirmPass, setProfileConfirmPass ] = useState<string>(user.pass)
-    const[ showProfileConfirmationPass, setShowProfileConfirmationPass ] = useState<boolean>(false)
+    // const[ showProfileConfirmationPass, setShowProfileConfirmationPass ] = useState<boolean>(false)
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [errorData, setErrorData] = useState("");  
     
+    const [openChangePassModal, setOpenChangePassModal] = useState(false);  
 
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("profileLastName: ", profileLastName)
@@ -86,8 +89,8 @@ export default function Profile( { open, handleClose }: ChildProps) {
                 bodyUpdate.email = profileEmail;
             if(user.user!=profileUser)
                 bodyUpdate.user = profileUser;
-            if(user.pass!=profilePass)
-                bodyUpdate.pass = profilePass;
+            // if(user.pass!=profilePass)
+            //     bodyUpdate.pass = profilePass;
 
             let changed = false;
             if(Object.keys(bodyUpdate).length)
@@ -163,28 +166,38 @@ export default function Profile( { open, handleClose }: ChildProps) {
     }
 
     const handleOpenSaveChanges = () => {
-        setErrorTextFields({
-            "user": false,
-            "email": false,
-            "pass": false,
-            "confirmPass": false,
-        });
-        if(profileUser===""){
-            setOpenErrorModal(true);
-            setErrorData("missing_data_user");
-        } else if (profileEmail===""){
-            setOpenErrorModal(true)
-            setErrorData("missing_email")
-            setErrorTextFields((prevErrorTextFields: any) => ({
-                ...prevErrorTextFields,
-                email: true,
-            }));
-        }else if(profilePass!==profileConfirmPass){
-            setOpenErrorModal(true);
-            setErrorData("not_confirmed_pass");
-        }
-        else{
-            setOpenSaveChanges(true);
+        console.log("user.name===profileName", user.name==profileName)
+        console.log("user.name", String(user.name))
+        console.log("profileName", String(profileName))
+        if( user.name==profileName &&
+            user.last_name==profileLastName &&
+            user.email==profileEmail &&
+            user.user==profileUser ){  // It means no changes
+            close();
+        } else {
+            setErrorTextFields({
+                "user": false,
+                "email": false,
+                // "pass": false,
+                // "confirmPass": false,
+            });
+            if(profileUser===""){
+                setOpenErrorModal(true);
+                setErrorData("missing_data_user");
+            } else if (profileEmail===""){
+                setOpenErrorModal(true)
+                setErrorData("missing_email")
+                setErrorTextFields((prevErrorTextFields: any) => ({
+                    ...prevErrorTextFields,
+                    email: true,
+                }));
+            }else if(profilePass!==profileConfirmPass){
+                setOpenErrorModal(true);
+                setErrorData("not_confirmed_pass");
+            }
+            else{
+                setOpenSaveChanges(true);
+            }
         }
     };
 
@@ -208,13 +221,17 @@ export default function Profile( { open, handleClose }: ChildProps) {
             user: false,
         }));
     }
-    const handleEditPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProfilePass(event.target.value);
-    }
-    const handleEditConfirmPass = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setProfileConfirmPass(event.target.value);
-    }
+    // const handleEditPass = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setProfilePass(event.target.value);
+    // }
+    // const handleEditConfirmPass = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setProfileConfirmPass(event.target.value);
+    // }
     
+    
+    const handleCloseChangePassModal = () => {
+        setOpenChangePassModal(false);
+    }
     // const showProfilePassToggle = () => {
     //     setShowProfilePass(!showProfilePass)
     // }
@@ -223,14 +240,19 @@ export default function Profile( { open, handleClose }: ChildProps) {
     // }
 
     useEffect(() => {
-        setProfileName(user.name?user.name:'');
-        setProfileLastName(user.last_name?user.last_name:'');
-        setProfileEmail(user.email?user.email:'');
-        setProfileUser(user.user?user.user:'');
-        setProfilePass(user.pass?user.pass:'');
-        setProfileConfirmPass(user.pass?user.pass:'');
-        setShowProfilePass(false);
-        setShowProfileConfirmationPass(false);
+        setProfileName(user.name);
+        setProfileLastName(user.last_name);
+        setProfileEmail(user.email);
+        setProfileUser(user.user);
+        // setProfileName(user.name?user.name:'');
+        // setProfileLastName(user.last_name?user.last_name:'');
+        // setProfileEmail(user.email?user.email:'');
+        // setProfileUser(user.user?user.user:'');
+
+        // setProfilePass(user.pass?user.pass:'');
+        // setProfileConfirmPass(user.pass?user.pass:'');
+        // setShowProfilePass(false);
+        // setShowProfileConfirmationPass(false);
     }, [user, open])
     
     return (
@@ -248,6 +270,10 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         openErrorModal={openErrorModal}
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
+                    />
+                    <ChangePassModal
+                        openChangePassModal={openChangePassModal}
+                        closeChangePassModal={handleCloseChangePassModal}
                     />
                     <Typography align="center" variant="h5">
                         Profile
@@ -303,7 +329,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 InputProps={{className: classes.inputClassName,}}
                             />
                         </Box>
-                        <Box className={classes.customBoxRow}>
+                        {/* <Box className={classes.customBoxRow}>
                             <TextField
                                 label="Password*"
                                 maxRows={1}
@@ -340,7 +366,22 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 //     ),
                                 // }}
                             />
-                        </Box>
+                        </Box> */}
+                        {/* <OkButton
+                            clicked={() => setOpenChangePassModal(true)}
+                        /> */}
+                        <Button
+                            className={classes.btnCommonStyle} 
+                            variant="contained"
+                            onClick={() => setOpenChangePassModal(true)}
+                            // maxRows={1}
+                            size="small"
+                            // color="neutral"
+                        >
+                        <Typography >
+                            Change Password
+                        </Typography>  
+                    </Button>
                     </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton

@@ -70,6 +70,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       const json = await response.json();
       // console.log("/*-/*-/*-json: ", json)
       // console.log("/*-/*-/*-response: ", response)
+      if(json.name===undefined) json.name = ""
+      if(json.last_name===undefined) json.last_name = ""
       setUser(json);
 
       // if (response.ok) {

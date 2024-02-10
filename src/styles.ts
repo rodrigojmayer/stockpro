@@ -139,6 +139,7 @@ export const useStylesGlobal = makeStyles()({
     },
     inputClassName: {
         borderRadius: 10,
+        // autoComplete: 'new-password',
     },
     table: {
         width: "calc(100% - 6px)",
@@ -325,7 +326,13 @@ export const modalStyleInternal = {
 };
 
 
+export const modalStyleChangePassExternal = {
+    top: "23%",
+};
 
+export const modalStyleChangePassInternal = {
+    width: "calc(100% - 64px)",
+};
 export const modalStyleSaveExternal = {
     position: 'absolute',
     display: "flex",

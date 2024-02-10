@@ -31,9 +31,6 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (errorData === "missing_data_user"){
         title="Missing required data"
         subTitle=`Alias`
-    } else if (errorData === "not_confirmed_pass"){
-        // title="Not confirmed password"
-        subTitle=`The password confirmation does not match`
     } else if (errorData === "missing_user_name"){
         title="Missing required data"
         subTitle="Name*"
@@ -43,9 +40,9 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (errorData === "missing_user_user"){
         title="Missing required data"
         subTitle=`User*`
-    } else if (errorData === "missing_user_password"){
-        title="Missing required data"
-        subTitle=`Password*`
+    // } else if (errorData === "missing_user_password"){
+    //     title="Missing required data"
+    //     subTitle=`Password*`
     } else if (errorData === "missing_email"){
         title="Missing required data"
         subTitle=`Email*`
@@ -76,8 +73,22 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (errorData === "login_failed"){
         title="Login failed"
         subTitle=`User or password incorrect`
-    } 
-    
+    } else if (errorData === "missing_actual_pass"){
+        title="Missing required data"
+        subTitle=`Actual password*`
+    } else if (errorData === "missing_new_pass"){
+        title="Missing required data"
+        subTitle=`New password*`
+    } else if (errorData === "missing_confirm_new_pass"){
+        title="Missing required data"
+        subTitle=`Confirm new password*`
+    } else if (errorData === "not_confirmed_pass"){
+        // title="Not confirmed password"
+        subTitle=`The password confirmation does not match`
+    }  else if (errorData === "invalid_password"){
+        title=""
+        subTitle=`Actual password incorrect`
+    }
 
     return (
         <Modal
