@@ -57,12 +57,12 @@ export default function ManageUser(
     const [userEmail, setUserEmail] = useState<string>('');
     const [userDeleted, setUserDeleted] = useState<boolean>(false);
     const [userEnabled, setUserEnabled] = useState<boolean>(true);
-    const [userPassword, setUserPassword] = useState<string>('');
+    // const [userPassword, setUserPassword] = useState<string>('');
     const [errorTextFields, setErrorTextFields] = useState({
         "access_level": false,
         "email": false,
         "user": false,
-        "password": false,
+        // "password": false,
     });
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -87,8 +87,8 @@ export default function ManageUser(
             if(!edition || dataEditUser.enabled !== userEnabled){
                 bodyUpdate.enabled = userEnabled
             }
-            if(!edition || dataEditUser.pass != userPassword)
-                bodyUpdate.pass = userPassword 
+            // if(!edition || dataEditUser.pass != userPassword)
+            //     bodyUpdate.pass = userPassword 
             let changed = false
             if(Object.keys(bodyUpdate).length>0)
                 changed = true;
@@ -198,7 +198,7 @@ export default function ManageUser(
             "access_level": false,
             "email": false,
             "user": false,
-            "password": false,
+            // "password": false,
         });
         if(!userAccessLevel){
             setOpenErrorModal(true)
@@ -221,13 +221,13 @@ export default function ManageUser(
                 ...prevErrorTextFields,
                 email: true,
             }));
-        }else if(userPassword===""){
-            setOpenErrorModal(true)
-            setErrorData("missing_user_password")
-            setErrorTextFields((prevErrorTextFields: any) => ({
-                ...prevErrorTextFields,
-                password: true,
-            }));
+        // }else if(userPassword===""){
+        //     setOpenErrorModal(true)
+        //     setErrorData("missing_user_password")
+        //     setErrorTextFields((prevErrorTextFields: any) => ({
+        //         ...prevErrorTextFields,
+        //         password: true,
+        //     }));
         }else{
             setOpenSaveChanges(true);
         }
@@ -278,14 +278,14 @@ export default function ManageUser(
         console.log("setUserEnabled value: ", value)
         setUserEnabled(value)
     }
-    const handleUserPassword = (value: string) => {
-        // console.log("setUserPassword value: ", value)
-        setUserPassword(value)
-        setErrorTextFields((prevErrorTextFields: any) => ({
-            ...prevErrorTextFields,
-            password: false,
-        }));
-    }
+    // const handleUserPassword = (value: string) => {
+    //     // console.log("setUserPassword value: ", value)
+    //     setUserPassword(value)
+    //     setErrorTextFields((prevErrorTextFields: any) => ({
+    //         ...prevErrorTextFields,
+    //         password: false,
+    //     }));
+    // }
 
     useEffect(() => {
         if(dataEditUser.id_access_level)
@@ -312,15 +312,15 @@ export default function ManageUser(
             setUserEnabled(dataEditUser.enabled)
         else
             setUserEnabled(true)
-        if(dataEditUser.pass)
-            setUserPassword(dataEditUser.pass)
-        else
-            setUserPassword('')
+        // if(dataEditUser.pass)
+        //     setUserPassword(dataEditUser.pass)
+        // else
+        //     setUserPassword('')
         setErrorTextFields({
             "access_level": false,
             "email": false,
             "user": false,
-            "password": false,
+            // "password": false,
         });
     }, [ open, openOptionsCreate])
     
@@ -473,7 +473,7 @@ export default function ManageUser(
                                     }}
                                 />
                             </Box>
-                            <Box className={classes.customBoxRow}>
+                            {/* <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Password*"
                                     value={userPassword}
@@ -486,7 +486,7 @@ export default function ManageUser(
                                         className: classes.inputClassName,
                                     }}
                                 />
-                            </Box>
+                            </Box> */}
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Name"

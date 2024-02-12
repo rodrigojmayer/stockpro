@@ -233,62 +233,63 @@ export default function Login () {
     setOpenErrorModal(false)
   }
 
-  useEffect(() => {
-    if(gmailUserLogged.email && gmailUserLogged.email !== user.email){
-      const fetchUserByGmail = async () => {
-        try {
-          const response = await fetch(`http://localhost:4000/api/users/logingmail/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body:JSON.stringify(gmailUserLogged)
-          });
-          if (response.ok) {
-            const json = await response.json();
-            console.log("json: ", json.error)
-            if (json.error){
-              // postClient()
-              const bodyCreate: UserEditData = {}
-              bodyCreate.deleted = false
-              bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
-              bodyCreate.background_color = 0
-              bodyCreate.alerts_enabled = false
-              bodyCreate.ordered_fields = [-1,-2,-3,-4,-5]
-              bodyCreate.id_access_level = 4
-              bodyCreate.user = gmailUserLogged.email?.split("@")[0] || ""
-              bodyCreate.email = gmailUserLogged.email
-              bodyCreate.name= gmailUserLogged.given_name,
-              bodyCreate.last_name= gmailUserLogged.family_name,
-              bodyCreate.enabled = true
-              bodyCreate.gmail_autocreate = true
-              // bodyCreate.pass = pass
-              // addUser(bodyCreate);
-              const createUser = async () => {
-                  await addUser(bodyCreate);
-              };
-              createUser();
-            }
-            else{
-              // loginLocalStorage(json);
+  // useEffect(() => {
+  //   if(gmailUserLogged.email && gmailUserLogged.email !== user.email){
+  //     const fetchUserByGmail = async () => {
+  //       try {
+  //         const response = await fetch(`http://localhost:4000/api/users/logingmail/`, {
+  //           method: 'POST',
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //           },
+  //           body:JSON.stringify(gmailUserLogged)
+  //         });
+  //         if (response.ok) {
+  //           const json = await response.json();
+  //           console.log("json: ", json.error)
+  //           if (json.error){
+  //             // postClient()
+  //             const bodyCreate: UserEditData = {}
+  //             bodyCreate.deleted = false
+  //             bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
+  //             bodyCreate.background_color = 0
+  //             bodyCreate.alerts_enabled = false
+  //             bodyCreate.ordered_fields = [-1,-2,-3,-4,-5]
+  //             bodyCreate.id_access_level = 4
+  //             bodyCreate.user = gmailUserLogged.email?.split("@")[0] || ""
+  //             bodyCreate.email = gmailUserLogged.email
+  //             bodyCreate.name= gmailUserLogged.given_name,
+  //             bodyCreate.last_name= gmailUserLogged.family_name,
+  //             bodyCreate.enabled = true
+  //             bodyCreate.gmail_autocreate = true
+  //             bodyCreate.validated = true
+  //             // bodyCreate.pass = pass
+  //             // addUser(bodyCreate);
+  //             const createUser = async () => {
+  //                 await addUser(bodyCreate);
+  //             };
+  //             createUser();
+  //           }
+  //           else{
+  //             // loginLocalStorage(json);
 
-            }
-          }
-        } catch (error) {
-          console.log("error: ", error)
-          // setUser(INITIAL_USER);
-          // Handle any network or fetch-related errors
-        } finally {
-          setIsLoading((prevLoading:any) => ({
-            ...prevLoading,
-            user: false,
-          }));
-          setGmailUserLogged(INITIAL_USER)  // Resetting after login to allow later the logout
-        }
-      };
-      fetchUserByGmail();
-    }
-  }, [gmailUserLogged]);
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.log("error: ", error)
+  //         // setUser(INITIAL_USER);
+  //         // Handle any network or fetch-related errors
+  //       } finally {
+  //         setIsLoading((prevLoading:any) => ({
+  //           ...prevLoading,
+  //           user: false,
+  //         }));
+  //         setGmailUserLogged(INITIAL_USER)  // Resetting after login to allow later the logout
+  //       }
+  //     };
+  //     fetchUserByGmail();
+  //   }
+  // }, [gmailUserLogged]);
 
   useEffect(() => {
     setCheckListStock([]) 

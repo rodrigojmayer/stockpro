@@ -33,6 +33,7 @@ export interface UserEditData {
   background_color?: number;
   alerts_enabled?: boolean;
   gmail_autocreate?: boolean;
+  validated?: boolean;
 }
 
 export interface EmailData {
