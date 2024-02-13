@@ -13,7 +13,7 @@ import Layout from './components/Layout';
 // import UpdateAmountStock from './components/UpdateAmountStock';
 // import { Data, ColumnData, CustomValueData, UserData, ProductUpdateData } from './types';
 // import { UserContext } from './context/UserContext';
-// import { IsLoadingContext } from './context/IsLoadingContext';
+import { IsLoadingContext } from './context/IsLoadingContext';
 // import { ColumnsContext } from './context/ColumnsContext';
 // import { ProductsContext } from './context/ProductsContext';
 // import MassiveUpdateStock from './components/MassiveUpdateStock';
@@ -45,6 +45,7 @@ const theme = createTheme({
 function App() {
   const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
   // const { user } = useContext<any>(UserContext);
+  const { setIsLoading } = useContext<any>(IsLoadingContext);
   // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const { auth, persist } = useAuth();
   const navigate = useNavigate();
@@ -58,8 +59,9 @@ function App() {
     //     // Check if JWT exists in cookies
       const subPaths = pathname.split("/")
       if (subPaths[1] === "login" && subPaths[2]) {
-        console.log("subPaths[2]: ", subPaths[2])
-        const activateUser = async () => {        
+        // console.log("subPaths[2]: ", subPaths[2])
+        const activateUser = async () => {   
+          let loadingSuccess = false     
           try {
             const response = await fetch(`http://localhost:4000/api/register/validateUser/${subPaths[2]}`, {
                 method: 'PATCH',
@@ -70,24 +72,23 @@ function App() {
             })
             // Check if the response status is successful
             if (response.ok) {
+              loadingSuccess = true
               console.log("User validatedDd: ", response)
                 // const responseData = await response.json() // parse the response data
             } else {
                 // Handle non-successful responses
-                console.error('Request failed: ', response.status, response.statusText)
+                // console.error('Request failed: ', response.status, response.statusText)
                 // Handle the error here
             }
           } catch (error: unknown) {
-              if (typeof error === 'string') {
-                  // 'error' is now narrowed down to type 'string'
-                  console.error('Error:', error)
-              } else if (error instanceof Error) {
-                  // 'error' is now narrowed down to type 'Error'
-                  console.error('Error object:', error.message)
-              } else {
-                  // Handle other cases as needed
-              }
+             
           } finally {
+            
+            setIsLoading((prevLoading: any) => ({
+              ...prevLoading,
+              firstTimeValidateUser: loadingSuccess,
+            }));
+            
           }
         
         }

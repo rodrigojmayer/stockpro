@@ -25,6 +25,7 @@ import ComboBox from "../components/inputs/ComboBox";
 import useAddUser from "../hooks/addUser";
 import { CheckListStockContext } from "../context/CheckListStockContext";
 import Cookies from 'js-cookie';
+import ConfirmUserValidatedModal from '../components/ConfirmUserValidatedModal';
 
 // const theme = createTheme({
 //   palette: {
@@ -60,7 +61,8 @@ export default function Login () {
   const [rememberUser, setRememberUser] = useState<boolean>(false);
   const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
   const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
-  
+  const [openConfirmUserValidatedModal, setOpenConfirmUserValidatedModal] = useState(false);  
+    
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -317,6 +319,17 @@ export default function Login () {
     
   }, [])
 
+  useEffect(() => {
+  if(isLoading.firstTimeValidateUser){
+    setOpenConfirmUserValidatedModal(true)
+  }
+  
+}, [isLoading])
+  
+  const handlecloseConfirmUserValidatedModal = () => {
+    setOpenConfirmUserValidatedModal(false)
+  }
+
   return (
       <Modal open={true} > 
         <Box sx={modalStyleSaveExternal}>
@@ -325,7 +338,11 @@ export default function Login () {
               openErrorModal={openErrorModal}
               closeErrorModal={handleCloseErrorModal}
               errorData={errorData} 
-            />            
+            />
+            <ConfirmUserValidatedModal
+                openConfirmUserValidatedModal={openConfirmUserValidatedModal}
+                closeConfirmUserValidatedModal={handlecloseConfirmUserValidatedModal} 
+            />           
             <Typography className={classes.finishButtons} align="center" variant='h5' >
                 Login
             </Typography> 
