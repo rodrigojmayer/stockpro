@@ -533,7 +533,7 @@ export default function ManageUser(
                         clicked={() => close()}
                         />
                         <OkButton
-                        clicked={() => handleOpenSaveChanges()}
+                            clicked={() => handleOpenSaveChanges()}
                         />
                     </Box> 
                 </Box>
