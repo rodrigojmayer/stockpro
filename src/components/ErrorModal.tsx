@@ -88,6 +88,9 @@ export default function ErrorModal( props: ErrorModalProps) {
     }  else if (errorData === "invalid_password"){
         title=""
         subTitle=`Actual password incorrect`
+    }  else if (errorData === "email_not_found"){
+        title=""
+        subTitle=`Email not found`
     }
 
     return (

@@ -109,10 +109,11 @@ export default function ManageUser(
                         },
                         body:JSON.stringify(bodyUpdate)
                     })
+                    const responseData = await response.json() // parse the response data
 
                     // Check if the response status is successful
                     if (response.ok) {
-                        const responseData = await response.json() // parse the response data
+                        // const responseData = await response.json() // parse the response data
                         // console.log(`${manage_method} request successful: `, responseData)
                         loadingSuccess = true
                         let updatedUsers
@@ -142,16 +143,16 @@ export default function ManageUser(
                         }
                     } else if (response.status === 400) {
                         // Handle non-successful responses
-                        const errorData = await response.json()
+                        // const errorData = await response.json()
                         // console.error('errorData: ', errorData)
                         // console.error('errorData.error: ', errorData.error)
                         // console.error('errorData.errorCode: ', errorData.errorCode)
                         // Handle the error here
                         setOpenErrorModal(true) // Open the modal for duplicate product error
-                        setErrorData(errorData.errorCode)
+                        setErrorData(responseData.errorCode)
                         setErrorTextFields((prevErrorTextFields: any) => ({
                             ...prevErrorTextFields,
-                            [errorData.field]: true,
+                            [responseData.field]: true,
                         }));
                     } else {
                         console.error('Request failed: ', response.status, response.statusText)

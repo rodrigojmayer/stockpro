@@ -41,7 +41,41 @@ export default function ForgottenPassModal( props: ForgottenPassModalProps) {
             }));
         }
         else{
-            closeForgottenPassModal(true)
+
+            let loadingSuccess: boolean = false
+            try{
+
+                const response = await fetch(`http://localhost:4000/api/users/forgottenPass`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: emailForgottenPass
+                    })
+                })
+
+                const responseData = await response.json()
+                if(response.ok){
+                    console.log("request ok: ", responseData)
+                    loadingSuccess=true
+                } else {
+                    console.log("error: ", responseData)
+                    setOpenErrorModal(true)
+                    setErrorData(responseData.errorCode)
+                    setErrorTextFields((prevErrorTextFields: any) => ({
+                        ...prevErrorTextFields,
+                        [responseData.field]: true,
+                    }));
+                }
+            } catch (err: unknown) {
+                console.log("err: ", err)
+            } finally {
+                if(loadingSuccess){
+                    closeForgottenPassModal(true)
+                    setEmailForgottenPass("")
+                }
+            }
         }
     };
     
@@ -52,6 +86,10 @@ export default function ForgottenPassModal( props: ForgottenPassModalProps) {
     const handleCloseForgottenPassModal = () => {
         closeForgottenPassModal()
         setEmailForgottenPass("")
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            email: false,
+        }));
     }
     
     return (
