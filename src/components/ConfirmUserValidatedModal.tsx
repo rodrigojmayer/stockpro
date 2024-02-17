@@ -8,15 +8,23 @@ import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from
 type ConfirmUserValidatedModalProps = {
     openConfirmUserValidatedModal: boolean;
     closeConfirmUserValidatedModal: (newData?: boolean) => void;
+    textData: string
 }
 export default function ConfirmUserValidatedModal( props: ConfirmUserValidatedModalProps) {
-    const { openConfirmUserValidatedModal, closeConfirmUserValidatedModal } = props;
+    const { openConfirmUserValidatedModal, closeConfirmUserValidatedModal, textData } = props;
     const { classes } = useStylesGlobal();
     
     const handleOkButton = async() => {
         closeConfirmUserValidatedModal(true)
     };
-    
+
+    let text = ""
+    if(textData === "user_already_validated"){
+        text="Your account was already validated"
+    } else {
+        text="Your account has been validated"
+    }
+
     return (
         <Modal
             open={openConfirmUserValidatedModal} 
@@ -31,7 +39,7 @@ export default function ConfirmUserValidatedModal( props: ConfirmUserValidatedMo
                             Thanks for signing up to StockPro
                         </Typography>  */}
                         <Typography variant='body2' align="center" >
-                            Your account has been validated  
+                             {text}
                         </Typography> 
                     </Box>
                     <Box className={classes.finishButtons}>

@@ -54,7 +54,8 @@ export default function Login () {
    
   const [openErrorModal, setOpenErrorModal] = useState(false);  
   const [errorData, setErrorData] = useState("");  
-
+  const [textData, setTextData] = useState("");  
+  
   const [userNameEmail, setUserNameEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [showProfilePass, setShowProfilePass] = useState<boolean>(false);
@@ -68,11 +69,15 @@ export default function Login () {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  
+  const { hash, pathname, search } = location;
+
   // Get the keys from localStorage
   // let localStorageKeys = Object.keys(localStorage)
   // let varrememberUsersPass: any[] = []
-
+  useEffect(() => {
+    setOpenErrorModal(false)
+    setErrorData("")
+  }, [])
   // useEffect(() => {
   //   // Define a filter criterion
   //   const filterCriterion = 'remember_profile_'
@@ -178,9 +183,9 @@ export default function Login () {
   }
   
   const handleLogin = async () => {
-    // console.log("handleLogin userNameEmail: ", userNameEmail)
-    // console.log("handleLogin userPass: ", userPass)
-    // console.log("handleLogin rememberUser: ", rememberUser)
+    console.log("handleLogin userNameEmail: ", userNameEmail)
+    console.log("handleLogin userPass: ", userPass)
+    console.log("handleLogin rememberUser: ", rememberUser)
     // alert("login submit success")
     let dataOk: boolean = true
     setErrorTextFields({
@@ -206,14 +211,18 @@ export default function Login () {
       dataOk = false
     }
     if(!dataOk) return
-
-    const rta = await loginUser(userNameEmail, userPass, rememberUser)
-    setOpenErrorModal(true) // Open the modal for duplicate product error
-    setErrorData(rta.errorCode)
-    setErrorTextFields((prevErrorTextFields: any) => ({
-        ...prevErrorTextFields,
-        [rta.field]: true,
-    }));
+    const login = async() => {
+      const rta = await loginUser(userNameEmail, userPass, rememberUser)
+      if(!rta.loadingSuccess){
+        setOpenErrorModal(true) // Open the modal for duplicate product error
+        setErrorData(rta.errorCode)
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            [rta.field]: true,
+        }));
+      }
+    }
+    login();
     // navigate(from, { replace: true });
   }
   
@@ -229,7 +238,7 @@ export default function Login () {
   };
 
   const handleLoginGoogleFailure = (error: any) => {
-    console.error('Login Google Failure:', error);
+    // console.error('Login Google Failure:', error);
     // Handle the failure/error during Google login here
   };
   
@@ -300,33 +309,33 @@ export default function Login () {
 
     const rmb = Cookies.get('rmb')
     if (rmb) {
-      console.log("rmb: ", rmb)
-      console.log("Array?: ", Array.isArray(rmb))
-      console.log("Array?: ", JSON.parse(rmb))
-      console.log("Array now?: ",  Array.isArray(JSON.parse(rmb)))
+      // console.log("rmb: ", rmb)
+      // console.log("Array?: ", Array.isArray(rmb))
+      // console.log("Array?: ", JSON.parse(rmb))
+      // console.log("Array now?: ",  Array.isArray(JSON.parse(rmb)))
       let rmbU: RememberLabelUsersData[] = []
       let rmbP: RememberUsersPassData[] = []
       JSON.parse(rmb).forEach((obj:any) => {
-      console.log("obj.u: ",  obj.u)
-      console.log("obj.p: ",  obj.p)
+      // console.log("obj.u: ",  obj.u)
+      // console.log("obj.p: ",  obj.p)
 
         rmbU.push({label: obj.u})
         rmbP.push({[obj.u]: obj.p})
       })
-      console.log("rmbU: ", rmbU)
-      console.log("rmbP: ", rmbP)
+      // console.log("rmbU: ", rmbU)
+      // console.log("rmbP: ", rmbP)
       setRememberLabelUsers(rmbU)
       setRememberUsersPass(rmbP)
     }
     
   }, [])
 
-  useEffect(() => {
-  if(isLoading.firstTimeValidateUser){ //  Only will set open when the user open the web from the button in the email to validate
-    setOpenConfirmUserValidatedModal(true)
-  }
+//   useEffect(() => {
+//   if(isLoading.openFirstTimeValidateUser){ //  Only will set open when the user open the web from the button in the email to validate
+//     setOpenConfirmUserValidatedModal(true)
+//   }
   
-}, [isLoading])
+// }, [isLoading])
   
 const handlecloseConfirmUserValidatedModal = () => {
   setOpenConfirmUserValidatedModal(false)
@@ -334,6 +343,63 @@ const handlecloseConfirmUserValidatedModal = () => {
 const handlecloseForgottenPassModal = () => {
   setOpenForgottenPassModal(false)
 }
+
+useEffect(() => {
+  //     // Check if JWT exists in cookies
+  // alert("stop1")
+  // console.log("pathname: ", pathname)
+  // const subPaths = pathname.split("/")
+  // console.log("subPaths: ", subPaths)
+  // alert("stop2")
+    console.log("isLoading.openFirstTimeValidateUser: ", isLoading.openFirstTimeValidateUser)
+
+  // if (subPaths[1] === "login" && subPaths[2]) {//  Only will set open when the user open the web from the button in the email to validate
+  if (isLoading.openFirstTimeValidateUser) {//  Only will set open when the user open the web from the button in the email to validate
+    // console.log("subPaths[2]: ", subPaths[2])
+
+    
+  // alert("stop3")
+    const activateUser = async () => {   
+      // let loadingSuccess = false     
+      try {
+        // const response = await fetch(`http://localhost:4000/api/register/validateUser/${subPaths[2]}`, {
+        const response = await fetch(`http://localhost:4000/api/register/validateUser/${isLoading.openFirstTimeValidateUser}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json', // Set the appropriate content-type for my API
+            },
+            // body:JSON.stringify({})
+        })
+        const responseData = await response.json() // parse the response data
+
+        // Check if the response status is successful
+        if (response.ok) {
+           setOpenConfirmUserValidatedModal(true)
+           setTextData(responseData.message)
+        } else {
+          // Handle non-successful responses
+          // console.error('responseData: ', responseData)
+          // Handle the error here
+          setOpenErrorModal(true) // Open the modal for duplicate product error
+          setErrorData(responseData.errorCode)
+        }
+      } catch (error: unknown) {
+          
+      } finally {
+        setIsLoading((prevLoading: any) => ({
+          ...prevLoading,
+          openFirstTimeValidateUser: "",
+        }));
+      }
+    
+    }
+
+    activateUser();
+
+  }
+
+// }, [pathname])
+}, [isLoading.openFirstTimeValidateUser])
 
 
 
@@ -349,6 +415,7 @@ return (
         <ConfirmUserValidatedModal
             openConfirmUserValidatedModal={openConfirmUserValidatedModal}
             closeConfirmUserValidatedModal={handlecloseConfirmUserValidatedModal} 
+            textData={textData}
         />  
         <ForgottenPassModal
             openForgottenPassModal={openForgottenPassModal}

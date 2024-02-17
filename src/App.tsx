@@ -45,58 +45,23 @@ const theme = createTheme({
 function App() {
   const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
   // const { user } = useContext<any>(UserContext);
+
   const { setIsLoading } = useContext<any>(IsLoadingContext);
   // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const { auth, persist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const { hash, pathname, search } = location;
-  // console.log("hash: ", hash)
-  // console.log("hash: ", hash)
-  // console.log("pathname: ", pathname)
-  //  console.log("search: ", search)
+  
   useEffect(() => {
-    //     // Check if JWT exists in cookies
-      const subPaths = pathname.split("/")
-      if (subPaths[1] === "login" && subPaths[2]) {
-        // console.log("subPaths[2]: ", subPaths[2])
-        const activateUser = async () => {   
-          let loadingSuccess = false     
-          try {
-            const response = await fetch(`http://localhost:4000/api/register/validateUser/${subPaths[2]}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json', // Set the appropriate content-type for my API
-                },
-                // body:JSON.stringify({})
-            })
-            // Check if the response status is successful
-            if (response.ok) {
-              loadingSuccess = true
-              console.log("User validatedDd: ", response)
-                // const responseData = await response.json() // parse the response data
-            } else {
-                // Handle non-successful responses
-                // console.error('Request failed: ', response.status, response.statusText)
-                // Handle the error here
-            }
-          } catch (error: unknown) {
-             
-          } finally {
-            
-            setIsLoading((prevLoading: any) => ({
-              ...prevLoading,
-              firstTimeValidateUser: loadingSuccess,
-            }));
-            
-          }
-        
-        }
-
-      activateUser();
-
+    const subPaths = pathname.split("/")
+    if (subPaths[1] === "login" && subPaths[2]) {      
+      setIsLoading((prevLoading: any) => ({
+        ...prevLoading,
+        openFirstTimeValidateUser: subPaths[2],
+      }));
+      subPaths[2] = ""
     }
-
   }, [pathname])
   // navigate('/home')
 //   useEffect(() => {

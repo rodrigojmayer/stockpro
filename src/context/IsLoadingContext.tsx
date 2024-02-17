@@ -24,7 +24,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
     products: true,
     user: true,
     usersAlert: false,
-    firstTimeValidateUser: false
+    openFirstTimeValidateUser: ""
   }); // New state for loading status
   
   useEffect(() => {
@@ -60,7 +60,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
   const [openBackdrop, setOpenBackdrop] = useState(true)
   // console.log("openBackdrop", openBackdrop)
   useEffect(() => {
-    console.log("isLoading.firstTimeValidateUser: ", isLoading.firstTimeValidateUser)
+    // console.log("isLoading.openFirstTimeValidateUser: ", isLoading.openFirstTimeValidateUser)
   }, [isLoading])
 
   return  (

@@ -7,7 +7,7 @@ import {
         } from './Buttons';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
 // import { useState } from 'react';
- 
+import { useNavigate } from 'react-router-dom';
 
 type ErrorModalProps = {
     openErrorModal: boolean;
@@ -19,7 +19,7 @@ export default function ErrorModal( props: ErrorModalProps) {
     const { classes } = useStylesGlobal();
     let title = ""
     let subTitle = ""
-
+    const navigate = useNavigate()
     // Mising, invalid format, duplicated
 
     if(errorData === "missing_data"){
@@ -91,18 +91,29 @@ export default function ErrorModal( props: ErrorModalProps) {
     }  else if (errorData === "email_not_found"){
         title=""
         subTitle=`Email not found`
+    } else if (errorData === "expired_validation"){
+        title="Invalid activation link"
+        subTitle=`You can sign up again. `
+    }
+
+    const handleCloseErrorModal = () => {
+
+        closeErrorModal()            
+        if (errorData === "expired_validation") {
+            navigate('/signup')
+        }
     }
 
     return (
         <Modal
         open={openErrorModal} 
-        onClose={() => closeErrorModal()}
+        onClose={() => handleCloseErrorModal()}
         > 
             <form
                 onKeyDown={(e) => {
                     if (e.key === "Enter" || e.code === "Space") {
                         e.preventDefault();
-                        closeErrorModal(false);
+                        handleCloseErrorModal();
                         e.stopPropagation() 
                     }
                 }}
@@ -117,7 +128,7 @@ export default function ErrorModal( props: ErrorModalProps) {
                         </Typography>
                         <Box className={classes.finishButtons}>
                             <CancelButton
-                            clicked={() => closeErrorModal(false)}
+                            clicked={() => handleCloseErrorModal()}
                             />
                         </Box> 
                     </Box>

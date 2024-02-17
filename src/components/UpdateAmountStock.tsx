@@ -257,9 +257,9 @@ export default function UpdateAmountStock(
     }
     
     const handleOpenSaveChanges = () => {
-        console.log("valueUpdateasd: ", valueUpdate)
-        console.log("signUpdate: ", signUpdate)
-        console.log("Number(productUpdate.amount): ", Number(productUpdate.amount))
+        // console.log("valueUpdateasd: ", valueUpdate)
+        // console.log("signUpdate: ", signUpdate)
+        // console.log("Number(productUpdate.amount): ", Number(productUpdate.amount))
         const updatedResult = (valueUpdate * signUpdate) + Number(productUpdate.amount);
         setResultUpdated(updatedResult);
         setUpdatedResultVisible(true);

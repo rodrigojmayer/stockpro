@@ -13,7 +13,7 @@ const PersistLogin = () => {
             try {
                 await refresh();
             } catch (err) {
-                console.error(err);
+                // console.error(err);
             } finally {
                 setIsLoading(false);
             }
