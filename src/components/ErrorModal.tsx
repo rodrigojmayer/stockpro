@@ -93,7 +93,10 @@ export default function ErrorModal( props: ErrorModalProps) {
         subTitle=`Email not found`
     } else if (errorData === "expired_validation"){
         title="Invalid activation link"
-        subTitle=`You can sign up again. `
+        subTitle=`You can sign up again.`
+    } else if (errorData === "invalid_user_format"){
+        title="Invalid user format"
+        subTitle=`Contains invalid characters.`
     }
 
     const handleCloseErrorModal = () => {

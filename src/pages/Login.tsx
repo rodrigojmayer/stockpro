@@ -429,23 +429,20 @@ return (
               if (e.key === "Enter") {
                 e.preventDefault();
                 handleLogin(); // Call your login function
-                e.stopPropagation() 
+                e.stopPropagation();
               }
             }}
           >
           <Box className={classes.customBoxColumn}>
             <Box className={classes.customBoxRow}>
-
               <ComboBox
                 // optionsData={[{label: "test"}, {label: "test2"}]}
                 optionsData={rememberLabelUsers}
-                
                 comboLabel="Username or Email"
                 comboValue={userNameEmail}
                 comboHandleValue={handleUserNameEmail}
                 errorTextField={errorTextFields.user_name_email}
               />
-
             </Box>
             <Box className={classes.customBoxRow}>
               <TextField

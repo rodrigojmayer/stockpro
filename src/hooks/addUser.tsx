@@ -139,6 +139,7 @@ export default function useAddUser () {
                 console.error('Error:', err)
             } else if (err instanceof Error) {
                 // 'error' is now narrowed down to type 'Error'
+                console.error('Error:', err)
                 console.error('Error object:', err.message)
             } else {
                 // Handle other cases as needed
