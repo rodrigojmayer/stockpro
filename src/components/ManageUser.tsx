@@ -527,9 +527,9 @@ export default function ManageUser(
                         </Box>
                     </form>
                     <Box className={classes.finishButtons}>
-                        <DeleteButton
+                        { edition ? <DeleteButton
                             clicked={() => handleDeleteProduct()}
-                        /> 
+                        /> : "" }
                         <CancelButton
                         clicked={() => close()}
                         />
