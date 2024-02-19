@@ -33,16 +33,19 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
   const signature = filestack[0].signature;
   const policy = "eyJleHBpcnkiOjI3NjI0NjAwMDB9"; // The policy is always the same for for all the files for the date 2057-07-16
   
-  const deleteFilesStock = (id_product: number, imgurl: string) => {
-    console.log("Deleting this filestock imgurl: ", imgurl)
-    console.log("Deleting this filestock apiKey: ", apiKey)
-    const fileHandle = imgurl.split('/')[3];
-    console.log("Deleting apiKey: ", apiKey)
-    console.log("Deleting fileHandle: ", fileHandle)
-    console.log("Deleting policy: ", policy)
-    console.log("Deleting signature: ", signature)
+  const deleteFilesStock = (id_product: number, img_url_handle: string) => {
+    // console.log("Deleting this filestock imgurl: ", imgurl)
+    // console.log("Deleting this filestock apiKey: ", apiKey)
+    // const fileHandle = imgurl.split('/')[3];
+    // console.log("Deleting apiKey: ", apiKey)
+    // console.log("Deleting fileHandle: ", fileHandle)
+    // console.log("Deleting policy: ", policy)
+    // console.log("Deleting signature: ", signature)
     
-    const url = `https://www.filestackapi.com/api/file/${fileHandle}?key=${apiKey}&policy=${policy}&signature=${signature}`; 
+    const url = `https://www.filestackapi.com/api/file/${img_url_handle}?key=${apiKey}&policy=${policy}&signature=${signature}`; 
+    // const url = `https://www.filestackapi.com/api/file/${fileHandle}?key=${apiKey}&policy=${policy}&signature=${signature}`; 
+    // const url = `https://cdn.filestackcontent.com/auto_image/${fileHandle}?key=${apiKey}&policy=${policy}&signature=${signature}`;
+    // const url = `https://cdn.filestackcontent.com/resize=w:30/auto_image/compress/${fileHandle}?key=${apiKey}&policy=${policy}&signature=${signature}`;
     const requestOptions = {
         method: 'DELETE',
     };
@@ -56,7 +59,7 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
     .catch(error => {
         console.error('There was a problem deleting the file:', error);
     });
-    // onSetImageUrl("")
+    // onSetImageUrlHandle("")
     const fetchDeleteImageProduct = async () => {
         try {
             const response = await fetch(`http://localhost:4000/api/products/${id_product}`, {

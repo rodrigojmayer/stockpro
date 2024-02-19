@@ -14,6 +14,7 @@ import { useStylesGlobal } from '../Styles'
 import { unstable_gridTabIndexColumnHeaderFilterSelector } from '@mui/x-data-grid-premium';
 import { FilestackContext } from '../context/FilestackContext';
 import { PickerOverlay } from 'filestack-react';
+// import {  TransformOptions } from 'filestack-js'; 
 import IonTrash from "../assets/ion_trash.svg";
 
 // import * as filestack from 'filestack-js';
@@ -30,8 +31,8 @@ interface ChildProps {
     onStockPriceChange: (newData: number | string )=> void
     stockDescriptionTemp: string
     onStockDescriptionChange: (newData: string )=> void
-    imageUrl: string
-    onSetImageUrl: (newData: string )=> void
+    imageUrlHandle: string
+    onSetImageUrlHandle: (newData: string )=> void
     unsavedImages: string[]
     onHandleUnsavedImages: (newData: string )=> void
 }
@@ -44,8 +45,8 @@ export default function ManageStockSecondaryData(
         onStockPriceChange, 
         stockDescriptionTemp, 
         onStockDescriptionChange,
-        imageUrl,
-        onSetImageUrl,
+        imageUrlHandle,
+        onSetImageUrlHandle,
         unsavedImages,
         onHandleUnsavedImages 
     }: ChildProps )  {
@@ -129,7 +130,7 @@ export default function ManageStockSecondaryData(
         // .catch(error => {
         //     console.error('There was a problem deleting the file:', error);
         // });
-        onSetImageUrl("")
+        onSetImageUrlHandle("")
         // const fetchDeleteImageProduct = async () => {
         //     try {
         //         const response = await fetch(`http://localhost:4000/api/products/${id_product}`, {
@@ -162,6 +163,10 @@ export default function ManageStockSecondaryData(
         // } 
         // fetchDeleteImageProduct()
     }
+
+    useEffect(() => {
+        console.log("imageUrlHandle: ", imageUrlHandle)
+    }, [imageUrlHandle])
                 
     return (
         <div
@@ -197,7 +202,7 @@ export default function ManageStockSecondaryData(
                         InputProps={{  className: classes.inputClassName }}
                     />
                 </Box> 
-                {  imageUrl ? 
+                {  imageUrlHandle ? 
                     <Box className={classes.customImgRow}>
                         <img 
                             style={{
@@ -206,12 +211,13 @@ export default function ManageStockSecondaryData(
                                  maxHeight: "130px", 
                                  objectFit: 'contain' 
                             }} 
-                            src={imageUrl} 
+                            // src={imageUrlHandle} 
+                            src={`https://cdn.filestackcontent.com/resize=w:90/auto_image/compress/${imageUrlHandle}`} 
                             onClick={handleShowPicker} 
                         />
                         <IconButton
                             className={classes.ionTrash}
-                            onClick={() => removeImg(imageUrl)}
+                            onClick={() => removeImg(imageUrlHandle)}
                             style={{ marginRight: "15px" }} 
                         >
                             <img 
@@ -235,22 +241,150 @@ export default function ManageStockSecondaryData(
                             // onUploadDone={(res) => console.log(res)}
                             // onUploadDone={(res filesUploaded) => console.log(res.filesUploaded[0])}
                             // onUploadDone={(res: any) => console.log(res.filesUploaded[0].url)}
+                            
+                            // resizeParams={{
+                            // transformOptions={{
+                            //     clientOptions={{
+                                // actionOptions={{
+                            // // compressParams={{
+                            //     transformations: {
+                            //         convert: { 
+                                // convertTransform={ { 
+                                //             output:{
+                                //                 format: "webp"
+                                //             } 
+                                //         }}
+                        //             } 
+                            //     }
+                            // }}
+                            
+                            // onSuccess={(
+                            //     transformations: {
+                            //         convert: { 
+                            //                 output:{
+                            //                     format: "webp"
+                            //                 } 
+                            //             } 
+                            //     }
+                            // }}
+
+                            // transformOptions= {{
+
+                            // }}
+
                             onUploadDone={(res: any) => {
-                                if(imageUrl){
-                                    console.log("There is already the imageUrl: ", imageUrl)
-                                    // setUnsavedImages((prevImages: string[]) => [...prevImages, imageUrl])
-                                    onHandleUnsavedImages(imageUrl)
+                                if(imageUrlHandle){
+                                    console.log("There is already the imageUrlHandle: ", imageUrlHandle)
+                                    // setUnsavedImages((prevImages: string[]) => [...prevImages, imageUrlHandle])
+                                    onHandleUnsavedImages(imageUrlHandle)
                                 }
-                                onSetImageUrl(res.filesUploaded[0].url)
                                 // console.log("res.filesUploaded[0]: ", res.filesUploaded[0])
+                                // onSetImageUrlHandle(res.filesUploaded[0].url)
+                                // onSetImageUrlHandle(`https://cdn.filestackcontent.com/${res.filesUploaded[0].handle}`)
+                                // onSetImageUrlHandle(`https://cdn.filestackcontent.com/auto_image/${res.filesUploaded[0].handle}`)
+                                onSetImageUrlHandle(`${res.filesUploaded[0].handle}`)
+                                // onSetImageUrlHandle(`https://cdn.filestackcontent.com/resize=w:30/auto_image/compress/${res.filesUploaded[0].handle}`)
                                 // handleShowPicker()
                             }}
+                            
                             pickerOptions={{
                                 onClose: () => {
                                     handleShowPicker()
                                 },
-                                lang: "es"
+                                lang: "es",
+                                accept: ["image/*"],
+                               
+                            //     transformations: {
+                            //         convert: {
+                            //     output: {
+                            //         format: 'png',
+                            //         quality: 1,
+                            //         blob: false, // export file as blob or url
+                            //         name: null, // output file name if null name will be extracted from url or file element
+                            //       },
+                            //     }
+                            // }
+                                // outputParams: {
+                                //     format: 'webp'
+                                // }
+                                // maxSize:25,
+                                // minifyJs:{
+
+                                //     transform: {
+                                //     output:{
+    
+                                //         format: 'webp'
+                                //     }   
+                                // }
+                                        
+
+                                // transformations: {
+                                //     outformat: {
+                                //         format: 'webp'
+                                //     }
+                                // }
+                                // transformations: {
+                                // //     compress:true
+                                //     // convert: {
+                                //     //     output:{
+                                //     //         format: "webp"
+                                //     //     }
+                                //     // }
+                                //     crop: {
+                                //         aspectRatio: 1,
+                                //         force: true
+                                //       }
+                                // },
+                                // actionOptions: {
+
+                                // },
+                                // uploadConfig: {
+                                    // outputParams:{
+                                        // transformations: {
+                                            // output: {
+                                                        //  format: 'zip'
+                                                        //  }
+                                        //   }
+                                    // },
+                                //     transformations: {
+                                            // output:{
+                                //                 // format: "webp"
+                                //             // }
+                                //         } 
+                                // transformOptions: {
+                                // transformations: {
+                                            // convert: { 
+                                                    // output:{
+                                                        // format: "webp"
+                                    //                 } 
+                                    //             } 
+                                        // }
+                                // }
+                                    // conversion: {
+                                    //     output: {
+                                    //         format: 'webp' // Specify the desired output format here
+                                    //     }
+                                    // }
+                                
                             }}
+                            // convert={{
+                            //     output:{
+                            //         format: "webp"
+                                // }
+                            // }} 
+                            // Filelink ={{
+                            //     transformations: {
+                            //         crop: {
+                            //             aspectRatio: 16/9
+                            //         },
+                            //         convert: {
+                                        // output: {
+                                        //     format: 'webp' // Specify the desired output format here
+                                        // }
+                            //         }
+                            // //     }
+                            // }}
+
                         />
                     </Box>
                 )}

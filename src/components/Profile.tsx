@@ -281,30 +281,6 @@ export default function Profile( { open, handleClose }: ChildProps) {
                     <Box className={classes.customBoxColumn}>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Name"
-                                maxRows={1}
-                                size="small"
-                                type="text"
-                                className={classes.inputMainData}
-                                value={profileName}
-                                onChange={ handleEditName }
-                                InputProps={{className: classes.inputClassName,}}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Last name"
-                                maxRows={1}
-                                size="small"
-                                type="text"
-                                className={classes.inputMainData}
-                                value={profileLastName}
-                                onChange={ handleEditLastName }
-                                InputProps={{className: classes.inputClassName,}}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
                                 label="Email*"
                                 maxRows={1}
                                 size="small"
@@ -329,6 +305,31 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 InputProps={{className: classes.inputClassName,}}
                             />
                         </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Name"
+                                maxRows={1}
+                                size="small"
+                                type="text"
+                                className={classes.inputMainData}
+                                value={profileName}
+                                onChange={ handleEditName }
+                                InputProps={{className: classes.inputClassName,}}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Last name"
+                                maxRows={1}
+                                size="small"
+                                type="text"
+                                className={classes.inputMainData}
+                                value={profileLastName}
+                                onChange={ handleEditLastName }
+                                InputProps={{className: classes.inputClassName,}}
+                            />
+                        </Box>
+                        
                         {/* <Box className={classes.customBoxRow}>
                             <TextField
                                 label="Password*"

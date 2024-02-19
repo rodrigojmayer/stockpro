@@ -606,11 +606,11 @@ export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction
 }
 
 interface SelectImageButtonProps{
-  imageUrl:string
+  imageUrlHandle:string
   setImageUrl:(newData: string) => void
 }
 
-export function SelectImageButton( { imageUrl, setImageUrl } : SelectImageButtonProps) {
+export function SelectImageButton( { imageUrlHandle, setImageUrl } : SelectImageButtonProps) {
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
 
@@ -637,9 +637,9 @@ export function SelectImageButton( { imageUrl, setImageUrl } : SelectImageButton
         <ThemeProvider theme={theme}>
           <Button color='neutral' 
          component='span' sx={{ outline: "dotted  1px", padding: "0", height:"130px", width: "230px" }}>
-            { imageUrl && selectedImage ? (
+            { imageUrlHandle && selectedImage ? (
                   <img 
-                    src={imageUrl} 
+                    src={imageUrlHandle} 
                     alt={selectedImage.name} 
                     style={{ borderRadius:"3px", height: "100%", width: "100%", objectFit: "contain" }}
                   />
@@ -654,7 +654,7 @@ export function SelectImageButton( { imageUrl, setImageUrl } : SelectImageButton
 }
 
 // interface AddImageButtonProps{
-//   imageUrl?:string
+//   imageUrlHandle?:string
 //   setImageUrl?:(newData: string) => void
 //   clicked: (id?)
 // }
@@ -714,7 +714,7 @@ export function AddImageButton( { sizeIco, roundedIco, cusField, clicked, submit
           >
             {/* { selectedImage ? (
                   <img 
-                    src={imageUrl} 
+                    src={imageUrlHandle} 
                     alt={selectedImage.name} 
                     style={{ borderRadius:"3px", height: "100%", width: "100%", objectFit: "contain" }}
                     

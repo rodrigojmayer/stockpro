@@ -508,8 +508,8 @@ export default function ManageStock(
                         stockDescriptionTemp={stockDescriptionTemp}
                         onStockDescriptionChange={handleStockDescriptionChange}
                         
-                        imageUrl={stockImageUrlTemp}
-                        onSetImageUrl={handleSetImageUrl}
+                        imageUrlHandle={stockImageUrlTemp}
+                        onSetImageUrlHandle={handleSetImageUrl}
 
                         unsavedImages={unsavedImages}
                         onHandleUnsavedImages={handleUnsavedImages}

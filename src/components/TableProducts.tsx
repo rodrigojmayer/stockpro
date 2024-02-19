@@ -12,6 +12,7 @@ import { ColumnsContext } from '../context/ColumnsContext'
 import { tableStyles, useStylesGlobal } from '../Styles';
 import { blueGrey } from '@material-ui/core/colors';
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import ShowImgModal from './ShowImgModal';
 // import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
 
 
@@ -46,8 +47,17 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 
 // const { classes } = useStylesGlobal()
 // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
-  // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: Data) => void, checkListStock:any, checkingRow:(id_row: any) => void) {
+// function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
+function rowContent(
+    _index: number, 
+    row: Data, 
+    columns: ColumnData[], 
+    classes: any, 
+    openUpdateAmountStock:(newData: Data) => void, 
+    checkListStock:any, 
+    checkingRow:(id_row: any) => void,
+    handleOpenShowImg:(selectedImgUrlHandle: string) => void,
+  ) {
 
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
@@ -103,30 +113,34 @@ const VirtuosoTableComponents: TableComponents<Data> = {
               checked={checkListStock.includes(newRow._id)? true : false}
               onClick={(e)=> {
                 e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                // console.log("newRow: ", newRow._id)
                 checkingRow(newRow._id)
               }}
               sx={{
-                // color: blueGrey[50],
-                // '&.Mui-checked': {
-                //   color: blueGrey[50],
-                // },
                   padding: 0,
-              //   '& .MuiSvgIcon-root': { 
-              //     fontSize: 30,
-              //     margin: 0
-              //  }
               }}
               color="default"
             />
-          :
+          : ( column.dataKey !== "url_image"  || !newRow[column.dataKey]) ?
             <Typography noWrap 
             sx={{
               padding: "0 4px ",
             }}>
               { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
-
-            </Typography>
+            </Typography> :
+          //  (newRow[column.dataKey])
+            <img 
+              style={{
+                display: "block", // Ensure the image is treated as a block element
+                margin: "auto",   // Set margins to auto to horizontally center the image
+                objectFit: 'contain',
+              }} 
+              // src={newRow[column.dataKey]} 
+              src={`https://cdn.filestackcontent.com/resize=w:34,h:34,fit:crop/auto_image/compress/${newRow[column.dataKey]}`} 
+              onClick={(e)=> {
+                e.stopPropagation() // Prevent the click event from propagating to the parent cell
+                handleOpenShowImg(newRow[column.dataKey])
+              }}
+            /> 
           }
           </div>
 
@@ -182,6 +196,20 @@ export default function TableProducts(
       setCheckListStock(updatedCheckListStock);
     }
   }
+
+  
+  const handleOpenShowImg = (selectedImgUrlHandle: string) => {
+    setShowImgModal(selectedImgUrlHandle)
+    setOpenShowImgModal(true)
+
+  }
+  const handleCloseShowImgModal = () => {
+    setOpenShowImgModal(false)
+  }
+  
+  const [showImgModal, setShowImgModal] = useState(""); 
+  const [openShowImgModal, setOpenShowImgModal] = useState(false); 
+
   useEffect(()=> {
     if(checkListStock.length>0)
       handleDisabledUpdateButton(false)
@@ -246,6 +274,13 @@ export default function TableProducts(
   
 
   return (
+    
+<div>
+    <ShowImgModal
+        openShowImgModal={openShowImgModal}
+        closeShowImgModal={handleCloseShowImgModal} 
+        showImgModal={showImgModal}
+    />
     <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
       <TableVirtuoso 
         data={filteredData}
@@ -324,12 +359,25 @@ export default function TableProducts(
           }}
         // itemContent={rowContent}
         itemContent={(index: number) =>
-          rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock, checkListStock, checkingRow) 
+          rowContent(
+              index, 
+              filteredData[index], 
+              columns, 
+              classes, 
+              openUpdateAmountStock, 
+              checkListStock, 
+              checkingRow,
+              handleOpenShowImg
+          ) 
           // rowContent(index, filteredData[index], columns)
         }
         style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
         
       />
     </Paper>
+
+</div>
+
+  
   );
 }
