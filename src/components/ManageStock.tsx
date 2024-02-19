@@ -74,7 +74,7 @@ export default function ManageStock(
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
     const [stockCodeTemp, setStockCodeTemp] = useState<any>(data.code);
-    const [stockAmountTemp, setStockAmountTemp] = useState<number | string>(data.amount);
+    const [stockAmountTemp, setStockAmountTemp] = useState<number >(data.amount);
     const [stockMeasureTemp, setStockMeasureTemp] = useState<string>(data.measure);
     let selectedCategory
     if(edition)
@@ -85,7 +85,7 @@ export default function ManageStock(
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');  
     const [unsavedImages, setUnsavedImages] = useState<string[]>([])
-    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number | string>(data.alert_amount?data.alert_amount:0);
+    const [stockAlertAmountTemp, setStockAlertAmountTemp] = useState<number>(data.alert_amount?data.alert_amount:0);
     const [stockAlertAmountEnabledTemp, setStockAlertAmountEnabledTemp] = useState<boolean>(data.alert_amount_enabled?data.alert_amount_enabled:false);
     const [stockAlertedAmountTemp, setStockAlertedAmountTemp] = useState<boolean>(data.alerted_amount?data.alerted_amount:false);
     const [stockAlertDateTemp, setStockAlertDateTemp] = useState<any>(data.alert_date?data.alert_date:'');
@@ -255,7 +255,7 @@ export default function ManageStock(
     const handleStockNameChange = (value: string) => {
         setStockNameTemp(value)
     }
-    const handleStockAmountChange = (value: number | string) => {
+    const handleStockAmountChange = (value: number ) => {
         console.log("value: ", value)
         console.log("typeof value: ", typeof value)
         const topValue = 999
@@ -296,7 +296,8 @@ export default function ManageStock(
         // setUnsavedImages(value)
         setUnsavedImages((prevImages: string[]) => [...prevImages, value])
     }
-    const handleStockAlertAmountChange = (value: number | string) => {
+    const handleStockAlertAmountChange = (value: number) => {
+        // console.log("value: ", value)
         setStockAlertAmountTemp(value)
     }
     const handleStockAlertAmountEnabledChange = (value: boolean) => {
@@ -426,14 +427,14 @@ export default function ManageStock(
         if(!edition){
             setStockNameTemp("")
             setStockCodeTemp('')
-            setStockAmountTemp('')
+            setStockAmountTemp(0)
             setStockMeasureTemp('')
             setStockCategoryTemp(null)
             setStockSubCategoryTemp('')
             setStockPriceTemp('')
             setStockDescriptionTemp('')
             setStockImageUrlTemp('')
-            setStockAlertAmountTemp('')
+            setStockAlertAmountTemp(0)
             setStockAlertAmountEnabledTemp(false)
             setStockAlertedAmountTemp(false)
             setStockAlertDateTemp('')

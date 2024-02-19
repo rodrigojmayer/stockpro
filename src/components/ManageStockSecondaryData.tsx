@@ -4,6 +4,7 @@ import { Box,
          IconButton, 
          TextField,
          Typography,
+         InputAdornment,
         } from '@mui/material';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import { UpButton,
@@ -70,6 +71,19 @@ export default function ManageStockSecondaryData(
     const handleShowPicker = () => {
         // console.log("handleShowPicker showPicker: ", showPicker)
         setShowPicker((prevState) => !prevState)
+    }
+    
+    const writeStockPriceChange = (e:any) => {
+        let newValue = parseFloat(e.target.value.replace(/[^0-9.,]/g, '')); // Allow only numbers, commas, and dots
+        // let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
+        newValue = Math.round(newValue * 100) / 100;
+        const topValue = 1000000 
+        if (isNaN(newValue)) {
+            newValue = 0;
+        } else if (newValue > topValue) {
+            newValue = topValue;
+        }
+        onStockPriceChange(newValue);
     }
 //     // const configValue: string = (process.env.FILESTACK_API_KEY as string);
 //     // const configValue : any = process.env.FILESTACK_API_KEY 
@@ -180,9 +194,10 @@ export default function ManageStockSecondaryData(
                         maxRows={1}
                         size="small"
                         type="number"
+                        // type="money"
                         className={classes.inputMainData}
                         value={stockPriceTemp}
-                        onChange={ (event) => onStockPriceChange(Number(event.target.value)) }
+                        onChange={ (event) => writeStockPriceChange(event) }
                         InputProps={{
                             className: classes.inputClassName,
                             endAdornment: (

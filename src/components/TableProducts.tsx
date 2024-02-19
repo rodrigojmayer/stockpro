@@ -133,6 +133,7 @@ function rowContent(
                 display: "block", // Ensure the image is treated as a block element
                 margin: "auto",   // Set margins to auto to horizontally center the image
                 objectFit: 'contain',
+                paddingTop: "0.3px ", // Set to avoid small space when the row is alerted
               }} 
               // src={newRow[column.dataKey]} 
               src={`https://cdn.filestackcontent.com/resize=w:34,h:34,fit:crop/auto_image/compress/${newRow[column.dataKey]}`} 

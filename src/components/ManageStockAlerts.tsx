@@ -21,8 +21,8 @@ interface ChildProps {
     hiddenPanel:  boolean
     openOptionsCreate: (newData: string )=> void
     stockMeasureTemp: string
-    stockAlertAmountTemp: number | string
-    onStockAlertAmountChange: (newData: number | string) => void
+    stockAlertAmountTemp: number
+    onStockAlertAmountChange: (newData: number ) => void
     stockAlertAmountEnabledTemp: boolean
     onStockAlertAmountEnabledChange: (newData: boolean) => void
     stockAlertDateTemp: Date | null
@@ -56,6 +56,17 @@ export default function ManageStockAlerts(
         setOpenSaveChanges(false);
     }
     const handleOpenSaveChanges = () => setOpenSaveChanges(true);
+    
+    const writeStockAlertAmount = (e:any) => {
+        let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
+        const topValue = 999 
+        if (isNaN(newValue)) {
+            newValue = 0;
+        } else if (newValue > topValue) {
+            newValue = topValue;
+        }
+        onStockAlertAmountChange(newValue);
+    }
     const handleDatePickerChange = (newDate:any) => { 
         // console.log("newDate: ", newDate) 
         // console.log("newDate.$d: ", newDate.$d)
@@ -93,11 +104,12 @@ export default function ManageStockAlerts(
                                 label="By amount"
                                 maxRows={1}
                                 size="small"
-                                type="number"
+                                // type="number"
                                 className={classes.inputMainData}
                                 value={stockAlertAmountTemp}
                                 disabled={!stockAlertAmountEnabledTemp}
-                                onChange={ (event) => onStockAlertAmountChange(Number(event.target.value)) }
+                                // onChange={ (event) => onStockAlertAmountChange(Number(event.target.value)) }
+                                onChange={ (event) => writeStockAlertAmount(event) }
                                 InputProps={{
                                     className: classes.inputClassName,
                                     endAdornment: (

@@ -28,7 +28,7 @@ interface ChildProps {
     stockNameTemp: string
     onStockNameChange: (newData: string )=> void
     stockAmountTemp: number | string
-    onStockAmountChange: (newData: number | string )=> void
+    onStockAmountChange: (newData: number  )=> void
     measureArray: mainData[]
     stockMeasureTemp: string
     onStockMeasureChange: (newData: any )=> void

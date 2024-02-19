@@ -73,7 +73,7 @@ export interface Data {
   id?: number;
   id_client: number;
   product: string;
-  amount: number | string;
+  amount: number ;
   measure: string;
   category: string;
   sub_category: string;
@@ -84,7 +84,7 @@ export interface Data {
   price?: number | string;
   description?: string;
   url_image?: string;
-  alert_amount?: number | string;
+  alert_amount?: number ;
   alert_amount_enabled?: boolean;
   alerted_amount?: boolean;
   alert_date?: Date | string;
