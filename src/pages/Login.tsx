@@ -26,7 +26,7 @@ import useAddUser from "../hooks/addUser";
 import { CheckListStockContext } from "../context/CheckListStockContext";
 import Cookies from 'js-cookie';
 import ConfirmUserValidatedModal from '../components/ConfirmUserValidatedModal';
-import ForgottenPassModal from "../components/ForgottenPassModal";
+import ManageForgottenPass from "../components/ManageForgottenPass";
 
 // const theme = createTheme({
 //   palette: {
@@ -64,7 +64,7 @@ export default function Login () {
   const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
   const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
   const [openConfirmUserValidatedModal, setOpenConfirmUserValidatedModal] = useState(false);  
-  const [openForgottenPassModal, setOpenForgottenPassModal] = useState(false);  
+  const [openManageForgottenPass, setOpenManageForgottenPass] = useState(false);  
     
   const navigate = useNavigate();
   const location = useLocation();
@@ -340,8 +340,8 @@ export default function Login () {
 const handlecloseConfirmUserValidatedModal = () => {
   setOpenConfirmUserValidatedModal(false)
 }
-const handlecloseForgottenPassModal = () => {
-  setOpenForgottenPassModal(false)
+const handlecloseManageForgottenPass = () => {
+  setOpenManageForgottenPass(false)
 }
 
 useEffect(() => {
@@ -417,9 +417,9 @@ return (
             closeConfirmUserValidatedModal={handlecloseConfirmUserValidatedModal} 
             textData={textData}
         />  
-        <ForgottenPassModal
-            openForgottenPassModal={openForgottenPassModal}
-            closeForgottenPassModal={handlecloseForgottenPassModal} 
+        <ManageForgottenPass
+            openManageForgottenPass={openManageForgottenPass}
+            closeManageForgottenPass={handlecloseManageForgottenPass} 
         />           
         <Typography className={classes.finishButtons} align="center" variant='h5' >
             Login
@@ -516,7 +516,7 @@ return (
             <NavLink 
               style={{ color: '#c1e8fb' }}
               to=""
-              onClick={() => setOpenForgottenPassModal(true)}
+              onClick={() => setOpenManageForgottenPass(true)}
 
             >
               Forgot Password? 

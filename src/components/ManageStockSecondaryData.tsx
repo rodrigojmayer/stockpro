@@ -178,9 +178,9 @@ export default function ManageStockSecondaryData(
         // fetchDeleteImageProduct()
     }
 
-    useEffect(() => {
-        console.log("imageUrlHandle: ", imageUrlHandle)
-    }, [imageUrlHandle])
+    // useEffect(() => {
+    //     console.log("imageUrlHandle: ", imageUrlHandle)
+    // }, [imageUrlHandle])
                 
     return (
         <div
