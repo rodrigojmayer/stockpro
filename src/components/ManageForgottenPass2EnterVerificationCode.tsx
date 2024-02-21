@@ -24,7 +24,6 @@ interface Category {
 
 interface ChildProps {
     hiddenPanel:  boolean
-    openOptions: (newData: string )=> void
     verificationCode: string
     verificationCodeChange: (newData: string )=> void
     // stockAmountTemp: number | string
@@ -43,35 +42,10 @@ interface ChildProps {
 
 export default function ManageForgottenPass2EnterVerificationCode(
         {   hiddenPanel, 
-            openOptions,
             verificationCode, 
             verificationCodeChange,
-            // stockAmountTemp, 
-            // onStockAmountChange,
-            // measureArray,  
-            // stockMeasureTemp, 
-            // onStockMeasureChange,
-            // stockCodeTemp, 
-            // onStockCodeChange,
-            // categoryArray, 
-            // stockCategoryTemp, 
-            // onStockCategoryChange,
-            // stockSubCategoryTemp, 
-            // onStockSubCategoryChange, 
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
-    const close = () => {}
-    const [openSaveChanges, setOpenSaveChanges] = useState(false);  
-    const handleCloseSaveChanges = (ans?:boolean) => {
-        if(ans){
-            close()
-        }
-        setOpenSaveChanges(false);
-    }
-    const handleOpenSaveChanges = () => setOpenSaveChanges(true);
-    // const handleHiddenOptions = (changeTo:string) =>  {
-    //     openOptionsCreate(changeTo)
-    // }
 
     return (
         <div
@@ -79,23 +53,7 @@ export default function ManageForgottenPass2EnterVerificationCode(
         >
             <Typography align='center' variant='h6'>Main data</Typography>
             <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
-                {/* <Box className={classes.customBoxRow}>
-                    <TextField
-                        label="Name*"
-                        value={emailForgottenPass}
-                        onChange={ (event) => emailForgottenPassChange(event.target.value) }
-                        maxRows={1}
-                        size="small"
-                        className={classes.inputMainData}
-                        InputProps={{
-                            className: classes.inputClassName,
-                        }}
-                    />
-                </Box>  */}
-                {/* <Box className={classes.customBoxColumn}> */}
                 <Box className={classes.customBoxRow}>
-                    {/* { true ?  */}
-                    {/* { false ?  */}
                     <TextField
                         label="Verification Code"
                         maxRows={1}
@@ -109,27 +67,6 @@ export default function ManageForgottenPass2EnterVerificationCode(
                             className: classes.inputClassName,
                         }}
                     /> 
-                    {/* // : 
-                    // <Box>
-                    //     <Box marginBottom="10px">
-                    //         <Typography variant='body2' align="center" >
-                    //             An email with a verification code was just sent to {emailForgottenPass} 
-                    //         </Typography>
-                    //     </Box>
-                    //     <TextField
-                    //         label="Verification Code"
-                    //         maxRows={1}
-                    //         size="small"
-                    //         type= "text"
-                    //         className= {`${errorTextFields.verification_code ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                    //         value={emailForgottenPass}
-                    //         onChange={ (event) => handleEditEmailForgottenPass(event.target.value) }
-                    //         InputProps={{
-                    //             className: classes.inputClassName,
-                    //         }}
-                    //     />
-                    // </Box>
-                    // } */}
                 </Box>
             </Box>
         </div>
