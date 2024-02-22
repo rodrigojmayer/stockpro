@@ -6,19 +6,19 @@ import { Box,
 import { OkButton, 
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'; 
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalStyleInternalForgottenPass, modalStyleInternal } from '../Styles'; 
 import { useEffect, useState } from 'react';
 import ErrorModal from './ErrorModal';
 import SaveChanges from './SaveChanges';
 import ManageForgottenPass1EnterEmail from './ManageForgottenPass1EnterEmail';
 import ManageForgottenPass2EnterVerificationCode from './ManageForgottenPass2EnterVerificationCode';
+import ManageForgottenPass3ChangePass from './ManageForgottenPass3ChangePass';
+import ConfirmChangedPassModal from './ConfirmChangedPassModal';
 
-// const INITIAL_CREATESTOCK_OPTIONS:DataCreateStockOptions = {
 const INITIAL_FORGOTTENPASS_OPTIONS:any = {
     enterEmail: true,  
     enterVerificationCode: false,
-    // alerts: true,    
-    // customFields: true,
+    changePass: false, 
 }
 
 type ManageForgottenPassProps = {
@@ -31,6 +31,8 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
     const { classes } = useStylesGlobal();
     const [emailForgottenPass, setEmailForgottenPass] = useState<string>("")
     const [verificationCode, setVerificationCode] = useState<string>("")
+    const [newPass, setNewPass] = useState<string>("")
+    const [confirmNewPass, setConfirmNewPass] = useState<string>("")
     
     const [openOptions, setOpenOptions] = useState<any>(INITIAL_FORGOTTENPASS_OPTIONS);
 
@@ -39,21 +41,229 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
     const [errorTextFields, setErrorTextFields] = useState({
         "email": false,
         "verification_code": false,
+        "new_password": false,
+        "confirm_new_password": false,
     });
     const [openErrorModal, setOpenErrorModal] = useState(false);
     const [errorData, setErrorData] = useState("");
+    const [opencloseConfirmChangedPassModal, setOpencloseConfirmChangedPassModal] = useState(false); 
 
     const handleEditEmailForgottenPass = (value: string) => {
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            email: false,
+        }));
         setEmailForgottenPass(value)
     }
-    const handleEditverificationCode = (value: string) => {
+    const handleEditVerificationCode = (value: string) => {
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            verification_code: false,
+        }));
         setVerificationCode(value)
     }
-    
-    
-
+    const handleEditNewPass = (value: string) => {
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            new_password: false,
+        }));
+        setNewPass(value)
+    }
+    const handleEditConfirmNewPass = (value: string) => {
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            confirm_new_password: false,
+        }));
+        setConfirmNewPass(value)
+    }
     const handleCloseErrorModal = () => {
         setOpenErrorModal(false)
+    }
+    
+    const handleOkButton = async () => {
+
+        if(openOptions.enterEmail){
+            const sendEmailSuccess = await handleSendEmail();
+            if(sendEmailSuccess)
+                handleOpenOptions("enterVerificationCode");
+        } else if (openOptions.enterVerificationCode) {
+            const verificateCodeSuccess = await handleVerificateCode();
+            if(verificateCodeSuccess)
+                handleOpenOptions("changePass");
+        }else if (openOptions.changePass) {
+            const changePassSuccess = await handleChangePass();
+            if(changePassSuccess)
+                setOpencloseConfirmChangedPassModal(true)
+        }
+    }
+
+    const handleSendEmail = async() => {
+        // setErrorTextFields({
+        //     "email": false,
+        //     "verification_code": false,
+        // });
+        let loadingSuccess: boolean = false;
+        if(emailForgottenPass===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_email")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                email: true,
+            }));
+        } else {
+            try{
+                const response = await fetch(`http://localhost:4000/api/users/generateVerificationCodeForgottenPass`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: emailForgottenPass
+                    })
+                })
+                const responseData = await response.json()
+                if(response.ok){
+                    console.log("request ok: ", responseData)
+                    loadingSuccess=true
+                } else {
+                    console.log("error: ", responseData)
+                    setOpenErrorModal(true)
+                    setErrorData(responseData.errorCode)
+                    setErrorTextFields((prevErrorTextFields: any) => ({
+                        ...prevErrorTextFields,
+                        [responseData.field]: true,
+                    }));
+                }
+            } catch (err: unknown) {
+                console.log("err: ", err)
+            } 
+        }
+        console.log("loadingSuccess: ", loadingSuccess)
+        return loadingSuccess
+    };
+
+    const handleVerificateCode = async() => {
+        console.log("handling verificate code")
+        console.log("emailForgottenPass: ", emailForgottenPass)
+        let loadingSuccess: boolean = false;
+        if(verificationCode===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_verification_code")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                verification_code: true,
+            }));
+        } else {
+            try{
+                const response = await fetch(`http://localhost:4000/api/users/verifyCodeForgottenPass`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: emailForgottenPass,
+                        verification_code: verificationCode,
+                    })
+                })
+                const responseData = await response.json()
+                if(response.ok){
+                    console.log("request ok: ", responseData)
+                    loadingSuccess=true
+                } else {
+                    console.log("error: ", responseData)
+                    setOpenErrorModal(true)
+                    setErrorData(responseData.errorCode)
+                    setErrorTextFields((prevErrorTextFields: any) => ({
+                        ...prevErrorTextFields,
+                        [responseData.field]: true,
+                    }));
+                }
+            } catch (err: unknown) {
+                console.log("err: ", err)
+            } 
+        }
+        console.log("loadingSuccess: ", loadingSuccess)
+        return loadingSuccess
+    }
+
+    const handleChangePass = async() => {
+        console.log("handling verificate code")
+        console.log("emailForgottenPass: ", emailForgottenPass)
+        let loadingSuccess: boolean = false;
+        if(newPass===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_new_pass")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                new_password: true,
+            }));
+        } else if(newPass.length<6){
+            setOpenErrorModal(true)
+            setErrorData("invalid_pass_format")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                new_password: true,
+            }));
+        } else if(confirmNewPass===""){
+            setOpenErrorModal(true)
+            setErrorData("missing_confirm_new_pass")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                confirm_new_password: true,
+            }));
+        } else if(newPass!==confirmNewPass){
+            setOpenErrorModal(true)
+            setErrorData("confirm_password_must_match")
+            setErrorTextFields((prevErrorTextFields: any) => ({
+                ...prevErrorTextFields,
+                confirm_new_password: true,
+            }));
+        } else {
+            try{
+                const response = await fetch(`http://localhost:4000/api/users/changePassForgottenPass`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: emailForgottenPass,
+                        verification_code: verificationCode,
+                        new_pass: newPass,
+                    })
+                })
+                const responseData = await response.json()
+                if(response.ok){
+                    console.log("request ok: ", responseData)
+                    loadingSuccess=true
+                } else {
+                    console.log("error: ", responseData)
+                    setOpenErrorModal(true)
+                    setErrorData(responseData.errorCode)
+                    setErrorTextFields((prevErrorTextFields: any) => ({
+                        ...prevErrorTextFields,
+                        [responseData.field]: true,
+                    }));
+                }
+            } catch (err: unknown) {
+                console.log("err: ", err)
+            } 
+        }
+        console.log("loadingSuccess: ", loadingSuccess)
+        return loadingSuccess
+    }
+    
+    const handleOpenOptions = (newData:  string) => {
+        const updatedOptions = { ...openOptions };
+        for (const key in updatedOptions) {
+            if (Object.prototype.hasOwnProperty.call(updatedOptions, key)) 
+            updatedOptions[key as keyof typeof updatedOptions] = (newData===key ? true : false );
+        }
+        setOpenOptions(updatedOptions);
+    }
+    
+    const handlecloseConfirmChangedPassModal = () => {
+        setOpencloseConfirmChangedPassModal(false)
+        handleCloseManageForgottenPass()
     }
 
     const handleCloseManageForgottenPass = () => {
@@ -63,109 +273,16 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
             ...prevErrorTextFields,
             email: false,
         }));
-    }
-    const handleOpenSaveChanges = () => {
-        // console.log("stockNameTemp: ", stockNameTemp)
-
-        // if(stockNameTemp===""){
-        //     setOpenErrorModal(true)
-        //     setErrorData("missing_data")
-        // }else if(Number(stockAmountTemp)<0){
-        //     setOpenErrorModal(true)
-        //     setErrorData("negative_amount")
-        // }
-        // else{
-        //     setOpenSaveChanges(true);
-        // }
-        setOpenSaveChanges(true);
-
-    }
-    
-    const handleOkButton = () => {
-        if(openOptions.enterEmail){
-            // alert("ok button")
-            // handleSendEmail()
-            handleOpenOptions("enterVerificationCode")
-        } else if (openOptions.enterVerificationCode) {
-
-            // handleOpenOptions("verification_code")
-        }
+        handleOpenOptions("enterEmail")
     }
 
-    const handleSendEmail = async() => {
-        // setErrorTextFields({
-        //     "email": false,
-        //     "verification_code": false,
-        // });
-        if(emailForgottenPass===""){
-            // setOpenErrorModal(true)
-            // setErrorData("missing_email")
-            // setErrorTextFields((prevErrorTextFields: any) => ({
-            //     ...prevErrorTextFields,
-            //     email: true,
-            // }));
-        }
-        else{
-
-            let loadingSuccess: boolean = false
-            try{
-
-                const response = await fetch(`http://localhost:4000/api/users/forgottenPass`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: emailForgottenPass
-                    })
-                })
-
-                const responseData = await response.json()
-                if(response.ok){
-                    console.log("request ok: ", responseData)
-                    loadingSuccess=true
-                } else {
-                    // console.log("error: ", responseData)
-                    // setOpenErrorModal(true)
-                    // setErrorData(responseData.errorCode)
-                    // setErrorTextFields((prevErrorTextFields: any) => ({
-                    //     ...prevErrorTextFields,
-                    //     [responseData.field]: true,
-                    // }));
-                }
-            } catch (err: unknown) {
-                console.log("err: ", err)
-            } finally {
-                if(loadingSuccess){
-                    // closeForgottenPassModal(true)
-                    // setEmailForgottenPass("")
-                }
-            }
-        }
-    };
-
-    const handleCloseSaveChanges = (ans?:boolean) => {
-        if(ans){
-
-        }
-        setOpenSaveChanges(false);
-    }
-
-    const handleOpenOptions = (newData:  string) => {
-        const updatedOptions = { ...openOptions };
-        console.log("newData: ", newData)
-        console.log("updatedOptions before: ", updatedOptions)
-        for (const key in updatedOptions) {
-            console.log("key: ", key)
-            if (Object.prototype.hasOwnProperty.call(updatedOptions, key)) 
-            updatedOptions[key as keyof typeof updatedOptions] = (newData===key ? true : false );
-        }
-        console.log("updatedOptions after: ", updatedOptions)
-        setOpenOptions(updatedOptions);
-    }
     useEffect(() => {
-        setEmailForgottenPass('')
-        setVerificationCode('')
+        if(INITIAL_FORGOTTENPASS_OPTIONS.enterEmail){
+            setEmailForgottenPass('');
+            setVerificationCode('');
+            setNewPass('');
+            setConfirmNewPass('');
+        }
     }, [openManageForgottenPass])
     
     return (
@@ -174,51 +291,58 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
             onClose={handleCloseManageForgottenPass}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleErrorInternal}>
-                    
-                <form
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                e.preventDefault();
-                                handleOkButton();
-                                e.stopPropagation() 
-                            }
-                        }}
-                    >
-                        <SaveChanges
-                            openSaveChanges={openSaveChanges}
-                            closeSaveChanges={handleCloseSaveChanges} 
-                            messageBeforeSave={messageBeforeSave}
-                        />                    
+                <Box sx={{...modalStyleErrorInternal, ...modalStyleInternalForgottenPass}}>
+                    <form onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            handleOkButton();
+                            e.stopPropagation() 
+                        }
+                    }}>
+                        <ConfirmChangedPassModal
+                            openConfirmChangedPassModal={opencloseConfirmChangedPassModal}
+                            closeConfirmChangedPassModal={handlecloseConfirmChangedPassModal} 
+                        />                  
                         <ErrorModal
                             openErrorModal={openErrorModal}
                             closeErrorModal={handleCloseErrorModal}
                             errorData={errorData} 
                         />
-                        <Box margin="10px">  
-                            <Typography variant='body1' align="center" >
+                        <Box marginTop="10px">  
+                            <Typography variant='h6' align="center" >
                                 Account recovery
                             </Typography> 
-                            {/* <Typography variant='body2' align="center" >
-                                Your account has been validated  
-                            </Typography>  */}
                         </Box>
                         <ManageForgottenPass1EnterEmail 
                             hiddenPanel={!openOptions.enterEmail}
 
                             emailForgottenPass={emailForgottenPass}
                             emailForgottenPassChange={handleEditEmailForgottenPass}
+
+                            errorTextFields={errorTextFields}
                         />
                         <ManageForgottenPass2EnterVerificationCode 
                             hiddenPanel={!openOptions.enterVerificationCode}
-
+                            
+                            emailForgottenPass={emailForgottenPass}
                             verificationCode={verificationCode}
-                            verificationCodeChange={handleEditverificationCode}
+                            verificationCodeChange={handleEditVerificationCode}
+
+                            errorTextFields={errorTextFields}
                         />
-                        
+                        <ManageForgottenPass3ChangePass 
+                            hiddenPanel={!openOptions.changePass}
+
+                            newPass={newPass}
+                            newPassChange={handleEditNewPass}
+                            confirmNewPass={confirmNewPass}
+                            confirmNewPassChange={handleEditConfirmNewPass}
+                            
+                            errorTextFields={errorTextFields}
+                        />
                         <Box className={classes.finishButtons}>
                             <CancelButton
-                            clicked={handleCloseManageForgottenPass}
+                                clicked={handleCloseManageForgottenPass}
                             />
                             <OkButton
                                 clicked={() => handleOkButton()}

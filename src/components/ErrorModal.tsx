@@ -97,8 +97,20 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (errorData === "invalid_user_format"){
         title="Invalid user format"
         subTitle=`Contains invalid characters.`
+    } else if (errorData === "invalid_pass_format"){
+        title="Invalid password format"
+        subTitle=`It must have at least 6 characters.`
+    } else if (errorData === "missing_verification_code"){
+        title="Missing required data"
+        subTitle=`Verification code*.`
+    } else if (errorData === "expired_code_validation"){
+        title="Expired code validation"
+        // subTitle=`You can sign up again.`
+    } else if (errorData === "invalid_code"){
+        title="Invalid code validation"
+        // subTitle=`You can sign up again.`
     }
-
+    
     const handleCloseErrorModal = () => {
 
         closeErrorModal()            

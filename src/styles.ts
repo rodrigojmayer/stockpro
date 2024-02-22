@@ -324,7 +324,9 @@ export const modalStyleInternal = {
     overflow: "scroll",
     overflowX: "hidden",
 };
-
+export const modalStyleInternalForgottenPass = {
+    width: "280px",
+}
 
 export const modalStyleChangePassExternal = {
     top: "23%",
