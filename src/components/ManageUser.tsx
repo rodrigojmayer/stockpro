@@ -21,12 +21,6 @@ import { UsersContext } from '../context/UsersContext';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 // import useAddUser from '../hooks/addUser';   //      To do next
 
-const INITIAL_CREATESTOCK_OPTIONS = {
-    mainData: false,  
-    secondaryData: true,
-    alerts: true,    
-    customFields: true,
-}
 
 interface ChildProps {
     open:  boolean
@@ -49,12 +43,12 @@ export default function ManageUser(
     const { users, setUsers } = useContext<any>(UsersContext)
     const { accessLevels } = useContext<any>(AccessLevelsContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
-    const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [userAccessLevel, setUserAccessLevel] = useState<number|null>(null);
     const [userName, setUserName] = useState<string>('');
     const [userLastName, setUserLastName] = useState<string>('');
     const [userUser, setUserUser] = useState<string>('');
     const [userEmail, setUserEmail] = useState<string>('');
+    const[ userAlertsEnabled, setUserAlertsEnabled ] = useState<boolean>(false)
     const [userDeleted, setUserDeleted] = useState<boolean>(false);
     const [userEnabled, setUserEnabled] = useState<boolean>(true);
     // const [userPassword, setUserPassword] = useState<string>('');
@@ -79,6 +73,8 @@ export default function ManageUser(
                 bodyUpdate.last_name = userLastName
             if(!edition || dataEditUser.user != userUser)
                 bodyUpdate.user = userUser
+            if(!edition || dataEditUser.alerts_enabled != userAlertsEnabled)
+                bodyUpdate.alerts_enabled = userAlertsEnabled
             if(userEmail===""){
                 bodyUpdate.email = null
             }else if(!edition || dataEditUser.email != userEmail){
@@ -234,14 +230,6 @@ export default function ManageUser(
         }
     }
 
-    const handleOpenOptionsCreate = (newData:  string) => {
-        const updatedOptions = { ...openOptionsCreate };
-        for (const key in updatedOptions) {
-            if (Object.prototype.hasOwnProperty.call(updatedOptions, key)) 
-            updatedOptions[key as keyof typeof updatedOptions] = (newData===key ? false : true );
-        }
-        setOpenOptionsCreate(updatedOptions);
-    }
 
     const handleUserAccessLevel = (value: number) => {
         // console.log("setUserAccessLevel value: ", value)
@@ -274,6 +262,9 @@ export default function ManageUser(
     const handleUserDeleted = (value: boolean) => {
         // console.log("setUserDeleted value: ", value)
         setUserDeleted(value)
+    }
+    const handleUserAlertsEnabled = (value: boolean) => {
+        setUserAlertsEnabled(value)
     }
     const handleUserEnabled = (value: boolean) => {
         console.log("setUserEnabled value: ", value)
@@ -313,6 +304,10 @@ export default function ManageUser(
             setUserEnabled(dataEditUser.enabled)
         else
             setUserEnabled(true)
+        if(dataEditUser.alerts_enabled!==undefined)
+            setUserAlertsEnabled(dataEditUser.alerts_enabled)
+        else
+            setUserAlertsEnabled(true)
         // if(dataEditUser.pass)
         //     setUserPassword(dataEditUser.pass)
         // else
@@ -323,7 +318,7 @@ export default function ManageUser(
             "user": false,
             // "password": false,
         });
-    }, [ open, openOptionsCreate])
+    }, [ open])
     
     const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
    
@@ -515,7 +510,17 @@ export default function ManageUser(
                                 />
                             </Box>
                             <Box className={classes.customBoxRow}>
-                                <Typography >{(userEnabled)?'Enabled':'Disabled'}</Typography>
+                                <Typography >Alerts by email</Typography>
+                                <Switch 
+                                        color='success'  
+                                        checked={userAlertsEnabled}
+                                        onChange={(event) => {
+                                            handleUserAlertsEnabled(event.target.checked)
+                                        }}
+                                    />  
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <Typography >User {(userEnabled)?'enabled':'disabled'}</Typography>
                                 <Switch 
                                         color='success'  
                                         checked={userEnabled}

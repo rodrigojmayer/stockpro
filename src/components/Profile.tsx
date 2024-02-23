@@ -15,6 +15,7 @@ import { Box,
          Stack,
          Chip,
          Button,
+         Switch,
         } from '@mui/material';
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
@@ -63,6 +64,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
     const[ profileLastName, setProfileLastName ] = useState<string>(user.last_name)
     const[ profileEmail, setProfileEmail ] = useState<string>(user.email)
     const[ profileUser, setProfileUser ] = useState<string>(user.user)
+    const[ profileAlertsEnabled, setProfileAlertsEnabled ] = useState<boolean>(user.alerts_enabled)
     const[ profilePass, setProfilePass ] = useState<string>(user.pass)
     // const[ showProfilePass, setShowProfilePass ] = useState<boolean>(false)
     const[ profileConfirmPass, setProfileConfirmPass ] = useState<string>(user.pass)
@@ -89,6 +91,8 @@ export default function Profile( { open, handleClose }: ChildProps) {
                 bodyUpdate.email = profileEmail;
             if(user.user!=profileUser)
                 bodyUpdate.user = profileUser;
+            if(user.alerts_enabled!=profileAlertsEnabled)
+                bodyUpdate.alerts_enabled = profileAlertsEnabled;
             // if(user.pass!=profilePass)
             //     bodyUpdate.pass = profilePass;
 
@@ -166,13 +170,14 @@ export default function Profile( { open, handleClose }: ChildProps) {
     }
 
     const handleOpenSaveChanges = () => {
-        console.log("user.name===profileName", user.name==profileName)
-        console.log("user.name", String(user.name))
-        console.log("profileName", String(profileName))
+        // console.log("user.name===profileName", user.name==profileName)
+        // console.log("user.name", String(user.name))
+        // console.log("profileName", String(profileName))
         if( user.name==profileName &&
             user.last_name==profileLastName &&
             user.email==profileEmail &&
-            user.user==profileUser ){  // It means no changes
+            user.user==profileUser &&
+            user.alerts_enabled==profileAlertsEnabled ){  // It means no changes
             close();
         } else {
             setErrorTextFields({
@@ -221,6 +226,9 @@ export default function Profile( { open, handleClose }: ChildProps) {
             user: false,
         }));
     }
+    const handleEditAlertsEnabled = (value: boolean) => {
+        setProfileAlertsEnabled(value)
+    }
     // const handleEditPass = (event: React.ChangeEvent<HTMLInputElement>) => {
     //     setProfilePass(event.target.value);
     // }
@@ -244,6 +252,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
         setProfileLastName(user.last_name);
         setProfileEmail(user.email);
         setProfileUser(user.user);
+        setProfileAlertsEnabled(user.alerts_enabled);
         // setProfileName(user.name?user.name:'');
         // setProfileLastName(user.last_name?user.last_name:'');
         // setProfileEmail(user.email?user.email:'');
@@ -281,32 +290,6 @@ export default function Profile( { open, handleClose }: ChildProps) {
                     <Box className={classes.customBoxColumn}>
                         <Box className={classes.customBoxRow}>
                             <TextField
-                                label="Email*"
-                                maxRows={1}
-                                size="small"
-                                type="email"
-                                // className={classes.inputMainData}
-                                className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                value={profileEmail}
-                                onChange={ handleEditEmail }
-                                InputProps={{className: classes.inputClassName,}}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Alias*"
-                                maxRows={1}
-                                size="small"
-                                type="text"
-                                // className={classes.inputMainData}
-                                className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                value={profileUser}
-                                onChange={ handleEditUser }
-                                InputProps={{className: classes.inputClassName,}}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
                                 label="Name"
                                 maxRows={1}
                                 size="small"
@@ -329,6 +312,42 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 InputProps={{className: classes.inputClassName,}}
                             />
                         </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Alias*"
+                                maxRows={1}
+                                size="small"
+                                type="text"
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                value={profileUser}
+                                onChange={ handleEditUser }
+                                InputProps={{className: classes.inputClassName,}}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                            <TextField
+                                label="Email*"
+                                maxRows={1}
+                                size="small"
+                                type="email"
+                                // className={classes.inputMainData}
+                                className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                value={profileEmail}
+                                onChange={ handleEditEmail }
+                                InputProps={{className: classes.inputClassName,}}
+                            />
+                        </Box>
+                        <Box className={classes.customBoxRow}>
+                                <Typography >Alerts by email</Typography>
+                                <Switch 
+                                        color='success'  
+                                        checked={profileAlertsEnabled}
+                                        onChange={(event) => {
+                                            handleEditAlertsEnabled(event.target.checked)
+                                        }}
+                                    />  
+                            </Box>
                         
                         {/* <Box className={classes.customBoxRow}>
                             <TextField

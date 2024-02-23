@@ -227,7 +227,8 @@ export default function ManageStockSecondaryData(
                                  objectFit: 'contain' 
                             }} 
                             // src={imageUrlHandle} 
-                            src={`https://cdn.filestackcontent.com/resize=w:90/auto_image/compress/${imageUrlHandle}`} 
+                            // src={`https://cdn.filestackcontent.com/resize=w:90/auto_image/compress/${imageUrlHandle}`} 
+                            src={`https://cdn.filestackcontent.com/resize=w:200,h:200,fit:crop/rounded_corners=radius:17/auto_image/compress/${imageUrlHandle}`} 
                             onClick={handleShowPicker} 
                         />
                         <IconButton
