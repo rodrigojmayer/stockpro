@@ -214,7 +214,10 @@ export default function ManageStockSecondaryData(
                         className={classes.inputMainData}
                         value={stockDescriptionTemp}
                         onChange={ (event) => onStockDescriptionChange(event.target.value) }
-                        InputProps={{  className: classes.inputClassName }}
+                        InputProps={{  
+                            className: classes.inputClassName,
+                            inputProps: {maxLength: 75}
+                        }}
                     />
                 </Box> 
                 {  imageUrlHandle ? 

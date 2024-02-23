@@ -105,7 +105,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
  
     let height_box = "50%"
     if(user.id_access_level <4){
-        buttons.splice(1, 0, <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>)
+        // buttons.splice(1, 0, <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>)
         buttons.splice(3, 0, <Button value="users" key="users" variant="text" onClick={selOp}>Users</Button>)
         height_box = "70%"
     }

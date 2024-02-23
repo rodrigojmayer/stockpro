@@ -89,6 +89,7 @@ export default function ManageStockMainData(
                         className={classes.inputMainData}
                         InputProps={{
                             className: classes.inputClassName,
+                            inputProps: {maxLength: 30}
                         }}
                     />
                 </Box> 
@@ -102,6 +103,7 @@ export default function ManageStockMainData(
                         className={classes.inputMainData}
                         InputProps={{
                             className: classes.inputClassName,
+                            inputProps: {maxLength: 25}
                         }}
                     />
                 </Box> 

@@ -500,6 +500,7 @@ export default function Fields(
                                                     // height:"36px",
                                                     borderRadius: 10,
                                                     },
+                                                    inputProps: {maxLength: 15}, 
                                                 }}
                                             />
                                             <div className={classes.customBoxCenter}> 

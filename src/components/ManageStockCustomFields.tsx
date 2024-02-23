@@ -145,9 +145,8 @@ export default function ManageStockCustomFields(
                                     value={stockCustomValuesTemp[cusField.dataKey as keyof typeof stockCustomValuesTemp] || ''}
                                     onChange={ (event) => onStockCustomValuesTemp(event.target.value, cusField.dataKey) }
                                     InputProps={{
-                                        style: {
-                                        borderRadius: 10,
-                                        },
+                                        style: { borderRadius: 10 },
+                                        inputProps: { maxLength: 30 }
                                     }}
                                 />
                             </Box>

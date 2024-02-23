@@ -235,6 +235,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                                     onChange={ handleEditActualPass }
                                     InputProps={{
                                         className: classes.inputClassName,
+                                        inputProps: {maxLength: 25}, 
                                         endAdornment: (
                                             <IconButton onClick={showActualPassToggle}>
                                                 {showActualPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -255,6 +256,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                                     onChange={ handleEditNewPass }
                                     InputProps={{
                                         className: classes.inputClassName,
+                                        inputProps: {maxLength: 25}, 
                                         endAdornment: (
                                             <IconButton onClick={showNewPassToggle}>
                                                 {showNewPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -275,6 +277,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                                     onChange={ handleEditConfirmNewPass }
                                     InputProps={{
                                         className: classes.inputClassName,
+                                        inputProps: {maxLength: 25}, 
                                         endAdornment: (
                                             <IconButton onClick={showConfirmNewPassToggle}>
                                                 {showConfirmNewPass ? <VisibilityIcon /> : <VisibilityOffIcon />}

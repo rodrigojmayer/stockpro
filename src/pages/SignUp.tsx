@@ -278,6 +278,7 @@ export default function SignUp () {
                                     className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                     InputProps={{
                                         className: classes.inputClassName,
+                                        inputProps: {maxLength: 20}
                                     }}
                                 />
                             </Box>
@@ -311,6 +312,7 @@ export default function SignUp () {
                                         {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                     </IconButton>
                                     ),
+                                    inputProps: {maxLength: 25}
                                 }}
                                 />
                             </Box>

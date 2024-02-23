@@ -444,6 +444,34 @@ export default function ManageUser(
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
+                                    label="Name"
+                                    value={userName}
+                                    onChange={ (event) => handleUserName(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className= {classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 25}, 
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Last name"
+                                    value={userLastName}
+                                    onChange={ (event) => handleUserLastName(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 25}, 
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
                                     label="User*"
                                     value={userUser}
                                     onChange={ (event) => handleUserUser(event.target.value) }
@@ -452,6 +480,7 @@ export default function ManageUser(
                                     className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                     InputProps={{
                                         className: classes.inputClassName,
+                                        inputProps: {maxLength: 20}, 
                                     }}
                                 />
                             </Box>
@@ -483,32 +512,6 @@ export default function ManageUser(
                                     }}
                                 />
                             </Box> */}
-                            <Box className={classes.customBoxRow}>
-                                <TextField
-                                    label="Name"
-                                    value={userName}
-                                    onChange={ (event) => handleUserName(event.target.value) }
-                                    maxRows={1}
-                                    size="small"
-                                    className= {classes.inputMainData}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                    }}
-                                />
-                            </Box>
-                            <Box className={classes.customBoxRow}>
-                                <TextField
-                                    label="Last name"
-                                    value={userLastName}
-                                    onChange={ (event) => handleUserLastName(event.target.value) }
-                                    maxRows={1}
-                                    size="small"
-                                    className={classes.inputMainData}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                    }}
-                                />
-                            </Box>
                             <Box className={classes.customBoxRow}>
                                 <Typography >Alerts by email</Typography>
                                 <Switch 
