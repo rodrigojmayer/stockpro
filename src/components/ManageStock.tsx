@@ -442,6 +442,7 @@ export default function ManageStock(
             setStockAlertedDateTemp(false);
             setStockCustomValuesTemp({});
             setTitleStat("Create ")
+            setOpenOptionsCreate(INITIAL_CREATESTOCK_OPTIONS)
         }
     }, [open])
     

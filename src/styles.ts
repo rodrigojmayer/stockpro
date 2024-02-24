@@ -301,28 +301,57 @@ export const useStylesGlobal = makeStyles()({
     }
 })
 
+// export const modalStyleExternal = {
+//     position: 'absolute',
+//     display: "flex",
+//     justifyContent: "center",
+//     top: 74,
+//     width: "100%",
+//     overflowX: "hidden",
+// };
 export const modalStyleExternal = {
-    position: 'absolute',
+    // position: 'absolute',
+    // display: "flex",
+    // justifyContent: "center",
+    // top: 74,
+    // width: "100%",
+    overflowX: "hidden",
+
+    
     display: "flex",
     justifyContent: "center",
-    top: 74,
-    width: "100%",
-    overflowX: "hidden",
+    alignItems: "center",
 };
+// export const modalStyleInternal = {
+//     // top: 74,
+//     maxWidth: "700px",
+//     width: "calc(100% - 32px)",
+//     // height: "520px",
+//     maxHeight: "520px",
+//     // minHeight: "490px",
+//     backgroundColor: "rgb(45,72, 91, 1)",
+//     borderRadius: "10px",
+//     // margin: "auto",
+//     padding: "3px",
+//     color: "white",
+//     overflow: "scroll",
+//     overflowX: "hidden",
+// };
 export const modalStyleInternal = {
-    // top: 74,
     maxWidth: "700px",
-    width: "calc(100% - 32px)",
-    // height: "520px",
+    width: "calc(100% - 25px)",
     maxHeight: "520px",
-    // minHeight: "490px",
     backgroundColor: "rgb(45,72, 91, 1)",
     borderRadius: "10px",
-    // margin: "auto",
-    padding: "3px",
+    padding: "5px",
     color: "white",
-    overflow: "scroll",
+    // overflow: "scroll",
     overflowX: "hidden",
+    
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
 };
 export const modalStyleInternalForgottenPass = {
     width: "280px",
@@ -372,6 +401,17 @@ export const modalStyleErrorInternal = {
 export const modalLoginInternal = {
     width: "320px",
     paddingBottom: "20px",
+};
+export const modalStyleImageExternal = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+};
+export const modalStyleImageInternal = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
 };
 // export const TableStyles = makeStyles((theme: Theme) => ({
 export const tableStyles = makeStyles()({

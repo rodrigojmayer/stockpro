@@ -501,50 +501,55 @@ export default function MassiveUpdateStock(
                         errorData={errorData} 
                     />
                     <Typography align='center' variant="h5">Massive upload</Typography>
-                    
 
-                    <Paper style={{ height: `calc(100vh - ${(breakpointLG?"375px":"295px")})`, width: '87vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
-                        <TableVirtuoso 
-                            data={filteredData}
-                            // data={data}
-                            components={VirtuosoTableComponents}
-                            // fixedHeaderContent={fixedHeaderContent}
-                            fixedHeaderContent={() => {
-                                return (
-                                <TableRow>
-                                    {columns.map((column:any) => (
-                                      <TableCell
-                                          key={column._id}
-                                          variant="head"
-                                          align='center'
-                                          style={{ 
-                                          width: column.width, 
-                                          backgroundColor:"rgb(25, 54, 72)", 
-                                          border:0
-                                          }}
-                                          sx={{
-                                          color: "white",
-                                          padding: "8px 0",
-                                          }}
-                                      >
-                                          <ColumnLabel
-                                              column={column}
-                                          />
-                                      </TableCell>
-                                    ))}
-                                </TableRow>
-                                );
-                            }}
-                            itemContent={(index: number) =>
-                            // rowContent(index, filteredData[index], columns, classes, openUpdateAmountStock) 
-                            rowContent(index, filteredData[index], columns, classes, tableClassNames, writeValue) 
-                            // rowContent(index, filteredData[index], columns)
-                            }
-                            style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
-                            
-                        />
-                        </Paper>
-
+                    <Paper style={{ 
+                        height: `calc(100vh - ${(breakpointLG?"380px":"300px")})`, 
+                        width: '87vw', 
+                        margin: "12px auto 0 auto" ,
+                        borderRadius: "10px"
+                    }}>
+                        
+                        <div style={{ overflow: 'auto', height: '100%' }}>
+                            <TableVirtuoso 
+                                data={filteredData}
+                                components={VirtuosoTableComponents}
+                                fixedHeaderContent={() => {
+                                    return (
+                                    <TableRow >
+                                        {columns.map((column:any) => (
+                                        <TableCell
+                                            key={column._id}
+                                            variant="head"
+                                            align='center'
+                                            style={{ 
+                                            width: column.width, 
+                                            backgroundColor:"rgb(25, 54, 72)", 
+                                            border:0,
+                                            }}
+                                            sx={{
+                                            color: "white",
+                                            padding: "8px 0",
+                                            }}
+                                        >
+                                            <ColumnLabel
+                                                column={column}
+                                            />
+                                        </TableCell>
+                                        ))}
+                                    </TableRow>
+                                    );
+                                }}
+                                itemContent={(index: number) =>
+                                    rowContent(index, filteredData[index], columns, classes, tableClassNames, writeValue) 
+                                }
+                                style={{
+                                    backgroundColor: "rgb(45, 72, 91)", 
+                                    borderRadius: "10px",
+                                    margin: "-1px",
+                                }}
+                            />
+                        </div>
+                    </Paper>
 
                     <Box className={classes.finishButtons}>
                         <CancelButton
