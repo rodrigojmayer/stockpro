@@ -15,11 +15,11 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
   
   const [products, setProducts] = useState<Data[]>([])
 
-  const formatAlertDate = (dateString: string | null) => {
-    if (!dateString) return null
-    const date = new Date(dateString)
-    return date.getTime() // Returns the time in miliseconds since January 1, 1970 (UNIX timestamp)
-  }
+  // const formatAlertDate = (dateString: string | null) => {
+  //   if (!dateString) return null
+  //   const date = new Date(dateString)
+  //   return date.getTime() // Returns the time in miliseconds since January 1, 1970 (UNIX timestamp)
+  // }
   const fetchProducts = async () => {
       
     // console.log("Fetching products isLoading.fieldsFetchCreateStock:", isLoading.fieldsFetchCreateStock)
@@ -44,16 +44,16 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
             };
           });
 
-          // Sort the products array by the 'alert_on' field
-          formattedProducts.sort((a:any, b:any) => {
-            const alertOnA = formatAlertDate((a.alerted_amount && a.alert_amount_enabled) || (a.alerted_date && a.alert_date_enabled))
-            const alertOnB = formatAlertDate((b.alerted_amount && b.alert_amount_enabled) || (b.alerted_date && b.alert_date_enabled))
-            if (alertOnA && alertOnB) {
-              return alertOnA - alertOnB
-            }
-            // If one of the dates is null or undefined, place it at the end
-            return alertOnA ? -1 : 1
-          })
+          // // Sort the products array by the 'alert_on' field
+          // formattedProducts.sort((a:any, b:any) => {
+          //   const alertOnA = formatAlertDate((a.alerted_amount && a.alert_amount_enabled) || (a.alerted_date && a.alert_date_enabled))
+          //   const alertOnB = formatAlertDate((b.alerted_amount && b.alert_amount_enabled) || (b.alerted_date && b.alert_date_enabled))
+          //   if (alertOnA && alertOnB) {
+          //     return alertOnA - alertOnB
+          //   }
+          //   // If one of the dates is null or undefined, place it at the end
+          //   return alertOnA ? -1 : 1
+          // })
         // console.log("productsContext here is ok: ------------------")
 
           setProducts(formattedProducts)

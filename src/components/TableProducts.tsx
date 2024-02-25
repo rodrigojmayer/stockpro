@@ -13,6 +13,10 @@ import { tableStyles, useStylesGlobal } from '../Styles';
 import { blueGrey } from '@material-ui/core/colors';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import ShowImgModal from './ShowImgModal';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
 // import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
 
 
@@ -175,6 +179,7 @@ export default function TableProducts(
     field: "_id",
     asc: true
   })
+  const [alertsOnTopUserSort, setAlertsOnTopUserSort] = useState(true)
   // const [rowsUserSort, setRowsUserSort] = useState("_id_ASC")
 
   const checkingRow = (id_row:any) => {
@@ -204,27 +209,41 @@ export default function TableProducts(
     }
   }
 
+  const formatAlertDate = (dateString: string | null) => {
+    if (!dateString) return null
+    const date = new Date(dateString)
+    return date.getTime() // Returns the time in miliseconds since January 1, 1970 (UNIX timestamp)
+  }
+
   // const [dataVersion, setDataVersion] = useState(0);
   const orderByField = (field: any, calledFrom: string) => {
     if(field==="url_image")
       return
+
+
     // console.log("rowsUserSort: ", rowsUserSort)
     let newSortAsc:boolean = true
     if(calledFrom === "onClick"){
       newSortAsc = (field === rowsUserSort.field ? !rowsUserSort.asc: rowsUserSort.asc)
+    } else{
+      newSortAsc = rowsUserSort.asc
     }
     // console.log("field out: ", field)
     let arraySorted = filteredData.slice();
     setRowsUserSort({field: field, asc: newSortAsc});
+    let aField, bField
     if(newSortAsc){
       arraySorted.sort((a, b) => {
         // console.log("typeof a[field]: ", typeof a[field])
         if (typeof a[field] === "string"){
-          a[field] = a[field].toLowerCase()
-          b[field] = b[field].toLowerCase()
+          aField = a[field].toLowerCase()
+          bField = b[field].toLowerCase()
+        } else {
+          aField = a[field]
+          bField = b[field]
         }
-        if (a[field] < b[field]) return -1;
-        if (a[field] > b[field]) return 1;
+        if (aField < bField) return -1;
+        if (aField > bField) return 1;
         // console.log("a[field.daKey]: ", a[field])
         // if (a[field].toString().toLowerCase() < b[field].toString().toLowerCase()) return -1;
         // if (a[field].toString().toLowerCase() > b[field].toString().toLowerCase()) return 1;
@@ -233,14 +252,37 @@ export default function TableProducts(
     } else {
       arraySorted.sort((a, b) => {
         if (typeof a[field] === "string"){
-          a[field] = a[field].toLowerCase()
-          b[field] = b[field].toLowerCase()
+          aField = a[field].toLowerCase()
+          bField = b[field].toLowerCase()
+        } else {
+          aField = a[field]
+          bField = b[field]
         }
-        if (a[field] < b[field]) return 1;
-        if (a[field] > b[field]) return -1;
+        if (aField < bField) return 1;
+        if (aField > bField) return -1;
         return 0;
       })
     }
+
+    
+    if(alertsOnTopUserSort){
+
+
+      
+      // Sort the products array by the 'alert_on' field
+      arraySorted.sort((a:any, b:any) => {
+        const alertOnA = formatAlertDate((a.alerted_amount && a.alert_amount_enabled) || (a.alerted_date && a.alert_date_enabled))
+        const alertOnB = formatAlertDate((b.alerted_amount && b.alert_amount_enabled) || (b.alerted_date && b.alert_date_enabled))
+        if (alertOnA && alertOnB) {
+          return alertOnA - alertOnB
+        }
+        // If one of the dates is null or undefined, place it at the end
+        return alertOnA ? -1 : 1
+      })
+      
+    }
+
+
     // setFilteredData(arraySorted);
     setSortedData(arraySorted);
     // console.log("array: ", array)
@@ -258,6 +300,25 @@ export default function TableProducts(
   const [showImgModal, setShowImgModal] = useState(""); 
   const [openShowImgModal, setOpenShowImgModal] = useState(false); 
 
+
+  
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const openTableOptions = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation()
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  
+  const handleAlertsOnTop = () => {
+   
+    setAlertsOnTopUserSort(!alertsOnTopUserSort)
+    handleClose()
+  }
+  
+  
   useEffect(()=> {
     if(checkListStock.length>0)
       handleDisabledUpdateButton(false)
@@ -319,13 +380,16 @@ export default function TableProducts(
       return vals
     }))
   }, [ filteredRows, data]);
-  
+  const [initialRender, setInitialRender] = useState(true);
   useEffect(() => {
+    if (initialRender) {
+      console.log("Initial rendering");
+      setInitialRender(false); // Update the flag after the initial rendering
+      return; // Exit early to prevent further execution of the effect
+    }
     console.log("rowsUserSort: ", rowsUserSort)
-    // if(rowsUserSort!=="_id_ASC")
-    // if(rowsUserSort!=="")
       orderByField(rowsUserSort.field, "useEffect")
-  }, [filteredData])
+  }, [filteredData, alertsOnTopUserSort])
 
   return (
     
@@ -371,7 +435,49 @@ export default function TableProducts(
                           orderByField(column.dataKey, "onClick")
                         }} 
                       >
-                        {column.label}
+                        { column.label ? 
+                            column.label 
+                          : 
+                          <>
+                          <IconButton
+                            onClick={
+                              openTableOptions
+                            }
+                           style={{ 
+                             width: "30px", 
+                             border:0
+                           }}
+                           sx={{
+                             color: "white",
+                             padding: "0",
+                            //  paddingTop: "-10px",
+                             top: "-5px",
+                           }}
+                           >
+                            <MoreVertIcon fontSize="small" />
+                           </IconButton>
+                            <Menu
+                              id="demo-positioned-menu"
+                              aria-labelledby="demo-positioned-button"
+                              anchorEl={anchorEl}
+                              open={open}
+                              onClose={handleClose}
+                              anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                              }}
+                              transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                              }}
+                              style={{ marginTop: '30px', marginLeft: '20px' }}
+                            >
+                              <MenuItem onClick={() => handleAlertsOnTop()}><MoreVertIcon fontSize="small" /> Alerts on top</MenuItem>
+                              <MenuItem onClick={() => alert("2")}>My account</MenuItem>
+                              <MenuItem onClick={() => alert("3")}>Logout</MenuItem>
+                            </Menu>
+                          </>
+                        }
                       </Typography>
                        
                       { ( column.dataKey === "check_stock" ) ? 
