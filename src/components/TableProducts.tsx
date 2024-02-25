@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Box } from '@mui/material';
+import { 
+  TableContainer, 
+  Table, 
+  TableHead, 
+  TableRow, 
+  TableCell, 
+  TableBody, 
+  Paper, 
+  Box, 
+  Switch
+} from '@mui/material';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
@@ -17,6 +27,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import { Anchor } from '@mui/icons-material';
 // import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
 
 
@@ -50,12 +61,12 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 };
 
 // const { classes } = useStylesGlobal()
-// function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
-// function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
+// function rowContent(_index: number, row: Data, columnsTable: ColumnData[], classes: TableClasses) {
+// function rowContent(_index: number, row: Data, columnsTable: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
 function rowContent(
     _index: number, 
     row: Data, 
-    columns: ColumnData[], 
+    columnsTable: ColumnData[], 
     classes: any, 
     openUpdateAmountStock:(newData: Data) => void, 
     checkListStock:any, 
@@ -76,7 +87,7 @@ function rowContent(
 
   return (
     <React.Fragment >
-      {columns.map((column) => (
+      {columnsTable.map((column) => (
         <TableCell
           key={column.id}
           align='center'
@@ -165,13 +176,26 @@ export default function TableProducts(
   const breakpointLG = useMediaQuery('(min-width:1024px)');
 
   const { user } = useContext<any>(UserContext);
-  const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+  const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
-
-  // const columns = columnsUserOrder
+  // console.log("defaultColumns: ", defaultColumns)
+  // console.log("customColumns: ", customColumns)
+  console.log("columns: ", columns)
+  console.log("columnsUserOrder: ", columnsUserOrder)
+  // console.log("filteredColumnsCustom: ", filteredColumnsCustom)
+  
+  // const columnsTable = columnsUserOrder
   const elementToAdd = {dataKey: "check_stock", id: 0, width: 40,}
-  const columns = [elementToAdd, ...columnsUserOrder];
-  // console.log("columns: ", columns)
+  const columnsTable = [elementToAdd, ...columnsUserOrder];
+  const initialManageColumns = columns.map((column:any) => {
+    const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
+    console.log("foundColumn: ", foundColumn)
+    const isInArray = foundColumn !== undefined ? true : false;
+    return {_id:column._id, dataKey:column.dataKey, id:column.id, label: column.label, showInTable: isInArray}
+  })
+
+  const [manageColumns, setManageColumns] = useState(initialManageColumns)
+  // console.log("columnsTable: ", columnsTable)
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
   const [sortedData, setSortedData] = useState(data)
@@ -183,7 +207,7 @@ export default function TableProducts(
   // const [rowsUserSort, setRowsUserSort] = useState("_id_ASC")
 
   const checkingRow = (id_row:any) => {
-    console.log("checkingRow _id: ", id_row)
+    // console.log("checkingRow _id: ", id_row)
     const updatedCheckListStock = checkListStock.includes(id_row)
     ? checkListStock.filter((item: any) => item !== id_row)
     : [...checkListStock, id_row];
@@ -303,22 +327,45 @@ export default function TableProducts(
 
   
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorEl2);
   const openTableOptions = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation()
     setAnchorEl(event.currentTarget);
   };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    // Delay resetting anchorEl until after the menu has closed
+    // setTimeout(() => {
+      // if(anchorEl)
+        setAnchorEl(null);
+    // }, 100); // Adjust the delay as needed
+};
   
   const handleAlertsOnTop = () => {
    
     setAlertsOnTopUserSort(!alertsOnTopUserSort)
-    handleClose()
+    // handleClose()
   }
   
+  const openSubTableOptions = (event: React.MouseEvent<HTMLElement>) => {
+    console.log("manageColumns: ", manageColumns)
+    event.stopPropagation()
+    setAnchorEl2(event.currentTarget);
+    // handleClose()
+    // setAnchorEl(null);
+  }
   
+  const handleClose2 = () => {
+    // if(anchorEl2)
+    setAnchorEl(null);
+    setAnchorEl2(null);
+      // handleClose()
+  };
+
   useEffect(()=> {
     if(checkListStock.length>0)
       handleDisabledUpdateButton(false)
@@ -383,11 +430,11 @@ export default function TableProducts(
   const [initialRender, setInitialRender] = useState(true);
   useEffect(() => {
     if (initialRender) {
-      console.log("Initial rendering");
+      // console.log("Initial rendering");
       setInitialRender(false); // Update the flag after the initial rendering
       return; // Exit early to prevent further execution of the effect
     }
-    console.log("rowsUserSort: ", rowsUserSort)
+    // console.log("rowsUserSort: ", rowsUserSort)
       orderByField(rowsUserSort.field, "useEffect")
   }, [filteredData, alertsOnTopUserSort])
 
@@ -410,13 +457,13 @@ export default function TableProducts(
         fixedHeaderContent={() => {
             return (
               <TableRow>
-                {columns.map((column:any) => (
+                {columnsTable.map((columnTable:any) => (
                   <TableCell
-                    key={column.id}
+                    key={columnTable.id}
                     variant="head"
                     align='center'
                     style={{ 
-                      width: column.width, 
+                      width: columnTable.width, 
                       backgroundColor:"rgb(25, 54, 72)", 
                       border:0
                     }}
@@ -432,36 +479,37 @@ export default function TableProducts(
                         }}
                         onClick={(e)=> {
                           e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                          orderByField(column.dataKey, "onClick")
+                          orderByField(columnTable.dataKey, "onClick")
                         }} 
                       >
-                        { column.label ? 
-                            column.label 
+                        { columnTable.label ? 
+                            columnTable.label 
                           : 
                           <>
-                          <IconButton
-                            onClick={
-                              openTableOptions
-                            }
-                           style={{ 
-                             width: "30px", 
-                             border:0
-                           }}
-                           sx={{
-                             color: "white",
-                             padding: "0",
-                            //  paddingTop: "-10px",
-                             top: "-5px",
-                           }}
-                           >
-                            <MoreVertIcon fontSize="small" />
-                           </IconButton>
+                            <IconButton
+                              onClick={
+                                openTableOptions
+                              }
+                            style={{ 
+                              width: "30px", 
+                              border:0
+                            }}
+                            sx={{
+                              color: "white",
+                              padding: "0",
+                              //  paddingTop: "-10px",
+                              top: "-5px",
+                            }}
+                            >
+                              <MoreVertIcon fontSize="small" />
+                            </IconButton>
                             <Menu
                               id="demo-positioned-menu"
                               aria-labelledby="demo-positioned-button"
                               anchorEl={anchorEl}
                               open={open}
                               onClose={handleClose}
+                              // onExited={() => setAnchorEl(null)} 
                               anchorOrigin={{
                                 vertical: 'top',
                                 horizontal: 'left',
@@ -470,17 +518,89 @@ export default function TableProducts(
                                 vertical: 'top',
                                 horizontal: 'left',
                               }}
-                              style={{ marginTop: '30px', marginLeft: '20px' }}
+                              style={{ 
+                                marginTop: '20px', 
+                                marginLeft: '15px',
+                              }}
                             >
-                              <MenuItem onClick={() => handleAlertsOnTop()}><MoreVertIcon fontSize="small" /> Alerts on top</MenuItem>
-                              <MenuItem onClick={() => alert("2")}>My account</MenuItem>
+                              <MenuItem 
+                                onClick={() => 
+                                  handleAlertsOnTop()}
+                                  style={{
+                                    paddingLeft: '5px',
+                                    // backgroundColor:"rgb(25, 54, 72)", 
+                                  }
+                                }
+                              >
+                                <Switch 
+                                  size='small'
+                                  color='success'  
+                                  checked={alertsOnTopUserSort}
+                                />  
+                                Alerts on top
+                              </MenuItem>
+                              <MenuItem 
+                                // onClick={() => 
+                                // alert("2")}
+                                onClick={
+                                  openSubTableOptions
+                                }
+                              >
+                                Manage columns
+                              </MenuItem>
                               <MenuItem onClick={() => alert("3")}>Logout</MenuItem>
+                            </Menu>
+                            
+                            <Menu
+                              
+                              id="demo-positioned-menu2"
+                              aria-labelledby="demo-positioned-button2"
+                              anchorEl={anchorEl2}
+                              open={open2}
+                              onClose={handleClose2}
+                              anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                              }}
+                              transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                              }}
+                              style={{ 
+                                marginTop: '-57px', 
+                                marginLeft: '0px',
+                                height: '470px',
+                              }}
+                            >
+
+                              {manageColumns.map((manageColumn:any) => (
+
+                                <MenuItem 
+                                
+                                  key={manageColumn.id}
+
+                                  onClick={() => 
+                                    handleAlertsOnTop()}
+                                    style={{
+                                      paddingLeft: '5px',
+                                      // backgroundColor:"rgb(25, 54, 72)", 
+                                    }
+                                  }
+                                >
+                                  <Switch 
+                                    size='small'
+                                    color='success'  
+                                    checked={manageColumn.showInTable}
+                                  />  
+                                  {manageColumn.label}
+                                </MenuItem>
+                              ))}
                             </Menu>
                           </>
                         }
                       </Typography>
                        
-                      { ( column.dataKey === "check_stock" ) ? 
+                      { ( columnTable.dataKey === "check_stock" ) ? 
                         <Checkbox  
                           checked={(checkListStock.length===data.length && data.length!==0 )? true : false}
                           onClick={(e)=> {
@@ -499,7 +619,7 @@ export default function TableProducts(
                       :
                           <TextField
                             // id={column.dataKey}
-                            id={column.dataKey.toString()}
+                            id={columnTable.dataKey.toString()}
                             // id="filled-multiline-flexible"
                             // value={filters[0].dataKey}
                             onChange={handleFilterChange}
@@ -528,14 +648,14 @@ export default function TableProducts(
               index, 
               // filteredData[index], 
               sortedData[index], 
-              columns, 
+              columnsTable, 
               classes, 
               openUpdateAmountStock, 
               checkListStock, 
               checkingRow,
               handleOpenShowImg
           ) 
-          // rowContent(index, filteredData[index], columns)
+          // rowContent(index, filteredData[index], columnsTable)
         }
         style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
         
