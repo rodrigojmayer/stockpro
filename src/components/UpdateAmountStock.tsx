@@ -326,10 +326,14 @@ export default function UpdateAmountStock(
                         errorData={errorData} 
                     /> */}
                     <Box className={`${classes.customBoxColumn} ${classes.updateBoxColumn}`}>
-                    <Typography variant="h5">{productUpdate.product}</Typography>
+                    <Typography align='center' variant="h5">{productUpdate.product}</Typography>
                     
                         <Grid container spacing={0} alignItems="center" >
-                            <Grid item xs={6} md={6} > </Grid>
+                            <Grid item xs={3} md={8} >
+                                <Typography variant="h6" >
+                                    Amount
+                                </Typography> </Grid>
+                            <Grid item xs={3} md={6} > </Grid>
                             <Grid item xs={3} md={6} display="flex" justifyContent="center">
                                 <UpButton
                                     direction="up"
@@ -340,7 +344,6 @@ export default function UpdateAmountStock(
 
                             <Grid item xs={1} md={8} > </Grid>
                             <Grid item xs={2} md={8} >
-                            {/* <Box className={classes.customBoxRow}> */}
                                 <Typography align='center' variant="h6" >
                                     {productUpdate.amount}
                                 </Typography>

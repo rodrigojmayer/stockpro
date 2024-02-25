@@ -170,6 +170,12 @@ export default function TableProducts(
   // console.log("columns: ", columns)
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
+  const [sortedData, setSortedData] = useState(data)
+  const [rowsUserSort, setRowsUserSort] = useState({
+    field: "_id",
+    asc: true
+  })
+  // const [rowsUserSort, setRowsUserSort] = useState("_id_ASC")
 
   const checkingRow = (id_row:any) => {
     console.log("checkingRow _id: ", id_row)
@@ -198,6 +204,47 @@ export default function TableProducts(
     }
   }
 
+  // const [dataVersion, setDataVersion] = useState(0);
+  const orderByField = (field: any, calledFrom: string) => {
+    if(field==="url_image")
+      return
+    // console.log("rowsUserSort: ", rowsUserSort)
+    let newSortAsc:boolean = true
+    if(calledFrom === "onClick"){
+      newSortAsc = (field === rowsUserSort.field ? !rowsUserSort.asc: rowsUserSort.asc)
+    }
+    // console.log("field out: ", field)
+    let arraySorted = filteredData.slice();
+    setRowsUserSort({field: field, asc: newSortAsc});
+    if(newSortAsc){
+      arraySorted.sort((a, b) => {
+        // console.log("typeof a[field]: ", typeof a[field])
+        if (typeof a[field] === "string"){
+          a[field] = a[field].toLowerCase()
+          b[field] = b[field].toLowerCase()
+        }
+        if (a[field] < b[field]) return -1;
+        if (a[field] > b[field]) return 1;
+        // console.log("a[field.daKey]: ", a[field])
+        // if (a[field].toString().toLowerCase() < b[field].toString().toLowerCase()) return -1;
+        // if (a[field].toString().toLowerCase() > b[field].toString().toLowerCase()) return 1;
+        return 0;
+      })
+    } else {
+      arraySorted.sort((a, b) => {
+        if (typeof a[field] === "string"){
+          a[field] = a[field].toLowerCase()
+          b[field] = b[field].toLowerCase()
+        }
+        if (a[field] < b[field]) return 1;
+        if (a[field] > b[field]) return -1;
+        return 0;
+      })
+    }
+    // setFilteredData(arraySorted);
+    setSortedData(arraySorted);
+    // console.log("array: ", array)
+  }
   
   const handleOpenShowImg = (selectedImgUrlHandle: string) => {
     setShowImgModal(selectedImgUrlHandle)
@@ -273,6 +320,12 @@ export default function TableProducts(
     }))
   }, [ filteredRows, data]);
   
+  useEffect(() => {
+    console.log("rowsUserSort: ", rowsUserSort)
+    // if(rowsUserSort!=="_id_ASC")
+    // if(rowsUserSort!=="")
+      orderByField(rowsUserSort.field, "useEffect")
+  }, [filteredData])
 
   return (
     
@@ -284,7 +337,9 @@ export default function TableProducts(
     />
     <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
       <TableVirtuoso 
-        data={filteredData}
+        // data={filteredData}
+        
+        data={sortedData}
         // data={data}
         components={VirtuosoTableComponents}
         // fixedHeaderContent={fixedHeaderContent}
@@ -306,12 +361,15 @@ export default function TableProducts(
                       padding: "8px 0",
                     }}
                   >
-                  {/* {filters[0].dataKey} */}
                     
                       <Typography noWrap
                         sx={{
                           padding: "0 4px ",
                         }}
+                        onClick={(e)=> {
+                          e.stopPropagation() // Prevent the click event from propagating to the parent cell
+                          orderByField(column.dataKey, "onClick")
+                        }} 
                       >
                         {column.label}
                       </Typography>
@@ -362,7 +420,8 @@ export default function TableProducts(
         itemContent={(index: number) =>
           rowContent(
               index, 
-              filteredData[index], 
+              // filteredData[index], 
+              sortedData[index], 
               columns, 
               classes, 
               openUpdateAmountStock, 
