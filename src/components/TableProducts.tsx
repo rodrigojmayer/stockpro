@@ -548,7 +548,6 @@ export default function TableProducts(
                               >
                                 Manage columns
                               </MenuItem>
-                              <MenuItem onClick={() => alert("3")}>Logout</MenuItem>
                             </Menu>
                             
                             <Menu
