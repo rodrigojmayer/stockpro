@@ -176,7 +176,7 @@ export default function TableProducts(
   const breakpointLG = useMediaQuery('(min-width:1024px)');
 
   const { user } = useContext<any>(UserContext);
-  const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+  const { defaultColumns, customColumns, columns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
   // console.log("defaultColumns: ", defaultColumns)
   // console.log("customColumns: ", customColumns)
@@ -189,7 +189,7 @@ export default function TableProducts(
   const columnsTable = [elementToAdd, ...columnsUserOrder];
   const initialManageColumns = columns.map((column:any) => {
     const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
-    console.log("foundColumn: ", foundColumn)
+    // console.log("foundColumn: ", foundColumn)
     const isInArray = foundColumn !== undefined ? true : false;
     return {_id:column._id, dataKey:column.dataKey, id:column.id, label: column.label, showInTable: isInArray}
   })
@@ -365,6 +365,24 @@ export default function TableProducts(
     setAnchorEl2(null);
       // handleClose()
   };
+
+  const handlePickCollumn = (columnSelected: any) => {
+    console.log("columnSelected: ", columnSelected)
+    console.log("manageColumns: ", manageColumns)
+    const indexColumnUserOrder = columnsUserOrder.findIndex((columnUserOrder:any) => columnUserOrder._id === columnSelected._id);
+    const actualColumnUserOrder = columnsUserOrder
+    const indexManageColumn = manageColumns.findIndex((manageColumn:any) => manageColumn._id === columnSelected._id);
+    const actualManageColumn = manageColumns
+    if (indexColumnUserOrder !== -1) {
+      actualColumnUserOrder.splice(indexColumnUserOrder, 1);
+      actualManageColumn[indexManageColumn].showInTable = false
+    } else {
+      actualColumnUserOrder.push(columnSelected)
+      actualManageColumn[indexManageColumn].showInTable = true
+    }
+    setManageColumns(actualManageColumn)
+    setColumnsUserOrder(actualColumnUserOrder)
+  }
 
   useEffect(()=> {
     if(checkListStock.length>0)
@@ -549,9 +567,7 @@ export default function TableProducts(
                                 Manage columns
                               </MenuItem>
                             </Menu>
-                            
                             <Menu
-                              
                               id="demo-positioned-menu2"
                               aria-labelledby="demo-positioned-button2"
                               anchorEl={anchorEl2}
@@ -571,20 +587,15 @@ export default function TableProducts(
                                 height: '470px',
                               }}
                             >
-
                               {manageColumns.map((manageColumn:any) => (
-
                                 <MenuItem 
-                                
                                   key={manageColumn.id}
-
                                   onClick={() => 
-                                    handleAlertsOnTop()}
-                                    style={{
-                                      paddingLeft: '5px',
-                                      // backgroundColor:"rgb(25, 54, 72)", 
-                                    }
-                                  }
+                                    handlePickCollumn(manageColumn)}
+                                  style={{
+                                    paddingLeft: '5px',
+                                    // backgroundColor:"rgb(25, 54, 72)", 
+                                  }}
                                 >
                                   <Switch 
                                     size='small'
