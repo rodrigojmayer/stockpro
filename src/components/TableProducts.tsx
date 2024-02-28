@@ -520,7 +520,7 @@ export default function TableProducts(
                             }}
                             >
                               <MoreVertIcon fontSize="small" />
-                            </IconButton>
+                            </IconButton>                            
                             <Menu
                               id="demo-positioned-menu"
                               aria-labelledby="demo-positioned-button"
@@ -540,31 +540,50 @@ export default function TableProducts(
                                 marginTop: '20px', 
                                 marginLeft: '15px',
                               }}
+
+                              MenuListProps={{
+                                  sx: { padding: 0,  
+                                  },
+                              }}
+                              // PaperProps={{
+                              //   sx: { borderRadius: '5px' }, // Adjust the value as needed
+                              // }}
                             >
                               <MenuItem 
                                 onClick={() => 
                                   handleAlertsOnTop()}
                                   style={{
-                                    paddingLeft: '5px',
-                                    // backgroundColor:"rgb(25, 54, 72)", 
-                                  }
-                                }
+                                    padding: '0 5px',
+                                    backgroundColor: "#DCF2F1",
+                                  }}
                               >
-                                <Switch 
-                                  size='small'
-                                  color='success'  
-                                  checked={alertsOnTopUserSort}
-                                />  
-                                Alerts on top
+                                <Typography 
+                                  align="center" 
+                                  variant="body2" 
+                                > 
+                                  <Switch 
+                                    size='small'
+                                    color='success'  
+                                    checked={alertsOnTopUserSort}
+                                  />  
+                                  Alerts on top
+                                </Typography>
                               </MenuItem>
                               <MenuItem 
-                                // onClick={() => 
-                                // alert("2")}
                                 onClick={
                                   openSubTableOptions
                                 }
+                                style={{
+                                  padding: '0 5px',
+                                  backgroundColor: "#DCF2F1",
+                                }}
                               >
-                                Manage columns
+                                <Typography 
+                                  align="center" 
+                                  variant="body2" 
+                                > 
+                                  Manage columns
+                                </Typography>
                               </MenuItem>
                             </Menu>
                             <Menu
@@ -586,6 +605,12 @@ export default function TableProducts(
                                 marginLeft: '0px',
                                 height: '470px',
                               }}
+                              MenuListProps={{
+                                  sx: { padding: 0 },
+                              }}
+                              // PaperProps={{
+                              //   sx: { borderRadius: '7px' }, // Adjust the value as needed
+                              // }}
                             >
                               {manageColumns.map((manageColumn:any) => (
                                 <MenuItem 
@@ -593,17 +618,22 @@ export default function TableProducts(
                                   onClick={() => 
                                     handlePickCollumn(manageColumn)}
                                   style={{
-                                    paddingLeft: '5px',
-                                    // backgroundColor:"rgb(25, 54, 72)", 
+                                    padding: '0 5px',
+                                    backgroundColor: "#DCF2F1",
                                   }}
                                 >
-                                  <Switch 
-                                    size='small'
-                                    color='success'  
-                                    checked={manageColumn.showInTable}
-                                  />  
-                                  {manageColumn.label}
-                                </MenuItem>
+                                  <Typography 
+                                    align="center" 
+                                    variant="body2" 
+                                  > 
+                                    <Switch 
+                                      size='small'
+                                      color='success'  
+                                      checked={manageColumn.showInTable}
+                                    />  
+                                      {manageColumn.label}
+                                  </Typography>
+                                </MenuItem> 
                               ))}
                             </Menu>
                           </>
