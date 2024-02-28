@@ -27,6 +27,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import LockIcon from '@mui/icons-material/Lock';
 import { Anchor } from '@mui/icons-material';
 // import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
 
@@ -369,6 +370,7 @@ export default function TableProducts(
   const handlePickCollumn = (columnSelected: any) => {
     console.log("columnSelected: ", columnSelected)
     console.log("manageColumns: ", manageColumns)
+    if(columnSelected.id === -1) return
     const indexColumnUserOrder = columnsUserOrder.findIndex((columnUserOrder:any) => columnUserOrder._id === columnSelected._id);
     const actualColumnUserOrder = columnsUserOrder
     const indexManageColumn = manageColumns.findIndex((manageColumn:any) => manageColumn._id === columnSelected._id);
@@ -632,6 +634,15 @@ export default function TableProducts(
                                       checked={manageColumn.showInTable}
                                     />  
                                       {manageColumn.label}
+                                      {manageColumn.id==-1 ? 
+                                        <LockIcon 
+                                          style={{
+                                            paddingTop: "10px",
+                                          }}
+                                          fontSize='small'
+                                        /> 
+                                      : 
+                                        "" }
                                   </Typography>
                                 </MenuItem> 
                               ))}
