@@ -181,8 +181,8 @@ export default function TableProducts(
   const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
   // console.log("defaultColumns: ", defaultColumns)
   // console.log("customColumns: ", customColumns)
-  console.log("columns: ", columns)
-  console.log("columnsUserOrder: ", columnsUserOrder)
+  // console.log("columns: ", columns)
+  // console.log("columnsUserOrder: ", columnsUserOrder)
   // console.log("filteredColumnsCustom: ", filteredColumnsCustom)
   
   // const columnsTable = columnsUserOrder
@@ -193,6 +193,11 @@ export default function TableProducts(
     // console.log("foundColumn: ", foundColumn)
     const isInArray = foundColumn !== undefined ? true : false;
     return {_id:column._id, dataKey:column.dataKey, id:column.id, label: column.label, showInTable: isInArray}
+  })
+  initialManageColumns.sort((a:any, b:any) => {
+    if (a.label.toLowerCase() < b.label.toLowerCase()) return -1;
+    if (a.label.toLowerCase() > b.label.toLowerCase()) return 1;
+    return 0;
   })
 
   const [manageColumns, setManageColumns] = useState(initialManageColumns)
@@ -367,9 +372,9 @@ export default function TableProducts(
       // handleClose()
   };
 
-  const handlePickCollumn = (columnSelected: any) => {
-    console.log("columnSelected: ", columnSelected)
-    console.log("manageColumns: ", manageColumns)
+  const handlePickColumn = (columnSelected: any) => {
+    // console.log("columnSelected: ", columnSelected)
+    // console.log("manageColumns: ", manageColumns)
     if(columnSelected.id === -1) return
     const indexColumnUserOrder = columnsUserOrder.findIndex((columnUserOrder:any) => columnUserOrder._id === columnSelected._id);
     const actualColumnUserOrder = columnsUserOrder
@@ -382,8 +387,49 @@ export default function TableProducts(
       actualColumnUserOrder.push(columnSelected)
       actualManageColumn[indexManageColumn].showInTable = true
     }
+
+    const array_ordered_fields = actualColumnUserOrder.map((col:any)=>col.id)
+    console.log("VirtuosoTableComponents: ", VirtuosoTableComponents)
+    // console.log("columnsTable: ", columnsTable)
+    // console.log("JSON.stringify(user.ordered_fields): ", JSON.stringify(user.ordered_fields))
+    // console.log("JSON.stringify(array_ordered_fields): ", JSON.stringify(array_ordered_fields))
+    // console.log("JSON.stringify(array_ordered_fields): ", JSON.stringify(array_ordered_fields))
+    
+  // if(JSON.stringify(user.ordered_fields) !== JSON.stringify(array_ordered_fields)){
+    const fetchEditUsersFieldsOrder = async () => {
+        let loadingSuccess: boolean = false
+        try {
+            const response = await fetch(`http://localhost:4000/api/users/${user._id}/`, {
+              method: 'PATCH',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  ordered_fields: array_ordered_fields
+              })
+            })
+            if (response) {
+                loadingSuccess = true
+            } else {
+                console.error('Update failed.')
+            }
+        } catch (error) {
+            // Handle the case where the response is not OK (e.g., show an error message)
+        } finally {
+            // setIsLoading((prevLoading: any) => ({
+            //     ...prevLoading,
+            //     fieldsFetchEditUsersFieldsOrder: loadingSuccess,
+            // }));
+            
+            setCheckListStock([])
+        }
+    }
+    fetchEditUsersFieldsOrder()
+
+    // }
+
     setManageColumns(actualManageColumn)
-    setColumnsUserOrder(actualColumnUserOrder)
+    // setColumnsUserOrder(actualColumnUserOrder)
   }
 
   useEffect(()=> {
@@ -483,7 +529,8 @@ export default function TableProducts(
                     variant="head"
                     align='center'
                     style={{ 
-                      width: columnTable.width, 
+                      width: "100px", 
+                      // width: columnTable.width, 
                       backgroundColor:"rgb(25, 54, 72)", 
                       border:0
                     }}
@@ -491,8 +538,7 @@ export default function TableProducts(
                       color: "white",
                       padding: "8px 0",
                     }}
-                  >
-                    
+                  >{console.log("columnTable.width: ", columnTable.width)}
                       <Typography noWrap
                         sx={{
                           padding: "0 4px ",
@@ -618,7 +664,7 @@ export default function TableProducts(
                                 <MenuItem 
                                   key={manageColumn.id}
                                   onClick={() => 
-                                    handlePickCollumn(manageColumn)}
+                                    handlePickColumn(manageColumn)}
                                   style={{
                                     padding: '0 5px',
                                     backgroundColor: "#DCF2F1",
