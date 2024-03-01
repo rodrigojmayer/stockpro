@@ -10,6 +10,7 @@ import {
   Box, 
   Switch
 } from '@mui/material';
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
@@ -258,47 +259,43 @@ export default function TableProducts(
     } else{
       newSortAsc = rowsUserSort.asc
     }
-    // console.log("field out: ", field)
+    console.log("field out: ", field)
     let arraySorted = filteredData.slice();
     setRowsUserSort({field: field, asc: newSortAsc});
     let aField, bField
-    if(newSortAsc){
-      arraySorted.sort((a, b) => {
-        // console.log("typeof a[field]: ", typeof a[field])
-        if (typeof a[field] === "string"){
-          aField = a[field].toLowerCase()
-          bField = b[field].toLowerCase()
-        } else {
-          aField = a[field]
-          bField = b[field]
-        }
+    // if(newSortAsc ){
+    arraySorted.sort((a, b) => {
+      // console.log(" a[field]: ", a[field])
+      // console.log("typeof a[field]: ", typeof a[field])
+      // console.log(" a[field]: ", a[field])
+      // console.log("typeof a[field]: ", typeof a[field])
+      if (typeof a[field] === "string"){
+        aField = a[field].toLowerCase()
+      } else if (a[field] === undefined){
+        aField ="-"
+      } else {
+        aField = a[field]
+      }
+      if (typeof b[field] === "string"){
+        bField = b[field].toLowerCase()
+      } else if (b[field] === undefined){
+        bField ="-"
+      } else {
+        bField = b[field]
+      }
+      
+      if(newSortAsc ){
         if (aField < bField) return -1;
         if (aField > bField) return 1;
-        // console.log("a[field.daKey]: ", a[field])
-        // if (a[field].toString().toLowerCase() < b[field].toString().toLowerCase()) return -1;
-        // if (a[field].toString().toLowerCase() > b[field].toString().toLowerCase()) return 1;
         return 0;
-      })
-    } else {
-      arraySorted.sort((a, b) => {
-        if (typeof a[field] === "string"){
-          aField = a[field].toLowerCase()
-          bField = b[field].toLowerCase()
-        } else {
-          aField = a[field]
-          bField = b[field]
-        }
+      } else {
         if (aField < bField) return 1;
         if (aField > bField) return -1;
         return 0;
-      })
-    }
-
+      }
+    })
     
     if(alertsOnTopUserSort){
-
-
-      
       // Sort the products array by the 'alert_on' field
       arraySorted.sort((a:any, b:any) => {
         const alertOnA = formatAlertDate((a.alerted_amount && a.alert_amount_enabled) || (a.alerted_date && a.alert_date_enabled))
@@ -321,7 +318,6 @@ export default function TableProducts(
   const handleOpenShowImg = (selectedImgUrlHandle: string) => {
     setShowImgModal(selectedImgUrlHandle)
     setOpenShowImgModal(true)
-
   }
   const handleCloseShowImgModal = () => {
     setOpenShowImgModal(false)
@@ -339,6 +335,7 @@ export default function TableProducts(
   const openTableOptions = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation()
     setAnchorEl(event.currentTarget);
+    setCheckListStock([])
   };
   // const handleClose = () => {
   //   setAnchorEl(null);
@@ -389,7 +386,7 @@ export default function TableProducts(
     }
 
     const array_ordered_fields = actualColumnUserOrder.map((col:any)=>col.id)
-    console.log("VirtuosoTableComponents: ", VirtuosoTableComponents)
+    // console.log("VirtuosoTableComponents: ", VirtuosoTableComponents)
     // console.log("columnsTable: ", columnsTable)
     // console.log("JSON.stringify(user.ordered_fields): ", JSON.stringify(user.ordered_fields))
     // console.log("JSON.stringify(array_ordered_fields): ", JSON.stringify(array_ordered_fields))
@@ -421,7 +418,7 @@ export default function TableProducts(
             //     fieldsFetchEditUsersFieldsOrder: loadingSuccess,
             // }));
             
-            setCheckListStock([])
+            // setCheckListStock([])
         }
     }
     fetchEditUsersFieldsOrder()
@@ -539,17 +536,24 @@ export default function TableProducts(
                       padding: "8px 0",
                     }}
                   >
+
                       <Typography noWrap
                         sx={{
                           padding: "0 4px ",
                         }}
                         onClick={(e)=> {
+                          
                           e.stopPropagation() // Prevent the click event from propagating to the parent cell
                           orderByField(columnTable.dataKey, "onClick")
                         }} 
                       >
-                        { columnTable.label ? 
+                  { columnTable.label ? 
+
+
                             columnTable.label 
+
+
+                            
                           : 
                           <>
                             <IconButton
@@ -598,8 +602,7 @@ export default function TableProducts(
                               // }}
                             >
                               <MenuItem 
-                                onClick={() => 
-                                  handleAlertsOnTop()}
+                                onClick={() => handleAlertsOnTop()}
                                   style={{
                                     padding: '0 5px',
                                     backgroundColor: "#DCF2F1",
@@ -618,9 +621,7 @@ export default function TableProducts(
                                 </Typography>
                               </MenuItem>
                               <MenuItem 
-                                onClick={
-                                  openSubTableOptions
-                                }
+                                onClick={ openSubTableOptions }
                                 style={{
                                   padding: '0 5px',
                                   backgroundColor: "#DCF2F1",
@@ -695,7 +696,7 @@ export default function TableProducts(
                             </Menu>
                           </>
                         }
-                      </Typography>
+                        </Typography>
                        
                       { ( columnTable.dataKey === "check_stock" ) ? 
                         <Checkbox  
