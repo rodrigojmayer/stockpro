@@ -192,7 +192,7 @@ export default function TableProducts(
     const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
     // console.log("foundColumn: ", foundColumn)
     const isInArray = foundColumn !== undefined ? true : false;
-    return {_id:column._id, dataKey:column.dataKey, id:column.id, label: column.label, showInTable: isInArray}
+    return {_id:column._id, id:column.id, width:column.width, label: column.label, dataKey:column.dataKey, showInTable: isInArray}
   })
   initialManageColumns.sort((a:any, b:any) => {
     if (a.label.toLowerCase() < b.label.toLowerCase()) return -1;
@@ -529,8 +529,8 @@ export default function TableProducts(
                     variant="head"
                     align='center'
                     style={{ 
-                      width: "100px", 
-                      // width: columnTable.width, 
+                      // width: "100px", 
+                      width: columnTable.width, 
                       backgroundColor:"rgb(25, 54, 72)", 
                       border:0
                     }}
@@ -538,7 +538,7 @@ export default function TableProducts(
                       color: "white",
                       padding: "8px 0",
                     }}
-                  >{console.log("columnTable.width: ", columnTable.width)}
+                  >
                       <Typography noWrap
                         sx={{
                           padding: "0 4px ",
