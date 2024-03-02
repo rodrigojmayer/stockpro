@@ -210,7 +210,8 @@ export default function TableProducts(
     field: "_id",
     asc: true
   })
-  const [alertsOnTopUserSort, setAlertsOnTopUserSort] = useState(true)
+  // const [alertsOnTopUserSort, setAlertsOnTopUserSort] = useState(true)
+  const [alertsOnTopUserSort, setAlertsOnTopUserSort] = useState(user.alerts_on_top)
   // const [rowsUserSort, setRowsUserSort] = useState("_id_ASC")
 
   const checkingRow = (id_row:any) => {
@@ -352,6 +353,29 @@ export default function TableProducts(
    
     setAlertsOnTopUserSort(!alertsOnTopUserSort)
     // handleClose()
+    
+    const fetchEditUsersFieldsOrder = async () => {
+      let loadingSuccess: boolean = false
+      try {
+          const response = await fetch(`http://localhost:4000/api/users/${user._id}/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                alerts_on_top: !alertsOnTopUserSort
+            })
+          })
+          if (response) {
+              loadingSuccess = true
+          } else {
+              console.error('Update failed.')
+          }
+      } catch (error) {
+          // Handle the case where the response is not OK (e.g., show an error message)
+      }
+  }
+  fetchEditUsersFieldsOrder()
   }
   
   const openSubTableOptions = (event: React.MouseEvent<HTMLElement>) => {
@@ -386,13 +410,7 @@ export default function TableProducts(
     }
 
     const array_ordered_fields = actualColumnUserOrder.map((col:any)=>col.id)
-    // console.log("VirtuosoTableComponents: ", VirtuosoTableComponents)
-    // console.log("columnsTable: ", columnsTable)
-    // console.log("JSON.stringify(user.ordered_fields): ", JSON.stringify(user.ordered_fields))
-    // console.log("JSON.stringify(array_ordered_fields): ", JSON.stringify(array_ordered_fields))
-    // console.log("JSON.stringify(array_ordered_fields): ", JSON.stringify(array_ordered_fields))
     
-  // if(JSON.stringify(user.ordered_fields) !== JSON.stringify(array_ordered_fields)){
     const fetchEditUsersFieldsOrder = async () => {
         let loadingSuccess: boolean = false
         try {
@@ -412,18 +430,9 @@ export default function TableProducts(
             }
         } catch (error) {
             // Handle the case where the response is not OK (e.g., show an error message)
-        } finally {
-            // setIsLoading((prevLoading: any) => ({
-            //     ...prevLoading,
-            //     fieldsFetchEditUsersFieldsOrder: loadingSuccess,
-            // }));
-            
-            // setCheckListStock([])
         }
     }
     fetchEditUsersFieldsOrder()
-
-    // }
 
     setManageColumns(actualManageColumn)
     // setColumnsUserOrder(actualColumnUserOrder)
