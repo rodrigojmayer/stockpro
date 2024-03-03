@@ -22,7 +22,7 @@ import { Data, DataTable, ColumnData, ProductUpdateData } from '../types';
 import { UserContext } from '../context/UserContext'
 import { ColumnsContext } from '../context/ColumnsContext'
 import { tableStyles, useStylesGlobal } from '../Styles';
-import { blueGrey } from '@material-ui/core/colors';
+import { blueGrey } from '@mui/material/colors';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import ShowImgModal from './ShowImgModal';
 import MoreVertIcon from '@mui/icons-material/MoreVert';

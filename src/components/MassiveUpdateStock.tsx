@@ -35,7 +35,6 @@ import ErrorModal from './ErrorModal';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ColumnsContext } from '../context/ColumnsContext'
-import { Grid } from '@material-ui/core';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 
 const INITIAL_CREATESTOCK_OPTIONS = {
