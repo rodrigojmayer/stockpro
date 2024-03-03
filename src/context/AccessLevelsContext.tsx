@@ -43,7 +43,7 @@ export const AccessLevelsProvider: React.FC<AccessLevelsProviderProps> = ({ chil
           setAccessLevels(INITIAL_ACCESS_LEVEL);
           // Handle the case where the response is not OK (e.g., show an error message)
         }
-      } catch (error) {
+      } catch (error: unknown) {
         setAccessLevels(INITIAL_ACCESS_LEVEL);
         // Handle any network or fetch-related errors
       } finally {

@@ -91,7 +91,7 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
             return (item._id !== user._id && !item.deleted && item.id_access_level > user.id_access_level)
           })
           isMounted && setUsers(json_filtered)
-        } catch (err) {
+        } catch (err: unknown) {
           console.error(err)
           setUsers(INITIAL_USERS);
         } finally {

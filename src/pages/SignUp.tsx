@@ -258,7 +258,7 @@ export default function SignUp () {
                         Sign Up
                     </Typography>
                     <form
-                        onKeyDown={(e) => {
+                        onKeyDown={(e:any) => {
                             if (e.key === "Enter") {
                                 e.preventDefault();
                                 handleOpenSaveChanges(); 
@@ -271,7 +271,7 @@ export default function SignUp () {
                                 <TextField
                                     label="Username"
                                     value={user}
-                                    onChange={ (event) => handleUser(event.target.value)}
+                                    onChange={ (event:any) => handleUser(event.target.value)}
                                     maxRows={1}
                                     size="small"
                                     type="text"
@@ -286,7 +286,7 @@ export default function SignUp () {
                                 <TextField
                                     label="Email"
                                     value={email}
-                                    onChange={ (event) => handleEmail(event.target.value)}
+                                    onChange={ (event:any) => handleEmail(event.target.value)}
                                     maxRows={1}
                                     size="small"
                                     type="email"
@@ -303,7 +303,7 @@ export default function SignUp () {
                                 size="small"
                                 value={pass}
                                 type={ showProfilePass ? "text" : "password" }
-                                onChange={ (event) => handlePass(event.target.value) }
+                                onChange={ (event:any) => handlePass(event.target.value) }
                                 className= {`${errorTextFields.pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,
@@ -323,7 +323,7 @@ export default function SignUp () {
                                 size="small"
                                 value={confirmPass}
                                 type={ showProfileConfirmPass ? "text" : "password" }
-                                onChange={ (event) => handleConfirmPass(event.target.value) }
+                                onChange={ (event:any) => handleConfirmPass(event.target.value) }
                                 className= {`${errorTextFields.confirmPass ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                 InputProps={{
                                     className: classes.inputClassName,

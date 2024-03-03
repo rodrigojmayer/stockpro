@@ -197,7 +197,7 @@ export default function ManageStockSecondaryData(
                         // type="money"
                         className={classes.inputMainData}
                         value={stockPriceTemp}
-                        onChange={ (event) => writeStockPriceChange(event) }
+                        onChange={ (event:any) => writeStockPriceChange(event) }
                         InputProps={{
                             className: classes.inputClassName,
                             endAdornment: (
@@ -213,7 +213,7 @@ export default function ManageStockSecondaryData(
                         size="small"
                         className={classes.inputMainData}
                         value={stockDescriptionTemp}
-                        onChange={ (event) => onStockDescriptionChange(event.target.value) }
+                        onChange={ (event:any) => onStockDescriptionChange(event.target.value) }
                         InputProps={{  
                             className: classes.inputClassName,
                             inputProps: {maxLength: 75}

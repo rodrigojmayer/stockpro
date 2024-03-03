@@ -411,7 +411,7 @@ export default function ManageUser(
                     />
                     <Typography align='center' variant="h5">{edition ? 'Edit ' : 'Create '} user</Typography>
                     <form
-                        onKeyDown={(e) => {
+                        onKeyDown={(e:any) => {
                             if (e.key === "Enter") {
                                 e.preventDefault();
                                 handleOpenSaveChanges(); // Call your save function
@@ -428,7 +428,7 @@ export default function ManageUser(
                                     className= {`${errorTextFields.access_level ? classes.text_field_error : ""} ${classes.inputMainData} `}
                                     InputProps={{className: classes.inputClassName}}
                                     value={userAccessLevel ? userAccessLevel : '' }
-                                    onChange={ (event) => handleUserAccessLevel(Number(event.target.value)) }
+                                    onChange={ (event:any) => handleUserAccessLevel(Number(event.target.value)) }
                                     >
                                         {accessLevels.map((accessLevel: any) => (
                                             <MenuItem 
@@ -446,7 +446,7 @@ export default function ManageUser(
                                 <TextField
                                     label="Name"
                                     value={userName}
-                                    onChange={ (event) => handleUserName(event.target.value) }
+                                    onChange={ (event:any) => handleUserName(event.target.value) }
                                     maxRows={1}
                                     size="small"
                                     className= {classes.inputMainData}
@@ -460,7 +460,7 @@ export default function ManageUser(
                                 <TextField
                                     label="Last name"
                                     value={userLastName}
-                                    onChange={ (event) => handleUserLastName(event.target.value) }
+                                    onChange={ (event:any) => handleUserLastName(event.target.value) }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -474,7 +474,7 @@ export default function ManageUser(
                                 <TextField
                                     label="User*"
                                     value={userUser}
-                                    onChange={ (event) => handleUserUser(event.target.value) }
+                                    onChange={ (event:any) => handleUserUser(event.target.value) }
                                     maxRows={1}
                                     size="small"
                                     className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
@@ -488,7 +488,7 @@ export default function ManageUser(
                                 <TextField
                                     label="Email*"
                                     value={userEmail}
-                                    onChange={ (event) => handleUserEmail(event.target.value) }
+                                    onChange={ (event:any) => handleUserEmail(event.target.value) }
                                     maxRows={1}
                                     size="small"
                                     // className={classes.inputMainData}
@@ -517,7 +517,7 @@ export default function ManageUser(
                                 <Switch 
                                         color='success'  
                                         checked={userAlertsEnabled}
-                                        onChange={(event) => {
+                                        onChange={(event:any) => {
                                             handleUserAlertsEnabled(event.target.checked)
                                         }}
                                     />  
@@ -527,7 +527,7 @@ export default function ManageUser(
                                 <Switch 
                                         color='success'  
                                         checked={userEnabled}
-                                        onChange={(event) => {
+                                        onChange={(event:any) => {
                                             handleUserEnabled(event.target.checked)
                                         }}
                                     />  

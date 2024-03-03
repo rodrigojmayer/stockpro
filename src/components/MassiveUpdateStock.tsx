@@ -110,7 +110,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                       className={`${classes.inputMainData} `}
                       // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
                       value={newRow[item.column.dataKey]==="" ? newRow[item.column.dataKey] : Math.abs(newRow[item.column.dataKey])}
-                      onChange={ (event) => writeValue(event, newRow._id) }
+                      onChange={ (event:any) => writeValue(event, newRow._id) }
                     //   onChange={ () => console.log("testin") }
                       InputProps={{
                           className: classes.inputClassName,

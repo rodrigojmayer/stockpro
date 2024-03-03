@@ -292,7 +292,7 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
         > 
             <Box sx={modalStyleSaveExternal}>
                 <Box sx={{...modalStyleErrorInternal, ...modalStyleInternalForgottenPass}}>
-                    <form onKeyDown={(e) => {
+                    <form onKeyDown={(e:any) => {
                         if (e.key === "Enter") {
                             e.preventDefault();
                             handleOkButton();

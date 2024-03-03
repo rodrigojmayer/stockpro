@@ -195,7 +195,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
         onClose={() => closeChangePassModal()}
         > 
             <form
-                onKeyDown={(e) => {
+                onKeyDown={(e:any) => {
                     if (e.key === "Enter") {
                         e.preventDefault();
                         closeChangePassModal(true); // Call your save function?

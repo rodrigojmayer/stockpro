@@ -53,7 +53,7 @@ export default function ManageForgottenPass3ChangePass(
                         type={showNewPass ? "text" : "password"}
                         className= {`${errorTextFields.new_password ? classes.text_field_error : ""} ${classes.inputMainData} `}
                         value={newPass}
-                        onChange={ (event) => newPassChange(event.target.value) }
+                        onChange={ (event:any) => newPassChange(event.target.value) }
                         InputProps={{
                             className: classes.inputClassName,
                             endAdornment: (
@@ -73,7 +73,7 @@ export default function ManageForgottenPass3ChangePass(
                         type={showConfirmNewPass ? "text" : "password"}
                         className= {`${errorTextFields.confirm_new_password ? classes.text_field_error : ""} ${classes.inputMainData} `}
                         value={confirmNewPass}
-                        onChange={ (event) => confirmNewPassChange(event.target.value) }
+                        onChange={ (event:any) => confirmNewPassChange(event.target.value) }
                         InputProps={{
                             className: classes.inputClassName,
                             endAdornment: (

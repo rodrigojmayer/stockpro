@@ -208,7 +208,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                         } else {
                             console.log('Update failed.')
                         }
-                    } catch (error) {
+                    } catch (error:any) {
                         // Handle the case where the response is not OK (e.g., show an error message)
                     } finally {
                         setIsLoading((prevLoading: any) => ({
@@ -283,7 +283,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                             className={classes.selectUsers}
                                 multiple
                                 value={selectedUsersTemp2.map(user => user.name)}
-                                onChange={(e) => {
+                                onChange={(e:any) => {
                                     const selectedUserIds = Array.isArray(e.target.value) ? e.target.value : [];
                                     const selectedUsersTemp2 = users.filter((user:any) => selectedUserIds.includes(user.name));
                                     
@@ -309,7 +309,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                                                 deleteIcon={
                                                     <CancelIcon
                                                     className={classes.cancelIconUsers}
-                                                        onMouseDown={(event) => event.stopPropagation()}
+                                                        onMouseDown={(event:any) => event.stopPropagation()}
                                                     />   
                                                 }
                                             />

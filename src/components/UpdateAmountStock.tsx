@@ -365,7 +365,7 @@ export default function UpdateAmountStock(
                                     className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
                                     // value={Math.abs(valueUpdate)}
                                     value={valueUpdate}
-                                    onChange={ (event) => writeValue(event) }
+                                    onChange={ (event:any) => writeValue(event) }
                                     style= {{
                                         textAlign: 'center',
                                     }}

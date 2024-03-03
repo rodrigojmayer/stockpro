@@ -83,7 +83,7 @@ export default function ManageStockMainData(
                     <TextField
                         label="Name*"
                         value={stockNameTemp}
-                        onChange={ (event) => onStockNameChange(event.target.value) }
+                        onChange={ (event:any) => onStockNameChange(event.target.value) }
                         maxRows={1}
                         size="small"
                         className={classes.inputMainData}
@@ -97,7 +97,7 @@ export default function ManageStockMainData(
                     <TextField
                         label="Code"
                         value={stockCodeTemp}
-                        onChange={ (event) => onStockCodeChange(event.target.value) }
+                        onChange={ (event:any) => onStockCodeChange(event.target.value) }
                         maxRows={1}
                         size="small"
                         className={classes.inputMainData}
@@ -111,7 +111,7 @@ export default function ManageStockMainData(
                     <TextField
                         label="Amount"
                         value={stockAmountTemp}
-                        onChange={ (event) => onStockAmountChange(Number(event.target.value)) }
+                        onChange={ (event:any) => onStockAmountChange(Number(event.target.value)) }
                         maxRows={1}
                         size="small"
                         // type="number"
@@ -125,7 +125,7 @@ export default function ManageStockMainData(
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockMeasureTemp}
-                        onChange={ (event) => onStockMeasureChange(event.target.value) }
+                        onChange={ (event:any) => onStockMeasureChange(event.target.value) }
                         >
                             {measureArray.map((measure) => (
                                 <MenuItem 
@@ -147,7 +147,7 @@ export default function ManageStockMainData(
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockCategoryTemp?.id || ''}
-                        onChange={ (event) => onStockCategoryChange(event.target.value) }
+                        onChange={ (event:any) => onStockCategoryChange(event.target.value) }
                     >
                         {categoryArray.map((category) => (
                             <MenuItem 
@@ -168,7 +168,7 @@ export default function ManageStockMainData(
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockSubCategoryTemp}
-                        onChange={ (event) => onStockSubCategoryChange(event.target.value) }
+                        onChange={ (event:any) => onStockSubCategoryChange(event.target.value) }
                     >
                         {stockCategoryTemp ? stockCategoryTemp.sub_categories.map((subCategory, index) => (
                             <MenuItem 

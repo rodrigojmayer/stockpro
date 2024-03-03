@@ -143,7 +143,7 @@ export default function ManageStockCustomFields(
                                     size="small"
                                     className={classes.inputMainData}
                                     value={stockCustomValuesTemp[cusField.dataKey as keyof typeof stockCustomValuesTemp] || ''}
-                                    onChange={ (event) => onStockCustomValuesTemp(event.target.value, cusField.dataKey) }
+                                    onChange={ (event:any) => onStockCustomValuesTemp(event.target.value, cusField.dataKey) }
                                     InputProps={{
                                         style: { borderRadius: 10 },
                                         inputProps: { maxLength: 30 }

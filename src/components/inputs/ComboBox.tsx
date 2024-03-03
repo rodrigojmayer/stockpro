@@ -47,14 +47,14 @@ interface ComboBoxProps {
             sx={{ width: 300 }}
             value={selectedValue}
             inputValue={inputValue}
-            onChange={(event, newValue:any) => {
+            onChange={(event:any, newValue:any) => {
                 setSelectedValue(newValue);
                 // console.log("newValue: ", newValue)
                 if (newValue) {
                     comboHandleValue(newValue.label);
                 }
             }}
-            onInputChange={(event, newInputValue) => {
+            onInputChange={(event:any, newInputValue:any) => {
                 setInputValue(newInputValue);
             }}
             getOptionLabel={(option: any) => option.label || inputValue}
@@ -65,7 +65,7 @@ interface ComboBoxProps {
                     value={comboValue}
                     {...params} 
                     label={comboLabel}
-                    onChange={ (event) => comboHandleValue(event.target.value) }
+                    onChange={ (event:any) => comboHandleValue(event.target.value) }
                     maxRows={1}
                     size="small"
                     className= {`${errorTextField ? classes.text_field_error : ""} ${classes.inputMainData} `}

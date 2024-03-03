@@ -24,7 +24,7 @@ export default function SaveChanges( props: SaveChangesProps) {
         onClose={() => closeSaveChanges()}
         > 
             <form
-                onKeyDown={(e) => {
+                onKeyDown={(e:any) => {
                     if (e.key === "Enter") {
                         
                         e.preventDefault();

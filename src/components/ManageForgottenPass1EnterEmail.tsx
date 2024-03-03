@@ -35,7 +35,7 @@ export default function ManageForgottenPass1EnterEmail(
                         type= "text"
                         className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
                         value={emailForgottenPass}
-                        onChange={ (event) => emailForgottenPassChange(event.target.value) }
+                        onChange={ (event:any) => emailForgottenPassChange(event.target.value) }
                         InputProps={{
                             className: classes.inputClassName,
                         }}

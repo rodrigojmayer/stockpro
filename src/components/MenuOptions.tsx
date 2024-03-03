@@ -89,7 +89,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
             // await logoutLocalStorage()
             await logout()
             setUser(INITIAL_USER)
-        } catch (error) {
+        } catch (error: unknown) {
             console.error('Logout error: ', error)
         } finally {
             navigate('/login')

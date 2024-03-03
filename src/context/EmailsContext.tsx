@@ -54,7 +54,7 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
           setEmails(INITIAL_EMAILS);
           // Handle the case where the response is not OK (e.g., show an error message)
         }
-      } catch (error) {
+      } catch (error:unknown) {
         setEmails(INITIAL_EMAILS);
         // Handle any network or fetch-related errors
       } finally {

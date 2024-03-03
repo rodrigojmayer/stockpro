@@ -37,7 +37,7 @@ export default function ManageForgottenPass2EnterVerificationCode(
                         type= "text"
                         className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
                         value={verificationCode}
-                        onChange={ (event) => verificationCodeChange(event.target.value) }
+                        onChange={ (event:any) => verificationCodeChange(event.target.value) }
                         InputProps={{
                             className: classes.inputClassName,
                         }}

@@ -14,12 +14,12 @@ const useAxiosPrivate = () => {
                     config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
                 }
                 return config;
-            }, (error) => Promise.reject(error)
+            }, (error:any) => Promise.reject(error)
         );
 
         const responseIntercept = axiosPrivate.interceptors.response.use(
             response => response,
-            async (error) => {
+            async (error:any) => {
                 const prevRequest = error?.config;
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true;

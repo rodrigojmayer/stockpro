@@ -125,7 +125,7 @@ export default function ErrorModal( props: ErrorModalProps) {
         onClose={() => handleCloseErrorModal()}
         > 
             <form
-                onKeyDown={(e) => {
+                onKeyDown={(e:any) => {
                     if (e.key === "Enter" || e.code === "Space") {
                         e.preventDefault();
                         handleCloseErrorModal();

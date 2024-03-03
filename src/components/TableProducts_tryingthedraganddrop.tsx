@@ -129,7 +129,7 @@ function rowContent(
           { ( column.dataKey === "check_stock" ) ? 
             <Checkbox 
               checked={checkListStock.includes(newRow._id)? true : false}
-              onClick={(e)=> {
+              onClick={(e:any)=> {
                 e.stopPropagation() // Prevent the click event from propagating to the parent cell
                 checkingRow(newRow._id)
               }}
@@ -155,7 +155,7 @@ function rowContent(
               }} 
               // src={newRow[column.dataKey]} 
               src={`https://cdn.filestackcontent.com/resize=w:34,h:34,fit:crop/auto_image/compress/${newRow[column.dataKey]}`} 
-              onClick={(e)=> {
+              onClick={(e:any)=> {
                 e.stopPropagation() // Prevent the click event from propagating to the parent cell
                 handleOpenShowImg(newRow[column.dataKey])
               }}
@@ -385,7 +385,7 @@ export default function TableProducts(
           } else {
               console.error('Update failed.')
           }
-      } catch (error) {
+      } catch (error: unknown) {
           // Handle the case where the response is not OK (e.g., show an error message)
       }
   }
@@ -442,7 +442,7 @@ export default function TableProducts(
             } else {
                 console.error('Update failed.')
             }
-        } catch (error) {
+        } catch (error: unknown) {
             // Handle the case where the response is not OK (e.g., show an error message)
         }
     }
@@ -624,7 +624,7 @@ export default function TableProducts(
                                 sx={{
                                   padding: "0 4px ",
                                 }}
-                                onClick={(e)=> {
+                                onClick={(e:any)=> {
                                   e.stopPropagation() // Prevent the click event from propagating to the parent cell
                                   orderByField(columnTable.dataKey, "onClick")
                                 }} 
@@ -777,7 +777,7 @@ export default function TableProducts(
                               { ( columnTable.dataKey === "check_stock" ) ? 
                                 <Checkbox  
                                   checked={(checkListStock.length===data.length && data.length!==0 )? true : false}
-                                  onClick={(e)=> {
+                                  onClick={(e:any)=> {
                                     e.stopPropagation() // Prevent the click event from propagating to the parent cell
                                     checkingAll()
                                   }} 

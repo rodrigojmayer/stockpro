@@ -60,7 +60,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
       } else {
         // Handle the case where the response is not OK (e.g., show an error message)
       }
-    } catch (error) {
+    } catch (error: unknown) {
       setProducts([])
       // Handle any network or fetch-related errors
     } finally {

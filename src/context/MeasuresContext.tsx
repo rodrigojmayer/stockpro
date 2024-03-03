@@ -34,7 +34,7 @@ export const MeasuresProvider: React.FC<MeasuresProviderProps> = ({ children }) 
           setMeasures(INITIAL_MEASURE);
           // Handle the case where the response is not OK (e.g., show an error message)
         }
-      } catch (error) {
+      } catch (error: unknown) {
         setMeasures(INITIAL_MEASURE);
         // Handle any network or fetch-related errors
       } finally {

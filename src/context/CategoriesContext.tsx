@@ -37,7 +37,7 @@ export const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children
           setCategories(INITIAL_CATEGORY);
           // Handle the case where the response is not OK (e.g., show an error message)
         }
-      } catch (error) {
+      } catch (error: unknown) {
         setCategories(INITIAL_CATEGORY);
         // Handle any network or fetch-related errors
       } finally {

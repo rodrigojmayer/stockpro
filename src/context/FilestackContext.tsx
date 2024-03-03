@@ -106,7 +106,7 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
           // setFilestack(INITIAL_FILESTACK);
           // Handle the case where the response is not OK (e.g., show an error message)
         }
-      } catch (error) {
+      } catch (error: unknown) {
         // setFilestack(INITIAL_FILESTACK);
         // Handle any network or fetch-related errors
       } finally {

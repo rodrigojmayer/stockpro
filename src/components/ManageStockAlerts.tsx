@@ -109,7 +109,7 @@ export default function ManageStockAlerts(
                                 value={stockAlertAmountTemp}
                                 disabled={!stockAlertAmountEnabledTemp}
                                 // onChange={ (event) => onStockAlertAmountChange(Number(event.target.value)) }
-                                onChange={ (event) => writeStockAlertAmount(event) }
+                                onChange={ (event:any) => writeStockAlertAmount(event) }
                                 InputProps={{
                                     className: classes.inputClassName,
                                     endAdornment: (
@@ -133,7 +133,7 @@ export default function ManageStockAlerts(
                             <Switch 
                                 color='success' 
                                 checked={stockAlertAmountEnabledTemp}
-                                onChange={(event) => {
+                                onChange={(event:any) => {
                                     onStockAlertAmountEnabledChange(event.target.checked)
                                 }}
                             />                           
@@ -185,7 +185,7 @@ export default function ManageStockAlerts(
                         <Switch 
                             color='success' 
                             checked={stockAlertDateEnabledTemp}
-                            onChange={(event) => {
+                            onChange={(event:any) => {
                                 onStockAlertDateEnabledChange(event.target.checked)
                             }}
                             />   

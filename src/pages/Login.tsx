@@ -425,7 +425,7 @@ return (
             Login
         </Typography> 
         <form
-            onKeyDown={(e) => {
+            onKeyDown={(e:any) => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 handleLogin(); // Call your login function
@@ -451,7 +451,7 @@ return (
                 size="small"
                 value={userPass}
                 type={ showProfilePass ? "text" : "password" }
-                onChange={ (event) => handleUserPass(event.target.value) }
+                onChange={ (event:any) => handleUserPass(event.target.value) }
                 className= {`${errorTextFields.user_pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
                 InputProps={{
                   className: classes.inputClassName,
@@ -469,7 +469,7 @@ return (
                 <Switch 
                   color='success' 
                   checked={rememberUser}
-                  onChange={(event) => {
+                  onChange={(event:any) => {
                     rememberEnabledChange(event.target.checked)
                   }}
                 />Remember me 

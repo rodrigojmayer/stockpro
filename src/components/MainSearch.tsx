@@ -72,7 +72,7 @@ export default function MainSearch ({ setSearchQuery }: Props) {
             </SearchIconWrapper>
             <StyledInputBase
                 placeholder="Global search..."
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e:any) => setSearchQuery(e.target.value)}
                 // inputProps={{ 'aria-label': 'search' }}
             />
         </Search>

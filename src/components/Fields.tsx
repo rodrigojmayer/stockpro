@@ -226,7 +226,7 @@ export default function Fields(
                             } else {
                                 console.error('Update failed.');
                             }
-                        }catch (error) {
+                        }catch (error:any) {
                             // Handle the case where the response is not OK (e.g., show an error message)
                                 
                         } finally {

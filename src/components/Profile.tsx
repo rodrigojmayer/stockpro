@@ -352,7 +352,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 <Switch 
                                         color='success'  
                                         checked={profileAlertsEnabled}
-                                        onChange={(event) => {
+                                        onChange={(event:any) => {
                                             handleEditAlertsEnabled(event.target.checked)
                                         }}
                                     />  
