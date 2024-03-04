@@ -89,7 +89,7 @@ export default function ManageUser(
             if(Object.keys(bodyUpdate).length>0)
                 changed = true;
             
-            let loadingSuccess: boolean = false
+            let loadingSuccess: boolean = false 
 
             const fetchManageUser = async () => {
                 bodyUpdate.id_client = user.id_client
