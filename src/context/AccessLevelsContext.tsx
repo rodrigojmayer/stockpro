@@ -29,7 +29,7 @@ export const AccessLevelsProvider: React.FC<AccessLevelsProviderProps> = ({ chil
 
     const fetchAccessLevels = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/accesslevels/`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/accesslevels/`);
         
         if (response.ok) {
           const json = await response.json();

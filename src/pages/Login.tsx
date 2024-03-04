@@ -240,7 +240,7 @@ export default function Login () {
   const handleLoginGoogleFailure = (error: any) => {
     // console.error('Login Google Failure:', error);
     // Handle the failure/error during Google login here
-  };
+  }; 
   
   const handleCloseErrorModal = () => {
     setOpenErrorModal(false)
@@ -250,7 +250,7 @@ export default function Login () {
   //   if(gmailUserLogged.email && gmailUserLogged.email !== user.email){
   //     const fetchUserByGmail = async () => {
   //       try {
-  //         const response = await fetch(`http://localhost:4000/api/users/logingmail/`, {
+  //         const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/logingmail/`, {
   //           method: 'POST',
   //           headers: {
   //             'Content-Type': 'application/json',
@@ -362,8 +362,8 @@ useEffect(() => {
     const activateUser = async () => {   
       // let loadingSuccess = false     
       try {
-        // const response = await fetch(`http://localhost:4000/api/register/validateUser/${subPaths[2]}`, {
-        const response = await fetch(`http://localhost:4000/api/register/validateUser/${isLoading.openFirstTimeValidateUser}`, {
+        // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/register/validateUser/${subPaths[2]}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/register/validateUser/${isLoading.openFirstTimeValidateUser}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json', // Set the appropriate content-type for my API

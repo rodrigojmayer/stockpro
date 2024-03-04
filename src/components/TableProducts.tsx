@@ -30,7 +30,6 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import LockIcon from '@mui/icons-material/Lock';
 import { Anchor } from '@mui/icons-material';
-// import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
 
 
 // type TableClasses = ReturnType<typeof useStyles>;
@@ -357,7 +356,7 @@ export default function TableProducts(
     const fetchEditUsersAlertsOnTop = async () => {
       let loadingSuccess: boolean = false
       try {
-          const response = await fetch(`http://localhost:4000/api/users/${user._id}/`, {
+          const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${user._id}/`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -414,7 +413,7 @@ export default function TableProducts(
     const fetchEditUsersFieldsOrder = async () => {
         let loadingSuccess: boolean = false
         try {
-            const response = await fetch(`http://localhost:4000/api/users/${user._id}/`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${user._id}/`, {
               method: 'PATCH',
               headers: {
                   'Content-Type': 'application/json',

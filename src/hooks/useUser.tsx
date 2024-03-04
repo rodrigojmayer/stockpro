@@ -55,8 +55,8 @@ export default function useUser () {
   const loginUser = async (userNameEmail: string, userPass: string, rememberUser: boolean, googleDecodedToken?: JwtPayload) => {
     const rta = {loadingSuccess: false, errorCode: "", field: ""}        
     // try {
-    //   // const response = await fetch(`http://localhost:4000/api/users/login/`, {
-    //   const response = await fetch(`http://localhost:4000/api/auth/`, {
+    //   // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/login/`, {
+    //   const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/auth/`, {
     //     method: 'POST',
     //     credentials: 'include',
     //     headers: {

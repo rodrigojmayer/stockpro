@@ -211,7 +211,7 @@ export default function Fields(
                     const fetchEditCustomColumn = async () => {
                         let loadingSuccess: boolean = false
                         try {
-                            const response = await fetch(`http://localhost:4000/api/customColumns/${obj._id}/`, {
+                            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/customColumns/${obj._id}/`, {
                                 method: 'PATCH',
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -246,7 +246,7 @@ export default function Fields(
                     const fetchCreateCustomColumn = async () => {
                         let loadingSuccess: boolean = false
                         try {
-                            const response = await fetch(`http://localhost:4000/api/customColumns/`, {
+                            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/customColumns/`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -299,7 +299,7 @@ export default function Fields(
                 const fetchEditUsersFieldsOrder = async () => {
                     let loadingSuccess: boolean = false
                     try {
-                        const response = await fetch(`http://localhost:4000/api/users/${user._id}/`, {
+                        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${user._id}/`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',

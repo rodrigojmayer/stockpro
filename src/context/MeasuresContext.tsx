@@ -25,7 +25,7 @@ export const MeasuresProvider: React.FC<MeasuresProviderProps> = ({ children }) 
   useEffect(() => {
     const fetchMeasures = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/measures/`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/measures/`);
         
         if (response.ok) {
           const json = await response.json();

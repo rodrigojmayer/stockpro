@@ -12,7 +12,7 @@ export default function useAddUser () {
 
     const deleteClient = async (_idClient: number) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/clients/${_idClient}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/clients/${_idClient}`, {
                 method: 'DELETE'
             });
         } catch (error: unknown) {
@@ -35,7 +35,7 @@ export default function useAddUser () {
     //     try {
     //         console.log("testing addUser")
 
-    //         const response = await fetch(`http://localhost:4000/api/clients/`, {
+    //         const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/clients/`, {
     //             method: 'POST',
     //             headers: {
     //             'Content-Type': 'application/json', // Set the appropriate content-type for my API

@@ -33,8 +33,8 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
 
     const fetchEmailsClient = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/emails/client/${user.id_client}`); 
-        // const response = await fetch(`http://localhost:4000/api/users/client/3`); 
+        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/emails/client/${user.id_client}`); 
+        // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/client/3`); 
         
         if (response.ok) {
           const json = await response.json();

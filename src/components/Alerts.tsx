@@ -106,7 +106,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                 const fetchUpdateUsersAlerts = async () => {
                     let loadingSuccess: boolean = false
                     try {
-                        const response = await fetch(`http://localhost:4000/api/users/${user_obj._id}`, {
+                        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${user_obj._id}`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -155,7 +155,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                 const fetchCreateEmailAlert = async () => {
                     let loadingSuccess: boolean = false
                     try {
-                        const response = await fetch(`http://localhost:4000/api/emails/`, {
+                        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/emails/`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -193,7 +193,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
                 const fetchEditEmailAlert = async () => {
                     let loadingSuccess: boolean = false
                     try {
-                        const response = await fetch(`http://localhost:4000/api/emails/${email_obj._id}/`, {
+                        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/emails/${email_obj._id}/`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',

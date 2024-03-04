@@ -62,7 +62,7 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
     // onSetImageUrlHandle("")
     const fetchDeleteImageProduct = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/api/products/${id_product}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/products/${id_product}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -97,7 +97,7 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
     const fetchFilestack = async () => {
       try {
         // console.log("user.id_client: ", user.id_client)
-        const response = await fetch(`http://localhost:4000/api/filestackEmails/client/${user.id_client}`); 
+        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/filestackEmails/client/${user.id_client}`); 
         // console.log("filestack response: ", response)
         if (response.ok) {
           const json = await response.json();

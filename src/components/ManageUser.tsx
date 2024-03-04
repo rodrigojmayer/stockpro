@@ -97,7 +97,7 @@ export default function ManageUser(
                 try {
                     const manage_user = (edition ? dataEditUser._id : "")
                     const manage_method = (edition ? 'PATCH' : 'POST')
-                    const response = await fetch(`http://localhost:4000/api/users/${manage_user}`, {
+                    const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${manage_user}`, {
                         method: manage_method,
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -332,7 +332,7 @@ export default function ManageUser(
         const fetchDeleteStockProduct = async () => {
             let loadingSuccess: boolean = false
             try {
-                const response = await fetch(`http://localhost:4000/api/users/${dataEditUser._id}`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${dataEditUser._id}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json', // Set the appropriate content-type for my API

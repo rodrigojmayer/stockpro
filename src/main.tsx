@@ -18,7 +18,7 @@ import { ColumnsProvider } from './context/ColumnsContext';
 import { ProductsProvider } from './context/ProductsContext';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CheckListStockProvider } from './context/CheckListStockContext';
-  
+ 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
     <BrowserRouter>

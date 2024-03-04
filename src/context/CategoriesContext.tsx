@@ -28,7 +28,7 @@ export const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/categories/`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categories/`);
         
         if (response.ok) {
           const json = await response.json();
@@ -61,7 +61,7 @@ export const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children
 // const [getUser, setGetUser] = useState<UserData>( INITIAL_USER)
 // const fetchUser = async () => {
 // try {
-//     const response = await fetch(`http://localhost:4000/api/users/64b1b4b5cc67f2fbd144413c`)
+//     const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/64b1b4b5cc67f2fbd144413c`)
 //     if (response.ok) {
 //     const json = await response.json()
 //     // console.log("userjson: ", json)

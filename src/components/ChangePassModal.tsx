@@ -118,7 +118,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
             const fetchChangePass = async () => {
                 let loadingSuccess: boolean = false
                 try {
-                    const response = await fetch(`http://localhost:4000/api/users/changePass`, {
+                    const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/changePass`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API

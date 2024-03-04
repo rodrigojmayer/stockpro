@@ -62,8 +62,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const fetchUserByUser = async () => {
     try {
-      // const response = await fetch(`http://localhost:4000/api/users/user/${profileStringWithoutQuotes}`)
-      const response = await fetch(`http://localhost:4000/api/users/${auth._id}`)
+      // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/user/${profileStringWithoutQuotes}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${auth._id}`)
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);
       }

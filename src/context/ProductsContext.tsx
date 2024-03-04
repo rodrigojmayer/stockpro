@@ -25,7 +25,7 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
     // console.log("Fetching products isLoading.fieldsFetchCreateStock:", isLoading.fieldsFetchCreateStock)
 
     try {
-      const response = await fetch(`http://localhost:4000/api/products/client/${user.id_client}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/products/client/${user.id_client}`)
       if (response.ok) {
         const json = await response.json()
         // console.log("productsContext json: ", json)

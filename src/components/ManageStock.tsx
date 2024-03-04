@@ -161,7 +161,7 @@ export default function ManageStock(
                 try {
                     const manage_stock = (edition ? data._id : "")
                     const manage_method = (edition ? 'PATCH' : 'POST')
-                    const response = await fetch(`http://localhost:4000/api/products/${manage_stock}`, {
+                    const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/products/${manage_stock}`, {
                         method: manage_method,
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -349,7 +349,7 @@ export default function ManageStock(
         const fetchDeleteStockProduct = async () => {
             let loadingSuccess: boolean = false
             try {
-                const response = await fetch(`http://localhost:4000/api/products/${data._id}`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/products/${data._id}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json', // Set the appropriate content-type for my API

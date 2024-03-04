@@ -112,7 +112,7 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
             }));
         } else {
             try{
-                const response = await fetch(`http://localhost:4000/api/users/generateVerificationCodeForgottenPass`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/generateVerificationCodeForgottenPass`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
             }));
         } else {
             try{
-                const response = await fetch(`http://localhost:4000/api/users/verifyCodeForgottenPass`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/verifyCodeForgottenPass`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
             }));
         } else {
             try{
-                const response = await fetch(`http://localhost:4000/api/users/changePassForgottenPass`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/changePassForgottenPass`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

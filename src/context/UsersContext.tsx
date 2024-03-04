@@ -47,8 +47,8 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
       // console.log("UsersContext.tsx user.id_client: ", user.id_client)
       // const fetchUser = async () => {
       //   try {
-      //     const response = await fetch(`http://localhost:4000/api/users/client/${user.id_client}`); 
-      //     // const response = await fetch(`http://localhost:4000/api/users/client/3`); 
+      //     const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/client/${user.id_client}`); 
+      //     // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/client/3`); 
           
       //     if (response.ok) {
       //       const json = await response.json();

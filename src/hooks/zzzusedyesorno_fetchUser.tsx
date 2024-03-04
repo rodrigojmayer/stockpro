@@ -30,7 +30,7 @@ export default function useAddUser () {
         try {
             console.log("testing addUser")
 
-            const response = await fetch(`http://localhost:4000/api/clients/`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/clients/`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json', // Set the appropriate content-type for my API
@@ -78,7 +78,7 @@ export default function useAddUser () {
         try {
             console.log('try: ')
             // bodyUser.pass="testpassss"
-            const response = await fetch(`http://localhost:4000/api/users/`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Set the appropriate content-type for my API

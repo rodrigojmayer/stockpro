@@ -89,7 +89,7 @@ export default function Users( { open, handleClose }: ChildProps) {
     //             const fetchUpdateUser = async () => {
     //             let loadingSuccess: boolean = false
     //             try {
-    //                 const response = await fetch(`http://localhost:4000/api/users/${user._id}`, {
+    //                 const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${user._id}`, {
     //                     method: 'PATCH',
     //                     headers: {
     //                         'Content-Type': 'application/json', // Set the appropriate content-type for my API
