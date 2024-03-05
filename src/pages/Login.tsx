@@ -27,6 +27,7 @@ import { CheckListStockContext } from "../context/CheckListStockContext";
 import Cookies from 'js-cookie';
 import ConfirmUserValidatedModal from '../components/ConfirmUserValidatedModal';
 import ManageForgottenPass from "../components/ManageForgottenPass";
+import Paper from '@mui/material/Paper/Paper';
 
 // const theme = createTheme({
 //   palette: {
@@ -405,134 +406,136 @@ useEffect(() => {
 
 return (
   <Modal open={true} > 
-    <Box sx={modalStyleSaveExternal}>
-      <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
-        <ErrorModal
-          openErrorModal={openErrorModal}
-          closeErrorModal={handleCloseErrorModal}
-          errorData={errorData} 
-        />
-        <ConfirmUserValidatedModal
-            openConfirmUserValidatedModal={openConfirmUserValidatedModal}
-            closeConfirmUserValidatedModal={handlecloseConfirmUserValidatedModal} 
-            textData={textData}
-        />  
-        <ManageForgottenPass
-            openManageForgottenPass={openManageForgottenPass}
-            closeManageForgottenPass={handlecloseManageForgottenPass} 
-        />           
-        <Typography className={classes.finishButtons} align="center" variant='h5' >
-            Login
-        </Typography> 
-        <form
-            onKeyDown={(e:any) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                handleLogin(); // Call your login function
-                e.stopPropagation();
-              }
-            }}
-          >
-          <Box className={classes.customBoxColumn}>
-            <Box className={classes.customBoxRow}>
-              <ComboBox
-                // optionsData={[{label: "test"}, {label: "test2"}]}
-                optionsData={rememberLabelUsers}
-                comboLabel="Username or Email"
-                comboValue={userNameEmail}
-                comboHandleValue={handleUserNameEmail}
-                errorTextField={errorTextFields.user_name_email}
-              />
-            </Box>
-            <Box className={classes.customBoxRow}>
-              <TextField
-                label="Password"
-                maxRows={1}
-                size="small"
-                value={userPass}
-                type={ showProfilePass ? "text" : "password" }
-                onChange={ (event:any) => handleUserPass(event.target.value) }
-                className= {`${errorTextFields.user_pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                InputProps={{
-                  className: classes.inputClassName,
-                  endAdornment: (
-                    <IconButton onClick={showProfilePassToggle}>
-                      {(allowShowProfilePass && showProfilePass) ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                    </IconButton>
-                  ),
-                }}
-              />
-            </Box>
-            <Box className={classes.customBoxRowSpaceBetween}>
-            {/* <Box className={classes.customBoxRowEnd}> */}
-              <Box>
-                <Switch 
-                  color='success' 
-                  checked={rememberUser}
-                  onChange={(event:any) => {
-                    rememberEnabledChange(event.target.checked)
-                  }}
-                />Remember me 
-              </Box>
-                  
-              {/* <Box > */}
-              {/* <Box > */}
-              <OkButton
-                clicked={() => handleLogin()}
-                widthIco={100}
-                // type="submit"
-              />
-              {/* </Box> */}
-            </Box>
-          </Box>
-        </form>
-        <Box className={classes.customBoxRow}>
-          <Divider 
-            className={classes.customDivider} 
-            sx={{
-                "&::before, &::after": {
-                borderColor: "white",
-                },
-            }}
-            variant="middle"  
-          >
-            Or login using
-          </Divider>
-        </Box>
-
-        <Box className={classes.customBoxRow}>
-          <GoogleLogin
-            onError={() => handleLoginGoogleFailure}
-            onSuccess={handleLoginGoogleSuccess}
+    <Paper style={{ margin: 0 }}>
+      <Box sx={modalStyleSaveExternal}>
+        <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+          <ErrorModal
+            openErrorModal={openErrorModal}
+            closeErrorModal={handleCloseErrorModal}
+            errorData={errorData} 
           />
-        </Box>
-        <Box className={classes.customBoxRow}>
-            <Divider 
-                className={classes.customDivider} 
-                variant="middle" 
-            />
-        </Box>
-        <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
-            <NavLink 
-              style={{ color: '#c1e8fb' }}
-              to=""
-              onClick={() => setOpenManageForgottenPass(true)}
-
+          <ConfirmUserValidatedModal
+              openConfirmUserValidatedModal={openConfirmUserValidatedModal}
+              closeConfirmUserValidatedModal={handlecloseConfirmUserValidatedModal} 
+              textData={textData}
+          />  
+          <ManageForgottenPass
+              openManageForgottenPass={openManageForgottenPass}
+              closeManageForgottenPass={handlecloseManageForgottenPass} 
+          />           
+          <Typography className={classes.finishButtons} align="center" variant='h5' >
+              Login
+          </Typography> 
+          <form
+              onKeyDown={(e:any) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleLogin(); // Call your login function
+                  e.stopPropagation();
+                }
+              }}
             >
-              Forgot Password? 
-            </NavLink>
-            {/* <Box className={classes.customBoxRow}> */}
-                {/* New here?  */}
+            <Box className={classes.customBoxColumn}>
+              <Box className={classes.customBoxRow}>
+                <ComboBox
+                  // optionsData={[{label: "test"}, {label: "test2"}]}
+                  optionsData={rememberLabelUsers}
+                  comboLabel="Username or Email"
+                  comboValue={userNameEmail}
+                  comboHandleValue={handleUserNameEmail}
+                  errorTextField={errorTextFields.user_name_email}
+                />
+              </Box>
+              <Box className={classes.customBoxRow}>
+                <TextField
+                  label="Password"
+                  maxRows={1}
+                  size="small"
+                  value={userPass}
+                  type={ showProfilePass ? "text" : "password" }
+                  onChange={ (event:any) => handleUserPass(event.target.value) }
+                  className= {`${errorTextFields.user_pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                  InputProps={{
+                    className: classes.inputClassName,
+                    endAdornment: (
+                      <IconButton onClick={showProfilePassToggle}>
+                        {(allowShowProfilePass && showProfilePass) ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                      </IconButton>
+                    ),
+                  }}
+                />
+              </Box>
+              <Box className={classes.customBoxRowSpaceBetween}>
+              {/* <Box className={classes.customBoxRowEnd}> */}
+                <Box>
+                  <Switch 
+                    color='success' 
+                    checked={rememberUser}
+                    onChange={(event:any) => {
+                      rememberEnabledChange(event.target.checked)
+                    }}
+                  />Remember me 
+                </Box>
+                    
+                {/* <Box > */}
+                {/* <Box > */}
+                <OkButton
+                  clicked={() => handleLogin()}
+                  widthIco={100}
+                  // type="submit"
+                />
+                {/* </Box> */}
+              </Box>
+            </Box>
+          </form>
+          <Box className={classes.customBoxRow}>
+            <Divider 
+              className={classes.customDivider} 
+              sx={{
+                  "&::before, &::after": {
+                  borderColor: "white",
+                  },
+              }}
+              variant="middle"  
+            >
+              Or login using
+            </Divider>
+          </Box>
+
+          <Box className={classes.customBoxRow}>
+            <GoogleLogin
+              onError={() => handleLoginGoogleFailure}
+              onSuccess={handleLoginGoogleSuccess}
+            />
+          </Box>
+          <Box className={classes.customBoxRow}>
+              <Divider 
+                  className={classes.customDivider} 
+                  variant="middle" 
+              />
+          </Box>
+          <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
               <NavLink 
                 style={{ color: '#c1e8fb' }}
-                to="/signup"
+                to=""
+                onClick={() => setOpenManageForgottenPass(true)}
+
               >
-                Sign Up 
+                Forgot Password? 
               </NavLink>
-            {/* </Box> */}
+              {/* <Box className={classes.customBoxRow}> */}
+                  {/* New here?  */}
+                <NavLink 
+                  style={{ color: '#c1e8fb' }}
+                  to="/signup"
+                >
+                  Sign Up 
+                </NavLink>
+              {/* </Box> */}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Paper>
   </Modal>  
   )
 }
