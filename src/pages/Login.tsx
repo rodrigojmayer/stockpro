@@ -235,9 +235,10 @@ export default function Login () {
     const userEmailData = googleDecodedToken
     setGmailUserLogged(userEmailData)     //////////// check for what is this
     // Remove special characters from the string, excluding '@' and '.'
-    const emailWithoutSpecialChars = googleDecodedToken.email.replace(/[&\/\\#,+(|°)=$~%.'":*?<>{}@-_!&\-/]/g, '').slice(0, -3);
+    // const emailWithoutSpecialChars = googleDecodedToken.email.replace(/[&\/\\#,+(|°)=$~%.'":*?<>{}@-_!&\-/]/g, '').slice(0, -3);
     // const emailWithoutSpecialChars3 = "google@Decod!#$%&'/(|°)=?ed-_,.Token.email".replace(/[&\/\\#,+(|°)=$~%.'":*?<>{}@-_!&\-/]/g, '');
-    await loginUser(emailWithoutSpecialChars, "", false, googleDecodedToken)
+    await loginUser(googleDecodedToken.email, "", false, googleDecodedToken)
+    // await loginUser(emailWithoutSpecialChars, "", false, googleDecodedToken)
   };
 
   const handleLoginGoogleFailure = (error: any) => {

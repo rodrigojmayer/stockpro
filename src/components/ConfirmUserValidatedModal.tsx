@@ -4,6 +4,7 @@ import { Box,
         } from '@mui/material';
 import { OkButton } from './Buttons';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
+import Paper from '@mui/material/Paper/Paper';
 
 type ConfirmUserValidatedModalProps = {
     openConfirmUserValidatedModal: boolean;
@@ -30,25 +31,27 @@ export default function ConfirmUserValidatedModal( props: ConfirmUserValidatedMo
             open={openConfirmUserValidatedModal} 
             onClose={() => closeConfirmUserValidatedModal()}
         > 
-            <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleErrorInternal}>
-                    <Box 
-                        margin="20px 10px"
-                    >
-                        {/* <Typography variant='body1' align="center" >
-                            Thanks for signing up to StockPro
-                        </Typography>  */}
-                        <Typography variant='body2' align="center" >
-                             {text}
-                        </Typography> 
+            <Paper style={{margin:0}} >
+                <Box sx={modalStyleSaveExternal}>
+                    <Box sx={modalStyleErrorInternal}>
+                        <Box 
+                            margin="20px 10px"
+                        >
+                            {/* <Typography variant='body1' align="center" >
+                                Thanks for signing up to StockPro
+                            </Typography>  */}
+                            <Typography variant='body2' align="center" >
+                                {text}
+                            </Typography> 
+                        </Box>
+                        <Box className={classes.finishButtons}>
+                            <OkButton
+                                clicked={() => handleOkButton()}
+                            />
+                        </Box> 
                     </Box>
-                    <Box className={classes.finishButtons}>
-                        <OkButton
-                            clicked={() => handleOkButton()}
-                        />
-                    </Box> 
                 </Box>
-            </Box>
+            </Paper>
         </Modal>
     )
 }
