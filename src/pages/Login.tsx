@@ -237,8 +237,20 @@ export default function Login () {
     // Remove special characters from the string, excluding '@' and '.'
     // const emailWithoutSpecialChars = googleDecodedToken.email.replace(/[&\/\\#,+(|°)=$~%.'":*?<>{}@-_!&\-/]/g, '').slice(0, -3);
     // const emailWithoutSpecialChars3 = "google@Decod!#$%&'/(|°)=?ed-_,.Token.email".replace(/[&\/\\#,+(|°)=$~%.'":*?<>{}@-_!&\-/]/g, '');
-    await loginUser(googleDecodedToken.email, "", false, googleDecodedToken)
+    // await loginUser(googleDecodedToken.email, "", false, googleDecodedToken)
     // await loginUser(emailWithoutSpecialChars, "", false, googleDecodedToken)
+    const login = async() => {
+      const rta = await loginUser(googleDecodedToken.email, "", false, googleDecodedToken)
+      if(!rta.loadingSuccess){
+        setOpenErrorModal(true) // Open the modal for duplicate product error
+        setErrorData(rta.errorCode)
+        setErrorTextFields((prevErrorTextFields: any) => ({
+            ...prevErrorTextFields,
+            [rta.field]: true,
+        }));
+      }
+    }
+    login();
   };
 
   const handleLoginGoogleFailure = (error: any) => {
