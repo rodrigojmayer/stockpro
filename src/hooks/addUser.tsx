@@ -137,6 +137,13 @@ export default function useAddUser () {
             if (typeof err === 'string') {
                 // 'error' is now narrowed down to type 'string'
                 console.error('Error:', err)
+            // }  else if (responseData.errorCode === "email_duplicated") {
+            //     setOpenErrorModal(true) // Open the modal for duplicate product error
+            //     setErrorData(responseData.errorCode)
+            //     setErrorTextFields((prevErrorTextFields: any) => ({
+            //         ...prevErrorTextFields,
+            //         [responseData.field]: true,
+            //     }));
             } else if (err instanceof Error) {
                 // 'error' is now narrowed down to type 'Error'
                 console.error('Error:', err)

@@ -90,7 +90,7 @@ export default function ManageUser(
                 changed = true;
             
             let loadingSuccess: boolean = false 
-
+            let responseData: any
             const fetchManageUser = async () => {
                 bodyUpdate.id_client = user.id_client
                 bodyUpdate.language =  user.language
@@ -105,7 +105,11 @@ export default function ManageUser(
                         },
                         body:JSON.stringify(bodyUpdate)
                     })
-                    const responseData = await response.json() // parse the response data
+                    // console.log("funcastaca")
+                    responseData = await response.json() // parse the response data
+                    // console.log("funcastaca2")
+                    // console.log("responseData: ", responseData)
+                    // console.log("response: ", response)
 
                     // Check if the response status is successful
                     if (response.ok) {
@@ -137,6 +141,13 @@ export default function ManageUser(
                                 disable: responseData.user
                             })
                         }
+                    } else if (responseData.errorCode === "email_duplicated") {
+                        setOpenErrorModal(true) // Open the modal for duplicate product error
+                        setErrorData(responseData.errorCode)
+                        setErrorTextFields((prevErrorTextFields: any) => ({
+                            ...prevErrorTextFields,
+                            [responseData.field]: true,
+                        }));
                     } else if (response.status === 400) {
                         // Handle non-successful responses
                         // const errorData = await response.json()
@@ -161,8 +172,15 @@ export default function ManageUser(
                         console.error('Error:', error)
                     } else if (error instanceof Error) {
                         // 'error' is now narrowed down to type 'Error'
-                        console.error('Errrrrrror object:')
-                        console.error('Error object:', error.message)
+                        // console.error('error: ', error)
+                        // console.error('Errrrrrror object:')
+                        // console.error('Error object:', error.message)
+                        setOpenErrorModal(true) // Open the modal for duplicate product error
+                        setErrorData(responseData.errorCode)
+                        setErrorTextFields((prevErrorTextFields: any) => ({
+                            ...prevErrorTextFields,
+                            [responseData.field]: true,
+                        }));
                     } else {
                         // Handle other cases as needed
                         console.error('Error??? object:')
