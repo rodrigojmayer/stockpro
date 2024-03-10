@@ -20,6 +20,7 @@ import { IsLoadingContext } from "../context/IsLoadingContext";
 import { UserData, UserEditData } from "../types";
 import useAddUser from "../hooks/addUser";
 import ConfirmCreatedUserModal from "../components/ConfirmCreatedUserModal";
+import ConfirmTermsAndPrivacyModal from "../components/ConfirmTermsAndPrivacyModal";
 import Paper from '@mui/material/Paper/Paper';
 
 export default function SignUp () {
@@ -51,6 +52,8 @@ export default function SignUp () {
     // const [rememberLabelUsers, setRememberLabelUsers] = useState<RememberLabelUsersData[]>([]);
     // const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
     const [openConfirmCreatedUserModal, setOpenConfirmCreatedUserModal] = useState<any>(false);
+    const [openConfirmTermsAndPrivacyModal, setOpenConfirmTermsAndPrivacyModal] = useState<any>(false);
+
     const [stockNameTemp, setStockNameTemp] = useState<any>();
      
     // Get the keys from localStorage
@@ -230,6 +233,10 @@ export default function SignUp () {
     const handleCloseConfirmCreatedUserModal = () => {
         setOpenConfirmCreatedUserModal(false)
     }
+    const handleCloseConfirmTermsAndPrivacyModal = () => {
+        setOpenConfirmTermsAndPrivacyModal(false)
+    }
+    
     
 /////////// AAAAAAAAAAADDDDDDDDDDEmail format error 
 /////////// AAAAAAAAAAADDDDDDDDDD ConfirmCreatedUserModal send email of confirmation before to enable the user, and if is not confirmated in the next 15 minutes should delete the user an the client creates(?)
@@ -255,6 +262,10 @@ export default function SignUp () {
                             data={stockNameTemp} 
                             // confirmCreatedUser={handleConfirmDelete}
                             
+                        />
+                        <ConfirmTermsAndPrivacyModal
+                            openConfirmTermsAndPrivacyModal={openConfirmTermsAndPrivacyModal}
+                            closeConfirmTermsAndPrivacyModal={handleCloseConfirmTermsAndPrivacyModal}
                         />
                         <Typography className={classes.finishButtons} align="center" variant='h5'>
                             Sign Up
@@ -345,7 +356,8 @@ export default function SignUp () {
                                         <NavLink 
                                             // style={{ color: theme.palette.secondary.main }}
                                             style={{ color: '#c1e8fb' }}
-                                            to="/login"
+                                            to="/signup"
+                                            onClick={() => setOpenConfirmTermsAndPrivacyModal(true)}
                                         >
                                             Terms & Privacy
                                         </NavLink>

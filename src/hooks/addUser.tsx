@@ -146,11 +146,11 @@ export default function useAddUser () {
             //     }));
             } else if (err instanceof Error) {
                 // 'error' is now narrowed down to type 'Error'
-                console.error('Error:', err)
-                console.error('Error object:', err.message)
+                // console.error('Error:', err)
+                // console.error('Error object:', err.message)
             } else {
                 // Handle other cases as needed
-                console.error('Registration Failed!!!!!!!!!!!!!!!!!!')
+                // console.error('Registration Failed!!!!!!!!!!!!!!!!!!')
             }
             if (!err?.response) {
                 console.error('No Server Response')
@@ -159,11 +159,11 @@ export default function useAddUser () {
                 console.error('Username Taken')
                 // setErrMsg('Username Taken')
             } else {
-                console.error('Registration Failed')
+                // console.error('Registration Failed')
                 // setErrMsg('Registration Failed')
             }
             // errRef.current.focus()
-            console.error('Registration Failed!!!!!!!!!!!!!!!!!!')
+            // console.error('Registration Failed!!!!!!!!!!!!!!!!!!')
         } finally {
             // console.log("isLoading: ", isLoading)
             // alert("alert")
