@@ -763,7 +763,7 @@ export default function TableProducts(
           ) 
           // rowContent(index, filteredData[index], columnsTable)
         }
-        style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px"}}
+        style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px", scrollbarWidth: "none" }}
         
       />
     </Paper>

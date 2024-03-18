@@ -315,8 +315,11 @@ export const modalStyleExternal = {
     // justifyContent: "center",
     // top: 74,
     // width: "100%",
+    // overflowX: "hidden",
+    // overflow: "hidden",
+    // scrollbarWidth: "none",
     overflowX: "hidden",
-
+    scrollbarWidth: "none",
     
     display: "flex",
     justifyContent: "center",
@@ -347,6 +350,8 @@ export const modalStyleInternal = {
     color: "white",
     // overflow: "scroll",
     overflowX: "hidden",
+    scrollbarWidth: "none",
+    // overflowX: "hidden",
     
     position: "absolute",
     top: "50%",
@@ -372,7 +377,9 @@ export const modalStyleSaveExternal = {
     top: "50%",
     transform: "translateY(-50%)", // Center vertically using transform
     width: "100%",
+    // overflow: "hidden",
     overflowX: "hidden",
+    scrollbarWidth: "none",
     margin: "auto",
 };
 export const modalStyleSaveInternal = {
@@ -383,8 +390,10 @@ export const modalStyleSaveInternal = {
     margin: "auto",
     padding: "3px",
     color: "white",
-    overflow: "scroll",
+    // overflow: "scroll",
+    // overflow: "hidden",
     overflowX: "hidden",
+    scrollbarWidth: "none",
 };
 
 export const modalStyleErrorInternal = {
@@ -395,8 +404,9 @@ export const modalStyleErrorInternal = {
     margin: "auto",
     padding: "3px",
     color: "white",
-    overflow: "scroll",
+    // overflow: "hidden",
     overflowX: "hidden",
+    scrollbarWidth: "none",
 };
 export const modalLoginInternal = {
     width: "320px",
