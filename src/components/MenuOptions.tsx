@@ -1,39 +1,18 @@
 import React from 'react'
 import { useContext } from 'react';
-import { makeStyles } from 'tss-react/mui';
-// import MenuList from '@mui/material/MenuList/MenuList';
-// import Box from '@mui/material/Box';
 import { Box, useMediaQuery } from '@mui/material';
 import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { UserContext } from '../context/UserContext';
-import { NavLink, Outlet, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import useUser from '../hooks/useUser';
 import useLogout from '../hooks/useLogout';
 
-
-
-const useStyles = makeStyles()({
-    menuOptions: {
-        position: "absolute",
-        bottom: 48,
-        zIndex: 500,
-        width: "100%",
-        height: "70%",
-        backgroundColor: "red !important"
-    }
-})
-
-const style = {
+const styleMenuOptions = {
     position: 'absolute',
-    bottom: 64,
-    width: "100%",
-    backgroundColor: "rgb(18, 35, 46, 1)",
     '&  > :nth-of-type(1)': {
         width: "100%",
-        justifyContent: "space-evenly",
         height: "100%",
     },
     '& Button': {
@@ -41,45 +20,33 @@ const style = {
         height: "100%",
     },
 };
-const styleLG = {
-    position: 'absolute',
+const styleMenuOptionsSM = {
+    bottom: 64,
+    width: "100%",
+    backgroundColor: "rgb(18, 35, 46, 1)",
+}
+const styleMenuOptionsLG = {
     top: 64,
     right: 0,
     width: "15%",
     backgroundColor: "rgb(38,55, 66, 1)",
     height: "30%",
     borderRadius: "0 0 10px 10px",
-    '&  > :nth-of-type(1)': {
-        width: "100%",
-        justifyContent: "space-evenly",
-        height: "100%",
-    },
-    '& Button': {
-        color: "white",
-        height: "100%",
-    },
 };
 
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
-    // openOptionF: (newData: boolean) => void
-    // openOptionA: (newData: boolean) => void
     onData: (data: { option: string, open: boolean }) => void;
 }
-
-
 
 export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     
     const breakpointLG = useMediaQuery('(min-width:1024px)');
-    const { classes } = useStyles()
     const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
-    // const { isLogged, logoutLocalStorage } = useUser()
     const { isLogged } = useUser()
     const logout = useLogout();
 
-    // console.log("UserContext.tsx useUser.isLogged: ", isLogged)
     const close = () => {
         handleClose(false)
     }
@@ -87,25 +54,15 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     const selOp = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const buttonElement = e.currentTarget.value 
-        // console.log("buttonElement: ", buttonElement)
         onData({option:buttonElement, open: true})
-        // if(buttonElement === "fields")
-        //     // openOptionF(true)
-        //     onData({option:"fields", open: true})
-        // else if(buttonElement === "alerts")
-        //     onData({option:"alerts", open: true})
-            // openOptionA(["alerts", true])
         handleClose(false)
     }
 
     const navigate = useNavigate();
 
     const signOut = async() => {
-        // console.log("prev logoutLocalStorage()")
 
         try {
-            // console.log("prev logoutLocalStorage()")
-            // await logoutLocalStorage()
             await logout()
             setUser(INITIAL_USER)
         } catch (error: unknown) {
@@ -122,20 +79,28 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
         <Button value="logout" key="logout" variant="text" onClick={signOut}>Log out</Button>,
     ];
  
-    let height_box = "50%"
+    let height_box = "42%"
     if(user.id_access_level <4){
         // buttons.splice(1, 0, <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>)
-        buttons.splice(3, 0, <Button value="users" key="users" variant="text" onClick={selOp}>Users</Button>)
-        height_box = "70%"
+        buttons.splice(2, 0, <Button value="users" key="users" variant="text" onClick={selOp}>Users</Button>)
+        height_box = "50%"
     }
 
     return (
         <Modal
             open={open} 
             onClose={close}
-            sx={{ '& .MuiBackdrop-root': { backgroundColor: breakpointLG ? 'rgba(0, 0, 0, 0)': ""} }} // Set the custom background color here
-            > 
-            <Box sx={ breakpointLG ? styleLG : style } height={height_box}>
+            sx={{ 
+                '& .MuiBackdrop-root': { backgroundColor: breakpointLG ? 'rgba(0, 0, 0, 0)': ""} 
+            }} // Set the custom background color here
+        > 
+            <Box 
+                sx={{
+                    ...styleMenuOptions, 
+                    ...(breakpointLG ? styleMenuOptionsLG : styleMenuOptionsSM)
+                }}
+                height={height_box}
+            >
                 <ButtonGroup 
                     orientation="vertical"
                     // variant="text"    
