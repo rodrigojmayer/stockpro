@@ -439,6 +439,21 @@ export const tableStyles = makeStyles()({
     row_odd: {
         backgroundColor:"rgb(162, 199, 220)", 
     },
-           
-// }))
+    menu : {
+        borderRadius: '4px', // Set border-radius to mimic scrollbar radius
+        '& .MuiPaper-root': {  
+            overflow: 'hidden', // Hide any overflow
+            borderRadius: '4px', // Set border-radius to mimic scrollbar radius
+            paddingRight: '12px',
+            backgroundColor:"#DCF2F1",
+            scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+            '&:hover': {
+                scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                backgroundColor:"#DCF2F1", 
+                overflowY: 'auto', // Show scrollbar on hover
+                paddingRight: '0',
+                overflowX: 'hidden',
+            },
+        },
+    },
 })

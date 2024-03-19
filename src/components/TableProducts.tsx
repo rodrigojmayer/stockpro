@@ -580,8 +580,12 @@ export default function TableProducts(
                             }}
                             >
                               <MoreVertIcon fontSize="small" />
-                            </IconButton>                            
+                            </IconButton>  
+
+
+
                             <Menu
+                              disableScrollLock={true}
                               id="demo-positioned-menu"
                               aria-labelledby="demo-positioned-button"
                               anchorEl={anchorEl}
@@ -643,7 +647,14 @@ export default function TableProducts(
                                 </Typography>
                               </MenuItem>
                             </Menu>
+
+
+
                             <Menu
+    // <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
+
+                              className={breakpointLG ? classes.menu : ""}
+                              //  className={classes.menu} 
                               id="demo-positioned-menu2"
                               aria-labelledby="demo-positioned-button2"
                               anchorEl={anchorEl2}
@@ -660,10 +671,12 @@ export default function TableProducts(
                               style={{ 
                                 marginTop: '-57px', 
                                 marginLeft: '0px',
-                                height: '470px',
+                                height: '370px',
                               }}
                               MenuListProps={{
-                                  sx: { padding: 0 },
+                                  sx: { padding: 0,
+                                  },
+                                  
                               }}
                               // PaperProps={{
                               //   sx: { borderRadius: '7px' }, // Adjust the value as needed
@@ -702,6 +715,8 @@ export default function TableProducts(
                                 </MenuItem> 
                               ))}
                             </Menu>
+
+                            
                           </>
                         }
                         </Typography>
