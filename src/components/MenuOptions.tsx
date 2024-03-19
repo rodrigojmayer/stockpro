@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { makeStyles } from 'tss-react/mui';
 // import MenuList from '@mui/material/MenuList/MenuList';
 // import Box from '@mui/material/Box';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -41,6 +41,24 @@ const style = {
         height: "100%",
     },
 };
+const styleLG = {
+    position: 'absolute',
+    top: 64,
+    right: 0,
+    width: "15%",
+    backgroundColor: "rgb(38,55, 66, 1)",
+    height: "30%",
+    borderRadius: "0 0 10px 10px",
+    '&  > :nth-of-type(1)': {
+        width: "100%",
+        justifyContent: "space-evenly",
+        height: "100%",
+    },
+    '& Button': {
+        color: "white",
+        height: "100%",
+    },
+};
 
 interface ChildProps {
     open:  boolean
@@ -54,6 +72,7 @@ interface ChildProps {
 
 export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     
+    const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { classes } = useStyles()
     const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
     // const { isLogged, logoutLocalStorage } = useUser()
@@ -97,7 +116,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     }
     
     const  buttons = [
-        <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
+        // <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
         <Button value="profile" key="profile" variant="text" onClick={selOp}>Profile</Button>,
         <Button value="preferences" key="preferences" variant="text" onClick={selOp}>Preferences</Button>,
         <Button value="logout" key="logout" variant="text" onClick={signOut}>Log out</Button>,
@@ -114,8 +133,9 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
         <Modal
             open={open} 
             onClose={close}
+            sx={{ '& .MuiBackdrop-root': { backgroundColor: breakpointLG ? 'rgba(0, 0, 0, 0)': ""} }} // Set the custom background color here
             > 
-            <Box sx={style} height={height_box}>
+            <Box sx={ breakpointLG ? styleLG : style } height={height_box}>
                 <ButtonGroup 
                     orientation="vertical"
                     // variant="text"    
