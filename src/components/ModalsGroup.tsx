@@ -143,7 +143,7 @@ export default function ModalsGroup(
                 >  
                 <Toolbar >
                     <Typography variant= "h6" className={classes.logo}>
-                        StockPro
+                        StockPro-Beta
                         {test}
                     </Typography>
                     <MenuButton
