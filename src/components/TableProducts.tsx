@@ -517,7 +517,7 @@ export default function TableProducts(
         closeShowImgModal={handleCloseShowImgModal} 
         showImgModal={showImgModal}
     />
-    <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
+    <Paper style={{ height: `calc(100vh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
       <TableVirtuoso 
         // data={filteredData}
         

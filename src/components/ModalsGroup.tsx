@@ -152,17 +152,21 @@ export default function ModalsGroup(
             >  
                 <Toolbar >
                     <Grid container  >
-                        <Grid item xs={10} md={3}   sx={{ marginTop: "7px"}}>
+                        <Grid item xs={10} md={3} lg={2}  sx={{ marginTop: "7px"}}>
                             <Typography variant= "h6" className={classes.logo}>
                                 StockPro-Beta
                                 {test}
                             </Typography>
                         </Grid>
-                        <Grid item xs={0} md={8} >
+                        <Grid item xs={0} md={8} lg={9} >
                             {/* <Container sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}>
                                 <MainSearch setSearchQuery={setSearchQuery} />
                             </Container> */}
-                            <Container maxWidth="md" style={{padding: "0"}} sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}>
+                            <Container 
+                                maxWidth="md" 
+                                style={{padding: "0"}} 
+                                sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}
+                            >
                                 <Grid container>
                                     <Grid item xs={1} >
                                         <UpdateButton
