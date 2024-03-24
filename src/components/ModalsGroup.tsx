@@ -4,7 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Container } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { MenuButton } from './Buttons';
 import MenuOptions from './MenuOptions';
@@ -14,6 +14,7 @@ import Profile from './Profile';
 import { ColumnData, Data, DataMenuOptions } from '../types';
 import Preferences from './Preferences';
 import Users from './Users';
+import MainSearch from './MainSearch';
 // import MassiveUpdateStock from './MassiveUpdateStock';
 
 const useStyles = makeStyles()({
@@ -69,6 +70,7 @@ interface ModalsGroupProps {
     // columnsHiddenFields: ColumnData[]
     children: React.ReactNode
     // showCreataddButtonShoweStock: boolean
+    setSearchQuery: (value: string) => void;
   }
 
 
@@ -78,7 +80,8 @@ export default function ModalsGroup(
         columnsDefault, 
         columnsCustom, 
         idColumnsTableOrder,
-        data
+        data,
+        setSearchQuery
     }: ModalsGroupProps) {
     // export default function ModalsGroup( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -88,7 +91,7 @@ export default function ModalsGroup(
     const handleOpenMenu = () => setOpenMenu(true);
     const handleCloseMenu = () => setOpenMenu(false);
     const [openOptions, setOpenOptions] = useState<DataMenuOptions>(INITIAL_MENU_OPTIONS);
-
+    // const [ searchQuery, setSearchQuery ] = useState("")
     
   
     const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
@@ -142,13 +145,26 @@ export default function ModalsGroup(
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
                 >  
                 <Toolbar >
-                    <Typography variant= "h6" className={classes.logo}>
-                        StockPro-Beta
-                        {test}
-                    </Typography>
-                    <MenuButton
-                        onDataChanged={handleOpenMenu}
-                    ></MenuButton>
+                    
+                    <Grid container  >
+                        <Grid item xs={10} md={3}  sx={{ marginTop: "7px"}}>
+                            <Typography variant= "h6" className={classes.logo}>
+                                StockPro-Beta
+                                {test}
+                            </Typography>
+                  </Grid>
+                        <Grid item xs={0} md={8} >
+                            <Container sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}>
+                                <MainSearch setSearchQuery={setSearchQuery} />
+                            </Container>
+                  </Grid>
+                        <Grid item xs={2} md={1} >
+                            <MenuButton
+                                onDataChanged={handleOpenMenu}
+                            ></MenuButton>
+                            </Grid>
+                    </Grid>
+
                 </Toolbar>
             </AppBar>
             <Container className={classes.page}

@@ -16,6 +16,7 @@ import { ColumnsContext } from '../context/ColumnsContext';
 import { ProductsContext } from '../context/ProductsContext';
 import MassiveUpdateStock from '../components/MassiveUpdateStock';
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 // const theme = createTheme({
@@ -45,7 +46,7 @@ const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
     
 
 function Home() {
-  
+  const breakpointLG = useMediaQuery('(min-width:1024px)');
   const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
@@ -263,7 +264,7 @@ function Home() {
         {/* <ThemeProvider theme={theme}> */}
           <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={openBackdrop}
+            open={openBackdrop} // Loading...
           >
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -272,6 +273,7 @@ function Home() {
               columnsCustom={customColumns}
               idColumnsTableOrder={idColumnsTableOrder} 
               data={filteredData}
+              setSearchQuery={setSearchQuery}
             >
               <Container maxWidth="md" style={{padding: "0"}} >
                 <Grid container>
@@ -281,7 +283,7 @@ function Home() {
                       disabled={disabledUpdateButton}
                     />
                   </Grid>
-                  <Grid item xs={8} >
+                  <Grid item xs={8} sx={{ display: (breakpointLG?"none":"block") }}>
                     <MainSearch setSearchQuery={setSearchQuery} />
                   </Grid>
                   <Grid item xs={2} >

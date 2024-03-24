@@ -128,6 +128,9 @@ const useStyles = makeStyles()({
       width: '2.9rem',
       height: '2.9rem',
     },
+    display: 'flex',
+    margin: "auto",
+    marginRight: "0",
   },  
   plusIcon: {
     color: "rgb(77, 168, 218, 1)",

@@ -54,17 +54,7 @@ color: 'inherit',
 
 
 export default function MainSearch ({ setSearchQuery }: Props) {
-
-    const [searchTerm, setSearchTerm] = useState('');
-
-    // const handleSearchChange = (event: any) => {
-    //     const term = event.target.value;
-    //     setSearchTerm(term);
-    //     setSearchQuery(term);
-    // }
-    // console.log("main search:")
     
-
     return(
         <Search>
             <SearchIconWrapper>
