@@ -163,7 +163,7 @@ function Home() {
   }])
   const [ showMassiveUpdateStock, setShowMassiveUpdateStock ] = useState(false)
   const handleMassiveUpdateStock = () => setShowMassiveUpdateStock(false)
-  const openMassiveUpdateStoc = (newData:String) => {
+  const openMassiveUpdateStock = (newData:String) => {
     setShowMassiveUpdateStock(true)
     setMassiveUpdate(
       products.filter((item:any) => {
@@ -274,16 +274,19 @@ function Home() {
               idColumnsTableOrder={idColumnsTableOrder} 
               data={filteredData}
               setSearchQuery={setSearchQuery}
+              openMassiveUpdateStock={openMassiveUpdateStock}
+              disabledUpdateButton={disabledUpdateButton}
+              openCreateStock={openCreateStock}
             >
-              <Container maxWidth="md" style={{padding: "0"}} >
+              <Container maxWidth="md" sx={{ display: (breakpointLG?"none":"block") }} style={{padding: "0"}} >
                 <Grid container>
                   <Grid item xs={2} >
                     <UpdateButton
-                      clicked={()=>openMassiveUpdateStoc("update")}
+                      clicked={()=>openMassiveUpdateStock("update")}
                       disabled={disabledUpdateButton}
                     />
                   </Grid>
-                  <Grid item xs={8} sx={{ display: (breakpointLG?"none":"block") }}>
+                  <Grid item xs={8} >
                     <MainSearch setSearchQuery={setSearchQuery} />
                   </Grid>
                   <Grid item xs={2} >

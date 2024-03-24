@@ -134,7 +134,9 @@ const useStyles = makeStyles()({
   },  
   plusIcon: {
     color: "rgb(77, 168, 218, 1)",
-    margin: "0 5px",
+    display: "flex",
+    // margin: "0 5px",
+    margin: "auto",
     padding: "1px 1px",
     backgroundColor: "rgb(77, 168, 218, 0)",
     '& .MuiSvgIcon-root': {
@@ -767,7 +769,9 @@ export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled 
           sx={{  
             // border: bor, 
             // padding:noPadding, 
-            // paddingTop:0,  
+            // paddingTop:0, 
+            display: "flex", 
+            margin:"auto",  
             // height: sizeIco,
             borderRadius: borRad,
             // border: bor, 

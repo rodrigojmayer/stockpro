@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Container, Grid } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-import { MenuButton } from './Buttons';
+import { MenuButton, PlusButton, UpdateButton } from './Buttons';
 import MenuOptions from './MenuOptions';
 import Fields from './Fields';
 import Alerts from './Alerts';
@@ -71,6 +71,9 @@ interface ModalsGroupProps {
     children: React.ReactNode
     // showCreataddButtonShoweStock: boolean
     setSearchQuery: (value: string) => void;
+    openMassiveUpdateStock: (value: string) => void;
+    disabledUpdateButton: boolean;
+    openCreateStock: () => void;
   }
 
 
@@ -81,7 +84,10 @@ export default function ModalsGroup(
         columnsCustom, 
         idColumnsTableOrder,
         data,
-        setSearchQuery
+        setSearchQuery,
+        openMassiveUpdateStock,
+        disabledUpdateButton,
+        openCreateStock,
     }: ModalsGroupProps) {
     // export default function ModalsGroup( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -143,28 +149,44 @@ export default function ModalsGroup(
             />
             <AppBar className={classes.appbar}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
-                >  
+            >  
                 <Toolbar >
-                    
                     <Grid container  >
-                        <Grid item xs={10} md={3}  sx={{ marginTop: "7px"}}>
+                        <Grid item xs={10} md={3}   sx={{ marginTop: "7px"}}>
                             <Typography variant= "h6" className={classes.logo}>
                                 StockPro-Beta
                                 {test}
                             </Typography>
-                  </Grid>
+                        </Grid>
                         <Grid item xs={0} md={8} >
-                            <Container sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}>
+                            {/* <Container sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}>
                                 <MainSearch setSearchQuery={setSearchQuery} />
+                            </Container> */}
+                            <Container maxWidth="md" style={{padding: "0"}} sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}>
+                                <Grid container>
+                                    <Grid item xs={1} >
+                                        <UpdateButton
+                                            clicked={()=>openMassiveUpdateStock("update")}
+                                            disabled={disabledUpdateButton}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={10}>
+                                        <MainSearch setSearchQuery={setSearchQuery} />
+                                    </Grid>
+                                    <Grid item xs={1} >
+                                        <PlusButton
+                                            clicked={openCreateStock}
+                                        />
+                                    </Grid>
+                                </Grid>
                             </Container>
-                  </Grid>
+                        </Grid>
                         <Grid item xs={2} md={1} >
                             <MenuButton
                                 onDataChanged={handleOpenMenu}
                             ></MenuButton>
-                            </Grid>
+                        </Grid>
                     </Grid>
-
                 </Toolbar>
             </AppBar>
             <Container className={classes.page}
