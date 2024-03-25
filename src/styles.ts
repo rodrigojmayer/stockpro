@@ -343,7 +343,8 @@ export const modalStyleExternal = {
 export const modalStyleInternal = {
     maxWidth: "700px",
     width: "calc(100% - 25px)",
-    maxHeight: "520px",
+    // maxHeight: "520px",
+    maxHeight: "85vh",
     backgroundColor: "rgb(45,72, 91, 1)",
     borderRadius: "10px",
     padding: "5px",

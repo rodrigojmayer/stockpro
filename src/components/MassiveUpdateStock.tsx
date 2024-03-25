@@ -226,19 +226,7 @@ export default function MassiveUpdateStock(
         width: 50
     });
 
-    // const productsValueUpdate = data.map((item) => {
-    //   return {_id:item._id, value_update:"e"}
-    // })
-    
-    // console.log("productsValueUpdate: ", productsValueUpdate[0].value_update)
-    // columns.
-    // const columns = [""]
-    // console.log("columns: ", columns.find((column:any) => { column.dataKey=="amount"}))
-    // console.log("defaultColumns: ", defaultColumns)
-    // console.log("columns: ", columns)
     const [ signUpdate, setSignUpdate ] = useState<number>(-1)
-    // const [ valueUpdate, setValueUpdate ] = useState<number|null>(null)
-    // const [ valueUpdate, setValueUpdate ] = useState<Object[]>(productsValueUpdate)
     let ButtonOperator:any
     let buttonOperatorColor:any
     if (Number(signUpdate) > 0 ){
@@ -328,13 +316,8 @@ export default function MassiveUpdateStock(
             </Typography>
         )
     }
-    
-
-
     const [filteredRows, setFilteredRows] = useState<any>(INITIAL_STATE);
-    // console.log("data: ", data[0].id)
     const filteredFields = data.map((item) => {
-    //   console.log("item: ", item)
       return {
       _id: item._id,
       product: item.product,
@@ -343,55 +326,25 @@ export default function MassiveUpdateStock(
       alert_amount: item.alert_amount,
       alert_amount_enabled: item.alert_amount_enabled,
     }})
-    // const filteredFields = data.map(({ _id, product, otherField }) => ({
-    //   _id,
-    //   product,
-    //   otherField, // Add any other fields you want to include here
-    // }));
-    // console.log("data: ", data)
-    // console.log("filteredFields: ", filteredFields)
-
     const [filteredData, setFilteredData] = useState<any>(filteredFields)
-
-    // console.log("data: ", data)
-
-
     const close = () => {
         handleClose(false)
     } 
     
     const { user } = useContext<any>(UserContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
-
     const [openSaveChanges, setOpenSaveChanges] = useState(false); 
     const [openErrorModal, setOpenErrorModal] = useState(false);  
     const [messageBeforeSave, setMessageBeforeSave] = useState("");  
     const [errorData, setErrorData] = useState("");  
     const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);  
-   
     const handleCloseSaveChanges = (ans?:boolean) => {
-        // console.log("ans close Save: ", ans)
-        // console.log("filteredData close Save: ", filteredData)
-        
-        
         ///////////////////  Make the put here!!!!!!!!!!!!!!!!!!
-
-
         if(ans){
-            // const bodyUpdate: ProductEditData = {}
-            // bodyUpdate.id_client = user.id_client
-            // bodyUpdate.deleted = false
             filteredData.forEach((stock:any) => {
-                
                 if(stock.update_amount){
-                    // console.log("enter to element close Save: ", stock)
-                    // console.log("(stock.update_amount * signUpdate) + stock.amount: ", (stock.update_amount * signUpdate) + stock.amount)
-                    // console.log("stock.alerted_amount: ", stock.alerted_amount)
-                    // console.log("stock: ", stock)
                     const newAmount = (stock.update_amount * signUpdate) + stock.amount
                     const alertedAmount = (stock.alert_amount_enabled && (stock.alert_amount >= newAmount))
-                    // console.log("newAmount: ", newAmount)
-                    // console.log("alertedAmount: ", alertedAmount)
                     const fetchMassiveUpdateStock = async () => {
                         let loadingSuccess: boolean = false
                         try {
@@ -406,7 +359,6 @@ export default function MassiveUpdateStock(
                                     "alerted_amount": alertedAmount
                                 })
                             })
-        
                             // Check if the response status is successful
                             if (response.ok) {
                                 const responseData = await response.json() // parse the response data
@@ -502,50 +454,52 @@ export default function MassiveUpdateStock(
                     <Typography align='center' variant="h5">Massive upload</Typography>
 
                     <Paper style={{ 
-                        height: `calc(100vh - ${(breakpointLG?"380px":"300px")})`, 
+                        height: `65vh`, 
                         width: '87vw', 
+                        maxWidth: '90%',
+                        
                         margin: "12px auto 0 auto" ,
                         borderRadius: "10px"
-                    }}>
-                        
+                    }}> 
                         <div style={{ overflow: 'auto', height: '100%' }}>
                             <TableVirtuoso 
                                 data={filteredData}
                                 components={VirtuosoTableComponents}
+                                style={{
+                                    backgroundColor: "rgb(45, 72, 91)", 
+                                    borderRadius: "10px",
+                                    margin: "-1px",
+                                    scrollbarWidth: "none" 
+                                }}
                                 fixedHeaderContent={() => {
                                     return (
-                                    <TableRow >
-                                        {columns.map((column:any) => (
-                                        <TableCell
-                                            key={column._id}
-                                            variant="head"
-                                            align='center'
-                                            style={{ 
-                                            width: column.width, 
-                                            backgroundColor:"rgb(25, 54, 72)", 
-                                            border:0,
-                                            }}
-                                            sx={{
-                                            color: "white",
-                                            padding: "8px 0",
-                                            }}
-                                        >
-                                            <ColumnLabel
-                                                column={column}
-                                            />
-                                        </TableCell>
-                                        ))}
-                                    </TableRow>
+                                        <TableRow >
+                                            {columns.map((column:any) => (
+                                            <TableCell
+                                                key={column._id}
+                                                variant="head"
+                                                align='center'
+                                                style={{ 
+                                                width: column.width, 
+                                                backgroundColor:"rgb(25, 54, 72)", 
+                                                border:0,
+                                                }}
+                                                sx={{
+                                                color: "white",
+                                                padding: "8px 0",
+                                                }}
+                                            >
+                                                <ColumnLabel
+                                                    column={column}
+                                                />
+                                            </TableCell>
+                                            ))}
+                                        </TableRow>
                                     );
                                 }}
                                 itemContent={(index: number) =>
                                     rowContent(index, filteredData[index], columns, classes, tableClassNames, writeValue) 
                                 }
-                                style={{
-                                    backgroundColor: "rgb(45, 72, 91)", 
-                                    borderRadius: "10px",
-                                    margin: "-1px",
-                                }}
                             />
                         </div>
                     </Paper>

@@ -519,12 +519,13 @@ export default function TableProducts(
     />
     <Paper style={{ height: `calc(100vh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
       <TableVirtuoso 
-        // data={filteredData}
-        
         data={sortedData}
-        // data={data}
         components={VirtuosoTableComponents}
-        // fixedHeaderContent={fixedHeaderContent}
+        style={{
+          backgroundColor: "rgb(45, 72, 91)", 
+          borderRadius: "10px", 
+          scrollbarWidth: "none" 
+        }}
         fixedHeaderContent={() => {
             return (
               <TableRow>
@@ -778,7 +779,6 @@ export default function TableProducts(
           ) 
           // rowContent(index, filteredData[index], columnsTable)
         }
-        style={{backgroundColor: "rgb(45, 72, 91)", borderRadius: "10px", scrollbarWidth: "none" }}
         
       />
     </Paper>
