@@ -326,7 +326,9 @@ export default function UpdateAmountStock(
                         errorData={errorData} 
                     /> */}
                     <Box className={`${classes.customBoxColumn} ${classes.updateBoxColumn}`}>
-                    <Typography align='center' variant="h5">{productUpdate.product}</Typography>
+                    <Typography noWrap align='center' variant="h5">
+                        {productUpdate.product}
+                    </Typography>
                     
                         <Grid container spacing={0} alignItems="center" >
                             <Grid item xs={3} display="flex" justifyContent="center">

@@ -78,58 +78,34 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, tableClassNames: any, writeValue:any) {
   
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
-    // console.log("newRow: ", newRow)
-  
-    // if (newRow.custom_fields) {
-      // for (const key in newRow) {
-      //   // console.log("key: ", key)
-      //   newRow.update_amount = ""
-      // }
-    // }
-    // console.log("newRow2: ", newRow)
 
     const RowContent = (item:any) => {
-        // console.log("item.column: ", item.column)
-        // console.log("item.column: ", item.column)
-        // console.log("item.column.dataKey: ", item.column.dataKey)
-        // console.log("newRow[item.column.dataKey]: ", newRow[item.column.dataKey])
-        
         let lab
         if (item.column._id === 1){
             return(
-                    <TextField
+                <TextField
                     // key="password"
                     sx= {{
-                      margin: "0 auto",
-                      width: "90% !important",
+                        margin: "0 auto",
+                        width: "90% !important",
                     }}
-                      maxRows={1}
-                      size="small"
-                    //   type="number"
-                      className={`${classes.inputMainData} `}
-                      // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
-                      value={newRow[item.column.dataKey]==="" ? newRow[item.column.dataKey] : Math.abs(newRow[item.column.dataKey])}
-                      onChange={ (event:any) => writeValue(event, newRow._id) }
-                    //   onChange={ () => console.log("testin") }
-                      InputProps={{
-                          className: classes.inputClassName,
-                          inputProps: {
-                              style: { 
-                                textAlign: "center", 
-                              },
-                          },
-                      }}/>
-                       
-
-                      // <Typography noWrap 
-                      // sx={{
-                      //     padding: "0 4px ",
-                      // }}>
-                      //     {newRow.update_amount}
-                      //     {/* {item.column} */}
-                      // </Typography>
-
-
+                    maxRows={1}
+                    size="small"
+                //   type="number"
+                    className={`${classes.inputMainData} `}
+                    // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
+                    value={newRow[item.column.dataKey]==="" ? newRow[item.column.dataKey] : Math.abs(newRow[item.column.dataKey])}
+                    onChange={ (event:any) => writeValue(event, newRow._id) }
+                //   onChange={ () => console.log("testin") }
+                    InputProps={{
+                        className: classes.inputClassName,
+                        inputProps: {
+                            style: { 
+                            textAlign: "center", 
+                            },
+                        },
+                    }}
+                />
             )
         } else {
             return(
@@ -140,7 +116,6 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                         { ( newRow[item.column.dataKey] || newRow[item.column.dataKey] === 0 ) ? newRow[item.column.dataKey] : "-"}
                   </Typography>
             )
-
         }
     }
    
@@ -155,39 +130,19 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                border:0,
             }}
             sx={{
-              // padding: "8px 0",
               padding: "0",
             }}
           >
             <div 
               className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? tableClassNames.alert_on  : "" } ${tableClassNames.rows}`}
             >
-                {/* <RowContent column={column} /> */}
                 {RowContent({column: column})}
-
-              {/* </RowContent> */}
-              {/* <Typography noWrap 
-                sx={{
-                    padding: "0 4px ",
-                }}>
-                    { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
-              </Typography> */}
-
             </div>
-  
           </TableCell>
         ))}
       </React.Fragment>
     );
   }
-
-
-
-
-
-
-
-
 
 interface ChildProps {
     open:  boolean
@@ -391,9 +346,6 @@ export default function MassiveUpdateStock(
                     fetchMassiveUpdateStock()        //////////Change the name for update
                 }
             });
-
-
-
             close()
         }
         setOpenSaveChanges(false);
@@ -406,17 +358,7 @@ export default function MassiveUpdateStock(
     const handleOpenSaveChanges = () => {
         console.log("signUpdate: ", signUpdate)
         console.log("filteredData: ", filteredData)
-        
-        // if(stockNameTemp===""){
-        //     setOpenErrorModal(true)
-        //     setErrorData("missing_data")
-        // }else if(Number(stockAmountTemp)<0){
-        //     setOpenErrorModal(true)
-        //     setErrorData("negative_amount")
-        // }
-        // else{
-            setOpenSaveChanges(true);
-        // }
+        setOpenSaveChanges(true);
     }
 
     const handleCloseConfirmDeleteModal = () => {
@@ -480,9 +422,9 @@ export default function MassiveUpdateStock(
                                                 variant="head"
                                                 align='center'
                                                 style={{ 
-                                                width: column.width, 
-                                                backgroundColor:"rgb(25, 54, 72)", 
-                                                border:0,
+                                                    width: column.width, 
+                                                    backgroundColor:"rgb(25, 54, 72)", 
+                                                    border:0,
                                                 }}
                                                 sx={{
                                                 color: "white",
