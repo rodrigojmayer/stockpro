@@ -341,8 +341,8 @@ export const modalStyleExternal = {
 //     overflowX: "hidden",
 // };
 export const modalStyleInternal = {
-    maxWidth: "700px",
-    width: "calc(100% - 25px)",
+    maxWidth: "350px",
+    width: "calc(100% - 50px)",
     // maxHeight: "520px",
     maxHeight: "85vh",
     backgroundColor: "rgb(45,72, 91, 1)",

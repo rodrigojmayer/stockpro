@@ -454,7 +454,7 @@ export default function MassiveUpdateStock(
                     <Typography align='center' variant="h5">Massive upload</Typography>
 
                     <Paper style={{ 
-                        height: `65vh`, 
+                        height: `60vh`, 
                         width: '87vw', 
                         maxWidth: '90%',
                         

@@ -329,26 +329,24 @@ export default function UpdateAmountStock(
                     <Typography align='center' variant="h5">{productUpdate.product}</Typography>
                     
                         <Grid container spacing={0} alignItems="center" >
-                            <Grid item xs={3} md={8} >
+                            <Grid item xs={3} display="flex" justifyContent="center">
                                 <Typography variant="h6" >
                                     Amount
                                 </Typography> </Grid>
-                            <Grid item xs={3} md={6} > </Grid>
-                            <Grid item xs={3} md={6} display="flex" justifyContent="center">
+                            <Grid item xs={3} />
+                            <Grid item xs={3} display="flex" justifyContent="center">
                                 <UpButton
                                     direction="up"
                                     clicked={() => upValue()}
                                 /> 
                             </Grid>
-                            <Grid item xs={3} md={6} > </Grid>
-
-                            <Grid item xs={1} md={8} > </Grid>
-                            <Grid item xs={2} md={8} >
-                                <Typography align='center' variant="h6" >
+                            <Grid item xs={3} />
+                            <Grid item xs={3} display="flex" justifyContent="center">
+                                <Typography variant="h6" >
                                     {productUpdate.amount}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={3} md={8} display="flex" justifyContent="center" > 
+                            <Grid item xs={3} display="flex" justifyContent="center" > 
                                 <ButtonOperator
                                     sizeIcoExt="50px !important"
                                     sizeIcoInt="57px !important"
@@ -357,7 +355,7 @@ export default function UpdateAmountStock(
                                     clicked={() => swapOperator()}
                                 />
                             </Grid>
-                            <Grid item xs={3} md={8} display="flex" justifyContent="center" >
+                            <Grid item xs={3} display="flex" justifyContent="center" >
                                 <TextField
                                     maxRows={1}
                                     size="small"
@@ -377,15 +375,13 @@ export default function UpdateAmountStock(
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={2} md={8} display="flex" justifyContent="center" >
+                            <Grid item xs={3} display="flex" justifyContent="center" >
                                 <Typography variant="h6" >
                                     {productUpdate.measure}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={1} md={8} > </Grid>
-
-                            <Grid item xs={6} md={8} > </Grid>
-                            <Grid item xs={3} md={8} display="flex" justifyContent="center" >
+                            <Grid item xs={6} />
+                            <Grid item xs={3} display="flex" justifyContent="center" >
                                 {/* </Box>  */}
                                 <UpButton
                                     direction="down"
@@ -393,19 +389,10 @@ export default function UpdateAmountStock(
                                     clicked={() => downValue()}
                                 /> 
                             </Grid>
-                            <Grid item xs={3} md={6} > </Grid>
+                            <Grid item xs={3} />
                         </Grid>
                     </Box>  
-                    
-                    {/* <EditStock  ////////////////////////////////////////////// Continue with the edit stock modal here
-                        open={openEditStock} 
-                        handleClose={handleCloseEditStock} 
-                        data={productUpdate} 
-                        // columnsCustom={[]} 
-                        columnsCustom={columnsCustom} 
-                                          
-                    /> */}
-                    <ManageStock  ////////////////////////////////////////////// Continue with the edit stock modal here
+                    <ManageStock  ///////////////////// Continue with the edit stock modal here
                         open={openEditStock} 
                         handleClose={handleCloseEditStock} 
                         data={productUpdate} 
