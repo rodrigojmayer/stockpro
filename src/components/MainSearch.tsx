@@ -11,6 +11,7 @@ const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     // borderRadius: theme.shape.borderRadius,
     borderRadius: "10px",
+    cursor: "pointer", 
     backgroundColor: alpha(theme.palette.common.white, 0.55),
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.65),
@@ -37,6 +38,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
+        cursor: "pointer", 
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `1em`,
