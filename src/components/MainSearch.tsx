@@ -9,9 +9,7 @@ interface Props {
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
-    // borderRadius: theme.shape.borderRadius,
     borderRadius: "10px",
-    cursor: "pointer", 
     backgroundColor: alpha(theme.palette.common.white, 0.55),
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.65),
@@ -20,7 +18,6 @@ const Search = styled('div')(({ theme }) => ({
     width: '97%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
-    //   width: '333px',
     },
 }));
 
@@ -37,19 +34,17 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
+    width: 'calc(100% - 45px)',
     '& .MuiInputBase-input': {
-        cursor: "pointer", 
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `1em`,
         transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-            width: '20ch',
-        },
-        },
+        // [theme.breakpoints.up('sm')]: {
+            // '&:focus': {
+                // width: '20ch',
+            // },
+        // },
     },
 }));
 
