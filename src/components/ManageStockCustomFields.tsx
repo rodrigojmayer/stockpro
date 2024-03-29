@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box,
          TextField,
          Typography,
+         useMediaQuery,
         } from '@mui/material';
 import { UpButton } from './Buttons';
 import { useStylesGlobal } from '../Styles'
@@ -22,6 +23,8 @@ export default function ManageStockCustomFields(
         stockCustomValuesTemp,
         onStockCustomValuesTemp,
     }: ChildProps )  {
+        
+    const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { classes } = useStylesGlobal();
     const close = () => {}
     const handleCloseSaveChanges = (ans?:boolean) => {
@@ -131,7 +134,10 @@ export default function ManageStockCustomFields(
         hidden= {hiddenPanel}
         >
             <Typography align='center' variant='h6'>Custom fields</Typography>
-            <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>                
+            <Box 
+                // className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}    
+                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""}`}
+            >
                 {customFieldsNewTemp.map((cusField: ColumnDataCustom) => {
                     if (!cusField.deleted) {
                         return (
@@ -141,7 +147,7 @@ export default function ManageStockCustomFields(
                                 <TextField
                                     label={cusField.label}
                                     size="small"
-                                    className={classes.inputMainData}
+                                    className={`${classes.inputMainData} ${classes.inputMainDataMargin}`}
                                     value={stockCustomValuesTemp[cusField.dataKey as keyof typeof stockCustomValuesTemp] || ''}
                                     onChange={ (event:any) => onStockCustomValuesTemp(event.target.value, cusField.dataKey) }
                                     InputProps={{
@@ -153,16 +159,16 @@ export default function ManageStockCustomFields(
                         )
                     }
                 })}
-                <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
-                    <div className={classes.customBoxCenter}>
-                        <UpButton
-                            direction="left"
-                            clicked={() => handleHiddenOptions("alerts")}
-                        />
-                        <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
-                    <Typography align="right" sx={{ width: "169px" }}></Typography>
-                    </div>
-                </Box>
+            </Box>
+            <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
+                <div className={classes.customBoxCenter}>
+                    <UpButton
+                        direction="left"
+                        clicked={() => handleHiddenOptions("alerts")}
+                    />
+                    <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
+                <Typography align="right" sx={{ width: "169px" }}></Typography>
+                </div>
             </Box>
         </div>
     )

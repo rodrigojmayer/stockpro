@@ -49,18 +49,38 @@ export const useStylesGlobal = makeStyles()({
         width: "90%",
         gap: 8,
     },
+    customBoxColumnCustomFields: { 
+        // maxHeight:"50vh", 
+        height:"260px",
+        overflowX: "hidden",
+        backgroundColor:"rgb(255,255, 255, .2)",
+        padding: "8px 0",  
+        borderRadius: 10, 
+        
+    },
+    scrollBarHide: {
+        paddingRight: '12px',
+        overflow: 'hidden', // Hide any overflow
+        scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+        '&:hover': {
+            scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+            overflowY: 'auto', // Show scrollbar on hover
+            paddingRight: '0',
+            overflowX: 'hidden',
+        },
+    },
     customBoxColumnStockOptions: {
         minHeight: "330px",
     },
-    // updateBoxColumn: {
-    //     // marginTop: "16px",
-    //     minHeight: "250px",
-    // },
     customBoxRow: {
         display: "flex",
         justifyContent:  "center",
         alignItems: "center",
         gap: 8,
+    },
+    customBoxRowHideSpace: {
+        height: "40px",
+        marginTop: "10px"
     },
     customBoxRowSpaceBetween: {
         display: "flex",
@@ -105,6 +125,9 @@ export const useStylesGlobal = makeStyles()({
         backgroundColor: "white",
         borderRadius: 10,
         width: "100%",
+    },
+    inputMainDataMargin: {
+        margin: "0 16px",
     },
     newEmailField: {        
         backgroundColor: "transparent",

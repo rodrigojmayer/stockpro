@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import { Box,
          Container,
          Grid,
@@ -6,6 +6,7 @@ import { Box,
          Modal, 
          TextField,
          Typography,
+         useMediaQuery,
         } from '@mui/material';
 import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
@@ -33,6 +34,8 @@ export default function Fields(
     {   open, 
         handleClose, 
     }: ChildProps) {
+        
+    const breakpointLG = useMediaQuery('(min-width:1024px)');
  
     const { classes } = useStylesGlobal()
     const close = () => {
@@ -48,45 +51,8 @@ export default function Fields(
     const [customFields, setCustomFields] = useState<ColumnDataCustom[]>([]) 
     const [customFieldsNew, setCustomFieldsNew] = useState<ColumnDataCustom[]>([])
     const [addButtonShow, setAddButtonShow] = useState<boolean>(true)
-    const [isFetching, setIsFetching] = useState(false)
     const [openSaveChanges, setOpenSaveChanges] = useState<boolean>(false);  
-                              
-    const removeField = (e: React.MouseEvent<HTMLButtonElement>)  => {
-        let orderedArray = Array.from(orderedFields)
-        const unsetArray = Array.from(unsetFields)
-        const fieldToRemove = orderedFields.find((o: any) => o.id == parseInt(e.currentTarget.value))
-        if (fieldToRemove) {
-            orderedArray = orderedArray.filter(function(item) {
-                return item !== fieldToRemove
-            })
-            unsetArray.push(fieldToRemove)
-        }
-        setOrderedFields(orderedArray)
-        unsetArray.sort((a,b) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
-        setUnsetFields(unsetArray)
-    }
-    const addField = (e: React.MouseEvent<HTMLButtonElement>)  => {
-        const orderedArray = Array.from(orderedFields)
-        let unsetArray = Array.from(unsetFields)
-        const fieldToAdd = unsetArray.find(o => o.id == parseInt(e.currentTarget.value))
-        if (fieldToAdd) {
-            unsetArray = unsetArray.filter(function(item) {
-                return item !== fieldToAdd
-            })
-            orderedArray.push(fieldToAdd)
-        }
-        setOrderedFields(orderedArray)
-        unsetArray.sort((a,b) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : ((b.label.toLowerCase() > a.label.toLowerCase()) ? -1 : 0))
-        setUnsetFields(unsetArray)
-    }
-    const handleDragEnd = (result: any) => {
-        if (!result.destination) return;
-        const items = Array.from(orderedFields);
-        const [reorderData] = items.splice(result.source.index,1);
-        items.splice(result.destination.index, 0, reorderData);
-        setOrderedFields(items)
-    }
-    
+     
     const handleEditCustomFieldNew = (event: React.ChangeEvent<HTMLInputElement>) => {
         const index = customFieldsNew.findIndex((field: { id: number }) => field.id === Number(event.currentTarget.id))
         if(index !== -1) {
@@ -196,7 +162,10 @@ export default function Fields(
         setCustomFieldsNew(updateFieldsNew)
     }
 
-    const addInputCustomField = () => {
+    // const containerRef = useRef(null); // Create a ref for the Box element and manage the scroll
+    
+        const containerRef = useRef<HTMLDivElement | null>(null);
+        const addInputCustomField = () => {
         const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
         const nextId = lastObj? lastObj.id + 1 : 1
         const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
@@ -353,11 +322,17 @@ export default function Fields(
     useEffect(() => {
         if(customFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
             setAddButtonShow(false)
+            if (containerRef.current) { // To scroll to the bottom to add a new input custom field 
+                containerRef.current.scrollTop = containerRef.current.scrollHeight;
+            }
         } else {
             setAddButtonShow(true)
         }
+        
+        
     }, [customFieldsNew])
 
+    
     return (
         <Modal
         open={open} 
@@ -372,76 +347,82 @@ export default function Fields(
                         Custom fields
                     </Typography>
                     {user.id_access_level <4 ? 
-                        <Box className={classes.customBoxColumn}>
-                            
-                                {customFieldsNew.map((cusField: ColumnDataCustom) => {
-                                    if (!cusField.deleted) {
-                                        return (
-                                            <Box className={classes.customBoxRow}
-                                                key={cusField.id}
-                                            >
-                                                <TextField
-                                                    id={String(cusField.id)}
-                                                    // id={column.dataKey.toString()}
-                                                    // id="filled-multiline-flexible"
-                                                    value={cusField.label}
-                                                    // onChange={handleFilterChange}
-                                                    onChange={ handleEditCustomFieldNew }
-                                                    maxRows={1}
-                                                    size="small"
-                                                    className={classes.newCustomField}
-                                                    InputProps={{
-                                                        style: {
-                                                        // height:"36px",
-                                                        borderRadius: 10,
-                                                        },
-                                                        inputProps: {maxLength: 15}, 
-                                                    }}
-                                                />
-                                                <div className={classes.customBoxCenter}> 
-                                                    <IconButton
-                                                    className={classes.ionTrash}
-                                                    onClick={() => deleteField(cusField._id, cusField.id)}
-                                                    // id="plusButton"
-                                                    // value={column.id}
-                                                    >
-                                                        <img 
-                                                        src={IonTrash} 
-                                                        alt="Trash"
-                                                        />
-                                                    </IconButton>
-                                                </div>
-                                                {/* className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `} */}
-                                                <div className={`${classes.customBoxCenter} ${classes.hideShowSpace} `}> 
-                                                {/* <div className={classes.customBoxCenter}>  */}
-                                                    {/* <div className={classes.hideShowSpace}> */}
-                                                    <div className={cusField.okButtonShow ? classes.show : classes.hide}>
-                                                        <OkButton
-                                                        sizeIco={"34px"}
-                                                        roundedIco={true}
-                                                        cusField = {{id: cusField.id, value: cusField.label}}
-                                                        clicked={() => preSaveCustomField(cusField._id, cusField.id, cusField.label)}
-                                                        />
+
+
+                            <Box 
+                                ref={containerRef} 
+                                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""}`}
+                            >
+                                    {customFieldsNew.map((cusField: ColumnDataCustom) => {
+                                        if (!cusField.deleted) {
+                                            return (
+                                                <Box className={classes.customBoxRow}
+                                                    key={cusField.id}
+                                                >
+                                                    <TextField
+                                                        id={String(cusField.id)}
+                                                        // id={column.dataKey.toString()}
+                                                        // id="filled-multiline-flexible"
+                                                        value={cusField.label}
+                                                        // onChange={handleFilterChange}
+                                                        onChange={ handleEditCustomFieldNew }
+                                                        maxRows={1}
+                                                        size="small"
+                                                        className={classes.newCustomField}
+                                                        InputProps={{
+                                                            style: {
+                                                                // height:"36px",
+                                                                borderRadius: 10,
+                                                            },
+                                                            inputProps: {maxLength: 15}, 
+                                                        }}
+                                                    />
+                                                    <div className={classes.customBoxCenter}> 
+                                                        <IconButton
+                                                            className={classes.ionTrash}
+                                                            onClick={() => deleteField(cusField._id, cusField.id)}
+                                                            // id="plusButton"
+                                                            // value={column.id}
+                                                        >
+                                                            <img 
+                                                            src={IonTrash} 
+                                                            alt="Trash"
+                                                            />
+                                                        </IconButton>
                                                     </div>
-                                                    <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
-                                                        Field repeated
-                                                    {/* </div> */}
+                                                    {/* className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `} */}
+                                                    <div className={`${classes.customBoxCenter} ${classes.hideShowSpace} `}> 
+                                                    {/* <div className={classes.customBoxCenter}>  */}
+                                                        {/* <div className={classes.hideShowSpace}> */}
+                                                        <div className={cusField.okButtonShow ? classes.show : classes.hide}>
+                                                            <OkButton
+                                                                sizeIco={"34px"}
+                                                                roundedIco={true}
+                                                                cusField = {{id: cusField.id, value: cusField.label}}
+                                                                clicked={() => preSaveCustomField(cusField._id, cusField.id, cusField.label)}
+                                                            />
+                                                        </div>
+                                                        <div className={cusField.fieldRepeatedShow ? classes.show : classes.hide}>
+                                                            Field repeated
+                                                        {/* </div> */}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </Box>
-                                        )
-                                    }
-                                })}
-                            <Box className={classes.customBoxRow}>
-                                <div className={(addButtonShow? "" : classes.hide)}>
-                                <PlusButton
-                                    sizeIco={"45px !important"}
-                                    clicked={addInputCustomField}
-                                />
-                                </div>
+                                                </Box>
+                                            )
+                                        }
+                                    })}
                             </Box>
-                        </Box>
+                            
+
                     :""}
+                    <Box className={`${classes.customBoxRow} ${classes.customBoxRowHideSpace}`}>
+                        <div className={(addButtonShow? "" : classes.hide)}>
+                        <PlusButton
+                            sizeIco={"45px !important"}
+                            clicked={addInputCustomField}
+                        />
+                        </div>
+                    </Box>
                     <Box className={classes.finishButtons}>
                         <CancelButton
                         clicked={() => close()}
