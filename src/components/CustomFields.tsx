@@ -164,13 +164,22 @@ export default function Fields(
 
     // const containerRef = useRef(null); // Create a ref for the Box element and manage the scroll
     
-        const containerRef = useRef<HTMLDivElement | null>(null);
-        const addInputCustomField = () => {
-        const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
-        const nextId = lastObj? lastObj.id + 1 : 1
-        const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
-        setCustomFieldsNew(updateFieldsNew)
-    }
+        const containerRef = useRef<HTMLDivElement | null>(null);// Create a ref for the Box element and manage the scroll
+        const lastInputRef = useRef<HTMLDivElement | null>(null);  //Create a ref for the focus after add a new input
+        const addInputCustomField = async() => {
+            const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
+            const nextId = lastObj? lastObj.id + 1 : 1
+            const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
+
+            await setCustomFieldsNew(updateFieldsNew)
+            
+            if (containerRef.current) { // To scroll to the bottom to add a new input custom field 
+                containerRef.current.scrollTop = containerRef.current.scrollHeight;
+            } 
+            if (lastInputRef.current) {
+                lastInputRef.current.focus();
+            }
+        }
 
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){            
@@ -322,9 +331,7 @@ export default function Fields(
     useEffect(() => {
         if(customFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
             setAddButtonShow(false)
-            if (containerRef.current) { // To scroll to the bottom to add a new input custom field 
-                containerRef.current.scrollTop = containerRef.current.scrollHeight;
-            }
+            
         } else {
             setAddButtonShow(true)
         }
@@ -363,6 +370,7 @@ export default function Fields(
                                                         id={String(cusField.id)}
                                                         // id={column.dataKey.toString()}
                                                         // id="filled-multiline-flexible"
+                                                        inputRef={lastInputRef}
                                                         value={cusField.label}
                                                         // onChange={handleFilterChange}
                                                         onChange={ handleEditCustomFieldNew }
