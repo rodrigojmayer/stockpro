@@ -11,6 +11,7 @@ import {
   Switch,
   Tooltip
 } from '@mui/material';
+import { tooltipClasses } from '@mui/material/Tooltip';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import { useState, useEffect, useContext } from 'react';
@@ -138,7 +139,20 @@ function rowContent(
               color="default"
             />
           : ( column.dataKey !== "url_image"  || !newRow[column.dataKey]) ?
-              <Tooltip title={newRow[column.dataKey]} >
+              <Tooltip 
+                title={newRow[column.dataKey]} 
+                slotProps={{
+                  popper: {
+                    sx: {
+                      [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
+                        {
+                          marginTop: '0px',
+                          marginLeft: '5px',
+                        },
+                    }
+                  }
+                }}
+              >
                 <Typography noWrap 
                 sx={{
                   padding: "0 4px ",

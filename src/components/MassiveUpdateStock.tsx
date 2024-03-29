@@ -12,6 +12,7 @@ import { Box,
          TextField,
          Tooltip
         } from '@mui/material';
+        import { tooltipClasses } from '@mui/material/Tooltip';
 import { OkButton,
          CancelButton,
          PlusButton,
@@ -111,7 +112,20 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         } else {
             return(
                 
-              <Tooltip title={newRow[item.column.dataKey]} >
+              <Tooltip 
+                title={newRow[item.column.dataKey]} 
+                slotProps={{
+                    popper: {
+                    sx: {
+                        [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
+                        {
+                            marginTop: '0px',
+                            marginLeft: '5px',
+                        },
+                    }
+                    }
+                }}
+              >
                     <Typography noWrap 
                         sx={{
                             padding: "0 4px ",
