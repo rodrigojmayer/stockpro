@@ -284,7 +284,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         openChangePassModal={openChangePassModal}
                         closeChangePassModal={handleCloseChangePassModal}
                     />
-                    <Typography align="center" variant="h5">
+                    <Typography align="center" variant="h5" className={classes.title}>
                         Profile
                     </Typography>
                     <Box className={classes.customBoxColumn}>

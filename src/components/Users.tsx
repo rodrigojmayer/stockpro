@@ -162,7 +162,7 @@ export default function Users( { open, handleClose }: ChildProps) {
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
                     />
-                    <Typography align="center" variant="h5">
+                    <Typography align="center" variant="h5"  className={classes.title}>
                         Users
                     </Typography>
                     <Box className={classes.customBoxColumn}>

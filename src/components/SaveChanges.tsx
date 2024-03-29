@@ -35,7 +35,7 @@ export default function SaveChanges( props: SaveChangesProps) {
             >
                 <Box sx={modalStyleSaveExternal}>
                     <Box sx={modalStyleSaveInternal}>
-                        <Typography align="center" variant="h6">
+                        <Typography align="center" variant="h6" className={classes.title}>
                             Save changes?
                         </Typography>
                         <Typography align="center" >

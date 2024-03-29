@@ -398,7 +398,7 @@ export default function MassiveUpdateStock(
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
                     />
-                    <Typography align='center' variant="h5">Massive upload</Typography>
+                    <Typography align='center' variant="h5"  className={classes.title}>Massive upload</Typography>
 
                     <Paper style={{ 
                         height: `60vh`, 

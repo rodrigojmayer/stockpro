@@ -186,7 +186,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
                     />
-                    <Typography align="center" variant="h5">
+                    <Typography align="center" variant="h5" className={classes.title}>
                         Preferences
                     </Typography>
                     <Box className={classes.customBoxColumn}>

@@ -52,10 +52,10 @@ export const useStylesGlobal = makeStyles()({
     customBoxColumnStockOptions: {
         minHeight: "330px",
     },
-    updateBoxColumn: {
-        marginTop: "16px",
-        minHeight: "250px",
-    },
+    // updateBoxColumn: {
+    //     // marginTop: "16px",
+    //     minHeight: "250px",
+    // },
     customBoxRow: {
         display: "flex",
         justifyContent:  "center",
@@ -298,6 +298,11 @@ export const useStylesGlobal = makeStyles()({
         size: "50px",
         marginRight: "10px",
         marginLeft: "1px",
+    },
+    
+    title : {
+        marginTop: "5px",
+        marginBottom: "10px",
     }
 })
 
@@ -424,6 +429,7 @@ export const modalStyleImageInternal = {
     left: "50%",
     transform: "translate(-50%, -50%)",
 };
+
 // export const TableStyles = makeStyles((theme: Theme) => ({
 export const tableStyles = makeStyles()({
     alert_on : {

@@ -368,7 +368,7 @@ export default function Fields(
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 
                     />
-                    <Typography align="center" variant="h5">
+                    <Typography align="center" variant="h5"  className={classes.title}>
                         Fields
                     </Typography>
                     <Grid container>

@@ -266,7 +266,7 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         > 
             <Box sx={modalStyleExternal}>
                 <Box sx={modalStyleInternal}>
-                    <Typography align="center" variant="h5">
+                    <Typography align="center" variant="h5"  className={classes.title}>
                         Alerts
                     </Typography>
                     <Box className={classes.customBoxColumn}>

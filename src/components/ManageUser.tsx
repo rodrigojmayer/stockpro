@@ -427,7 +427,7 @@ export default function ManageUser(
                         data={userName} 
                         confirmDelete={handleConfirmDelete}
                     />
-                    <Typography align='center' variant="h5">{edition ? 'Edit ' : 'Create '} user</Typography>
+                    <Typography align='center' variant="h5"  className={classes.title}>{edition ? 'Edit ' : 'Create '} user</Typography>
                     <form
                         onKeyDown={(e:any) => {
                             if (e.key === "Enter") {

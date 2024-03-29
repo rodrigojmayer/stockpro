@@ -325,10 +325,10 @@ export default function UpdateAmountStock(
                         closeErrorModal={handleCloseErrorModal}
                         errorData={errorData} 
                     /> */}
-                    <Box className={`${classes.customBoxColumn} ${classes.updateBoxColumn}`}>
-                    <Typography noWrap align='center' variant="h5">
-                        {productUpdate.product}
-                    </Typography>
+                    <Box className={`${classes.customBoxColumn}`}>
+                        <Typography noWrap align='center' variant="h5" className={classes.title}>
+                            {productUpdate.product}
+                        </Typography>
                     
                         <Grid container spacing={0} alignItems="center" >
                             <Grid item xs={3} display="flex" justifyContent="center">

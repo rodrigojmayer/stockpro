@@ -472,7 +472,7 @@ export default function ManageStock(
                         
                     />
                     {/* <Typography align='center' variant="h5">{edition ?'Editetete ' : 'Createtete '} stock</Typography> */}
-                    <Typography align='center' variant="h5">{titleStat} stock</Typography>
+                    <Typography align='center' variant="h5" >{titleStat} stock</Typography>
                     <ManageStockMainData 
                         hiddenPanel={openOptionsCreate.mainData}
                         openOptionsCreate={handleOpenOptionsCreate}

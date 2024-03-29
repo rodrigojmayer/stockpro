@@ -31,6 +31,7 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import LockIcon from '@mui/icons-material/Lock';
 import { Anchor } from '@mui/icons-material';
+import CustomFields from './CustomFields';
 
 
 // type TableClasses = ReturnType<typeof useStyles>;
@@ -326,9 +327,17 @@ export default function TableProducts(
   
   const [showImgModal, setShowImgModal] = useState(""); 
   const [openShowImgModal, setOpenShowImgModal] = useState(false); 
+  const [openCustomFieldsModal, setOpenCustomFieldsModal] = useState(false); 
 
-
+  const handleCloseCustomFieldsModal = () => {
+    setOpenCustomFieldsModal(false)
+  }
   
+  const handleOpenCustomFieldsModal = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation()
+    setAnchorEl(null);
+    setOpenCustomFieldsModal(true)
+  }
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -379,7 +388,7 @@ export default function TableProducts(
   }
   
   const openSubTableOptions = (event: React.MouseEvent<HTMLElement>) => {
-    console.log("manageColumns: ", manageColumns)
+    // console.log("manageColumns: ", manageColumns)
     event.stopPropagation()
     setAnchorEl2(event.currentTarget);
     // handleClose()
@@ -518,6 +527,10 @@ export default function TableProducts(
         closeShowImgModal={handleCloseShowImgModal} 
         showImgModal={showImgModal}
     />
+    <CustomFields 
+        open={openCustomFieldsModal} 
+        handleClose={handleCloseCustomFieldsModal}  
+    /> 
     <Paper style={{ height: `calc(100vh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
       <TableVirtuoso 
         data={sortedData}
@@ -637,6 +650,20 @@ export default function TableProducts(
                                   variant="body2" 
                                 > 
                                   Manage columns
+                                </Typography>
+                              </MenuItem>
+                              <MenuItem 
+                                onClick={ handleOpenCustomFieldsModal  }
+                                style={{
+                                  padding: '0 5px',
+                                  backgroundColor: "#DCF2F1",
+                                }}
+                              >
+                                <Typography 
+                                  align="center" 
+                                  variant="body2" 
+                                > 
+                                  Custom fields
                                 </Typography>
                               </MenuItem>
                             </Menu>

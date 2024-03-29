@@ -126,10 +126,10 @@ export default function ModalsGroup(
                 open={openOptions.fields} 
                 handleClose={handleCloseOptions}  
             /> 
-            <Alerts 
+            {/* <Alerts 
                  open={openOptions.alerts} 
                  handleClose={handleCloseOptions} 
-            /> 
+            />  */}
             {/* <MassiveUpdateStock
                 open={openOptions.massive}
                 handleClose={handleCloseOptions} 

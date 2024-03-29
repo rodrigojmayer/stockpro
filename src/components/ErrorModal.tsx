@@ -135,7 +135,7 @@ export default function ErrorModal( props: ErrorModalProps) {
             >
                 <Box sx={modalStyleSaveExternal}>
                     <Box sx={modalStyleErrorInternal}>
-                        <Typography align="center" variant="h6">
+                        <Typography align="center" variant="h6" >
                             {title}
                         </Typography>
                         <Typography align="center" >

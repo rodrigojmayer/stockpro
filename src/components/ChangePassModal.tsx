@@ -219,7 +219,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                             closeErrorModal={handleCloseErrorModal}
                             errorData={errorData} 
                         />
-                        <Typography align="center" variant="h6">
+                        <Typography align="center" variant="h6" className={classes.title}>
                             Change Password
                         </Typography>
                         <Box className={classes.customBoxColumn}>
