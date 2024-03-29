@@ -8,7 +8,8 @@ import {
   TableBody, 
   Paper, 
   Box, 
-  Switch
+  Switch,
+  Tooltip
 } from '@mui/material';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
@@ -117,7 +118,6 @@ function rowContent(
              border:0,
           }}
           sx={{
-            // padding: "8px 0",
             padding: "0",
           }}
         >
@@ -137,30 +137,31 @@ function rowContent(
               color="default"
             />
           : ( column.dataKey !== "url_image"  || !newRow[column.dataKey]) ?
-            <Typography noWrap 
-            sx={{
-              padding: "0 4px ",
-            }}>
-              { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
-            </Typography> :
-          //  (newRow[column.dataKey])
-            <img 
-              style={{
-                display: "block", // Ensure the image is treated as a block element
-                margin: "auto",   // Set margins to auto to horizontally center the image
-                objectFit: 'contain',
-                paddingTop: "0.3px ", // Set to avoid small space when the row is alerted
-              }} 
-              // src={newRow[column.dataKey]} 
-              src={`https://cdn.filestackcontent.com/resize=w:34,h:34,fit:crop/auto_image/compress/${newRow[column.dataKey]}`} 
-              onClick={(e:any)=> {
-                e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                handleOpenShowImg(newRow[column.dataKey])
-              }}
-            /> 
+              <Tooltip title={newRow[column.dataKey]} >
+                <Typography noWrap 
+                sx={{
+                  padding: "0 4px ",
+                }}>
+                  { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
+                </Typography>
+              </Tooltip> 
+            :
+              <img 
+                style={{
+                  display: "block", // Ensure the image is treated as a block element
+                  margin: "auto",   // Set margins to auto to horizontally center the image
+                  objectFit: 'contain',
+                  paddingTop: "0.3px ", // Set to avoid small space when the row is alerted
+                }} 
+                // src={newRow[column.dataKey]} 
+                src={`https://cdn.filestackcontent.com/resize=w:34,h:34,fit:crop/auto_image/compress/${newRow[column.dataKey]}`} 
+                onClick={(e:any)=> {
+                  e.stopPropagation() // Prevent the click event from propagating to the parent cell
+                  handleOpenShowImg(newRow[column.dataKey])
+                }}
+              /> 
           }
           </div>
-
         </TableCell>
       ))}
     </React.Fragment>
@@ -524,7 +525,8 @@ export default function TableProducts(
         style={{
           backgroundColor: "rgb(45, 72, 91)", 
           borderRadius: "10px", 
-          scrollbarWidth: "none" 
+          scrollbarWidth: "none",
+          cursor: "pointer"
         }}
         fixedHeaderContent={() => {
             return (
@@ -545,24 +547,17 @@ export default function TableProducts(
                       padding: "8px 0",
                     }}
                   >
-
-                      <Typography noWrap
-                        sx={{
-                          padding: "0 4px ",
-                        }}
-                        onClick={(e:any)=> {
-                          
-                          e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                          orderByField(columnTable.dataKey, "onClick")
-                        }} 
-                      >
-                  { columnTable.label ? 
-
-
+                    <Typography noWrap
+                      sx={{
+                        padding: "0 4px ",
+                      }}
+                      onClick={(e:any)=> {
+                        e.stopPropagation() // Prevent the click event from propagating to the parent cell
+                        orderByField(columnTable.dataKey, "onClick")
+                      }} 
+                    >
+                      { columnTable.label ? 
                             columnTable.label 
-
-
-                            
                           : 
                           <>
                             <IconButton
@@ -582,9 +577,6 @@ export default function TableProducts(
                             >
                               <MoreVertIcon fontSize="small" />
                             </IconButton>  
-
-
-
                             <Menu
                               disableScrollLock={true}
                               id="demo-positioned-menu"
@@ -648,12 +640,8 @@ export default function TableProducts(
                                 </Typography>
                               </MenuItem>
                             </Menu>
-
-
-
                             <Menu
-    // <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
-
+                            // <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
                               className={breakpointLG ? classes.menu : ""}
                               //  className={classes.menu} 
                               id="demo-positioned-menu2"
@@ -716,8 +704,6 @@ export default function TableProducts(
                                 </MenuItem> 
                               ))}
                             </Menu>
-
-                            
                           </>
                         }
                         </Typography>

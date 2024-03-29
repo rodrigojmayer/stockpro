@@ -9,7 +9,8 @@ import { Box,
          TableCell, 
          TableBody, 
          Paper,
-         TextField
+         TextField,
+         Tooltip
         } from '@mui/material';
 import { OkButton,
          CancelButton,
@@ -109,12 +110,16 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             )
         } else {
             return(
-                <Typography noWrap 
-                    sx={{
-                        padding: "0 4px ",
-                    }}>
+                
+              <Tooltip title={newRow[item.column.dataKey]} >
+                    <Typography noWrap 
+                        sx={{
+                            padding: "0 4px ",
+                        }}
+                    >
                         { ( newRow[item.column.dataKey] || newRow[item.column.dataKey] === 0 ) ? newRow[item.column.dataKey] : "-"}
-                  </Typography>
+                    </Typography>
+                </Tooltip>
             )
         }
     }
