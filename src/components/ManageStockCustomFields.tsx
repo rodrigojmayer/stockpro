@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Box,
          TextField,
          Typography,
@@ -128,6 +128,15 @@ export default function ManageStockCustomFields(
     const handleHiddenOptions = (changeTo:string) =>  {
         openOptionsCreate(changeTo)
     }
+    const containerRef = useRef<HTMLDivElement | null>(null);// Create a ref for the Box element and manage the scroll
+    const [isScrollbarVisible, setIsScrollbarVisible] = useState(false);
+
+    useEffect(() => {
+        const box = containerRef.current;
+        if (box) { 
+            setIsScrollbarVisible(box.scrollHeight > box.clientHeight);
+        }
+    }, [hiddenPanel]); // Include containerRef.current as a dependency to re-run the effect whenever it changes
 
     return (
         <div
@@ -135,8 +144,8 @@ export default function ManageStockCustomFields(
         >
             <Typography align='center' variant='h6'>Custom fields</Typography>
             <Box 
-                // className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}    
-                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""}`}
+                ref={containerRef}    
+                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
             >
                 {customFieldsNewTemp.map((cusField: ColumnDataCustom) => {
                     if (!cusField.deleted) {

@@ -69,6 +69,9 @@ export const useStylesGlobal = makeStyles()({
             overflowX: 'hidden',
         },
     },
+    scrollBarHideInsufficientHeight : {
+        paddingRight: '0',
+    },
     customBoxColumnStockOptions: {
         minHeight: "330px",
     },
@@ -488,9 +491,5 @@ export const tableStyles = makeStyles()({
     },
     disabled: {
         backgroundColor: "rgb(255,255, 255, .3)",
-        // position: "relative",
-        // top: 0,
-        // visibility: "hidden",
-        // flexGrow: "6",
     },
 })

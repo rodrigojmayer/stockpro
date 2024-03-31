@@ -161,26 +161,26 @@ export default function Fields(
             updateFieldsNew[index].edited = true
         setCustomFieldsNew(updateFieldsNew)
     }
-
-    // const containerRef = useRef(null); // Create a ref for the Box element and manage the scroll
     
-        const containerRef = useRef<HTMLDivElement | null>(null);// Create a ref for the Box element and manage the scroll
-        const lastInputRef = useRef<HTMLDivElement | null>(null);  //Create a ref for the focus after add a new input
-        const addInputCustomField = async() => {
-            const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
-            const nextId = lastObj? lastObj.id + 1 : 1
-            const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
+    const containerRef = useRef<HTMLDivElement | null>(null);   // Create a ref for the Box element and manage the scroll
+    const lastInputRef = useRef<HTMLDivElement | null>(null);   //  Create a ref for the focus after add a new input
+    const addInputCustomField = async() => {
+        const lastObj = customFieldsNew.length ? customFieldsNew[customFieldsNew.length - 1] : customColumns[customColumns.length - 1]
+        const nextId = lastObj? lastObj.id + 1 : 1
+        const updateFieldsNew = [...customFieldsNew, {id:nextId, dataKey: "", label: "", width: 100, id_client: user.id_client, deleted: false, okButtonShow: false, fieldRepeatedShow:false, pre_saved: false}]
 
-            await setCustomFieldsNew(updateFieldsNew)
-            
-            if (containerRef.current) { // To scroll to the bottom to add a new input custom field 
-                containerRef.current.scrollTop = containerRef.current.scrollHeight;
-            } 
-            if (lastInputRef.current) {
-                lastInputRef.current.focus();
-            }
+        await setCustomFieldsNew(updateFieldsNew)
+        
+        if (containerRef.current) { // To scroll to the bottom to add a new input custom field 
+            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        } 
+        if (lastInputRef.current) {
+            lastInputRef.current.focus();
         }
-
+    }
+    
+    const [isScrollbarVisible, setIsScrollbarVisible] = useState(false);
+    
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){            
         /////////// Should I check if there have been any changes in the custom columns before or is it already checking that?
@@ -327,16 +327,26 @@ export default function Fields(
         setCustomFields(ColumnsCustom)
         setCustomFieldsNew(ColumnsCustom.sort((a:any,b:any) => ((b.id > a.id) ? -1 : 0)))
     }, [open])
+    
+    useEffect(() => {
+        const box = containerRef.current;
+        if (box) {
+        setIsScrollbarVisible(box.scrollHeight > box.clientHeight);
+        }
+    }, [containerRef.current]); // Include containerRef.current as a dependency to re-run the effect whenever it changes
+
 
     useEffect(() => {
         if(customFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
-            setAddButtonShow(false)
-            
+            setAddButtonShow(false)  
         } else {
             setAddButtonShow(true)
         }
-        
-        
+
+        const box = containerRef.current;
+        if (box) {
+            setIsScrollbarVisible(box.scrollHeight > box.clientHeight);
+        }
     }, [customFieldsNew])
 
     
@@ -358,7 +368,7 @@ export default function Fields(
 
                             <Box 
                                 ref={containerRef} 
-                                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""}`}
+                                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
                             >
                                     {customFieldsNew.map((cusField: ColumnDataCustom) => {
                                         if (!cusField.deleted) {
