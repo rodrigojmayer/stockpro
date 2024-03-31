@@ -183,18 +183,17 @@ function Home() {
   useEffect(() => {
       setFilteredData(
         products.filter((item:any) => {
-          // console.log("item: ", item)
+          const columnsUserOrderWithoutImages = columnsUserOrder.filter((column:any) => column.dataKey !=="url_image")
           const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 
             columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
           )
           return (
-            defaultColumns.some((column:any) => 
+            columnsUserOrderWithoutImages.some((column:any) => 
               (item[column.dataKey] || item[column.dataKey]===0) &&
               item[column.dataKey]
                 .toString()
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase()) 
-            
             ) || (
               item.custom_fields &&
               filteredColumnsCustomUser
@@ -209,7 +208,7 @@ function Home() {
           )
         })
       );
-  }, [searchQuery, columns, products]) 
+  }, [searchQuery, products, columnsUserOrder]) 
 
 
   useEffect(() => {

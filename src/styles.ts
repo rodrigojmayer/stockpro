@@ -486,4 +486,11 @@ export const tableStyles = makeStyles()({
             },
         },
     },
+    disabled: {
+        backgroundColor: "rgb(255,255, 255, .3)",
+        // position: "relative",
+        // top: 0,
+        // visibility: "hidden",
+        // flexGrow: "6",
+    },
 })

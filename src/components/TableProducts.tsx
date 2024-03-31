@@ -772,6 +772,8 @@ export default function TableProducts(
                             // id="filled-multiline-flexible"
                             // value={filters[0].dataKey}
                             onChange={handleFilterChange}
+                            disabled={ columnTable.dataKey==="url_image"}
+                            className={`${ columnTable.dataKey==="url_image" ? classes.disabled  : "" }`}
                             maxRows={1}
                             size="small"
                             sx={{
