@@ -18,55 +18,18 @@ import MassiveUpdateStock from '../components/MassiveUpdateStock';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-
-// const theme = createTheme({
-//   typography: {
-//     fontFamily: [
-//       '"Asap Condensed"',
-//     ].join(','),
-//     fontSize: 20,
-//   },
-//   components: {
-//     MuiInputLabel: {
-//       styleOverrides: {
-//         root: {
-//           '&.Mui-focused': {
-//             marginTop: 4
-//           },
-//           '&.MuiInputLabel-shrink': {
-//             marginTop: 4
-//           },
-//         },
-//       },
-//     },
-//   },
-// })
-
 const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
-    
 
 function Home() {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
-  const { user } = useContext<any>(UserContext);
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   const { products } = useContext<any>(ProductsContext)
   const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
-
   const [ searchQuery, setSearchQuery ] = useState("")
-  
-  
   const [ showCreateStock, setShowCreateStock ] = useState(false)
   const handleCloseCreateStock = () => setShowCreateStock(false)
   const openCreateStock = () => setShowCreateStock(true)
-
-  // const [ productUpdate, setProductUpdate ] = useState<ProductUpdateData>({
-  //   "id_prod": 0,
-  //   "name_prod": "",
-  //   "amount_prod": 0,
-  //   "measure_prod": "",
-  //   "alert_amount": 0,
-  // })
   const [ productUpdate, setProductUpdate ] = useState<Data>({
     "_id": "",
     "id": 0,
@@ -90,7 +53,6 @@ function Home() {
   })
   const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
   const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
-  // const openUpdateAmountStock = (newData:ProductUpdateData) => {
   const openUpdateAmountStock = (newData:Data) => {
     setShowUpdateAmountStock(true)
     let dateObject
@@ -131,7 +93,6 @@ function Home() {
       "alert_date_enabled": newData.alert_date_enabled,
       "alerted_date": newData.alerted_date,
       "custom_fields": newData.newRow.custom_fields,
-      // "alert_date": "2023-08-22T00:00:00.000Z",
     })
   }  
 
@@ -167,7 +128,6 @@ function Home() {
     setShowMassiveUpdateStock(true)
     setMassiveUpdate(
       products.filter((item:any) => {
-        // console.log("item: ", item._id)
         return (
           checkListStock.includes(item._id)
         )
@@ -175,9 +135,6 @@ function Home() {
     );
   }
   
-
-  
-
   const [filteredData, setFilteredData] = useState<Data[]>([])
     
   useEffect(() => {
@@ -260,7 +217,6 @@ function Home() {
 
   return (
         <div className="App">
-        {/* <ThemeProvider theme={theme}> */}
           <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={openBackdrop} // Loading...
@@ -304,12 +260,6 @@ function Home() {
                 />
               }
             </ModalsGroup>
-            {/* <CreateStock
-                open={showCreateStock} 
-                handleClose={handleCloseCreateStock} 
-                data={filteredData}
-                columnsCustom={filteredColumnsCustom}
-            /> */}
             <ManageStock
                 open={showCreateStock} 
                 handleClose={handleCloseCreateStock} 
@@ -323,14 +273,10 @@ function Home() {
                 productUpdate={productUpdate}
             />
             <MassiveUpdateStock
-                // open={openOptions.massive}
                 open={showMassiveUpdateStock}
-                // handleClose={handleCloseOptions} 
                 handleClose={handleMassiveUpdateStock}
-                // data={data} 
                 data={massiveUpdate}
             />
-          {/* </ThemeProvider> */}
         </div>
   )
 }
