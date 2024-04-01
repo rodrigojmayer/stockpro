@@ -452,7 +452,8 @@ export default function ManageStock(
         onClose={close}
         > 
             <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
+                <Box sx={{...modalStyleInternal, overflow: 'visible'}}>
+                {/* <Box sx={modalStyleInternal}> */}
                     <SaveChanges
                         openSaveChanges={openSaveChanges}
                         closeSaveChanges={handleCloseSaveChanges} 

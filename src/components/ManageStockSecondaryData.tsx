@@ -5,6 +5,7 @@ import { Box,
          TextField,
          Typography,
          InputAdornment,
+         Modal,
         } from '@mui/material';
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
 import { UpButton,
@@ -70,7 +71,11 @@ export default function ManageStockSecondaryData(
     const [showPicker, setShowPicker] = useState(false)
     const handleShowPicker = () => {
         // console.log("handleShowPicker showPicker: ", showPicker)
-        setShowPicker((prevState) => !prevState)
+        // setShowPicker((prevState) => !prevState)
+        setShowPicker(true)
+    }
+    const handleClosePicker = () => {
+        setShowPicker(false)
     }
     
     const writeStockPriceChange = (e:any) => {
@@ -252,8 +257,12 @@ export default function ManageStockSecondaryData(
                         />
                     </Box> 
                 } 
-                {showPicker && (
-                    <Box className={classes.customZIndexTop}>
+                {/* {showPicker && ( */}
+                     <Modal
+                     open={showPicker} 
+                     onClose={handleClosePicker}
+                     > 
+                    <Box className={classes.customZIndexTop} >
                         <PickerOverlay
                        
                             apikey={apiKey}
@@ -308,7 +317,7 @@ export default function ManageStockSecondaryData(
                             
                             pickerOptions={{
                                 onClose: () => {
-                                    handleShowPicker()
+                                    handleClosePicker()
                                 },
                                 lang: "es",
                                 accept: ["image/*"],
@@ -405,8 +414,10 @@ export default function ManageStockSecondaryData(
                             // }}
 
                         />
-                    </Box>
-                )}
+                     </Box> 
+
+                     </Modal> 
+                {/* )} */}
                 {/* </Box>  */}
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>
                     <div className={classes.customBoxCenter}>
