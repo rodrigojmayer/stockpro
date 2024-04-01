@@ -267,38 +267,48 @@ export default function TableProducts(
   const orderByField = (field: any, calledFrom: string) => {
     if(field==="url_image")
       return
-
-
-    // console.log("rowsUserSort: ", rowsUserSort)
     let newSortAsc:boolean = true
     if(calledFrom === "onClick"){
       newSortAsc = (field === rowsUserSort.field ? !rowsUserSort.asc: rowsUserSort.asc)
     } else{
       newSortAsc = rowsUserSort.asc
     }
-    console.log("field out: ", field)
     let arraySorted = filteredData.slice();
     setRowsUserSort({field: field, asc: newSortAsc});
     let aField, bField
-    // if(newSortAsc ){
     arraySorted.sort((a, b) => {
-      // console.log(" a[field]: ", a[field])
-      // console.log("typeof a[field]: ", typeof a[field])
-      // console.log(" a[field]: ", a[field])
-      // console.log("typeof a[field]: ", typeof a[field])
-      if (typeof a[field] === "string"){
-        aField = a[field].toLowerCase()
-      } else if (a[field] === undefined){
-        aField ="-"
+      if(field === "alert_date" ){
+        if(typeof a[field] === "string"){
+          let aDate = a[field]
+          aDate = aDate.split("/")
+          aDate = new Date( aDate[2], aDate[1] - 1, aDate[0]);
+          aField = aDate.getTime()
+        } else {
+          aField = 0
+        }
+        if(typeof b[field] === "string"){
+          let bDate = b[field]
+          bDate = bDate.split("/")
+          bDate = new Date( bDate[2], bDate[1] - 1, bDate[0]);
+          bField = bDate.getTime()
+        } else {
+          bField = 0
+        }
       } else {
-        aField = a[field]
-      }
-      if (typeof b[field] === "string"){
-        bField = b[field].toLowerCase()
-      } else if (b[field] === undefined){
-        bField ="-"
-      } else {
-        bField = b[field]
+        if (typeof a[field] === "string"){
+          aField = a[field].toLowerCase()
+        } else if (a[field] === undefined){
+          aField ="-"
+        } else {
+          aField = a[field]
+        }
+        if (typeof b[field] === "string"){
+          bField = b[field].toLowerCase()
+        } else if (b[field] === undefined){
+          bField ="-"
+        } else {
+          bField = b[field]
+        }
       }
       
       if(newSortAsc ){
