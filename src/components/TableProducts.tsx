@@ -135,6 +135,7 @@ function rowContent(
               }}
               sx={{
                   padding: 0,
+                  color: `${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? blueGrey[50]  : "" }`
               }}
               color="default"
             />
