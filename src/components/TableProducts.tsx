@@ -205,9 +205,11 @@ export default function TableProducts(
   // const columnsTable = columnsUserOrder
   const elementToAdd = {dataKey: "check_stock", id: 0, width: 40,}
   const columnsTable = [elementToAdd, ...columnsUserOrder];
+
+
+
   const initialManageColumns = columns.map((column:any) => {
     const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
-    // console.log("foundColumn: ", foundColumn)
     const isInArray = foundColumn !== undefined ? true : false;
     return {_id:column._id, id:column.id, width:column.width, label: column.label, dataKey:column.dataKey, showInTable: isInArray}
   })
@@ -217,8 +219,12 @@ export default function TableProducts(
     return 0;
   })
 
+
   const [manageColumns, setManageColumns] = useState(initialManageColumns)
   // console.log("columnsTable: ", columnsTable)
+  // console.log("initialManageColumns: ", initialManageColumns)
+  // console.log("manageColumns: ", manageColumns)
+  // console.log("columns: ", columns)
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
   const [filteredData, setFilteredData] = useState(data)
   const [sortedData, setSortedData] = useState(data)
@@ -413,7 +419,9 @@ export default function TableProducts(
   }
   
   const openSubTableOptions = (event: React.MouseEvent<HTMLElement>) => {
-    // console.log("manageColumns: ", manageColumns)
+    console.log("manageColumns: ", manageColumns)
+    
+  console.log("columns: ", columns)
     event.stopPropagation()
     setAnchorEl2(event.currentTarget);
     // handleClose()
@@ -543,6 +551,20 @@ export default function TableProducts(
     // console.log("rowsUserSort: ", rowsUserSort)
       orderByField(rowsUserSort.field, "useEffect")
   }, [filteredData, alertsOnTopUserSort])
+  
+  useEffect(() => {
+    const updateManageColumns = columns.map((column:any) => {
+      const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
+      const isInArray = foundColumn !== undefined ? true : false;
+      return {_id:column._id, id:column.id, width:column.width, label: column.label, dataKey:column.dataKey, showInTable: isInArray}
+    })
+    updateManageColumns.sort((a:any, b:any) => {
+      if (a.label.toLowerCase() < b.label.toLowerCase()) return -1;
+      if (a.label.toLowerCase() > b.label.toLowerCase()) return 1;
+      return 0;
+    })
+    setManageColumns(updateManageColumns)
+  }, [columns])
 
   return (
     
