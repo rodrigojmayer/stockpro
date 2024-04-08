@@ -21,6 +21,7 @@ export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPriva
     
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={openConfirmTermsAndPrivacyModal} 
             onClose={() => closeConfirmTermsAndPrivacyModal()}
         > 

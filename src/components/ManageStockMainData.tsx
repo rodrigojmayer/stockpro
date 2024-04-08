@@ -91,6 +91,7 @@ export default function ManageStockMainData(
                             className: classes.inputClassName,
                             inputProps: {maxLength: 30}
                         }}
+                        inputRef={input => input && input.focus()}
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>

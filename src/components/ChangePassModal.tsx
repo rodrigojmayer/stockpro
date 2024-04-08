@@ -191,6 +191,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
 
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={openChangePassModal} 
         onClose={() => closeChangePassModal()}
         > 

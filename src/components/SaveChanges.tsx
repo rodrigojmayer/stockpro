@@ -20,6 +20,7 @@ export default function SaveChanges( props: SaveChangesProps) {
 
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={openSaveChanges} 
         onClose={() => closeSaveChanges()}
         > 

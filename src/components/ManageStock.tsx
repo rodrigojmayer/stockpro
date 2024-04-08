@@ -448,118 +448,130 @@ export default function ManageStock(
     
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={open} 
         onClose={close}
         > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={{...modalStyleInternal, overflow: 'visible'}}>
-                {/* <Box sx={modalStyleInternal}> */}
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
-                        messageBeforeSave={messageBeforeSave}
-                    />
-                    <ErrorModal
-                        openErrorModal={openErrorModal}
-                        closeErrorModal={handleCloseErrorModal}
-                        errorData={errorData} 
-                    />
-                    <ConfirmDeleteModal
-                        openConfirmDeleteModal={openConfirmDeleteModal}
-                        closeConfirmDeleteModal={handleCloseConfirmDeleteModal}
-                        source={"stock"}
-                        data={stockNameTemp} 
-                        confirmDelete={handleConfirmDelete}
-                        
-                    />
-                    {/* <Typography align='center' variant="h5">{edition ?'Editetete ' : 'Createtete '} stock</Typography> */}
-                    <Typography align='center' variant="h5" >{titleStat} stock</Typography>
-                    <ManageStockMainData 
-                        hiddenPanel={openOptionsCreate.mainData}
-                        openOptionsCreate={handleOpenOptionsCreate}
-                        
-                        stockNameTemp={stockNameTemp}
-                        onStockNameChange={handleStockNameChange}
-
-                        stockAmountTemp={stockAmountTemp}
-                        onStockAmountChange={handleStockAmountChange}
-
-                        measureArray={measureArray}
-                        stockMeasureTemp={stockMeasureTemp}
-                        onStockMeasureChange={handleStockMeasureChange}
-                        
-                        stockCodeTemp={stockCodeTemp}
-                        onStockCodeChange={handleStockCodeChange}
-
-                        categoryArray={categoryArray}
-                        stockCategoryTemp={stockCategoryTemp}
-                        onStockCategoryChange={handleStockCategoryChange}
-                        
-                        // subCategoryArray={subCategoryArray}
-                        stockSubCategoryTemp={stockSubCategoryTemp}
-                        onStockSubCategoryChange={handleStockSubCategoryChange}
-                    />
-                    <ManageStockSecondaryData 
-                        hiddenPanel={openOptionsCreate.secondaryData}
-                        openOptionsCreate={handleOpenOptionsCreate} 
-
-                        id_product={data._id}
-                        
-                        stockPriceTemp={stockPriceTemp}
-                        onStockPriceChange={handleStockPriceChange}
-                        
-                        stockDescriptionTemp={stockDescriptionTemp}
-                        onStockDescriptionChange={handleStockDescriptionChange}
-                        
-                        imageUrlHandle={stockImageUrlTemp}
-                        onSetImageUrlHandle={handleSetImageUrl}
-
-                        unsavedImages={unsavedImages}
-                        onHandleUnsavedImages={handleUnsavedImages}
-                    />
-                    <ManageStockAlerts 
-                        hiddenPanel={openOptionsCreate.alerts}
-                        openOptionsCreate={handleOpenOptionsCreate}
-                        
-                        stockMeasureTemp={stockMeasureTemp}
-
-                        stockAlertAmountTemp = {stockAlertAmountTemp}
-                        onStockAlertAmountChange = {handleStockAlertAmountChange}
-                        
-                        stockAlertAmountEnabledTemp = {stockAlertAmountEnabledTemp}
-                        onStockAlertAmountEnabledChange = {handleStockAlertAmountEnabledChange}
-                        
-                        stockAlertDateTemp={stockAlertDateTemp}
-                        onStockAlertDateChange={handleStockAlertDateChange}
- 
-                        stockAlertDateEnabledTemp={stockAlertDateEnabledTemp}
-                        onStockAlertDateEnabledChange={handleStockAlertDateEnabledChange}
- 
-                    />
-                    <ManageStockCustomFields
-                        hiddenPanel={openOptionsCreate.customFields}
-                        openOptionsCreate={handleOpenOptionsCreate}
-                        
-                        columnsCustom={columnsCustom}
-                        
-                        stockCustomValuesTemp={stockCustomValuesTemp}
-                        onStockCustomValuesTemp={handleStockCustomValuesTemp}
-                    />
-                    <Box className={classes.finishButtons}>
-                        {(titleStat === "Edit ") &&
-                            <DeleteButton
-                                clicked={() => handleDeleteProduct()}
-                            />  
-                        }
-                        <CancelButton
-                            clicked={() => handleCloseWithoutSaveChanges()}
+            <form
+                onKeyDown={(e:any) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault()
+                        handleOpenSaveChanges()
+                        e.stopPropagation()
+                    }
+                }}
+            >
+                <Box sx={modalStyleExternal}>
+                    <Box sx={{...modalStyleInternal, overflow: 'visible'}}>
+                    {/* <Box sx={modalStyleInternal}> */}
+                        <SaveChanges
+                            openSaveChanges={openSaveChanges}
+                            closeSaveChanges={handleCloseSaveChanges} 
+                            messageBeforeSave={messageBeforeSave}
                         />
-                        <OkButton
-                            clicked={() => handleOpenSaveChanges()}
+                        <ErrorModal
+                            openErrorModal={openErrorModal}
+                            closeErrorModal={handleCloseErrorModal}
+                            errorData={errorData} 
                         />
-                    </Box> 
+                        <ConfirmDeleteModal
+                            openConfirmDeleteModal={openConfirmDeleteModal}
+                            closeConfirmDeleteModal={handleCloseConfirmDeleteModal}
+                            source={"stock"}
+                            data={stockNameTemp} 
+                            confirmDelete={handleConfirmDelete}
+                            
+                        />
+                        
+                        {/* <Typography align='center' variant="h5">{edition ?'Editetete ' : 'Createtete '} stock</Typography> */}
+                        <Typography align='center' variant="h5" >{titleStat} stock</Typography>
+                        <ManageStockMainData 
+                            hiddenPanel={openOptionsCreate.mainData}
+                            openOptionsCreate={handleOpenOptionsCreate}
+                            
+                            stockNameTemp={stockNameTemp}
+                            onStockNameChange={handleStockNameChange}
+
+                            stockAmountTemp={stockAmountTemp}
+                            onStockAmountChange={handleStockAmountChange}
+
+                            measureArray={measureArray}
+                            stockMeasureTemp={stockMeasureTemp}
+                            onStockMeasureChange={handleStockMeasureChange}
+                            
+                            stockCodeTemp={stockCodeTemp}
+                            onStockCodeChange={handleStockCodeChange}
+
+                            categoryArray={categoryArray}
+                            stockCategoryTemp={stockCategoryTemp}
+                            onStockCategoryChange={handleStockCategoryChange}
+                            
+                            // subCategoryArray={subCategoryArray}
+                            stockSubCategoryTemp={stockSubCategoryTemp}
+                            onStockSubCategoryChange={handleStockSubCategoryChange}
+                        />
+                        <ManageStockSecondaryData 
+                            hiddenPanel={openOptionsCreate.secondaryData}
+                            openOptionsCreate={handleOpenOptionsCreate} 
+
+                            id_product={data._id}
+                            
+                            stockPriceTemp={stockPriceTemp}
+                            onStockPriceChange={handleStockPriceChange}
+                            
+                            stockDescriptionTemp={stockDescriptionTemp}
+                            onStockDescriptionChange={handleStockDescriptionChange}
+                            
+                            imageUrlHandle={stockImageUrlTemp}
+                            onSetImageUrlHandle={handleSetImageUrl}
+
+                            unsavedImages={unsavedImages}
+                            onHandleUnsavedImages={handleUnsavedImages}
+                        />
+                        <ManageStockAlerts 
+                            hiddenPanel={openOptionsCreate.alerts}
+                            openOptionsCreate={handleOpenOptionsCreate}
+                            
+                            stockMeasureTemp={stockMeasureTemp}
+
+                            stockAlertAmountTemp = {stockAlertAmountTemp}
+                            onStockAlertAmountChange = {handleStockAlertAmountChange}
+                            
+                            stockAlertAmountEnabledTemp = {stockAlertAmountEnabledTemp}
+                            onStockAlertAmountEnabledChange = {handleStockAlertAmountEnabledChange}
+                            
+                            stockAlertDateTemp={stockAlertDateTemp}
+                            onStockAlertDateChange={handleStockAlertDateChange}
+    
+                            stockAlertDateEnabledTemp={stockAlertDateEnabledTemp}
+                            onStockAlertDateEnabledChange={handleStockAlertDateEnabledChange}
+    
+                        />
+                        <ManageStockCustomFields
+                            hiddenPanel={openOptionsCreate.customFields}
+                            openOptionsCreate={handleOpenOptionsCreate}
+                            
+                            columnsCustom={columnsCustom}
+                            
+                            stockCustomValuesTemp={stockCustomValuesTemp}
+                            onStockCustomValuesTemp={handleStockCustomValuesTemp}
+                        />
+                        <Box className={classes.finishButtons}>
+                            {(titleStat === "Edit ") &&
+                                <DeleteButton
+                                    clicked={() => handleDeleteProduct()}
+                                />  
+                            }
+                            <CancelButton
+                                clicked={() => handleCloseWithoutSaveChanges()}
+                            />
+                            <OkButton
+                                clicked={() => handleOpenSaveChanges()}
+                            />
+                        </Box> 
+                    </Box>
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }

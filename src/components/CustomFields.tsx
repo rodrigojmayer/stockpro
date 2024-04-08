@@ -352,6 +352,7 @@ export default function Fields(
     
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={open} 
         onClose={close}> 
             <Box sx={modalStyleExternal}>

@@ -38,6 +38,7 @@ export default function PickerOverlayModal( props: PickerOverlayModalProps) {
 
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={showPicker} 
         onClose={() => handleClosePickerOverlayModal()}
         > 

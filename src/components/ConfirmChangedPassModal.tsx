@@ -21,6 +21,7 @@ export default function ConfirmChangedPassModal( props: ConfirmChangedPassModalP
     
     return (
         <Modal
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={openConfirmChangedPassModal} 
             onClose={() => closeConfirmChangedPassModal()}
         > 

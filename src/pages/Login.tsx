@@ -231,7 +231,10 @@ useEffect(() => {
 }, [isLoading.openFirstTimeValidateUser])
 
 return (
-  <Modal open={true} > 
+  <Modal 
+    sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+    open={true} 
+  > 
     <Paper style={{ margin: 0 }}>
       <Box sx={modalStyleSaveExternal}>
         <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>

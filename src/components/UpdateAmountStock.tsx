@@ -309,6 +309,7 @@ export default function UpdateAmountStock(
     // console.log("signUpdate: ", signUpdate)
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={open} 
         onClose={close}
         > 

@@ -28,6 +28,7 @@ export default function ConfirmUserValidatedModal( props: ConfirmUserValidatedMo
 
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={openConfirmUserValidatedModal} 
             onClose={() => closeConfirmUserValidatedModal()}
         > 

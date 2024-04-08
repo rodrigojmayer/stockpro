@@ -287,6 +287,7 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
     
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={openManageForgottenPass} 
             onClose={handleCloseManageForgottenPass}
         > 

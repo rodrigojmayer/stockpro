@@ -86,6 +86,7 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={openConfirmDeleteModal} 
         onClose={() => closeConfirmDeleteModal()}
         > 

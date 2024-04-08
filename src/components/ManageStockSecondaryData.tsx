@@ -209,6 +209,7 @@ export default function ManageStockSecondaryData(
                                 <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
                             ),
                         }}
+                        inputRef={input => input && input.focus()}
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>
@@ -258,10 +259,11 @@ export default function ManageStockSecondaryData(
                     </Box> 
                 } 
                 {/* {showPicker && ( */}
-                     <Modal
-                     open={showPicker} 
-                     onClose={handleClosePicker}
-                     > 
+                    <Modal
+                        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+                        open={showPicker} 
+                        onClose={handleClosePicker}
+                    > 
                     <Box className={classes.customZIndexTop} >
                         <PickerOverlay
                        

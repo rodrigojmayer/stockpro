@@ -406,6 +406,7 @@ export default function ManageUser(
 
     return (
         <Modal
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={open} 
             onClose={close}
         > 

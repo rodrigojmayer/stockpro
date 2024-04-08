@@ -58,6 +58,7 @@ export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalP
     
     return (
         <Modal
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={openConfirmCreatedUserModal} 
             onClose={() => closeConfirmCreatedUserModal()}
         > 

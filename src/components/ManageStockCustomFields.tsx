@@ -147,8 +147,8 @@ export default function ManageStockCustomFields(
                 ref={containerRef}    
                 className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
             >
-                {customFieldsNewTemp.map((cusField: ColumnDataCustom) => {
-                    if (!cusField.deleted) {
+                {customFieldsNewTemp.map((cusField: ColumnDataCustom, index: number) => {
+                    // if (!cusField.deleted) {
                         return (
                             <Box className={classes.customBoxRow}
                                 key={cusField.id}
@@ -163,10 +163,12 @@ export default function ManageStockCustomFields(
                                         style: { borderRadius: 10 },
                                         inputProps: { maxLength: 30 }
                                     }}
+                                    // inputRef={(index===0 ? input => input && input.focus() : "")}
+                                    inputRef={index===0 ? input => input && input.focus() : undefined}
                                 />
                             </Box>
                         )
-                    }
+                    // }
                 })}
             </Box>
             <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>

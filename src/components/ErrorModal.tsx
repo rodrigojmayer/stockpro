@@ -121,6 +121,7 @@ export default function ErrorModal( props: ErrorModalProps) {
 
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={openErrorModal} 
         onClose={() => handleCloseErrorModal()}
         > 

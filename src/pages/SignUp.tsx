@@ -242,7 +242,10 @@ export default function SignUp () {
 /////////// AAAAAAAAAAADDDDDDDDDD ConfirmCreatedUserModal send email of confirmation before to enable the user, and if is not confirmated in the next 15 minutes should delete the user an the client creates(?)
 
     return (
-        <Modal open={true} >
+        <Modal 
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+            open={true} 
+        >
             <Paper style={{margin:0}} >
                 <Box sx={modalStyleSaveExternal}>
                     <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>

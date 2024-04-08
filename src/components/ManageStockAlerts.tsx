@@ -124,6 +124,7 @@ export default function ManageStockAlerts(
                                         </Typography>
                                     ),
                                 }}
+                                inputRef={input => input && input.focus()}
                             />
                         </Grid>
                         <Grid item xs={3} >

@@ -397,6 +397,7 @@ export default function MassiveUpdateStock(
     
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={open} 
         onClose={close}
         > 

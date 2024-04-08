@@ -172,6 +172,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
     
     return (
         <Modal
+        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
         open={open} 
         onClose={close}
         > 
