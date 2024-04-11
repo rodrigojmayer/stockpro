@@ -101,18 +101,6 @@ export default function ManageStock(
    
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
-            
-            // console.log("data.alert_date_enabled: ", data.alert_date_enabled)
-            // console.log("stockAlertDateEnabledTemp: ", stockAlertDateEnabledTemp)
-            // console.log("data.alerted_date: ", data.alerted_date)
-            // console.log("stockAlertedDateTemp: ", stockAlertedDateTemp)
-            // console.log("data.alert_amount_enabled: ", data.alert_amount_enabled)
-            // console.log("stockAlertAmountEnabledTemp: ", stockAlertAmountEnabledTemp)
-            // console.log("data.alert_amount_enabled!=stockAlertAmountEnabledTemp: ", data.alert_amount_enabled!=stockAlertAmountEnabledTemp)
-            // console.log("unsavedImages: ", unsavedImages)
-            // console.log(" data.url_image: ",  data.url_image)
-            // console.log(" stockImageUrlTemp: ",  stockImageUrlTemp)
-            // alert("stop")
 
             if(unsavedImages.length>0) {
                 unsavedImages.forEach((unsavedImage) => {
@@ -172,8 +160,6 @@ export default function ManageStock(
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
-                        // console.log('POST request successful: ', responseData)
-                        // console.log(`${manage_method} request successful: `, responseData)
                         loadingSuccess = true
                     } else {
                         // Handle non-successful responses
@@ -210,7 +196,6 @@ export default function ManageStock(
     }
 
     const handleOpenSaveChanges = () => {
-        // console.log("stockNameTemp: ", stockNameTemp)
 
         if(stockNameTemp===""){
             setOpenErrorModal(true)
@@ -259,7 +244,6 @@ export default function ManageStock(
         console.log("value: ", value)
         console.log("typeof value: ", typeof value)
         const topValue = 999
-        // let newValue = parseInt(value.replace(/[+\-e]/g, ''), 10);
         if(typeof value === 'number'){
             if(isNaN(value)){
                 value = stockAmountTemp
@@ -293,19 +277,15 @@ export default function ManageStock(
     }
     
     const handleUnsavedImages = (value: string) => {
-        // setUnsavedImages(value)
         setUnsavedImages((prevImages: string[]) => [...prevImages, value])
     }
     const handleStockAlertAmountChange = (value: number) => {
-        // console.log("value: ", value)
         setStockAlertAmountTemp(value)
     }
     const handleStockAlertAmountEnabledChange = (value: boolean) => {
-        // console.log("value alerted: ", value)
         setStockAlertAmountEnabledTemp(value)
     }
     const handleStockAlertDateChange = (date:Dayjs | Date | null | string) => {
-        // console.log("handleSetAlertDate value: ", date)
         if (date) {
             setStockAlertDateTemp(date);
         } else {
@@ -345,7 +325,6 @@ export default function ManageStock(
                 deleteFilesStock(data._id, unsavedImage)
             })
         }
-        // alert("stomper")
         const fetchDeleteStockProduct = async () => {
             let loadingSuccess: boolean = false
             try {
@@ -364,7 +343,6 @@ export default function ManageStock(
                 // Check if the response status is successful
                 if (response.ok) {
                     const responseData = await response.json() // parse the response data
-                    // console.log('POST request successful: ', responseData)
                     loadingSuccess = true
                 } else {
                     // Handle non-successful responses
@@ -463,7 +441,6 @@ export default function ManageStock(
             >
                 <Box sx={modalStyleExternal}>
                     <Box sx={{...modalStyleInternal, overflow: 'visible'}}>
-                    {/* <Box sx={modalStyleInternal}> */}
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 
@@ -483,7 +460,6 @@ export default function ManageStock(
                             
                         />
                         
-                        {/* <Typography align='center' variant="h5">{edition ?'Editetete ' : 'Createtete '} stock</Typography> */}
                         <Typography align='center' variant="h5" >{titleStat} stock</Typography>
                         <ManageStockMainData 
                             hiddenPanel={openOptionsCreate.mainData}
@@ -506,7 +482,6 @@ export default function ManageStock(
                             stockCategoryTemp={stockCategoryTemp}
                             onStockCategoryChange={handleStockCategoryChange}
                             
-                            // subCategoryArray={subCategoryArray}
                             stockSubCategoryTemp={stockSubCategoryTemp}
                             onStockSubCategoryChange={handleStockSubCategoryChange}
                         />
