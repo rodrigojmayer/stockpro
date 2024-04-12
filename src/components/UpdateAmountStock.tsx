@@ -374,6 +374,7 @@ export default function UpdateAmountStock(
                                         className: classes.inputClassName,
                                         inputProps: {
                                             style: { textAlign: "center" },
+                                            inputMode: "numeric",
                                         },
                                     }}
                                 />
