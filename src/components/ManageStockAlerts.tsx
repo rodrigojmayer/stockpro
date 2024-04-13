@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';// Import dayjs
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box,
          Grid,
          TextField,
@@ -48,6 +48,7 @@ export default function ManageStockAlerts(
     const { classes } = useStylesGlobal();
     const close = () => {}
     const DatePickerComponent = breakpointLG ? DatePicker : MobileDatePicker;
+    const [openDatePicker, setOpenDatePicker] = useState(false);  
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
@@ -68,23 +69,7 @@ export default function ManageStockAlerts(
         onStockAlertAmountChange(newValue);
     }
     const handleDatePickerChange = (newDate:any) => { 
-        // console.log("newDate: ", newDate) 
-        // console.log("newDate.$d: ", newDate.$d)
-        // Here, we adjust the selected date to GMT+0400 by using the utcOffset method
-        // const adjustedDate = newDate.utcOffset('+0400', true);
-        // const adjustedDate = newDate
-        // const day = newDate.$D
-        // console.log("day: ", day) 
-        // const month = (newDate.$M + 1)
-        // console.log("month: ", month)
-        // const year = newDate.$y
-        // console.log("year: ", year)
-        // const adjustedDate = `${day}-${month}-${year}T02:00:00.000Z` // Adding 2 hours because the GMT comes in +0200 and returns the day before
-        // const adjustedDate = `15-08-2023T02:00:00.000Z` // Adding 2 hours because the GMT comes in +0200 and returns the day before
         const adjustedDate = newDate.add(2, 'hour').toISOString(); // Adding 2 hours because the GMT comes in +0200 and returns the day before
-        // // const formattedDate = date;
-        // console.log("adjustedDate: ", adjustedDate) 
-        // Call the onStockAlertDateChange function with the adjusted date
         onStockAlertDateChange(adjustedDate);
       };
     const handleHiddenOptions = (changeTo:string) =>  {
@@ -157,12 +142,15 @@ export default function ManageStockAlerts(
                                             InputProps: {
                                             endAdornment: (
                                             <InputAdornment
-                                            sx={{
-                                                color: "rgb(45,72, 91, 1)",
-                                            }}
-                                            position="end"
+                                                sx={{
+                                                    color: "rgb(45,72, 91, 1)",
+                                                }}
+                                                position="end"
                                             >
-                                            <CalendarMonthRoundedIcon />
+                                            <CalendarMonthRoundedIcon 
+                                                onClick = {stockAlertDateEnabledTemp ? () => setOpenDatePicker(true) : () => {}}
+                                                style={stockAlertDateEnabledTemp ? {cursor: "pointer"} :  {}}
+                                            />
                                             </InputAdornment>
                                             ),
                                             },
@@ -175,6 +163,8 @@ export default function ManageStockAlerts(
                                             borderRadius:  "10px !important",
                                         }
                                     }} 
+                                    open={breakpointLG ? openDatePicker :undefined}
+                                    onClose={breakpointLG ? () => setOpenDatePicker(false) :()=>{}}
                                 />
                             </DemoContainer>
                         </LocalizationProvider>
@@ -189,7 +179,7 @@ export default function ManageStockAlerts(
                             onChange={(event:any) => {
                                 onStockAlertDateEnabledChange(event.target.checked)
                             }}
-                            />   
+                        />   
                     </Grid>
                 </Grid>
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`} >
