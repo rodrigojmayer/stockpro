@@ -97,6 +97,7 @@ export default function ManageStockAlerts(
                                 onChange={ (event:any) => writeStockAlertAmount(event) }
                                 InputProps={{
                                     className: classes.inputClassName,
+                                    inputMode: "numeric",
                                     endAdornment: (
                                         <Typography 
                                             align='center' 

@@ -117,7 +117,10 @@ export default function ManageStockMainData(
                         size="small"
                         // type="number"
                         className={classes.inputMainData}
-                        InputProps={{  className: classes.inputClassName }}
+                        InputProps={{  
+                            className: classes.inputClassName,    
+                            inputMode: "numeric",
+                        }}
                     />
                     <TextField 
                         label="Measure"

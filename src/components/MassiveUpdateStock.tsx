@@ -101,6 +101,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                 //   onChange={ () => console.log("testin") }
                     InputProps={{
                         className: classes.inputClassName,
+                        inputMode: "numeric",
                         inputProps: {
                             style: { 
                             textAlign: "center", 

@@ -40,6 +40,7 @@ export default function ManageForgottenPass2EnterVerificationCode(
                         onChange={ (event:any) => verificationCodeChange(event.target.value) }
                         InputProps={{
                             className: classes.inputClassName,
+                            inputMode: "numeric",
                         }}
                     /> 
                 </Box>

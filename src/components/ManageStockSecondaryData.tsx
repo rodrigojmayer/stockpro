@@ -205,6 +205,7 @@ export default function ManageStockSecondaryData(
                         onChange={ (event:any) => writeStockPriceChange(event) }
                         InputProps={{
                             className: classes.inputClassName,
+                            inputMode: "numeric",
                             endAdornment: (
                                 <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
                             ),
