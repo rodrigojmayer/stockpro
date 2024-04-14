@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Box,
          Modal, 
          Typography, 
@@ -77,10 +77,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   // const { classes } = useStylesGlobal()
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
     // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, tableClassNames: any, writeValue:any) {
-  
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, tableClassNames: any, writeValue:any, firstInputRef: any) {
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
-
     const RowContent = (item:any) => {
         let lab
         if (item.column._id === 1){
@@ -108,6 +106,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                             },
                         },
                     }}
+                    inputRef={(_index===0 && firstInputRef ? input => input && input.focus() : undefined)}
                 />
             )
         } else {
@@ -141,7 +140,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
    
     return (
       <React.Fragment >
-        {columns.map((column) => (
+        {columns.map((column, index) => (
           <TableCell
             key={column._id}
             align='center'
@@ -162,7 +161,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
         ))}
       </React.Fragment>
     );
-  }
+}
 
 interface ChildProps {
     open:  boolean
@@ -213,6 +212,7 @@ export default function MassiveUpdateStock(
 
     }
     const swapOperator = () => {
+        setFirstInputRef(false)
         let newSign = -(signUpdate)
         if(newSign < 0){
             const updatedData = filteredData.map((item:any) => {
@@ -241,6 +241,7 @@ export default function MassiveUpdateStock(
         setSignUpdate(newSign)
     }
     const writeValue = (e:any, _id: string) => {
+        setFirstInputRef(false)
         const productAmount = filteredData.filter((item:any) => item._id===_id)[0].amount
         const topValue = 999 - productAmount
         let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
@@ -391,92 +392,103 @@ export default function MassiveUpdateStock(
     //         // window.location.reload();
     //     }
     // }, [isLoading]) // To know if after save should reload the page
+    const [firstInputRef, setFirstInputRef] = useState(true)
     useEffect(() => {
         setFilteredData(filteredFields)
+        setFirstInputRef(true)
       }, [ open]);
     
     
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
-        open={open} 
-        onClose={close}
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+            open={open} 
+            onClose={close}
         > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
-                        messageBeforeSave={messageBeforeSave}
-                    />
-                    <ErrorModal
-                        openErrorModal={openErrorModal}
-                        closeErrorModal={handleCloseErrorModal}
-                        errorData={errorData} 
-                    />
-                    <Typography align='center' variant="h5"  className={classes.title}>Massive upload</Typography>
+            <form
+                onKeyDown={(e:any) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault()
+                        handleOpenSaveChanges()
+                        e.stopPropagation()
+                    }
+                }}
+            >
+                <Box sx={modalStyleExternal}>
+                    <Box sx={modalStyleInternal}>
+                        <SaveChanges
+                            openSaveChanges={openSaveChanges}
+                            closeSaveChanges={handleCloseSaveChanges} 
+                            messageBeforeSave={messageBeforeSave}
+                        />
+                        <ErrorModal
+                            openErrorModal={openErrorModal}
+                            closeErrorModal={handleCloseErrorModal}
+                            errorData={errorData} 
+                        />
+                        <Typography align='center' variant="h5"  className={classes.title}>Massive upload</Typography>
 
-                    <Paper style={{ 
-                        height: `60vh`, 
-                        width: '87vw', 
-                        maxWidth: '90%',
-                        
-                        margin: "12px auto 0 auto" ,
-                        borderRadius: "10px"
-                    }}> 
-                        <div style={{ overflow: 'auto', height: '100%' }}>
-                            <TableVirtuoso 
-                                data={filteredData}
-                                components={VirtuosoTableComponents}
-                                style={{
-                                    backgroundColor: "rgb(45, 72, 91)", 
-                                    borderRadius: "10px",
-                                    margin: "-1px",
-                                    scrollbarWidth: "none" 
-                                }}
-                                fixedHeaderContent={() => {
-                                    return (
-                                        <TableRow >
-                                            {columns.map((column:any) => (
-                                            <TableCell
-                                                key={column._id}
-                                                variant="head"
-                                                align='center'
-                                                style={{ 
-                                                    width: column.width, 
-                                                    backgroundColor:"rgb(25, 54, 72)", 
-                                                    border:0,
-                                                }}
-                                                sx={{
-                                                color: "white",
-                                                padding: "8px 0",
-                                                }}
-                                            >
-                                                <ColumnLabel
-                                                    column={column}
-                                                />
-                                            </TableCell>
-                                            ))}
-                                        </TableRow>
-                                    );
-                                }}
-                                itemContent={(index: number) =>
-                                    rowContent(index, filteredData[index], columns, classes, tableClassNames, writeValue) 
-                                }
+                        <Paper style={{ 
+                            height: `60vh`, 
+                            width: '87vw', 
+                            maxWidth: '90%',
+                            margin: "12px auto 0 auto" ,
+                            borderRadius: "10px"
+                        }}> 
+                            <div style={{ overflow: 'auto', height: '100%' }}>
+                                <TableVirtuoso 
+                                    data={filteredData}
+                                    components={VirtuosoTableComponents}
+                                    style={{
+                                        backgroundColor: "rgb(45, 72, 91)", 
+                                        borderRadius: "10px",
+                                        margin: "-1px",
+                                        scrollbarWidth: "none" 
+                                    }}
+                                    fixedHeaderContent={() => {
+                                        return (
+                                            <TableRow >
+                                                {columns.map((column:any) => (
+                                                <TableCell
+                                                    key={column._id}
+                                                    variant="head"
+                                                    align='center'
+                                                    style={{ 
+                                                        width: column.width, 
+                                                        backgroundColor:"rgb(25, 54, 72)", 
+                                                        border:0,
+                                                    }}
+                                                    sx={{
+                                                    color: "white",
+                                                    padding: "8px 0",
+                                                    }}
+                                                >
+                                                    <ColumnLabel
+                                                        column={column}
+                                                    />
+                                                </TableCell>
+                                                ))}
+                                            </TableRow>
+                                        );
+                                    }}
+                                    itemContent={(index: number) =>
+                                        rowContent(index, filteredData[index], columns, classes, tableClassNames, writeValue, firstInputRef) 
+                                    }
+                                />
+                            </div>
+                        </Paper>
+
+                        <Box className={classes.finishButtons}>
+                            <CancelButton
+                                clicked={() => close()}
                             />
-                        </div>
-                    </Paper>
-
-                    <Box className={classes.finishButtons}>
-                        <CancelButton
-                            clicked={() => close()}
-                        />
-                        <OkButton
-                            clicked={() => handleOpenSaveChanges()}
-                        />
-                    </Box> 
+                            <OkButton
+                                clicked={() => handleOpenSaveChanges()}
+                            />
+                        </Box> 
+                    </Box>
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }
