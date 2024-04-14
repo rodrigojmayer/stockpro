@@ -26,6 +26,16 @@ export default function ManageStockCustomFields(
         
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { classes } = useStylesGlobal();
+    const firstInputRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (!hiddenPanel) {
+            if (firstInputRef.current) {
+                firstInputRef.current.focus()
+            }
+        }
+    }, [hiddenPanel])
+
     const close = () => {}
     const handleCloseSaveChanges = (ans?:boolean) => {
         if(ans){
@@ -164,7 +174,8 @@ export default function ManageStockCustomFields(
                                         inputProps: { maxLength: 30 }
                                     }}
                                     // inputRef={(index===0 ? input => input && input.focus() : "")}
-                                    inputRef={index===0 ? input => input && input.focus() : undefined}
+                                    // inputRef={index===0 ? input => input && input.focus() : undefined}
+                                    inputRef={index===0 ? firstInputRef : undefined}
                                 />
                             </Box>
                         )

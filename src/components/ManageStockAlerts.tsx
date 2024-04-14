@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';// Import dayjs
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box,
          Grid,
          TextField,
@@ -46,6 +46,16 @@ export default function ManageStockAlerts(
     }: ChildProps )  {
     const breakpointLG = useMediaQuery('(min-width:1024px)')
     const { classes } = useStylesGlobal();
+    const firstInputRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (!hiddenPanel) {
+            if (firstInputRef.current) {
+                firstInputRef.current.focus()
+            }
+        }
+    }, [hiddenPanel])
+
     const close = () => {}
     const DatePickerComponent = breakpointLG ? DatePicker : MobileDatePicker;
     const [openDatePicker, setOpenDatePicker] = useState(false);  
@@ -110,7 +120,8 @@ export default function ManageStockAlerts(
                                         </Typography>
                                     ),
                                 }}
-                                inputRef={input => input && input.focus()}
+                                // inputRef={input => input && input.focus()}
+                                inputRef={firstInputRef}
                             />
                         </Grid>
                         <Grid item xs={3} >

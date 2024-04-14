@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box,
          TextField,
          Typography,
@@ -60,6 +60,16 @@ export default function ManageStockMainData(
             onStockSubCategoryChange, 
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
+    const firstInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (!hiddenPanel) {
+            if (firstInputRef.current) {
+                firstInputRef.current.focus()
+            }
+        }
+    }, [hiddenPanel])
+
     const close = () => {}
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
@@ -91,7 +101,8 @@ export default function ManageStockMainData(
                             className: classes.inputClassName,
                             inputProps: {maxLength: 30}
                         }}
-                        inputRef={input => input && input.focus()}
+                        // inputRef={input => input && input.focus()}
+                        inputRef={firstInputRef} // Set the ref to the first input    
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>

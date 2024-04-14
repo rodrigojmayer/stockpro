@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { Box, 
          Button,
          IconButton, 
@@ -53,8 +53,17 @@ export default function ManageStockSecondaryData(
         onHandleUnsavedImages 
     }: ChildProps )  {
     const { classes } = useStylesGlobal();
+    const firstInputRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        if (!hiddenPanel) {
+            if (firstInputRef.current) {
+                firstInputRef.current.focus()
+            }
+        }
+    }, [hiddenPanel])
+
     const close = () => {}
-    
     const { filestack, deleteFilesStock } = useContext<any>(FilestackContext);
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const handleCloseSaveChanges = (ans?:boolean) => {
@@ -210,7 +219,8 @@ export default function ManageStockSecondaryData(
                                 <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
                             ),
                         }}
-                        inputRef={input => input && input.focus()}
+                        // inputRef={input => input && input.focus()}
+                        inputRef={firstInputRef}
                     />
                 </Box> 
                 <Box className={classes.customBoxRow}>

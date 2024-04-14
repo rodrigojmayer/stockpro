@@ -314,22 +314,22 @@ export default function SignUp () {
                                 </Box>
                                 <Box className={classes.customBoxRow}>
                                     <TextField
-                                    label="Password"
-                                    maxRows={1}
-                                    size="small"
-                                    value={pass}
-                                    type={ showProfilePass ? "text" : "password" }
-                                    onChange={ (event:any) => handlePass(event.target.value) }
-                                    className= {`${errorTextFields.pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        endAdornment: (
-                                        <IconButton onClick={showProfilePassToggle}>
-                                            {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                        </IconButton>
-                                        ),
-                                        inputProps: {maxLength: 25}
-                                    }}
+                                        label="Password"
+                                        maxRows={1}
+                                        size="small"
+                                        value={pass}
+                                        type={ showProfilePass ? "text" : "password" }
+                                        onChange={ (event:any) => handlePass(event.target.value) }
+                                        className= {`${errorTextFields.pass ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                        InputProps={{
+                                            className: classes.inputClassName,
+                                            endAdornment: (
+                                            <IconButton onClick={showProfilePassToggle}>
+                                                {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                            </IconButton>
+                                            ),
+                                            inputProps: {maxLength: 25}
+                                        }}
                                     />
                                 </Box>
                                 <Box className={classes.customBoxRow}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Box,
          Container,
          Grid,
@@ -58,6 +58,7 @@ export default function UpdateAmountStock(
         productUpdate,
     }: ChildProps) {
     const { classes } = useStylesGlobal();
+    const [firstInputRef, setFirstInputRef] = useState(true);
     const close = () => {
         handleClose(false)
     } 
@@ -134,6 +135,7 @@ export default function UpdateAmountStock(
         setValueUpdate(Math.abs(newValue))
     }
     const writeValue = (e:any) => {
+        setFirstInputRef(false)
         const productAmount = Number(productUpdate.amount)
         let newValue = parseInt(e.target.value.replace(/[+\-e]/g, ''), 10);
         const topValue = 999 - productAmount
@@ -183,6 +185,7 @@ export default function UpdateAmountStock(
         setValueUpdate(1)
         setAlertedAmount(false);
         setMessageBeforeSave("");
+        setFirstInputRef(true)
     // }, [handleClose])
     }, [open])
 
@@ -377,6 +380,8 @@ export default function UpdateAmountStock(
                                             inputMode: "numeric",
                                         },
                                     }}
+                                    // inputRef={firstInputRef}
+                                    inputRef={firstInputRef ? input => input && input.select() : undefined}
                                 />
                             </Grid>
                             <Grid item xs={3} display="flex" justifyContent="center" >
