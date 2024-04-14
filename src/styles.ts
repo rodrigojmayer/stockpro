@@ -355,6 +355,7 @@ export const modalStyleExternal = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    
 };
 // export const modalStyleInternal = {
 //     // top: 74,

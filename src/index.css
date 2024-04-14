@@ -26,6 +26,18 @@
   --services-card-separation: 0.5vw;
 }
 
+::selection {
+  background-color: var(--link-color);
+  color: white;
+  border-radius: 200px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* *************** Reset *************** */
 
 html {
