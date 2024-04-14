@@ -156,60 +156,70 @@ export default function Users( { open, handleClose }: ChildProps) {
             open={open} 
             onClose={close}
         > 
-            <Box sx={modalStyleExternal }>
-                <Box sx={modalStyleInternal}>
-                    <ErrorModal
-                        openErrorModal={openErrorModal}
-                        closeErrorModal={handleCloseErrorModal}
-                        errorData={errorData} 
-                    />
-                    <Typography align="center" variant="h5"  className={classes.title}>
-                        Users
-                    </Typography>
-                    <Box className={classes.customBoxColumn}>
-                        {Array.isArray(usersArray) && usersArray.map((user:any) => {
-                        {/* {Array.isArray(users) && users.map((user:any) => { */}
-                        
-                            return (
-                                <Stack 
-                                    className={classes.customBoxColumn} 
-                                    key={user._id}  
-                                    spacing={2} 
-                                    direction="row"
-                                >
-
-                                    <Button
-                                        className={classes.btnCommonStyle} 
-                                        variant="contained"
-                                        onClick={() => selectEditUser(user)}
-                                        // maxRows={1}
-                                        size="small"
-                                        // color="neutral"
-                                    >
-                                        <Typography >
-                                            {user.user}
-                                        </Typography>  
-                                    </Button>
-                                </Stack>
-                            )
-                        })}
-                    </Box>
-                    <ManageUser
-                        open={showManageUser} 
-                        handleClose={handleCloseManageUser} 
-                        dataEditUser={userEditData}
-                    />
-
-                    <Box className={classes.finishButtons}>
-                        <AddButton 
-                            clicked={ openManageUser}
-                        /> 
-                        <CancelButton
-                        clicked={() => close()}
+            <form
+                onKeyDown={(e:any) => {
+                    if(e.key === "Enter") {
+                        e.preventDefault()
+                        openManageUser()
+                        e.stopPropagation()
+                    }
+                }}
+            >
+                <Box sx={modalStyleExternal }>
+                    <Box sx={modalStyleInternal}>
+                        <ErrorModal
+                            openErrorModal={openErrorModal}
+                            closeErrorModal={handleCloseErrorModal}
+                            errorData={errorData} 
                         />
-                    </Box> 
+                        <Typography align="center" variant="h5"  className={classes.title}>
+                            Users
+                        </Typography>
+                        <Box className={classes.customBoxColumn}>
+                            {Array.isArray(usersArray) && usersArray.map((user:any) => {
+                            {/* {Array.isArray(users) && users.map((user:any) => { */}
+                            
+                                return (
+                                    <Stack 
+                                        className={classes.customBoxColumn} 
+                                        key={user._id}  
+                                        spacing={2} 
+                                        direction="row"
+                                    >
+
+                                        <Button
+                                            className={classes.btnCommonStyle} 
+                                            variant="contained"
+                                            onClick={() => selectEditUser(user)}
+                                            // maxRows={1}
+                                            size="small"
+                                            // color="neutral"
+                                        >
+                                            <Typography >
+                                                {user.user}
+                                            </Typography>  
+                                        </Button>
+                                    </Stack>
+                                )
+                            })}
+                        </Box>
+                        <ManageUser
+                            open={showManageUser} 
+                            handleClose={handleCloseManageUser} 
+                            dataEditUser={userEditData}
+                        />
+
+                        <Box className={classes.finishButtons}>
+                            <CancelButton
+                            clicked={() => close()}
+                            />
+                            <AddButton 
+                                clicked={ openManageUser}
+                            /> 
+                        </Box> 
+                    </Box>
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }

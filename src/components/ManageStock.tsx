@@ -426,9 +426,9 @@ export default function ManageStock(
     
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
-        open={open} 
-        onClose={close}
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+            open={open} 
+            onClose={close}
         > 
             <form
                 onKeyDown={(e:any) => {
