@@ -253,15 +253,6 @@ export default function Profile( { open, handleClose }: ChildProps) {
         setProfileEmail(user.email);
         setProfileUser(user.user);
         setProfileAlertsEnabled(user.alerts_enabled);
-        // setProfileName(user.name?user.name:'');
-        // setProfileLastName(user.last_name?user.last_name:'');
-        // setProfileEmail(user.email?user.email:'');
-        // setProfileUser(user.user?user.user:'');
-
-        // setProfilePass(user.pass?user.pass:'');
-        // setProfileConfirmPass(user.pass?user.pass:'');
-        // setShowProfilePass(false);
-        // setShowProfileConfirmationPass(false);
     }, [user, open])
     
     return (
@@ -270,159 +261,127 @@ export default function Profile( { open, handleClose }: ChildProps) {
         open={open} 
         onClose={close}
         > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
-                    />
-                    <ErrorModal
-                        openErrorModal={openErrorModal}
-                        closeErrorModal={handleCloseErrorModal}
-                        errorData={errorData} 
-                    />
-                    <ChangePassModal
-                        openChangePassModal={openChangePassModal}
-                        closeChangePassModal={handleCloseChangePassModal}
-                    />
-                    <Typography align="center" variant="h5" className={classes.title}>
-                        Profile
-                    </Typography>
-                    <Box className={classes.customBoxColumn}>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Name"
-                                maxRows={1}
-                                size="small"
-                                type="text"
-                                className={classes.inputMainData}
-                                value={profileName}
-                                onChange={ handleEditName }
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                    inputProps: {maxLength: 25}
-                                }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Last name"
-                                maxRows={1}
-                                size="small"
-                                type="text"
-                                className={classes.inputMainData}
-                                value={profileLastName}
-                                onChange={ handleEditLastName }
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                    inputProps: {maxLength: 25}
-                                }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Alias*"
-                                maxRows={1}
-                                size="small"
-                                type="text"
-                                // className={classes.inputMainData}
-                                className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                value={profileUser}
-                                onChange={ handleEditUser }
-                                InputProps={{
-                                    className: classes.inputClassName,
-                                    inputProps: {maxLength: 20}
-                                }}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Email*"
-                                maxRows={1}
-                                size="small"
-                                type="email"
-                                // className={classes.inputMainData}
-                                className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                value={profileEmail}
-                                onChange={ handleEditEmail }
-                                InputProps={{className: classes.inputClassName,}}
-                            />
-                        </Box>
-                        <Box className={classes.customBoxRow}>
-                                <Typography >Alerts by email</Typography>
-                                <Switch 
-                                        color='success'  
-                                        checked={profileAlertsEnabled}
-                                        onChange={(event:any) => {
-                                            handleEditAlertsEnabled(event.target.checked)
-                                        }}
-                                    />  
+            <form
+                onKeyDown={(e:any) => {
+                    if(e.key === "Enter") {
+                        e.preventDefault()
+                        handleOpenSaveChanges()
+                        e.stopPropagation()
+                    }
+                }}
+                >
+                <Box sx={modalStyleExternal}>
+                    <Box sx={modalStyleInternal}>
+                        <SaveChanges
+                            openSaveChanges={openSaveChanges}
+                            closeSaveChanges={handleCloseSaveChanges} 
+                        />
+                        <ErrorModal
+                            openErrorModal={openErrorModal}
+                            closeErrorModal={handleCloseErrorModal}
+                            errorData={errorData} 
+                        />
+                        <ChangePassModal
+                            openChangePassModal={openChangePassModal}
+                            closeChangePassModal={handleCloseChangePassModal}
+                        />
+                        <Typography align="center" variant="h5" className={classes.title}>
+                            Profile
+                        </Typography>
+                        <Box className={classes.customBoxColumn}>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Name"
+                                    maxRows={1}
+                                    size="small"
+                                    type="text"
+                                    className={classes.inputMainData}
+                                    value={profileName}
+                                    onChange={ handleEditName }
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 25}
+                                    }}
+                                />
                             </Box>
-                        
-                        {/* <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Password*"
-                                maxRows={1}
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Last name"
+                                    maxRows={1}
+                                    size="small"
+                                    type="text"
+                                    className={classes.inputMainData}
+                                    value={profileLastName}
+                                    onChange={ handleEditLastName }
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 25}
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Alias*"
+                                    maxRows={1}
+                                    size="small"
+                                    type="text"
+                                    // className={classes.inputMainData}
+                                    className= {`${errorTextFields.user ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    value={profileUser}
+                                    onChange={ handleEditUser }
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 20}
+                                    }}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Email*"
+                                    maxRows={1}
+                                    size="small"
+                                    type="email"
+                                    // className={classes.inputMainData}
+                                    className= {`${errorTextFields.email ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                    value={profileEmail}
+                                    onChange={ handleEditEmail }
+                                    InputProps={{className: classes.inputClassName,}}
+                                />
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                    <Typography >Alerts by email</Typography>
+                                    <Switch 
+                                            color='success'  
+                                            checked={profileAlertsEnabled}
+                                            onChange={(event:any) => {
+                                                handleEditAlertsEnabled(event.target.checked)
+                                            }}
+                                        />  
+                                </Box>
+                            <Button
+                                className={classes.btnCommonStyle} 
+                                variant="contained"
+                                onClick={() => setOpenChangePassModal(true)}
+                                // maxRows={1}
                                 size="small"
-                                type={showProfilePass ? "text" : "password"}
-                                className={classes.inputMainData}
-                                value={profilePass}
-                                onChange={ handleEditPass }
-                                // InputProps={{
-                                //     className: classes.inputClassName,
-                                //     endAdornment: (
-                                //         <IconButton onClick={showProfilePassToggle}>
-                                //             {showProfilePass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                //         </IconButton>
-                                //     ),
-                                // }}
-                            />
+                                // color="neutral"
+                            >
+                            <Typography >
+                                Change Password
+                            </Typography>  
+                        </Button>
                         </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField
-                                label="Confirm password*"
-                                maxRows={1}
-                                size="small"
-                                type={showProfileConfirmationPass ? "text" : "password"}
-                                className={classes.inputMainData}
-                                value={profileConfirmPass}
-                                onChange={ handleEditConfirmPass }
-                                // InputProps={{
-                                //     className: classes.inputClassName,
-                                //     endAdornment: (
-                                //         <IconButton onClick={showProfileConfirmationPassToggle}>
-                                //             {showProfileConfirmationPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                //         </IconButton>
-                                //     ),
-                                // }}
+                        <Box className={classes.finishButtons}>
+                            <CancelButton
+                            clicked={() => close()}
                             />
-                        </Box> */}
-                        {/* <OkButton
-                            clicked={() => setOpenChangePassModal(true)}
-                        /> */}
-                        <Button
-                            className={classes.btnCommonStyle} 
-                            variant="contained"
-                            onClick={() => setOpenChangePassModal(true)}
-                            // maxRows={1}
-                            size="small"
-                            // color="neutral"
-                        >
-                        <Typography >
-                            Change Password
-                        </Typography>  
-                    </Button>
+                            <OkButton
+                            clicked={() => handleOpenSaveChanges()}
+                            />
+                        </Box> 
                     </Box>
-                    <Box className={classes.finishButtons}>
-                        <CancelButton
-                        clicked={() => close()}
-                        />
-                        <OkButton
-                        clicked={() => handleOpenSaveChanges()}
-                        />
-                    </Box> 
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }
