@@ -21,7 +21,7 @@ export default function ErrorModal( props: ErrorModalProps) {
     let subTitle = ""
     const navigate = useNavigate()
     // Mising, invalid format, duplicated
-
+    
     if(errorData === "missing_data"){
         title="Missing required data"
         subTitle="Name*"
@@ -40,9 +40,12 @@ export default function ErrorModal( props: ErrorModalProps) {
     } else if (errorData === "missing_user_user"){
         title="Missing required data"
         subTitle=`User*`
-    // } else if (errorData === "missing_user_password"){
-    //     title="Missing required data"
-    //     subTitle=`Password*`
+    } else if (errorData === "missing_user_name_email"){
+        title="Missing required data"
+        subTitle=`Username or Email*`
+    } else if (errorData === "missing_user_password"){
+        title="Missing required data"
+        subTitle=`Password*`
     } else if (errorData === "missing_email"){
         title="Missing required data"
         subTitle=`Email*`
