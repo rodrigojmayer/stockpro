@@ -172,82 +172,92 @@ export default function Preferences( { open, handleClose }: ChildProps) {
     
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
-        open={open} 
-        onClose={close}
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+            open={open} 
+            onClose={close}
         > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
-                    />
-                    <ErrorModal
-                        openErrorModal={openErrorModal}
-                        closeErrorModal={handleCloseErrorModal}
-                        errorData={errorData} 
-                    />
-                    <Typography align="center" variant="h5" className={classes.title}>
-                        Preferences
-                    </Typography>
-                    <Box className={classes.customBoxColumn}>
-                        <Box className={classes.customBoxRow}>
-                             <TextField 
-                                label="Language"
-                                size="small"
-                                select
-                                className={classes.inputMainData}
-                                InputProps={{className: classes.inputClassName}}
-                                value={languagePref}
-                                onChange={ handleLanguagePref }
-                                >
-                                    {languagesArray.map((language) => (
-                                        <MenuItem 
-                                            className={classes.menuItemUsers}
-                                            key={language.id} 
-                                            value={language.id}
-                                            sx={{ justifyContent: "space-between" }}
-                                        >
-                                            {language.name}
-                                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
-                                        </MenuItem>
-                                    ))}
-                            </TextField>
+            <form
+                onKeyDown={(e:any) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault()
+                        handleOpenSaveChanges()
+                        e.stopPropagation()
+                    }
+                }}
+            >
+                <Box sx={modalStyleExternal}>
+                    <Box sx={modalStyleInternal}>
+                        <SaveChanges
+                            openSaveChanges={openSaveChanges}
+                            closeSaveChanges={handleCloseSaveChanges} 
+                        />
+                        <ErrorModal
+                            openErrorModal={openErrorModal}
+                            closeErrorModal={handleCloseErrorModal}
+                            errorData={errorData} 
+                        />
+                        <Typography align="center" variant="h5" className={classes.title}>
+                            Preferences
+                        </Typography>
+                        <Box className={classes.customBoxColumn}>
+                            <Box className={classes.customBoxRow}>
+                                <TextField 
+                                    label="Language"
+                                    size="small"
+                                    select
+                                    className={classes.inputMainData}
+                                    InputProps={{className: classes.inputClassName}}
+                                    value={languagePref}
+                                    onChange={ handleLanguagePref }
+                                    >
+                                        {languagesArray.map((language) => (
+                                            <MenuItem 
+                                                className={classes.menuItemUsers}
+                                                key={language.id} 
+                                                value={language.id}
+                                                sx={{ justifyContent: "space-between" }}
+                                            >
+                                                {language.name}
+                                                {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                            </MenuItem>
+                                        ))}
+                                </TextField>
+                            </Box>
+                            <Box className={classes.customBoxRow}>
+                                <TextField 
+                                    label="Color mode"
+                                    size="small"
+                                    select
+                                    className={classes.inputMainData}
+                                    InputProps={{className: classes.inputClassName}}
+                                    value={backgroundColorPref}
+                                    onChange={ handleBackgroundColorPref }
+                                    >
+                                        {backgroundColorsArray.map((color) => (
+                                            <MenuItem 
+                                                className={classes.menuItemUsers}
+                                                key={color.id} 
+                                                value={color.id}
+                                                sx={{ justifyContent: "space-between" }}
+                                            >
+                                                {color.name}
+                                                {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
+                                            </MenuItem>
+                                        ))}
+                                </TextField>
+                            </Box>
                         </Box>
-                        <Box className={classes.customBoxRow}>
-                            <TextField 
-                                label="Color mode"
-                                size="small"
-                                select
-                                className={classes.inputMainData}
-                                InputProps={{className: classes.inputClassName}}
-                                value={backgroundColorPref}
-                                onChange={ handleBackgroundColorPref }
-                                >
-                                    {backgroundColorsArray.map((color) => (
-                                        <MenuItem 
-                                            className={classes.menuItemUsers}
-                                            key={color.id} 
-                                            value={color.id}
-                                            sx={{ justifyContent: "space-between" }}
-                                        >
-                                            {color.name}
-                                            {/* {selectedUsersTemp.includes(unit) ? <CheckIcon color="info" /> : null} */}
-                                        </MenuItem>
-                                    ))}
-                            </TextField>
-                        </Box>
+                        <Box className={classes.finishButtons}>
+                            <CancelButton
+                            clicked={() => close()}
+                            />
+                            <OkButton
+                            clicked={() => handleOpenSaveChanges()}
+                            />
+                        </Box> 
                     </Box>
-                    <Box className={classes.finishButtons}>
-                        <CancelButton
-                        clicked={() => close()}
-                        />
-                        <OkButton
-                        clicked={() => handleOpenSaveChanges()}
-                        />
-                    </Box> 
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }
