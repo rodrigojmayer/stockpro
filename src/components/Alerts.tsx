@@ -252,7 +252,6 @@ export default function Alerts( { open, handleClose }: ChildProps) {
         const updateEmails = [...emailsAlerts, {_id:randomTemporalId, email: "", id_client:user.id_client, deleted: false, edited: false}]
         setEmailsAlerts(updateEmails)
     }
-    
 
     useEffect(() => {
         setSelectedUsersTemp2(usersAlertSelected2)
@@ -261,9 +260,9 @@ export default function Alerts( { open, handleClose }: ChildProps) {
     
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
-        open={open} 
-        onClose={close}
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+            open={open} 
+            onClose={close}
         > 
             <Box sx={modalStyleExternal}>
                 <Box sx={modalStyleInternal}>

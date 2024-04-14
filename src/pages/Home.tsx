@@ -216,68 +216,68 @@ function Home() {
   }, [showCreateStock])
 
   return (
-        <div className="App">
-          <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={openBackdrop} // Loading...
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
-            <ModalsGroup 
-              columnsDefault={defaultColumns} 
-              columnsCustom={customColumns}
-              idColumnsTableOrder={idColumnsTableOrder} 
-              data={filteredData}
-              setSearchQuery={setSearchQuery}
-              openMassiveUpdateStock={openMassiveUpdateStock}
-              disabledUpdateButton={disabledUpdateButton}
-              openCreateStock={openCreateStock}
-            >
-              <Container maxWidth="md" sx={{ display: (breakpointLG?"none":"block") }} style={{padding: "0"}} >
-                <Grid container>
-                  <Grid item xs={2} >
-                    <UpdateButton
-                      clicked={()=>openMassiveUpdateStock("update")}
-                      disabled={disabledUpdateButton}
-                    />
-                  </Grid>
-                  <Grid item xs={8} >
-                    <MainSearch setSearchQuery={setSearchQuery} />
-                  </Grid>
-                  <Grid item xs={2} >
-                    <PlusButton
-                      clicked={openCreateStock}
-                    />
-                  </Grid>
-                </Grid>
-              </Container>
-              {openBackdrop ? "": 
-                <TableProducts 
-                  data={filteredData} 
-                  columns={columnsUserOrder} 
-                  openUpdateAmountStock={openUpdateAmountStock} 
-                  handleDisabledUpdateButton={handleDisabledUpdateButton} 
-                />
-              }
-            </ModalsGroup>
-            <ManageStock
-                open={showCreateStock} 
-                handleClose={handleCloseCreateStock} 
-                data={productUpdate}
-                columnsCustom={filteredColumnsCustom}
-            />
-            <UpdateAmountStock
-                open={showUpdateAmountStock}
-                handleClose={handleCloseUpdateAmountStock}
-                columnsCustom={filteredColumnsCustom}
-                productUpdate={productUpdate}
-            />
-            <MassiveUpdateStock
-                open={showMassiveUpdateStock}
-                handleClose={handleMassiveUpdateStock}
-                data={massiveUpdate}
-            />
-        </div>
+    <div className="App">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop} // Loading...
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <ModalsGroup 
+        columnsDefault={defaultColumns} 
+        columnsCustom={customColumns}
+        idColumnsTableOrder={idColumnsTableOrder} 
+        data={filteredData}
+        setSearchQuery={setSearchQuery}
+        openMassiveUpdateStock={openMassiveUpdateStock}
+        disabledUpdateButton={disabledUpdateButton}
+        openCreateStock={openCreateStock}
+      >
+        <Container maxWidth="md" sx={{ display: (breakpointLG?"none":"block") }} style={{padding: "0"}} >
+          <Grid container>
+            <Grid item xs={2} >
+              <UpdateButton
+                clicked={()=>openMassiveUpdateStock("update")}
+                disabled={disabledUpdateButton}
+              />
+            </Grid>
+            <Grid item xs={8} >
+              <MainSearch setSearchQuery={setSearchQuery} />
+            </Grid>
+            <Grid item xs={2} >
+              <PlusButton
+                clicked={openCreateStock}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+        {openBackdrop ? "": 
+          <TableProducts 
+            data={filteredData} 
+            columns={columnsUserOrder} 
+            openUpdateAmountStock={openUpdateAmountStock} 
+            handleDisabledUpdateButton={handleDisabledUpdateButton} 
+          />
+        }
+      </ModalsGroup>
+      <ManageStock
+          open={showCreateStock} 
+          handleClose={handleCloseCreateStock} 
+          data={productUpdate}
+          columnsCustom={filteredColumnsCustom}
+      />
+      <UpdateAmountStock
+          open={showUpdateAmountStock}
+          handleClose={handleCloseUpdateAmountStock}
+          columnsCustom={filteredColumnsCustom}
+          productUpdate={productUpdate}
+      />
+      <MassiveUpdateStock
+          open={showMassiveUpdateStock}
+          handleClose={handleMassiveUpdateStock}
+          data={massiveUpdate}
+      />
+    </div>
   )
 }
 export default Home

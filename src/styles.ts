@@ -53,7 +53,7 @@ export const useStylesGlobal = makeStyles()({
         // maxHeight:"50vh", 
         height:"260px",
         overflowX: "hidden",
-        backgroundColor:"rgb(255,255, 255, .2)",
+        backgroundColor: "rgb(255,255, 255, .2)",
         padding: "8px 0",  
         borderRadius: 10, 
         
@@ -385,12 +385,15 @@ export const modalStyleInternal = {
     overflowX: "hidden",
     scrollbarWidth: "none",
     // overflowX: "hidden",
-    
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
 };
+export const modalStyleInternalConfirmTermsAndPrivacy = {
+    maxWidth: "900px",
+    backgroundColor: "rgb(45,72, 91, 1)",
+}
 export const modalStyleInternalForgottenPass = {
     width: "280px",
 }

@@ -134,11 +134,11 @@ export default function useUser () {
       //       console.log("error email not found 2?: ", response)
       //     }
     } catch (err:any) {
-      console.log("error email not found?: ", err)
+      // console.log("error email not found?: ", err)
       //   // setUser(INITIAL_USER);
       //   // Handle any network or fetch-related errors
       if (!err?.response) {
-        console.error('No Server Response')
+        // console.error('No Server Response')
         // setErrMsg('No Server Response')
       } else if (err.response?.status === 400) {
         // console.error('err.response.data.error: ', err.response.data.error)

@@ -8,7 +8,6 @@ interface Option {
     label: string,
     // user_email?: string,
     // pass?: string,
-
 }
 
 interface ComboBoxProps {
@@ -17,11 +16,10 @@ interface ComboBoxProps {
     comboValue: string ;
     comboHandleValue: (value: string) => void;
     errorTextField: boolean
-  }
+}
 
 // export default function ComboBox() {
-    export default function ComboBox({ optionsData, comboLabel, comboValue, comboHandleValue, errorTextField }: ComboBoxProps) {
-   
+export default function ComboBox({ optionsData, comboLabel, comboValue, comboHandleValue, errorTextField }: ComboBoxProps) {
     const { classes } = useStylesGlobal();
     const [selectedValue, setSelectedValue] = React.useState<{ label: string }>({label:""});
     const [inputValue, setInputValue] = React.useState('');

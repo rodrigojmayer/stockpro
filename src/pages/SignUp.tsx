@@ -278,6 +278,7 @@ export default function SignUp () {
                             <ConfirmTermsAndPrivacyModal
                                 openConfirmTermsAndPrivacyModal={openConfirmTermsAndPrivacyModal}
                                 closeConfirmTermsAndPrivacyModal={handleCloseConfirmTermsAndPrivacyModal}
+                                handleSetTermsAndPrivacy={setTermsAndPrivacy}
                             />
                             <Typography className={classes.finishButtons} align="center" variant='h5'>
                                 Sign Up
@@ -334,25 +335,25 @@ export default function SignUp () {
                                 </Box>
                                 <Box className={classes.customBoxRow}>
                                     <TextField
-                                    label="Confirm password"
-                                    maxRows={1}
-                                    size="small"
-                                    value={confirmPass}
-                                    type={ showProfileConfirmPass ? "text" : "password" }
-                                    onChange={ (event:any) => handleConfirmPass(event.target.value) }
-                                    className= {`${errorTextFields.confirmPass ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        endAdornment: (
-                                        <IconButton onClick={showProfileConfirmPassToggle}>
-                                            {showProfileConfirmPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                        </IconButton>
-                                        ),
-                                    }}
+                                        label="Confirm password"
+                                        maxRows={1}
+                                        size="small"
+                                        value={confirmPass}
+                                        type={ showProfileConfirmPass ? "text" : "password" }
+                                        onChange={ (event:any) => handleConfirmPass(event.target.value) }
+                                        className= {`${errorTextFields.confirmPass ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                                        InputProps={{
+                                            className: classes.inputClassName,
+                                            endAdornment: (
+                                                <IconButton onClick={showProfileConfirmPassToggle}>
+                                                    {showProfileConfirmPass ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                                </IconButton>
+                                            ),
+                                        }}
                                     />
                                 </Box>
                                 {/* <Box> */}
-                                <Box className={classes.customBoxRow} >
+                                <Box className={classes.customBoxRow}>
                                     <Box>
                                         By creating an account you agree to our 
                                         <br/>

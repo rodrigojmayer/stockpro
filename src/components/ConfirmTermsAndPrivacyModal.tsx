@@ -1,48 +1,63 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction, Dispatch } from 'react';
 import { Box, 
          Modal, 
          Typography, 
         } from '@mui/material';
-import { OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalStyleInternal, modalStyleExternal } from '../Styles'
+import { CancelButton, OkButton } from './Buttons';
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalStyleInternal, modalStyleExternal, modalStyleInternalConfirmTermsAndPrivacy } from '../Styles'
 
 type ConfirmTermsAndPrivacyModalProps = {
     openConfirmTermsAndPrivacyModal: boolean;
     closeConfirmTermsAndPrivacyModal: (newData?: boolean) => void;
+    handleSetTermsAndPrivacy:  Dispatch<SetStateAction<boolean>>;
 }
 export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPrivacyModalProps) {
-    const { openConfirmTermsAndPrivacyModal, closeConfirmTermsAndPrivacyModal } = props;
+    const { openConfirmTermsAndPrivacyModal, closeConfirmTermsAndPrivacyModal, handleSetTermsAndPrivacy } = props;
     const { classes } = useStylesGlobal();
-    
-    
     const handleOkButton = async() => {
+        handleSetTermsAndPrivacy(true)
+        closeConfirmTermsAndPrivacyModal(true)
+    };
+    const handleCancel = async() => {
+        handleSetTermsAndPrivacy(false)
         closeConfirmTermsAndPrivacyModal(true)
     };
     
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={openConfirmTermsAndPrivacyModal} 
             onClose={() => closeConfirmTermsAndPrivacyModal()}
-        > 
+        >
             <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
+                <Box sx={{...modalStyleInternal, ...modalStyleInternalConfirmTermsAndPrivacy}}>
                     <Box 
                         margin="5px"
                         component="div"
                         sx={{
                             maxHeight: "400px",
-                            overflow: 'auto',
                             px: 1.5,
                             pb: 1.5,
                             bgcolor: (theme) =>
-                              theme.palette.mode === 'dark' ? '#101010' : 'grey.100',
+                            //   theme.palette.mode === 'dark' ? '#101010' : 'grey.100',
+                              theme.palette.mode === 'dark' ? '#101010' : 'rgb(255,255, 255, .1)',
                             color: (theme) =>
-                              theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+                            //   theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+                                theme.palette.mode === 'dark' ? 'grey.300' : 'rgb(255,255, 255, 1)',
                             border: '1px solid',
                             borderColor: (theme) =>
-                              theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
-                            borderRadius: 1,
+                            //   theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
+                                theme.palette.mode === 'dark' ? 'grey.800' : 'rgb(55,55, 55, 1)',
+                            borderRadius: 3,
+                            overflow: 'hidden', // Hide any overflow
+                            paddingRight: '12px',
+                            scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+                            '&:hover': {
+                                scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                overflowY: 'auto', // Show scrollbar on hover
+                                paddingRight: '0',
+                                overflowX: 'hidden',
+                            },
                             '& p': {
                                 margin: '0',
                                 fontSize: '1rem',
@@ -59,7 +74,7 @@ export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPriva
                             '& h5': {
                                 fontSize: '1.2rem',
                             },
-                          }}
+                        }}
                     >
                         <h2>Privacy Policy</h2>
                         <p>Last updated: March 11, 2024</p>
@@ -223,6 +238,9 @@ export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPriva
                         </ul>
                     </Box>
                     <Box className={classes.finishButtons}>
+                        <CancelButton
+                            clicked={() => handleCancel()}
+                        />
                         <OkButton
                             clicked={() => handleOkButton()}
                         />
