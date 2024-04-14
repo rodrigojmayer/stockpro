@@ -410,34 +410,34 @@ export default function ManageUser(
             open={open} 
             onClose={close}
         > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
-                    />
-                    <ErrorModal
-                        openErrorModal={openErrorModal}
-                        closeErrorModal={handleCloseErrorModal}
-                        errorData={errorData} 
-                    />
-                    <ConfirmDeleteModal
-                        openConfirmDeleteModal={openConfirmDeleteModal}
-                        closeConfirmDeleteModal={handleCloseConfirmDeleteModal}
-                        source={"user"}
-                        data={userName} 
-                        confirmDelete={handleConfirmDelete}
-                    />
-                    <Typography align='center' variant="h5"  className={classes.title}>{edition ? 'Edit ' : 'Create '} user</Typography>
-                    <form
-                        onKeyDown={(e:any) => {
-                            if (e.key === "Enter") {
-                                e.preventDefault();
-                                handleOpenSaveChanges(); // Call your save function
-                                e.stopPropagation() 
-                            }
-                        }}
-                    >
+            <form
+                onKeyDown={(e:any) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleOpenSaveChanges(); // Call your save function
+                        e.stopPropagation();
+                    }
+                }}
+            >
+                <Box sx={modalStyleExternal}>
+                    <Box sx={modalStyleInternal}>
+                        <SaveChanges
+                            openSaveChanges={openSaveChanges}
+                            closeSaveChanges={handleCloseSaveChanges} 
+                        />
+                        <ErrorModal
+                            openErrorModal={openErrorModal}
+                            closeErrorModal={handleCloseErrorModal}
+                            errorData={errorData} 
+                        />
+                        <ConfirmDeleteModal
+                            openConfirmDeleteModal={openConfirmDeleteModal}
+                            closeConfirmDeleteModal={handleCloseConfirmDeleteModal}
+                            source={"user"}
+                            data={userName} 
+                            confirmDelete={handleConfirmDelete}
+                        />
+                        <Typography align='center' variant="h5"  className={classes.title}>{edition ? 'Edit ' : 'Create '} user</Typography>
                         <Box className={classes.customBoxColumn}>
                             <Box className={classes.customBoxRow}>
                                 <TextField 
@@ -517,20 +517,6 @@ export default function ManageUser(
                                     }}
                                 />
                             </Box>
-                            {/* <Box className={classes.customBoxRow}>
-                                <TextField
-                                    label="Password*"
-                                    value={userPassword}
-                                    type="password"
-                                    onChange={ (event) => handleUserPassword(event.target.value) }
-                                    maxRows={1}
-                                    size="small"
-                                    className= {`${errorTextFields.password ? classes.text_field_error : ""} ${classes.inputMainData} `}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                    }}
-                                />
-                            </Box> */}
                             <Box className={classes.customBoxRow}>
                                 <Typography >Alerts by email</Typography>
                                 <Switch 
@@ -552,20 +538,20 @@ export default function ManageUser(
                                     />  
                             </Box>
                         </Box>
-                    </form>
-                    <Box className={classes.finishButtons}>
-                        { edition ? <DeleteButton
-                            clicked={() => handleDeleteProduct()}
-                        /> : "" }
-                        <CancelButton
-                        clicked={() => close()}
-                        />
-                        <OkButton
-                            clicked={() => handleOpenSaveChanges()}
-                        />
-                    </Box> 
+                        <Box className={classes.finishButtons}>
+                            { edition ? <DeleteButton
+                                clicked={() => handleDeleteProduct()}
+                            /> : "" }
+                            <CancelButton
+                            clicked={() => close()}
+                            />
+                            <OkButton
+                                clicked={() => handleOpenSaveChanges()}
+                            />
+                        </Box> 
+                    </Box>
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }
