@@ -235,35 +235,35 @@ return (
     sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
     open={true} 
   > 
-    <Paper style={{ margin: 0 }}>
-      <Box sx={modalStyleSaveExternal}>
-        <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
-          <ErrorModal
-            openErrorModal={openErrorModal}
-            closeErrorModal={handleCloseErrorModal}
-            errorData={errorData} 
-          />
-          <ConfirmUserValidatedModal
-              openConfirmUserValidatedModal={openConfirmUserValidatedModal}
-              closeConfirmUserValidatedModal={handlecloseConfirmUserValidatedModal} 
-              textData={textData}
-          />  
-          <ManageForgottenPass
-              openManageForgottenPass={openManageForgottenPass}
-              closeManageForgottenPass={handlecloseManageForgottenPass} 
-          />           
-          <Typography className={classes.finishButtons} align="center" variant='h5' >
-              Login
-          </Typography> 
-          <form
-              onKeyDown={(e:any) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handleLogin(); // Call your login function
-                  e.stopPropagation();
-                }
-              }}
-            >
+    <form
+      onKeyDown={(e:any) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleLogin(); // Call your login function
+          e.stopPropagation();
+        }
+      }}
+    >
+      <Paper style={{ margin: 0 }}>
+        <Box sx={modalStyleSaveExternal}>
+          <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+            <ErrorModal
+              openErrorModal={openErrorModal}
+              closeErrorModal={handleCloseErrorModal}
+              errorData={errorData} 
+            />
+            <ConfirmUserValidatedModal
+                openConfirmUserValidatedModal={openConfirmUserValidatedModal}
+                closeConfirmUserValidatedModal={handlecloseConfirmUserValidatedModal} 
+                textData={textData}
+            />  
+            <ManageForgottenPass
+                openManageForgottenPass={openManageForgottenPass}
+                closeManageForgottenPass={handlecloseManageForgottenPass} 
+            />           
+            <Typography className={classes.finishButtons} align="center" variant='h5' >
+                Login
+            </Typography> 
             <Box className={classes.customBoxColumn}>
               <Box className={classes.customBoxRow}>
                 <ComboBox
@@ -310,52 +310,52 @@ return (
                 />
               </Box>
             </Box>
-          </form>
-          <Box className={classes.customBoxRow}>
-            <Divider 
-              className={classes.customDivider} 
-              sx={{
-                  "&::before, &::after": {
-                  borderColor: "white",
-                  },
-              }}
-              variant="middle"  
-            >
-              Or login using
-            </Divider>
-          </Box>
-
-          <Box className={classes.customBoxRow}>
-            <GoogleLogin
-              onError={() => handleLoginGoogleFailure}
-              onSuccess={handleLoginGoogleSuccess}
-            />
-          </Box>
-          <Box className={classes.customBoxRow}>
+            <Box className={classes.customBoxRow}>
               <Divider 
-                  className={classes.customDivider} 
-                  variant="middle" 
-              />
-          </Box>
-          <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
-              <NavLink 
-                style={{ color: '#c1e8fb' }}
-                to=""
-                onClick={() => setOpenManageForgottenPass(true)}
-
+                className={classes.customDivider} 
+                sx={{
+                    "&::before, &::after": {
+                    borderColor: "white",
+                    },
+                }}
+                variant="middle"  
               >
-                Forgot Password? 
-              </NavLink>
+                Or login using
+              </Divider>
+            </Box>
+
+            <Box className={classes.customBoxRow}>
+              <GoogleLogin
+                onError={() => handleLoginGoogleFailure}
+                onSuccess={handleLoginGoogleSuccess}
+              />
+            </Box>
+            <Box className={classes.customBoxRow}>
+                <Divider 
+                    className={classes.customDivider} 
+                    variant="middle" 
+                />
+            </Box>
+            <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
                 <NavLink 
                   style={{ color: '#c1e8fb' }}
-                  to="/signup"
+                  to=""
+                  onClick={() => setOpenManageForgottenPass(true)}
+
                 >
-                  Sign Up 
+                  Forgot Password? 
                 </NavLink>
+                  <NavLink 
+                    style={{ color: '#c1e8fb' }}
+                    to="/signup"
+                  >
+                    Sign Up 
+                  </NavLink>
+            </Box>
           </Box>
         </Box>
-      </Box>
-    </Paper>
+      </Paper>
+    </form>
   </Modal>  
   )
 }

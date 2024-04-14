@@ -68,7 +68,10 @@ interface ComboBoxProps {
                     onChange={ (event:any) => comboHandleValue(event.target.value) }
                     maxRows={1}
                     size="small"
-                    className= {`${errorTextField ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                    className={`${errorTextField ? classes.text_field_error : ""} ${classes.inputMainData} `}
+                    InputProps={{
+                        className: classes.inputClassName,
+                    }}
                 />
             }
             ListboxProps={{ style: { maxHeight: 100 } }}

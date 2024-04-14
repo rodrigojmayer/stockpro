@@ -246,42 +246,42 @@ export default function SignUp () {
             sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={true} 
         >
-            <Paper style={{margin:0}} >
-                <Box sx={modalStyleSaveExternal}>
-                    <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
-                        <SaveChanges
-                            openSaveChanges={openSaveChanges}
-                            closeSaveChanges={handleCloseSaveChanges} 
-                        />
-                        <ErrorModal
-                            openErrorModal={openErrorModal}
-                            closeErrorModal={handleCloseErrorModal}
-                            errorData={errorData} 
-                        />
-                        <ConfirmCreatedUserModal
-                            openConfirmCreatedUserModal={openConfirmCreatedUserModal}
-                            closeConfirmCreatedUserModal={handleCloseConfirmCreatedUserModal}
-                            source={"Confirm created user"}
-                            data={stockNameTemp} 
-                            // confirmCreatedUser={handleConfirmDelete}
-                            
-                        />
-                        <ConfirmTermsAndPrivacyModal
-                            openConfirmTermsAndPrivacyModal={openConfirmTermsAndPrivacyModal}
-                            closeConfirmTermsAndPrivacyModal={handleCloseConfirmTermsAndPrivacyModal}
-                        />
-                        <Typography className={classes.finishButtons} align="center" variant='h5'>
-                            Sign Up
-                        </Typography>
-                        <form
-                            onKeyDown={(e:any) => {
-                                if (e.key === "Enter") {
-                                    e.preventDefault();
-                                    handleOpenSaveChanges(); 
-                                    e.stopPropagation() 
-                                }
-                            }}
-                        >
+            <form
+                onKeyDown={(e:any) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleOpenSaveChanges(); 
+                        e.stopPropagation();
+                    }
+                }}
+            >
+                <Paper style={{margin:0}} >
+                    <Box sx={modalStyleSaveExternal}>
+                        <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+                            <SaveChanges
+                                openSaveChanges={openSaveChanges}
+                                closeSaveChanges={handleCloseSaveChanges} 
+                            />
+                            <ErrorModal
+                                openErrorModal={openErrorModal}
+                                closeErrorModal={handleCloseErrorModal}
+                                errorData={errorData} 
+                            />
+                            <ConfirmCreatedUserModal
+                                openConfirmCreatedUserModal={openConfirmCreatedUserModal}
+                                closeConfirmCreatedUserModal={handleCloseConfirmCreatedUserModal}
+                                source={"Confirm created user"}
+                                data={stockNameTemp} 
+                                // confirmCreatedUser={handleConfirmDelete}
+                                
+                            />
+                            <ConfirmTermsAndPrivacyModal
+                                openConfirmTermsAndPrivacyModal={openConfirmTermsAndPrivacyModal}
+                                closeConfirmTermsAndPrivacyModal={handleCloseConfirmTermsAndPrivacyModal}
+                            />
+                            <Typography className={classes.finishButtons} align="center" variant='h5'>
+                                Sign Up
+                            </Typography>
                             <Box className={classes.customBoxColumn}>
                                 <Box className={classes.customBoxRow}>
                                     <TextField
@@ -407,10 +407,10 @@ export default function SignUp () {
                                     </NavLink> 
                                 </Box>
                             </Box>
-                        </form>
+                        </Box>
                     </Box>
-                </Box>
-            </Paper>
+                </Paper>
+            </form>
         </Modal>
     )
 }
