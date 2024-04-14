@@ -312,119 +312,137 @@ export default function UpdateAmountStock(
     // console.log("signUpdate: ", signUpdate)
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
-        open={open} 
-        onClose={close}
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+            open={open} 
+            onClose={close}
         > 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
+            <form
+                onKeyDown={(e:any) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault()
+                        handleOpenSaveChanges()
+                        e.stopPropagation()
+                    } else if (e.key === "ArrowUp") {
+                        e.preventDefault()
+                        upValue()
+                        e.stopPropagation()
+                    } else if (e.key === "ArrowDown") {
+                        e.preventDefault()
+                        downValue()
+                        e.stopPropagation()
+                    }
+                }}
+            >
+                <Box sx={modalStyleExternal}>
+                    <Box sx={modalStyleInternal}>
+                        <SaveChanges
+                            openSaveChanges={openSaveChanges}
+                            closeSaveChanges={handleCloseSaveChanges} 
 
-                        messageBeforeSave={messageBeforeSave}
-                    />
-                     {/* <ErrorModal
-                        openErrorModal={openErrorModal}
-                        closeErrorModal={handleCloseErrorModal}
-                        errorData={errorData} 
-                    /> */}
-                    <Box className={`${classes.customBoxColumn}`}>
-                        <Typography noWrap align='center' variant="h5" className={classes.title}>
-                            {productUpdate.product}
-                        </Typography>
-                    
-                        <Grid container spacing={0} alignItems="center" >
-                            <Grid item xs={3} display="flex" justifyContent="center">
-                                <Typography variant="h6" >
-                                    Amount
-                                </Typography> </Grid>
-                            <Grid item xs={3} />
-                            <Grid item xs={3} display="flex" justifyContent="center">
-                                <UpButton
-                                    direction="up"
-                                    clicked={() => upValue()}
-                                /> 
-                            </Grid>
-                            <Grid item xs={3} />
-                            <Grid item xs={3} display="flex" justifyContent="center">
-                                <Typography variant="h6" >
-                                    {productUpdate.amount}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={3} display="flex" justifyContent="center" > 
-                                <ButtonOperator
-                                    sizeIcoExt="50px !important"
-                                    sizeIcoInt="57px !important"
-                                    // colorIco = "white"  // Fix color
-                                    colorIco = {buttonOperatorColor}
-                                    clicked={() => swapOperator()}
-                                />
-                            </Grid>
-                            <Grid item xs={3} display="flex" justifyContent="center" >
-                                <TextField
-                                    maxRows={1}
-                                    size="small"
-                                    // type="number"
-                                    className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
-                                    // value={Math.abs(valueUpdate)}
-                                    value={valueUpdate}
-                                    onChange={ (event:any) => writeValue(event) }
-                                    style= {{
-                                        textAlign: 'center',
-                                    }}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        inputProps: {
-                                            style: { textAlign: "center" },
-                                            inputMode: "numeric",
-                                        },
-                                    }}
-                                    // inputRef={firstInputRef}
-                                    inputRef={firstInputRef ? input => input && input.select() : undefined}
-                                />
-                            </Grid>
-                            <Grid item xs={3} display="flex" justifyContent="center" >
-                                <Typography variant="h6" >
-                                    {productUpdate.measure}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={6} />
-                            <Grid item xs={3} display="flex" justifyContent="center" >
-                                {/* </Box>  */}
-                                <UpButton
-                                    direction="down"
-                                    // clicked={() => setValueUpdate(valueUpdate-1)}
-                                    clicked={() => downValue()}
-                                /> 
-                            </Grid>
-                            <Grid item xs={3} />
-                        </Grid>
-                    </Box>  
-                    <ManageStock  ///////////////////// Continue with the edit stock modal here
-                        open={openEditStock} 
-                        handleClose={handleCloseEditStock} 
-                        data={productUpdate} 
-                        columnsCustom={columnsCustom} 
-                    />
-                    
-                    <Box className={classes.finishButtons}>
-                        {user.id_access_level === 4 ? 
-                                "" 
-                            : 
-                                <EditButton
-                                    clicked={() => handleOpenEditStock()}
-                                />
-                        } 
-                        <CancelButton
-                        clicked={() => close()}
+                            messageBeforeSave={messageBeforeSave}
                         />
-                        <OkButton
-                        clicked={() => handleOpenSaveChanges()}
+                        {/* <ErrorModal
+                            openErrorModal={openErrorModal}
+                            closeErrorModal={handleCloseErrorModal}
+                            errorData={errorData} 
+                        /> */}
+                        <Box className={`${classes.customBoxColumn}`}>
+                            <Typography noWrap align='center' variant="h5" className={classes.title}>
+                                {productUpdate.product}
+                            </Typography>
+                        
+                            <Grid container spacing={0} alignItems="center" >
+                                <Grid item xs={3} display="flex" justifyContent="center">
+                                    <Typography variant="h6" >
+                                        Amount
+                                    </Typography> </Grid>
+                                <Grid item xs={3} />
+                                <Grid item xs={3} display="flex" justifyContent="center">
+                                    <UpButton
+                                        direction="up"
+                                        clicked={() => upValue()}
+                                    /> 
+                                </Grid>
+                                <Grid item xs={3} />
+                                <Grid item xs={3} display="flex" justifyContent="center">
+                                    <Typography variant="h6" >
+                                        {productUpdate.amount}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={3} display="flex" justifyContent="center" > 
+                                    <ButtonOperator
+                                        sizeIcoExt="50px !important"
+                                        sizeIcoInt="57px !important"
+                                        // colorIco = "white"  // Fix color
+                                        colorIco = {buttonOperatorColor}
+                                        clicked={() => swapOperator()}
+                                    />
+                                </Grid>
+                                <Grid item xs={3} display="flex" justifyContent="center" >
+                                    <TextField
+                                        maxRows={1}
+                                        size="small"
+                                        // type="number"
+                                        className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
+                                        // value={Math.abs(valueUpdate)}
+                                        value={valueUpdate}
+                                        onChange={ (event:any) => writeValue(event) }
+                                        style= {{
+                                            textAlign: 'center',
+                                        }}
+                                        InputProps={{
+                                            className: classes.inputClassName,
+                                            inputProps: {
+                                                style: { textAlign: "center" },
+                                                inputMode: "numeric",
+                                            },
+                                        }}
+                                        // inputRef={firstInputRef}
+                                        inputRef={firstInputRef ? input => input && input.select() : undefined}
+                                    />
+                                </Grid>
+                                <Grid item xs={3} display="flex" justifyContent="center" >
+                                    <Typography variant="h6" >
+                                        {productUpdate.measure}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={6} />
+                                <Grid item xs={3} display="flex" justifyContent="center" >
+                                    {/* </Box>  */}
+                                    <UpButton
+                                        direction="down"
+                                        // clicked={() => setValueUpdate(valueUpdate-1)}
+                                        clicked={() => downValue()}
+                                    /> 
+                                </Grid>
+                                <Grid item xs={3} />
+                            </Grid>
+                        </Box>  
+                        <ManageStock  ///////////////////// Continue with the edit stock modal here
+                            open={openEditStock} 
+                            handleClose={handleCloseEditStock} 
+                            data={productUpdate} 
+                            columnsCustom={columnsCustom} 
                         />
-                    </Box> 
+                        
+                        <Box className={classes.finishButtons}>
+                            {user.id_access_level === 4 ? 
+                                    "" 
+                                : 
+                                    <EditButton
+                                        clicked={() => handleOpenEditStock()}
+                                    />
+                            } 
+                            <CancelButton
+                            clicked={() => close()}
+                            />
+                            <OkButton
+                            clicked={() => handleOpenSaveChanges()}
+                            />
+                        </Box> 
+                    </Box>
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }
