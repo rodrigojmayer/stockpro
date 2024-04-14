@@ -212,11 +212,9 @@ export default function Fields(
                                 ...prevLoading,
                                 fieldsFetchEditCustomColumn: loadingSuccess,
                             }));
-                            
                             setCheckListStock([])
                         }
                     }
-                
                     if(obj.edited) 
                         fetchEditCustomColumn()
                      
@@ -239,7 +237,6 @@ export default function Fields(
                                     "deleted": false
                                 })
                             })
-
                             // Check if the response status is successful (2xx range)
                             if (response.ok) {
                                 loadingSuccess = true
@@ -263,7 +260,6 @@ export default function Fields(
                                 ...prevLoading,
                                 fieldsFetchCreateCustomColumn: loadingSuccess,
                             }));
-                            
                             setCheckListStock([])
                         }
                     }
@@ -298,12 +294,10 @@ export default function Fields(
                             ...prevLoading,
                             fieldsFetchEditUsersFieldsOrder: loadingSuccess,
                         }));
-                        
                         setCheckListStock([])
                     }
                 }
                 fetchEditUsersFieldsOrder()
-
             }
             close()
         }
@@ -335,38 +329,43 @@ export default function Fields(
         }
     }, [containerRef.current]); // Include containerRef.current as a dependency to re-run the effect whenever it changes
 
-
     useEffect(() => {
         if(customFieldsNew.find((obj) => { if(obj.pre_saved==false && obj.deleted==false)  return true})){
             setAddButtonShow(false)  
         } else {
             setAddButtonShow(true)
         }
-
         const box = containerRef.current;
         if (box) {
             setIsScrollbarVisible(box.scrollHeight > box.clientHeight);
         }
     }, [customFieldsNew])
-
     
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
-        open={open} 
-        onClose={close}> 
-            <Box sx={modalStyleExternal}>
-                <Box sx={modalStyleInternal}>
-                    <SaveChanges
-                        openSaveChanges={openSaveChanges}
-                        closeSaveChanges={handleCloseSaveChanges} 
-                    />
-                    <Typography align="center" variant="h5" className={classes.title}>
-                        Custom fields
-                    </Typography>
-                    {user.id_access_level <4 ? 
-
-
+            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+            open={open} 
+            onClose={close}
+        >
+            <form
+                onKeyDown={(e:any) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleOpenSaveChanges();
+                        e.stopPropagation();
+                    }
+                }} 
+            >
+                <Box sx={modalStyleExternal}>
+                    <Box sx={modalStyleInternal}>
+                        <SaveChanges
+                            openSaveChanges={openSaveChanges}
+                            closeSaveChanges={handleCloseSaveChanges} 
+                        />
+                        <Typography align="center" variant="h5" className={classes.title}>
+                            Custom fields
+                        </Typography>
+                        {user.id_access_level <4 ? 
                             <Box 
                                 ref={containerRef} 
                                 className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
@@ -431,28 +430,27 @@ export default function Fields(
                                         }
                                     })}
                             </Box>
-                            
-
-                    :""}
-                    <Box className={`${classes.customBoxRow} ${classes.customBoxRowHideSpace}`}>
-                        <div className={(addButtonShow? "" : classes.hide)}>
-                        <PlusButton
-                            sizeIco={"45px !important"}
-                            clicked={addInputCustomField}
-                        />
-                        </div>
-                    </Box>
-                    <Box className={classes.finishButtons}>
-                        <CancelButton
-                        clicked={() => close()}
-                        />
-                        <OkButton
-                        clicked={() => handleOpenSaveChanges()}
-                        // submitOk={true}
-                        />
+                        :""}
+                        <Box className={`${classes.customBoxRow} ${classes.customBoxRowHideSpace}`}>
+                            <div className={(addButtonShow? "" : classes.hide)}>
+                            <PlusButton
+                                sizeIco={"45px !important"}
+                                clicked={addInputCustomField}
+                            />
+                            </div>
+                        </Box>
+                        <Box className={classes.finishButtons}>
+                            <CancelButton
+                            clicked={() => close()}
+                            />
+                            <OkButton
+                            clicked={() => handleOpenSaveChanges()}
+                            // submitOk={true}
+                            />
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
+            </form>
         </Modal>
     )
 }
