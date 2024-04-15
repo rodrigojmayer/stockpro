@@ -50,8 +50,6 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     // console.log("props: ", props)
     let subTitle = `Swipe to confirm ${props.source} "${props.data}" deletion`
 
-
-
     const [isThumbPressed, setIsThumbPressed] = useState(true);
     const [valueSlider, setValueSlider] = useState(0);
     
@@ -60,6 +58,7 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     };
   
     const handleThumbMouseUp = () => {
+        console.log("handleThumbMouseUp")
         if(valueSlider<100)
             setValueSlider(0)
         setIsThumbPressed(false);
@@ -78,11 +77,28 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     };
 
     useEffect(() => {
+        console.log("valueSlider: ", valueSlider)
         if(valueSlider===100 && !isThumbPressed){
             props.confirmDelete(true)
         }
     }, [valueSlider, isThumbPressed])
 
+    
+  useEffect(() => {
+    const handleMouseUp = () => {
+      if (isThumbPressed && valueSlider < 100) {
+        setValueSlider(0);
+        setIsThumbPressed(false);
+      } else if(valueSlider===100){
+        props.confirmDelete(true)
+    }
+    };
+
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isThumbPressed, valueSlider]);
     
     return (
         <Modal
