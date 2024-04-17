@@ -739,7 +739,6 @@ export default function TableProducts(
                               MenuListProps={{
                                   sx: { padding: 0,
                                   },
-                                  
                               }}
                               // PaperProps={{
                               //   sx: { borderRadius: '7px' }, // Adjust the value as needed
