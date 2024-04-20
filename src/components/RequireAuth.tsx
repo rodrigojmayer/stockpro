@@ -32,44 +32,37 @@ const RequireAuth = () => {
 
                 navigate('/')
                 setRender("home")
+                FinalComponent =  <Outlet />
             } else {
-                // navigate('/login')
                 setRender("login")
             }
-            // setIsLoading(false)
             
         } else {
             setSecondLoad(true)
         }
     }, [auth])
-    // useEffect(() => {
-    //     console.log("RequireAuth persist: ", persist)
-    // }, [persist])
-    // useEffect(() => {
-    //     console.log("countAuthRenders: ", countAuthRenders)
-    // }, [countAuthRenders])
+    
+    let FinalComponent = <Navigate to="/login" state={{ from: location }} replace />
+    
+    switch (render) {
+        case "home":
+            FinalComponent = <Outlet />;
+            break;
+
+        default:
+            FinalComponent = (
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={true}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+            );
+            break;
+    }
 
     return (
-        <>
-         {
-            // auth?._id && (isLoading.user || 
-            // isLoading.products ||
-            // isLoading.columns||
-            // isLoading.customColumns)
-                 render==="login"   ? 
-                 <Navigate to="/login" state={{ from: location }} replace />
-                    : (render === "home" && !isLoading.user && !isLoading.products && !isLoading.columns && !isLoading.customColumns )?
-                    // : auth?._id 
-                         <Outlet />
-                        : 
-                    <Backdrop
-                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                    open={true} // Loading...
-                  >
-                    <CircularProgress color="inherit" />
-                  </Backdrop>
-        } 
-        </>
+        <>{FinalComponent} </>
     )
 }
 
