@@ -10,9 +10,6 @@ const Redirect = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // console.log("RequireAuth auth: ", auth)
-        // console.log("RequireAuth _id: ", auth._id)
-        // console.log("RequireAuth auth userNameEmail: ", auth?.userNameEmail)
         if(auth || secondLoad){
             if (auth._id ){
                 navigate('/')
@@ -22,33 +19,15 @@ const Redirect = () => {
             setSecondLoad(true)
         }
     }, [auth])
-    // useEffect(() => {
-    //     console.log("RequireAuth persist: ", persist)
-    // }, [persist])
 
     return (
         <>
         {
-            // auth?._id
-            //     ? <Outlet />
-            //     : <Navigate to="/login" state={{ from: location }} replace />
-
-
             isLoading
                     ? <p></p>
                     : auth?._id 
                         ? <Navigate to="/" state={{ from: location }} replace />
                         : <Outlet />
-                        
-              
-
-                
-            // auth?._id
-            //     ? auth._id
-            //         ? <Outlet />
-            //         : <Navigate to="/login" state={{ from: location }} replace />
-            //     : <></>
-
         }
         </>
     )
