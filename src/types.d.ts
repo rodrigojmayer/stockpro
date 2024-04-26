@@ -16,6 +16,14 @@ export interface UserData {
   alerts_enabled: boolean;
 }
 
+export interface ClientData {
+  _id: string;
+  id: number;
+  id_group_filestack: number;
+  client: string;
+  deleted: boolean;
+  enabled: boolean;
+}
 export interface UserEditData {
   _id?: string;
   id_client?: number;
@@ -182,7 +190,7 @@ export interface ProductEditData {
   deleted?: boolean;
 }
 export interface FilestackData {
-  id_client: number;
+  id_group_filestack: number;
   filestack_email: string;
   createdAt: Date | string;
   updatedAt: Date | string;

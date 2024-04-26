@@ -1,11 +1,12 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { FilestackData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
-import { UserContext } from './UserContext';
+// import { UserContext } from './UserContext';
+import { ClientContext } from './ClientContext';
 
 const INITIAL_FILESTACK = [{
   _id: 0,
-  id_client: 1,
+  id_group_filestack: 1,
   filestack_email: '',
   createdAt: '',
   updatedAt: '',
@@ -24,7 +25,8 @@ type FilestackProviderProps = {
 };
 
 export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }) => {
-  const { user } = useContext<any>(UserContext);
+  // const { user } = useContext<any>(UserContext);
+  const { client } = useContext<any>(ClientContext);
   
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const [filestack, setFilestack] = useState<FilestackData[]>(INITIAL_FILESTACK);
@@ -97,7 +99,8 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
     const fetchFilestack = async () => {
       try {
         // console.log("user.id_client: ", user.id_client)
-        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/filestackEmails/client/${user.id_client}`); 
+        // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/filestackEmails/client/${user.id_client}`); 
+        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/filestackEmails/client/${client.id_group_filestack}`); 
         // console.log("filestack response: ", response)
         if (response.ok) {
           const json = await response.json();
@@ -117,10 +120,11 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
         }
     };
 
-    if (!isLoading.user) {
+    if (!isLoading.client) {
       fetchFilestack();
     }
-  }, [user]);
+  // }, [user]);
+}, [client]);
 
   return (
     <FilestackContext.Provider value={{ filestack, setFilestack, deleteFilesStock }}>

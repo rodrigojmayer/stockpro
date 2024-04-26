@@ -1,8 +1,6 @@
 import { createContext, useState, useEffect, useContext, useRef } from 'react';
 import { UserData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
-import useUser from '../hooks/useUser';
-import axios from '../api/axios'
 import AuthContext from "../context/AuthProvider"
 
 import useWebSocket from 'react-use-websocket'

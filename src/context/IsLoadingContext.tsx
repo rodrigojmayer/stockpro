@@ -23,6 +23,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
     measures: true,
     products: true,
     user: true,
+    client: true,
     usersAlert: false,
     openFirstTimeValidateUser: ""
   }); // New state for loading status

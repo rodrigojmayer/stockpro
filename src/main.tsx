@@ -7,6 +7,7 @@ import './index.css'
 // import { UserData } from './types'
 import { AuthProvider } from './context/AuthProvider';
 import { UserProvider } from './context/UserContext';
+import { ClientProvider } from './context/ClientContext';
 import { FilestackProvider } from './context/FilestackContext';
 import { UsersProvider } from './context/UsersContext';
 import { EmailsProvider } from './context/EmailsContext';
@@ -25,27 +26,29 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <IsLoadingProvider>
         <AuthProvider>
           <UserProvider>
-            <CheckListStockProvider>
-              <FilestackProvider>
-                <UsersProvider>
-                  <EmailsProvider>
-                    <MeasuresProvider>
-                      <AccessLevelsProvider>
-                        <CategoriesProvider>
-                          <ColumnsProvider>
-                            <ProductsProvider>
-                              <Routes>
-                                <Route path="/*" element={<App />} />
-                              </Routes>
-                            </ProductsProvider>
-                          </ColumnsProvider>
-                        </CategoriesProvider>
-                      </AccessLevelsProvider>
-                    </MeasuresProvider>
-                  </EmailsProvider>
-                </UsersProvider>
-              </FilestackProvider>
-            </CheckListStockProvider>
+            <ClientProvider>
+              <CheckListStockProvider>
+                <FilestackProvider>
+                  <UsersProvider>
+                    <EmailsProvider>
+                      <MeasuresProvider>
+                        <AccessLevelsProvider>
+                          <CategoriesProvider>
+                            <ColumnsProvider>
+                              <ProductsProvider>
+                                <Routes>
+                                  <Route path="/*" element={<App />} />
+                                </Routes>
+                              </ProductsProvider>
+                            </ColumnsProvider>
+                          </CategoriesProvider>
+                        </AccessLevelsProvider>
+                      </MeasuresProvider>
+                    </EmailsProvider>
+                  </UsersProvider>
+                </FilestackProvider>
+              </CheckListStockProvider>
+            </ClientProvider>
           </UserProvider>
         </AuthProvider>
       </IsLoadingProvider>
