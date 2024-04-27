@@ -217,12 +217,12 @@ function Home() {
 
   return (
     <div className="App">
-      <Backdrop
+      {/* <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={openBackdrop} // Loading...
       >
         <CircularProgress color="inherit" />
-      </Backdrop>
+      </Backdrop> */}
       <ModalsGroup 
         columnsDefault={defaultColumns} 
         columnsCustom={customColumns}

@@ -6,7 +6,7 @@ import { ClientContext } from './ClientContext';
 
 const INITIAL_FILESTACK = [{
   _id: 0,
-  id_group_filestack: 1,
+  id_group_filestack: 0,
   filestack_email: '',
   createdAt: '',
   updatedAt: '',
@@ -63,34 +63,34 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
     });
     // onSetImageUrlHandle("")
     const fetchDeleteImageProduct = async () => {
-        try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/products/${id_product}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json', // Set the appropriate content-type for my API
-                },
-                body:JSON.stringify({url_image:""})
-            })
-            // Check if the response status is successful
-            if (response.ok) {
-                // const responseData = await response.json() // parse the response data
-            } else {
-                // Handle non-successful responses
-                console.error('Request failed: ', response.status, response.statusText)
-                // Handle the error here
-            }
-        } catch (error: unknown) {
-            if (typeof error === 'string') {
-                // 'error' is now narrowed down to type 'string'
-                console.error('Error:', error)
-            } else if (error instanceof Error) {
-                // 'error' is now narrowed down to type 'Error'
-                console.error('Error object:', error.message)
-            } else {
-                // Handle other cases as needed
-            }
-        } finally {
-        }
+      try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/products/${id_product}`, {
+              method: 'PATCH',
+              headers: {
+                  'Content-Type': 'application/json', // Set the appropriate content-type for my API
+              },
+              body:JSON.stringify({url_image:""})
+          })
+          // Check if the response status is successful
+          if (response.ok) {
+              // const responseData = await response.json() // parse the response data
+          } else {
+              // Handle non-successful responses
+              console.error('Request failed: ', response.status, response.statusText)
+              // Handle the error here
+          }
+      } catch (error: unknown) {
+          if (typeof error === 'string') {
+              // 'error' is now narrowed down to type 'string'
+              console.error('Error:', error)
+          } else if (error instanceof Error) {
+              // 'error' is now narrowed down to type 'Error'
+              console.error('Error object:', error.message)
+          } else {
+              // Handle other cases as needed
+          }
+      } finally {
+      }
     } 
     fetchDeleteImageProduct()
   }
@@ -98,7 +98,8 @@ export const FilestackProvider: React.FC<FilestackProviderProps> = ({ children }
   useEffect(() => {
     const fetchFilestack = async () => {
       try {
-        // console.log("user.id_client: ", user.id_client)
+        // console.log("client: ", client)
+        // console.log("client.id_group_filestack: ", client.id_group_filestack)
         // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/filestackEmails/client/${user.id_client}`); 
         const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/filestackEmails/client/${client.id_group_filestack}`); 
         // console.log("filestack response: ", response)

@@ -114,6 +114,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                         body:JSON.stringify(bodyUpdate)
                     })
 
+                    // console.log('response: ', response);
                     // Check if the response status is successful
                     if (response.ok) {
                         const responseData = await response.json(); // parse the response data
