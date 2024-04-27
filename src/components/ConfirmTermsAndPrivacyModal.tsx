@@ -49,13 +49,16 @@ export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPriva
                             //   theme.palette.mode === 'dark' ? 'grey.800' : 'grey.300',
                                 theme.palette.mode === 'dark' ? 'grey.800' : 'rgb(55,55, 55, 1)',
                             borderRadius: 3,
-                            overflow: 'hidden', // Hide any overflow
-                            paddingRight: '12px',
+                            // overflow: 'hidden', // Hide any overflow
+                            overflowY: 'auto', // Show scrollbar on hover
+                            overflowX: 'hidden',
+                            paddingRight: '20px',
+                            scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
                             scrollbarWidth: 'thin', // Hide scrollbar for Firefox
                             '&:hover': {
                                 scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
                                 overflowY: 'auto', // Show scrollbar on hover
-                                paddingRight: '0',
+                                // paddingRight: '10px',
                                 overflowX: 'hidden',
                             },
                             '& p': {
