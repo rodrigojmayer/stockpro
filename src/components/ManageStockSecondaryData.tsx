@@ -323,7 +323,7 @@ export default function ManageStockSecondaryData(
                                 // onSetImageUrlHandle(res.filesUploaded[0].url)
                                 // onSetImageUrlHandle(`https://cdn.filestackcontent.com/${res.filesUploaded[0].handle}`)
                                 // onSetImageUrlHandle(`https://cdn.filestackcontent.com/auto_image/${res.filesUploaded[0].handle}`)
-                                onSetImageUrlHandle(`${res.filesUploaded[0].handle}`)
+                                onSetImageUrlHandle(res.filesUploaded[0])
                                 // onSetImageUrlHandle(`https://cdn.filestackcontent.com/resize=w:30/auto_image/compress/${res.filesUploaded[0].handle}`)
                                 // handleShowPicker()
                             }}

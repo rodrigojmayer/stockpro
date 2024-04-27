@@ -272,8 +272,43 @@ export default function ManageStock(
     const handleStockDescriptionChange = (value: string) => {
         setStockDescriptionTemp(value)
     }
-    const handleSetImageUrl = (value: string) => {
-        setStockImageUrlTemp(value)
+    const fetchCreateFilestackImagesProcessingQueue = async (img_data:any) => {
+        let loadingSuccess: boolean = false
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/filestackImagesProcessingQueue/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "name": img_data.filename,
+                    "apikey": filestack[0].apikey,
+                    "url": img_data.url,
+                    "size": img_data.size
+                })
+            })
+            // Check if the response status is successful
+            if (response.ok) {
+                loadingSuccess = true
+            } else {
+                console.log('Request failed.', response.status, response.statusText)
+                // Handle the error here
+            }
+        } catch (error: unknown) {
+            if (typeof error === 'string') {
+                // 'error' is now narrowed down to type 'string'
+                console.error('Error:', error);
+            } else if (error instanceof Error) {
+                // 'error' is now narrowed down to type 'Error'
+                console.error('Error object:', error.message);
+            } else {
+                // Handle other cases as needed
+            }
+        } 
+    }
+    const handleSetImageUrl = (value: any) => {
+        setStockImageUrlTemp(value.handle)
+        fetchCreateFilestackImagesProcessingQueue(value);
     }
     
     const handleUnsavedImages = (value: string) => {
