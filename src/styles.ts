@@ -52,25 +52,31 @@ export const useStylesGlobal = makeStyles()({
     customBoxColumnCustomFields: { 
         // maxHeight:"50vh", 
         height:"260px",
+        // width: "300px",
         overflowX: "hidden",
         backgroundColor: "rgb(255,255, 255, .2)",
-        padding: "8px 0",  
+        paddingTop: "8px",   
+        paddingBottom: "8px",   
+        // paddingLeft: "8px",    
         borderRadius: 10, 
         
     },
     scrollBarHide: {
-        paddingRight: '12px',
-        overflow: 'hidden', // Hide any overflow
+        // paddingRight: '11px',
+        // paddingRight: "auto",
+        // overflow: 'hidden', // Hide any overflow
+        overflow: 'auto', // Hide any overflow
         scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+        scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
         '&:hover': {
             scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
             overflowY: 'auto', // Show scrollbar on hover
-            paddingRight: '0',
+            // paddingRight: '0',
             overflowX: 'hidden',
         },
     },
     scrollBarHideInsufficientHeight : {
-        paddingRight: '0',
+        paddingRight: '10px',
     },
     customBoxColumnStockOptions: {
         minHeight: "330px",
@@ -480,15 +486,18 @@ export const tableStyles = makeStyles()({
         borderRadius: '4px', // Set border-radius to mimic scrollbar radius
         '& .MuiPaper-root': {  
             overflow: 'hidden', // Hide any overflow
+            overflowY: 'auto', // Show scrollbar on hover
             borderRadius: '4px', // Set border-radius to mimic scrollbar radius
-            paddingRight: '12px',
+            // paddingRight: '12px',
+            scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
             backgroundColor:"#DCF2F1",
+            // backgroundColor:"#DCF2F1",
             scrollbarWidth: 'thin', // Hide scrollbar for Firefox
             '&:hover': {
                 scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
                 backgroundColor:"#DCF2F1", 
                 overflowY: 'auto', // Show scrollbar on hover
-                paddingRight: '0',
+                // paddingRight: '0',
                 overflowX: 'hidden',
             },
         },
