@@ -110,6 +110,8 @@ export default function ManageStock(
             const bodyUpdate: ProductEditData = {}
             bodyUpdate.id_client = user.id_client
             bodyUpdate.deleted = false
+            bodyUpdate.apikey = filestack[0].apikey
+            bodyUpdate.signature = filestack[0].signature
             if(!edition || data.product!=stockNameTemp)
                 bodyUpdate.product= stockNameTemp
             if(!edition || data.code!=stockCodeTemp)

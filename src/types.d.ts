@@ -188,6 +188,8 @@ export interface ProductEditData {
   alert_date_enabled?: boolean;
   alerted_date?: boolean;
   deleted?: boolean;
+  apikey?: string;
+  signature?: string;
 }
 export interface FilestackData {
   id_group_filestack: number;
