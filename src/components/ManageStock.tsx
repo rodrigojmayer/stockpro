@@ -276,6 +276,7 @@ export default function ManageStock(
     }
     const fetchCreateFilestackImagesProcessingQueue = async (img_data:any) => {
         let loadingSuccess: boolean = false
+        console.log("img_data: ", img_data)
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/filestackImagesProcessingQueue/`, {
                 method: 'POST',
@@ -285,7 +286,8 @@ export default function ManageStock(
                 body: JSON.stringify({
                     "name": img_data.filename,
                     "apikey": filestack[0].apikey,
-                    "url": img_data.url,
+                    "signature": filestack[0].signature,
+                    "url": img_data.handle,
                     "size": img_data.size
                 })
             })
