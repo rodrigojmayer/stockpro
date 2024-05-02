@@ -192,6 +192,7 @@ export default function TableProducts(
 
   const  {classes} = tableStyles()
   const breakpointLG = useMediaQuery('(min-width:1024px)');
+  const breakpointMD = useMediaQuery('(min-width: 724px)');
 
   const { user } = useContext<any>(UserContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
@@ -716,7 +717,7 @@ export default function TableProducts(
                             </Menu>
                             <Menu
                             // <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
-                              className={breakpointLG ? classes.menu : ""}
+                              className={breakpointMD ? classes.menu : ""}
                               //  className={classes.menu} 
                               id="demo-positioned-menu2"
                               aria-labelledby="demo-positioned-button2"

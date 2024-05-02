@@ -24,7 +24,8 @@ export default function ManageStockCustomFields(
         onStockCustomValuesTemp,
     }: ChildProps )  {
         
-    const breakpointLG = useMediaQuery('(min-width:1024px)');
+    // const breakpointLG = useMediaQuery('(min-width:1024px)');
+    const breakpointMD = useMediaQuery('(min-width: 724px)');
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null)
 
@@ -155,7 +156,7 @@ export default function ManageStockCustomFields(
             <Typography align='center' variant='h6'>Custom fields</Typography>
             <Box 
                 ref={containerRef}    
-                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
+                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointMD ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
             >
                 {customFieldsNewTemp.map((cusField: ColumnDataCustom, index: number) => {
                     // if (!cusField.deleted) {

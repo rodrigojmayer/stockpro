@@ -35,7 +35,8 @@ export default function Fields(
         handleClose, 
     }: ChildProps) {
         
-    const breakpointLG = useMediaQuery('(min-width:1024px)');
+    // const breakpointLG = useMediaQuery('(min-width:1024px)');
+    const breakpointMD = useMediaQuery('(min-width: 724px)');
  
     const { classes } = useStylesGlobal()
     const close = () => {
@@ -368,7 +369,7 @@ export default function Fields(
                         {user.id_access_level <4 ? 
                             <Box 
                                 ref={containerRef} 
-                                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointLG ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
+                                className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointMD ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
                             >
                                     {customFieldsNew.map((cusField: ColumnDataCustom) => {
                                         if (!cusField.deleted) {
