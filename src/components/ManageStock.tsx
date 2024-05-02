@@ -110,8 +110,6 @@ export default function ManageStock(
             const bodyUpdate: ProductEditData = {}
             bodyUpdate.id_client = user.id_client
             bodyUpdate.deleted = false
-            bodyUpdate.apikey = filestack[0].apikey
-            bodyUpdate.signature = filestack[0].signature
             if(!edition || data.product!=stockNameTemp)
                 bodyUpdate.product= stockNameTemp
             if(!edition || data.code!=stockCodeTemp)
@@ -144,7 +142,11 @@ export default function ManageStock(
                 bodyUpdate.alert_date_enabled = stockAlertDateEnabledTemp
             if(!edition || data.alerted_date!=stockAlertedDateTemp)
                 bodyUpdate.alerted_date = stockAlertedDateTemp
-                
+            bodyUpdate.apikey = filestack[0].apikey
+            bodyUpdate.signature = filestack[0].signature
+            if(data.url_image!=stockImageUrlTemp)
+                bodyUpdate.url_image_edited = true
+
             const fetchManageStockProduct = async () => {
                 
                 let loadingSuccess: boolean = false

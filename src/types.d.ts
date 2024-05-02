@@ -190,6 +190,7 @@ export interface ProductEditData {
   deleted?: boolean;
   apikey?: string;
   signature?: string;
+  url_image_edited?: boolean;
 }
 export interface FilestackData {
   id_group_filestack: number;
