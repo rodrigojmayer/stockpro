@@ -451,7 +451,7 @@ export default function ManageUser(
                                     >
                                         {accessLevels.map((accessLevel: any) => (
                                             <MenuItem 
-                                                className={classes.menuItemUsers}
+                                                // className={classes.menuItemUsers}
                                                 key={accessLevel.id} 
                                                 value={accessLevel.id}
                                                 sx={{ justifyContent: "space-between" }}

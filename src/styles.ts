@@ -1,6 +1,13 @@
 import { makeStyles } from 'tss-react/mui';
 import {  Theme } from '@mui/material/styles';
 
+const linkColor = '#c1e8fb';
+const mainColor = 'rgb(45, 72, 91, 1)';
+const mainColorD = 'rgb(25, 54, 72)';
+// const mainColor = 'green';
+const rowEvenColor = 'rgb(69, 144, 186)';
+const rowOddColor = 'rgb(162, 199, 220)';
+
 export const useStylesGlobal = makeStyles()({
     finishButtons: {
         display: "flex",
@@ -8,40 +15,50 @@ export const useStylesGlobal = makeStyles()({
         gap: 20,
         margin: "20px",
     },
-    palette: {
-        color: '#c1e8fb',
+    link: {
+        // color: '#c1e8fb',
+        color: linkColor,
     },
-    formControlUsers: {
-        width: "300px",
-        backgroundColor: "rgb(255,255, 255, .1)",
-        borderRadius: "10px",
-        "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-            },
-            '&.Mui-focused': {
-                },
-            "&.Mui-focused fieldset": {
-            }
-        }
+    mainColor: {
+        color: mainColor,
     },
-    selectUsers: {
+    mainBackGroundColor: {
+        backgroundColor: mainColor,
     },
-    inputLabelUsers: {
+    mainBackGroundColorD: {
+        backgroundColor: mainColorD,
     },
-    stackUsers: {
-    },
-    chipUsers: {
-        backgroundColor: "rgb(255,255, 255, .8)",
-    },
-    cancelIconUsers: {
-        '& > *': {
-            color: 'rgb(255, 47, 47, .9)',
-        }
-    },
-    menuItemUsers: {
-        "&.Mui-selected": {
-        },
-    },
+    // formControlUsers: {
+    //     width: "300px",
+    //     backgroundColor: "rgb(255,255, 255, .1)",
+    //     borderRadius: "10px",
+    //     "& .MuiOutlinedInput-root": {
+    //         "& fieldset": {
+    //         },
+    //         '&.Mui-focused': {
+    //             },
+    //         "&.Mui-focused fieldset": {
+    //         }
+    //     }
+    // },
+    // selectUsers: {
+    // },
+    // inputLabelUsers: {
+    // },
+    // stackUsers: {
+    // },
+    // chipUsers: {
+    //     backgroundColor: "rgb(255,255, 255, .8)",
+    // },
+    // cancelIconUsers: {
+    //     '& > *': {
+    //         color: 'rgb(255, 47, 47, .9)',
+    //     }
+    // },
+    // menuItemUsers: {
+    //     "&.Mui-selected": {
+    //     },
+    // },
     customBoxColumn: { 
         margin: "0 auto",
         display: "flex",
@@ -173,16 +190,16 @@ export const useStylesGlobal = makeStyles()({
         borderRadius: 10,
         // autoComplete: 'new-password',
     },
-    table: {
-        width: "calc(100% - 6px)",
-        margin: "3px",
-        padding: "6px 0",
-        borderRadius: "10px",
-        backgroundColor: "rgb(69, 144, 186)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    },
+    // table: {
+    //     width: "calc(100% - 6px)",
+    //     margin: "3px",
+    //     padding: "6px 0",
+    //     borderRadius: "10px",
+    //     backgroundColor: "rgb(695, 144, 186)",
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     alignItems: "center",
+    // },
     buttonsGroup: {
         width: "100%",
         height: "100%",
@@ -220,27 +237,27 @@ export const useStylesGlobal = makeStyles()({
         height: "30%",
         backgroundColor: "white",
     },
-    dropped_widget: {
-        color: "red",
-    },
-    backPlus: {
-        color: "rgb(255, 47, 47, 1)",
-        width: "32px", 
-        height: "32px",
-        '& svg': {
-            width: "32px", 
-            height: "32px",
-        }
-    },
-    plusIcon: {
-        color: "rgb(32, 205, 60, 1)",
-        width: "32px", 
-        height: "32px",
-        '& svg': {
-            width: "32px", 
-            height: "32px",
-        }
-    },
+    // dropped_widget: {
+    //     color: "red",
+    // },
+    // backPlus: {
+    //     color: "rgb(255, 47, 47, 1)",
+    //     width: "32px", 
+    //     height: "32px",
+    //     '& svg': {
+    //         width: "32px", 
+    //         height: "32px",
+    //     }
+    // },
+    // plusIcon: {
+    //     color: "rgb(32, 205, 60, 1)",
+    //     width: "32px", 
+    //     height: "32px",
+    //     '& svg': {
+    //         width: "32px", 
+    //         height: "32px",
+    //     }
+    // },
     editIcon: {
         width: "32px", 
         height: "32px",
@@ -335,7 +352,48 @@ export const useStylesGlobal = makeStyles()({
     title : {
         marginTop: "5px",
         marginBottom: "10px",
-    }
+    },
+    table_alert_on : {
+        backgroundColor: "rgb(290, 10, 50, .6)", 
+        color:"white",
+    },
+    table_rows : {
+        padding: "8px 0",
+        border:0,
+    },
+    table_row_even: {
+        // backgroundColor: "rgb(69, 144, 186)", 
+        backgroundColor: rowEvenColor, 
+    },
+    table_row_odd: {
+        // backgroundColor: "rgb(162, 199, 220)", 
+        backgroundColor: rowOddColor, 
+    },
+    table_menu : {
+        borderRadius: '4px', // Set border-radius to mimic scrollbar radius
+        '& .MuiPaper-root': {  
+            overflow: 'hidden', // Hide any overflow
+            overflowY: 'auto', // Show scrollbar on hover
+            borderRadius: '4px', // Set border-radius to mimic scrollbar radius
+            // paddingRight: '12px',
+            scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+            backgroundColor:"#DCF2F1",
+            // backgroundColor:"#DCF2F1",
+            scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+            '&:hover': {
+                scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                backgroundColor:"#DCF2F1", 
+                overflowY: 'auto', // Show scrollbar on hover
+                // paddingRight: '0',
+                overflowX: 'hidden',
+            },
+        },
+    },
+    table_disabled: {
+        backgroundColor: "rgb(255,255, 255, .3)",
+    },
+
+
 })
 
 // export const modalStyleExternal = {
@@ -383,7 +441,8 @@ export const modalStyleInternal = {
     width: "calc(100% - 50px)",
     // maxHeight: "520px",
     maxHeight: "85vh",
-    backgroundColor: "rgb(45,72, 91, 1)",
+    // backgroundColor: "rgb(45,72, 91, 1)",
+    backgroundColor: mainColor,
     borderRadius: "10px",
     padding: "5px",
     color: "white",
@@ -398,7 +457,8 @@ export const modalStyleInternal = {
 };
 export const modalStyleInternalConfirmTermsAndPrivacy = {
     maxWidth: "900px",
-    backgroundColor: "rgb(45,72, 91, 1)",
+    // backgroundColor: "rgb(45,72, 91, 1)",
+    backgroundColor: mainColor,
 }
 export const modalStyleInternalForgottenPass = {
     width: "280px",
@@ -427,7 +487,8 @@ export const modalStyleSaveExternal = {
 export const modalStyleSaveInternal = {
     top: 74,
     width: "220px",
-    backgroundColor: "rgb(45,72, 91, 1)",
+    // backgroundColor: "rgb(45,72, 91, 1)",
+    backgroundColor: mainColor,
     borderRadius: "10px",
     margin: "auto",
     padding: "3px",
@@ -441,7 +502,8 @@ export const modalStyleSaveInternal = {
 export const modalStyleErrorInternal = {
     top: 74,
     width: "270px",
-    backgroundColor: "rgb(45,72, 91, 1)",
+    // backgroundColor: "rgb(45,72, 91, 1)",
+    backgroundColor: mainColor,
     borderRadius: "10px",
     margin: "auto",
     padding: "3px",
@@ -467,42 +529,42 @@ export const modalStyleImageInternal = {
 };
 
 // export const TableStyles = makeStyles((theme: Theme) => ({
-export const tableStyles = makeStyles()({
-    alert_on : {
-        backgroundColor: "rgb(290, 10, 50, .6)", 
-        color:"white",
-    },
-    rows : {
-        padding: "8px 0",
-        border:0,
-    },
-    row_even: {
-        backgroundColor: "rgb(69, 144, 186)", 
-    },
-    row_odd: {
-        backgroundColor:"rgb(162, 199, 220)", 
-    },
-    menu : {
-        borderRadius: '4px', // Set border-radius to mimic scrollbar radius
-        '& .MuiPaper-root': {  
-            overflow: 'hidden', // Hide any overflow
-            overflowY: 'auto', // Show scrollbar on hover
-            borderRadius: '4px', // Set border-radius to mimic scrollbar radius
-            // paddingRight: '12px',
-            scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-            backgroundColor:"#DCF2F1",
-            // backgroundColor:"#DCF2F1",
-            scrollbarWidth: 'thin', // Hide scrollbar for Firefox
-            '&:hover': {
-                scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-                backgroundColor:"#DCF2F1", 
-                overflowY: 'auto', // Show scrollbar on hover
-                // paddingRight: '0',
-                overflowX: 'hidden',
-            },
-        },
-    },
-    disabled: {
-        backgroundColor: "rgb(255,255, 255, .3)",
-    },
-})
+// export const tableStyles = makeStyles()({
+//     alert_on : {
+//         backgroundColor: "rgb(290, 10, 50, .6)", 
+//         color:"white",
+//     },
+//     rows : {
+//         padding: "8px 0",
+//         border:0,
+//     },
+//     row_even: {
+//         backgroundColor: "rgb(69, 144, 186)", 
+//     },
+//     row_odd: {
+//         backgroundColor:"rgb(162, 199, 220)", 
+//     },
+//     menu : {
+//         borderRadius: '4px', // Set border-radius to mimic scrollbar radius
+//         '& .MuiPaper-root': {  
+//             overflow: 'hidden', // Hide any overflow
+//             overflowY: 'auto', // Show scrollbar on hover
+//             borderRadius: '4px', // Set border-radius to mimic scrollbar radius
+//             // paddingRight: '12px',
+//             scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+//             backgroundColor:"#DCF2F1",
+//             // backgroundColor:"#DCF2F1",
+//             scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+//             '&:hover': {
+//                 scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+//                 backgroundColor:"#DCF2F1", 
+//                 overflowY: 'auto', // Show scrollbar on hover
+//                 // paddingRight: '0',
+//                 overflowX: 'hidden',
+//             },
+//         },
+//     },
+//     disabled: {
+//         backgroundColor: "rgb(255,255, 255, .3)",
+//     },
+// })

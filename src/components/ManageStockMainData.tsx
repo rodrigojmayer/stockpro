@@ -144,7 +144,7 @@ export default function ManageStockMainData(
                         >
                             {measureArray.map((measure) => (
                                 <MenuItem 
-                                    className={classes.menuItemUsers}
+                                    // className={classes.menuItemUsers}
                                     key={measure.id} 
                                     value={measure.name}
                                     sx={{ justifyContent: "space-between" }}
@@ -166,7 +166,7 @@ export default function ManageStockMainData(
                     >
                         {categoryArray.map((category) => (
                             <MenuItem 
-                                className={classes.menuItemUsers}
+                                // className={classes.menuItemUsers}
                                 key={category.id} 
                                 value={category.id}
                                 sx={{ justifyContent: "space-between" }}
@@ -187,7 +187,7 @@ export default function ManageStockMainData(
                     >
                         {stockCategoryTemp ? stockCategoryTemp.sub_categories.map((subCategory, index) => (
                             <MenuItem 
-                                className={classes.menuItemUsers}
+                                // className={classes.menuItemUsers}
                                 key={index} 
                                 value={subCategory}
                                 sx={{ justifyContent: "space-between" }}

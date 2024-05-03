@@ -22,7 +22,8 @@ import  SaveChanges from './SaveChanges';
 import { useStylesGlobal as globalClasses, 
         modalStyleExternal, 
         modalStyleInternal, 
-        tableStyles as tableClasses } from '../Styles'
+        // tableStyles as tableClasses 
+    } from '../Styles'
 import { DataCreateStockOptions, 
         ColumnData, 
         ProductEditData,  
@@ -77,7 +78,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   // const { classes } = useStylesGlobal()
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
     // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, tableClassNames: any, writeValue:any, firstInputRef: any) {
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, writeValue:any, firstInputRef: any) {
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
     const RowContent = (item:any) => {
         let lab
@@ -144,7 +145,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
           <TableCell
             key={column._id}
             align='center'
-            className={`${ _index%2 ? tableClassNames.row_odd  : tableClassNames.row_even }`}
+            className={`${ _index%2 ? classes.table_row_odd  : classes.table_row_even }`}
             style={{ 
                border:0,
             }}
@@ -153,7 +154,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             }}
           >
             <div 
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? tableClassNames.alert_on  : "" } ${tableClassNames.rows}`}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.table_alert_on  : "" } ${classes.table_rows}`}
             >
                 {RowContent({column: column})}
             </div>
@@ -176,7 +177,7 @@ export default function MassiveUpdateStock(
     }: ChildProps) {
 
     const { classes } = globalClasses();
-    const { classes: tableClassNames } = tableClasses() 
+    // const { classes: tableClassNames } = tableClasses() 
 
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
@@ -428,19 +429,22 @@ export default function MassiveUpdateStock(
                         />
                         <Typography align='center' variant="h5"  className={classes.title}>Massive upload</Typography>
 
-                        <Paper style={{ 
-                            height: `60vh`, 
-                            width: '87vw', 
-                            maxWidth: '90%',
-                            margin: "12px auto 0 auto" ,
-                            borderRadius: "10px"
-                        }}> 
+                        <Paper 
+                            style={{ 
+                                height: `60vh`, 
+                                width: '87vw', 
+                                maxWidth: '90%',
+                                margin: "12px auto 0 auto" ,
+                                borderRadius: "10px",
+                            }}
+                        > 
                             <div style={{ overflow: 'auto', height: '100%' }}>
                                 <TableVirtuoso 
                                     data={filteredData}
                                     components={VirtuosoTableComponents}
                                     style={{
                                         backgroundColor: "rgb(45, 72, 91)", 
+                                        // backgroundColor: "rgb(45, 72, 91, 0)", 
                                         borderRadius: "10px",
                                         margin: "-1px",
                                         scrollbarWidth: "none" 
@@ -453,9 +457,10 @@ export default function MassiveUpdateStock(
                                                     key={column._id}
                                                     variant="head"
                                                     align='center'
+                                                    className= {classes.mainBackGroundColorD}
                                                     style={{ 
                                                         width: column.width, 
-                                                        backgroundColor:"rgb(25, 54, 72)", 
+                                                        // backgroundColor:"rgb(25, 54, 72)", 
                                                         border:0,
                                                     }}
                                                     sx={{
@@ -472,7 +477,7 @@ export default function MassiveUpdateStock(
                                         );
                                     }}
                                     itemContent={(index: number) =>
-                                        rowContent(index, filteredData[index], columns, classes, tableClassNames, writeValue, firstInputRef) 
+                                        rowContent(index, filteredData[index], columns, classes, writeValue, firstInputRef) 
                                     }
                                 />
                             </div>

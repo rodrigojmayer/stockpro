@@ -22,7 +22,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { Data, DataTable, ColumnData, ProductUpdateData } from '../types';
 import { UserContext } from '../context/UserContext'
 import { ColumnsContext } from '../context/ColumnsContext'
-import { tableStyles, useStylesGlobal } from '../Styles';
+import { useStylesGlobal } from '../Styles';
 import { blueGrey } from '@mui/material/colors';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import ShowImgModal from './ShowImgModal';
@@ -115,7 +115,7 @@ function rowContent(
               "alert_date_enabled": newRow.alert_date_enabled, 
               "alerted_date": newRow.alerted_date, 
               "newRow": newRow})}
-          className={`${ _index%2 ? classes.row_odd  : classes.row_even }`}
+          className={`${ _index%2 ? classes.table_row_odd  : classes.table_row_even }`}
           style={{ 
              border:0,
           }}
@@ -124,7 +124,7 @@ function rowContent(
           }}
         >
           <div 
-            className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.alert_on  : "" } ${classes.rows}`}
+            className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.table_alert_on  : "" } ${classes.table_rows}`}
           > 
           { ( column.dataKey === "check_stock" ) ? 
             <Checkbox 
@@ -190,7 +190,7 @@ export default function TableProducts(
     handleDisabledUpdateButton, 
   }:  DataTable ) {
 
-  const  {classes} = tableStyles()
+  const  {classes} = useStylesGlobal()
   const breakpointLG = useMediaQuery('(min-width:1024px)');
   const breakpointMD = useMediaQuery('(min-width: 724px)');
 
@@ -585,6 +585,7 @@ export default function TableProducts(
         components={VirtuosoTableComponents}
         style={{
           backgroundColor: "rgb(45, 72, 91)", 
+          // backgroundColor: "rgb(45, 72, 91, 0)", 
           borderRadius: "10px", 
           scrollbarWidth: "none",
           cursor: "pointer"
@@ -597,10 +598,11 @@ export default function TableProducts(
                     key={columnTable.id}
                     variant="head"
                     align='center'
+                    className= {classes.mainBackGroundColorD}
                     style={{ 
                       // width: "100px", 
                       width: columnTable.width, 
-                      backgroundColor:"rgb(25, 54, 72)", 
+                      // backgroundColor:"rgb(25, 54, 72)", 
                       border:0
                     }}
                     sx={{
@@ -717,7 +719,7 @@ export default function TableProducts(
                             </Menu>
                             <Menu
                             // <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
-                              className={breakpointMD ? classes.menu : ""}
+                              className={breakpointMD ? classes.table_menu : ""}
                               //  className={classes.menu} 
                               id="demo-positioned-menu2"
                               aria-labelledby="demo-positioned-button2"
@@ -806,7 +808,7 @@ export default function TableProducts(
                             // value={filters[0].dataKey}
                             onChange={handleFilterChange}
                             disabled={ columnTable.dataKey==="url_image"}
-                            className={`${ columnTable.dataKey==="url_image" ? classes.disabled  : "" }`}
+                            className={`${ columnTable.dataKey==="url_image" ? classes.table_disabled  : "" }`}
                             maxRows={1}
                             size="small"
                             sx={{

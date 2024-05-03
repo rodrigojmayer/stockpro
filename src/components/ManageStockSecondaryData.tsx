@@ -216,7 +216,10 @@ export default function ManageStockSecondaryData(
                             className: classes.inputClassName,
                             inputMode: "numeric",
                             endAdornment: (
-                                <AttachMoneyRoundedIcon  sx={{ color: "rgb(45,72, 91, 1)" }} />
+                                <AttachMoneyRoundedIcon  
+                                    className= {classes.mainColor} 
+                                    // sx={{ color: "rgb(45,72, 91, 1)" }} 
+                                />
                             ),
                         }}
                         // inputRef={input => input && input.focus()}

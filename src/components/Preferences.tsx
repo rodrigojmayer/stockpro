@@ -212,7 +212,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                                     >
                                         {languagesArray.map((language) => (
                                             <MenuItem 
-                                                className={classes.menuItemUsers}
+                                                // className={classes.menuItemUsers}
                                                 key={language.id} 
                                                 value={language.id}
                                                 sx={{ justifyContent: "space-between" }}
@@ -235,7 +235,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                                     >
                                         {backgroundColorsArray.map((color) => (
                                             <MenuItem 
-                                                className={classes.menuItemUsers}
+                                                // className={classes.menuItemUsers}
                                                 key={color.id} 
                                                 value={color.id}
                                                 sx={{ justifyContent: "space-between" }}

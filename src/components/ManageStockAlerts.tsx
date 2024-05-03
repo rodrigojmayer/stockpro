@@ -112,9 +112,10 @@ export default function ManageStockAlerts(
                                         <Typography 
                                             align='center' 
                                             variant='h6' 
-                                            sx={{
-                                                color: "rgb(45,72, 91, 1)",
-                                            }}
+                                            className= {classes.mainColor}
+                                            // sx={{
+                                            //     color: "rgb(45,72, 91, 1)",
+                                            // }}
                                         >
                                             {stockMeasureTemp}
                                         </Typography>
@@ -154,9 +155,8 @@ export default function ManageStockAlerts(
                                             InputProps: {
                                             endAdornment: (
                                             <InputAdornment
-                                                sx={{
-                                                    color: "rgb(45,72, 91, 1)",
-                                                }}
+                                                className= {classes.mainColor} 
+                                                // sx={{ color: "rgb(45,72, 91, 1)" }} 
                                                 position="end"
                                             >
                                             <CalendarMonthRoundedIcon 

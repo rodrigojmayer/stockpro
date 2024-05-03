@@ -338,7 +338,7 @@ return (
             </Box>
             <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
                 <NavLink 
-                  style={{ color: '#c1e8fb' }}
+                  className={classes.link}
                   to=""
                   onClick={() => setOpenManageForgottenPass(true)}
 
@@ -346,7 +346,7 @@ return (
                   Forgot Password? 
                 </NavLink>
                   <NavLink 
-                    style={{ color: '#c1e8fb' }}
+                    className={classes.link}
                     to="/signup"
                   >
                     Sign Up 

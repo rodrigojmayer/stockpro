@@ -358,8 +358,7 @@ export default function SignUp () {
                                         By creating an account you agree to our 
                                         <br/>
                                         <NavLink 
-                                            // style={{ color: theme.palette.secondary.main }}
-                                            style={{ color: '#c1e8fb' }}
+                                            className={classes.link}
                                             to="/signup"
                                             onClick={() => setOpenConfirmTermsAndPrivacyModal(true)}
                                         >
@@ -400,8 +399,7 @@ export default function SignUp () {
                                 {/* <Box  */}
                                     Already have an account?
                                     <NavLink 
-                                        // style={{ color: theme.palette.secondary.main }}
-                                        style={{ color: '#c1e8fb' }}
+                                        className={classes.link}
                                         to="/login"
                                     >
                                         Login
