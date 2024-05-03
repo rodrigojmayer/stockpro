@@ -220,11 +220,11 @@ button:focus-visible {
   background-color: var(--second-color);
 } */
 
-body{
+/* body{ */
   /* background-color: blue; */
-  background-color: rgb(45, 72, 91, 1);
+  /* background-color: rgb(45, 72, 91, 1); */
   /* height: 100vh; */
-}
+/* } */
 
 @media (min-width:480px){
   .fsp-picker {
