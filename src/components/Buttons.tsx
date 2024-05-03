@@ -60,12 +60,6 @@ declare module '@mui/material/Button' {
   }
 }
 
-
-const colorOk = {
-  main: 'rgb(32, 205, 60, 1)',
-  // dark: 
-}
-
 const useStyles = makeStyles()({
   btnCommonStyle: {
     borderRadius: "10px",
@@ -569,46 +563,46 @@ export function UpButton({ sizeIco, roundedIco, cusField, clicked, direction }: 
   )
 }
 
-export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction }: ButtonProps ) {
-  sizeIco = "50px"
-  roundedIco = true
+// export function FolderButton({ sizeIco, roundedIco, cusField, clicked, direction }: ButtonProps ) {
+//   sizeIco = "50px"
+//   roundedIco = true
   
-  let fontIco = 35, noPadding, bor = 5, borRad
-  if(sizeIco) {
-    fontIco = (parseInt(sizeIco))
-    // bor = 3
-  }
-  if(roundedIco){
-    noPadding=0
-    borRad="50px !important"
-  } 
-  const handleClick = (() => {
-      clicked()
-  })
+//   let fontIco = 35, noPadding, bor = 5, borRad
+//   if(sizeIco) {
+//     fontIco = (parseInt(sizeIco))
+//     // bor = 3
+//   }
+//   if(roundedIco){
+//     noPadding=0
+//     borRad="50px !important"
+//   } 
+//   const handleClick = (() => {
+//       clicked()
+//   })
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Button
-        color="neutral"
-        sx={{  
-          // border: bor, 
-          padding:noPadding, 
-          paddingTop:0,  
-          paddingBottom:0, 
-          minWidth: sizeIco, 
-          width: sizeIco, 
-          height: sizeIco,
-          borderRadius: borRad,
-          color: "rgb(45,72, 91, 1)" ,
-        }}
-        onClick={handleClick}
-        >
-        <FolderOpenRoundedIcon></FolderOpenRoundedIcon>
-      </Button>
-    </ThemeProvider>
+//   return (
+//     <ThemeProvider theme={theme}>
+//       <Button
+//         color="neutral"
+//         sx={{  
+//           // border: bor, 
+//           padding:noPadding, 
+//           paddingTop:0,  
+//           paddingBottom:0, 
+//           minWidth: sizeIco, 
+//           width: sizeIco, 
+//           height: sizeIco,
+//           borderRadius: borRad,
+//           color: "rgb(45,72, 91, 1)" ,
+//         }}
+//         onClick={handleClick}
+//         >
+//         <FolderOpenRoundedIcon></FolderOpenRoundedIcon>
+//       </Button>
+//     </ThemeProvider>
 
-  )
-}
+//   )
+// }
 
 interface SelectImageButtonProps{
   imageUrlHandle:string

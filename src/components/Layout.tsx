@@ -9,11 +9,6 @@ const theme = createTheme({
       ].join(','),
       fontSize: 20,
     },
-    palette: {
-      secondary: {
-        main: '#c1e8fb',
-      },
-    },
     components: {
       MuiInputLabel: {
         styleOverrides: {

@@ -8,8 +8,8 @@ import { Container, Grid } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { MenuButton, PlusButton, UpdateButton } from './Buttons';
 import MenuOptions from './MenuOptions';
-import Fields from './Fields';
-import Alerts from './Alerts';
+// import Fields from './Fields';
+// import Alerts from './Alerts';
 import Profile from './Profile';
 import { ColumnData, Data, DataMenuOptions } from '../types';
 import Preferences from './Preferences';
@@ -122,10 +122,10 @@ export default function ModalsGroup(
                  handleClose={handleCloseMenu} 
                  onData = {handleOpenOptions}
             /> 
-            <Fields 
+            {/* <Fields 
                 open={openOptions.fields} 
                 handleClose={handleCloseOptions}  
-            /> 
+            />  */}
             {/* <Alerts 
                  open={openOptions.alerts} 
                  handleClose={handleCloseOptions} 
