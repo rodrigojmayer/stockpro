@@ -29,6 +29,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // import Cookies from 'js-cookie';
 import useAuth from './hooks/useAuth';
+import { useStylesGlobal } from './Styles';
 
 
 const theme = createTheme({
@@ -131,7 +132,9 @@ function App() {
   //   </GoogleOAuthProvider>
   // )
 
+  const { classes } = useStylesGlobal();
   return(
+    <div className={classes.mainBackGroundColor}>
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <Routes>
         <Route path="/" element={<Layout />} >
@@ -159,6 +162,7 @@ function App() {
         </Route>
       </Routes>
     </GoogleOAuthProvider>
+    </div>
   )
 }
 export default App
