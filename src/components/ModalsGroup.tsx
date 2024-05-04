@@ -15,42 +15,9 @@ import { ColumnData, Data, DataMenuOptions } from '../types';
 import Preferences from './Preferences';
 import Users from './Users';
 import MainSearch from './MainSearch';
+import { useStylesGlobal } from '../Styles';
 // import MassiveUpdateStock from './MassiveUpdateStock';
 
-const useStyles = makeStyles()({
-    appbar: {
-        position: "fixed",
-        left: 0,
-        bottom: 0,
-        backgroundColor: "rgb(18, 35, 46, 1)",
-        height: "64px",
-        display: "flex",
-        justifyContent: "center",
-    },
-    toolbar: {
-        height: "64px",
-        margin: "auto",
-    },
-    logo: {
-        flexGrow: 1,
-    },
-    page: {
-        padding: "12px !important",
-        margin: "0",
-
-    },
-    footer: {
-        left: 0,
-        bottom:  '64px',
-        color: "white",
-        backgroundColor: "rgb(255, 47, 47, .25)",
-        height: "32px",
-        width: '100%',
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-})
 const INITIAL_MENU_OPTIONS = {
     fields: false,
     alerts: false,
@@ -91,7 +58,7 @@ export default function ModalsGroup(
     }: ModalsGroupProps) {
     // export default function ModalsGroup( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
-    const { classes } = useStyles()
+    const { classes } = useStylesGlobal()
     const [test, setTest] = useState(false)
     const [openMenu, setOpenMenu] = useState(false);
     const handleOpenMenu = () => setOpenMenu(true);
@@ -147,13 +114,13 @@ export default function ModalsGroup(
                 open={openOptions.preferences}
                 handleClose={handleCloseOptions} 
             />
-            <AppBar className={classes.appbar}
+            <AppBar className={classes.menu_appbar}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
             >  
                 <Toolbar >
                     <Grid container  >
                         <Grid item xs={10} md={3} lg={2}  sx={{ marginTop: "7px"}}>
-                            <Typography variant= "h6" className={classes.logo}>
+                            <Typography variant= "h6" className={classes.menu_logo}>
                                 StockPro (Beta)
                                 {test}
                             </Typography>
@@ -193,11 +160,11 @@ export default function ModalsGroup(
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <Container className={classes.page}
+            <Container className={classes.menu_page}
                 sx={{
                     minHeight: `calc(100vh - ${(breakpointLG?"32px":"96px")})` }}
             >
-                <div className={(breakpointLG?classes.toolbar:"")}></div>
+                <div className={(breakpointLG?classes.menu_toolbar:"")}></div>
                 {children}
             </Container>
         </div>

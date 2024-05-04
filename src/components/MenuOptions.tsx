@@ -8,31 +8,7 @@ import { UserContext } from '../context/UserContext';
 import { useNavigate } from "react-router-dom"
 import useUser from '../hooks/useUser';
 import useLogout from '../hooks/useLogout';
-
-const styleMenuOptions = {
-    position: 'absolute',
-    '&  > :nth-of-type(1)': {
-        width: "100%",
-        height: "100%",
-    },
-    '& Button': {
-        color: "white",
-        height: "100%",
-    },
-};
-const styleMenuOptionsSM = {
-    bottom: 64,
-    width: "100%",
-    backgroundColor: "rgb(18, 35, 46, 1)",
-}
-const styleMenuOptionsLG = {
-    top: 64,
-    right: 0,
-    width: "15%",
-    backgroundColor: "rgb(38,55, 66, 1)",
-    height: "30%",
-    borderRadius: "0 0 10px 10px",
-};
+import { useStylesGlobal } from '../Styles';
 
 interface ChildProps {
     open:  boolean
@@ -42,6 +18,7 @@ interface ChildProps {
 
 export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     
+    const { classes } = useStylesGlobal()
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
     const { isLogged } = useUser()
@@ -96,10 +73,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
             }} // Set the custom background color here
         > 
             <Box 
-                sx={{
-                    ...styleMenuOptions, 
-                    ...(breakpointLG ? styleMenuOptionsLG : styleMenuOptionsSM)
-                }}
+                className={`${classes.menu_options} ${(breakpointLG ? classes.menu_options_LG : classes.menu_options_SM)}`}
                 height={height_box}
             >
                 <ButtonGroup 

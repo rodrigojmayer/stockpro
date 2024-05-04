@@ -3,7 +3,10 @@ import {  Theme } from '@mui/material/styles';
 
 const linkColor = '#c1e8fb';
 const mainColor = 'rgb(45, 72, 91, 1)';
+const mainColor3 = 'rgb(38,55, 66, 1)'; // is used just in the menu options with large screens
+
 const mainColorD = 'rgb(25, 54, 72)';
+const mainColorDD = 'rgb(18, 35, 46, 1)';
 // const mainColor = 'green';
 const rowEvenColor = 'rgb(69, 144, 186)';
 const rowOddColor = 'rgb(162, 199, 220)';
@@ -16,7 +19,6 @@ export const useStylesGlobal = makeStyles()({
         margin: "20px",
     },
     link: {
-        // color: '#c1e8fb',
         color: linkColor,
     },
     mainColor: {
@@ -352,6 +354,62 @@ export const useStylesGlobal = makeStyles()({
     title : {
         marginTop: "5px",
         marginBottom: "10px",
+    },
+    menu_appbar: {
+        position: "fixed",
+        left: 0,
+        bottom: 0,
+        backgroundColor: mainColorDD,
+        height: "64px",
+        display: "flex",
+        justifyContent: "center",
+    },
+    menu_toolbar: {
+        height: "64px",
+        margin: "auto",
+    },
+    menu_logo: {
+        flexGrow: 1,
+    },
+    menu_page: {
+        padding: "12px !important",
+        margin: "0",
+
+    },
+    menu_footer: {
+        left: 0,
+        bottom:  '64px',
+        color: "white",
+        backgroundColor: "rgb(255, 47, 47, .25)",
+        height: "32px",
+        width: '100%',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    menu_options : {
+        position: 'absolute',
+        '&  > :nth-of-type(1)': {
+            width: "100%",
+            height: "100%",
+        },
+        '& Button': {
+            color: "white",
+            height: "100%",
+        },
+    },
+    menu_options_SM : {
+        bottom: 64,
+        width: "100%",
+        backgroundColor: mainColorDD,
+    },
+    menu_options_LG : {
+        top: 64,
+        right: 0,
+        width: "15%",
+        backgroundColor: mainColor3,
+        height: "30%",
+        borderRadius: "0 0 10px 10px",
     },
     table_alert_on : {
         backgroundColor: "rgb(290, 10, 50, .6)", 
