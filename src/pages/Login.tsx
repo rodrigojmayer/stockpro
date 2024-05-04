@@ -232,7 +232,8 @@ useEffect(() => {
 
 return (
   <Modal 
-    sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+    className={classes.mainBackGroundColor}
+    // sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
     open={true} 
   > 
     <form

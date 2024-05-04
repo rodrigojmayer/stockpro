@@ -154,7 +154,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             }}
           >
             <div 
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.table_alert_on  : "" } ${classes.table_rows}`}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes.table_alert_on_background} ${classes.table_alert_on_color}`  : "" } ${classes.table_rows}`}
             >
                 {RowContent({column: column})}
             </div>

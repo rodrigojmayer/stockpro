@@ -1,6 +1,13 @@
 import { makeStyles } from 'tss-react/mui';
 import {  Theme } from '@mui/material/styles';
 
+
+// 0: Space blue
+// 1: Dark
+// 2: Light
+// 3: Minimal warm
+
+const _0linkColor = '#c1e8fb';
 const linkColor = '#c1e8fb';
 const mainColor = 'rgb(45, 72, 91, 1)';
 const mainColor3 = 'rgb(38,55, 66, 1)'; // is used just in the menu options with large screens
@@ -8,8 +15,14 @@ const mainColor3 = 'rgb(38,55, 66, 1)'; // is used just in the menu options with
 const mainColorD = 'rgb(25, 54, 72)';
 const mainColorDD = 'rgb(18, 35, 46, 1)';
 // const mainColor = 'green';
-const rowEvenColor = 'rgb(69, 144, 186)';
-const rowOddColor = 'rgb(162, 199, 220)';
+const tableHeaderColor = '#FFF';
+const tableAlertOnBackground = 'rgb(290, 10, 50, .6)';
+const tableAlertOnColor = '#FFF';
+const tableRowColor = '#222';
+const rowEvenBackground = 'rgb(69, 144, 186)';
+const rowOddBackground = 'rgb(162, 199, 220)';
+
+const menuItem = '#DCF2F1';
 
 export const useStylesGlobal = makeStyles()({
     finishButtons: {
@@ -411,21 +424,30 @@ export const useStylesGlobal = makeStyles()({
         height: "30%",
         borderRadius: "0 0 10px 10px",
     },
-    table_alert_on : {
-        backgroundColor: "rgb(290, 10, 50, .6)", 
-        color:"white",
+    table_header_color: {
+        color: tableHeaderColor,
+        '&.Mui-checked': {
+            color: tableHeaderColor,
+          },
     },
     table_rows : {
         padding: "8px 0",
         border:0,
     },
+    table_rows_color : {
+        color:tableRowColor,
+    },
+    table_alert_on_background : {
+        backgroundColor: tableAlertOnBackground, 
+    },
+    table_alert_on_color : {
+        color: tableAlertOnColor,
+    },
     table_row_even: {
-        // backgroundColor: "rgb(69, 144, 186)", 
-        backgroundColor: rowEvenColor, 
+        backgroundColor: rowEvenBackground, 
     },
     table_row_odd: {
-        // backgroundColor: "rgb(162, 199, 220)", 
-        backgroundColor: rowOddColor, 
+        backgroundColor: rowOddBackground, 
     },
     table_menu : {
         borderRadius: '4px', // Set border-radius to mimic scrollbar radius
@@ -435,12 +457,11 @@ export const useStylesGlobal = makeStyles()({
             borderRadius: '4px', // Set border-radius to mimic scrollbar radius
             // paddingRight: '12px',
             scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-            backgroundColor:"#DCF2F1",
-            // backgroundColor:"#DCF2F1",
+            backgroundColor: menuItem,
             scrollbarWidth: 'thin', // Hide scrollbar for Firefox
             '&:hover': {
                 scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-                backgroundColor:"#DCF2F1", 
+                backgroundColor: menuItem,
                 overflowY: 'auto', // Show scrollbar on hover
                 // paddingRight: '0',
                 overflowX: 'hidden',
@@ -450,8 +471,10 @@ export const useStylesGlobal = makeStyles()({
     table_disabled: {
         backgroundColor: "rgb(255,255, 255, .3)",
     },
-
-
+    menu_item: {
+        padding: '0 5px',
+        backgroundColor: menuItem,
+    }
 })
 
 // export const modalStyleExternal = {
@@ -610,12 +633,9 @@ export const modalStyleImageInternal = {
 //             borderRadius: '4px', // Set border-radius to mimic scrollbar radius
 //             // paddingRight: '12px',
 //             scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-//             backgroundColor:"#DCF2F1",
-//             // backgroundColor:"#DCF2F1",
 //             scrollbarWidth: 'thin', // Hide scrollbar for Firefox
 //             '&:hover': {
 //                 scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-//                 backgroundColor:"#DCF2F1", 
 //                 overflowY: 'auto', // Show scrollbar on hover
 //                 // paddingRight: '0',
 //                 overflowX: 'hidden',

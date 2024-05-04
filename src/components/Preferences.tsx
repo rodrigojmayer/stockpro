@@ -106,6 +106,11 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                         const responseData = await response.json() // parse the response data
                         // console.log('POST request successful: ', responseData)
                         loadingSuccess = true
+                        const updatedUser = {
+                            ...user,
+                            ...bodyUpdate
+                        }
+                        setUser(updatedUser)
                     } else {
                         // Handle non-successful responses
                         console.error('Request failed: ', response.status, response.statusText)

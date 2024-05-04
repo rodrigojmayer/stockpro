@@ -124,7 +124,7 @@ function rowContent(
           }}
         >
           <div 
-            className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.table_alert_on  : "" } ${classes.table_rows}`}
+            className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes.table_alert_on_background} ${classes.table_alert_on_color}`  : "" } ${classes.table_rows}  ${classes.table_rows_color}`}
           > 
           { ( column.dataKey === "check_stock" ) ? 
             <Checkbox 
@@ -133,9 +133,9 @@ function rowContent(
                 e.stopPropagation() // Prevent the click event from propagating to the parent cell
                 checkingRow(newRow._id)
               }}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes.table_alert_on_color  : classes.table_rows_color }`}
               sx={{
-                  padding: 0,
-                  color: `${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? blueGrey[50]  : "" }`
+                  padding: 0, 
               }}
               color="default"
             />
@@ -155,9 +155,10 @@ function rowContent(
                 }}
               >
                 <Typography noWrap 
-                sx={{
-                  padding: "0 4px ",
-                }}>
+                  sx={{
+                    padding: "0 4px ",
+                  }}
+                >
                   { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
                 </Typography>
               </Tooltip> 
@@ -596,17 +597,16 @@ export default function TableProducts(
                 {columnsTable.map((columnTable:any) => (
                   <TableCell
                     key={columnTable.id}
-                    variant="head"
+                    variant="head" 
                     align='center'
-                    className= {classes.mainBackGroundColorD}
+                    // className= {`${classes.mainBackGroundColorD} ${classes.table_header_color}`}
+                    className= {`${user.background_color === 0 ? classes.mainBackGroundColorD : ""} ${classes.table_header_color}`}
                     style={{ 
                       // width: "100px", 
                       width: columnTable.width, 
-                      // backgroundColor:"rgb(25, 54, 72)", 
                       border:0
                     }}
                     sx={{
-                      color: "white",
                       padding: "8px 0",
                     }}
                   >
@@ -627,16 +627,16 @@ export default function TableProducts(
                               onClick={
                                 openTableOptions
                               }
-                            style={{ 
-                              width: "30px", 
-                              border:0
-                            }}
-                            sx={{
-                              color: "white",
-                              padding: "0",
-                              //  paddingTop: "-10px",
-                              top: "-5px",
-                            }}
+                              className={classes.table_header_color}
+                              style={{ 
+                                width: "30px", 
+                                border:0
+                              }}
+                              sx={{
+                                padding: "0",
+                                //  paddingTop: "-10px",
+                                top: "-5px",
+                              }}
                             >
                               <MoreVertIcon fontSize="small" />
                             </IconButton>  
@@ -671,10 +671,7 @@ export default function TableProducts(
                             >
                               <MenuItem 
                                 onClick={() => handleAlertsOnTop()}
-                                  style={{
-                                    padding: '0 5px',
-                                    backgroundColor: "#DCF2F1",
-                                  }}
+                                className={classes.menu_item}
                               >
                                 <Typography 
                                   align="center" 
@@ -690,10 +687,7 @@ export default function TableProducts(
                               </MenuItem>
                               <MenuItem 
                                 onClick={ openSubTableOptions }
-                                style={{
-                                  padding: '0 5px',
-                                  backgroundColor: "#DCF2F1",
-                                }}
+                                className={classes.menu_item}
                               >
                                 <Typography 
                                   align="center" 
@@ -704,10 +698,7 @@ export default function TableProducts(
                               </MenuItem>
                               <MenuItem 
                                 onClick={ handleOpenCustomFieldsModal  }
-                                style={{
-                                  padding: '0 5px',
-                                  backgroundColor: "#DCF2F1",
-                                }}
+                                className={classes.menu_item}
                               >
                                 <Typography 
                                   align="center" 
@@ -750,12 +741,8 @@ export default function TableProducts(
                               {manageColumns.map((manageColumn:any) => (
                                 <MenuItem 
                                   key={manageColumn.id}
-                                  onClick={() => 
-                                    handlePickColumn(manageColumn)}
-                                  style={{
-                                    padding: '0 5px',
-                                    backgroundColor: "#DCF2F1",
-                                  }}
+                                  onClick={() => handlePickColumn(manageColumn) }
+                                  className={classes.menu_item}
                                 >
                                   <Typography 
                                     align="center" 
@@ -791,12 +778,13 @@ export default function TableProducts(
                             e.stopPropagation() // Prevent the click event from propagating to the parent cell
                             checkingAll()
                           }} 
+                          className={classes.table_header_color}
                           sx={{
-                            color: blueGrey[50],
+                            // color: blueGrey[50],
                             padding: 0,
-                            '&.Mui-checked': {
-                              color: blueGrey[50],
-                            },
+                            // '&.Mui-checked': {
+                              // color: blueGrey[50],
+                            // },
                           }}
                           // color="default"
                         />
