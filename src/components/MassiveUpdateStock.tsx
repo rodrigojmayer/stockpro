@@ -22,6 +22,7 @@ import  SaveChanges from './SaveChanges';
 import { useStylesGlobal as globalClasses, 
         modalStyleExternal, 
         modalStyleInternal, 
+        _0modal_background_color
         // tableStyles as tableClasses 
     } from '../Styles'
 import { DataCreateStockOptions, 
@@ -80,6 +81,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
     // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
   function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, writeValue:any, firstInputRef: any) {
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
+    console.log("newRow: ", newRow)
     const RowContent = (item:any) => {
         let lab
         if (item.column._id === 1){
@@ -129,7 +131,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
               >
                     <Typography noWrap 
                         sx={{
-                            padding: "0 4px ",
+                            padding: "7.78px 4px",
                         }}
                     >
                         { ( newRow[item.column.dataKey] || newRow[item.column.dataKey] === 0 ) ? newRow[item.column.dataKey] : "-"}
@@ -154,7 +156,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             }}
           >
             <div 
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes.table_alert_on_background} ${classes.table_alert_on_color}`  : "" } ${classes.table_rows}`}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes.table_alert_on_color}`  : "" } ${classes.table_rows}`}
             >
                 {RowContent({column: column})}
             </div>
@@ -302,6 +304,9 @@ export default function MassiveUpdateStock(
       update_amount: '',
       alert_amount: item.alert_amount,
       alert_amount_enabled: item.alert_amount_enabled,
+      alerted_amount: item.alerted_amount,
+      alerted_date: item.alerted_date,
+      alert_date_enabled: item.alert_date_enabled,
     }})
     const [filteredData, setFilteredData] = useState<any>(filteredFields)
     const close = () => {
@@ -416,7 +421,7 @@ export default function MassiveUpdateStock(
                 }}
             >
                 <Box sx={modalStyleExternal}>
-                    <Box sx={modalStyleInternal}>
+                    <Box sx={{...modalStyleInternal, ..._0modal_background_color}}>
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 
@@ -458,7 +463,7 @@ export default function MassiveUpdateStock(
                                                     key={column._id}
                                                     variant="head"
                                                     align='center'
-                                                    className= {classes.mainBackGroundColorD}
+                                                    className= {classes._0main_background_colorD}
                                                     style={{ 
                                                         width: column.width, 
                                                         // backgroundColor:"rgb(25, 54, 72)", 
