@@ -11,7 +11,7 @@ import { Box,
 import { OkButton } from "../components/Buttons";
 import SaveChanges from '../components/SaveChanges';
 import ErrorModal from '../components/ErrorModal';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal } from "../Styles";
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color, modalLoginInternal } from "../Styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { UserContext } from "../context/UserContext";
@@ -243,7 +243,7 @@ export default function SignUp () {
 
     return (
         <Modal 
-            className={classes.mainBackGroundColor}
+            className={classes._0main_background_color}
             // sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={true} 
         >
@@ -258,7 +258,7 @@ export default function SignUp () {
             >
                 <Paper style={{margin:0}} >
                     <Box sx={modalStyleSaveExternal}>
-                        <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+                        <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color, ...modalLoginInternal}}>
                             <SaveChanges
                                 openSaveChanges={openSaveChanges}
                                 closeSaveChanges={handleCloseSaveChanges} 
@@ -359,7 +359,7 @@ export default function SignUp () {
                                         By creating an account you agree to our 
                                         <br/>
                                         <NavLink 
-                                            className={classes.link}
+                                            className={classes._0link_color}
                                             to="/signup"
                                             onClick={() => setOpenConfirmTermsAndPrivacyModal(true)}
                                         >
@@ -400,7 +400,7 @@ export default function SignUp () {
                                 {/* <Box  */}
                                     Already have an account?
                                     <NavLink 
-                                        className={classes.link}
+                                        className={classes._0link_color}
                                         to="/login"
                                     >
                                         Login

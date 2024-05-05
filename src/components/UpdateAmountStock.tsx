@@ -30,7 +30,7 @@ import { OkButton,
 // import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 // import Checkbox from '@mui/material/Checkbox';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, _0modal_background_color } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../types';
 
 // import { CategoriesContext } from '../context/CategoriesContext';
@@ -334,7 +334,7 @@ export default function UpdateAmountStock(
                 }}
             >
                 <Box sx={modalStyleExternal}>
-                    <Box sx={modalStyleInternal}>
+                    <Box sx={{...modalStyleInternal, ..._0modal_background_color}}>
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 

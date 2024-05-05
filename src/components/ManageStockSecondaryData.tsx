@@ -217,8 +217,7 @@ export default function ManageStockSecondaryData(
                             inputMode: "numeric",
                             endAdornment: (
                                 <AttachMoneyRoundedIcon  
-                                    className= {classes.mainColor} 
-                                    // sx={{ color: "rgb(45,72, 91, 1)" }} 
+                                    className= {classes._0main_color} 
                                 />
                             ),
                         }}

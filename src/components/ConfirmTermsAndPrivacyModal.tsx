@@ -4,7 +4,7 @@ import { Box,
          Typography, 
         } from '@mui/material';
 import { CancelButton, OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalStyleInternal, modalStyleExternal, modalStyleInternalConfirmTermsAndPrivacy } from '../Styles'
+import { useStylesGlobal, modalStyleInternal, _0modal_background_color, modalStyleExternal, modalStyleInternalConfirmTermsAndPrivacy } from '../Styles'
 
 type ConfirmTermsAndPrivacyModalProps = {
     openConfirmTermsAndPrivacyModal: boolean;
@@ -30,7 +30,7 @@ export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPriva
             onClose={() => closeConfirmTermsAndPrivacyModal()}
         >
             <Box sx={modalStyleExternal}>
-                <Box sx={{...modalStyleInternal, ...modalStyleInternalConfirmTermsAndPrivacy}}>
+                <Box sx={{...modalStyleInternal, ..._0modal_background_color, ...modalStyleInternalConfirmTermsAndPrivacy}}>
                     <Box 
                         margin="5px"
                         component="div"

@@ -8,21 +8,21 @@ import {  Theme } from '@mui/material/styles';
 // 3: Minimal warm
 
 const _0linkColor = '#c1e8fb';
-const linkColor = '#c1e8fb';
-const mainColor = 'rgb(45, 72, 91, 1)';
-const mainColor3 = 'rgb(38,55, 66, 1)'; // is used just in the menu options with large screens
+const _0mainColor = 'rgb(45, 72, 91, 1)';
+const _0mainColor3 = 'rgb(38,55, 66, 1)'; // is used just in the menu options with large screens
+const _0mainColorD = 'rgb(25, 54, 72)';
+const _0mainColorDD = 'rgb(18, 35, 46, 1)';
+const _0tableHeaderColor = '#FFF';
+const _0tableAlertOnBackground = 'rgb(290, 10, 50, .6)';
+const _0tableAlertOnColor = '#FFF';
+const _0tableRowColor = '#222';
+const _0rowEvenBackground = 'rgb(69, 144, 186)';
+const _0rowOddBackground = 'rgb(162, 199, 220)';
+const _0menuItem = '#DCF2F1';
 
-const mainColorD = 'rgb(25, 54, 72)';
-const mainColorDD = 'rgb(18, 35, 46, 1)';
-// const mainColor = 'green';
-const tableHeaderColor = '#FFF';
-const tableAlertOnBackground = 'rgb(290, 10, 50, .6)';
-const tableAlertOnColor = '#FFF';
-const tableRowColor = '#222';
-const rowEvenBackground = 'rgb(69, 144, 186)';
-const rowOddBackground = 'rgb(162, 199, 220)';
+// ----------------------------------------
 
-const menuItem = '#DCF2F1';
+
 
 export const useStylesGlobal = makeStyles()({
     finishButtons: {
@@ -31,22 +31,22 @@ export const useStylesGlobal = makeStyles()({
         gap: 20,
         margin: "20px",
     },
-    link: {
-        color: linkColor,
+    _0link_color: {
+        color: _0linkColor,
     },
-    mainColor: {
-        color: mainColor,
+    _0main_color: {
+        color: _0mainColor,
+    },
+    _0main_background_color: {
+        backgroundColor: _0mainColor,
     },
     AppDiv: {
         height:"100vh",
         margin: "0",
         padding: "0",
     },
-    mainBackGroundColor: {
-        backgroundColor: mainColor,
-    },
-    mainBackGroundColorD: {
-        backgroundColor: mainColorD,
+    _0main_background_colorD: {
+        backgroundColor: _0mainColorD,
     },
     // formControlUsers: {
     //     width: "300px",
@@ -377,10 +377,12 @@ export const useStylesGlobal = makeStyles()({
         position: "fixed",
         left: 0,
         bottom: 0,
-        backgroundColor: mainColorDD,
         height: "64px",
         display: "flex",
         justifyContent: "center",
+    },
+    _0main_background_colorDD: {
+        backgroundColor: _0mainColorDD,
     },
     menu_toolbar: {
         height: "64px",
@@ -419,40 +421,42 @@ export const useStylesGlobal = makeStyles()({
     menu_options_SM : {
         bottom: 64,
         width: "100%",
-        backgroundColor: mainColorDD,
     },
     menu_options_LG : {
         top: 64,
         right: 0,
         width: "15%",
-        backgroundColor: mainColor3,
         height: "30%",
         borderRadius: "0 0 10px 10px",
     },
-    table_header_color: {
-        color: tableHeaderColor,
+    _0background_color3 : {
+        backgroundColor: _0mainColor3,
+    },
+    
+    _0table_header_color: {
+        color: _0tableHeaderColor,
         '&.Mui-checked': {
-            color: tableHeaderColor,
+            color: _0tableHeaderColor,
           },
     },
     table_rows : {
         padding: "8px 0",
         border:0,
     },
-    table_rows_color : {
-        color:tableRowColor,
+    _0table_rows_color : {
+        color:_0tableRowColor,
     },
-    table_alert_on_background : {
-        backgroundColor: tableAlertOnBackground, 
+    _0table_alert_on_background : {
+        backgroundColor: _0tableAlertOnBackground, 
     },
-    table_alert_on_color : {
-        color: tableAlertOnColor,
+    _0table_alert_on_color : {
+        color: _0tableAlertOnColor,
     },
-    table_row_even: {
-        backgroundColor: rowEvenBackground, 
+    _0table_row_even: {
+        backgroundColor: _0rowEvenBackground, 
     },
-    table_row_odd: {
-        backgroundColor: rowOddBackground, 
+    _0table_row_odd: {
+        backgroundColor: _0rowOddBackground, 
     },
     table_menu : {
         borderRadius: '4px', // Set border-radius to mimic scrollbar radius
@@ -462,15 +466,21 @@ export const useStylesGlobal = makeStyles()({
             borderRadius: '4px', // Set border-radius to mimic scrollbar radius
             // paddingRight: '12px',
             scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-            backgroundColor: menuItem,
             scrollbarWidth: 'thin', // Hide scrollbar for Firefox
             '&:hover': {
                 scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-                backgroundColor: menuItem,
                 overflowY: 'auto', // Show scrollbar on hover
                 // paddingRight: '0',
                 overflowX: 'hidden',
             },
+        },
+    },
+    _0table_menu_background_color : {
+        '& .MuiPaper-root': { 
+            backgroundColor: _0menuItem,
+            '&:hover': {
+                backgroundColor: _0menuItem,
+             },
         },
     },
     table_disabled: {
@@ -478,9 +488,12 @@ export const useStylesGlobal = makeStyles()({
     },
     menu_item: {
         padding: '0 5px',
-        backgroundColor: menuItem,
+    },
+    // menu_item: {
+    _0menu_item_background_color: {
+        backgroundColor: _0menuItem,
         '&:hover': {
-            backgroundColor: menuItem,
+            backgroundColor: _0menuItem,
         },
     }
 })
@@ -530,8 +543,6 @@ export const modalStyleInternal = {
     width: "calc(100% - 50px)",
     // maxHeight: "520px",
     maxHeight: "85vh",
-    // backgroundColor: "rgb(45,72, 91, 1)",
-    backgroundColor: mainColor,
     borderRadius: "10px",
     padding: "5px",
     color: "white",
@@ -546,8 +557,9 @@ export const modalStyleInternal = {
 };
 export const modalStyleInternalConfirmTermsAndPrivacy = {
     maxWidth: "900px",
-    // backgroundColor: "rgb(45,72, 91, 1)",
-    backgroundColor: mainColor,
+}
+export const _0modal_background_color = {
+    backgroundColor: _0mainColor,
 }
 export const modalStyleInternalForgottenPass = {
     width: "280px",
@@ -576,8 +588,6 @@ export const modalStyleSaveExternal = {
 export const modalStyleSaveInternal = {
     top: 74,
     width: "220px",
-    // backgroundColor: "rgb(45,72, 91, 1)",
-    backgroundColor: mainColor,
     borderRadius: "10px",
     margin: "auto",
     padding: "3px",
@@ -591,8 +601,6 @@ export const modalStyleSaveInternal = {
 export const modalStyleErrorInternal = {
     top: 74,
     width: "270px",
-    // backgroundColor: "rgb(45,72, 91, 1)",
-    backgroundColor: mainColor,
     borderRadius: "10px",
     margin: "auto",
     padding: "3px",

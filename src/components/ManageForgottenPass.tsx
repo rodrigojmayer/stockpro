@@ -6,7 +6,7 @@ import { Box,
 import { OkButton, 
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalStyleInternalForgottenPass, modalStyleInternal } from '../Styles'; 
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color, modalStyleInternalForgottenPass } from '../Styles'; 
 import { useEffect, useState } from 'react';
 import ErrorModal from './ErrorModal';
 import SaveChanges from './SaveChanges';
@@ -292,7 +292,7 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
             onClose={handleCloseManageForgottenPass}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={{...modalStyleErrorInternal, ...modalStyleInternalForgottenPass}}>
+                <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color, ...modalStyleInternalForgottenPass}}>
                     <form onKeyDown={(e:any) => {
                         if (e.key === "Enter") {
                             e.preventDefault();

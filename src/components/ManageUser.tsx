@@ -11,7 +11,7 @@ import { OkButton,
          DeleteButton
         } from './Buttons';
 import SaveChanges from './SaveChanges';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, _0modal_background_color } from '../Styles'
 import { DataCreateStockOptions, ColumnData, UserEditData } from '../types';
 import { AccessLevelsContext } from '../context/AccessLevelsContext';
 import { UserContext } from '../context/UserContext';
@@ -420,7 +420,7 @@ export default function ManageUser(
                 }}
             >
                 <Box sx={modalStyleExternal}>
-                    <Box sx={modalStyleInternal}>
+                    <Box sx={{...modalStyleInternal, ..._0modal_background_color}}>
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 

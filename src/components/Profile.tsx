@@ -34,7 +34,7 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, _0modal_background_color } from '../Styles'
 import { ColumnData, ColumnDataCustom, ChildProps, UserEditData } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
@@ -272,7 +272,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                 }}
                 >
                 <Box sx={modalStyleExternal}>
-                    <Box sx={modalStyleInternal}>
+                    <Box sx={{...modalStyleInternal, ..._0modal_background_color}}>
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 

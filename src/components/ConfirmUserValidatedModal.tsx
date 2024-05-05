@@ -3,7 +3,7 @@ import { Box,
          Typography, 
         } from '@mui/material';
 import { OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
 import Paper from '@mui/material/Paper/Paper';
 
 type ConfirmUserValidatedModalProps = {
@@ -34,7 +34,7 @@ export default function ConfirmUserValidatedModal( props: ConfirmUserValidatedMo
         > 
             <Paper style={{margin:0}} >
                 <Box sx={modalStyleSaveExternal}>
-                    <Box sx={modalStyleErrorInternal}>
+                    <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}>
                         <Box 
                             margin="20px 10px"
                         >

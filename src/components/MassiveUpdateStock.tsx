@@ -147,7 +147,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
           <TableCell
             key={column._id}
             align='center'
-            className={`${ _index%2 ? classes.table_row_odd  : classes.table_row_even }`}
+            className={`${ _index%2 ? classes._0table_row_odd  : classes._0table_row_even }`}
             style={{ 
                border:0,
             }}
@@ -156,7 +156,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             }}
           >
             <div 
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes.table_alert_on_color}`  : "" } ${classes.table_rows}`}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}`}
             >
                 {RowContent({column: column})}
             </div>

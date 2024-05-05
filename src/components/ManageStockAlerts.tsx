@@ -112,7 +112,7 @@ export default function ManageStockAlerts(
                                         <Typography 
                                             align='center' 
                                             variant='h6' 
-                                            className= {classes.mainColor}
+                                            className= {classes._0main_color}
                                             // sx={{
                                             //     color: "rgb(45,72, 91, 1)",
                                             // }}
@@ -155,7 +155,7 @@ export default function ManageStockAlerts(
                                             InputProps: {
                                             endAdornment: (
                                             <InputAdornment
-                                                className= {classes.mainColor} 
+                                                className= {classes._0main_color} 
                                                 // sx={{ color: "rgb(45,72, 91, 1)" }} 
                                                 position="end"
                                             >

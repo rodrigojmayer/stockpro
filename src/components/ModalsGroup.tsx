@@ -114,7 +114,7 @@ export default function ModalsGroup(
                 open={openOptions.preferences}
                 handleClose={handleCloseOptions} 
             />
-            <AppBar className={classes.menu_appbar}
+            <AppBar className={`${classes.menu_appbar} ${classes._0main_background_colorDD}`}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
             >  
                 <Toolbar >

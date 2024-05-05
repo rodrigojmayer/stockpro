@@ -7,7 +7,7 @@ import { Box,
 import { OkButton,
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal, modalStyleExternal, modalStyleInternal, modalStyleChangePassExternal, modalStyleChangePassInternal } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, _0modal_background_color, modalStyleChangePassExternal, modalStyleChangePassInternal } from '../Styles'
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import { CheckListStockContext } from '../context/CheckListStockContext';
@@ -205,7 +205,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                 }}
             >
                 <Box sx={{...modalStyleExternal, ...modalStyleChangePassExternal}}>
-                    <Box sx={{...modalStyleInternal, ...modalStyleChangePassInternal}}>
+                    <Box sx={{...modalStyleInternal, ..._0modal_background_color, ...modalStyleChangePassInternal}}>
                     
                         <SaveChanges
                             openSaveChanges={openSaveChanges}

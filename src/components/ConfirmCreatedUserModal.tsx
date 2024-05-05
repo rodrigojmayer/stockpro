@@ -4,7 +4,7 @@ import { Box,
          Typography, 
         } from '@mui/material';
 import { OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
 import Slider from '@mui/material/Slider';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { styled } from '@mui/material/styles';
@@ -63,7 +63,7 @@ export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalP
             onClose={() => closeConfirmCreatedUserModal()}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleErrorInternal}>
+                <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}>
                     <Box 
                         margin="20px 10px"
                     >

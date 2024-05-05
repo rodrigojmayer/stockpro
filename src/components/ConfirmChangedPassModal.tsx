@@ -4,7 +4,7 @@ import { Box,
          Typography, 
         } from '@mui/material';
 import { OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
 
 type ConfirmChangedPassModalProps = {
     openConfirmChangedPassModal: boolean;
@@ -26,7 +26,7 @@ export default function ConfirmChangedPassModal( props: ConfirmChangedPassModalP
             onClose={() => closeConfirmChangedPassModal()}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleErrorInternal}>
+                <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}>
                     <Box 
                         margin="20px 10px"
                     >

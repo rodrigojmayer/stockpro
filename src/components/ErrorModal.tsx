@@ -5,7 +5,7 @@ import { Box,
 import { 
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
 // import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -138,7 +138,7 @@ export default function ErrorModal( props: ErrorModalProps) {
                 }}
             >
                 <Box sx={modalStyleSaveExternal}>
-                    <Box sx={modalStyleErrorInternal}>
+                    <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}>
                         <Typography align="center" variant="h6" >
                             {title}
                         </Typography>

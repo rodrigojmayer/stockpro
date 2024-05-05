@@ -5,7 +5,7 @@ import { Box,
 import { OkButton,
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal, _0modal_background_color } from '../Styles'
 
 
 type SaveChangesProps = {
@@ -35,7 +35,7 @@ export default function SaveChanges( props: SaveChangesProps) {
                 }}
             >
                 <Box sx={modalStyleSaveExternal}>
-                    <Box sx={modalStyleSaveInternal}>
+                    <Box sx={{ ...modalStyleSaveInternal, ..._0modal_background_color }}>
                         <Typography align="center" variant="h6" className={classes.title}>
                             Save changes?
                         </Typography>

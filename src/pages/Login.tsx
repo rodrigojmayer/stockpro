@@ -12,7 +12,7 @@ import { Box,
         } from '@mui/material';
 import { OkButton } from '../components/Buttons';
 import ErrorModal from '../components/ErrorModal';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal  } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color, modalLoginInternal  } from '../Styles'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { UserContext } from '../context/UserContext';
@@ -232,7 +232,7 @@ useEffect(() => {
 
 return (
   <Modal 
-    className={classes.mainBackGroundColor}
+    className={classes._0main_background_color}
     // sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
     open={true} 
   > 
@@ -247,7 +247,7 @@ return (
     >
       <Paper style={{ margin: 0 }}>
         <Box sx={modalStyleSaveExternal}>
-          <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal}}>
+          <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal, ..._0modal_background_color}}>
             <ErrorModal
               openErrorModal={openErrorModal}
               closeErrorModal={handleCloseErrorModal}
@@ -339,7 +339,7 @@ return (
             </Box>
             <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
                 <NavLink 
-                  className={classes.link}
+                  className={classes._0link_color}
                   to=""
                   onClick={() => setOpenManageForgottenPass(true)}
 
@@ -347,7 +347,7 @@ return (
                   Forgot Password? 
                 </NavLink>
                   <NavLink 
-                    className={classes.link}
+                    className={classes._0link_color}
                     to="/signup"
                   >
                     Sign Up 

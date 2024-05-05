@@ -135,7 +135,7 @@ function App() {
   const { classes } = useStylesGlobal();
   return(
     <div 
-    className={`${classes.mainBackGroundColor} ${classes.AppDiv}`}
+    className={`${classes._0main_background_color} ${classes.AppDiv}`}
     >
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <Routes>

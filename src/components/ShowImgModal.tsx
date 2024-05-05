@@ -4,7 +4,7 @@ import { Box,
          Typography, 
         } from '@mui/material';
 // import { OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalStyleImageExternal, modalStyleImageInternal } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleImageExternal, modalStyleImageInternal } from '../Styles'
 
 type ConfirmChangedPassModalProps = {
     openShowImgModal: boolean;

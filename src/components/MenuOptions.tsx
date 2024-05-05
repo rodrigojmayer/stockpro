@@ -73,7 +73,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
             }} // Set the custom background color here
         > 
             <Box 
-                className={`${classes.menu_options} ${(breakpointLG ? classes.menu_options_LG : classes.menu_options_SM)}`}
+                className={`${classes.menu_options} ${(breakpointLG ? `${classes.menu_options_LG} ${classes._0background_color3}` : `${classes.menu_options_SM} ${classes._0main_background_colorDD}`)}`}
                 height={height_box}
             >
                 <ButtonGroup 

@@ -4,7 +4,7 @@ import { Box,
          Typography, 
         } from '@mui/material';
 import { CancelButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 
@@ -107,7 +107,7 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
         onClose={() => closeConfirmDeleteModal()}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={modalStyleErrorInternal}>
+                <Box sx={{ ...modalStyleErrorInternal, ..._0modal_background_color }}>
                     <Typography className={classes.finishButtons} align="center" >
                         {subTitle}
                     </Typography> 
