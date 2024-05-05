@@ -580,13 +580,13 @@ export default function TableProducts(
         open={openCustomFieldsModal} 
         handleClose={handleCloseCustomFieldsModal}  
     /> 
-    <Paper style={{ height: `calc(100dvh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
+    <Paper style={{backgroundColor: "rgb(0, 0, 0, 0)", height: `calc(100dvh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
       <TableVirtuoso 
         data={sortedData}
         components={VirtuosoTableComponents}
         style={{
-          backgroundColor: "rgb(45, 72, 91)", 
-          // backgroundColor: "rgb(45, 72, 91, 0)", 
+          // backgroundColor: "rgb(45, 72, 91)", 
+          backgroundColor: "rgb(0, 0, 0, 0)", 
           borderRadius: "10px", 
           scrollbarWidth: "none",
           cursor: "pointer"

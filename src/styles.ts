@@ -37,6 +37,11 @@ export const useStylesGlobal = makeStyles()({
     mainColor: {
         color: mainColor,
     },
+    AppDiv: {
+        height:"100vh",
+        margin: "0",
+        padding: "0",
+    },
     mainBackGroundColor: {
         backgroundColor: mainColor,
     },
@@ -474,6 +479,9 @@ export const useStylesGlobal = makeStyles()({
     menu_item: {
         padding: '0 5px',
         backgroundColor: menuItem,
+        '&:hover': {
+            backgroundColor: menuItem,
+        },
     }
 })
 

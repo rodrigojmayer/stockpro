@@ -436,6 +436,7 @@ export default function MassiveUpdateStock(
                                 maxWidth: '90%',
                                 margin: "12px auto 0 auto" ,
                                 borderRadius: "10px",
+                                backgroundColor: "rgb(0, 0, 0, 0)", 
                             }}
                         > 
                             <div style={{ overflow: 'auto', height: '100%' }}>
@@ -443,8 +444,8 @@ export default function MassiveUpdateStock(
                                     data={filteredData}
                                     components={VirtuosoTableComponents}
                                     style={{
-                                        backgroundColor: "rgb(45, 72, 91)", 
-                                        // backgroundColor: "rgb(45, 72, 91, 0)", 
+                                        // backgroundColor: "rgb(45, 72, 91)", 
+                                        backgroundColor: "rgb(0, 0, 0, 0)", 
                                         borderRadius: "10px",
                                         margin: "-1px",
                                         scrollbarWidth: "none" 
