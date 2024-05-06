@@ -1,10 +1,11 @@
-import { useState, useEffect, SetStateAction, Dispatch } from 'react';
+import { useState, useEffect, SetStateAction, Dispatch, useContext } from 'react';
 import { Box, 
          Modal, 
          Typography, 
         } from '@mui/material';
 import { CancelButton, OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleInternal, _0modal_background_color, modalStyleExternal, modalStyleInternalConfirmTermsAndPrivacy } from '../Styles'
+import { useStylesGlobal, modalStyleInternal, modalStyleExternal, modalStyleInternalConfirmTermsAndPrivacy } from '../Styles'
+import { UserContext } from '../context/UserContext';
 
 type ConfirmTermsAndPrivacyModalProps = {
     openConfirmTermsAndPrivacyModal: boolean;
@@ -14,6 +15,7 @@ type ConfirmTermsAndPrivacyModalProps = {
 export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPrivacyModalProps) {
     const { openConfirmTermsAndPrivacyModal, closeConfirmTermsAndPrivacyModal, handleSetTermsAndPrivacy } = props;
     const { classes } = useStylesGlobal();
+    const { user } = useContext<any>(UserContext);
     const handleOkButton = async() => {
         handleSetTermsAndPrivacy(true)
         closeConfirmTermsAndPrivacyModal(true)
@@ -30,7 +32,12 @@ export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPriva
             onClose={() => closeConfirmTermsAndPrivacyModal()}
         >
             <Box sx={modalStyleExternal}>
-                <Box sx={{...modalStyleInternal, ..._0modal_background_color, ...modalStyleInternalConfirmTermsAndPrivacy}}>
+                {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color, ...modalStyleInternalConfirmTermsAndPrivacy}}> */}
+                {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true}, ...modalStyleInternalConfirmTermsAndPrivacy}}> */}
+                <Box 
+                    sx={{ ...modalStyleInternal }}
+                    className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                >
                     <Box 
                         margin="5px"
                         component="div"

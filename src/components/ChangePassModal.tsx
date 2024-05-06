@@ -7,7 +7,7 @@ import { Box,
 import { OkButton,
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal, _0modal_background_color, modalStyleChangePassExternal, modalStyleChangePassInternal } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, modalStyleChangePassExternal, modalStyleChangePassInternal } from '../Styles'
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import { CheckListStockContext } from '../context/CheckListStockContext';
@@ -205,7 +205,12 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                 }}
             >
                 <Box sx={{...modalStyleExternal, ...modalStyleChangePassExternal}}>
-                    <Box sx={{...modalStyleInternal, ..._0modal_background_color, ...modalStyleChangePassInternal}}>
+                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color, ...modalStyleChangePassInternal}}> */}
+                    {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true}, ...modalStyleChangePassInternal}}> */}
+                    <Box 
+                        sx={{...modalStyleInternal }}
+                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    >
                     
                         <SaveChanges
                             openSaveChanges={openSaveChanges}

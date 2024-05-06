@@ -7,7 +7,7 @@ import {  Theme } from '@mui/material/styles';
 // 2: Light
 // 3: Minimal warm
 
-const _0linkColor = '#c1e8fb';
+const _0linkColor = '#c1e8fb';  // Is used without a user so it should be only one
 const _0mainColor = 'rgb(45, 72, 91, 1)';
 const _0mainColor3 = 'rgb(38,55, 66, 1)'; // is used just in the menu options with large screens
 const _0mainColorD = 'rgb(25, 54, 72)';
@@ -22,6 +22,17 @@ const _0menuItem = '#DCF2F1';
 
 // ----------------------------------------
 
+const _1mainColor = 'rgb(75, 72, 91, 1)';
+const _1mainColor3 = 'rgb(608,505, 66, 1)'; // is used just in the menu options with large screens
+const _1mainColorD = 'rgb(405, 54, 72)';////////
+const _1mainColorDD = 'rgb(38, 35, 46, 1)';
+const _1tableHeaderColor = '#000';
+const _1tableAlertOnBackground = 'rgb(20, 10, 50, .6)';
+const _1tableAlertOnColor = '#FFF';
+const _1tableRowColor = '#222';
+const _1rowEvenBackground = 'rgb(619, 144, 186)';
+const _1rowOddBackground = 'rgb(12, 19, 220)';
+const _1menuItem = '#F2F1';
 
 
 export const useStylesGlobal = makeStyles()({
@@ -37,8 +48,14 @@ export const useStylesGlobal = makeStyles()({
     _0main_color: {
         color: _0mainColor,
     },
+    _1main_color: {
+        color: _1mainColor,
+    },
     _0main_background_color: {
         backgroundColor: _0mainColor,
+    },
+    _1main_background_color: {
+        backgroundColor: _1mainColor,
     },
     AppDiv: {
         height:"100vh",
@@ -47,6 +64,9 @@ export const useStylesGlobal = makeStyles()({
     },
     _0main_background_colorD: {
         backgroundColor: _0mainColorD,
+    },
+    _1main_background_colorD: {
+        backgroundColor: _1mainColorD,
     },
     // formControlUsers: {
     //     width: "300px",
@@ -384,6 +404,9 @@ export const useStylesGlobal = makeStyles()({
     _0main_background_colorDD: {
         backgroundColor: _0mainColorDD,
     },
+    _1main_background_colorDD: {
+        backgroundColor: _1mainColorDD,
+    },
     menu_toolbar: {
         height: "64px",
         margin: "auto",
@@ -432,16 +455,24 @@ export const useStylesGlobal = makeStyles()({
     _0background_color3 : {
         backgroundColor: _0mainColor3,
     },
-    
+    _1background_color3 : {
+        backgroundColor: _1mainColor3,
+    },
     _0table_header_color: {
         color: _0tableHeaderColor,
         '&.Mui-checked': {
             color: _0tableHeaderColor,
+        },
+    },
+    _1table_header_color: {
+        color: _1tableHeaderColor,
+        '&.Mui-checked': {
+            color: _1tableHeaderColor,
           },
     },
     table_rows : {
         padding: "8px 0",
-        border:0,
+        border: 0,
     },
     _0table_rows_color : {
         color:_0tableRowColor,
@@ -457,6 +488,21 @@ export const useStylesGlobal = makeStyles()({
     },
     _0table_row_odd: {
         backgroundColor: _0rowOddBackground, 
+    },
+    _1table_rows_color : {
+        color:_1tableRowColor,
+    },
+    _1table_alert_on_background : {
+        backgroundColor: _1tableAlertOnBackground, 
+    },
+    _1table_alert_on_color : {
+        color: _1tableAlertOnColor,
+    },
+    _1table_row_even: {
+        backgroundColor: _1rowEvenBackground, 
+    },
+    _1table_row_odd: {
+        backgroundColor: _1rowOddBackground, 
     },
     table_menu : {
         borderRadius: '4px', // Set border-radius to mimic scrollbar radius
@@ -483,6 +529,14 @@ export const useStylesGlobal = makeStyles()({
              },
         },
     },
+    _1table_menu_background_color : {
+        '& .MuiPaper-root': { 
+            backgroundColor: _1menuItem,
+            '&:hover': {
+                backgroundColor: _1menuItem,
+             },
+        },
+    },
     table_disabled: {
         backgroundColor: "rgb(255,255, 255, .3)",
     },
@@ -495,7 +549,19 @@ export const useStylesGlobal = makeStyles()({
         '&:hover': {
             backgroundColor: _0menuItem,
         },
-    }
+    },
+    _1menu_item_background_color: {
+        backgroundColor: _1menuItem,
+        '&:hover': {
+            backgroundColor: _1menuItem,
+        },
+    },
+    //  _0modal_background_color: {
+    //     backgroundColor: _0mainColor,
+    // },
+    // _1modal_background_color: {
+    //     backgroundColor: _1mainColor,
+    // },
 })
 
 // export const modalStyleExternal = {
@@ -558,9 +624,12 @@ export const modalStyleInternal = {
 export const modalStyleInternalConfirmTermsAndPrivacy = {
     maxWidth: "900px",
 }
-export const _0modal_background_color = {
-    backgroundColor: _0mainColor,
-}
+// export const _0modal_background_color = {
+//     backgroundColor: _0mainColor,
+// }
+// export const _1modal_background_color = {
+//     backgroundColor: _1mainColor,
+// }
 export const modalStyleInternalForgottenPass = {
     width: "280px",
 }

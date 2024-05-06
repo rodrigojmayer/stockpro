@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { Box, 
          Modal, 
          Typography, 
         } from '@mui/material';
 import { OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
+import { UserContext } from '../context/UserContext';
 
 type ConfirmChangedPassModalProps = {
     openConfirmChangedPassModal: boolean;
@@ -13,6 +14,7 @@ type ConfirmChangedPassModalProps = {
 export default function ConfirmChangedPassModal( props: ConfirmChangedPassModalProps) {
     const { openConfirmChangedPassModal, closeConfirmChangedPassModal } = props;
     const { classes } = useStylesGlobal();
+    const { user } = useContext<any>(UserContext);
     
     
     const handleOkButton = async() => {
@@ -26,7 +28,12 @@ export default function ConfirmChangedPassModal( props: ConfirmChangedPassModalP
             onClose={() => closeConfirmChangedPassModal()}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}>
+                {/* <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}> */}
+                {/* <Box sx={{ ...modalStyleErrorInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
+                <Box 
+                    sx={{ ...modalStyleErrorInternal }}
+                    className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                >
                     <Box 
                         margin="20px 10px"
                     >

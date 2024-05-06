@@ -1,10 +1,12 @@
+import { useContext } from 'react';
 import { Box, 
          Modal, 
-         Typography, 
+         Typography
         } from '@mui/material';
 import { OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
 import Paper from '@mui/material/Paper/Paper';
+import { UserContext } from '../context/UserContext';
 
 type ConfirmUserValidatedModalProps = {
     openConfirmUserValidatedModal: boolean;
@@ -14,6 +16,7 @@ type ConfirmUserValidatedModalProps = {
 export default function ConfirmUserValidatedModal( props: ConfirmUserValidatedModalProps) {
     const { openConfirmUserValidatedModal, closeConfirmUserValidatedModal, textData } = props;
     const { classes } = useStylesGlobal();
+    const { user } = useContext<any>(UserContext);
     
     const handleOkButton = async() => {
         closeConfirmUserValidatedModal(true)
@@ -34,7 +37,12 @@ export default function ConfirmUserValidatedModal( props: ConfirmUserValidatedMo
         > 
             <Paper style={{margin:0}} >
                 <Box sx={modalStyleSaveExternal}>
-                    <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}>
+                    {/* <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}> */}
+                    {/* <Box sx={{...modalStyleErrorInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
+                    <Box 
+                        sx={{ ...modalStyleErrorInternal }}
+                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    >
                         <Box 
                             margin="20px 10px"
                         >

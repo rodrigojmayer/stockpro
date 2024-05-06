@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Box, 
          Modal, 
          Typography, 
         } from '@mui/material';
 import { OkButton } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
 import Slider from '@mui/material/Slider';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 
 // const PrettoSlider = styled(Slider)({
@@ -48,6 +49,7 @@ type ConfirmCreatedUserModalProps = {
 export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalProps) {
     const { openConfirmCreatedUserModal, closeConfirmCreatedUserModal } = props;
     const { classes } = useStylesGlobal();
+    const { user } = useContext<any>(UserContext);
     
     const navigate = useNavigate();
     
@@ -63,7 +65,12 @@ export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalP
             onClose={() => closeConfirmCreatedUserModal()}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}>
+                {/* <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}> */}
+                {/* <Box sx={{ ...modalStyleErrorInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
+                <Box 
+                    sx={{ ...modalStyleErrorInternal }}
+                    className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                >
                     <Box 
                         margin="20px 10px"
                     >

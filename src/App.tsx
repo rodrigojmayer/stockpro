@@ -12,7 +12,7 @@ import Layout from './components/Layout';
 // import ManageStock from './components/ManageStock';
 // import UpdateAmountStock from './components/UpdateAmountStock';
 // import { Data, ColumnData, CustomValueData, UserData, ProductUpdateData } from './types';
-// import { UserContext } from './context/UserContext';
+import { UserContext } from './context/UserContext';
 import { IsLoadingContext } from './context/IsLoadingContext';
 // import { ColumnsContext } from './context/ColumnsContext';
 // import { ProductsContext } from './context/ProductsContext';
@@ -45,7 +45,7 @@ const theme = createTheme({
 
 function App() {
   const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
-  // const { user } = useContext<any>(UserContext);
+  const { user } = useContext<any>(UserContext);
 
   const { setIsLoading } = useContext<any>(IsLoadingContext);
   // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
@@ -135,7 +135,8 @@ function App() {
   const { classes } = useStylesGlobal();
   return(
     <div 
-    className={`${classes._0main_background_color} ${classes.AppDiv}`}
+      // className={`${classes._0main_background_color} ${classes.AppDiv}`}
+      className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes.AppDiv}`} 
     >
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <Routes>
