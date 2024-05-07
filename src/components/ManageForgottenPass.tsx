@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Box, 
          Modal, 
          TextField, 
@@ -6,7 +7,7 @@ import { Box,
 import { OkButton, 
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color, modalStyleInternalForgottenPass } from '../Styles'; 
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalStyleInternalForgottenPass } from '../Styles'; 
 import { useEffect, useState } from 'react';
 import ErrorModal from './ErrorModal';
 import SaveChanges from './SaveChanges';
@@ -14,6 +15,7 @@ import ManageForgottenPass1EnterEmail from './ManageForgottenPass1EnterEmail';
 import ManageForgottenPass2EnterVerificationCode from './ManageForgottenPass2EnterVerificationCode';
 import ManageForgottenPass3ChangePass from './ManageForgottenPass3ChangePass';
 import ConfirmChangedPassModal from './ConfirmChangedPassModal';
+import { UserContext } from '../context/UserContext';
 
 const INITIAL_FORGOTTENPASS_OPTIONS:any = {
     enterEmail: true,  
@@ -29,6 +31,7 @@ type ManageForgottenPassProps = {
 export default function ManageForgottenPass( props: ManageForgottenPassProps) {
     const { openManageForgottenPass, closeManageForgottenPass } = props;
     const { classes } = useStylesGlobal();
+    const { user } = useContext<any>(UserContext);
     const [emailForgottenPass, setEmailForgottenPass] = useState<string>("")
     const [verificationCode, setVerificationCode] = useState<string>("")
     const [newPass, setNewPass] = useState<string>("")
@@ -292,7 +295,12 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
             onClose={handleCloseManageForgottenPass}
         > 
             <Box sx={modalStyleSaveExternal}>
-                <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color, ...modalStyleInternalForgottenPass}}>
+                {/* <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color, ...modalStyleInternalForgottenPass}}> */}
+                {/* <Box sx={{...modalStyleErrorInternal, ...{[`_${user.background_color}modal_background_color`]: true}, ...modalStyleInternalForgottenPass}}> */}
+                <Box 
+                    sx={{ ...modalStyleErrorInternal }}
+                    className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                >
                     <form onKeyDown={(e:any) => {
                         if (e.key === "Enter") {
                             e.preventDefault();

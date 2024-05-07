@@ -18,6 +18,7 @@ import { FilestackContext } from '../context/FilestackContext';
 import { PickerOverlay } from 'filestack-react';
 // import {  TransformOptions } from 'filestack-js'; 
 import IonTrash from "../assets/ion_trash.svg";
+import { UserContext } from '../context/UserContext';
 
 // import * as filestack from 'filestack-js';
 // declare module 'filestack' {
@@ -54,6 +55,7 @@ export default function ManageStockSecondaryData(
     }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null)
+    const { user } = useContext<any>(UserContext);
 
     useEffect(() => {
         if (!hiddenPanel) {
@@ -217,7 +219,9 @@ export default function ManageStockSecondaryData(
                             inputMode: "numeric",
                             endAdornment: (
                                 <AttachMoneyRoundedIcon  
-                                    className= {classes._0main_color} 
+                                    // className= {classes._0main_color} 
+                                    className={classes[`_${user.background_color}main_color` as keyof typeof classes]} 
+                                            
                                 />
                             ),
                         }}

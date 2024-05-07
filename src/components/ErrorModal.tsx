@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Box,
          Modal, 
          Typography,
@@ -5,9 +6,10 @@ import { Box,
 import { 
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
 // import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 type ErrorModalProps = {
     openErrorModal: boolean;
@@ -17,6 +19,7 @@ type ErrorModalProps = {
 export default function ErrorModal( props: ErrorModalProps) {
     const { openErrorModal, closeErrorModal, errorData } = props;
     const { classes } = useStylesGlobal();
+    const { user } = useContext<any>(UserContext);
     let title = ""
     let subTitle = ""
     const navigate = useNavigate()
@@ -138,7 +141,12 @@ export default function ErrorModal( props: ErrorModalProps) {
                 }}
             >
                 <Box sx={modalStyleSaveExternal}>
-                    <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}>
+                    {/* <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}> */}
+                    {/* <Box sx={{...modalStyleErrorInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
+                    <Box 
+                        sx={{ ...modalStyleErrorInternal }}
+                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    >
                         <Typography align="center" variant="h6" >
                             {title}
                         </Typography>

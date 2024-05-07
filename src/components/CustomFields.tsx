@@ -22,7 +22,7 @@ import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import { ColumnData, ColumnDataCustom, ChildProps } from '../types';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal, _0modal_background_color } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { ColumnsContext } from '../context/ColumnsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext'
@@ -358,7 +358,12 @@ export default function Fields(
                 }} 
             >
                 <Box sx={modalStyleExternal}>
-                    <Box sx={{...modalStyleInternal, ..._0modal_background_color}}>
+                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color}}> */}
+                    {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
+                    <Box 
+                        sx={{ ...modalStyleInternal }}
+                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    >
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 

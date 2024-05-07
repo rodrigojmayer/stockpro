@@ -12,7 +12,7 @@ import  ManageStockSecondaryData  from './ManageStockSecondaryData'
 import  ManageStockAlerts  from './ManageStockAlerts'
 import  ManageStockCustomFields  from './ManageStockCustomFields'
 import  SaveChanges from './SaveChanges';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal, _0modal_background_color } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData, ProductEditData } from '../types';
 import { CategoriesContext } from '../context/CategoriesContext';
 import { MeasuresContext } from '../context/MeasuresContext';
@@ -481,7 +481,12 @@ export default function ManageStock(
                 }}
             >
                 <Box sx={modalStyleExternal}>
-                    <Box sx={{...modalStyleInternal, ..._0modal_background_color, overflow: 'visible'}}>
+                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color, overflow: 'visible'}}> */}
+                    {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true}, overflow: 'visible'}}> */}
+                    <Box 
+                        sx={{ ...modalStyleInternal }}
+                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    >
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 

@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';// Import dayjs
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Box,
          Grid,
          TextField,
@@ -16,6 +16,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import useMediaQuery from '@mui/material/useMediaQuery'
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import Switch from '@mui/material/Switch';
+import { UserContext } from '../context/UserContext';
 
 interface ChildProps {
     hiddenPanel:  boolean
@@ -47,6 +48,7 @@ export default function ManageStockAlerts(
     const breakpointLG = useMediaQuery('(min-width:1024px)')
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null)
+    const { user } = useContext<any>(UserContext); 
 
     useEffect(() => {
         if (!hiddenPanel) {
@@ -112,7 +114,8 @@ export default function ManageStockAlerts(
                                         <Typography 
                                             align='center' 
                                             variant='h6' 
-                                            className= {classes._0main_color}
+                                            // className= {classes._0main_color}
+                                            className={classes[`_${user.background_color}main_color` as keyof typeof classes]} 
                                             // sx={{
                                             //     color: "rgb(45,72, 91, 1)",
                                             // }}
@@ -155,7 +158,8 @@ export default function ManageStockAlerts(
                                             InputProps: {
                                             endAdornment: (
                                             <InputAdornment
-                                                className= {classes._0main_color} 
+                                                // className= {classes._0main_color} 
+                                                className={classes[`_${user.background_color}main_color` as keyof typeof classes]} 
                                                 // sx={{ color: "rgb(45,72, 91, 1)" }} 
                                                 position="end"
                                             >

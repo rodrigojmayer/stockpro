@@ -211,7 +211,6 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                         sx={{...modalStyleInternal }}
                         className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
                     >
-                    
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 
