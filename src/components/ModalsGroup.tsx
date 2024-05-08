@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,6 +17,7 @@ import Users from './Users';
 import MainSearch from './MainSearch';
 import { useStylesGlobal } from '../Styles';
 // import MassiveUpdateStock from './MassiveUpdateStock';
+import { UserContext } from '../context/UserContext';
 
 const INITIAL_MENU_OPTIONS = {
     fields: false,
@@ -59,6 +60,7 @@ export default function ModalsGroup(
     // export default function ModalsGroup( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { classes } = useStylesGlobal()
+    const { user } = useContext<any>(UserContext);
     const [test, setTest] = useState(false)
     const [openMenu, setOpenMenu] = useState(false);
     const handleOpenMenu = () => setOpenMenu(true);
@@ -114,7 +116,9 @@ export default function ModalsGroup(
                 open={openOptions.preferences}
                 handleClose={handleCloseOptions} 
             />
-            <AppBar className={`${classes.menu_appbar} ${classes._0main_background_colorDD}`}
+            <AppBar 
+                // className={`${classes.menu_appbar} ${classes._0main_background_colorDD}`}
+                className={`${classes.menu_appbar} ${classes[`_${user.background_color}main_background_colorDD` as keyof typeof classes]}`}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
             >  
                 <Toolbar >

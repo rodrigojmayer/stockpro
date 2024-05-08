@@ -22,7 +22,6 @@ import  SaveChanges from './SaveChanges';
 import { useStylesGlobal as globalClasses, 
         modalStyleExternal, 
         modalStyleInternal, 
-        _0modal_background_color
         // tableStyles as tableClasses 
     } from '../Styles'
 import { DataCreateStockOptions, 
@@ -79,7 +78,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   // const { classes } = useStylesGlobal()
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
     // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, writeValue:any, firstInputRef: any) {
+  function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, writeValue:any, firstInputRef: any, user_background_color: any) {
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
     console.log("newRow: ", newRow)
     const RowContent = (item:any) => {
@@ -147,7 +146,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
           <TableCell
             key={column._id}
             align='center'
-            className={`${ _index%2 ? classes._0table_row_odd  : classes._0table_row_even }`}
+            // className={`${ _index%2 ? classes._0table_row_odd  : classes._0table_row_even }`}
+            className={`${ _index%2 ? classes[`_${user_background_color}table_row_odd` as keyof typeof classes]  : classes[`_${user_background_color}table_row_even` as keyof typeof classes] }`}
             style={{ 
                border:0,
             }}
@@ -156,7 +156,9 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             }}
           >
             <div 
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}`}
+            //   className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}`}
+            //   className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}`}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]}`  : "" } ${classes.table_rows}`}
             >
                 {RowContent({column: column})}
             </div>
@@ -421,8 +423,13 @@ export default function MassiveUpdateStock(
                 }}
             >
                 <Box sx={modalStyleExternal}>
-                    <Box sx={{...modalStyleInternal, ..._0modal_background_color}}>
-                        <SaveChanges
+                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color}}> */}
+                    {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
+                    <Box 
+                        sx={{ ...modalStyleInternal }}
+                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    >
+                       <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 
                             messageBeforeSave={messageBeforeSave}
@@ -463,7 +470,8 @@ export default function MassiveUpdateStock(
                                                     key={column._id}
                                                     variant="head"
                                                     align='center'
-                                                    className= {classes._0main_background_colorD}
+                                                    // className= {classes._0main_background_colorD}
+                                                    className= {classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]}
                                                     style={{ 
                                                         width: column.width, 
                                                         // backgroundColor:"rgb(25, 54, 72)", 
@@ -483,7 +491,7 @@ export default function MassiveUpdateStock(
                                         );
                                     }}
                                     itemContent={(index: number) =>
-                                        rowContent(index, filteredData[index], columns, classes, writeValue, firstInputRef) 
+                                        rowContent(index, filteredData[index], columns, classes, writeValue, firstInputRef, user.background_color) 
                                     }
                                 />
                             </div>
