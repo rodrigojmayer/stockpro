@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Box,
          Modal, 
          Typography,
@@ -5,7 +6,8 @@ import { Box,
 import { OkButton,
          CancelButton, 
         } from './Buttons';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal, _0modal_background_color } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal } from '../Styles'
+import { UserContext } from '../context/UserContext';
 
 
 type SaveChangesProps = {
@@ -16,6 +18,7 @@ type SaveChangesProps = {
 export default function SaveChanges( props: SaveChangesProps) {
     const { openSaveChanges, closeSaveChanges, messageBeforeSave } = props;
     const { classes } = useStylesGlobal();
+    const { user } = useContext<any>(UserContext);
     // console.log("props: ", props)
 
     return (
@@ -35,7 +38,12 @@ export default function SaveChanges( props: SaveChangesProps) {
                 }}
             >
                 <Box sx={modalStyleSaveExternal}>
-                    <Box sx={{ ...modalStyleSaveInternal, ..._0modal_background_color }}>
+                    {/* <Box sx={{ ...modalStyleSaveInternal, ..._0modal_background_color }}> */}
+                    {/* <Box sx={{ ...modalStyleSaveInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
+                    <Box 
+                        sx={{ ...modalStyleSaveInternal }}
+                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    >
                         <Typography align="center" variant="h6" className={classes.title}>
                             Save changes?
                         </Typography>

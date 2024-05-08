@@ -76,6 +76,7 @@ function rowContent(
     checkListStock:any, 
     checkingRow:(id_row: any) => void,
     handleOpenShowImg:(selectedImgUrlHandle: string) => void,
+    user_background_color:any,
   ) {
 
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
@@ -115,7 +116,8 @@ function rowContent(
               "alert_date_enabled": newRow.alert_date_enabled, 
               "alerted_date": newRow.alerted_date, 
               "newRow": newRow})}
-          className={`${ _index%2 ? classes._0table_row_odd  : classes._0table_row_even }`}
+          // className={`${ _index%2 ? classes._0table_row_odd  : classes._0table_row_even }`}
+          className={`${ _index%2 ? classes[`_${user_background_color}table_row_odd` as keyof typeof classes]  : classes[`_${user_background_color}table_row_even` as keyof typeof classes] }`}
           style={{ 
              border:0,
           }}
@@ -124,7 +126,10 @@ function rowContent(
           }}
         >
           <div 
-            className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}  ${classes._0table_rows_color}`}
+            // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}  ${classes._0table_rows_color}`}
+            // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}  ${classes._0table_rows_color}`}
+            // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]}`  : "" } ${classes.table_rows}  ${classes._0table_rows_color}`}
+            className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]}`  : "" } ${classes.table_rows}  ${classes[`_${user_background_color}table_rows_color` as keyof typeof classes]}`}
           > 
           { ( column.dataKey === "check_stock" ) ? 
             <Checkbox 
@@ -133,7 +138,9 @@ function rowContent(
                 e.stopPropagation() // Prevent the click event from propagating to the parent cell
                 checkingRow(newRow._id)
               }}
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes._0table_alert_on_color  : classes._0table_rows_color }`}
+              // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes._0table_alert_on_color  : classes._0table_rows_color }`}
+              // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]  : classes._0table_rows_color }`}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]  : classes[`_${user_background_color}table_rows_color` as keyof typeof classes] }`}
               sx={{
                   padding: 0, 
               }}
@@ -599,8 +606,9 @@ export default function TableProducts(
                     key={columnTable.id}
                     variant="head" 
                     align='center'
-                    // className= {`${classes._0main_background_colorD} ${classes._0table_header_color}`}
-                    className= {`${user.background_color === 0 ? classes._0main_background_colorD : ""} ${classes._0table_header_color}`}
+                    // className= {`${classes._0main_background_colorD } ${classes._1table_header_color}`}
+                    // className= {`${user.background_color === 0 ? classes[`_${user.background_color}main_background_colorD` as keyof typeof classes] : ""} ${classes._0table_header_color}`}
+                    className= {`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]}`}
                     style={{ 
                       // width: "100px", 
                       width: columnTable.width, 
@@ -627,7 +635,8 @@ export default function TableProducts(
                               onClick={
                                 openTableOptions
                               }
-                              className={classes._0table_header_color}
+                              // className={classes._0table_header_color}
+                              className={classes[`_${user.background_color}table_header_color` as keyof typeof classes]}
                               style={{ 
                                 width: "30px", 
                                 border:0
@@ -671,7 +680,8 @@ export default function TableProducts(
                             >
                               <MenuItem 
                                 onClick={() => handleAlertsOnTop()}
-                                className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
                               >
                                 <Typography 
                                   align="center" 
@@ -687,7 +697,8 @@ export default function TableProducts(
                               </MenuItem>
                               <MenuItem 
                                 onClick={ openSubTableOptions }
-                                className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
                               >
                                 <Typography 
                                   align="center" 
@@ -698,7 +709,8 @@ export default function TableProducts(
                               </MenuItem>
                               <MenuItem 
                                 onClick={ handleOpenCustomFieldsModal  }
-                                className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
                               >
                                 <Typography 
                                   align="center" 
@@ -710,7 +722,8 @@ export default function TableProducts(
                             </Menu>
                             <Menu
                             // <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
-                              className={breakpointMD ? `${classes.table_menu} ${classes._0table_menu_background_color}` : ""}
+                              // className={breakpointMD ? `${classes.table_menu} ${classes._0table_menu_background_color}` : ""}
+                              className={breakpointMD ? `${classes.table_menu} ${classes[`_${user.background_color}table_menu_background_color` as keyof typeof classes]}` : ""}
                               //  className={classes.menu} 
                               id="demo-positioned-menu2"
                               aria-labelledby="demo-positioned-button2"
@@ -742,7 +755,8 @@ export default function TableProducts(
                                 <MenuItem 
                                   key={manageColumn.id}
                                   onClick={() => handlePickColumn(manageColumn) }
-                                  className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                  // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                  className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
                                 >
                                   <Typography 
                                     align="center" 
@@ -778,7 +792,8 @@ export default function TableProducts(
                             e.stopPropagation() // Prevent the click event from propagating to the parent cell
                             checkingAll()
                           }} 
-                          className={classes._0table_header_color}
+                          // className={classes._0table_header_color}
+                          className={classes[`_${user.background_color}table_header_color` as keyof typeof classes]}
                           sx={{
                             // color: blueGrey[50],
                             padding: 0,
@@ -827,7 +842,8 @@ export default function TableProducts(
               openUpdateAmountStock, 
               checkListStock, 
               checkingRow,
-              handleOpenShowImg
+              handleOpenShowImg,
+              user.background_color
           ) 
           // rowContent(index, filteredData[index], columnsTable)
         }
