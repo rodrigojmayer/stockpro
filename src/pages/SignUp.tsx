@@ -11,7 +11,7 @@ import { Box,
 import { OkButton } from "../components/Buttons";
 import SaveChanges from '../components/SaveChanges';
 import ErrorModal from '../components/ErrorModal';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color, modalLoginInternal } from "../Styles";
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal } from "../Styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { UserContext } from "../context/UserContext";
@@ -28,6 +28,7 @@ export default function SignUp () {
     const postUser = useAddUser(); 
     
     const { classes } = useStylesGlobal();
+    const {  user } = useContext<any>(UserContext);
     // const { isLogged, login }
     const { INITIAL_USER, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
     const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
@@ -41,7 +42,7 @@ export default function SignUp () {
     const [openSaveChanges, setOpenSaveChanges] = useState(false);
     const [openErrorModal, setOpenErrorModal] = useState(false);
     const [errorData, setErrorData] = useState("");
-    const [user, setUser] = useState("");
+    const [userState, setUser] = useState("");
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
@@ -107,7 +108,7 @@ export default function SignUp () {
         setUser(value)
         // setRememberUser((prevRememberUser: RememberUserData) => ({
         //     ...prevRememberUser,
-        //     user: value
+        //     userState: value
         // }))
         setErrorTextFields((prevErrorTextFields: any) => ({
             ...prevErrorTextFields,
@@ -150,7 +151,7 @@ export default function SignUp () {
             "confirmPass": false,
             "termsAndPrivacy": false
         });
-        if(user===""){
+        if(userState===""){
             setOpenErrorModal(true)
             setErrorData("missing_user_name")
             setErrorTextFields((prevErrorTextFields: any) => ({
@@ -200,7 +201,7 @@ export default function SignUp () {
             bodyCreate.alerts_enabled = false
             bodyCreate.ordered_fields = [-1,-2,-3,-4,-5]
             // bodyCreate.id_access_level = 3
-            bodyCreate.user = user
+            bodyCreate.user = userState
             bodyCreate.email = email
             bodyCreate.enabled = true
             bodyCreate.pass = pass
@@ -243,7 +244,9 @@ export default function SignUp () {
 
     return (
         <Modal 
-            className={classes._0main_background_color}
+            // className={classes._0main_background_color}
+            className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+            // className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]} 
             // sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
             open={true} 
         >
@@ -258,7 +261,11 @@ export default function SignUp () {
             >
                 <Paper style={{margin:0}} >
                     <Box sx={modalStyleSaveExternal}>
-                        <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color, ...modalLoginInternal}}>
+                        {/* <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color, ...modalLoginInternal}}> */}
+                        <Box 
+                            sx={{ ...modalStyleErrorInternal, ...modalLoginInternal }}
+                            className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                        >
                             <SaveChanges
                                 openSaveChanges={openSaveChanges}
                                 closeSaveChanges={handleCloseSaveChanges} 
@@ -288,7 +295,7 @@ export default function SignUp () {
                                 <Box className={classes.customBoxRow}>
                                     <TextField
                                         label="Username"
-                                        value={user}
+                                        value={userState}
                                         onChange={ (event:any) => handleUser(event.target.value)}
                                         maxRows={1}
                                         size="small"

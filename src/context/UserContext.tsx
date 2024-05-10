@@ -20,7 +20,7 @@ const INITIAL_USER = {
   enabled: true,
   ordered_fields: [],
   language: NaN,
-  background_color: NaN,
+  background_color: 0,
   alerts_enabled: false,
 };
 

@@ -22,17 +22,17 @@ const _0menuItem = '#DCF2F1';
 
 // ----------------------------------------
 
-const _1mainColor = 'rgb(75, 72, 91, 1)';
-const _1mainColor3 = 'rgb(608,505, 66, 1)'; // is used just in the menu options with large screens
-const _1mainColorD = 'rgb(405, 54, 72)';////////
-const _1mainColorDD = 'rgb(38, 35, 46, 1)';
-const _1tableHeaderColor = '#000';
-const _1tableAlertOnBackground = 'rgb(20, 10, 50, .6)';
+const _1mainColor = 'rgb(80, 80, 80, 1)';
+const _1mainColor3 = 'rgb(10, 10, 10, 1)'; // is used just in the menu options with large screens
+const _1mainColorD = 'rgb(20, 20, 20, 1)';////////
+const _1mainColorDD = 'rgb(4, 1, 1, 1)';
+const _1tableHeaderColor = '#FFF';
+const _1tableAlertOnBackground = 'rgb(200, 10, 50, .6)';
 const _1tableAlertOnColor = '#FFF';
-const _1tableRowColor = '#222';
-const _1rowEvenBackground = 'rgb(619, 144, 186)';
-const _1rowOddBackground = 'rgb(12, 19, 220)';
-const _1menuItem = '#F2F1';
+const _1tableRowColor = '#FFF';
+const _1rowEvenBackground = 'rgb(120, 120, 120)';
+const _1rowOddBackground = 'rgb(60, 60, 60)';
+const _1menuItem = 'rgb(200, 200, 200)';
 
 
 export const useStylesGlobal = makeStyles()({

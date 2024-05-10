@@ -12,7 +12,7 @@ import { Box,
         } from '@mui/material';
 import { OkButton } from '../components/Buttons';
 import ErrorModal from '../components/ErrorModal';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, _0modal_background_color, modalLoginInternal  } from '../Styles'
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal  } from '../Styles'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { UserContext } from '../context/UserContext';
@@ -30,7 +30,7 @@ export default function Login () {
 
   const { classes } = useStylesGlobal();
   const { loginUser } = useUser()
-  const { setGmailUserLogged } = useContext<any>(UserContext); 
+  const { setGmailUserLogged, user } = useContext<any>(UserContext); 
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const { setCheckListStock } = useContext<any>(CheckListStockContext);
   
@@ -232,7 +232,9 @@ useEffect(() => {
 
 return (
   <Modal 
-    className={classes._0main_background_color}
+    // className={classes._0main_background_color}
+    className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+    // className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]} 
     // sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
     open={true} 
   > 
@@ -247,7 +249,11 @@ return (
     >
       <Paper style={{ margin: 0 }}>
         <Box sx={modalStyleSaveExternal}>
-          <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal, ..._0modal_background_color}}>
+          {/* <Box sx={{...modalStyleErrorInternal, ...modalLoginInternal, ..._0modal_background_color}}> */}
+          <Box 
+              sx={{ ...modalStyleErrorInternal, ...modalLoginInternal }}
+              className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+          >
             <ErrorModal
               openErrorModal={openErrorModal}
               closeErrorModal={handleCloseErrorModal}
@@ -339,7 +345,8 @@ return (
             </Box>
             <Box className={classes.customBoxRowSpaceAround} sx={{ typography: 'subtitle2' }}>
                 <NavLink 
-                  className={classes._0link_color}
+                  // className={classes[`_${user.background_color}link_color` as keyof typeof classes]} 
+                  className={classes._0link_color} 
                   to=""
                   onClick={() => setOpenManageForgottenPass(true)}
 
@@ -347,7 +354,8 @@ return (
                   Forgot Password? 
                 </NavLink>
                   <NavLink 
-                    className={classes._0link_color}
+                    className={classes._0link_color}   
+                    // className={classes[`_${user.background_color}link_color` as keyof typeof classes]}   
                     to="/signup"
                   >
                     Sign Up 
