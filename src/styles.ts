@@ -1,6 +1,5 @@
 import { makeStyles } from 'tss-react/mui';
-import {  Theme } from '@mui/material/styles';
-
+import {  Theme, createTheme } from '@mui/material/styles';
 
 // 0: Space blue
 // 1: Dark
@@ -9,6 +8,7 @@ import {  Theme } from '@mui/material/styles';
 
 const _0linkColor = '#c1e8fb';  // Is used without a user so it should be only one
 const _0mainColor = 'rgb(45, 72, 91, 1)';
+const _0mainColorLighter = 'rgb(115, 142, 161, 1)';
 const _0mainColor3 = 'rgb(38,55, 66, 1)'; // is used just in the menu options with large screens
 const _0mainColorD = 'rgb(25, 54, 72)';
 const _0mainColorDD = 'rgb(18, 35, 46, 1)';
@@ -20,9 +20,21 @@ const _0rowEvenBackground = 'rgb(69, 144, 186)';
 const _0rowOddBackground = 'rgb(162, 199, 220)';
 const _0menuItem = '#DCF2F1';
 
+const _0succesMain = 'rgb(32, 205, 60, 1)';
+const _0succesContrastText = 'rgb(32, 205, 60, .2)';
+const _0succesDark = 'rgb(2, 145, 10, 1)';
+const _0warningMain = 'rgb(255, 47, 47, 1)';
+const _0warningContrastText = 'rgb(255, 47, 47, .2)';
+const _0warningDark = 'rgb(155, 27, 27, 1)';
+const _0neutralMain = 'rgb(255, 255, 255, 1)';
+const _0neutralContrastText = 'rgb(255, 255, 255, .2)';
+const _0neutralDark = 'rgb(155, 155, 155, 1)';
+const _0plusIcon = 'rgb(77, 168, 218, 1)';
+
 // ----------------------------------------
 
 const _1mainColor = 'rgb(80, 80, 80, 1)';
+const _1mainColorLighter = 'rgb(130, 130, 130, 1)';
 const _1mainColor3 = 'rgb(10, 10, 10, 1)'; // is used just in the menu options with large screens
 const _1mainColorD = 'rgb(20, 20, 20, 1)';////////
 const _1mainColorDD = 'rgb(4, 1, 1, 1)';
@@ -34,8 +46,61 @@ const _1rowEvenBackground = 'rgb(120, 120, 120)';
 const _1rowOddBackground = 'rgb(60, 60, 60)';
 const _1menuItem = 'rgb(200, 200, 200)';
 
+const _1succesMain = 'rgb(144,238,144, 1)';
+const _1succesContrastText = 'rgb(144,238,144, .2)';
+const _1succesDark = 'rgb(0,255,127, 1)';
+const _1warningMain = 'rgb(250, 128, 114, 1)';
+const _1warningContrastText = 'rgb(250, 128, 114, .2)';
+const _1warningDark = 'rgb(255, 160, 122, 1)';
+const _1neutralMain = 'rgb(200, 200, 200, 1)';
+const _1neutralContrastText = 'rgb(200, 200, 200, .2)';
+const _1neutralDark = 'rgb(155, 155, 155, 1)';
+
+const _1plusIcon = 'rgb(97, 358, 258, 1)';
+// const _1plusIcon = 'rgb(153, 255, 208, 1)';
+// const _1plusIcon = 'rgb(120, 120, 120, 1)';
+
+export const _0themeGlobal = createTheme({
+    palette: {
+      success: {
+        main: _0succesMain,
+        contrastText: _0succesContrastText,
+      },
+      warning: {
+        main: _0warningMain,
+        contrastText: _0warningContrastText,
+      },
+      neutral: {
+        main: _0neutralMain,
+        contrastText: _0neutralContrastText,
+        dark: _0neutralDark,
+      },
+    },
+});
+export const _1themeGlobal = createTheme({
+    palette: {
+        success: {
+            main: _1succesMain,
+            contrastText: _1succesContrastText,
+        },
+        warning: {
+            main: _1warningMain,
+            contrastText: _1warningContrastText,
+        },
+        neutral: {
+            main: _1neutralMain,
+            contrastText: _1neutralContrastText,
+            dark: _1neutralDark,
+        },
+    },
+});
 
 export const useStylesGlobal = makeStyles()({
+    
+    modal_external_background:{
+        backgroundColor: 'rgba(900, 900, 900, .1)',
+        backdropFilter: "blur(1px)",
+    },
     finishButtons: {
         display: "flex",
         justifyContent:  "center",
@@ -53,9 +118,13 @@ export const useStylesGlobal = makeStyles()({
     },
     _0main_background_color: {
         backgroundColor: _0mainColor,
+        backgroundImage: `linear-gradient(45deg, ${_0mainColor} 50%, ${_0mainColorLighter})`,
+        boxShadow: `-20px 20px 20px 2px ${_1mainColorDD} `,
     },
     _1main_background_color: {
         backgroundColor: _1mainColor,
+        backgroundImage: `linear-gradient(45deg, ${_1mainColor} 50%, ${_1mainColorLighter}) `,
+        boxShadow: `-20px 20px 20px 2px ${_1mainColorDD} `,
     },
     AppDiv: {
         height:"100vh",
@@ -68,37 +137,6 @@ export const useStylesGlobal = makeStyles()({
     _1main_background_colorD: {
         backgroundColor: _1mainColorD,
     },
-    // formControlUsers: {
-    //     width: "300px",
-    //     backgroundColor: "rgb(255,255, 255, .1)",
-    //     borderRadius: "10px",
-    //     "& .MuiOutlinedInput-root": {
-    //         "& fieldset": {
-    //         },
-    //         '&.Mui-focused': {
-    //             },
-    //         "&.Mui-focused fieldset": {
-    //         }
-    //     }
-    // },
-    // selectUsers: {
-    // },
-    // inputLabelUsers: {
-    // },
-    // stackUsers: {
-    // },
-    // chipUsers: {
-    //     backgroundColor: "rgb(255,255, 255, .8)",
-    // },
-    // cancelIconUsers: {
-    //     '& > *': {
-    //         color: 'rgb(255, 47, 47, .9)',
-    //     }
-    // },
-    // menuItemUsers: {
-    //     "&.Mui-selected": {
-    //     },
-    // },
     customBoxColumn: { 
         margin: "0 auto",
         display: "flex",
@@ -119,9 +157,6 @@ export const useStylesGlobal = makeStyles()({
         
     },
     scrollBarHide: {
-        // paddingRight: '11px',
-        // paddingRight: "auto",
-        // overflow: 'hidden', // Hide any overflow
         overflow: 'auto', // Hide any overflow
         scrollbarWidth: 'thin', // Hide scrollbar for Firefox
         scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
@@ -230,16 +265,6 @@ export const useStylesGlobal = makeStyles()({
         borderRadius: 10,
         // autoComplete: 'new-password',
     },
-    // table: {
-    //     width: "calc(100% - 6px)",
-    //     margin: "3px",
-    //     padding: "6px 0",
-    //     borderRadius: "10px",
-    //     backgroundColor: "rgb(695, 144, 186)",
-    //     display: "flex",
-    //     flexDirection: "column",
-    //     alignItems: "center",
-    // },
     buttonsGroup: {
         width: "100%",
         height: "100%",
@@ -261,14 +286,145 @@ export const useStylesGlobal = makeStyles()({
         borderRadius: "10px",
         transition: ".5s",
         "& > *": {
-        transition: ".5s",
+            transition: ".5s",
         },
         '&:hover': {
-        borderWidth: "5px",
+            borderWidth: "5px",
+            "& > *": {
+                transition: ".5s",
+            }
+        }
+    },
+    _0btn_cancel: {
+      backgroundColor: _0warningContrastText,
+      '&:hover': {
+        borderColor: _0warningDark,
+        backgroundColor: _0warningContrastText,
         "& > *": {
-            transition: ".5s",
+          stroke: _0warningDark
         }
+      }
+    },
+    _0btn_ok: {
+      backgroundColor: _0succesContrastText,
+      '&:hover': {
+        borderColor: _0succesDark,
+        backgroundColor: _0succesContrastText,
+        "& > *": {
+          stroke: _0succesDark
         }
+      }
+    },  
+    _0btn_edit: {
+      backgroundColor: _0neutralContrastText,
+      '&:hover': {
+        borderColor: _0neutralDark,
+        backgroundColor: _0neutralContrastText,
+        "& > *": {
+          color: _0neutralDark,
+        }
+      },
+    },
+    _0btn_add: {
+      backgroundColor: _0neutralContrastText,
+      '&:hover': {
+        borderColor: _0neutralDark,
+        backgroundColor: _0neutralContrastText,
+        "& > *": {
+          color: _0neutralDark,
+          stroke: _0neutralDark
+        }
+      },
+    },
+    _1btn_cancel: {
+        backgroundColor: _1warningContrastText,
+        '&:hover': {
+        borderColor: _1warningDark,
+        backgroundColor: _1warningContrastText,
+        "& > *": {
+            stroke: _1warningDark
+        }
+      }
+    },
+    _1btn_ok: {
+      backgroundColor: _1succesContrastText,
+      '&:hover': {
+        borderColor: _1succesDark,
+        backgroundColor: _1succesContrastText,
+        "& > *": {
+          stroke: _1succesDark
+        }
+      }
+    },  
+    _1btn_edit: {
+      backgroundColor: _1neutralContrastText,
+      '&:hover': {
+        borderColor: _1neutralDark,
+        backgroundColor: _1neutralContrastText,
+        "& > *": {
+          color: _1neutralDark,
+        }
+      },
+    },
+    _1btn_add: {
+      backgroundColor: _1neutralContrastText,
+      '&:hover': {
+        borderColor: _1neutralDark,
+        backgroundColor: _1neutralContrastText,
+        "& > *": {
+          color: _1neutralDark,
+          stroke: _1neutralDark
+        }
+      },
+    },
+    menuIcon: {
+      // color: "white !important",
+      color: _0neutralMain,
+      '& .MuiSvgIcon-root': {
+        width: '2.9rem',
+        height: '2.9rem',
+      },
+      display: 'flex',
+      margin: "auto",
+      marginRight: "0",
+    },  
+    plusIcon: {
+      display: "flex",
+      // margin: "0 5px",
+      margin: "auto",
+      padding: "1px 1px",
+      backgroundColor: "rgb(77, 168, 218, 0)",
+      '& .MuiSvgIcon-root': {
+        width: '2.9rem',
+        height: '2.9rem',
+      },
+    },
+    _0plus_icon_color: {
+      color: _0plusIcon,
+    },
+    _1plus_icon_color: {
+      color: _1plusIcon,
+    },
+    backPlus: {
+      color: "red",
+    },
+    _0check_rounded_icon_stroke_color: {
+        stroke: _0succesMain,
+    },
+    _0close_rounded_icon_stroke_color: {
+        stroke: _0warningMain,
+    },
+    _0add_rounded_icon_stroke_color: {
+        stroke: _0neutralMain,
+    },
+    _1check_rounded_icon_stroke_color: {
+        stroke: _1succesMain,
+    },
+    _1close_rounded_icon_stroke_color: {
+        stroke: _1warningMain,
+    },
+    _1add_rounded_icon_stroke_color: {
+        stroke: _1neutralMain,
     },
     page: {
         display: "inline-block",
@@ -277,27 +433,6 @@ export const useStylesGlobal = makeStyles()({
         height: "30%",
         backgroundColor: "white",
     },
-    // dropped_widget: {
-    //     color: "red",
-    // },
-    // backPlus: {
-    //     color: "rgb(255, 47, 47, 1)",
-    //     width: "32px", 
-    //     height: "32px",
-    //     '& svg': {
-    //         width: "32px", 
-    //         height: "32px",
-    //     }
-    // },
-    // plusIcon: {
-    //     color: "rgb(32, 205, 60, 1)",
-    //     width: "32px", 
-    //     height: "32px",
-    //     '& svg': {
-    //         width: "32px", 
-    //         height: "32px",
-    //     }
-    // },
     editIcon: {
         width: "32px", 
         height: "32px",
@@ -312,45 +447,26 @@ export const useStylesGlobal = makeStyles()({
     },
     show: {
         display: "block",
-        // position: "relative",
-        // top: 0,
-        // visibility: "visible",
-        // flexGrow: "5",
     },
     hide: {
         display: "none",
-        // position: "relative",
-        // top: 0,
-        // visibility: "hidden",
-        // flexGrow: "6",
     },
     hideShowSpace: {
         width: "10%", 
-        // flexGrow: ".5",
     },
-
-    // testt: {
-    //     backgroundColor: "red",
-    //     minHeight: "74%",
-    //     display: "flex",
-    //     // flex-direction: "column",
-    // },
 
     alert_on : {
         color: "red",
     },
     text_field_error: {
-        // color:"blue",
         borderColor: "red",
         '& label': {
             color: 'red !important',
         },
         '& .MuiInput-underline:after': {
-            // borderBottomColor: 'green',
             color: 'red',
         },
         '& .MuiOutlinedInput-root': {
-            // color: 'red',
             borderColor: 'red',
             '& fieldset': {
                 borderWidth: "2px",
@@ -556,31 +672,9 @@ export const useStylesGlobal = makeStyles()({
             backgroundColor: _1menuItem,
         },
     },
-    //  _0modal_background_color: {
-    //     backgroundColor: _0mainColor,
-    // },
-    // _1modal_background_color: {
-    //     backgroundColor: _1mainColor,
-    // },
 })
 
-// export const modalStyleExternal = {
-//     position: 'absolute',
-//     display: "flex",
-//     justifyContent: "center",
-//     top: 74,
-//     width: "100%",
-//     overflowX: "hidden",
-// };
 export const modalStyleExternal = {
-    // position: 'absolute',
-    // display: "flex",
-    // justifyContent: "center",
-    // top: 74,
-    // width: "100%",
-    // overflowX: "hidden",
-    // overflow: "hidden",
-    // scrollbarWidth: "none",
     overflowX: "hidden",
     scrollbarWidth: "none",
     
@@ -589,21 +683,6 @@ export const modalStyleExternal = {
     alignItems: "center",
     
 };
-// export const modalStyleInternal = {
-//     // top: 74,
-//     maxWidth: "700px",
-//     width: "calc(100% - 32px)",
-//     // height: "520px",
-//     maxHeight: "520px",
-//     // minHeight: "490px",
-//     backgroundColor: "rgb(45,72, 91, 1)",
-//     borderRadius: "10px",
-//     // margin: "auto",
-//     padding: "3px",
-//     color: "white",
-//     overflow: "scroll",
-//     overflowX: "hidden",
-// };
 export const modalStyleInternal = {
     maxWidth: "350px",
     width: "calc(100% - 50px)",
@@ -624,12 +703,6 @@ export const modalStyleInternal = {
 export const modalStyleInternalConfirmTermsAndPrivacy = {
     maxWidth: "900px",
 }
-// export const _0modal_background_color = {
-//     backgroundColor: _0mainColor,
-// }
-// export const _1modal_background_color = {
-//     backgroundColor: _1mainColor,
-// }
 export const modalStyleInternalForgottenPass = {
     width: "280px",
 }
@@ -693,41 +766,3 @@ export const modalStyleImageInternal = {
     left: "50%",
     transform: "translate(-50%, -50%)",
 };
-
-// export const TableStyles = makeStyles((theme: Theme) => ({
-// export const tableStyles = makeStyles()({
-//     alert_on : {
-//         backgroundColor: "rgb(290, 10, 50, .6)", 
-//         color:"white",
-//     },
-//     rows : {
-//         padding: "8px 0",
-//         border:0,
-//     },
-//     row_even: {
-//         backgroundColor: "rgb(69, 144, 186)", 
-//     },
-//     row_odd: {
-//         backgroundColor:"rgb(162, 199, 220)", 
-//     },
-//     menu : {
-//         borderRadius: '4px', // Set border-radius to mimic scrollbar radius
-//         '& .MuiPaper-root': {  
-//             overflow: 'hidden', // Hide any overflow
-//             overflowY: 'auto', // Show scrollbar on hover
-//             borderRadius: '4px', // Set border-radius to mimic scrollbar radius
-//             // paddingRight: '12px',
-//             scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-//             scrollbarWidth: 'thin', // Hide scrollbar for Firefox
-//             '&:hover': {
-//                 scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-//                 overflowY: 'auto', // Show scrollbar on hover
-//                 // paddingRight: '0',
-//                 overflowX: 'hidden',
-//             },
-//         },
-//     },
-//     disabled: {
-//         backgroundColor: "rgb(255,255, 255, .3)",
-//     },
-// })

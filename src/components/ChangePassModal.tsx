@@ -191,7 +191,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
 
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
         open={openChangePassModal} 
         onClose={() => closeChangePassModal()}
         > 
@@ -205,8 +205,6 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                 }}
             >
                 <Box sx={{...modalStyleExternal, ...modalStyleChangePassExternal}}>
-                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color, ...modalStyleChangePassInternal}}> */}
-                    {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true}, ...modalStyleChangePassInternal}}> */}
                     <Box 
                         sx={{...modalStyleInternal }}
                         className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
