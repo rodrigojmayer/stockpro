@@ -27,13 +27,11 @@ export default function ConfirmTermsAndPrivacyModal( props: ConfirmTermsAndPriva
     
     return (
         <Modal
-            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
             open={openConfirmTermsAndPrivacyModal} 
             onClose={() => closeConfirmTermsAndPrivacyModal()}
         >
             <Box sx={modalStyleExternal}>
-                {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color, ...modalStyleInternalConfirmTermsAndPrivacy}}> */}
-                {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true}, ...modalStyleInternalConfirmTermsAndPrivacy}}> */}
                 <Box 
                     sx={{ ...modalStyleInternal }}
                     className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}

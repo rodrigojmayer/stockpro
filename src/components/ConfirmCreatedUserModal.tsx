@@ -60,13 +60,11 @@ export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalP
     
     return (
         <Modal
-            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
             open={openConfirmCreatedUserModal} 
             onClose={() => closeConfirmCreatedUserModal()}
         > 
             <Box sx={modalStyleSaveExternal}>
-                {/* <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color}}> */}
-                {/* <Box sx={{ ...modalStyleErrorInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
                 <Box 
                     sx={{ ...modalStyleErrorInternal }}
                     className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
