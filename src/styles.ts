@@ -126,6 +126,12 @@ export const useStylesGlobal = makeStyles()({
         backgroundImage: `linear-gradient(45deg, ${_1mainColor} 50%, ${_1mainColorLighter}) `,
         boxShadow: `-20px 20px 20px 2px ${_1mainColorDD} `,
     },
+    _0warning_color: {
+        color: _0warningMain,
+    },
+    _1warning_color: {
+        color: _1warningMain,
+    },
     gradient_effect: {
         backgroundImage: `linear-gradient(45deg, rgb(250, 250, 250, 0) 50%, rgb(250, 250, 250, 0.1) 75%,  rgb(250, 250, 250, 0.5) 100%)`,
     },

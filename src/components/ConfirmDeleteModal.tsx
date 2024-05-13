@@ -122,6 +122,8 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
                     >
                         <PrettoSlider
                             aria-label="Temperature"
+                            // style={{color:"red"}}
+                            className={classes[`_${user.background_color}warning_color` as keyof typeof classes]}
                             value={valueSlider}
                             onMouseDown={handleThumbMouseDown} // Attach the event handler when thumb is pressed
                             onMouseUp={handleThumbMouseUp}     // Attach the event handler when thumb is released
