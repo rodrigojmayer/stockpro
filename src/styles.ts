@@ -30,6 +30,9 @@ const _0neutralMain = 'rgb(255, 255, 255, 1)';
 const _0neutralContrastText = 'rgb(255, 255, 255, .2)';
 const _0neutralDark = 'rgb(155, 155, 155, 1)';
 const _0plusIcon = 'rgb(77, 168, 218, 1)';
+// const _0modalInternalColor = 'rgb(77, 168, 218, 1)';
+// const _0modalColor = 'rgb(210, 210, 250, 1)';
+// const _0modalColor = 'rgb(210, 210, 250, 1)';
 
 // ----------------------------------------
 
@@ -57,8 +60,37 @@ const _1neutralContrastText = 'rgb(200, 200, 200, .2)';
 const _1neutralDark = 'rgb(155, 155, 155, 1)';
 
 const _1plusIcon = 'rgb(97, 358, 258, 1)';
-// const _1plusIcon = 'rgb(153, 255, 208, 1)';
-// const _1plusIcon = 'rgb(120, 120, 120, 1)';
+const _1modalColor = 'rgb(200, 200, 200)';
+
+
+// ----------------------------------------
+
+const _2mainColor = 'rgb(190, 220, 250, 1)';
+const _2mainColorLighter = 'rgb(250, 250, 250, 1)';
+const _2mainColor3 = 'rgb(57, 138, 208, 1)'; // is used just in the menu options with large screens
+const _2mainColorD = 'rgb(7, 78, 158, 1)';////////
+const _2mainColorDD = 'rgb(0, 58, 130, 1)';
+const _2tableHeaderColor = '#FFF';
+const _2tableAlertOnBackground = 'rgb(250, 0, 0, .8)';
+const _2tableAlertOnColor = 'rgb(250, 250, 250, 1)';
+const _2tableRowColor = 'rgb(0, 0, 0, 1)';
+const _2rowOddBackground = 'rgb(200, 240, 250)';
+const _2rowEvenBackground = 'rgb(87, 178, 238, 1)';
+const _2menuItem = 'rgb(00, 00, 200)';
+
+const _2succesMain = 'rgb(0,200,0, 1)';
+const _2succesContrastText = 'rgb(0,250,0, .2)';
+const _2succesDark = 'rgb(0,150,0, 1)';
+const _2warningMain = 'rgb(250, 0, 0, 1)';
+const _2warningContrastText = 'rgb(200, 0, 0, .2)';
+const _2warningDark = 'rgb(200, 45, 45, 1)';
+const _2neutralMain = 'rgb(0, 58, 130, 1)';
+const _2neutralContrastText = 'rgb(0, 58, 130, .2)';
+const _2neutralDark = 'rgb(0, 13, 85, 1)';
+
+const _2plusIcon = 'rgb(220, 200, 0, 1)';
+const _2modalColor = 'rgb(0, 58, 130, 1)';
+
 
 export const _0themeGlobal = createTheme({
     palette: {
@@ -94,6 +126,23 @@ export const _1themeGlobal = createTheme({
         },
     },
 });
+export const _2themeGlobal = createTheme({
+    palette: {
+        success: {
+            main: _2succesMain,
+            contrastText: _2succesContrastText,
+        },
+        warning: {
+            main: _2warningMain,
+            contrastText: _2warningContrastText,
+        },
+        neutral: {
+            main: _2neutralMain,
+            contrastText: _2neutralContrastText,
+            dark: _2neutralDark,
+        },
+    },
+});
 
 export const useStylesGlobal = makeStyles()({
     
@@ -116,6 +165,9 @@ export const useStylesGlobal = makeStyles()({
     _1main_color: {
         color: _1mainColor,
     },
+    _2main_color: {
+        color: _2mainColor,
+    },
     _0main_background_color: {
         backgroundColor: _0mainColor,
         backgroundImage: `linear-gradient(45deg, ${_0mainColor} 50%, ${_0mainColorLighter})`,
@@ -126,12 +178,31 @@ export const useStylesGlobal = makeStyles()({
         backgroundImage: `linear-gradient(45deg, ${_1mainColor} 50%, ${_1mainColorLighter}) `,
         boxShadow: `-20px 20px 20px 2px ${_1mainColorDD} `,
     },
+    _2main_background_color: {
+        backgroundColor: _2mainColor,
+        backgroundImage: `linear-gradient(45deg, ${_2mainColor} 50%, ${_2mainColorLighter}) `,
+        boxShadow: `-20px 20px 20px 2px ${_1mainColorDD} `,
+    },
     _0warning_color: {
         color: _0warningMain,
     },
     _1warning_color: {
         color: _1warningMain,
     },
+    _2warning_color: {
+        color: _2warningMain,
+    },
+    _0modal_color: {
+        // color: _0modalColor,
+        color: _0neutralMain,
+    },
+    _1modal_color: {
+        color: _1neutralMain,
+    },
+    _2modal_color: {
+        color: _2neutralMain,
+    },
+    
     gradient_effect: {
         backgroundImage: `linear-gradient(45deg, rgb(250, 250, 250, 0) 50%, rgb(250, 250, 250, 0.1) 75%,  rgb(250, 250, 250, 0.5) 100%)`,
     },
@@ -148,6 +219,9 @@ export const useStylesGlobal = makeStyles()({
     },
     _1main_background_colorD: {
         backgroundColor: _1mainColorD,
+    },
+    _2main_background_colorD: {
+        backgroundColor: _2mainColorD,
     },
     customBoxColumn: { 
         margin: "0 auto",
@@ -389,6 +463,47 @@ export const useStylesGlobal = makeStyles()({
         }
       },
     },
+    _2btn_cancel: {
+        backgroundColor: _2warningContrastText,
+        '&:hover': {
+        borderColor: _2warningDark,
+        backgroundColor: _2warningContrastText,
+        "& > *": {
+            stroke: _2warningDark
+        }
+      }
+    },
+    _2btn_ok: {
+      backgroundColor: _2succesContrastText,
+      '&:hover': {
+        borderColor: _2succesDark,
+        backgroundColor: _2succesContrastText,
+        "& > *": {
+          stroke: _2succesDark
+        }
+      }
+    },  
+    _2btn_edit: {
+      backgroundColor: _2neutralContrastText,
+      '&:hover': {
+        borderColor: _2neutralDark,
+        backgroundColor: _2neutralContrastText,
+        "& > *": {
+          color: _2neutralDark,
+        }
+      },
+    },
+    _2btn_add: {
+      backgroundColor: _2neutralContrastText,
+      '&:hover': {
+        borderColor: _2neutralDark,
+        backgroundColor: _2neutralContrastText,
+        "& > *": {
+          color: _2neutralDark,
+          stroke: _2neutralDark
+        }
+      },
+    },
     menuIcon: {
       // color: "white !important",
       color: _0neutralMain,
@@ -417,6 +532,9 @@ export const useStylesGlobal = makeStyles()({
     _1plus_icon_color: {
       color: _1plusIcon,
     },
+    _2plus_icon_color: {
+      color: _2plusIcon,
+    },
     backPlus: {
       color: "red",
     },
@@ -437,6 +555,15 @@ export const useStylesGlobal = makeStyles()({
     },
     _1add_rounded_icon_stroke_color: {
         stroke: _1neutralMain,
+    },
+    _2check_rounded_icon_stroke_color: {
+        stroke: _2succesMain,
+    },
+    _2close_rounded_icon_stroke_color: {
+        stroke: _2warningMain,
+    },
+    _2add_rounded_icon_stroke_color: {
+        stroke: _2neutralMain,
     },
     page: {
         display: "inline-block",
@@ -535,6 +662,9 @@ export const useStylesGlobal = makeStyles()({
     _1main_background_colorDD: {
         backgroundColor: _1mainColorDD,
     },
+    _2main_background_colorDD: {
+        backgroundColor: _2mainColorDD,
+    },
     menu_toolbar: {
         height: "64px",
         margin: "auto",
@@ -586,6 +716,9 @@ export const useStylesGlobal = makeStyles()({
     _1background_color3 : {
         backgroundColor: _1mainColor3,
     },
+    _2background_color3 : {
+        backgroundColor: _2mainColor3,
+    },
     _0table_header_color: {
         color: _0tableHeaderColor,
         '&.Mui-checked': {
@@ -596,7 +729,13 @@ export const useStylesGlobal = makeStyles()({
         color: _1tableHeaderColor,
         '&.Mui-checked': {
             color: _1tableHeaderColor,
-          },
+        },
+    },
+    _2table_header_color: {
+        color: _2tableHeaderColor,
+        '&.Mui-checked': {
+            color: _2tableHeaderColor,
+        },
     },
     table_rows : {
         padding: "8px 0",
@@ -632,6 +771,21 @@ export const useStylesGlobal = makeStyles()({
     _1table_row_odd: {
         backgroundColor: _1rowOddBackground, 
     },
+    _2table_rows_color : {
+        color:_2tableRowColor,
+    },
+    _2table_alert_on_background : {
+        backgroundColor: _2tableAlertOnBackground, 
+    },
+    _2table_alert_on_color : {
+        color: _2tableAlertOnColor,
+    },
+    _2table_row_even: {
+        backgroundColor: _2rowEvenBackground, 
+    },
+    _2table_row_odd: {
+        backgroundColor: _2rowOddBackground, 
+    },
     table_menu : {
         borderRadius: '4px', // Set border-radius to mimic scrollbar radius
         '& .MuiPaper-root': {  
@@ -665,6 +819,14 @@ export const useStylesGlobal = makeStyles()({
              },
         },
     },
+    _2table_menu_background_color : {
+        '& .MuiPaper-root': { 
+            backgroundColor: _2menuItem,
+            '&:hover': {
+                backgroundColor: _2menuItem,
+             },
+        },
+    },
     table_disabled: {
         backgroundColor: "rgb(255,255, 255, .3)",
     },
@@ -682,6 +844,12 @@ export const useStylesGlobal = makeStyles()({
         backgroundColor: _1menuItem,
         '&:hover': {
             backgroundColor: _1menuItem,
+        },
+    },
+    _2menu_item_background_color: {
+        backgroundColor: _2menuItem,
+        '&:hover': {
+            backgroundColor: _2menuItem,
         },
     },
 })
@@ -702,7 +870,7 @@ export const modalStyleInternal = {
     maxHeight: "85vh",
     borderRadius: "10px",
     padding: "5px",
-    color: "white",
+    // color: "white",
     // overflow: "scroll",
     overflowX: "hidden",
     scrollbarWidth: "none",

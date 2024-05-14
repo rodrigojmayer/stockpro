@@ -67,7 +67,7 @@ export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalP
             <Box sx={modalStyleSaveExternal}>
                 <Box 
                     sx={{ ...modalStyleErrorInternal }}
-                    className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                 >
                     <Box 
                         margin="20px 10px"

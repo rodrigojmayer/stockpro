@@ -20,7 +20,7 @@ import IonTrash from "../assets/ion_trash.svg";
 import UpdateArrowCircle from "../assets/akar-icons_arrow-cycle.svg";
 import GPlusIco from "../assets/gplus.svg";
 import Divider from '@mui/material/Divider';
-import { _0themeGlobal,_1themeGlobal, useStylesGlobal } from '../Styles'
+import { _0themeGlobal, _1themeGlobal, _2themeGlobal, useStylesGlobal } from '../Styles'
 import { UserContext } from '../context/UserContext';
 import { Theme } from '@mui/material/styles'; // Import the Theme type from your theme library
 
@@ -59,6 +59,7 @@ type ThemeMap = {
 const themeMap : ThemeMap = {
   '0': _0themeGlobal,
   '1': _1themeGlobal,
+  '2': _2themeGlobal,
 };
 
 export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk, widthIco }: ButtonProps ) {
