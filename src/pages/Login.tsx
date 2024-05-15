@@ -232,7 +232,7 @@ useEffect(() => {
 
 return (
   <Modal 
-    className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+    className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
     open={true} 
   > 
     <form
@@ -247,8 +247,8 @@ return (
       <Paper style={{ margin: 0 }}>
         <Box sx={modalStyleSaveExternal}>
           <Box 
-              sx={{ ...modalStyleErrorInternal, ...modalLoginInternal }}
-              className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+            sx={{ ...modalStyleErrorInternal, ...modalLoginInternal }}
+            className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
           >
             <ErrorModal
               openErrorModal={openErrorModal}

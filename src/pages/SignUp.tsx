@@ -244,7 +244,7 @@ export default function SignUp () {
 
     return (
         <Modal 
-            className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+            className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
             open={true} 
         >
             <form
@@ -260,7 +260,7 @@ export default function SignUp () {
                     <Box sx={modalStyleSaveExternal}>
                         <Box 
                             sx={{ ...modalStyleErrorInternal, ...modalLoginInternal }}
-                            className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                            className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                         >
                             <SaveChanges
                                 openSaveChanges={openSaveChanges}
