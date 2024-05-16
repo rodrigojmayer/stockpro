@@ -17,6 +17,9 @@ import { useContext, useEffect, useState } from 'react';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import EditIcon from '@mui/icons-material/Edit';
 import IonTrash from "../assets/ion_trash.svg";
+import _0IonTrash from "../assets/_0ion_trash.svg";
+import _1IonTrash from "../assets/_1ion_trash.svg";
+import _2IonTrash from "../assets/_2ion_trash.svg";
 import UpdateArrowCircle from "../assets/akar-icons_arrow-cycle.svg";
 import GPlusIco from "../assets/gplus.svg";
 import Divider from '@mui/material/Divider';
@@ -240,7 +243,15 @@ export function DeleteButton({ sizeIco, roundedIco, cusField, clicked, submitOk 
   })
 
   const selectedTheme = themeMap[user.background_color];
-
+  let trashIcon;
+  if (user.background_color === 0) {
+    trashIcon = _0IonTrash;
+  } else if (user.background_color === 1) {
+    trashIcon = _1IonTrash;
+  } else if (user.background_color === 2) {
+    trashIcon = _2IonTrash;
+  }
+  
   return (
     <ThemeProvider theme={selectedTheme}>
       <Button 
@@ -259,9 +270,10 @@ export function DeleteButton({ sizeIco, roundedIco, cusField, clicked, submitOk 
         >
 
           <img 
-            src={IonTrash} 
+            // src={_2IonTrash} 
+            src={trashIcon} 
             alt="Trash"
-            style={{ filter: "brightness(0) invert(100%)" }}  
+            // style={{ filter: "brightness(0) invert(100%)" }}  
             
           width= {28}   
           />
