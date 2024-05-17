@@ -179,13 +179,13 @@ export default function Users( { open, handleClose }: ChildProps) {
                             Users
                         </Typography>
                         <Box className={classes.customBoxColumn}>
-                            {Array.isArray(usersArray) && usersArray.map((user:any) => {
+                            {Array.isArray(usersArray) && usersArray.map((subUser:any) => {
                             {/* {Array.isArray(users) && users.map((user:any) => { */}
                             
                                 return (
                                     <Stack 
                                         className={classes.customBoxColumn} 
-                                        key={user._id}  
+                                        key={subUser._id}  
                                         spacing={2} 
                                         direction="row"
                                     >
@@ -194,13 +194,13 @@ export default function Users( { open, handleClose }: ChildProps) {
                                 className={`${classes.btnCommonStyle} ${classes[`_${user.background_color}btn_add` as keyof typeof classes]}`}
                                 // className={classes.btnCommonStyle} 
                                             variant="contained"
-                                            onClick={() => selectEditUser(user)}
+                                            onClick={() => selectEditUser(subUser)}
                                             // maxRows={1}
                                             size="small"
                                             // color="neutral"
                                         >
                                             <Typography >
-                                                {user.user}
+                                                {subUser.user}
                                             </Typography>  
                                         </Button>
                                     </Stack>

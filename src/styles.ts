@@ -1,10 +1,10 @@
 import { makeStyles } from 'tss-react/mui';
 import {  Theme, createTheme } from '@mui/material/styles';
 
-// 0: Space blue
-// 1: Dark
-// 2: Light
-// 3: Minimal warm
+// 0: Deep ocean
+// 1: Dark metal
+// 2: Fresh blue
+// 3: White solid
 
 const _0linkColor = '#c1e8fb';  // Is used without a user so it should be only one
 const _0mainColor = 'rgb(45, 72, 91, 1)';
@@ -59,7 +59,7 @@ const _1neutralMain = 'rgb(200, 200, 200, 1)';
 const _1neutralContrastText = 'rgb(200, 200, 200, .2)';
 const _1neutralDark = 'rgb(155, 155, 155, 1)';
 
-const _1plusIcon = 'rgb(97, 358, 258, 1)';
+const _1plusIcon = 'rgb(130, 180, 260, 1)';
 const _1modalColor = 'rgb(200, 200, 200)';
 
 
@@ -76,7 +76,7 @@ const _2tableAlertOnColor = 'rgb(250, 250, 250, 1)';
 const _2tableRowColor = 'rgb(0, 0, 0, 1)';
 const _2rowOddBackground = 'rgb(200, 240, 250)';
 const _2rowEvenBackground = 'rgb(87, 178, 238, 1)';
-const _2menuItem = 'rgb(00, 00, 200)';
+const _2menuItem = 'rgb(210, 230, 250, 1)';
 
 const _2succesMain = 'rgb(0,200,0, 1)';
 const _2succesContrastText = 'rgb(0,250,0, .2)';
@@ -84,9 +84,9 @@ const _2succesDark = 'rgb(0,150,0, 1)';
 const _2warningMain = 'rgb(250, 0, 0, 1)';
 const _2warningContrastText = 'rgb(200, 0, 0, .2)';
 const _2warningDark = 'rgb(200, 45, 45, 1)';
-const _2neutralMain = 'rgb(0, 58, 130, 1)';
+const _2neutralMain = 'rgb(60, 118, 190, 1)';
 const _2neutralContrastText = 'rgb(0, 58, 130, .2)';
-const _2neutralDark = 'rgb(0, 13, 85, 1)';
+const _2neutralDark = 'rgb(10, 89, 170, 1)';
 
 const _2plusIcon = 'rgb(220, 200, 0, 1)';
 const _2modalColor = 'rgb(0, 58, 130, 1)';
@@ -494,15 +494,16 @@ export const useStylesGlobal = makeStyles()({
       },
     },
     _2btn_add: {
-      backgroundColor: _2neutralContrastText,
-      '&:hover': {
-        borderColor: _2neutralDark,
         backgroundColor: _2neutralContrastText,
-        "& > *": {
-          color: _2neutralDark,
-          stroke: _2neutralDark
-        }
-      },
+        color: _2neutralContrastText,
+        '&:hover': {
+            borderColor: _2neutralDark,
+            backgroundColor: _2neutralContrastText,
+            "& > *": {
+            color: _2neutralDark,
+            stroke: _2neutralDark
+            }
+        },
     },
     menuIcon: {
       // color: "white !important",
