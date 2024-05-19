@@ -142,7 +142,7 @@ function rowContent(
               // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]  : classes._0table_rows_color }`}
               className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]  : classes[`_${user_background_color}table_rows_color` as keyof typeof classes] }`}
               sx={{
-                  padding: 0, 
+                  padding: "0", 
               }}
               color="default"
             />
@@ -175,7 +175,7 @@ function rowContent(
                   display: "block", // Ensure the image is treated as a block element
                   margin: "auto",   // Set margins to auto to horizontally center the image
                   objectFit: 'contain',
-                  paddingTop: "0.3px ", // Set to avoid small space when the row is alerted
+                  paddingTop: "0.27px ", // Set to avoid small space when the row is alerted
                 }} 
                 // src={newRow[column.dataKey]} 
                 src={`https://cdn.filestackcontent.com/resize=w:34,h:34,fit:crop/auto_image/compress/${newRow[column.dataKey]}`} 
