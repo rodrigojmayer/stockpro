@@ -59,7 +59,7 @@ const _1neutralMain = 'rgb(200, 200, 200, 1)';
 const _1neutralContrastText = 'rgb(200, 200, 200, .2)';
 const _1neutralDark = 'rgb(155, 155, 155, 1)';
 
-const _1plusIcon = 'rgb(130, 180, 260, 1)';
+const _1plusIcon = 'rgb(100, 50, 250, 1)';
 const _1modalColor = 'rgb(200, 200, 200)';
 
 

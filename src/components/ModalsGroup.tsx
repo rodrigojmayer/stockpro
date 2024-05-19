@@ -118,6 +118,7 @@ export default function ModalsGroup(
             />
             <AppBar 
                 // className={`${classes.menu_appbar} ${classes._0main_background_colorDD}`}
+                // className={`${classes.menu_appbar} ${classes[`_${user.background_color}main_background_colorDD` as keyof typeof classes]}`}
                 className={`${classes.menu_appbar} ${classes[`_${user.background_color}main_background_colorDD` as keyof typeof classes]}`}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
             >  

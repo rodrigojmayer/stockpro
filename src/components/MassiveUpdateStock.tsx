@@ -105,6 +105,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                         inputProps: {
                             style: { 
                             textAlign: "center", 
+                            height: 20,
                             },
                         },
                     }}
@@ -130,7 +131,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
               >
                     <Typography noWrap 
                         sx={{
-                            padding: "7.78px 4px",
+                            // padding: "7.78px 4px",
+                            padding: "1.4px 4px",
                         }}
                     >
                         { ( newRow[item.column.dataKey] || newRow[item.column.dataKey] === 0 ) ? newRow[item.column.dataKey] : "-"}
@@ -158,7 +160,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
             <div 
             //   className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}`}
             //   className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}`}
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]}`  : "" } ${classes.table_rows}`}
+              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]}`  : "" } ${classes.table_rows}  ${classes[`_${user_background_color}table_rows_color` as keyof typeof classes]}`}
             >
                 {RowContent({column: column})}
             </div>
@@ -202,7 +204,7 @@ export default function MassiveUpdateStock(
         _id: 1,
         label: "update_amount" , 
         dataKey: "update_amount",
-        width: 50
+        width: 57
     });
 
     const [ signUpdate, setSignUpdate ] = useState<number>(-1)
@@ -409,7 +411,7 @@ export default function MassiveUpdateStock(
     
     return (
         <Modal
-            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
             open={open} 
             onClose={close}
         > 
@@ -423,11 +425,9 @@ export default function MassiveUpdateStock(
                 }}
             >
                 <Box sx={modalStyleExternal}>
-                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color}}> */}
-                    {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
                     <Box 
                         sx={{ ...modalStyleInternal }}
-                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                        className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                     >
                        <SaveChanges
                             openSaveChanges={openSaveChanges}
@@ -451,7 +451,8 @@ export default function MassiveUpdateStock(
                                 backgroundColor: "rgb(0, 0, 0, 0)", 
                             }}
                         > 
-                            <div style={{ overflow: 'auto', height: '100%' }}>
+                            <div style={{ overflow: 'auto', height: '100%',
+                                        borderRadius: "10px", boxShadow: `-5px 5px 20px 2px black `, }}>
                                 <TableVirtuoso 
                                     data={filteredData}
                                     components={VirtuosoTableComponents}
@@ -461,24 +462,27 @@ export default function MassiveUpdateStock(
                                         borderRadius: "10px",
                                         margin: "-1px",
                                         scrollbarWidth: "none" 
+                                        
                                     }}
                                     fixedHeaderContent={() => {
                                         return (
-                                            <TableRow >
-                                                {columns.map((column:any) => (
+                                            <TableRow 
+                                            >
+                                                {columns.map((column:any, index:number) => (
                                                 <TableCell
                                                     key={column._id}
                                                     variant="head"
                                                     align='center'
                                                     // className= {classes._0main_background_colorD}
-                                                    className= {classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]}
+                                                    // className= {classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]}
+                                                    // className={`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]} ${index === columns.length - 1 ? classes[`_${user.background_color}gradient_effect` as keyof typeof classes] : "" }`}
+                                                    className={`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]} ${index === columns.length - 1 ? classes.gradient_effect : "" }`}
+
                                                     style={{ 
                                                         width: column.width, 
-                                                        // backgroundColor:"rgb(25, 54, 72)", 
                                                         border:0,
                                                     }}
                                                     sx={{
-                                                    color: "white",
                                                     padding: "8px 0",
                                                     }}
                                                 >

@@ -290,16 +290,14 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
     
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
             open={openManageForgottenPass} 
             onClose={handleCloseManageForgottenPass}
         > 
             <Box sx={modalStyleSaveExternal}>
-                {/* <Box sx={{...modalStyleErrorInternal, ..._0modal_background_color, ...modalStyleInternalForgottenPass}}> */}
-                {/* <Box sx={{...modalStyleErrorInternal, ...{[`_${user.background_color}modal_background_color`]: true}, ...modalStyleInternalForgottenPass}}> */}
                 <Box 
                     sx={{ ...modalStyleErrorInternal }}
-                    className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                    className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                 >
                     <form onKeyDown={(e:any) => {
                         if (e.key === "Enter") {

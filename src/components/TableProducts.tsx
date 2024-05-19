@@ -595,20 +595,19 @@ export default function TableProducts(
           // backgroundColor: "rgb(45, 72, 91)", 
           backgroundColor: "rgb(0, 0, 0, 0)", 
           borderRadius: "10px", 
-          scrollbarWidth: "none",
+          scrollbarWidth: "none", boxShadow: `-5px 5px 20px 2px black `,
           cursor: "pointer"
         }}
         fixedHeaderContent={() => {
             return (
               <TableRow>
-                {columnsTable.map((columnTable:any) => (
+                {columnsTable.map((columnTable:any, index: number) => (
                   <TableCell
                     key={columnTable.id}
                     variant="head" 
                     align='center'
-                    // className= {`${classes._0main_background_colorD } ${classes._1table_header_color}`}
-                    // className= {`${user.background_color === 0 ? classes[`_${user.background_color}main_background_colorD` as keyof typeof classes] : ""} ${classes._0table_header_color}`}
-                    className= {`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]}`}
+                    className={`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]} ${index === columnsTable.length - 1 ? classes.gradient_effect : "" }`}
+                    
                     style={{ 
                       // width: "100px", 
                       width: columnTable.width, 

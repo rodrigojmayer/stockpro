@@ -23,7 +23,7 @@ export default function SaveChanges( props: SaveChangesProps) {
 
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
         open={openSaveChanges} 
         onClose={() => closeSaveChanges()}
         > 
@@ -38,11 +38,9 @@ export default function SaveChanges( props: SaveChangesProps) {
                 }}
             >
                 <Box sx={modalStyleSaveExternal}>
-                    {/* <Box sx={{ ...modalStyleSaveInternal, ..._0modal_background_color }}> */}
-                    {/* <Box sx={{ ...modalStyleSaveInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
                     <Box 
                         sx={{ ...modalStyleSaveInternal }}
-                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                        className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                     >
                         <Typography align="center" variant="h6" className={classes.title}>
                             Save changes?

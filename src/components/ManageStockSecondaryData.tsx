@@ -277,7 +277,7 @@ export default function ManageStockSecondaryData(
                 } 
                 {/* {showPicker && ( */}
                     <Modal
-                        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
                         open={showPicker} 
                         onClose={handleClosePicker}
                     > 

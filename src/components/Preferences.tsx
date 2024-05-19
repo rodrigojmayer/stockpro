@@ -58,13 +58,13 @@ export default function Preferences( { open, handleClose }: ChildProps) {
     ]
     const backgroundColorsArray = [
         {"id": 0,
-        "name": "Space blue"},
-        {"id": 1,
-        "name": "Dark"},
-        {"id": 2,
-        "name": "Light"},
+        "name": "Deep ocean"},
         {"id": 3,
-        "name": "Minimal warm"},
+        "name": "White solid"},
+        {"id": 1,
+        "name": "Dark metal"},
+        {"id": 2,
+        "name": "Fresh blue"},
     ]
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
@@ -177,7 +177,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
     
     return (
         <Modal
-            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
             open={open} 
             onClose={close}
         > 
@@ -191,11 +191,9 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                 }}
             >
                 <Box sx={modalStyleExternal}>
-                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color}}> */}
-                    {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true}}}> */}
                     <Box 
                         sx={{ ...modalStyleInternal }}
-                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                        className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                     >
                         <SaveChanges
                             openSaveChanges={openSaveChanges}

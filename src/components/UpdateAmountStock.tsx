@@ -312,7 +312,7 @@ export default function UpdateAmountStock(
     // console.log("signUpdate: ", signUpdate)
     return (
         <Modal
-            sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
             open={open} 
             onClose={close}
         > 
@@ -334,11 +334,9 @@ export default function UpdateAmountStock(
                 }}
             >
                 <Box sx={modalStyleExternal}>
-                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color}}> */}
-                    {/* <Box sx={{...modalStyleInternal, ...{[`_${user.background_color}modal_background_color`]: true} }}> */}
                     <Box 
                         sx={{ ...modalStyleInternal }}
-                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                        className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                     >
                         <SaveChanges
                             openSaveChanges={openSaveChanges}

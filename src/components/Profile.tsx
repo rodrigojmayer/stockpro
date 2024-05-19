@@ -259,7 +259,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
     // const test = classes[`_${user.background_color}` as keyof typeof classes]}
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
         open={open} 
         onClose={close}
         > 
@@ -273,12 +273,10 @@ export default function Profile( { open, handleClose }: ChildProps) {
                 }}
                 >
                 <Box sx={modalStyleExternal}>
-                    {/* <Box sx={{...modalStyleInternal, ..._0modal_background_color}}> */}
                     <Box 
                         sx={modalStyleInternal}
-                        className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}
+                        className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                     >
-                        {/* <Box sx={modalStyleInternal} className={classes[`_${user.background_color}main_background_color` as keyof typeof classes]}> */}
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 
@@ -366,12 +364,13 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                         />  
                                 </Box>
                             <Button
-                                className={classes.btnCommonStyle} 
+                                // className={classes.btnCommonStyle} 
+                                className={`${classes.btnCommonStyle} ${classes[`_${user.background_color}btn_add` as keyof typeof classes]}`}
                                 variant="contained"
                                 onClick={() => setOpenChangePassModal(true)}
                                 // maxRows={1}
                                 size="small"
-                                // color="neutral"
+                                // color="success"
                             >
                             <Typography >
                                 Change Password

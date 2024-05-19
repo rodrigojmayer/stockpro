@@ -13,7 +13,7 @@ type ConfirmChangedPassModalProps = {
 }
 export default function ConfirmChangedPassModal( props: ConfirmChangedPassModalProps) {
     const { openShowImgModal, closeShowImgModal, showImgModal } = props;
-    // const { classes } = useStylesGlobal();
+    const { classes } = useStylesGlobal();
     
     
     // const handleOkButton = async() => {
@@ -22,11 +22,11 @@ export default function ConfirmChangedPassModal( props: ConfirmChangedPassModalP
     
     return (
         <Modal
-        sx={{backgroundColor: 'rgba(0, 0, 0, .5)'}}
+        className={classes.modal_external_background}
             open={openShowImgModal} 
             onClose={() => closeShowImgModal()}
         > 
-            <Box sx={modalStyleImageExternal}>
+            <Box sx={modalStyleImageExternal} >
                 <Box sx={modalStyleImageInternal}>
                     <img src={`https://cdn.filestackcontent.com/resize=w:320,h:320,fit:crop/rounded_corners=radius:17/auto_image/compress/${showImgModal}`} /> 
                 </Box>
