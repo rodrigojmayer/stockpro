@@ -12,9 +12,9 @@ const _0mainColorLighter = 'rgb(115, 142, 161, 1)';
 const _0mainColor3 = 'rgb(38,55, 66, 1)'; // is used just in the menu options with large screens
 const _0mainColorD = 'rgb(25, 54, 72)';
 const _0mainColorDD = 'rgb(18, 35, 46, 1)';
-const _0tableHeaderColor = '#FFF';
+const _0tableHeaderColor = 'rgb(255, 255, 255, 1)';
 const _0tableAlertOnBackground = 'rgb(290, 10, 50, .6)';
-const _0tableAlertOnColor = '#FFF';
+const _0tableAlertOnColor = 'rgb(255, 255, 255, 1)';
 const _0tableRowColor = '#222';
 const _0rowEvenBackground = 'rgb(69, 144, 186)';
 const _0rowOddBackground = 'rgb(162, 199, 220)';
@@ -41,10 +41,10 @@ const _1mainColorLighter = 'rgb(130, 130, 130, 1)';
 const _1mainColor3 = 'rgb(10, 10, 10, 1)'; // is used just in the menu options with large screens
 const _1mainColorD = 'rgb(20, 20, 20, 1)';////////
 const _1mainColorDD = 'rgb(4, 1, 1, 1)';
-const _1tableHeaderColor = '#FFF';
+const _1tableHeaderColor = 'rgb(255, 255, 255, 1)';
 const _1tableAlertOnBackground = 'rgb(200, 10, 50, .6)';
-const _1tableAlertOnColor = '#FFF';
-const _1tableRowColor = '#FFF';
+const _1tableAlertOnColor = 'rgb(255, 255, 255, 1)';
+const _1tableRowColor = 'rgb(255, 255, 255, 1)';
 const _1rowEvenBackground = 'rgb(120, 120, 120)';
 const _1rowOddBackground = 'rgb(60, 60, 60)';
 const _1menuItem = 'rgb(200, 200, 200)';
@@ -70,7 +70,7 @@ const _2mainColorLighter = 'rgb(250, 250, 250, 1)';
 const _2mainColor3 = 'rgb(57, 138, 208, 1)'; // is used just in the menu options with large screens
 const _2mainColorD = 'rgb(7, 78, 158, 1)';////////
 const _2mainColorDD = 'rgb(0, 58, 130, 1)';
-const _2tableHeaderColor = '#FFF';
+const _2tableHeaderColor = 'rgb(255, 255, 255, 1)';
 const _2tableAlertOnBackground = 'rgb(250, 0, 0, .8)';
 const _2tableAlertOnColor = 'rgb(250, 250, 250, 1)';
 const _2tableRowColor = 'rgb(0, 0, 0, 1)';
@@ -90,6 +90,35 @@ const _2neutralDark = 'rgb(10, 89, 170, 1)';
 
 const _2plusIcon = 'rgb(220, 200, 0, 1)';
 const _2modalColor = 'rgb(0, 58, 130, 1)';
+
+
+// ----------------------------------------
+
+const _3mainColor = 'rgb(225, 225, 225, 1)';
+const _3mainColorLighter = 'rgb(255, 255, 255, 1)';
+const _3mainColor3 = 'rgb(225, 225, 225, 1)'; // is used just in the menu options with large screens
+const _3mainColorD = 'rgb(200, 200, 200, 1)';////////
+const _3mainColorDD = 'rgb(231, 234, 234, 1)';
+const _3tableHeaderColor = 'rgb(70, 70, 70, 1)';
+const _3tableAlertOnBackground = 'rgb(255, 70, 100, .6)';
+const _3tableAlertOnColor = 'rgb(250, 250, 250, 1)';
+const _3tableRowColor = 'rgb(0, 0, 0, 1)';
+const _3rowOddBackground = 'rgb(220, 220, 220)';
+const _3rowEvenBackground = 'rgb(250, 250, 250, 1)';
+const _3menuItem = 'rgb(255, 250, 255, 1)';
+
+const _3succesMain = 'rgb(0,200,0, 1)';
+const _3succesContrastText = 'rgb(0,250,0, .2)';
+const _3succesDark = 'rgb(0,150,0, 1)';
+const _3warningMain = 'rgb(250, 0, 0, 1)';
+const _3warningContrastText = 'rgb(200, 0, 0, .2)';
+const _3warningDark = 'rgb(200, 45, 45, 1)';
+const _3neutralMain = 'rgb(145, 145, 145, 1)';
+const _3neutralContrastText = 'rgb(145, 145, 145, .2)';
+const _3neutralDark = 'rgb(125, 125, 125, 1)';
+
+const _3plusIcon = 'rgb(70, 70, 70, 1)';
+const _3modalColor = 'rgb(0, 58, 130, 1)';
 
 
 export const _0themeGlobal = createTheme({
@@ -143,6 +172,23 @@ export const _2themeGlobal = createTheme({
         },
     },
 });
+export const _3themeGlobal = createTheme({
+    palette: {
+        success: {
+            main: _3succesMain,
+            contrastText: _3succesContrastText,
+        },
+        warning: {
+            main: _3warningMain,
+            contrastText: _3warningContrastText,
+        },
+        neutral: {
+            main: _3neutralMain,
+            contrastText: _3neutralContrastText,
+            dark: _3neutralDark,
+        },
+    },
+});
 
 export const useStylesGlobal = makeStyles()({
     
@@ -168,6 +214,9 @@ export const useStylesGlobal = makeStyles()({
     _2main_color: {
         color: _2mainColor,
     },
+    _3main_color: {
+        color: _3mainColor,
+    },
     _0main_background_color: {
         backgroundColor: _0mainColor,
         backgroundImage: `linear-gradient(45deg, ${_0mainColor} 50%, ${_0mainColorLighter})`,
@@ -183,6 +232,11 @@ export const useStylesGlobal = makeStyles()({
         backgroundImage: `linear-gradient(45deg, ${_2mainColor} 50%, ${_2mainColorLighter}) `,
         boxShadow: `-20px 20px 20px 2px ${_1mainColorDD} `,
     },
+    _3main_background_color: {
+        backgroundColor: _3mainColor,
+        backgroundImage: `linear-gradient(45deg, ${_3mainColor} 50%, ${_3mainColorLighter}) `,
+        boxShadow: `-20px 20px 20px 2px ${_1mainColorDD} `,
+    },
     _0warning_color: {
         color: _0warningMain,
     },
@@ -191,6 +245,9 @@ export const useStylesGlobal = makeStyles()({
     },
     _2warning_color: {
         color: _2warningMain,
+    },
+    _3warning_color: {
+        color: _3warningMain,
     },
     _0modal_color: {
         // color: _0modalColor,
@@ -201,6 +258,9 @@ export const useStylesGlobal = makeStyles()({
     },
     _2modal_color: {
         color: _2neutralMain,
+    },
+    _3modal_color: {
+        color: _3neutralMain,
     },
     
     gradient_effect: {
@@ -222,6 +282,9 @@ export const useStylesGlobal = makeStyles()({
     },
     _2main_background_colorD: {
         backgroundColor: _2mainColorD,
+    },
+    _3main_background_colorD: {
+        backgroundColor: _3mainColorD,
     },
     customBoxColumn: { 
         margin: "0 auto",
@@ -505,6 +568,48 @@ export const useStylesGlobal = makeStyles()({
             }
         },
     },
+    _3btn_cancel: {
+        backgroundColor: _3warningContrastText,
+        '&:hover': {
+        borderColor: _3warningDark,
+        backgroundColor: _3warningContrastText,
+        "& > *": {
+            stroke: _3warningDark
+        }
+      }
+    },
+    _3btn_ok: {
+      backgroundColor: _3succesContrastText,
+      '&:hover': {
+        borderColor: _3succesDark,
+        backgroundColor: _3succesContrastText,
+        "& > *": {
+          stroke: _3succesDark
+        }
+      }
+    },  
+    _3btn_edit: {
+      backgroundColor: _3neutralContrastText,
+      '&:hover': {
+        borderColor: _3neutralDark,
+        backgroundColor: _3neutralContrastText,
+        "& > *": {
+          color: _3neutralDark,
+        }
+      },
+    },
+    _3btn_add: {
+        backgroundColor: _3neutralContrastText,
+        color: _3neutralMain,
+        '&:hover': {
+            borderColor: _3neutralDark,
+            backgroundColor: _3neutralContrastText,
+            "& > *": {
+            color: _3neutralDark,
+            stroke: _3neutralDark
+            }
+        },
+    },
     menuIcon: {
       // color: "white !important",
       color: _0neutralMain,
@@ -536,6 +641,9 @@ export const useStylesGlobal = makeStyles()({
     _2plus_icon_color: {
       color: _2plusIcon,
     },
+    _3plus_icon_color: {
+      color: _3plusIcon,
+    },
     backPlus: {
       color: "red",
     },
@@ -565,6 +673,15 @@ export const useStylesGlobal = makeStyles()({
     },
     _2add_rounded_icon_stroke_color: {
         stroke: _2neutralMain,
+    },
+    _3check_rounded_icon_stroke_color: {
+        stroke: _3succesMain,
+    },
+    _3close_rounded_icon_stroke_color: {
+        stroke: _3warningMain,
+    },
+    _3add_rounded_icon_stroke_color: {
+        stroke: _3neutralMain,
     },
     page: {
         display: "inline-block",
@@ -666,6 +783,12 @@ export const useStylesGlobal = makeStyles()({
     _2main_background_colorDD: {
         backgroundColor: _2mainColorDD,
     },
+    _3main_background_colorDD: {
+        backgroundColor: _3mainColorDD,
+    },
+    _3main_colorDD: {
+        color: _3tableHeaderColor,
+    },
     menu_toolbar: {
         height: "64px",
         margin: "auto",
@@ -720,6 +843,9 @@ export const useStylesGlobal = makeStyles()({
     _2background_color3 : {
         backgroundColor: _2mainColor3,
     },
+    _3background_color3 : {
+        backgroundColor: _3mainColor3,
+    },
     _0table_header_color: {
         color: _0tableHeaderColor,
         '&.Mui-checked': {
@@ -736,6 +862,12 @@ export const useStylesGlobal = makeStyles()({
         color: _2tableHeaderColor,
         '&.Mui-checked': {
             color: _2tableHeaderColor,
+        },
+    },
+    _3table_header_color: {
+        color: _3tableHeaderColor,
+        '&.Mui-checked': {
+            color: _3tableHeaderColor,
         },
     },
     table_rows : {
@@ -787,6 +919,21 @@ export const useStylesGlobal = makeStyles()({
     _2table_row_odd: {
         backgroundColor: _2rowOddBackground, 
     },
+    _3table_rows_color : {
+        color:_3tableRowColor,
+    },
+    _3table_alert_on_background : {
+        backgroundColor: _3tableAlertOnBackground, 
+    },
+    _3table_alert_on_color : {
+        color: _3tableAlertOnColor,
+    },
+    _3table_row_even: {
+        backgroundColor: _3rowEvenBackground, 
+    },
+    _3table_row_odd: {
+        backgroundColor: _3rowOddBackground, 
+    },
     table_menu : {
         borderRadius: '4px', // Set border-radius to mimic scrollbar radius
         '& .MuiPaper-root': {  
@@ -828,6 +975,14 @@ export const useStylesGlobal = makeStyles()({
              },
         },
     },
+    _3table_menu_background_color : {
+        '& .MuiPaper-root': { 
+            backgroundColor: _3menuItem,
+            '&:hover': {
+                backgroundColor: _3menuItem,
+             },
+        },
+    },
     table_disabled: {
         backgroundColor: "rgb(255,255, 255, .3)",
     },
@@ -851,6 +1006,12 @@ export const useStylesGlobal = makeStyles()({
         backgroundColor: _2menuItem,
         '&:hover': {
             backgroundColor: _2menuItem,
+        },
+    },
+    _3menu_item_background_color: {
+        backgroundColor: _3menuItem,
+        '&:hover': {
+            backgroundColor: _3menuItem,
         },
     },
 })

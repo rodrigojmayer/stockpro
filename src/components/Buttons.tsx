@@ -20,10 +20,11 @@ import IonTrash from "../assets/ion_trash.svg";
 import _0IonTrash from "../assets/_0ion_trash.svg";
 import _1IonTrash from "../assets/_1ion_trash.svg";
 import _2IonTrash from "../assets/_2ion_trash.svg";
+import _3IonTrash from "../assets/_3ion_trash.svg";
 import UpdateArrowCircle from "../assets/akar-icons_arrow-cycle.svg";
 import GPlusIco from "../assets/gplus.svg";
 import Divider from '@mui/material/Divider';
-import { _0themeGlobal, _1themeGlobal, _2themeGlobal, useStylesGlobal } from '../Styles'
+import { _0themeGlobal, _1themeGlobal, _2themeGlobal, _3themeGlobal, useStylesGlobal } from '../Styles'
 import { UserContext } from '../context/UserContext';
 import { Theme } from '@mui/material/styles'; // Import the Theme type from your theme library
 
@@ -63,6 +64,7 @@ const themeMap : ThemeMap = {
   '0': _0themeGlobal,
   '1': _1themeGlobal,
   '2': _2themeGlobal,
+  '3': _3themeGlobal,
 };
 
 export function OkButton({ sizeIco, roundedIco, cusField, clicked, submitOk, widthIco }: ButtonProps ) {
@@ -250,6 +252,8 @@ export function DeleteButton({ sizeIco, roundedIco, cusField, clicked, submitOk 
     trashIcon = _1IonTrash;
   } else if (user.background_color === 2) {
     trashIcon = _2IonTrash;
+  } else if (user.background_color === 3) {
+    trashIcon = _3IonTrash;
   }
   
   return (
