@@ -495,7 +495,7 @@ export const useStylesGlobal = makeStyles()({
     },
     _2btn_add: {
         backgroundColor: _2neutralContrastText,
-        color: _2neutralContrastText,
+        color: _2neutralMain,
         '&:hover': {
             borderColor: _2neutralDark,
             backgroundColor: _2neutralContrastText,
