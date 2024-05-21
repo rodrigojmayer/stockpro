@@ -345,6 +345,7 @@ interface ChildProps {
 export function MenuButton({ onDataChanged }: ChildProps) {
 
   const { classes } = useStylesGlobal();
+  const { user } = useContext<any>(UserContext)
  
   const handleClick:any = () => {
     onDataChanged(true)
@@ -353,7 +354,7 @@ export function MenuButton({ onDataChanged }: ChildProps) {
   return (
     <IconButton
       onClick={handleClick}
-      className={classes.menuIcon}
+      className={`${classes.menuIcon} ${classes[`_${user.background_color}menu_icon_color` as keyof typeof classes]}`}
       id="hamburgerMenuButton">
       <MenuRoundedIcon />
     </IconButton>

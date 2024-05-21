@@ -98,7 +98,7 @@ const _3mainColor = 'rgb(225, 225, 225, 1)';
 const _3mainColorLighter = 'rgb(255, 255, 255, 1)';
 const _3mainColor3 = 'rgb(225, 225, 225, 1)'; // is used just in the menu options with large screens
 const _3mainColorD = 'rgb(200, 200, 200, 1)';////////
-const _3mainColorDD = 'rgb(231, 234, 234, 1)';
+const _3mainColorDD = 'rgb(210, 210, 210, 1)';
 const _3tableHeaderColor = 'rgb(70, 70, 70, 1)';
 const _3tableAlertOnBackground = 'rgb(255, 70, 100, .6)';
 const _3tableAlertOnColor = 'rgb(250, 250, 250, 1)';
@@ -611,7 +611,6 @@ export const useStylesGlobal = makeStyles()({
         },
     },
     menuIcon: {
-      // color: "white !important",
       color: _0neutralMain,
       '& .MuiSvgIcon-root': {
         width: '2.9rem',
@@ -620,7 +619,10 @@ export const useStylesGlobal = makeStyles()({
       display: 'flex',
       margin: "auto",
       marginRight: "0",
-    },  
+    },
+    _3menu_icon_color: {
+      color: _3plusIcon,
+    },   
     plusIcon: {
       display: "flex",
       // margin: "0 5px",
