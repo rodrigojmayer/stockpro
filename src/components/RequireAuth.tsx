@@ -41,7 +41,7 @@ const RequireAuth = () => {
         </Backdrop>
     );
     
-    if(!isLoading.user){
+    if(!isLoading.user || render ==="login"){
         switch (render) {
             case "home":
                 FinalComponent = (<Outlet />);
