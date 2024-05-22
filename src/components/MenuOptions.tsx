@@ -68,8 +68,10 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
             open={open} 
             onClose={close}
             sx={{ 
-                backgroundColor: 'rgba(0, 0, 0, .5)',
-                '& .MuiBackdrop-root': { backgroundColor: breakpointLG ? 'rgba(0, 0, 0, 0)': ""} 
+                // backgroundColor: 'rgba(0, 0, 0, .5)',
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                // '& .MuiBackdrop-root': { backgroundColor: breakpointLG ? 'rgba(0, 0, 0, 0)': ""} 
+                '& .MuiBackdrop-root': { backgroundColor: 'rgba(0, 0, 0, 0)'} 
             }} // Set the custom background color here
         > 
             <Box 
