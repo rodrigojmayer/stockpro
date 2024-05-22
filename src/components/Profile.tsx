@@ -60,7 +60,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
         // "confirmPass": false,
     });
     const { user, setUser } = useContext<any>(UserContext); 
-    console.log(user.background_color); // Check the value of user.background_color
+    // console.log(user.background_color); // Check the value of user.background_color
     const[ profileName, setProfileName ] = useState<string>(user.name)
     const[ profileLastName, setProfileLastName ] = useState<string>(user.last_name)
     const[ profileEmail, setProfileEmail ] = useState<string>(user.email)
