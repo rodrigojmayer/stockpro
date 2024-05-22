@@ -118,7 +118,7 @@ const _3neutralContrastText = 'rgb(145, 145, 145, .2)';
 const _3neutralDark = 'rgb(125, 125, 125, 1)';
 
 const _3plusIcon = 'rgb(70, 70, 70, 1)';
-const _3modalColor = 'rgb(0, 58, 130, 1)';
+const _3modalColor = 'rgb(0, 110, 110, 1)';
 
 
 export const _0themeGlobal = createTheme({
@@ -644,7 +644,7 @@ export const useStylesGlobal = makeStyles()({
       color: _2plusIcon,
     },
     _3plus_icon_color: {
-      color: _3plusIcon,
+      color: _3modalColor,
     },
     backPlus: {
       color: "red",
@@ -788,6 +788,15 @@ export const useStylesGlobal = makeStyles()({
     _3main_background_colorDD: {
         backgroundColor: _3mainColorDD,
     },
+    _0main_colorDD: {
+        color: _0tableHeaderColor,
+    },
+    _1main_colorDD: {
+        color: _1tableHeaderColor,
+    },
+    _2main_colorDD: {
+        color: _2tableHeaderColor,
+    },
     _3main_colorDD: {
         color: _3tableHeaderColor,
     },
@@ -821,8 +830,28 @@ export const useStylesGlobal = makeStyles()({
             height: "100%",
         },
         '& Button': {
-            color: "white",
+            // color: "white",
             height: "100%",
+        },
+    },
+    _0menu_options_color : {
+        '& Button': {
+            color: _0tableHeaderColor,
+        },
+    },
+    _1menu_options_color : {
+        '& Button': {
+            color: _1tableHeaderColor,
+        },
+    },
+    _2menu_options_color : {
+        '& Button': {
+            color: _2tableHeaderColor,
+        },
+    },
+    _3menu_options_color : {
+        '& Button': {
+            color: _3tableHeaderColor,
         },
     },
     menu_options_SM : {
@@ -836,6 +865,7 @@ export const useStylesGlobal = makeStyles()({
         height: "30%",
         borderRadius: "0 0 10px 10px",
     },
+    
     _0background_color3 : {
         backgroundColor: _0mainColor3,
     },
