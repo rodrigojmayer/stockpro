@@ -19,6 +19,7 @@ import { ColumnsProvider } from './context/ColumnsContext';
 import { ProductsProvider } from './context/ProductsContext';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CheckListStockProvider } from './context/CheckListStockContext';
+import { LanguageLabelsProvider } from './context/LanguageLabelsContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
@@ -26,29 +27,31 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <IsLoadingProvider>
         <AuthProvider>
           <UserProvider>
-            <ClientProvider>
-              <CheckListStockProvider>
-                <FilestackProvider>
-                  <UsersProvider>
-                    <EmailsProvider>
-                      <MeasuresProvider>
-                        <AccessLevelsProvider>
-                          <CategoriesProvider>
-                            <ColumnsProvider>
-                              <ProductsProvider>
-                                <Routes>
-                                  <Route path="/*" element={<App />} />
-                                </Routes>
-                              </ProductsProvider>
-                            </ColumnsProvider>
-                          </CategoriesProvider>
-                        </AccessLevelsProvider>
-                      </MeasuresProvider>
-                    </EmailsProvider>
-                  </UsersProvider>
-                </FilestackProvider>
-              </CheckListStockProvider>
-            </ClientProvider>
+            <LanguageLabelsProvider>
+              <ClientProvider>
+                <CheckListStockProvider>
+                  <FilestackProvider>
+                    <UsersProvider>
+                      <EmailsProvider>
+                        <MeasuresProvider>
+                          <AccessLevelsProvider>
+                            <CategoriesProvider>
+                              <ColumnsProvider>
+                                <ProductsProvider>
+                                  <Routes>
+                                    <Route path="/*" element={<App />} />
+                                  </Routes>
+                                </ProductsProvider>
+                              </ColumnsProvider>
+                            </CategoriesProvider>
+                          </AccessLevelsProvider>
+                        </MeasuresProvider>
+                      </EmailsProvider>
+                    </UsersProvider>
+                  </FilestackProvider>
+                </CheckListStockProvider>
+              </ClientProvider>
+            </LanguageLabelsProvider>
           </UserProvider>
         </AuthProvider>
       </IsLoadingProvider>

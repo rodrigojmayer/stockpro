@@ -1,0 +1,33 @@
+import { createContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
+
+export const LanguageLabelsContext = createContext<Object | undefined>(undefined);
+
+type LanguageLabelsProviderProps = {
+  children: React.ReactNode;
+};
+  
+export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ children }) => {
+  const { user } = useContext<any>(UserContext);
+
+  const [labelsMainSearch, setLabelsMainSearch] = useState({}); // New state for loading status
+  
+
+  useEffect(() => {
+    if (user.language === 0) {
+      setLabelsMainSearch({
+        global_search: "Global search..."
+      })
+    } else if (user.language === 1) {
+      setLabelsMainSearch({
+        global_search: "Búsqueda global..."
+      })
+    }
+  }, [user.language]);
+
+  return  (
+    <LanguageLabelsContext.Provider value={{ labelsMainSearch }}>
+      {children}
+    </LanguageLabelsContext.Provider>)
+};
