@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 import useUser from '../hooks/useUser';
 import useLogout from '../hooks/useLogout';
 import { useStylesGlobal } from '../Styles';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 interface ChildProps {
     open:  boolean
@@ -21,6 +22,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     const { classes } = useStylesGlobal()
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { user, setUser, INITIAL_USER } = useContext<any>(UserContext)
+    const { labelsMenuOptions } = useContext<any>(LanguageLabelsContext)
     const { isLogged } = useUser()
     const logout = useLogout();
 
@@ -51,15 +53,15 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     
     const  buttons = [
         // <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
-        <Button value="profile" key="profile" variant="text" onClick={selOp}>Profile</Button>,
-        <Button value="preferences" key="preferences" variant="text" onClick={selOp}>Preferences</Button>,
-        <Button value="logout" key="logout" variant="text" onClick={signOut}>Log out</Button>,
+        <Button value="profile" key="profile" variant="text" onClick={selOp}>{labelsMenuOptions.profile}</Button>,
+        <Button value="preferences" key="preferences" variant="text" onClick={selOp}>{labelsMenuOptions.preferences}</Button>,
+        <Button value="logout" key="logout" variant="text" onClick={signOut}>{labelsMenuOptions.logout}</Button>,
     ];
  
     let height_box = "42%"
     if(user.id_access_level <4){
         // buttons.splice(1, 0, <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>)
-        buttons.splice(2, 0, <Button value="users" key="users" variant="text" onClick={selOp}>Users</Button>)
+        buttons.splice(2, 0, <Button value="users" key="users" variant="text" onClick={selOp}>{labelsMenuOptions.users}</Button>)
         height_box = "50%"
     }
 
