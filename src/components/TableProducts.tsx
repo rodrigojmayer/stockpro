@@ -33,6 +33,7 @@ import IconButton from '@mui/material/IconButton';
 import LockIcon from '@mui/icons-material/Lock';
 import { Anchor } from '@mui/icons-material';
 import CustomFields from './CustomFields';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 
 // type TableClasses = ReturnType<typeof useStyles>;
@@ -201,6 +202,7 @@ export default function TableProducts(
   const  {classes} = useStylesGlobal()
   const breakpointLG = useMediaQuery('(min-width:1024px)');
   const breakpointMD = useMediaQuery('(min-width: 724px)');
+  const { labelsTableProducts } = useContext<any>(LanguageLabelsContext)
 
   const { user } = useContext<any>(UserContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
@@ -691,7 +693,7 @@ export default function TableProducts(
                                     color='success'  
                                     checked={alertsOnTopUserSort}
                                   />  
-                                  Alerts on top
+                                  {labelsTableProducts.alerts_on_top}
                                 </Typography>
                               </MenuItem>
                               <MenuItem 
@@ -703,7 +705,7 @@ export default function TableProducts(
                                   align="center" 
                                   variant="body2" 
                                 > 
-                                  Manage columns
+                                  {labelsTableProducts.manage_columns}
                                 </Typography>
                               </MenuItem>
                               <MenuItem 
@@ -715,7 +717,7 @@ export default function TableProducts(
                                   align="center" 
                                   variant="body2" 
                                 > 
-                                  Custom fields
+                                  {labelsTableProducts.custom_fields}
                                 </Typography>
                               </MenuItem>
                             </Menu>

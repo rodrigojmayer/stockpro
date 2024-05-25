@@ -13,6 +13,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
 
   const [labelsMainSearch, setLabelsMainSearch] = useState({}); // New state for loading status
   const [labelsMenuOptions, setLabelsMenuOptions] = useState({}); // New state for loading status
+  const [labelsTableProducts, setLabelsTableProducts] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -25,6 +26,11 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         preferences: "Preferences",
         logout: "Log out",
         users: "Users",
+      });
+      setLabelsTableProducts({
+        alerts_on_top: "Alerts on top",
+        manage_columns: "Manage columns",
+        custom_fields: "Custom fields",
       })
     } else if (user.language === 1) {
       setLabelsMainSearch({
@@ -35,12 +41,17 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         preferences: "Preferencias",
         logout: "Cerrar sesión",
         users: "Usuarios",
+      });
+      setLabelsTableProducts({
+        alerts_on_top: "Alertas primero",
+        manage_columns: "Administrar columnas",
+        custom_fields: "Campos personalizados",
       })
     }
   }, [user.language]);
 
   return  (
-    <LanguageLabelsContext.Provider value={{ labelsMainSearch, labelsMenuOptions }}>
+    <LanguageLabelsContext.Provider value={{ labelsMainSearch, labelsMenuOptions, labelsTableProducts }}>
       {children}
     </LanguageLabelsContext.Provider>)
 };
