@@ -14,6 +14,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsMainSearch, setLabelsMainSearch] = useState({}); // New state for loading status
   const [labelsMenuOptions, setLabelsMenuOptions] = useState({}); // New state for loading status
   const [labelsTableProducts, setLabelsTableProducts] = useState({}); // New state for loading status
+  const [labelsProfile, setLabelsProfile] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -31,8 +32,19 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         alerts_on_top: "Alerts on top",
         manage_columns: "Manage columns",
         custom_fields: "Custom fields",
-      })
-    } else if (user.language === 1) {
+      });
+      setLabelsProfile({
+        profile: "Profile",
+        name: "Name",
+        last_name: "Last name",
+        alias: "Alias",
+        email: "Email",
+        alerts_by_email: "Alerts by email",
+        change_password: "Change password",
+      });
+    } 
+    
+    else if (user.language === 1) {
       setLabelsMainSearch({
         global_search: "Búsqueda global..."
       });
@@ -46,12 +58,21 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         alerts_on_top: "Alertas primero",
         manage_columns: "Administrar columnas",
         custom_fields: "Campos personalizados",
-      })
+      });
+      setLabelsProfile({
+        profile: "Perfil",
+        name: "Nombre",
+        last_name: "Apellido",
+        alias: "Alias",
+        email: "Email",
+        alerts_by_email: "Alertas por email",
+        change_password: "Cambiar contraseña",
+      });
     }
   }, [user.language]);
 
   return  (
-    <LanguageLabelsContext.Provider value={{ labelsMainSearch, labelsMenuOptions, labelsTableProducts }}>
+    <LanguageLabelsContext.Provider value={{ labelsMainSearch, labelsMenuOptions, labelsTableProducts, labelsProfile }}>
       {children}
     </LanguageLabelsContext.Provider>)
 };

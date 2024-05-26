@@ -43,6 +43,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import ChangePassModal from './ChangePassModal';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 
 export default function Profile( { open, handleClose }: ChildProps) {
@@ -60,6 +61,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
         // "confirmPass": false,
     });
     const { user, setUser } = useContext<any>(UserContext); 
+    const { labelsProfile } = useContext<any>(LanguageLabelsContext)
     // console.log(user.background_color); // Check the value of user.background_color
     const[ profileName, setProfileName ] = useState<string>(user.name)
     const[ profileLastName, setProfileLastName ] = useState<string>(user.last_name)
@@ -291,12 +293,12 @@ export default function Profile( { open, handleClose }: ChildProps) {
                             closeChangePassModal={handleCloseChangePassModal}
                         />
                         <Typography align="center" variant="h5" className={classes.title}>
-                            Profile
+                            {labelsProfile.profile}
                         </Typography>
                         <Box className={classes.customBoxColumn}>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Name"
+                                    label={labelsProfile.name}
                                     maxRows={1}
                                     size="small"
                                     type="text"
@@ -311,7 +313,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Last name"
+                                    label={labelsProfile.last_name}
                                     maxRows={1}
                                     size="small"
                                     type="text"
@@ -326,7 +328,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Alias*"
+                                    label={`${labelsProfile.alias}*`}
                                     maxRows={1}
                                     size="small"
                                     type="text"
@@ -342,7 +344,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Email*"
+                                    label={`${labelsProfile.email}*`}
                                     maxRows={1}
                                     size="small"
                                     type="email"
@@ -354,7 +356,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 />
                             </Box>
                             <Box className={classes.customBoxRow}>
-                                    <Typography >Alerts by email</Typography>
+                                    <Typography >{labelsProfile.alerts_by_email}</Typography>
                                     <Switch 
                                             color='success'  
                                             checked={profileAlertsEnabled}
@@ -373,7 +375,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                                 // color="success"
                             >
                             <Typography >
-                                Change Password
+                                {labelsProfile.change_password}
                             </Typography>  
                         </Button>
                         </Box>
