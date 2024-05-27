@@ -15,6 +15,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsMenuOptions, setLabelsMenuOptions] = useState({}); // New state for loading status
   const [labelsTableProducts, setLabelsTableProducts] = useState({}); // New state for loading status
   const [labelsProfile, setLabelsProfile] = useState({}); // New state for loading status
+  const [labelsChangePass, setLabelsChangePass] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -37,10 +38,16 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         profile: "Profile",
         name: "Name",
         last_name: "Last name",
-        alias: "Alias",
-        email: "Email",
+        alias: "Alias*",
+        email: "Email*",
         alerts_by_email: "Alerts by email",
         change_password: "Change password",
+      });
+      setLabelsChangePass({
+        change_password: "Change Password",
+        actual_password: "Actual password*",
+        new_password: "New password*",
+        confirm_new_password: "Confirm password*",
       });
     } 
     
@@ -63,16 +70,30 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         profile: "Perfil",
         name: "Nombre",
         last_name: "Apellido",
-        alias: "Alias",
-        email: "Email",
+        alias: "Alias*",
+        email: "Email*",
         alerts_by_email: "Alertas por email",
         change_password: "Cambiar contraseña",
+      });
+      setLabelsChangePass({
+        change_password: "Cambiar Contraseña",
+        actual_password: "Contraseña actual*",
+        new_password: "Nueva contraseña*",
+        confirm_new_password: "Confirmar contraseña*",
       });
     }
   }, [user.language]);
 
   return  (
-    <LanguageLabelsContext.Provider value={{ labelsMainSearch, labelsMenuOptions, labelsTableProducts, labelsProfile }}>
+    <LanguageLabelsContext.Provider 
+      value={{ 
+        labelsMainSearch, 
+        labelsMenuOptions, 
+        labelsTableProducts, 
+        labelsProfile, 
+        labelsChangePass, 
+      }}
+    >
       {children}
     </LanguageLabelsContext.Provider>)
 };

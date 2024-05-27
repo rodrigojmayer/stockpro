@@ -12,12 +12,12 @@ import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 import SaveChanges from './SaveChanges';
 import ConfirmChangedPassModal from './ConfirmChangedPassModal';
-
 
 type ChangePassModalProps = {
     openChangePassModal: boolean;
@@ -34,6 +34,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
     });
 
     const { user, setUser } = useContext<any>(UserContext);
+    const { labelsChangePass } = useContext<any>(LanguageLabelsContext)
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     
@@ -223,12 +224,12 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                             errorData={errorData} 
                         />
                         <Typography align="center" variant="h6" className={classes.title}>
-                            Change Password
+                            {labelsChangePass.change_password}
                         </Typography>
                         <Box className={classes.customBoxColumn}>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Actual password*"
+                                    label={labelsChangePass.actual_password}
                                     maxRows={1}
                                     size="small"
                                     type={showActualPass ? "text" : "password"}
@@ -249,7 +250,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="New password*"
+                                    label={labelsChangePass.new_password}
                                     maxRows={1}
                                     size="small"
                                     type={showNewPass ? "text" : "password"}
@@ -270,7 +271,7 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Confirm new password*"
+                                    label={labelsChangePass.confirm_new_password}
                                     maxRows={1}
                                     size="small"
                                     type={showConfirmNewPass ? "text" : "password"}

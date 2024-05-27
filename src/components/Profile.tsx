@@ -328,7 +328,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label={`${labelsProfile.alias}*`}
+                                    label={labelsProfile.alias}
                                     maxRows={1}
                                     size="small"
                                     type="text"
@@ -344,7 +344,7 @@ export default function Profile( { open, handleClose }: ChildProps) {
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label={`${labelsProfile.email}*`}
+                                    label={labelsProfile.email}
                                     maxRows={1}
                                     size="small"
                                     type="email"
