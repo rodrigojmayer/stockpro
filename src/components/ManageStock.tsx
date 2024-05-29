@@ -23,6 +23,7 @@ import ErrorModal from './ErrorModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import { FilestackContext } from '../context/FilestackContext';
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 interface Category {
     _id: string;
@@ -65,12 +66,13 @@ export default function ManageStock(
     const { measures } = useContext<any>(MeasuresContext)
     const measureArray = measures
     const { user } = useContext<any>(UserContext)
+    const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext) 
     const { filestack, deleteFilesStock } = useContext<any>(FilestackContext);
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
    
     const edition = (data._id!== "" ? true : false)
-    const [titleStat, setTitleStat] = useState<string>("Edit ");
+    const [titleStat, setTitleStat] = useState<string>(labelsManageStock.edit_stock);
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
     const [stockCodeTemp, setStockCodeTemp] = useState<any>(data.code);
@@ -460,7 +462,8 @@ export default function ManageStock(
             setStockAlertDateEnabledTemp(false)
             setStockAlertedDateTemp(false);
             setStockCustomValuesTemp({});
-            setTitleStat("Create ")
+            // setTitleStat("Create ")
+            setTitleStat(labelsManageStock.create_stock)
             setOpenOptionsCreate(INITIAL_CREATESTOCK_OPTIONS)
         }
     }, [open])
