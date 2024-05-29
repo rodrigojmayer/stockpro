@@ -17,6 +17,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import Switch from '@mui/material/Switch';
 import { UserContext } from '../context/UserContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 interface ChildProps {
     hiddenPanel:  boolean
@@ -49,6 +50,7 @@ export default function ManageStockAlerts(
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null)
     const { user } = useContext<any>(UserContext); 
+    const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
     useEffect(() => {
         if (!hiddenPanel) {
@@ -92,13 +94,13 @@ export default function ManageStockAlerts(
         <div
             hidden= {hiddenPanel}
         >
-            <Typography align='center' variant='h6'>Alerts</Typography>
+            <Typography align='center' variant='h6'>{labelsManageStock.alerts}</Typography>
             <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
                 <Box className={classes.customBoxRow}>
                     <Grid container>
                         <Grid item xs={12} >
                             <TextField
-                                label="By amount"
+                                    label={labelsManageStock.by_amount}
                                 maxRows={1}
                                 size="small"
                                 // type="number"
@@ -147,7 +149,7 @@ export default function ManageStockAlerts(
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DatePicker']} >
                                 <DatePickerComponent
-                                    label="By date"
+                                    label={labelsManageStock.by_date}
                                     format="DD/MM/YYYY"
                                     defaultValue = { stockAlertDateTemp? dayjs(stockAlertDateTemp) : null}
                                     disabled={!stockAlertDateEnabledTemp}
@@ -204,10 +206,10 @@ export default function ManageStockAlerts(
                             direction="left"
                             clicked={() => handleHiddenOptions("secondaryData")}
                         />
-                        <Typography align="left" sx={{ width: "95px" }}>Secondary data</Typography>
+                        <Typography align="left" sx={{ width: "95px" }}>{labelsManageStock.secondary_data}</Typography>
                     </div>
                     <div className={classes.customBoxCenter}>
-                        <Typography align="right" sx={{ width: "95px" }}>Custom fields</Typography>
+                        <Typography align="right" sx={{ width: "95px" }}>{labelsManageStock.custom_fields}</Typography>
                         <UpButton
                             direction="right"
                             clicked={() => handleHiddenOptions("customFields")}
