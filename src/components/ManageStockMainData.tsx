@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Box,
          TextField,
          Typography,
@@ -6,6 +6,7 @@ import { Box,
         } from '@mui/material';
 import { UpButton } from './Buttons';
 import { useStylesGlobal } from '../Styles'
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 interface mainData {
     id: number;
@@ -61,6 +62,7 @@ export default function ManageStockMainData(
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null);
+    const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
     useEffect(() => {
         if (!hiddenPanel) {
@@ -87,11 +89,11 @@ export default function ManageStockMainData(
         <div
             hidden= {hiddenPanel}
         >
-            <Typography align='center' variant='h6'>Main data</Typography>
+            <Typography align='center' variant='h6'>{labelsManageStock.main_data}</Typography>
             <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Name*"
+                        label={labelsManageStock.name}
                         value={stockNameTemp}
                         onChange={ (event:any) => onStockNameChange(event.target.value) }
                         maxRows={1}
@@ -107,7 +109,7 @@ export default function ManageStockMainData(
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Code"
+                        label={labelsManageStock.code}
                         value={stockCodeTemp}
                         onChange={ (event:any) => onStockCodeChange(event.target.value) }
                         maxRows={1}
@@ -121,7 +123,7 @@ export default function ManageStockMainData(
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Amount"
+                        label={labelsManageStock.amount}
                         value={stockAmountTemp}
                         onChange={ (event:any) => onStockAmountChange(Number(event.target.value)) }
                         maxRows={1}
@@ -134,7 +136,7 @@ export default function ManageStockMainData(
                         }}
                     />
                     <TextField 
-                        label="Measure"
+                        label={labelsManageStock.measure}
                         size="small"
                         select
                         className={classes.inputMainData}
@@ -156,7 +158,7 @@ export default function ManageStockMainData(
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField 
-                        label="Category"
+                        label={labelsManageStock.category}
                         size="small"
                         select
                         className={classes.inputMainData}
@@ -176,7 +178,7 @@ export default function ManageStockMainData(
                         ))}
                     </TextField>
                     <TextField  
-                        label="Sub-Categ." 
+                        label={labelsManageStock.sub_category}
                         size="small"
                         select
                         disabled={stockCategoryTemp ? false : true}
@@ -201,7 +203,7 @@ export default function ManageStockMainData(
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
                     <div className={classes.customBoxCenter}>
                         <Typography align="left" sx={{ width: "169px" }}></Typography>
-                        <Typography align="right" sx={{ width: "95px" }}>Secondary data</Typography>
+                        <Typography align="right" sx={{ width: "95px" }}>{labelsManageStock.secondary_data}</Typography>
                         <UpButton
                             direction="right"
                             clicked={() => handleHiddenOptions("secondaryData")}
