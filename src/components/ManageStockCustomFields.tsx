@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Box,
          TextField,
          Typography,
@@ -7,6 +7,7 @@ import { Box,
 import { UpButton } from './Buttons';
 import { useStylesGlobal } from '../Styles'
 import { ColumnData, ColumnDataCustom } from '../types';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 interface ChildProps {
     hiddenPanel:  boolean
@@ -28,6 +29,7 @@ export default function ManageStockCustomFields(
     const breakpointMD = useMediaQuery('(min-width: 724px)');
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null)
+    const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
     useEffect(() => {
         if (!hiddenPanel) {
@@ -153,7 +155,7 @@ export default function ManageStockCustomFields(
         <div
         hidden= {hiddenPanel}
         >
-            <Typography align='center' variant='h6'>Custom fields</Typography>
+            <Typography align='center' variant='h6'>{labelsManageStock.custom_fields}</Typography>
             <Box 
                 ref={containerRef}    
                 className={`${classes.customBoxColumn} ${classes.customBoxColumnCustomFields} ${breakpointMD ? classes.scrollBarHide : ""} ${ isScrollbarVisible ? "" : classes.scrollBarHideInsufficientHeight }`}
@@ -189,7 +191,7 @@ export default function ManageStockCustomFields(
                         direction="left"
                         clicked={() => handleHiddenOptions("alerts")}
                     />
-                    <Typography align="left" sx={{ width: "95px" }}>Alerts</Typography>
+                    <Typography align="left" sx={{ width: "95px" }}>{labelsManageStock.alerts}</Typography>
                 <Typography align="right" sx={{ width: "169px" }}></Typography>
                 </div>
             </Box>
