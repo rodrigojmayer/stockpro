@@ -19,6 +19,7 @@ import { PickerOverlay } from 'filestack-react';
 // import {  TransformOptions } from 'filestack-js'; 
 import IonTrash from "../assets/ion_trash.svg";
 import { UserContext } from '../context/UserContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 // import * as filestack from 'filestack-js';
 // declare module 'filestack' {
@@ -56,6 +57,7 @@ export default function ManageStockSecondaryData(
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null)
     const { user } = useContext<any>(UserContext);
+    const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
     useEffect(() => {
         if (!hiddenPanel) {
@@ -202,11 +204,11 @@ export default function ManageStockSecondaryData(
         <div
         hidden= {hiddenPanel}
         >
-            <Typography align='center' variant='h6' >Secondary data</Typography>
+            <Typography align='center' variant='h6' >{labelsManageStock.secondary_data}</Typography>
             <Box className={`${classes.customBoxColumn} ${classes.customBoxColumnStockOptions}`}>
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Price"
+                        label={labelsManageStock.price}
                         maxRows={1}
                         size="small"
                         type="number"
@@ -231,7 +233,7 @@ export default function ManageStockSecondaryData(
                 </Box> 
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Description"
+                        label={labelsManageStock.description}
                         maxRows={1}
                         size="small"
                         className={classes.inputMainData}
@@ -444,10 +446,10 @@ export default function ManageStockSecondaryData(
                             direction="left"
                             clicked={() => handleHiddenOptions("mainData")}
                         />
-                        <Typography align="left" sx={{ width: "95px" }}>Main data</Typography>
+                        <Typography align="left" sx={{ width: "95px" }}>{labelsManageStock.main_data}</Typography>
                     </div> 
                     <div className={classes.customBoxCenter}>  
-                        <Typography align="right" sx={{ width: "95px" }}>Alerts</Typography>
+                        <Typography align="right" sx={{ width: "95px" }}>{labelsManageStock.alerts}</Typography>
                         <UpButton
                             direction="right"
                             clicked={() => handleHiddenOptions("alerts")}
