@@ -40,11 +40,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 
 export default function Preferences( { open, handleClose }: ChildProps) {
     // const { openSaveChanges, closeSaveChanges } = props;
     const { classes } = useStylesGlobal();
+    const { labelsPreferences } = useContext<any>(LanguageLabelsContext)
     const close = () => {
         handleClose(false)
     }
@@ -205,12 +207,12 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                             errorData={errorData} 
                         />
                         <Typography align="center" variant="h5" className={classes.title}>
-                            Preferences
+                            {labelsPreferences.preferences}
                         </Typography>
                         <Box className={classes.customBoxColumn}>
                             <Box className={classes.customBoxRow}>
                                 <TextField 
-                                    label="Language"
+                                    label={labelsPreferences.language}
                                     size="small"
                                     select
                                     className={classes.inputMainData}
@@ -233,7 +235,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField 
-                                    label="Color mode"
+                                    label={labelsPreferences.color_mode}
                                     size="small"
                                     select
                                     className={classes.inputMainData}

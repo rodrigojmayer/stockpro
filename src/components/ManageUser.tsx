@@ -16,6 +16,7 @@ import { DataCreateStockOptions, ColumnData, UserEditData } from '../types';
 import { AccessLevelsContext } from '../context/AccessLevelsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 import ErrorModal from './ErrorModal';
 import { UsersContext } from '../context/UsersContext';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -41,6 +42,7 @@ export default function ManageUser(
     const edition = (Object.keys(dataEditUser).length !== 0 ? true : false)
     const { user, sendJsonMessage, lastJsonMessage } = useContext<any>(UserContext)
     const { users, setUsers } = useContext<any>(UsersContext)
+    const { labelsManageUser } = useContext<any>(LanguageLabelsContext)
     const { accessLevels } = useContext<any>(AccessLevelsContext)
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const [userAccessLevel, setUserAccessLevel] = useState<number|null>(null);
@@ -440,11 +442,11 @@ export default function ManageUser(
                             data={userName} 
                             confirmDelete={handleConfirmDelete}
                         />
-                        <Typography align='center' variant="h5"  className={classes.title}>{edition ? 'Edit ' : 'Create '} user</Typography>
+                        <Typography align='center' variant="h5"  className={classes.title}>{edition ? `${labelsManageUser.edit_user}` : `${labelsManageUser.create_user}`}</Typography>
                         <Box className={classes.customBoxColumn}>
                             <Box className={classes.customBoxRow}>
                                 <TextField 
-                                    label="Access level*"
+                                    label={labelsManageUser.access_level}
                                     size="small"
                                     select
                                     className= {`${errorTextFields.access_level ? classes.text_field_error : ""} ${classes.inputMainData} `}
@@ -466,7 +468,7 @@ export default function ManageUser(
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Name"
+                                    label={labelsManageUser.name}
                                     value={userName}
                                     onChange={ (event:any) => handleUserName(event.target.value) }
                                     maxRows={1}
@@ -480,7 +482,7 @@ export default function ManageUser(
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Last name"
+                                    label={labelsManageUser.last_name}
                                     value={userLastName}
                                     onChange={ (event:any) => handleUserLastName(event.target.value) }
                                     maxRows={1}
@@ -494,7 +496,7 @@ export default function ManageUser(
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="User*"
+                                    label={labelsManageUser.user}
                                     value={userUser}
                                     onChange={ (event:any) => handleUserUser(event.target.value) }
                                     maxRows={1}
@@ -508,7 +510,7 @@ export default function ManageUser(
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Email*"
+                                    label={labelsManageUser.email}
                                     value={userEmail}
                                     onChange={ (event:any) => handleUserEmail(event.target.value) }
                                     maxRows={1}
@@ -521,7 +523,7 @@ export default function ManageUser(
                                 />
                             </Box>
                             <Box className={classes.customBoxRow}>
-                                <Typography >Alerts by email</Typography>
+                                <Typography >{labelsManageUser.alerts_by_email}</Typography>
                                 <Switch 
                                         color='success'  
                                         checked={userAlertsEnabled}
@@ -531,7 +533,7 @@ export default function ManageUser(
                                     />  
                             </Box>
                             <Box className={classes.customBoxRow}>
-                                <Typography >User {(userEnabled)?'enabled':'disabled'}</Typography>
+                                <Typography >{(userEnabled)? `${labelsManageUser.user_enabled}` : `${labelsManageUser.user_disabled}` }</Typography>
                                 <Switch 
                                         color='success'  
                                         checked={userEnabled}
