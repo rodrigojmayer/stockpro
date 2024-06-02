@@ -38,6 +38,7 @@ import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styl
 import { ColumnData, ColumnDataCustom, ChildProps, UserEditData } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
@@ -56,6 +57,7 @@ export default function Users( { open, handleClose }: ChildProps) {
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
     const { users } = useContext<any>(UsersContext)
+    const { labelsUsers } = useContext<any>(LanguageLabelsContext)
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     // const usersArray = users
     const [ modalDisabled, setModalDisabled ]= useState<boolean>(false); 
@@ -176,7 +178,7 @@ export default function Users( { open, handleClose }: ChildProps) {
                             errorData={errorData} 
                         />
                         <Typography align="center" variant="h5"  className={classes.title}>
-                            Users
+                            {labelsUsers.users}
                         </Typography>
                         <Box className={classes.customBoxColumn}>
                             {Array.isArray(usersArray) && usersArray.map((subUser:any) => {
