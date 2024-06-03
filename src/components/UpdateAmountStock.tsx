@@ -42,6 +42,7 @@ import ManageStock from './ManageStock';
 import ErrorModal from './ErrorModal';
 import { useNavigate } from 'react-router-dom';
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 interface ChildProps {
     open:  boolean
@@ -63,9 +64,10 @@ export default function UpdateAmountStock(
         handleClose(false)
     } 
 
-    const { user } = useContext<any>(UserContext)
-    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
-    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
+    const { user } = useContext<any>(UserContext);
+    const { labelsUpdateAmountStock } = useContext<any>(LanguageLabelsContext);
+    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
+    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext);
     
     const [ signUpdate, setSignUpdate ] = useState<number>(-1)
     const [ valueUpdate, setValueUpdate ] = useState<number>(1)
@@ -357,7 +359,7 @@ export default function UpdateAmountStock(
                             <Grid container spacing={0} alignItems="center" >
                                 <Grid item xs={3} display="flex" justifyContent="center">
                                     <Typography variant="h6" >
-                                        Amount
+                                        {labelsUpdateAmountStock.amount}
                                     </Typography> </Grid>
                                 <Grid item xs={3} />
                                 <Grid item xs={3} display="flex" justifyContent="center">
