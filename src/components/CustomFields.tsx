@@ -27,6 +27,7 @@ import { ColumnsContext } from '../context/ColumnsContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext'
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 import { gridFilterActiveItemsLookupSelector } from '@mui/x-data-grid-premium';
 
 
@@ -44,6 +45,7 @@ export default function Fields(
     } 
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext)
     const { user, setUser } = useContext<any>(UserContext); 
+    const { labelsCustomFields } = useContext<any>(LanguageLabelsContext);
     const { columns, defaultColumns, customColumns, setCustomColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom, setFilteredColumnsCustom  } = useContext<any>(ColumnsContext);
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
 
@@ -367,7 +369,7 @@ export default function Fields(
                             closeSaveChanges={handleCloseSaveChanges} 
                         />
                         <Typography align="center" variant="h5" className={classes.title}>
-                            Custom fields
+                            {labelsCustomFields.custom_fields}
                         </Typography>
                         {user.id_access_level <4 ? 
                             <Box 

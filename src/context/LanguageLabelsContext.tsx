@@ -20,6 +20,8 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsUsers, setLabelsUsers] = useState({}); // New state for loading status
   const [labelsManageStock, setLabelsManageStock] = useState({}); // New state for loading status
   const [labelsManageUser, setLabelsManageUser] = useState({}); // New state for loading status
+  const [labelsUpdateAmountStock, setLabelsUpdateAmountStock] = useState({}); // New state for loading status
+  const [labelsCustomFields, setLabelsCustomFields] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -91,6 +93,12 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         user_enabled: "User enabled",
         user_disabled: "User disabled",
       });
+      setLabelsUpdateAmountStock({
+        amount: "Amount",
+      });
+      setLabelsCustomFields({
+        custom_fields: "Custom fields",
+      });
     } 
     
     else if (user.language === 1) {
@@ -161,6 +169,12 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         user_enabled: "Usuario habilitado",
         user_disabled: "Usuario deshabilitado",
       });
+      setLabelsUpdateAmountStock({
+        amount: "Cantidad",
+      });
+      setLabelsCustomFields({
+        custom_fields: "Campos propios",
+      });
     }
   }, [user.language]); 
 
@@ -176,6 +190,8 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         labelsUsers, 
         labelsManageStock, 
         labelsManageUser, 
+        labelsUpdateAmountStock,
+        labelsCustomFields,
       }} 
     > 
       {children} 
