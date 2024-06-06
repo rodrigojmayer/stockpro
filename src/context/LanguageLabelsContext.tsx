@@ -22,6 +22,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsManageUser, setLabelsManageUser] = useState({}); // New state for loading status
   const [labelsUpdateAmountStock, setLabelsUpdateAmountStock] = useState({}); // New state for loading status
   const [labelsCustomFields, setLabelsCustomFields] = useState({}); // New state for loading status
+  const [labelsSaveChanges, setLabelsSaveChanges] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -99,6 +100,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       setLabelsCustomFields({
         custom_fields: "Custom fields",
       });
+      setLabelsSaveChanges({
+        save_changes: "Save changes",
+      });
     } 
     
     else if (user.language === 1) {
@@ -175,6 +179,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       setLabelsCustomFields({
         custom_fields: "Campos propios",
       });
+      setLabelsSaveChanges({
+        save_changes: "Guardar cambios",
+      });
     }
   }, [user.language]); 
 
@@ -192,6 +199,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         labelsManageUser, 
         labelsUpdateAmountStock,
         labelsCustomFields,
+        labelsSaveChanges,
       }} 
     > 
       {children} 

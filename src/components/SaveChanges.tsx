@@ -8,6 +8,7 @@ import { OkButton,
         } from './Buttons';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleSaveInternal } from '../Styles'
 import { UserContext } from '../context/UserContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 
 type SaveChangesProps = {
@@ -19,6 +20,7 @@ export default function SaveChanges( props: SaveChangesProps) {
     const { openSaveChanges, closeSaveChanges, messageBeforeSave } = props;
     const { classes } = useStylesGlobal();
     const { user } = useContext<any>(UserContext);
+    const { labelsSaveChanges } = useContext<any>(LanguageLabelsContext);
     // console.log("props: ", props)
 
     return (
@@ -43,7 +45,7 @@ export default function SaveChanges( props: SaveChangesProps) {
                         className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                     >
                         <Typography align="center" variant="h6" className={classes.title}>
-                            Save changes?
+                            {labelsSaveChanges.save_changes}?
                         </Typography>
                         <Typography align="center" >
                             {messageBeforeSave}
