@@ -286,7 +286,7 @@ export default function UpdateAmountStock(
             if (Number(productUpdate.alert_amount) >= Number(resultUpdated)) {
                 setAlertedAmount(true);
                 if (productUpdate.alert_amount_enabled)
-                    setMessageBeforeSave("The stock amount will drop below the alert level.");
+                    setMessageBeforeSave(labelsUpdateAmountStock.messageAmountAlert);
                 else 
                     setMessageBeforeSave("");
             } else {

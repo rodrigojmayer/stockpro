@@ -96,6 +96,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       });
       setLabelsUpdateAmountStock({
         amount: "Amount",
+        messageAmountAlert: "The stock amount will drop below the alert level.",
       });
       setLabelsCustomFields({
         custom_fields: "Custom fields",
@@ -175,6 +176,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       });
       setLabelsUpdateAmountStock({
         amount: "Cantidad",
+        messageAmountAlert: "La cantidad del stock caerá por debajo del nivel de alerta.",
       });
       setLabelsCustomFields({
         custom_fields: "Campos propios",
