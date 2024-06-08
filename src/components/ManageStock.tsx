@@ -417,7 +417,7 @@ export default function ManageStock(
         if(stockAmountTemp <= stockAlertAmountTemp){
             setStockAlertedAmountTemp(true)
             if (stockAlertAmountEnabledTemp){
-                setMessageBeforeSave("The stock amount will drop below the alert level.");
+                setMessageBeforeSave(labelsManageStock.messageAmountAlert);
             }
             else 
                 setMessageBeforeSave("");
@@ -433,7 +433,7 @@ export default function ManageStock(
         if(currentDate >= alertDate){
             setStockAlertedDateTemp(true)
             if (stockAlertDateEnabledTemp){
-                setMessageBeforeSave("The alert date is before current date.");
+                setMessageBeforeSave(labelsManageStock.messageDateAlert);
             }
             else 
                 setMessageBeforeSave("");

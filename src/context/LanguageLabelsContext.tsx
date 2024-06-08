@@ -81,6 +81,8 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         by_amount: "By amount", 
         by_date: "By date", 
         custom_fields: "Custom fields", 
+        messageAmountAlert: "The stock amount will drop below the alert level.",
+        messageDateAlert: "The alert date is before current date.",
       });
       setLabelsManageUser({
         create_user: "Create user", 
@@ -161,6 +163,8 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         by_amount: "Por cantidad", 
         by_date: "Por fecha", 
         custom_fields: "Campos propios", 
+        messageAmountAlert: "La cantidad del stock estará por debajo del nivel de alerta.",
+        messageDateAlert: "La fecha de alerta es anterior a la fecha actual.",
       });
       setLabelsManageUser({
         create_user: "Crear usuario", 
@@ -176,7 +180,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       });
       setLabelsUpdateAmountStock({
         amount: "Cantidad",
-        messageAmountAlert: "La cantidad del stock caerá por debajo del nivel de alerta.",
+        messageAmountAlert: "La cantidad del stock estará por debajo del nivel de alerta.",
       });
       setLabelsCustomFields({
         custom_fields: "Campos propios",
