@@ -415,15 +415,22 @@ export default function ManageStock(
     
     useEffect(() => {
         if(stockAmountTemp <= stockAlertAmountTemp){
-            setStockAlertedAmountTemp(true)
+            setStockAlertedAmountTemp(true);
             if (stockAlertAmountEnabledTemp){
                 setMessageBeforeSave(labelsManageStock.messageAmountAlert);
             }
-            else 
+            else {
                 setMessageBeforeSave("");
+                if (stockAlertDateEnabledTemp){
+                    setMessageBeforeSave(labelsManageStock.messageDateAlert);
+                }
+            }
         }else{
-            setStockAlertedAmountTemp(false)
+            setStockAlertedAmountTemp(false);
             setMessageBeforeSave("");
+            if (stockAlertDateEnabledTemp){
+                setMessageBeforeSave(labelsManageStock.messageDateAlert);
+            }
         }
     }, [stockAmountTemp, stockAlertAmountTemp, stockAlertAmountEnabledTemp])
 
@@ -431,15 +438,22 @@ export default function ManageStock(
         const currentDate = new Date()
         const alertDate = new Date(stockAlertDateTemp)
         if(currentDate >= alertDate){
-            setStockAlertedDateTemp(true)
+            setStockAlertedDateTemp(true);
             if (stockAlertDateEnabledTemp){
                 setMessageBeforeSave(labelsManageStock.messageDateAlert);
             }
-            else 
+            else {
                 setMessageBeforeSave("");
+                if (stockAlertAmountEnabledTemp){
+                    setMessageBeforeSave(labelsManageStock.messageAmountAlert);
+                }
+            }
         }else{
-            setStockAlertedDateTemp(false)
+            setStockAlertedDateTemp(false);
             setMessageBeforeSave("");
+            if (stockAlertAmountEnabledTemp){
+                setMessageBeforeSave(labelsManageStock.messageAmountAlert);
+            }
         }
     }, [stockAlertDateTemp, stockAlertDateEnabledTemp])
 
