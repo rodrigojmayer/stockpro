@@ -625,39 +625,87 @@ export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled 
   )
 }
 
-export function GoogleButton({ clicked }: ButtonProps ) {
+// export function GoogleButton({ clicked }: ButtonProps ) {
 
-  const { classes } = useStylesGlobal();
-  const { user } = useContext<any>(UserContext)
+//   const { classes } = useStylesGlobal();
+//   const { user } = useContext<any>(UserContext)
   
-  const handleClick:any = (() => {
-      clicked()
+//   const handleClick:any = (() => {
+//       clicked()
+//   })
+
+//   const selectedTheme = themeMap[user.background_color];
+
+//   return (
+//     <ThemeProvider theme={selectedTheme}>
+//       <Button 
+//         variant="contained"
+//         color="error"
+//         startIcon={
+//           <img 
+//             src={GPlusIco} 
+//             alt="G"
+//             style={{ filter: "brightness(0) invert(100%)"}}  
+//             width= {20}   
+//           />
+//         }
+//         onClick={handleClick}
+//         >
+//           <Divider 
+//             orientation="vertical"  
+//             flexItem
+//             className={classes.customDividerVertical} 
+//           />
+//           Google
+//       </Button>
+//     </ThemeProvider>
+//   )
+// }
+
+export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, disabled }: ButtonProps ) {
+  const { user } = useContext<any>(UserContext)
+  let  noPadding, borRad, filterColor = 0
+  if(disabled) {
+    filterColor = 35
+  }
+  noPadding=0
+  borRad="50px !important"
+  const handleHover:any = (() => {
+    console.log("hover")
+  })
+  const handleOut:any = (() => {
+    console.log("handleOut")
   })
 
   const selectedTheme = themeMap[user.background_color];
 
   return (
+    <div style={{ display: 'grid' }}>
     <ThemeProvider theme={selectedTheme}>
       <Button 
-        variant="contained"
-        color="error"
-        startIcon={
-          <img 
-            src={GPlusIco} 
-            alt="G"
-            style={{ filter: "brightness(0) invert(100%)"}}  
-            width= {20}   
-          />
-        }
-        onClick={handleClick}
+          disabled={disabled}
+          sx={{
+              display: "flex", 
+              justifyContent:  "flex-start",  
+            gridColumn: 10,
+            // gridRow: 1,
+            // backgroundColor: 'primary.main',
+            color: 'white',
+          }}
+          // sx={{  
+          //   display: "flex", 
+          //   justifyContent:  "flex-end",  
+          //   // borderRadius: borRad,
+          //   // minWidth: 40, 
+          //   // minHeight: 40, 
+          //   color: "white"
+          // }}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleOut}
         >
-          <Divider 
-            orientation="vertical"  
-            flexItem
-            className={classes.customDividerVertical} 
-          />
-          Google
+          Site language: English
       </Button>
     </ThemeProvider>
+    </div>
   )
 }
