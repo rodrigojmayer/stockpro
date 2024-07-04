@@ -33,6 +33,10 @@ export const ColumnsProvider: React.FC<ColumnsProviderProps> = ({ children }) =>
             throw new Error(`Request failed with status: ${response.status}`);
           }
           const json = await response.json();
+          json.forEach((item:ColumnData) => {
+            if(user.language === 1)
+              item.label = item.label_esp
+          })
           setDefaultColumns(json);
         //   if (response.ok) {
         //     const json = await response.json()
