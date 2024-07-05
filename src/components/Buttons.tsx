@@ -700,10 +700,11 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
           //   // minHeight: 40, 
           //   color: "white"
           // }}
-          onMouseEnter={handleHover}
-          onMouseLeave={handleOut}
+          // onMouseEnter={handleHover}
+          // onMouseLeave={handleOut}
+          onClick={handleOut}
         >
-          Site language: English
+          English 
       </Button>
     </ThemeProvider>
     </div>
