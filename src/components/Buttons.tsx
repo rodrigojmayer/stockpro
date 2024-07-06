@@ -1,4 +1,4 @@
-import { Box, Button, IconButton } from '@mui/material';
+import { Box, Button, IconButton, Select, MenuItem } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -21,6 +21,14 @@ import _0IonTrash from "../assets/_0ion_trash.svg";
 import _1IonTrash from "../assets/_1ion_trash.svg";
 import _2IonTrash from "../assets/_2ion_trash.svg";
 import _3IonTrash from "../assets/_3ion_trash.svg";
+import en_flag_btn from "../assets/en_flag_btn.svg";
+import sp_flag_btn from "../assets/sp_flag_btn.svg";
+import dk_flag_btn from "../assets/dk_flag_btn.svg";
+import pg_flag_btn from "../assets/pg_flag_btn.svg";
+import gm_flag_btn from "../assets/gm_flag_btn.svg";
+import it_flag_btn from "../assets/it_flag_btn.svg";
+import ch_flag_btn from "../assets/ch_flag_btn.svg";
+import fr_flag_btn from "../assets/fr_flag_btn.svg";
 import UpdateArrowCircle from "../assets/akar-icons_arrow-cycle.svg";
 import GPlusIco from "../assets/gplus.svg";
 import Divider from '@mui/material/Divider';
@@ -670,42 +678,88 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
   }
   noPadding=0
   borRad="50px !important"
-  const handleHover:any = (() => {
-    console.log("hover")
-  })
-  const handleOut:any = (() => {
-    console.log("handleOut")
-  })
+  // const handleHover:any = (() => {
+  //   console.log("hover")
+  // })
+  // const handleOut:any = (() => {
+  //   console.log("handleOut")
+  // })
 
   const selectedTheme = themeMap[user.background_color];
+  
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const languages = [
+    { lang_lab:"English", flag: en_flag_btn},
+    { lang_lab:"Español", flag: sp_flag_btn},
+    { lang_lab:"Dansk", flag: dk_flag_btn},
+    { lang_lab:"Português", flag: pg_flag_btn},
+    { lang_lab:"Deutsch", flag: gm_flag_btn},
+    { lang_lab:"Italiano", flag: it_flag_btn},
+    { lang_lab:"中国人", flag: ch_flag_btn},
+    { lang_lab:"Français", flag: fr_flag_btn},
+  ]
 
+  const handleLanguageSelect = (lang_lab: any) => {
+    setSelectedLanguage(lang_lab);
+    console.log(`Selected language: ${lang_lab}`);
+    // Add additional logic if needed
+  };
   return (
     <div style={{ display: 'grid' }}>
     <ThemeProvider theme={selectedTheme}>
-      <Button 
-          disabled={disabled}
-          sx={{
-              display: "flex", 
-              justifyContent:  "flex-start",  
-            gridColumn: 10,
-            // gridRow: 1,
-            // backgroundColor: 'primary.main',
-            color: 'white',
-          }}
-          // sx={{  
-          //   display: "flex", 
-          //   justifyContent:  "flex-end",  
-          //   // borderRadius: borRad,
-          //   // minWidth: 40, 
-          //   // minHeight: 40, 
-          //   color: "white"
-          // }}
-          // onMouseEnter={handleHover}
-          // onMouseLeave={handleOut}
-          onClick={handleOut}
-        >
-          English 
-      </Button>
+      <Select
+        labelId="language-selector-label"
+        value={selectedLanguage}
+        onChange={handleLanguageSelect}
+        sx={{
+          display: "flex", 
+          justifyContent:  "flex-start",  
+          gridColumn: 10,
+          color: 'white',
+        }}
+        // label="Select Language"
+        defaultValue={"sese"}
+      >
+        {languages.map((lang:any, index) => (
+          <MenuItem key={index} value={lang.lang_lab}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span style={{ marginRight: 10 }}>{lang.lang_lab}</span>
+              <img 
+                src={lang.flag}
+                alt={`${lang.lang_lab} flag`} 
+                style={{ height: 20 }}
+              />
+            </div>
+              
+              {/* <Button
+              key={index}
+              onClick={() => handleLanguageSelect(lang.lang_lab)}
+              disabled={disabled}
+              sx={{
+                display: "flex", 
+                justifyContent:  "flex-start",  
+                gridColumn: 10,
+                color: 'white',
+              }}
+              // onClick={handleOut}
+              >
+              {lang.lang_lab} 
+              <img 
+                // src={_2IonTrash} 
+                src={lang.flag} 
+                alt={`${lang.lang_lab} flag`}
+                style={{ 
+                  // filter: "brightness(100%) invert(100%)" 
+                  marginLeft: 10,
+                  height: 25
+                }}  
+                
+                width= {28}   
+              />
+            </Button> */}
+            </MenuItem>
+        ))}
+      </Select>
     </ThemeProvider>
     </div>
   )
