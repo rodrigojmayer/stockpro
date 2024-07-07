@@ -19,7 +19,7 @@ const INITIAL_USER = {
   deleted: false,
   enabled: true,
   ordered_fields: [],
-  language: NaN,
+  language: 0,
   background_color: 0,
   alerts_enabled: false,
 };
@@ -90,7 +90,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       }));
     }
   }
-
   useEffect(() => {
     // console.log("/*-/*-/*-auth._id: ", auth._id)
     // console.log("/*-/*-/*-auth.accessToken: ", auth.accessToken)
@@ -110,6 +109,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   }, [isLoading.fieldsFetchEditUsersFieldsOrder]); 
 
+  useEffect(() => {
+    console.log("user: ", user)
+
+  }, [user])
   return (
     <UserContext.Provider value={{ INITIAL_USER, user, setUser, setGmailUserLogged, gmailUserLogged, _IdUserLogged, set_IdUserLogged, sendJsonMessage, lastJsonMessage  }}>
       {children}

@@ -671,7 +671,7 @@ export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled 
 // }
 
 export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, disabled }: ButtonProps ) {
-  const { user } = useContext<any>(UserContext)
+  const { user, setUser } = useContext<any>(UserContext)
   const { classes } = useStylesGlobal();
   let  noPadding, borRad, filterColor = 0
   if(disabled) {
@@ -688,20 +688,28 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
 
   const selectedTheme = themeMap[user.background_color];
   
-  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const languages = [
     { lang_lab:"English", flag: en_flag_btn},
     { lang_lab:"Español", flag: sp_flag_btn},
-    { lang_lab:"Dansk", flag: dk_flag_btn},
-    { lang_lab:"Italiano", flag: it_flag_btn},
-    { lang_lab:"Deutsch", flag: gm_flag_btn},
-    { lang_lab:"Français", flag: fr_flag_btn},
-    { lang_lab:"Português", flag: pg_flag_btn},
-    { lang_lab:"中国人", flag: ch_flag_btn},
+    // { lang_lab:"Dansk", flag: dk_flag_btn},
+    // { lang_lab:"Italiano", flag: it_flag_btn},
+    // { lang_lab:"Deutsch", flag: gm_flag_btn},
+    // { lang_lab:"Français", flag: fr_flag_btn},
+    // { lang_lab:"Português", flag: pg_flag_btn},
+    // { lang_lab:"中国人", flag: ch_flag_btn},
   ]
 
+  const [selectedLanguage, setSelectedLanguage] = useState(languages[user.language].lang_lab);
   const handleLanguageSelect = (event: any) => {
       setSelectedLanguage(event.target.value)
+      const indx = languages
+        .map((lang:any, index: number) => lang.lang_lab === event.target.value ? index : -1)
+        .filter(index => index !== -1)[0]
+      const updatedUser = {
+        ...user,
+        language: indx
+    }
+    setUser(updatedUser)
     console.log(`Selected language: ${event.target.value}`);
     // Add additional logic if needed
   };
