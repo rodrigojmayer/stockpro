@@ -1021,6 +1021,22 @@ export const useStylesGlobal = makeStyles()({
     menu_item: {
         padding: '0 5px',
     },
+    _0lang_menu_props_background_color: {
+        backgroundColor: _0mainColor,
+        color: "white",
+    },
+    _0lang_menu_item_background_color: {
+        '&:hover': {
+            backgroundColor: _0mainColorLighter,
+        },'&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: _0mainColorLighter,
+        },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: _0mainColorLighter,
+        },'& .MuiSelect-icon': {
+            display: 'none', // This hides the default arrow icon
+          },
+    },
     // menu_item: {
     _0menu_item_background_color: {
         backgroundColor: _0menuItem,

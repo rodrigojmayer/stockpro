@@ -8,7 +8,7 @@ import { Box,
         Typography,
         Switch
         } from "@mui/material";
-import { OkButton } from "../components/Buttons";
+import { OkButton, SelectLanguageButton } from '../components/Buttons';
 import SaveChanges from '../components/SaveChanges';
 import ErrorModal from '../components/ErrorModal';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal } from "../Styles";
@@ -256,6 +256,9 @@ export default function SignUp () {
                     }
                 }}
             >
+            <SelectLanguageButton
+              clicked={()=>console.log("update")}
+            />
                 <Paper style={{margin:0}} >
                     <Box sx={modalStyleSaveExternal}>
                         <Box 

@@ -21,14 +21,14 @@ import _0IonTrash from "../assets/_0ion_trash.svg";
 import _1IonTrash from "../assets/_1ion_trash.svg";
 import _2IonTrash from "../assets/_2ion_trash.svg";
 import _3IonTrash from "../assets/_3ion_trash.svg";
-import en_flag_btn from "../assets/en_flag_btn.svg";
-import sp_flag_btn from "../assets/sp_flag_btn.svg";
-import dk_flag_btn from "../assets/dk_flag_btn.svg";
-import pg_flag_btn from "../assets/pg_flag_btn.svg";
-import gm_flag_btn from "../assets/gm_flag_btn.svg";
-import it_flag_btn from "../assets/it_flag_btn.svg";
-import ch_flag_btn from "../assets/ch_flag_btn.svg";
-import fr_flag_btn from "../assets/fr_flag_btn.svg";
+import en_flag_btn from "../assets/en_flag_btn.png";
+import sp_flag_btn from "../assets/sp_flag_btn.png";
+import dk_flag_btn from "../assets/dk_flag_btn.png";
+import pg_flag_btn from "../assets/pg_flag_btn.png";
+import gm_flag_btn from "../assets/gm_flag_btn.png";
+import it_flag_btn from "../assets/it_flag_btn.png";
+import ch_flag_btn from "../assets/ch_flag_btn.png";
+import fr_flag_btn from "../assets/fr_flag_btn.png";
 import UpdateArrowCircle from "../assets/akar-icons_arrow-cycle.svg";
 import GPlusIco from "../assets/gplus.svg";
 import Divider from '@mui/material/Divider';
@@ -672,6 +672,7 @@ export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled 
 
 export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, disabled }: ButtonProps ) {
   const { user } = useContext<any>(UserContext)
+  const { classes } = useStylesGlobal();
   let  noPadding, borRad, filterColor = 0
   if(disabled) {
     filterColor = 35
@@ -687,80 +688,68 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
 
   const selectedTheme = themeMap[user.background_color];
   
-  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("English");
   const languages = [
     { lang_lab:"English", flag: en_flag_btn},
     { lang_lab:"Español", flag: sp_flag_btn},
     { lang_lab:"Dansk", flag: dk_flag_btn},
-    { lang_lab:"Português", flag: pg_flag_btn},
-    { lang_lab:"Deutsch", flag: gm_flag_btn},
     { lang_lab:"Italiano", flag: it_flag_btn},
-    { lang_lab:"中国人", flag: ch_flag_btn},
+    { lang_lab:"Deutsch", flag: gm_flag_btn},
     { lang_lab:"Français", flag: fr_flag_btn},
+    { lang_lab:"Português", flag: pg_flag_btn},
+    { lang_lab:"中国人", flag: ch_flag_btn},
   ]
 
-  const handleLanguageSelect = (lang_lab: any) => {
-    setSelectedLanguage(lang_lab);
-    console.log(`Selected language: ${lang_lab}`);
+  const handleLanguageSelect = (event: any) => {
+      setSelectedLanguage(event.target.value)
+    console.log(`Selected language: ${event.target.value}`);
     // Add additional logic if needed
   };
   return (
-    <div style={{ display: 'grid' }}>
+    // <div 
+    // >
     <ThemeProvider theme={selectedTheme}>
       <Select
         labelId="language-selector-label"
         value={selectedLanguage}
+          // label="Select "
         onChange={handleLanguageSelect}
+        className={` ${classes[`_${user.background_color}lang_menu_item_background_color` as keyof typeof classes]}`} 
         sx={{
-          display: "flex", 
-          justifyContent:  "flex-start",  
-          gridColumn: 10,
+          margin:2,
+          display: 'flex',
+          justifyContent: 'flex-start',
+          marginLeft: 'auto',
+          width:155,
           color: 'white',
         }}
+        MenuProps={{
+          PaperProps: {
+            className: classes._0lang_menu_props_background_color
+          }
+        }}
         // label="Select Language"
-        defaultValue={"sese"}
       >
         {languages.map((lang:any, index) => (
-          <MenuItem key={index} value={lang.lang_lab}>
+          <MenuItem 
+            key={index} 
+            value={lang.lang_lab}
+            className={` ${classes[`_${user.background_color}lang_menu_item_background_color` as keyof typeof classes]}`} 
+          >
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ marginRight: 10 }}>{lang.lang_lab}</span>
               <img 
                 src={lang.flag}
                 alt={`${lang.lang_lab} flag`} 
                 style={{ height: 20 }}
               />
+              <span style={{ marginLeft: 10 }}>{lang.lang_lab}</span>
             </div>
               
-              {/* <Button
-              key={index}
-              onClick={() => handleLanguageSelect(lang.lang_lab)}
-              disabled={disabled}
-              sx={{
-                display: "flex", 
-                justifyContent:  "flex-start",  
-                gridColumn: 10,
-                color: 'white',
-              }}
-              // onClick={handleOut}
-              >
-              {lang.lang_lab} 
-              <img 
-                // src={_2IonTrash} 
-                src={lang.flag} 
-                alt={`${lang.lang_lab} flag`}
-                style={{ 
-                  // filter: "brightness(100%) invert(100%)" 
-                  marginLeft: 10,
-                  height: 25
-                }}  
-                
-                width= {28}   
-              />
-            </Button> */}
+              
             </MenuItem>
         ))}
       </Select>
     </ThemeProvider>
-    </div>
+    // </div>
   )
 }
