@@ -122,6 +122,7 @@ const _3modalColor = 'rgb(0, 110, 110, 1)';
 
 
 export const _0themeGlobal = createTheme({
+    
     palette: {
       success: {
         main: _0succesMain,
@@ -1116,7 +1117,12 @@ export const modalStyleSaveExternal = {
     overflowX: "hidden",
     scrollbarWidth: "none",
     margin: "auto",
-    padding:"40px 0"
+    padding:"0",
+    paddingBottom:"40px",
+    // padding:"10px 0",
+};
+export const modalStyleSignUpExternal = {
+    marginTop: "30px",
 };
 export const modalStyleSaveInternal = {
     top: 74,

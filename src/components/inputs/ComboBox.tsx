@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import {TextField} from '@mui/material'
 import AutoComplete from '@mui/material/Autocomplete'
 import { useStylesGlobal } from '../../Styles';
@@ -23,11 +23,11 @@ export default function ComboBox({ optionsData, comboLabel, comboValue, comboHan
     const { classes } = useStylesGlobal();
     const [selectedValue, setSelectedValue] = React.useState<{ label: string }>({label:""});
     const [inputValue, setInputValue] = React.useState('');
-
+    const firstInputRef = useRef<HTMLInputElement>(null)
     const isOptionEqualToValue = (option: any, value: any) => option.label === value?.label;
-    React.useEffect(() => {
+    // React.useEffect(() => {
+    useEffect(() => {
         if(optionsData){
-
             // const foundOption = optionsData.find((option) => isOptionEqualToValue(option, selectedValue));
             if (comboValue ) {
                 setInputValue(comboValue);
@@ -35,7 +35,13 @@ export default function ComboBox({ optionsData, comboLabel, comboValue, comboHan
             }
         }
     }, [comboValue, selectedValue, isOptionEqualToValue]);
-
+    useEffect(() => {
+        
+        if (firstInputRef.current) {
+            // console.log("[] firstInputRef.current: ", firstInputRef.current)
+            firstInputRef.current.focus()
+        }
+    }, [])
     return (
         <AutoComplete
             disablePortal
@@ -70,6 +76,7 @@ export default function ComboBox({ optionsData, comboLabel, comboValue, comboHan
                     InputProps={{
                         className: classes.inputClassName,
                     }}
+                    inputRef={firstInputRef}
                 />
             }
             ListboxProps={{ style: { maxHeight: 100 } }}

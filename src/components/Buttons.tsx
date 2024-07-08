@@ -710,7 +710,7 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
         language: indx
     }
     setUser(updatedUser)
-    console.log(`Selected language: ${event.target.value}`);
+    // console.log(`Selected language: ${event.target.value}`);
     // Add additional logic if needed
   };
   return (
@@ -729,7 +729,8 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
           justifyContent: 'flex-start',
           marginLeft: 'auto',
           width:155,
-          color: 'white',
+          color: 'white',  
+          
         }}
         MenuProps={{
           PaperProps: {
@@ -752,9 +753,7 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
               />
               <span style={{ marginLeft: 10 }}>{lang.lang_lab}</span>
             </div>
-              
-              
-            </MenuItem>
+          </MenuItem>
         ))}
       </Select>
     </ThemeProvider>

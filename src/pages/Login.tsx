@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom"
-import { GoogleLogin } from '@react-oauth/google'
-import { jwtDecode  } from 'jwt-decode'
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode  } from 'jwt-decode';
 import { Box,
         Divider,
         Modal, 
@@ -25,12 +25,14 @@ import Cookies from 'js-cookie';
 import ConfirmUserValidatedModal from '../components/ConfirmUserValidatedModal';
 import ManageForgottenPass from "../components/ManageForgottenPass";
 import Paper from '@mui/material/Paper/Paper';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 export default function Login () {
 
   const { classes } = useStylesGlobal();
   const { loginUser } = useUser()
   const { setGmailUserLogged, user } = useContext<any>(UserContext); 
+  const { labelsLogin } = useContext<any>(LanguageLabelsContext)
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const { setCheckListStock } = useContext<any>(CheckListStockContext);
   
@@ -52,9 +54,11 @@ export default function Login () {
   const [openConfirmUserValidatedModal, setOpenConfirmUserValidatedModal] = useState(false);  
   const [openManageForgottenPass, setOpenManageForgottenPass] = useState(false);  
 
+
   useEffect(() => {
     setOpenErrorModal(false)
     setErrorData("")
+    
   }, [])
 
   const showProfilePassToggle = () => {
@@ -270,13 +274,13 @@ return (
                 closeManageForgottenPass={handlecloseManageForgottenPass} 
             />           
             <Typography className={classes.finishButtons} align="center" variant='h5' >
-                Login
+                {labelsLogin.login}
             </Typography> 
             <Box className={classes.customBoxColumn}>
               <Box className={classes.customBoxRow}>
                 <ComboBox
                   optionsData={rememberLabelUsers}
-                  comboLabel="Username or Email"
+                  comboLabel={labelsLogin.username_email}
                   comboValue={userNameEmail}
                   comboHandleValue={handleUserNameEmail}
                   errorTextField={errorTextFields.user_name_email}
@@ -284,7 +288,7 @@ return (
               </Box>
               <Box className={classes.customBoxRow}>
                 <TextField
-                  label="Password"
+                  label={labelsLogin.password}
                   maxRows={1}
                   size="small"
                   value={userPass}
@@ -309,7 +313,7 @@ return (
                     onChange={(event:any) => {
                       rememberEnabledChange(event.target.checked)
                     }}
-                  />Remember me 
+                  />{labelsLogin.remember_me}
                 </Box>
                 <OkButton
                   clicked={() => handleLogin()}
@@ -328,7 +332,7 @@ return (
                 }}
                 variant="middle"  
               >
-                Or login using
+                {labelsLogin.or_login_using}
               </Divider>
             </Box>
 
@@ -352,14 +356,14 @@ return (
                   onClick={() => setOpenManageForgottenPass(true)}
 
                 >
-                  Forgot Password? 
+                  {labelsLogin.forgot_password}
                 </NavLink>
                   <NavLink 
                     className={classes._0link_color}   
                     // className={classes[`_${user.background_color}link_color` as keyof typeof classes]}   
                     to="/signup"
                   >
-                    Sign Up 
+                    {labelsLogin.sign_up}
                   </NavLink>
             </Box>
           </Box>

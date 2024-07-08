@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { Box,
         Divider,
@@ -11,7 +11,7 @@ import { Box,
 import { OkButton, SelectLanguageButton } from '../components/Buttons';
 import SaveChanges from '../components/SaveChanges';
 import ErrorModal from '../components/ErrorModal';
-import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal, modalLoginInternal } from "../Styles";
+import { useStylesGlobal, modalStyleSaveExternal, modalStyleSignUpExternal, modalStyleErrorInternal, modalLoginInternal } from "../Styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { UserContext } from "../context/UserContext";
@@ -54,6 +54,7 @@ export default function SignUp () {
     // const [rememberUsersPass, setRememberUsersPass] = useState<RememberUsersPassData[] | any>();
     const [openConfirmCreatedUserModal, setOpenConfirmCreatedUserModal] = useState<any>(false);
     const [openConfirmTermsAndPrivacyModal, setOpenConfirmTermsAndPrivacyModal] = useState<any>(false);
+    const firstInputRef = useRef<HTMLInputElement>(null)
 
     const [stockNameTemp, setStockNameTemp] = useState<any>();
      
@@ -82,8 +83,19 @@ export default function SignUp () {
     //   }
     // }, [])
   
-
-
+    // useEffect(() => {
+    //     console.log("[] firstInputRef.current: ", firstInputRef.current)
+    //     if (firstInputRef.current) {
+    //         firstInputRef.current.focus()
+    //     }
+    // }, [])
+    useEffect(() => {
+        if (firstInputRef.current) {
+            // console.log("isLoading firstInputRef.current: ", firstInputRef.current)
+            firstInputRef.current.focus()
+        }
+    }, [firstInputRef.current])
+    
     const showProfilePassToggle = () => {
         setShowProfilePass(!showProfilePass)
     }
@@ -256,11 +268,11 @@ export default function SignUp () {
                     }
                 }}
             >
-            <SelectLanguageButton
-              clicked={()=>console.log("update")}
-            />
+                <SelectLanguageButton
+                    clicked={()=>console.log("update")}
+                />
                 <Paper style={{margin:0}} >
-                    <Box sx={modalStyleSaveExternal}>
+                    <Box sx={{ ...modalStyleSaveExternal, ...modalStyleSignUpExternal}}>
                         <Box 
                             sx={{ ...modalStyleErrorInternal, ...modalLoginInternal }}
                             className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
@@ -304,6 +316,11 @@ export default function SignUp () {
                                             className: classes.inputClassName,
                                             inputProps: {maxLength: 20}
                                         }}
+                                        inputRef={firstInputRef}
+                                        // inputRef={firstInputRef ? 
+                                        //     (firstInputRef.current) ?
+                                        //     input => input && input.select() : firstInputRef: undefined}
+                                        // autoFocus={false} // This prop can be set to false because we're manually focusing.
                                     />
                                 </Box>
                                 <Box className={classes.customBoxRow}>

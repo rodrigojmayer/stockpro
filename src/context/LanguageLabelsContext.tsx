@@ -23,6 +23,8 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsUpdateAmountStock, setLabelsUpdateAmountStock] = useState({}); // New state for loading status
   const [labelsCustomFields, setLabelsCustomFields] = useState({}); // New state for loading status
   const [labelsSaveChanges, setLabelsSaveChanges] = useState({}); // New state for loading status
+  const [labelsLogin, setLabelsLogin] = useState({}); // New state for loading status
+  const [labelsSignUp, setLabelsSignUp] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -106,6 +108,18 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       setLabelsSaveChanges({
         save_changes: "Save changes",
       });
+      setLabelsLogin({
+        login: "Login",
+        username_email: "Username or Email",
+        password: "Password",
+        remember_me: "Remember me",
+        or_login_using: "Or login using",
+        forgot_password: "Forgot Password?",
+        sign_up: "Sign Up",
+      });
+      setLabelsSignUp({
+        sign_up: "Sign Up",
+      });
     } 
     
     else if (user.language === 1) {
@@ -188,6 +202,15 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       setLabelsSaveChanges({
         save_changes: "Guardar cambios",
       });
+      setLabelsLogin({
+        login: "Acceso",
+        username_email: "Usuario o correo electrónico",
+        password: "Contraseña",
+        remember_me: "Recordar usuario",
+        or_login_using: "O acceder usando",
+        forgot_password: "Olvidé mi contraseña",
+        sign_up: "Crear Usuario",
+      });
     }
   }, [user.language]); 
 
@@ -206,6 +229,8 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         labelsUpdateAmountStock,
         labelsCustomFields,
         labelsSaveChanges,
+        labelsLogin,
+        labelsSignUp,
       }} 
     > 
       {children} 
