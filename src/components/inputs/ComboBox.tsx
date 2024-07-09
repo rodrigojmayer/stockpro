@@ -36,7 +36,6 @@ export default function ComboBox({ optionsData, comboLabel, comboValue, comboHan
         }
     }, [comboValue, selectedValue, isOptionEqualToValue]);
     useEffect(() => {
-        
         if (firstInputRef.current) {
             // console.log("[] firstInputRef.current: ", firstInputRef.current)
             firstInputRef.current.focus()

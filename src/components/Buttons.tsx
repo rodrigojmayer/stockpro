@@ -633,43 +633,6 @@ export function UpdateButton({ sizeIco, roundedIco, cusField, clicked, disabled 
   )
 }
 
-// export function GoogleButton({ clicked }: ButtonProps ) {
-
-//   const { classes } = useStylesGlobal();
-//   const { user } = useContext<any>(UserContext)
-  
-//   const handleClick:any = (() => {
-//       clicked()
-//   })
-
-//   const selectedTheme = themeMap[user.background_color];
-
-//   return (
-//     <ThemeProvider theme={selectedTheme}>
-//       <Button 
-//         variant="contained"
-//         color="error"
-//         startIcon={
-//           <img 
-//             src={GPlusIco} 
-//             alt="G"
-//             style={{ filter: "brightness(0) invert(100%)"}}  
-//             width= {20}   
-//           />
-//         }
-//         onClick={handleClick}
-//         >
-//           <Divider 
-//             orientation="vertical"  
-//             flexItem
-//             className={classes.customDividerVertical} 
-//           />
-//           Google
-//       </Button>
-//     </ThemeProvider>
-//   )
-// }
-
 export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, disabled }: ButtonProps ) {
   const { user, setUser } = useContext<any>(UserContext)
   const { classes } = useStylesGlobal();
@@ -700,6 +663,9 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
   ]
 
   const [selectedLanguage, setSelectedLanguage] = useState(languages[user.language].lang_lab);
+  useEffect(()=> {
+    setSelectedLanguage(languages[user.language].lang_lab)
+  }, [user])
   const handleLanguageSelect = (event: any) => {
       setSelectedLanguage(event.target.value)
       const indx = languages
