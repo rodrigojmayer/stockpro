@@ -725,12 +725,10 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
         className={` ${classes[`_${user.background_color}lang_menu_item_background_color` as keyof typeof classes]}`} 
         sx={{
           margin:2,
-          display: 'flex',
-          justifyContent: 'flex-start',
-          marginLeft: 'auto',
+          position: "fixed",
+          right: 0,
           width:155,
-          color: 'white',  
-          
+          color: 'white',
         }}
         MenuProps={{
           PaperProps: {

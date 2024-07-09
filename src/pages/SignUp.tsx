@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect, useRef, useLayoutEffect  } from "react";
 import { NavLink } from "react-router-dom";
 import { Box,
         Divider,
@@ -82,19 +82,14 @@ export default function SignUp () {
     //     setRememberUsersPass(varrememberUsersPass)
     //   }
     // }, [])
-  
-    // useEffect(() => {
-    //     console.log("[] firstInputRef.current: ", firstInputRef.current)
-    //     if (firstInputRef.current) {
-    //         firstInputRef.current.focus()
-    //     }
-    // }, [])
-    useEffect(() => {
+    const [ reloadUseEffect, setReloadUseEffect] = useState(true)
+    useEffect (() => {
         if (firstInputRef.current) {
-            // console.log("isLoading firstInputRef.current: ", firstInputRef.current)
             firstInputRef.current.focus()
+        } else {
+            setReloadUseEffect(!reloadUseEffect)
         }
-    }, [firstInputRef.current])
+    }, [firstInputRef.current, reloadUseEffect])
     
     const showProfilePassToggle = () => {
         setShowProfilePass(!showProfilePass)
@@ -322,6 +317,7 @@ export default function SignUp () {
                                         //     input => input && input.select() : firstInputRef: undefined}
                                         // autoFocus={false} // This prop can be set to false because we're manually focusing.
                                     />
+
                                 </Box>
                                 <Box className={classes.customBoxRow}>
                                     <TextField
