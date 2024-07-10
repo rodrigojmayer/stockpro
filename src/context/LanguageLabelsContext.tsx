@@ -114,11 +114,19 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         password: "Password",
         remember_me: "Remember me",
         or_login_using: "Or login using",
-        forgot_password: "Forgot Password?",
-        sign_up: "Sign Up",
+        forgot_password: "Forgot password?",
+        sign_up: "Sign up",
       });
       setLabelsSignUp({
-        sign_up: "Sign Up",
+        sign_up: "Sign up",
+        username: "Username",
+        email: "Email",
+        password: "Password",
+        confirm_password: "Confirm password",
+        by_creating_account: "By creating an account you agree to our",
+        terms_privacy: "Terms & Privacy",
+        already_account: "Already have an account?",
+        login: "Login",
       });
     } 
     
@@ -209,7 +217,18 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         remember_me: "Recordar usuario",
         or_login_using: "O acceder usando",
         forgot_password: "Olvidé mi contraseña",
-        sign_up: "Crear Usuario",
+        sign_up: "Crear usuario",
+      });
+      setLabelsSignUp({
+        sign_up: "Registrarse",
+        username: "Nombre de usuario",
+        email: "Correo electrónico",
+        password: "Contraseña",
+        confirm_password: "Confirmar contraseña",
+        by_creating_account: "Al crear una cuenta, aceptas nuestros",
+        terms_privacy: "Términos y Privacidad",
+        already_account: "¿Ya tienes una cuenta?",
+        login: "Iniciar sesión",
       });
     }
   }, [user.language]); 

@@ -22,6 +22,7 @@ import useAddUser from "../hooks/addUser";
 import ConfirmCreatedUserModal from "../components/ConfirmCreatedUserModal";
 import ConfirmTermsAndPrivacyModal from "../components/ConfirmTermsAndPrivacyModal";
 import Paper from '@mui/material/Paper/Paper';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 export default function SignUp () {
     // const addUser = useAddUser(); 
@@ -29,7 +30,8 @@ export default function SignUp () {
     
     const { classes } = useStylesGlobal();
     const {  user } = useContext<any>(UserContext);
-    // const { isLogged, login }
+    const { labelsSignUp } = useContext<any>(LanguageLabelsContext)
+  // const { isLogged, login }
     const { INITIAL_USER, gmailUserLogged, setGmailUserLogged, _IdUserLogged, set_IdUserLogged } = useContext<any>(UserContext); 
     const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
     const [errorTextFields, setErrorTextFields] = useState({
@@ -295,12 +297,12 @@ export default function SignUp () {
                                 handleSetTermsAndPrivacy={setTermsAndPrivacy}
                             />
                             <Typography className={classes.finishButtons} align="center" variant='h5'>
-                                Sign Up
+                                {labelsSignUp.sign_up}
                             </Typography>
                             <Box className={classes.customBoxColumn}>
                                 <Box className={classes.customBoxRow}>
                                     <TextField
-                                        label="Username"
+                                        label={labelsSignUp.username}
                                         value={userState}
                                         onChange={ (event:any) => handleUser(event.target.value)}
                                         maxRows={1}
@@ -321,7 +323,7 @@ export default function SignUp () {
                                 </Box>
                                 <Box className={classes.customBoxRow}>
                                     <TextField
-                                        label="Email"
+                                        label={labelsSignUp.email}
                                         value={email}
                                         onChange={ (event:any) => handleEmail(event.target.value)}
                                         maxRows={1}
@@ -335,7 +337,7 @@ export default function SignUp () {
                                 </Box>
                                 <Box className={classes.customBoxRow}>
                                     <TextField
-                                        label="Password"
+                                        label={labelsSignUp.password}
                                         maxRows={1}
                                         size="small"
                                         value={pass}
@@ -355,7 +357,7 @@ export default function SignUp () {
                                 </Box>
                                 <Box className={classes.customBoxRow}>
                                     <TextField
-                                        label="Confirm password"
+                                        label={labelsSignUp.confirm_password}
                                         maxRows={1}
                                         size="small"
                                         value={confirmPass}
@@ -375,14 +377,14 @@ export default function SignUp () {
                                 {/* <Box> */}
                                 <Box className={classes.customBoxRow}>
                                     <Box>
-                                        By creating an account you agree to our 
+                                        {labelsSignUp.by_creating_account}
                                         <br/>
                                         <NavLink 
                                             className={classes._0link_color}
                                             to="/signup"
                                             onClick={() => setOpenConfirmTermsAndPrivacyModal(true)}
                                         >
-                                            Terms & Privacy
+                                            {labelsSignUp.terms_privacy}
                                         </NavLink>
                                         <Switch 
                                             color='success' 
@@ -417,12 +419,12 @@ export default function SignUp () {
                                 </Box>
                                 <Box className={classes.customBoxRow} sx={{ typography: 'subtitle2' }}>
                                 {/* <Box  */}
-                                    Already have an account?
+                                    {labelsSignUp.already_account}
                                     <NavLink 
                                         className={classes._0link_color}
                                         to="/login"
                                     >
-                                        Login
+                                        {labelsSignUp.login}
                                     </NavLink> 
                                 </Box>
                             </Box>
