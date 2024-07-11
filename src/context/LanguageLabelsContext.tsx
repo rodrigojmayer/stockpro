@@ -25,6 +25,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsSaveChanges, setLabelsSaveChanges] = useState({}); // New state for loading status
   const [labelsLogin, setLabelsLogin] = useState({}); // New state for loading status
   const [labelsSignUp, setLabelsSignUp] = useState({}); // New state for loading status
+  const [labelsPrivacyPolicy, setLabelsPrivacyPolicy] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -128,6 +129,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         already_account: "Already have an account?",
         login: "Login",
       });
+      setLabelsPrivacyPolicy({
+        login: "Login",
+      })
     } 
     
     else if (user.language === 1) {
@@ -250,6 +254,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         labelsSaveChanges,
         labelsLogin,
         labelsSignUp,
+        labelsPrivacyPolicy,
       }} 
     > 
       {children} 
