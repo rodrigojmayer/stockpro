@@ -481,21 +481,21 @@ function SpanishTerms() {
             <h3>Recopilación y uso de sus datos personales</h3>
             <h4>Tipos de datos recopilados</h4>
             <h5>Información personal</h5>
-            <p>Mientras usa nuestro servicio, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:</p>
+            <p>Mientras usa nuestro servicio, Es posible que le solicitemos que nos proporcione cierta información de identificación personal que pueda usarse para contactarlo o identificarlo. La información de identificación personal puede incluir, entre otras:</p>
             <ul>
                 <li>
-                    <p>Email address</p>
+                    <p>Dirección de correo electrónico</p>
                 </li>
                 <li>
-                    <p>First name and last name</p>
+                    <p>Nombre y apellido</p>
                 </li>
                 <li>
-                <p>Usage Data</p>
+                <p>Datos de uso</p>
                 </li>
             </ul>
-            <h5>Usage Data</h5>
-            <p>Usage Data is collected automatically when using the Service.</p>
-            <p>Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
+            <h5>Datos de uso</h5>
+            <p>Los datos de uso se recopilan automáticamente cuando se utiliza el Servicio.</p>
+            <p>Los datos de uso pueden incluir información como la dirección de protocolo de Internet de su dispositivo (p.ej. dirección IP), tipo de navegador, versión del navegador, las páginas de nuestro Servicio que usted visita, la hora y fecha de su visita, el tiempo pasado en esas páginas, identificadores únicos de dispositivos y otros datos de diagnóstico.</p>
             <p>When You access the Service by or through a mobile device, We may collect certain information automatically, including, but not limited to, the type of mobile device You use, Your mobile device unique ID, the IP address of Your mobile device, Your mobile operating system, the type of mobile Internet browser You use, unique device identifiers and other diagnostic data.</p>
             <p>We may also collect information that Your browser sends whenever You visit our Service or when You access the Service by or through a mobile device.</p>
             <h5>Tracking Technologies and Cookies</h5>
