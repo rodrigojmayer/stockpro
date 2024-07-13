@@ -496,25 +496,25 @@ function SpanishTerms() {
             <h5>Datos de uso</h5>
             <p>Los datos de uso se recopilan automáticamente cuando se utiliza el Servicio.</p>
             <p>Los datos de uso pueden incluir información como la dirección de protocolo de Internet de su dispositivo (p.ej. dirección IP), tipo de navegador, versión del navegador, las páginas de nuestro Servicio que usted visita, la hora y fecha de su visita, el tiempo pasado en esas páginas, identificadores únicos de dispositivos y otros datos de diagnóstico.</p>
-            <p>When You access the Service by or through a mobile device, We may collect certain information automatically, including, but not limited to, the type of mobile device You use, Your mobile device unique ID, the IP address of Your mobile device, Your mobile operating system, the type of mobile Internet browser You use, unique device identifiers and other diagnostic data.</p>
-            <p>We may also collect information that Your browser sends whenever You visit our Service or when You access the Service by or through a mobile device.</p>
-            <h5>Tracking Technologies and Cookies</h5>
-            <p>We use Cookies and similar tracking technologies to track the activity on Our Service and store certain information. Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze Our Service. The technologies We use may include:</p>
+            <p>Cuando accede al Servicio mediante o a través de un dispositivo móvil, podemos recopilar cierta información automáticamente, incluyendo, entre otros, el tipo de dispositivo móvil que utiliza, la identificación única de su dispositivo móvil, la dirección IP de su dispositivo móvil, su sistema operativo móvil, el tipo de navegador de Internet móvil que utiliza, identificadores únicos de dispositivo y otros datos de diagnóstico.</p>
+            <p>También podemos recopilar información que su navegador envía cada vez que visita nuestro Servicio o cuando accede al Servicio mediante un dispositivo móvil.</p>
+            <h5>Tecnologías de seguimiento y cookies</h5>
+            <p>Utilizamos cookies y tecnologías de seguimiento similares para rastrear la actividad en Nuestro Servicio y almacenar cierta información. Las tecnologías de seguimiento utilizadas son balizas, etiquetas y scripts para recopilar y rastrear información y mejorar y analizar Nuestro Servicio. Las tecnologías que utilizamos pueden incluir:</p>
             <ul>
-                <li><strong>Cookies or Browser Cookies.</strong> A cookie is a small file placed on Your Device. You can instruct Your browser to refuse all Cookies or to indicate when a Cookie is being sent. However, if You do not accept Cookies, You may not be able to use some parts of our Service. Unless you have adjusted Your browser setting so that it will refuse Cookies, our Service may use Cookies.</li>
-                <li><strong>Web Beacons.</strong> Certain sections of our Service and our emails may contain small electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit the Company, for example, to count users who have visited those pages or opened an email and for other related website statistics (for example, recording the popularity of a certain section and verifying system and server integrity).</li>
+                <li><strong>Cookies o cookies del navegador.</strong> Una cookie es un pequeño archivo colocado en su dispositivo. Puede indicarle a su navegador que rechace todas las cookies o que indique cuándo se envía una cookie. Sin embargo, si no acepta las cookies, es posible que no pueda utilizar algunas partes de nuestro Servicio. A menos que haya ajustado la configuración de su navegador para que rechace cookies, nuestro Servicio puede utilizar cookies.</li>
+                <li><strong>Balizas web.</strong> Ciertas secciones de nuestro Servicio y nuestros correos electrónicos pueden contener pequeños archivos electrónicos conocidos como balizas web (también conocidos como gifs transparentes, etiquetas de píxel y gifs de un solo píxel) que permiten a la Compañía, por ejemplo, contar los usuarios que han visitado esas páginas. o abrió un correo electrónico y para otras estadísticas relacionadas con el sitio web (por ejemplo, registrar la popularidad de una determinada sección y verificar la integridad del sistema y del servidor).</li>
             </ul>
-            <p>Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser. You can learn more about cookies on <a href="https://www.termsfeed.com/blog/cookies/#What_Are_Cookies" target="_blank">TermsFeed website</a> article.</p>
-            <p>We use both Session and Persistent Cookies for the purposes set out below:</p>
+            <p>Las cookies pueden ser &quot;Persistentes&quot; o de &quot;Sesión&quot;. Las cookies persistentes permanecen en su computadora personal o dispositivo móvil cuando se desconecta, mientras que las cookies de sesión se eliminan tan pronto como cierra su navegador web. Puede obtener más información sobre las cookies en el artículo <a href="https://www.termsfeed.com/blog/cookies/#What_Are_Cookies" target="_blank">sitio web TermsFeed</a>.</p>
+            <p>Utilizamos cookies de sesión y persistentes para los fines que se detallan a continuación:</p>
             <ul>
                 <li>
-                    <p><strong>Necessary / Essential Cookies</strong></p>
-                    <p>Type: Session Cookies</p>
-                    <p>Administered by: Us</p>
-                    <p>Purpose: These Cookies are essential to provide You with services available through the Website and to enable You to use some of its features. They help to authenticate users and prevent fraudulent use of user accounts. Without these Cookies, the services that You have asked for cannot be provided, and We only use these Cookies to provide You with those services.</p>
+                    <p><strong>Cookies necesarias/esenciales</strong></p>
+                    <p>Tipo: Cookies de sesión</p>
+                    <p>Administrado por: Nosotros</p>
+                    <p>Propósito: Estas cookies son esenciales para brindarle los servicios disponibles a través del sitio web y permitirle utilizar algunas de sus funciones. Ayudan a autenticar a los usuarios y evitar el uso fraudulento de cuentas de usuario. Sin estas Cookies, no se pueden proporcionar los servicios que ha solicitado y solo utilizamos estas Cookies para brindarle esos servicios.</p>
                 </li>
                 <li>
-                    <p><strong>Cookies Policy / Notice Acceptance Cookies</strong></p>
+                    <p><strong>Política de Cookies / Aviso de Aceptación de Cookies</strong></p>
                     <p>Type: Persistent Cookies</p>
                     <p>Administered by: Us</p>
                     <p>Purpose: These Cookies identify if users have accepted the use of cookies on the Website.</p>
