@@ -520,18 +520,18 @@ function SpanishTerms() {
                     <p>Purpose: These Cookies identify if users have accepted the use of cookies on the Website.</p>
                 </li>
                 <li>
-                    <p><strong>Functionality Cookies</strong></p>
-                    <p>Type: Persistent Cookies</p>
-                    <p>Administered by: Us</p>
-                    <p>Purpose: These Cookies allow us to remember choices You make when You use the Website, such as remembering your login details or language preference. The purpose of these Cookies is to provide You with a more personal experience and to avoid You having to re-enter your preferences every time You use the Website.</p>
+                    <p><strong>Cookies de funcionalidad</strong></p>
+                    <p>Tipo: Cookies persistentes</p>
+                    <p>Administrado por: Nosotros</p>
+                    <p>Propósito: Estas cookies nos permiten recordar las elecciones que realiza cuando utiliza el sitio web, como recordar sus datos de inicio de sesión o su preferencia de idioma. El propósito de estas Cookies es brindarle una experiencia más personal y evitar que tenga que volver a ingresar sus preferencias cada vez que utiliza el sitio web.</p>
                 </li>
             </ul>
-            <p>For more information about the cookies we use and your choices regarding cookies, please visit our Cookies Policy or the Cookies section of our Privacy Policy.</p>
-            <h4>Use of Your Personal Data</h4>
-            <p>The Company may use Personal Data for the following purposes:</p>
+            <p>Para obtener más información sobre las cookies que utilizamos y sus opciones con respecto a las cookies, visite nuestra Política de Cookies o la sección de Cookies de nuestra Política de Privacidad.</p>
+            <h4>Uso de sus datos personales</h4>
+            <p>La Empresa podrá utilizar Datos Personales para los siguientes fines:</p>
             <ul>
-                <li><strong>To provide and maintain our Service</strong>, including to monitor the usage of our Service.</li>
-                <li><strong>To manage Your Account:</strong> to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.</li>
+                <li><strong>Para proporcionar y mantener nuestro Servicio</strong>, incluso para monitorear el uso de nuestro Servicio.</li>
+                <li><strong>Para administrar su cuenta:</strong> para gestionar su registro como usuario del Servicio. Los Datos Personales que usted proporciona pueden darle acceso a diferentes funcionalidades del Servicio que están disponibles para Usted como usuario registrado..</li>
                 <li><strong>For the performance of a contract:</strong> the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased or of any other contract with Us through the Service.</li>
                 <li><strong>To contact You:</strong> To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application's push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</li>
                 <li><strong>To provide You</strong> with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless You have opted not to receive such information.</li>
