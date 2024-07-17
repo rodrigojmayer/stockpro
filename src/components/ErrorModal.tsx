@@ -25,7 +25,7 @@ export default function ErrorModal( props: ErrorModalProps) {
     const navigate = useNavigate()
     // Mising, invalid format, duplicated
     // console.log("user: ", user._id==="")
-    if (user.language === 0 ||  user._id==="") {
+    if (user.language === 0 ) {
         if(errorData === 'missing_data'){
             title='Missing required data'
             subTitle='Name*'
