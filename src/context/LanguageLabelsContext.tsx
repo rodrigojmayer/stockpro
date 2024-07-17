@@ -117,6 +117,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         or_login_using: "Or login using",
         forgot_password: "Forgot password?",
         sign_up: "Sign up",
+        google_login: "en",
       });
       setLabelsSignUp({
         sign_up: "Sign up",
@@ -222,6 +223,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         or_login_using: "O acceder usando",
         forgot_password: "Olvidé mi contraseña",
         sign_up: "Crear usuario",
+        google_login: "es",
       });
       setLabelsSignUp({
         sign_up: "Registrarse",

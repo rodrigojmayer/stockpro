@@ -340,6 +340,7 @@ return (
               <GoogleLogin
                 onError={() => handleLoginGoogleFailure}
                 onSuccess={handleLoginGoogleSuccess}
+                locale= {labelsLogin.google_login}
               />
             </Box>
             <Box className={classes.customBoxRow}>
