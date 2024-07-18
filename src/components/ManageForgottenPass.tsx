@@ -16,6 +16,7 @@ import ManageForgottenPass2EnterVerificationCode from './ManageForgottenPass2Ent
 import ManageForgottenPass3ChangePass from './ManageForgottenPass3ChangePass';
 import ConfirmChangedPassModal from './ConfirmChangedPassModal';
 import { UserContext } from '../context/UserContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 const INITIAL_FORGOTTENPASS_OPTIONS:any = {
     enterEmail: true,  
@@ -50,6 +51,7 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
     const [openErrorModal, setOpenErrorModal] = useState(false);
     const [errorData, setErrorData] = useState("");
     const [opencloseConfirmChangedPassModal, setOpencloseConfirmChangedPassModal] = useState(false); 
+    const { labelsManageForgottenPass } = useContext<any>(LanguageLabelsContext)
 
     const handleEditEmailForgottenPass = (value: string) => {
         setErrorTextFields((prevErrorTextFields: any) => ({
@@ -317,7 +319,7 @@ export default function ManageForgottenPass( props: ManageForgottenPassProps) {
                         />
                         <Box marginTop="10px">  
                             <Typography variant='h6' align="center" >
-                                Account recovery
+                                {labelsManageForgottenPass.account_recovery}
                             </Typography> 
                         </Box>
                         <ManageForgottenPass1EnterEmail 

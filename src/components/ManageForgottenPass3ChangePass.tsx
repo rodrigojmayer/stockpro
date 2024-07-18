@@ -6,7 +6,8 @@ import { Box,
 import { useStylesGlobal } from '../Styles'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 interface ChildProps {
     hiddenPanel:  boolean
@@ -26,6 +27,7 @@ export default function ManageForgottenPass3ChangePass(
             errorTextFields,
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
+    const { labelsManageForgottenPass } = useContext<any>(LanguageLabelsContext)
 
     const[ showNewPass, setShowNewPass ] = useState<boolean>(false)
     const[ showConfirmNewPass, setShowConfirmNewPass ] = useState<boolean>(false)
@@ -41,12 +43,12 @@ export default function ManageForgottenPass3ChangePass(
             hidden= {hiddenPanel}
         >
             <Box padding="0 5px 7px 5px">
-                <Typography align='center' variant='body2'>Create a new password</Typography>
+                <Typography align='center' variant='body2'>{labelsManageForgottenPass.create_new_password}</Typography>
             </Box>
             <Box className={`${classes.customBoxColumn}`}>
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="New Password"
+                        label={labelsManageForgottenPass.new_password}
                         maxRows={1}
                         size="small"
                         // type= "password"
@@ -66,7 +68,7 @@ export default function ManageForgottenPass3ChangePass(
                 </Box>
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Confirm Password"
+                        label={labelsManageForgottenPass.confirm_password}
                         maxRows={1}
                         size="small"
                         // type= "password"

@@ -26,6 +26,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsLogin, setLabelsLogin] = useState({}); // New state for loading status
   const [labelsSignUp, setLabelsSignUp] = useState({}); // New state for loading status
   const [labelsConfirmTermsAndPrivacy, setLabelsConfirmTermsAndPrivacy] = useState({}); // New state for loading status
+  const [labelsManageForgottenPass, setLabelsManageForgottenPass] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -133,6 +134,18 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       setLabelsConfirmTermsAndPrivacy({
         terms: "EnglishTerms",
       });
+      setLabelsManageForgottenPass({
+        account_recovery: "Account recovery",
+        confirm_recovery_email: "To get a verification code, first confirm the recovery email address",
+        email: "Email",
+        verification_code_sent: "A verification code was sent to",
+        verification_code: "Verification code",
+        create_new_password: "Create a new password",
+        new_password: "New password",
+        confirm_password: "Confirm password",
+        password_changed: "Your password has been successfully changed",
+
+      });
     } 
     
     else if (user.language === 1) {
@@ -239,6 +252,17 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       setLabelsConfirmTermsAndPrivacy({
         terms: "SpanishTerms",
       });
+      setLabelsManageForgottenPass({
+        account_recovery: "Recuperación de cuenta",
+        confirm_recovery_email: "Para obtener un código de verificación, primero confirme la dirección de correo electrónico de recuperación",
+        email: "Correo electrónico",
+        verification_code_sent: "Un código de verificación fué enviado a",
+        verification_code: "Código de verificación",
+        create_new_password: "Crear una nueva contraseña",
+        new_password: "Nueva contraseña",
+        confirm_password: "Confirmar contraseña",
+        password_changed: "Su contraseña ha sido cambiada exitosamente",
+      });
     }
   }, [user.language]); 
 
@@ -260,6 +284,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         labelsLogin,
         labelsSignUp,
         labelsConfirmTermsAndPrivacy,
+        labelsManageForgottenPass,
       }} 
     > 
       {children} 

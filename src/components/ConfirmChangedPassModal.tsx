@@ -6,6 +6,7 @@ import { Box,
 import { OkButton } from './Buttons';
 import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from '../Styles'
 import { UserContext } from '../context/UserContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 type ConfirmChangedPassModalProps = {
     openConfirmChangedPassModal: boolean;
@@ -15,6 +16,7 @@ export default function ConfirmChangedPassModal( props: ConfirmChangedPassModalP
     const { openConfirmChangedPassModal, closeConfirmChangedPassModal } = props;
     const { classes } = useStylesGlobal();
     const { user } = useContext<any>(UserContext);
+    const { labelsManageForgottenPass } = useContext<any>(LanguageLabelsContext)
     
     
     const handleOkButton = async() => {
@@ -39,7 +41,7 @@ export default function ConfirmChangedPassModal( props: ConfirmChangedPassModalP
                             Thanks for signing up to StockPro
                         </Typography>  */}
                         <Typography variant='body2' align="center" >
-                            Your password has been successfully changed  
+                            {labelsManageForgottenPass.password_changed}  
                         </Typography> 
                     </Box>
                     <Box className={classes.finishButtons}>

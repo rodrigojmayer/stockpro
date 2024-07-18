@@ -3,6 +3,8 @@ import { Box,
          Typography,
         } from '@mui/material';
 import { useStylesGlobal } from '../Styles'
+import { useContext } from 'react';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 interface ChildProps {
     hiddenPanel:  boolean;
@@ -20,18 +22,19 @@ export default function ManageForgottenPass2EnterVerificationCode(
             errorTextFields,
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
+    const { labelsManageForgottenPass } = useContext<any>(LanguageLabelsContext)
 
     return (
         <div
             hidden= {hiddenPanel}
         >
             <Box padding="0 5px 7px 5px">
-                <Typography align='center' variant='body2'>A verification code was sent to {emailForgottenPass}</Typography>
+                <Typography align='center' variant='body2'>{labelsManageForgottenPass.verification_code_sent} {emailForgottenPass}</Typography>
             </Box>   
             <Box className={`${classes.customBoxColumn}`}>
                 <Box className={classes.customBoxRow}>
                     <TextField
-                        label="Verification Code"
+                        label={labelsManageForgottenPass.verification_code}
                         maxRows={1}
                         size="small"
                         type= "text"
