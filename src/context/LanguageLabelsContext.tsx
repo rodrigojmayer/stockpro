@@ -27,6 +27,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsSignUp, setLabelsSignUp] = useState({}); // New state for loading status
   const [labelsConfirmTermsAndPrivacy, setLabelsConfirmTermsAndPrivacy] = useState({}); // New state for loading status
   const [labelsManageForgottenPass, setLabelsManageForgottenPass] = useState({}); // New state for loading status
+  const [labelsConfirmDeleteModal, setLabelsConfirmDeleteModal] = useState({}); // New state for loading status
   
 
   useEffect(() => {
@@ -144,7 +145,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         new_password: "New password",
         confirm_password: "Confirm password",
         password_changed: "Your password has been successfully changed",
-
+      });
+      setLabelsConfirmDeleteModal({
+        swipe_confirm: "Swipe to confirm the deletion of the",
       });
     } 
     
@@ -263,6 +266,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         confirm_password: "Confirmar contraseña",
         password_changed: "Su contraseña ha sido cambiada exitosamente",
       });
+      setLabelsConfirmDeleteModal({
+        swipe_confirm: "Desliza para confirmar la eliminación del",
+      });
     }
   }, [user.language]); 
 
@@ -285,6 +291,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         labelsSignUp,
         labelsConfirmTermsAndPrivacy,
         labelsManageForgottenPass,
+        labelsConfirmDeleteModal,
       }} 
     > 
       {children} 

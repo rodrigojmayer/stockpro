@@ -8,6 +8,7 @@ import { useStylesGlobal, modalStyleSaveExternal, modalStyleErrorInternal } from
 import Slider from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
 import { UserContext } from '../context/UserContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 
 const PrettoSlider = styled(Slider)({
@@ -49,8 +50,9 @@ export default function ConfirmDeleteModal( props: ConfirmDeleteModalProps) {
     const { openConfirmDeleteModal, closeConfirmDeleteModal } = props;
     const { classes } = useStylesGlobal();
     const { user } = useContext<any>(UserContext);
+    const { labelsConfirmDeleteModal } = useContext<any>(LanguageLabelsContext)
     // console.log("props: ", props)
-    let subTitle = `Swipe to confirm ${props.source} "${props.data}" deletion`
+    let subTitle = `${labelsConfirmDeleteModal.swipe_confirm} ${props.source} "${props.data}" `
 
     const [isThumbPressed, setIsThumbPressed] = useState(true);
     const [valueSlider, setValueSlider] = useState(0);
