@@ -708,18 +708,20 @@ export default function TableProducts(
                                   {labelsTableProducts.manage_columns}
                                 </Typography>
                               </MenuItem>
-                              <MenuItem 
-                                onClick={ handleOpenCustomFieldsModal  }
-                                // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
-                                className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                              >
-                                <Typography 
-                                  align="center" 
-                                  variant="body2" 
-                                > 
-                                  {labelsTableProducts.custom_fields}
-                                </Typography>
-                              </MenuItem>
+                              {(user.id_access_level < 4) &&
+                                <MenuItem 
+                                  onClick={ handleOpenCustomFieldsModal  }
+                                  // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
+                                  className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                                >
+                                  <Typography 
+                                    align="center" 
+                                    variant="body2" 
+                                  > 
+                                    {labelsTableProducts.custom_fields}
+                                  </Typography>
+                                </MenuItem> 
+                              }
                             </Menu>
                             <Menu
                             // <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
