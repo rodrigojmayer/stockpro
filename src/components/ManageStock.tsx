@@ -71,7 +71,8 @@ export default function ManageStock(
     const { filestack, deleteFilesStock } = useContext<any>(FilestackContext);
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
    
-    const edition = (data._id!== "" ? true : false)
+    // const edition = (data._id!== "" ? true : false)
+    const [edition, setEdition] = useState<boolean>(data._id!== "" ? true : false);
     const [titleStat, setTitleStat] = useState<string>(labelsManageStock.edit_stock);
     const [openOptionsCreate, setOpenOptionsCreate] = useState<DataCreateStockOptions>(INITIAL_CREATESTOCK_OPTIONS);
     const [stockNameTemp, setStockNameTemp] = useState(data.product);
@@ -593,7 +594,8 @@ export default function ManageStock(
                             onStockCustomValuesTemp={handleStockCustomValuesTemp}
                         />
                         <Box className={classes.finishButtons}>
-                            {(titleStat === "Edit ") &&
+                            {(edition) &&
+                            
                                 <DeleteButton
                                     clicked={() => handleDeleteProduct()}
                                 />  
