@@ -340,9 +340,11 @@ export default function ManageStockSecondaryData(
                                 onClose: () => {
                                     handleClosePicker()
                                 },
-                                lang: "es",
+                                // lang: "en",
+                                // lang: "es",
+                                lang: labelsManageStock.filestack_options,
                                 accept: ["image/*"],
-                               
+                            
                             //     transformations: {
                             //         convert: {
                             //     output: {
