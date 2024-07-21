@@ -342,6 +342,7 @@ export default function ManageStockSecondaryData(
                                 },
                                 // lang: "en",
                                 // lang: "es",
+                                // lang: "da",
                                 lang: labelsManageStock.filestack_options,
                                 accept: ["image/*"],
                             

@@ -151,7 +151,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         swipe_confirm: "Swipe to confirm the deletion of the",
       });
     } 
-    
+
     else if (user.language === 1) {
       setLabelsMainSearch({
         global_search: "Búsqueda global..."
@@ -270,6 +270,127 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       });
       setLabelsConfirmDeleteModal({
         swipe_confirm: "Desliza para confirmar la eliminación del",
+      });
+    }
+
+    else if (user.language === 2) {
+      setLabelsMainSearch({
+        global_search: "Global søgning..."
+      });
+      setLabelsMenuOptions({
+        profile: "Profil",
+        preferences: "Præferencer",
+        logout: "Log ud",
+        users: "Brugere",
+      });
+      setLabelsTableProducts({
+        alerts_on_top: "Advarsler øverst",
+        manage_columns: "Administrer kolonner",
+        custom_fields: "Brugerdefinerede felter",
+      });
+      setLabelsProfile({
+        profile: "Profil",
+        name: "Navn",
+        last_name: "Efternavn",
+        alias: "Alias*",
+        email: "E-mail*",
+        alerts_by_email: "Alarmer via e-mail",
+        change_password: "Skift kodeord",
+      });
+      setLabelsChangePass({
+        change_password: "Skift kodeord",
+        actual_password: "Faktisk adgangskode*",
+        new_password: "Nyt kodeord*",
+        confirm_new_password: "Bekræft kodeord*",
+      });
+      setLabelsPreferences({
+        preferences: "Præferencer", 
+        language: "Sprog", 
+        color_mode: "Farvetilstand",  
+      });
+      setLabelsUsers({
+        users: "Brugere", 
+      });
+      setLabelsManageStock({
+        create_stock: "Skabe ", 
+        edit_stock: "Redigere ", 
+        main_data: "Hoveddata", 
+        name: "Navn*", 
+        code: "Kode", 
+        amount: "Beløb", 
+        measure: "Måle", 
+        category: "Kategori", 
+        sub_category: "Underkateg.", 
+        secondary_data: "Sekundære data", 
+        price: "Pris", 
+        description: "Beskrivelse", 
+        filestack_options: "da", 
+        alerts: "Advarsler", 
+        by_amount: "Efter beløb", 
+        by_date: "Efter dato", 
+        custom_fields: "Brugerdefinerede felter", 
+        messageAmountAlert: "Lagerbeløbet vil falde under alarmniveauet.",
+        messageDateAlert: "Advarselsdatoen er før den aktuelle dato.",
+      });
+      setLabelsManageUser({
+        create_user: "Opret bruger", 
+        edit_user: "Rediger bruger", 
+        access_level: "Adgangsniveau*", 
+        name: "Navn", 
+        last_name: "Efternavn", 
+        user: "Bruger*", 
+        email: "E-mail*", 
+        alerts_by_email: "Alarmer af E-mail",
+        user_enabled: "Bruger aktiveret",
+        user_disabled: "Bruger deaktiveret",
+      });
+      setLabelsUpdateAmountStock({
+        amount: "Beløb",
+        messageAmountAlert: "Lagerbeløbet vil falde under alarmniveauet.",
+      });
+      setLabelsCustomFields({
+        custom_fields: "Brugerdefinerede felter",
+      });
+      setLabelsSaveChanges({
+        save_changes: "Gem ændringer",
+      });
+      setLabelsLogin({
+        login: "Log på",
+        username_email: "Brugernavn eller E-mail",
+        password: "Adgangskode",
+        remember_me: "Husk mig",
+        or_login_using: "Eller log ind vha",
+        forgot_password: "Glemt kodeord?",
+        sign_up: "Tilmelde",
+        google_login: "da",
+      });
+      setLabelsSignUp({
+        sign_up: "Tilmelde",
+        username: "Brugernavn",
+        email: "E-mail",
+        password: "Adgangskode",
+        confirm_password: "Bekræft kodeord",
+        by_creating_account: "Ved at oprette en konto accepterer du vores",
+        terms_privacy: "Vilkår og privatliv",
+        already_account: "Har du allerede en bruger?",
+        login: "Log på",
+      });
+      setLabelsConfirmTermsAndPrivacy({
+        terms: "DanishTerms",
+      });
+      setLabelsManageForgottenPass({
+        account_recovery: "Kontogendannelse",
+        confirm_recovery_email: "For at få en bekræftelseskode skal du først bekræfte gendannelses-e-mailadressen",
+        email: "E-mail",
+        verification_code_sent: "En bekræftelseskode blev sendt til",
+        verification_code: "Verifikationskode",
+        create_new_password: "Opret en ny adgangskode",
+        new_password: "Nyt kodeord",
+        confirm_password: "Bekræft kodeord",
+        password_changed: "Dit kodeord er nu blevet ændret",
+      });
+      setLabelsConfirmDeleteModal({
+        swipe_confirm: "Stryg for at bekræfte sletningen af",
       });
     }
   }, [user.language]); 
