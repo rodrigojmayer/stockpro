@@ -57,6 +57,8 @@ export default function Preferences( { open, handleClose }: ChildProps) {
         "name": "English"},
         {"id": 1,
         "name": "Español"},
+        {"id": 2,
+        "name": "Dansk"},
     ]
     const backgroundColorsArray = [
         {"id": 0,
