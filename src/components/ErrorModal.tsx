@@ -87,6 +87,7 @@ export default function ErrorModal( props: ErrorModalProps) {
             title='Missing required data'
             subTitle='Confirm new password*'
         } else if (errorData === 'not_confirmed_pass'){
+            title='There is no coincidence'
             // title='Not confirmed password'
             subTitle='The password confirmation does not match'
         }  else if (errorData === 'invalid_password'){
@@ -202,6 +203,96 @@ export default function ErrorModal( props: ErrorModalProps) {
             // subTitle='You can sign up again'
         } else if (errorData === 'invalid_code'){
             title='Código inválido'
+            // subTitle='You can sign up again'
+        }
+    } else if (user.language === 2){
+        if(errorData === 'missing_data'){
+            title='Mangler nødvendige data'
+            subTitle='Navn*'
+        } else if (errorData === 'negative_amount'){
+            title='Underskud'
+            subTitle='Beløbet kan ikke være negativt'
+        } else if (errorData === 'missing_data_user'){
+            title='Mangler nødvendige data'
+            subTitle='Alias'
+        } else if (errorData === 'missing_user_name'){
+            title='Mangler nødvendige data'
+            subTitle='Navn*'
+        } else if (errorData === 'missing_user_access_level'){
+            title='Mangler nødvendige data'
+            subTitle='Adgangsniveau*'
+        } else if (errorData === 'missing_user_user'){
+            title='Mangler nødvendige data'
+            subTitle='Bruger*'
+        } else if (errorData === 'missing_user_name_email'){
+            title='Mangler nødvendige data'
+            subTitle='Brugernavn eller e-mail*'
+        } else if (errorData === 'missing_user_password'){
+            title='Mangler nødvendige data'
+            subTitle='Adgangskode*'
+        } else if (errorData === 'missing_email'){
+            title='Mangler nødvendige data'
+            subTitle='E-mail*'
+        } else if (errorData === 'confirm_password_must_match'){
+            title='Bekræft adgangskoden skal matche'
+            subTitle='Bekræft kodeord*'
+        } else if (errorData === 'missing_terms_and_privacy'){
+            title='Skal acceptere vilkår og privatliv'
+            subTitle='Vilkår og privatliv*'
+        } else if (errorData === 'invalid_email_format'){
+            title='Ugyldigt e-mail-format'
+            subTitle=''
+        } else if (errorData === 'email_duplicated'){
+            title=''
+            subTitle='Email adressen er allerede i brug'
+        } else if (errorData === 'user_duplicated'){
+            title=''
+            subTitle='Bruger er allerede i brug'
+        } else if (errorData === 'user_deleted'){
+            title=''
+            subTitle='Bruger slettet'
+        }  else if (errorData === 'user_disabled'){
+            title=''
+            subTitle='Bruger deaktiveret'
+        } else if (errorData === 'login_failed'){
+            title='Login mislykkedes'
+            subTitle='Bruger eller adgangskode er forkert'
+        } else if (errorData === 'missing_actual_pass'){
+            title='Mangler nødvendige data'
+            subTitle='Faktisk adgangskode*'
+        } else if (errorData === 'missing_new_pass'){
+            title='Mangler nødvendige data'
+            subTitle='Nyt kodeord*'
+        } else if (errorData === 'missing_confirm_new_pass'){
+            title='Mangler nødvendige data'
+            subTitle='Bekræft ny adgangskode*'
+        } else if (errorData === 'not_confirmed_pass'){
+            title='Der er ingen tilfældighed'
+            // title='Not confirmed password'
+            subTitle='Adgangskodebekræftelsen stemmer ikke overens'
+        }  else if (errorData === 'invalid_password'){
+            title=''
+            subTitle='Faktisk adgangskode forkert'
+        }  else if (errorData === 'email_not_found'){
+            title=''
+            subTitle='E-mail ikke fundet'
+        } else if (errorData === 'expired_validation'){
+            title='Ugyldigt aktiveringslink'
+            subTitle='Du kan tilmelde dig igen'
+        } else if (errorData === 'invalid_user_format'){
+            title='Ugyldigt brugerformat'
+            subTitle='Indeholder ugyldige tegn'
+        } else if (errorData === 'invalid_pass_format'){
+            title='Ugyldigt kodeordsformat'
+            subTitle='Den skal have mindst 6 tegn'
+        } else if (errorData === 'missing_verification_code'){
+            title='Mangler nødvendige data'
+            subTitle='Verifikationskode*'
+        } else if (errorData === 'expired_code_validation'){
+            title='Udløbet kodevalidering'
+            // subTitle='You can sign up again'
+        } else if (errorData === 'invalid_code'){
+            title='Ugyldig kodevalidering'
             // subTitle='You can sign up again'
         }
     }
