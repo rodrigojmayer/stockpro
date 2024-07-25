@@ -52,6 +52,7 @@ export default function Preferences( { open, handleClose }: ChildProps) {
     }
 
 
+    // languagechangessearch
     const languagesArray = [
         {"id": 0,
         "name": "English"},
@@ -59,6 +60,8 @@ export default function Preferences( { open, handleClose }: ChildProps) {
         "name": "Español"},
         {"id": 2,
         "name": "Dansk"},
+        {"id": 3,
+        "name": "Italiano"},
     ]
     const backgroundColorsArray = [
         {"id": 0,
