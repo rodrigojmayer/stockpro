@@ -8,6 +8,7 @@ type LanguageLabelsProviderProps = {
   children: React.ReactNode;
 };
   
+// languagechangessearch
 export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ children }) => {
   const { user } = useContext<any>(UserContext);
 
@@ -284,9 +285,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         users: "Brugere",
       });
       setLabelsTableProducts({
-        alerts_on_top: "Advarsler øverst",
-        manage_columns: "Administrer kolonner",
-        custom_fields: "Brugerdefinerede felter",
+        alerts_on_top: "Alarmer op",
+        manage_columns: "Kolonner",
+        custom_fields: "Egne felter",
       });
       setLabelsProfile({
         profile: "Profil",
@@ -328,7 +329,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         alerts: "Advarsler", 
         by_amount: "Efter beløb", 
         by_date: "Efter dato", 
-        custom_fields: "Brugerdefinerede felter", 
+        custom_fields: "Egne felter", 
         messageAmountAlert: "Lagerbeløbet vil falde under alarmniveauet.",
         messageDateAlert: "Advarselsdatoen er før den aktuelle dato.",
       });
@@ -349,7 +350,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         messageAmountAlert: "Lagerbeløbet vil falde under alarmniveauet.",
       });
       setLabelsCustomFields({
-        custom_fields: "Brugerdefinerede felter",
+        custom_fields: "Egne felter",
       });
       setLabelsSaveChanges({
         save_changes: "Gem ændringer",
@@ -393,6 +394,128 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         swipe_confirm: "Stryg for at bekræfte sletningen af",
       });
     }
+    
+    else if (user.language === 3) {
+      setLabelsMainSearch({
+        global_search: "Ricerca globale..."
+      });
+      setLabelsMenuOptions({
+        profile: "Profilo",
+        preferences: "Preferenze",
+        logout: "Disconnettersi",
+        users: "Utenti",
+      });
+      setLabelsTableProducts({
+        alerts_on_top: "Avvertenze sopra",
+        manage_columns: "Gestisci colonne",
+        custom_fields: "Campi su misura",
+      });
+      setLabelsProfile({
+        profile: "Profilo",
+        name: "Nome",
+        last_name: "Cognome",
+        alias: "Alias*",
+        email: "E-mail*",
+        alerts_by_email: "Avvisi via e-mail",
+        change_password: "Cambiare la password",
+      });
+      setLabelsChangePass({
+        change_password: "Cambiare la password",
+        actual_password: "Password effettiva*",
+        new_password: "Nuova password*",
+        confirm_new_password: "Conferma password*",
+      });
+      setLabelsPreferences({
+        preferences: "Preferenze", 
+        language: "Lingua", 
+        color_mode: "Modalità colore",  
+      });
+      setLabelsUsers({
+        users: "Utenti", 
+      });
+      setLabelsManageStock({
+        create_stock: "Creare ", 
+        edit_stock: "Modificare ", 
+        main_data: "Dati principali", 
+        name: "Nome*", 
+        code: "Codice", 
+        amount: "Quantità", 
+        measure: "Misurare", 
+        category: "Categoria", 
+        sub_category: "Sottocateg.", 
+        secondary_data: "Dati secondari", 
+        price: "Prezzo", 
+        description: "Descrizione", 
+        filestack_options: "it", 
+        alerts: "Avvisi", 
+        by_amount: "Per importo", 
+        by_date: "Per data", 
+        custom_fields: "Campi su misura", 
+        messageAmountAlert: "L'importo delle scorte scenderà al di sotto del livello di avviso.",
+        messageDateAlert: "La data dell'avviso è precedente alla data corrente.",
+      });
+      setLabelsManageUser({
+        create_user: "Creare un utente", 
+        edit_user: "Modifica utente", 
+        access_level: "Livello di accesso*", 
+        name: "Nome", 
+        last_name: "Cognome", 
+        user: "Utente*", 
+        email: "E-mail*", 
+        alerts_by_email: "Avvisi via e-mail",
+        user_enabled: "Utente abilitato",
+        user_disabled: "Utente disabilitato",
+      });
+      setLabelsUpdateAmountStock({
+        amount: "Quantità",
+        messageAmountAlert: "L'importo delle scorte scenderà al di sotto del livello di avviso.",
+      });
+      setLabelsCustomFields({
+        custom_fields: "Campi su misura",
+      });
+      setLabelsSaveChanges({
+        save_changes: "Salvare le modifiche",
+      });
+      setLabelsLogin({
+        login: "Login",
+        username_email: "Nome utente o email",
+        password: "Parola d'ordine",
+        remember_me: "Ricordati di me",
+        or_login_using: "Oppure accedi utilizzando",
+        forgot_password: "Ha dimenticato la password?",
+        sign_up: "Iscrizione",
+        google_login: "it",
+      });
+      setLabelsSignUp({
+        sign_up: "Iscrizione",
+        username: "Nome utente",
+        email: "E-mail",
+        password: "Parola d'ordine",
+        confirm_password: "Conferma password",
+        by_creating_account: "Creando un account accetti il ​​nostro",
+        terms_privacy: "Termini e privacy",
+        already_account: "Hai già un account?",
+        login: "Login",
+      });
+      setLabelsConfirmTermsAndPrivacy({
+        terms: "ItalianTerms",
+      });
+      setLabelsManageForgottenPass({
+        account_recovery: "Recupero dell'account",
+        confirm_recovery_email: "Per ottenere un codice di verifica, conferma prima l'indirizzo email di recupero",
+        email: "E-mail",
+        verification_code_sent: "È stato inviato un codice di verifica a",
+        verification_code: "Codice di verifica",
+        create_new_password: "Crea una nuova password",
+        new_password: "Nuova password",
+        confirm_password: "Conferma password",
+        password_changed: "La tua password è stata cambiata con successo",
+      });
+      setLabelsConfirmDeleteModal({
+        swipe_confirm: "Scorri per confermare l'eliminazione del",
+      });
+    } 
+
   }, [user.language]); 
 
   return  ( 
