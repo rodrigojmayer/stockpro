@@ -651,11 +651,12 @@ export function SelectLanguageButton({ sizeIco, roundedIco, cusField, clicked, d
 
   const selectedTheme = themeMap[user.background_color];
   
+// languagechangessearch
   const languages = [
     { lang_lab:"English", flag: en_flag_btn},
     { lang_lab:"Español", flag: sp_flag_btn},
     { lang_lab:"Dansk", flag: dk_flag_btn},
-    // { lang_lab:"Italiano", flag: it_flag_btn},
+    { lang_lab:"Italiano", flag: it_flag_btn},
     // { lang_lab:"Deutsch", flag: gm_flag_btn},
     // { lang_lab:"Français", flag: fr_flag_btn},
     // { lang_lab:"Português", flag: pg_flag_btn},
