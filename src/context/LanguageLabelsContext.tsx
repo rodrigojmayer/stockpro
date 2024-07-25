@@ -20,6 +20,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsPreferences, setLabelsPreferences] = useState({}); // New state for loading status
   const [labelsUsers, setLabelsUsers] = useState({}); // New state for loading status
   const [labelsManageStock, setLabelsManageStock] = useState({}); // New state for loading status
+  const [labelsMassiveUpdateStock, setLabelsMassiveUpdateStock] = useState({}); // New state for loading status
   const [labelsManageUser, setLabelsManageUser] = useState({}); // New state for loading status
   const [labelsUpdateAmountStock, setLabelsUpdateAmountStock] = useState({}); // New state for loading status
   const [labelsCustomFields, setLabelsCustomFields] = useState({}); // New state for loading status
@@ -90,6 +91,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         custom_fields: "Custom fields", 
         messageAmountAlert: "The stock amount will drop below the alert level.",
         messageDateAlert: "The alert date is before current date.",
+      });
+      setLabelsMassiveUpdateStock({
+        massive_upload: "Massive upload", 
       });
       setLabelsManageUser({
         create_user: "Create user", 
@@ -212,6 +216,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         messageAmountAlert: "La cantidad del stock estará por debajo del nivel de alerta.",
         messageDateAlert: "La fecha de alerta es anterior a la fecha actual.",
       });
+      setLabelsMassiveUpdateStock({
+        massive_upload: "Carga masiva", 
+      });
       setLabelsManageUser({
         create_user: "Crear usuario", 
         edit_user: "Editar usuario",
@@ -332,6 +339,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         custom_fields: "Egne felter", 
         messageAmountAlert: "Lagerbeløbet vil falde under alarmniveauet.",
         messageDateAlert: "Advarselsdatoen er før den aktuelle dato.",
+      });
+      setLabelsMassiveUpdateStock({
+        massive_upload: "Massiv upload", 
       });
       setLabelsManageUser({
         create_user: "Opret bruger", 
@@ -454,6 +464,9 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         messageAmountAlert: "L'importo delle scorte scenderà al di sotto del livello di avviso.",
         messageDateAlert: "La data dell'avviso è precedente alla data corrente.",
       });
+      setLabelsMassiveUpdateStock({
+        massive_upload: "Caricamento massiccio", 
+      });
       setLabelsManageUser({
         create_user: "Creare un utente", 
         edit_user: "Modifica utente", 
@@ -528,7 +541,8 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         labelsChangePass, 
         labelsPreferences, 
         labelsUsers, 
-        labelsManageStock, 
+        labelsManageStock,
+        labelsMassiveUpdateStock, 
         labelsManageUser, 
         labelsUpdateAmountStock,
         labelsCustomFields,

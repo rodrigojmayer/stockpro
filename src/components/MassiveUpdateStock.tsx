@@ -39,6 +39,7 @@ import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ColumnsContext } from '../context/ColumnsContext'
 import { CheckListStockContext } from '../context/CheckListStockContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 const INITIAL_CREATESTOCK_OPTIONS = {
     mainData: false,  
@@ -188,6 +189,7 @@ export default function MassiveUpdateStock(
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { defaultColumns, customColumns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
+    const { labelsMassiveUpdateStock } = useContext<any>(LanguageLabelsContext)
     // const modifiedColumns  = defaultColumns
     const columns  = defaultColumns
         .filter((column:any) => column.dataKey=="product" || column.dataKey=="amount"  )
@@ -439,7 +441,7 @@ export default function MassiveUpdateStock(
                             closeErrorModal={handleCloseErrorModal}
                             errorData={errorData} 
                         />
-                        <Typography align='center' variant="h5"  className={classes.title}>Massive upload</Typography>
+                        <Typography align='center' variant="h5"  className={classes.title}>{labelsMassiveUpdateStock.massive_upload}</Typography>
 
                         <Paper 
                             style={{ 
