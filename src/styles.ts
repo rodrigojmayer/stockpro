@@ -1063,6 +1063,45 @@ export const useStylesGlobal = makeStyles()({
             backgroundColor: _3menuItem,
         },
     },
+    menuItemContent: {
+        display: 'block',
+        maxWidth: '100px', // Set a fixed width for truncation
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        position: 'relative',
+        '& span': {
+          display: 'inline-block',
+          position: 'relative',
+        },
+        '&:hover': {
+            overflow: 'visible',
+            '&:before': {
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'inherit',
+                zIndex: 1,
+            },
+            '& span': {
+                display: 'inline-block',
+                position: 'relative',
+                // animation: '$scrollText 1s linear infinite',
+                
+//   transition: "1s ease-in-out all",
+                // whiteSpace: 'nowrap',
+            },
+            transition: "2s",
+            transform: 'translateX(-10px)'
+        },
+    },
+    //     '@keyframes scrollText': {
+    //         from: { transform: 'translateX(10px)' },
+    //         to: { transform: 'translateX(-10px)' },
+    // },
 })
 
 export const modalStyleExternal = {
