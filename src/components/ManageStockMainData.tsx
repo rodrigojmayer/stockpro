@@ -1,8 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Box,
-         TextField,
-         Typography,
-         MenuItem,
+import { Box, 
+         TextField, 
+         Typography, 
+         MenuItem, 
+         Tooltip, 
         } from '@mui/material';
 import { UpButton } from './Buttons';
 import { useStylesGlobal } from '../Styles'
@@ -39,7 +40,7 @@ interface ChildProps {
     stockCategoryTemp: (Category | null)
     onStockCategoryChange: (newData: any )=> void
     stockSubCategoryTemp: string
-    onStockSubCategoryChange: (newData: string )=> void    
+    onStockSubCategoryChange: (newData: any )=> void    
 }
 
 export default function ManageStockMainData(
@@ -146,7 +147,6 @@ export default function ManageStockMainData(
                         >
                             {measureArray.map((measure) => (
                                 <MenuItem 
-                                    // className={classes.menuItemUsers}
                                     key={measure.id} 
                                     value={measure.name}
                                     sx={{ justifyContent: "space-between" }}
@@ -162,58 +162,68 @@ export default function ManageStockMainData(
                         size="small"
                         select
                         className={classes.inputMainData}
-                        // className={`${classes.inputMainData} ${classes.table_menu}`}
                         InputProps={{className: classes.inputClassName}}
-                        value={stockCategoryTemp?.id || ''}
+                        value={stockCategoryTemp?.id || ''} // Ensure the value corresponds to the category ID
                         onChange={ (event:any) => onStockCategoryChange(event.target.value) }
                         SelectProps={{
                             MenuProps: {
                                 PaperProps: {
-                                    // style: {
-                                    //     maxHeight: 200, // Set the desired max height
-                                    //     maxWidth: 100,  // Set the desired max width
-                                    // },
-                                    sx: { 
+                                    sx: {
                                         maxHeight: 200, // Set the desired max height
                                         maxWidth: 200,  // Set the desired max width
-                                        // borderRadius: '4px', // Set border-radius to mimic scrollbar radius
-                                        // '& .MuiPaper-root': {  
-                                            // overflow: 'hidden', // Hide any overflow
-                                            overflowY: 'auto', // Show scrollbar on hover
-                                            scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-                                            scrollbarWidth: 'thin', // Hide scrollbar for Firefox
-                                            '&:hover': {
-                                                scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
-                                                // overflowY: 'auto', // Show scrollbar on hover
-                                                // overflowX: 'hidden',
-                                            },
-                                            // whiteSpace: "nowrap",
-                                            // textOverflow: "ellipsis",
+                                        overflowY: 'auto', // Show scrollbar on hover
+                                        scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                        scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+                                        '&:hover': {
+                                            scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                        },
                                     },
                                 },
                             },
                         }}
                     >
-                        {categoryArray.map((category) => (
-                            <MenuItem 
-                                // className={classes.menuItemUsers}
-                                key={category.id} 
-                                value={category.id}
-                                // onMouseOver={() => alert("pepi")}
-                                sx={{ 
-                                    justifyContent: "space-between",
-                                    // '&:hover': {
-                                    //     backgroundColor: "red"
-                                    // },
-                                }}
-                            >
-                                <Box className={classes.menuItemContent}>
-                                    <span>
-                                        {category.name}
-                                    </span>
-                                </Box>
-                            </MenuItem>
-                        ))}
+                        {categoryArray.map((category) => {
+                                const isLongText = category.name.length > 10;
+                                return isLongText ? (
+                                    <MenuItem
+                                        key={category.id}
+                                        value={category.id}
+                                        sx={{
+                                        justifyContent: 'space-between',
+                                        }}
+                                    >
+                                        <Tooltip
+                                            title={category.name}
+                                            arrow
+                                            key={category.id}
+                                            placement="right"
+                                            PopperProps={{
+                                                modifiers: [{
+                                                    name: 'offset',
+                                                    options: {offset: [0, -8]},
+                                                },],
+                                            }}
+                                        >
+                                            <Box className={classes.menuItemContent}>
+                                                {category.name}
+                                            </Box>
+                                        </Tooltip>
+                                    </MenuItem>
+                                ) : (
+                                    <MenuItem
+                                        key={category.id}
+                                        value={category.id}
+                                        sx={{
+                                        justifyContent: 'space-between',
+                                        }}
+                                    >
+                                        <Box className={classes.menuItemContent}>
+                                            {category.name}
+                                        </Box>
+                                    </MenuItem>
+                                );        
+                            }
+                        )}
                     </TextField>
                     <TextField  
                         label={labelsManageStock.sub_category}
@@ -224,17 +234,63 @@ export default function ManageStockMainData(
                         InputProps={{className: classes.inputClassName}}
                         value={stockSubCategoryTemp}
                         onChange={ (event:any) => onStockSubCategoryChange(event.target.value) }
+                        SelectProps={{
+                            MenuProps: {
+                                PaperProps: {
+                                    sx: {
+                                        maxHeight: 200, // Set the desired max height
+                                        maxWidth: 200,  // Set the desired max width
+                                        overflowY: 'auto', // Show scrollbar on hover
+                                        scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                        scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+                                        '&:hover': {
+                                            scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                        },
+                                    },
+                                },
+                            },
+                        }}
                     >
-                        {stockCategoryTemp ? stockCategoryTemp.sub_categories.map((subCategory, index) => (
-                            <MenuItem 
-                                // className={classes.menuItemUsers}
-                                key={index} 
-                                value={subCategory}
-                                sx={{ justifyContent: "space-between" }}
-                            >
-                                {subCategory}
-                            </MenuItem>
-                        )) : <MenuItem></MenuItem>
+                        {stockCategoryTemp ? 
+                            stockCategoryTemp.sub_categories.map((subCategory: string, index: any) => {
+                                const isLongText = subCategory.length > 10;
+                                return isLongText ? (
+                                    <MenuItem 
+                                        key={index} 
+                                        value={subCategory}
+                                        sx={{ justifyContent: "space-between" }}
+                                    >
+                                        <Tooltip
+                                            title={subCategory}
+                                            arrow
+                                            key={index}
+                                            placement="right"
+                                            PopperProps={{
+                                                modifiers: [{
+                                                    name: 'offset',
+                                                    options: {offset: [0, -8]},
+                                                },],
+                                            }}
+                                        >
+                                            <Box className={classes.menuItemContent}>
+                                                {subCategory}
+                                            </Box>
+                                        </Tooltip>
+                                    </MenuItem> 
+                                ) : (
+                                    <MenuItem
+                                        key={index} 
+                                        value={subCategory}
+                                        sx={{ justifyContent: "space-between" }}
+                                    >
+                                        <Box className={classes.menuItemContent}>
+                                            {subCategory}
+                                        </Box>
+                                    </MenuItem> 
+                                )
+                            })
+                        : 
+                            <MenuItem></MenuItem>
                         }
                     </TextField>
                 </Box> 

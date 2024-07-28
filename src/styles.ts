@@ -1070,38 +1070,42 @@ export const useStylesGlobal = makeStyles()({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         position: 'relative',
-        '& span': {
-          display: 'inline-block',
-          position: 'relative',
-        },
-        '&:hover': {
-            overflow: 'visible',
-            '&:before': {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'inherit',
-                zIndex: 1,
-            },
-            '& span': {
-                display: 'inline-block',
-                position: 'relative',
-                // animation: '$scrollText 1s linear infinite',
+//         '& span': {
+//           display: 'inline-block',
+//           position: 'relative',
+//         },
+//         '&:hover': {
+//             overflow: 'visible',
+//             '&:before': {
+//                 content: '""',
+//                 position: 'absolute',
+//                 top: 0,
+//                 left: 0,
+//                 right: 0,
+//                 bottom: 0,
+//                 background: 'inherit',
+//                 zIndex: 1,
+//             },
+//             '@keyframes $scrollText': {
+//                 from: { transform: 'translateX(10px)' },
+//                 to: { transform: 'translateX(-10px)' },
+//                 // from: { opacity: 0 },
+//                 // to: { opacity: 1 },
+//             },
+//             '& span': {
+//                 display: 'inline-block',
+//                 position: 'relative',
+//                 // animation: '$scrollText 1s ',
                 
-//   transition: "1s ease-in-out all",
-                // whiteSpace: 'nowrap',
-            },
-            transition: "2s",
-            transform: 'translateX(-10px)'
-        },
+// //   transition: "1s ease-in-out all",
+//                 // whiteSpace: 'nowrap',
+//             },
+//             transition: "2s",
+//             // transform: 'translateX(-170%)'
+//             transform: 'opacity: 0'
+//         },
     },
-    //     '@keyframes scrollText': {
-    //         from: { transform: 'translateX(10px)' },
-    //         to: { transform: 'translateX(-10px)' },
-    // },
+        
 })
 
 export const modalStyleExternal = {
