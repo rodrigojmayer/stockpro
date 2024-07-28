@@ -148,22 +148,23 @@ function rowContent(
               color="default"
             />
           : ( column.dataKey !== "url_image"  || !newRow[column.dataKey]) ?
-              <Tooltip 
+                <Tooltip 
                 title={newRow[column.dataKey]} 
+                disableHoverListener={String(newRow[column.dataKey])?.length <= 13}
                 slotProps={{
                   popper: {
                     sx: {
                       [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
-                        {
-                          marginTop: '0px',
-                          marginLeft: '5px',
-                        },
+                      {
+                        marginTop: '0px',
+                        marginLeft: '5px',
+                      },
                     }
                   }
                 }}
-              >
+                >
                 <Typography noWrap 
-                  sx={{
+                sx={{
                     padding: "0 4px ",
                   }}
                 >

@@ -182,47 +182,32 @@ export default function ManageStockMainData(
                             },
                         }}
                     >
-                        {categoryArray.map((category) => {
-                                const isLongText = category.name.length > 10;
-                                return isLongText ? (
-                                    <MenuItem
-                                        key={category.id}
-                                        value={category.id}
-                                        sx={{
-                                        justifyContent: 'space-between',
-                                        }}
-                                    >
-                                        <Tooltip
-                                            title={category.name}
-                                            arrow
-                                            key={category.id}
-                                            placement="right"
-                                            PopperProps={{
-                                                modifiers: [{
-                                                    name: 'offset',
-                                                    options: {offset: [0, -8]},
-                                                },],
-                                            }}
-                                        >
-                                            <Box className={classes.menuItemContent}>
-                                                {category.name}
-                                            </Box>
-                                        </Tooltip>
-                                    </MenuItem>
-                                ) : (
-                                    <MenuItem
-                                        key={category.id}
-                                        value={category.id}
-                                        sx={{
-                                        justifyContent: 'space-between',
-                                        }}
-                                    >
-                                        <Box className={classes.menuItemContent}>
-                                            {category.name}
-                                        </Box>
-                                    </MenuItem>
-                                );        
-                            }
+                        {categoryArray.map((category) => 
+                            <MenuItem
+                                key={category.id}
+                                value={category.id}
+                                sx={{
+                                justifyContent: 'space-between',
+                                }}
+                            >
+                                <Tooltip
+                                    title={category.name}
+                                    disableHoverListener={category.name?.length <= 8}
+                                    arrow
+                                    key={category.id}
+                                    placement="right"
+                                    PopperProps={{
+                                        modifiers: [{
+                                            name: 'offset',
+                                            options: {offset: [0, -8]},
+                                        },],
+                                    }}
+                                >
+                                    <Box className={classes.menuItemContent}>
+                                        {category.name}
+                                    </Box>
+                                </Tooltip>
+                            </MenuItem>
                         )}
                     </TextField>
                     <TextField  
@@ -252,43 +237,31 @@ export default function ManageStockMainData(
                         }}
                     >
                         {stockCategoryTemp ? 
-                            stockCategoryTemp.sub_categories.map((subCategory: string, index: any) => {
-                                const isLongText = subCategory.length > 10;
-                                return isLongText ? (
-                                    <MenuItem 
-                                        key={index} 
-                                        value={subCategory}
-                                        sx={{ justifyContent: "space-between" }}
-                                    >
-                                        <Tooltip
-                                            title={subCategory}
-                                            arrow
-                                            key={index}
-                                            placement="right"
-                                            PopperProps={{
-                                                modifiers: [{
-                                                    name: 'offset',
-                                                    options: {offset: [0, -8]},
-                                                },],
-                                            }}
-                                        >
-                                            <Box className={classes.menuItemContent}>
-                                                {subCategory}
-                                            </Box>
-                                        </Tooltip>
-                                    </MenuItem> 
-                                ) : (
-                                    <MenuItem
-                                        key={index} 
-                                        value={subCategory}
-                                        sx={{ justifyContent: "space-between" }}
+                            stockCategoryTemp.sub_categories.map((subCategory: string, index: any) => 
+                                <MenuItem 
+                                    key={index} 
+                                    value={subCategory}
+                                    sx={{ justifyContent: "space-between" }}
+                                >
+                                    <Tooltip
+                                        title={subCategory}
+                                        disableHoverListener={subCategory.length <= 8}
+                                        arrow
+                                        key={index}
+                                        placement="right"
+                                        PopperProps={{
+                                            modifiers: [{
+                                                name: 'offset',
+                                                options: {offset: [0, -8]},
+                                            },],
+                                        }}
                                     >
                                         <Box className={classes.menuItemContent}>
                                             {subCategory}
                                         </Box>
-                                    </MenuItem> 
-                                )
-                            })
+                                    </Tooltip>
+                                </MenuItem> 
+                            )
                         : 
                             <MenuItem></MenuItem>
                         }
