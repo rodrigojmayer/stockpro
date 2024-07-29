@@ -118,6 +118,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                 
               <Tooltip 
                 title={newRow[item.column.dataKey]} 
+                disableHoverListener={String(newRow[item.column.dataKey]).length <= 10}
                 slotProps={{
                     popper: {
                     sx: {
