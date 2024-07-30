@@ -192,7 +192,7 @@ export default function ManageStockMainData(
                             >
                                 <Tooltip
                                     title={category.name}
-                                    disableHoverListener={category.name?.length <= 8}
+                                    disableHoverListener={category.name?.length <= 9}
                                     arrow
                                     key={category.id}
                                     placement="right"
@@ -245,7 +245,7 @@ export default function ManageStockMainData(
                                 >
                                     <Tooltip
                                         title={subCategory}
-                                        disableHoverListener={subCategory.length <= 8}
+                                        disableHoverListener={subCategory.length <= 9}
                                         arrow
                                         key={index}
                                         placement="right"
