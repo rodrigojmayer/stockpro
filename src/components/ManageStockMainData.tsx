@@ -12,11 +12,17 @@ import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 interface mainData {
     id: number;
     name: string;
+    name_esp: string;
+    name_dan: string;
+    name_ita: string;
 }
 interface Category {
     _id: string;
     id: number;
     name: string;
+    name_esp: string;
+    name_dan: string;
+    name_ita: string;
     deleted: boolean;
     createdAt: string;
     updatedAt: string;
@@ -182,7 +188,7 @@ export default function ManageStockMainData(
                             },
                         }}
                     >
-                        {categoryArray.map((category) => 
+                        {categoryArray.map((category:any) => 
                             <MenuItem
                                 key={category.id}
                                 value={category.id}
@@ -191,8 +197,8 @@ export default function ManageStockMainData(
                                 }}
                             >
                                 <Tooltip
-                                    title={category.name}
-                                    disableHoverListener={category.name?.length <= 9}
+                                    title={category[labelsManageStock.category_name]}
+                                    disableHoverListener={category[labelsManageStock.category_name]?.length <= 9}
                                     arrow
                                     key={category.id}
                                     placement="right"
@@ -203,8 +209,9 @@ export default function ManageStockMainData(
                                         },],
                                     }}
                                 >
-                                    <Box className={classes.menuItemContent}>
-                                        {category.name}
+                                    <Box className={classes.menuItemContent} >
+                                        {category[labelsManageStock.category_name]}
+                                        
                                     </Box>
                                 </Tooltip>
                             </MenuItem>
