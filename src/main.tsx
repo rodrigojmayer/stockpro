@@ -12,6 +12,7 @@ import { FilestackProvider } from './context/FilestackContext';
 import { UsersProvider } from './context/UsersContext';
 import { EmailsProvider } from './context/EmailsContext';
 import { CategoriesProvider } from './context/CategoriesContext';
+import { CategoriesSubProvider } from './context/CategoriesSubContext';
 import { MeasuresProvider } from './context/MeasuresContext';
 import { AccessLevelsProvider } from './context/AccessLevelsContext';
 import { IsLoadingProvider } from './context/IsLoadingContext';
@@ -36,13 +37,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                         <MeasuresProvider>
                           <AccessLevelsProvider>
                             <CategoriesProvider>
-                              <ColumnsProvider>
-                                <ProductsProvider>
-                                  <Routes>
-                                    <Route path="/*" element={<App />} />
-                                  </Routes>
-                                </ProductsProvider>
-                              </ColumnsProvider>
+                              <CategoriesSubProvider>
+                                <ColumnsProvider>
+                                  <ProductsProvider>
+                                    <Routes>
+                                      <Route path="/*" element={<App />} />
+                                    </Routes>
+                                  </ProductsProvider>
+                                </ColumnsProvider>
+                              </CategoriesSubProvider>
                             </CategoriesProvider>
                           </AccessLevelsProvider>
                         </MeasuresProvider>

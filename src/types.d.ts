@@ -76,6 +76,16 @@ export interface CategoriesData {
   deleted: boolean;
 };
 
+export interface CategoriesSubData {
+  id: number;
+  id_category: number;
+  name: string;
+  name_esp: string;
+  name_dan: string;
+  name_ita: string;
+  deleted: boolean;
+};
+
 export interface Data {
   _id: string;
   id?: number;

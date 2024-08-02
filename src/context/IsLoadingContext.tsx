@@ -10,6 +10,7 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
   const [isLoading, setIsLoading] = useState({
     accessLevels: true,
     categories: true,
+    categories_sub: true,
     columns: true,
     customColumns: true,
     // customColumns: false,
@@ -42,6 +43,12 @@ export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }
       setIsLoading((prevLoading:any) => ({
           ...prevLoading,
           categories: false,
+      }));
+    }
+    if(isLoading.categories_sub){
+      setIsLoading((prevLoading:any) => ({
+          ...prevLoading,
+          categories_sub: false,
       }));
     }
     if(isLoading.accessLevels){
