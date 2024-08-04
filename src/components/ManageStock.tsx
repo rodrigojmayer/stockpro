@@ -15,6 +15,7 @@ import  SaveChanges from './SaveChanges';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
 import { Data, DataCreateStockOptions, ColumnData, ProductEditData } from '../types';
 import { CategoriesContext } from '../context/CategoriesContext';
+import { CategoriesSubContext } from '../context/CategoriesSubContext';
 import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
@@ -29,6 +30,9 @@ interface Category {
     _id: string;
     id: number;
     name: string;
+    name_esp: string;
+    name_dan: string;
+    name_ita: string;
     deleted: boolean;
     createdAt: string;
     updatedAt: string;
@@ -63,6 +67,8 @@ export default function ManageStock(
     
     const { categories } = useContext<any>(CategoriesContext) 
     const categoryArray = categories
+    const { categoriesSub } = useContext<any>(CategoriesSubContext) 
+    const categorySubArray = categoriesSub
     const { measures } = useContext<any>(MeasuresContext)
     const measureArray = measures
     const { user } = useContext<any>(UserContext)
@@ -546,6 +552,9 @@ export default function ManageStock(
                             
                             stockSubCategoryTemp={stockSubCategoryTemp}
                             onStockSubCategoryChange={handleStockSubCategoryChange}
+
+                            
+                            categorySubArray={categorySubArray}
                         />
                         <ManageStockSecondaryData 
                             hiddenPanel={openOptionsCreate.secondaryData}

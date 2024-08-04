@@ -47,6 +47,7 @@ interface ChildProps {
     onStockCategoryChange: (newData: any )=> void
     stockSubCategoryTemp: string
     onStockSubCategoryChange: (newData: any )=> void    
+    categorySubArray: mainData[]
 }
 
 export default function ManageStockMainData(
@@ -66,11 +67,13 @@ export default function ManageStockMainData(
             onStockCategoryChange,
             stockSubCategoryTemp, 
             onStockSubCategoryChange, 
+            categorySubArray
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null);
     const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
+    console.log("categorySubArray: ", categorySubArray)
     useEffect(() => {
         if (!hiddenPanel) {
             if (firstInputRef.current) {
