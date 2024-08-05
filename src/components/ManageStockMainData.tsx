@@ -73,7 +73,7 @@ export default function ManageStockMainData(
     const firstInputRef = useRef<HTMLInputElement>(null);
     const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
-    console.log("categorySubArray: ", categorySubArray)
+    // console.log("categorySubArray: ", categorySubArray)
     useEffect(() => {
         if (!hiddenPanel) {
             if (firstInputRef.current) {
@@ -277,6 +277,64 @@ export default function ManageStockMainData(
                         }
                     </TextField>
                 </Box> 
+                
+                <TextField  
+                        label={labelsManageStock.sub_category}
+                        size="small"
+                        select
+                        disabled={stockCategoryTemp ? false : true}
+                        className={classes.inputMainData}
+                        InputProps={{className: classes.inputClassName}}
+                        value={stockSubCategoryTemp}
+                        onChange={ (event:any) => onStockSubCategoryChange(event.target.value) }
+                        SelectProps={{
+                            MenuProps: {
+                                PaperProps: {
+                                    sx: {
+                                        maxHeight: 200, // Set the desired max height
+                                        maxWidth: 200,  // Set the desired max width
+                                        overflowY: 'auto', // Show scrollbar on hover
+                                        scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                        scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+                                        '&:hover': {
+                                            scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                        },
+                                    },
+                                },
+                            },
+                        }}
+                    >
+                        {
+                            categorySubArray.map((subCategory: any, index: any) => 
+                                <MenuItem 
+                                    key={index} 
+                                    value={subCategory}
+                                    sx={{ justifyContent: "space-between" }}
+                                >
+                                    <Tooltip
+                                        title={subCategory}
+                                        disableHoverListener={subCategory.length <= 9}
+                                        arrow
+                                        key={index}
+                                        placement="right"
+                                        PopperProps={{
+                                            modifiers: [{
+                                                name: 'offset',
+                                                options: {offset: [0, -8]},
+                                            },],
+                                        }}
+                                    >
+                                        <Box className={classes.menuItemContent}>
+                                            {subCategory}
+                                        </Box>
+                                    </Tooltip>
+                                </MenuItem> 
+                            )
+                        
+                        }
+                    </TextField>
+
+
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>
                     <div className={classes.customBoxCenter}>
                         <Typography align="left" sx={{ width: "169px" }}></Typography>
