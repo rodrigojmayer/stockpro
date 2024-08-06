@@ -48,6 +48,7 @@ interface ChildProps {
     stockSubCategoryTemp: string
     onStockSubCategoryChange: (newData: any )=> void    
     categorySubArray: mainData[]
+    stockCategorySubTemp: string
 }
 
 export default function ManageStockMainData(
@@ -67,13 +68,14 @@ export default function ManageStockMainData(
             onStockCategoryChange,
             stockSubCategoryTemp, 
             onStockSubCategoryChange, 
-            categorySubArray
+            categorySubArray,
+            stockCategorySubTemp 
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null);
     const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
-    // console.log("categorySubArray: ", categorySubArray)
+    console.log("categorySubArray: ", categorySubArray)
     useEffect(() => {
         if (!hiddenPanel) {
             if (firstInputRef.current) {
@@ -308,11 +310,11 @@ export default function ManageStockMainData(
                             categorySubArray.map((subCategory: any, index: any) => 
                                 <MenuItem 
                                     key={index} 
-                                    value={subCategory}
+                                    value={subCategory.name}
                                     sx={{ justifyContent: "space-between" }}
                                 >
                                     <Tooltip
-                                        title={subCategory}
+                                        title={subCategory.name}
                                         disableHoverListener={subCategory.length <= 9}
                                         arrow
                                         key={index}
@@ -325,7 +327,7 @@ export default function ManageStockMainData(
                                         }}
                                     >
                                         <Box className={classes.menuItemContent}>
-                                            {subCategory}
+                                            {subCategory.name}
                                         </Box>
                                     </Tooltip>
                                 </MenuItem> 

@@ -90,6 +90,7 @@ export default function ManageStock(
         selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category); 
+    const [stockCategorySubTemp, setStockCategorySubTemp] = useState<string>(data.sub_category); 
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');  
@@ -555,6 +556,7 @@ export default function ManageStock(
 
                             
                             categorySubArray={categorySubArray}
+                            stockCategorySubTemp={stockCategorySubTemp}
                         />
                         <ManageStockSecondaryData 
                             hiddenPanel={openOptionsCreate.secondaryData}
