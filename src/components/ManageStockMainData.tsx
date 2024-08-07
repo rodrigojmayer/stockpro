@@ -48,7 +48,7 @@ interface ChildProps {
     stockSubCategoryTemp: string
     onStockSubCategoryChange: (newData: any )=> void    
     categorySubArray: mainData[]
-    stockCategorySubTemp: string
+    stockCategorySubTemp: mainData[]
 }
 
 export default function ManageStockMainData(
@@ -76,6 +76,8 @@ export default function ManageStockMainData(
     const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
     console.log("categorySubArray: ", categorySubArray)
+    console.log("stockCategorySubTemp: ", stockCategorySubTemp)
+    
     useEffect(() => {
         if (!hiddenPanel) {
             if (firstInputRef.current) {
@@ -167,7 +169,7 @@ export default function ManageStockMainData(
                             ))}
                     </TextField>
                 </Box> 
-                <Box className={classes.customBoxRow}>
+                {/* <Box className={classes.customBoxRow}>
                     <TextField 
                         label={labelsManageStock.category}
                         size="small"
@@ -278,13 +280,67 @@ export default function ManageStockMainData(
                             <MenuItem></MenuItem>
                         }
                     </TextField>
-                </Box> 
-                
-                <TextField  
+                </Box>  */}
+                <Box className={classes.customBoxRow}>
+                    <TextField 
+                        label={labelsManageStock.category}
+                        size="small"
+                        select
+                        className={classes.inputMainData}
+                        InputProps={{className: classes.inputClassName}}
+                        value={stockCategoryTemp?.id || ''} // Ensure the value corresponds to the category ID
+                        onChange={ (event:any) => onStockCategoryChange(event.target.value) }
+                        SelectProps={{
+                            MenuProps: {
+                                PaperProps: {
+                                    sx: {
+                                        maxHeight: 200, // Set the desired max height
+                                        maxWidth: 200,  // Set the desired max width
+                                        overflowY: 'auto', // Show scrollbar on hover
+                                        scrollbarColor: 'rgba(0, 0, 0, 0) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                        scrollbarWidth: 'thin', // Hide scrollbar for Firefox
+                                        '&:hover': {
+                                            scrollbarColor: 'rgba(0, 0, 0, .3) rgba(0, 0, 0, 0)', // Adjust the color of the scrollbar
+                                        },
+                                    },
+                                },
+                            },
+                        }}
+                    >
+                        {categoryArray.map((category:any) => 
+                            <MenuItem
+                                key={category.id}
+                                value={category.id}
+                                sx={{
+                                justifyContent: 'space-between',
+                                }}
+                            >
+                                <Tooltip
+                                    title={category[labelsManageStock.category_name]}
+                                    disableHoverListener={category[labelsManageStock.category_name]?.length <= 9}
+                                    arrow
+                                    key={category.id}
+                                    placement="right"
+                                    PopperProps={{
+                                        modifiers: [{
+                                            name: 'offset',
+                                            options: {offset: [0, -8]},
+                                        },],
+                                    }}
+                                >
+                                    <Box className={classes.menuItemContent} >
+                                        {category[labelsManageStock.category_name]}
+                                        
+                                    </Box>
+                                </Tooltip>
+                            </MenuItem>
+                        )}
+                    </TextField>
+                    <TextField  
                         label={labelsManageStock.sub_category}
                         size="small"
                         select
-                        disabled={stockCategoryTemp ? false : true}
+                        // disabled={stockCategoryTemp ? false : true}
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockSubCategoryTemp}
@@ -307,7 +363,9 @@ export default function ManageStockMainData(
                         }}
                     >
                         {
-                            categorySubArray.map((subCategory: any, index: any) => 
+                            
+                            // categorySubArray.map((subCategory: any, index: any) => 
+                            stockCategorySubTemp.map((subCategory: any, index: any) => 
                                 <MenuItem 
                                     key={index} 
                                     value={subCategory.name}
@@ -335,6 +393,8 @@ export default function ManageStockMainData(
                         
                         }
                     </TextField>
+                </Box> 
+                
 
 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton} `}>

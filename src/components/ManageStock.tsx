@@ -90,7 +90,7 @@ export default function ManageStock(
         selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category); 
-    const [stockCategorySubTemp, setStockCategorySubTemp] = useState<string>(data.sub_category); 
+    const [stockCategorySubTemp, setStockCategorySubTemp] = useState<any>([]);
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');  
@@ -273,6 +273,11 @@ export default function ManageStock(
         const selectedCategory = categories.find((category: any) => category.id === id) || null;
         setStockCategoryTemp(selectedCategory)
         setStockSubCategoryTemp('')
+
+        const selectedCategorySub = categorySubArray.filter((categorySub: any) => categorySub.id_category === id) || null;
+        setStockCategorySubTemp(selectedCategorySub)
+        
+
     }
     const handleStockSubCategoryChange = (value: string) => {
         setStockSubCategoryTemp(value)
