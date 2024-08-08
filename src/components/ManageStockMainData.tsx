@@ -48,7 +48,7 @@ interface ChildProps {
     stockSubCategoryTemp: string
     onStockSubCategoryChange: (newData: any )=> void    
     categorySubArray: mainData[]
-    stockCategorySubTemp: mainData[]
+    stockCategorySubArrayTemp: mainData[]
 }
 
 export default function ManageStockMainData(
@@ -69,14 +69,14 @@ export default function ManageStockMainData(
             stockSubCategoryTemp, 
             onStockSubCategoryChange, 
             categorySubArray,
-            stockCategorySubTemp 
+            stockCategorySubArrayTemp 
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null);
     const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
-    console.log("categorySubArray: ", categorySubArray)
-    console.log("stockCategorySubTemp: ", stockCategorySubTemp)
+    // console.log("categorySubArray: ", categorySubArray)
+    // console.log("stockCategorySubArrayTemp: ", stockCategorySubArrayTemp)
     
     useEffect(() => {
         if (!hiddenPanel) {
@@ -340,7 +340,7 @@ export default function ManageStockMainData(
                         label={labelsManageStock.sub_category}
                         size="small"
                         select
-                        // disabled={stockCategoryTemp ? false : true}
+                        disabled={stockCategoryTemp ? false : true}
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockSubCategoryTemp}
@@ -365,10 +365,10 @@ export default function ManageStockMainData(
                         {
                             
                             // categorySubArray.map((subCategory: any, index: any) => 
-                            stockCategorySubTemp.map((subCategory: any, index: any) => 
+                            stockCategorySubArrayTemp.map((subCategory: any, index: any) => 
                                 <MenuItem 
                                     key={index} 
-                                    value={subCategory.name}
+                                    value={subCategory}
                                     sx={{ justifyContent: "space-between" }}
                                 >
                                     <Tooltip

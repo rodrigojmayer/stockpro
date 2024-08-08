@@ -90,7 +90,8 @@ export default function ManageStock(
         selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category); 
-    const [stockCategorySubTemp, setStockCategorySubTemp] = useState<any>([]);
+    const [stockCategorySubArrayTemp, setStockCategorySubArrayTemp] = useState<any>([]);
+    const [stockIdCategorySubTemp, setStockIdCategorySubTemp] = useState<number>(data.id_sub_category || 1);
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');  
@@ -132,6 +133,8 @@ export default function ManageStock(
                 bodyUpdate.category = stockCategoryTemp.name
             if(!edition || data.sub_category!=stockSubCategoryTemp)
                 bodyUpdate.sub_category = stockSubCategoryTemp
+            if(!edition || data.id_sub_category!=stockIdCategorySubTemp)
+                bodyUpdate.id_sub_category = stockIdCategorySubTemp
             if(!edition || data.custom_fields!=stockCustomValuesTemp)
                 bodyUpdate.custom_fields = stockCustomValuesTemp
             if(!edition || data.price!=stockPriceTemp)
@@ -275,13 +278,22 @@ export default function ManageStock(
         setStockSubCategoryTemp('')
 
         const selectedCategorySub = categorySubArray.filter((categorySub: any) => categorySub.id_category === id) || null;
-        setStockCategorySubTemp(selectedCategorySub)
+        setStockCategorySubArrayTemp(selectedCategorySub)
         
 
     }
-    const handleStockSubCategoryChange = (value: string) => {
+    // const handleStockSubCategoryChange = (value: string) => {
+    const handleStockSubCategoryChange = (value: any) => {
+        // console.log("handleStockSubCategoryChange value: ", value)
+        // console.log("handleStockSubCategoryChange value name_esp: ", value.name_esp)
         setStockSubCategoryTemp(value)
+        setStockIdCategorySubTemp(value.id)
     }
+    // useEffect(() => {
+    //     console.log("useEffect stockIdCategorySubTemp: ", stockIdCategorySubTemp)
+
+    // }, [stockIdCategorySubTemp])
+
     const handleStockPriceChange = (value: number | string) => {
         setStockPriceTemp(value)
     }
@@ -561,7 +573,7 @@ export default function ManageStock(
 
                             
                             categorySubArray={categorySubArray}
-                            stockCategorySubTemp={stockCategorySubTemp}
+                            stockCategorySubArrayTemp={stockCategorySubArrayTemp}
                         />
                         <ManageStockSecondaryData 
                             hiddenPanel={openOptionsCreate.secondaryData}

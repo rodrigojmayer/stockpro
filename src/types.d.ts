@@ -186,6 +186,7 @@ export interface ProductEditData {
   measure?: string;
   category?: string;
   sub_category?: string;
+  id_sub_category?: number;
   custom_fields?: array;
   id_custom_field_product?: number;
   price?: number | string;
