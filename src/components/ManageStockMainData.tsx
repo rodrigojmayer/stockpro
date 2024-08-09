@@ -48,6 +48,7 @@ interface ChildProps {
     stockSubCategoryTemp: string
     onStockSubCategoryChange: (newData: any )=> void    
     categorySubArray: mainData[]
+    stockIdCategorySubTemp: number
     stockCategorySubArrayTemp: mainData[]
 }
 
@@ -69,14 +70,16 @@ export default function ManageStockMainData(
             stockSubCategoryTemp, 
             onStockSubCategoryChange, 
             categorySubArray,
+            stockIdCategorySubTemp,
             stockCategorySubArrayTemp 
         }: ChildProps )  {
     const { classes } = useStylesGlobal();
     const firstInputRef = useRef<HTMLInputElement>(null);
     const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
-    // console.log("categorySubArray: ", categorySubArray)
-    // console.log("stockCategorySubArrayTemp: ", stockCategorySubArrayTemp)
+    console.log("categorySubArray: ", categorySubArray)
+    console.log("stockIdCategorySubTemp: ", stockIdCategorySubTemp)
+    console.log("stockCategorySubArrayTemp: ", stockCategorySubArrayTemp)
     
     useEffect(() => {
         if (!hiddenPanel) {
@@ -344,6 +347,7 @@ export default function ManageStockMainData(
                         className={classes.inputMainData}
                         InputProps={{className: classes.inputClassName}}
                         value={stockSubCategoryTemp}
+                        // value={stockIdCategorySubTemp}
                         onChange={ (event:any) => onStockSubCategoryChange(event.target.value) }
                         SelectProps={{
                             MenuProps: {
@@ -369,6 +373,7 @@ export default function ManageStockMainData(
                                 <MenuItem 
                                     key={index} 
                                     value={subCategory}
+                                    // value={stockIdCategorySubTemp}
                                     sx={{ justifyContent: "space-between" }}
                                 >
                                     <Tooltip

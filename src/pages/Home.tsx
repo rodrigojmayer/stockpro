@@ -39,6 +39,7 @@ function Home() {
     "measure": "",
     "category": "",
     "sub_category": "",
+    "id_sub_category": 1,
     "code": "",
     "price": "",
     "description": "",
@@ -54,6 +55,9 @@ function Home() {
   const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
   const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
   const openUpdateAmountStock = (newData:Data) => {
+    // console.log("products: ", products)
+    // console.log("newData: ", newData)
+
     setShowUpdateAmountStock(true)
     let dateObject
     let formattedDate
@@ -86,6 +90,7 @@ function Home() {
       "description": newData.description,
       "url_image": newData.url_image,
       "sub_category": newData.sub_category,
+      "id_sub_category": newData.id_sub_category,
       "alert_amount": newData.alert_amount,
       "alert_amount_enabled": newData.alert_amount_enabled,
       "alerted_amount": newData.alerted_amount,
@@ -110,6 +115,7 @@ function Home() {
     "measure": "",
     "category": "",
     "sub_category": "",
+    "id_sub_category": 1,
     "code": "",
     "price": "",
     "description": "",
@@ -201,6 +207,7 @@ function Home() {
       "measure": "",
       "category": "",
       "sub_category": "",
+      "id_sub_category": 1,
       "code": "",
       "price": "",
       "description": "",

@@ -89,9 +89,21 @@ export default function ManageStock(
     if(edition)
         selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
-    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.sub_category); 
-    const [stockCategorySubArrayTemp, setStockCategorySubArrayTemp] = useState<any>([]);
+    const selectedCategorySub = categorySubArray.filter((categorySub: any) => categorySub.id === data.id_sub_category) || null;
+    const selectedCategorySubArray = categorySubArray.filter((categorySub: any) => {
+    // console.log("categorySub.id_category:", categorySub.id_category);
+    // console.log("selectedCategorySub.id_category:", selectedCategorySub[0].id_category);
+        if(categorySub.id_category === selectedCategorySub[0].id_category)
+        return true
+        
+    }) || null;
+    // console.log("selectedCategorySub:", selectedCategorySub);
+    // console.log("selectedCategorySubArray:", selectedCategorySubArray);
+    // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.id_sub_category); 
+    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(selectedCategorySub[0]); 
+    const [stockCategorySubArrayTemp, setStockCategorySubArrayTemp] = useState<any>(selectedCategorySubArray);
     const [stockIdCategorySubTemp, setStockIdCategorySubTemp] = useState<number>(data.id_sub_category || 1);
+    // console.log("data: ", data)
     const [stockPriceTemp, setStockPriceTemp] = useState<number | string>(data.price?data.price:'');
     const [stockDescriptionTemp, setStockDescriptionTemp] = useState<string>(data.description?data.description:'');
     const [stockImageUrlTemp, setStockImageUrlTemp] = useState<string>(data.url_image?data.url_image:'');  
@@ -284,8 +296,8 @@ export default function ManageStock(
     }
     // const handleStockSubCategoryChange = (value: string) => {
     const handleStockSubCategoryChange = (value: any) => {
-        // console.log("handleStockSubCategoryChange value: ", value)
-        // console.log("handleStockSubCategoryChange value name_esp: ", value.name_esp)
+        console.log("handleStockSubCategoryChange value: ", value)
+        console.log("handleStockSubCategoryChange value name_esp: ", value.name_esp)
         setStockSubCategoryTemp(value)
         setStockIdCategorySubTemp(value.id)
     }
@@ -574,6 +586,7 @@ export default function ManageStock(
                             
                             categorySubArray={categorySubArray}
                             stockCategorySubArrayTemp={stockCategorySubArrayTemp}
+                            stockIdCategorySubTemp={stockIdCategorySubTemp}
                         />
                         <ManageStockSecondaryData 
                             hiddenPanel={openOptionsCreate.secondaryData}
