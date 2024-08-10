@@ -77,9 +77,12 @@ export default function ManageStockMainData(
     const firstInputRef = useRef<HTMLInputElement>(null);
     const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
 
-    console.log("categorySubArray: ", categorySubArray)
-    console.log("stockIdCategorySubTemp: ", stockIdCategorySubTemp)
-    console.log("stockCategorySubArrayTemp: ", stockCategorySubArrayTemp)
+    // console.log("------------------")
+    // console.log("categorySubArray: ", categorySubArray)
+    // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
+    // console.log("stockIdCategorySubTemp: ", stockIdCategorySubTemp)
+    // console.log("stockCategorySubArrayTemp: ", stockCategorySubArrayTemp)
+    // console.log("------------------")
     
     useEffect(() => {
         if (!hiddenPanel) {

@@ -109,10 +109,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   }, [isLoading.fieldsFetchEditUsersFieldsOrder]); 
 
-  useEffect(() => {
-    console.log("user: ", user)
+  // useEffect(() => {
+  //   console.log("user: ", user)
 
-  }, [user])
+  // }, [user])
   return (
     <UserContext.Provider value={{ INITIAL_USER, user, setUser, setGmailUserLogged, gmailUserLogged, _IdUserLogged, set_IdUserLogged, sendJsonMessage, lastJsonMessage  }}>
       {children}

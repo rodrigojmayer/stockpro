@@ -93,14 +93,14 @@ export default function ManageStock(
     const selectedCategorySubArray = categorySubArray.filter((categorySub: any) => {
     // console.log("categorySub.id_category:", categorySub.id_category);
     // console.log("selectedCategorySub.id_category:", selectedCategorySub[0].id_category);
-        if(categorySub.id_category === selectedCategorySub[0].id_category)
+        if(categorySub.id_category === selectedCategorySub[0]?.id_category)
         return true
         
     }) || null;
     // console.log("selectedCategorySub:", selectedCategorySub);
     // console.log("selectedCategorySubArray:", selectedCategorySubArray);
     // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.id_sub_category); 
-    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(selectedCategorySub[0]); 
+    const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<any>(selectedCategorySub[0]); 
     const [stockCategorySubArrayTemp, setStockCategorySubArrayTemp] = useState<any>(selectedCategorySubArray);
     const [stockIdCategorySubTemp, setStockIdCategorySubTemp] = useState<number>(data.id_sub_category || 1);
     // console.log("data: ", data)
@@ -287,24 +287,46 @@ export default function ManageStock(
     const handleStockCategoryChange = (id: number) => {
         const selectedCategory = categories.find((category: any) => category.id === id) || null;
         setStockCategoryTemp(selectedCategory)
-        setStockSubCategoryTemp('')
+        // setStockSubCategoryTemp('')
 
         const selectedCategorySub = categorySubArray.filter((categorySub: any) => categorySub.id_category === id) || null;
         setStockCategorySubArrayTemp(selectedCategorySub)
-        
+        const selectedIdCategorySub = selectedCategorySub
+            .filter((categorySub: any) => categorySub.name === "-") || null;
+            // const selectedIdCategorySub = selectedCategorySub.find((categorySub: any) => categorySub.name === "-")?.id;
+
+        // console.log("selectedIdCategorySub: ", selectedIdCategorySub)
+        // console.log("selectedIdCategorySub[0]: ", selectedIdCategorySub[0])
+        setStockSubCategoryTemp(selectedIdCategorySub[0])
+        setStockIdCategorySubTemp(selectedIdCategorySub[0].id)
 
     }
+
     // const handleStockSubCategoryChange = (value: string) => {
     const handleStockSubCategoryChange = (value: any) => {
-        console.log("handleStockSubCategoryChange value: ", value)
-        console.log("handleStockSubCategoryChange value name_esp: ", value.name_esp)
+        // console.log("handleStockSubCategoryChange value: ", value)
+        // console.log("handleStockSubCategoryChange value name_esp: ", value.name_esp)
         setStockSubCategoryTemp(value)
         setStockIdCategorySubTemp(value.id)
     }
     // useEffect(() => {
-    //     console.log("useEffect stockIdCategorySubTemp: ", stockIdCategorySubTemp)
+    //     // console.log("useEffect stockCategorySubArrayTemp: ", stockCategorySubArrayTemp)
+    //     if(stockCategorySubArrayTemp){
+    //         // console.log("useEffect stockIdCategorySubTemp: ", stockIdCategorySubTemp)
+    //         // setStockCategorySubArrayTemp(selectedCategorySub)
+    //         const selectedIdCategorySub = stockCategorySubArrayTemp
+    //             .filter((categorySub: any) => categorySub.name === "-") || null;
+    //             // const selectedIdCategorySub = selectedCategorySub.find((categorySub: any) => categorySub.name === "-")?.id;
+    //         if(selectedIdCategorySub[0]){
 
-    // }, [stockIdCategorySubTemp])
+    //             // console.log("selectedIdCategorySub: ", selectedIdCategorySub)
+    //             // console.log("selectedIdCategorySub[0]: ", selectedIdCategorySub[0])
+    //             // console.log("selectedIdCategorySub[0].id: ", selectedIdCategorySub[0].id)
+    //             setStockSubCategoryTemp(selectedIdCategorySub[0])
+    //             setStockIdCategorySubTemp(selectedIdCategorySub[0].id)
+    //         }
+    //     }
+    // }, [stockCategorySubArrayTemp])
 
     const handleStockPriceChange = (value: number | string) => {
         setStockPriceTemp(value)
@@ -518,6 +540,10 @@ export default function ManageStock(
             setOpenOptionsCreate(INITIAL_CREATESTOCK_OPTIONS)
         }
     }, [open])
+    
+    // useEffect(() => {
+    //         setStockIdCategorySubTemp(1)
+    // }, [stockCategoryTemp])
     
     return (
         <Modal
