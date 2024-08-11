@@ -270,8 +270,8 @@ export default function ManageStock(
         setStockNameTemp(value)
     }
     const handleStockAmountChange = (value: number ) => {
-        console.log("value: ", value)
-        console.log("typeof value: ", typeof value)
+        // console.log("value: ", value)
+        // console.log("typeof value: ", typeof value)
         const topValue = 999
         if(typeof value === 'number'){
             if(isNaN(value)){
