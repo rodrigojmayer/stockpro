@@ -144,7 +144,7 @@ export default function ManageStock(
             if(stockCategoryTemp && data.category!=stockCategoryTemp.name)
                 bodyUpdate.category = stockCategoryTemp.name
             if(!edition || data.sub_category!=stockSubCategoryTemp)
-                bodyUpdate.sub_category = stockSubCategoryTemp
+                bodyUpdate.sub_category = stockSubCategoryTemp.name
             if(!edition || data.id_sub_category!=stockIdCategorySubTemp)
                 bodyUpdate.id_sub_category = stockIdCategorySubTemp
             if(!edition || data.custom_fields!=stockCustomValuesTemp)
