@@ -2,6 +2,8 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { Data, UserData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 import { UserContext } from './UserContext';
+import { CategoriesContext } from './CategoriesContext';
+import { CategoriesSubContext } from './CategoriesSubContext';
 
 export const ProductsContext = createContext<object | undefined>(undefined);
 
@@ -12,6 +14,8 @@ type ProductsProviderProps = {
 export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) => {
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const { user } = useContext<any>(UserContext);
+  const { categories } = useContext<any>(CategoriesContext);
+  const { subCategories } = useContext<any>(CategoriesSubContext);
   
   const [products, setProducts] = useState<Data[]>([])
 
