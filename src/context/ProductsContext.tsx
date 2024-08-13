@@ -40,6 +40,8 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
             // Assuming the 'alert_date' field is in ISO format ('YYYY-MM-DDTHH:mm:ss.sssZ')
             // You can parse the date and format it as 'DD-MM-YY' before setting it to the state
             const alert_date = product.alert_date ? new Date(product.alert_date).toLocaleDateString('en-GB') : null;
+            // const category_sub = product.id_sub_category ? new Date(product.alert_date).toLocaleDateString('en-GB') : null;
+            // console.log("product.id_sub_category: ", product.id_sub_category)
 
             // Return the modified product object
             return {
