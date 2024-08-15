@@ -25,6 +25,7 @@ function Home() {
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   const { products } = useContext<any>(ProductsContext)
+  // console.log("products: ", products)
   const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
   const [ searchQuery, setSearchQuery ] = useState("")
   const [ showCreateStock, setShowCreateStock ] = useState(false)

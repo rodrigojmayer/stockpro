@@ -15,7 +15,8 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
   const { user } = useContext<any>(UserContext);
   const { categories } = useContext<any>(CategoriesContext);
-  const { subCategories } = useContext<any>(CategoriesSubContext);
+  const { categoriesSub } = useContext<any>(CategoriesSubContext);
+  // console.log("categoriesSub: ", categoriesSub)
   
   const [products, setProducts] = useState<Data[]>([])
 
@@ -42,11 +43,17 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({ children }) 
             const alert_date = product.alert_date ? new Date(product.alert_date).toLocaleDateString('en-GB') : null;
             // const category_sub = product.id_sub_category ? new Date(product.alert_date).toLocaleDateString('en-GB') : null;
             // console.log("product.id_sub_category: ", product.id_sub_category)
-
+            // console.log("categoriesSub: ", categoriesSub)
+            const selectedCategorySub = categoriesSub.find((categorySub: any) => categorySub.id === product.id_sub_category);
+            const selectedCategory = categories.find((category: any) => category.id === selectedCategorySub?.id_category);
+            // console.log("selectedCategory: ", selectedCategory?.name)
+            // console.log("selectedCategorySub: ", selectedCategorySub?.name)
             // Return the modified product object
             return {
               ...product,
               alert_date: alert_date,
+              category: selectedCategory.name,
+              sub_category: selectedCategorySub.name
             };
           });
 
