@@ -17,6 +17,7 @@ import { ProductsContext } from '../context/ProductsContext';
 import MassiveUpdateStock from '../components/MassiveUpdateStock';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
 
@@ -25,6 +26,7 @@ function Home() {
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   const { products } = useContext<any>(ProductsContext)
+  const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
   // console.log("products: ", products)
   const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
   const [ searchQuery, setSearchQuery ] = useState("")
@@ -147,6 +149,10 @@ function Home() {
   useEffect(() => {
       setFilteredData(
         products.filter((item:any) => {
+          // console.log("item: ", item)
+          item.category = item.category_obj[labelsManageStock.category_name]
+          item.sub_category = item.sub_category_obj[labelsManageStock.category_name]
+          // item.category= "pepe"
           const columnsUserOrderWithoutImages = columnsUserOrder.filter((column:any) => column.dataKey !=="url_image")
           const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 
             columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
@@ -182,6 +188,7 @@ function Home() {
           isLoading.filestack || 
           isLoading.accessLevels || 
           isLoading.categories || 
+          isLoading.categories_sub || 
           isLoading.defaultColumns || 
           isLoading.columns || 
           isLoading.products || 

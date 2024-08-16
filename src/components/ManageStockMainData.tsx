@@ -380,7 +380,8 @@ export default function ManageStockMainData(
                                     sx={{ justifyContent: "space-between" }}
                                 >
                                     <Tooltip
-                                        title={subCategory.name}
+                                        // title={subCategory.name}
+                                        title={subCategory[labelsManageStock.category_name]}
                                         disableHoverListener={subCategory.length <= 9}
                                         arrow
                                         key={index}
@@ -393,7 +394,8 @@ export default function ManageStockMainData(
                                         }}
                                     >
                                         <Box className={classes.menuItemContent}>
-                                            {subCategory.name}
+                                            {/* {subCategory.name} */}
+                                            {subCategory[labelsManageStock.category_name]}
                                         </Box>
                                     </Tooltip>
                                 </MenuItem> 

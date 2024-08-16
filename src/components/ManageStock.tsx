@@ -65,6 +65,7 @@ export default function ManageStock(
         handleClose(false)
     } 
     
+    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext) 
     const { categories } = useContext<any>(CategoriesContext) 
     const categoryArray = categories
     const { categoriesSub } = useContext<any>(CategoriesSubContext) 
@@ -73,7 +74,6 @@ export default function ManageStock(
     const measureArray = measures
     const { user } = useContext<any>(UserContext)
     const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
-    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext) 
     const { filestack, deleteFilesStock } = useContext<any>(FilestackContext);
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
    
@@ -87,9 +87,9 @@ export default function ManageStock(
     const [stockMeasureTemp, setStockMeasureTemp] = useState<string>(data.measure);
     let selectedCategory
     if(edition)
-        selectedCategory = categoryArray.find((category: any) => category.name === data.category) || null;
+        selectedCategory = categoryArray.find((category: any) => category[labelsManageStock.category_name] === data.category) || null;
     const [stockCategoryTemp, setStockCategoryTemp] = useState<Category | null>(selectedCategory);
-    const selectedCategorySub = categorySubArray.filter((categorySub: any) => categorySub.id === data.id_sub_category) || null;
+    const selectedCategorySub = categorySubArray.filter((categorySub: any) => categorySub.id === data.id_sub_category) || null; 
     const selectedCategorySubArray = categorySubArray.filter((categorySub: any) => {
     // console.log("categorySub.id_category:", categorySub.id_category);
     // console.log("selectedCategorySub.id_category:", selectedCategorySub[0].id_category);
@@ -292,7 +292,7 @@ export default function ManageStock(
         const selectedCategorySub = categorySubArray.filter((categorySub: any) => categorySub.id_category === id) || null;
         setStockCategorySubArrayTemp(selectedCategorySub)
         const selectedIdCategorySub = selectedCategorySub
-            .filter((categorySub: any) => categorySub.name === "-") || null;
+            .filter((categorySub: any) => categorySub[labelsManageStock.category_name] === "-") || null;
             // const selectedIdCategorySub = selectedCategorySub.find((categorySub: any) => categorySub.name === "-")?.id;
 
         // console.log("selectedIdCategorySub: ", selectedIdCategorySub)

@@ -105,7 +105,7 @@ function rowContent(
               "amount": newRow.amount, 
               "measure": newRow.measure, 
               "category": newRow.category, 
-              "sub_category": newRow.sub_category, 
+              "sub_category": newRow.sub_category,
               "id_sub_category": newRow.id_sub_category, 
               "code": newRow.code, 
               "price": newRow.price, 
