@@ -30,6 +30,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 // import Cookies from 'js-cookie';
 import useAuth from './hooks/useAuth';
 import { useStylesGlobal } from './Styles';
+import Administrator from './pages/Administrator';
 
 
 const theme = createTheme({
@@ -56,6 +57,7 @@ function App() {
   
   useEffect(() => {
     const subPaths = pathname.split("/")
+    console.log("subPaths: ", subPaths)
     if (subPaths[1] === "login" && subPaths[2]) {      
       setIsLoading((prevLoading: any) => ({
         ...prevLoading,
@@ -145,6 +147,7 @@ function App() {
           {/* we want to protect these routes */}
           <Route element={<PersistLogin />} >
             <Route element={<RequireAuth />} >
+              <Route path="/administrator" element={<Administrator />} />
               <Route path="" element={<Home />} />
               <Route path="*" element={<Home />} />
               <Route path="/*" element={<Home />} />
