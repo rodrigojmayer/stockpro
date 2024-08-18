@@ -57,7 +57,7 @@ function App() {
   
   useEffect(() => {
     const subPaths = pathname.split("/")
-    console.log("subPaths: ", subPaths)
+    // console.log("subPaths: ", subPaths)
     if (subPaths[1] === "login" && subPaths[2]) {      
       setIsLoading((prevLoading: any) => ({
         ...prevLoading,
@@ -147,7 +147,7 @@ function App() {
           {/* we want to protect these routes */}
           <Route element={<PersistLogin />} >
             <Route element={<RequireAuth />} >
-              <Route path="/administrator" element={<Administrator />} />
+              {/* <Route path="/administrator" element={<Administrator />} /> */}
               <Route path="" element={<Home />} />
               <Route path="*" element={<Home />} />
               <Route path="/*" element={<Home />} />
