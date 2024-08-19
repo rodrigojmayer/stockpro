@@ -25,6 +25,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     const { labelsMenuOptions } = useContext<any>(LanguageLabelsContext)
     const { isLogged } = useUser()
     const logout = useLogout();
+    const navigate = useNavigate();
 
     const close = () => {
         handleClose(false)
@@ -37,7 +38,10 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
         handleClose(false)
     }
 
-    const navigate = useNavigate();
+    const navigateAdmin = () => {
+        navigate('/administrator')
+        window.location.reload(); // Force a full page refresh
+    }
 
     const signOut = async() => {
 
@@ -50,6 +54,7 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
             navigate('/login')
         }
     }
+
     
     const  buttons = [
         // <Button value="fields" key="fields" variant="text" onClick={selOp}>Fields</Button>,
@@ -59,10 +64,15 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
     ];
  
     let height_box = "42%"
-    if(user.id_access_level <4){
+    if (user.id_access_level <4){
         // buttons.splice(1, 0, <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>)
         buttons.splice(2, 0, <Button value="users" key="users" variant="text" onClick={selOp}>{labelsMenuOptions.users}</Button>)
         height_box = "50%"
+    }  
+    if (user._id === "65ec59db81901b6dd1f45a13"){
+        // buttons.splice(1, 0, <Button value="alerts" key="alerts" variant="text" onClick={selOp}>Alerts</Button>)
+        buttons.splice(3, 0, <Button value="administrator" key="administrator" variant="text" onClick={navigateAdmin}>Administrator</Button>) 
+        height_box = "80%"
     }
 
     return (

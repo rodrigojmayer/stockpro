@@ -20,15 +20,17 @@ const RequireAuth = () => {
 
     useEffect(() => {
         if(Object.keys(auth).length !== 0 || countAuthRenders>0){
-            // console.log("auth._id: ", auth)
-            if (auth ){
+            console.log("auth._id: ", auth)
+            console.log("countAuthRenders: ", countAuthRenders)
+            if (auth._id){
                 if(auth._id === "65ec59db81901b6dd1f45a13" && location.pathname === "/administrator") {
                     setRender("administrator")
                 } else {
                     navigate('/')
                     setRender("home")
                 }
-            } else if(countAuthRenders === 50) {
+            } else if(countAuthRenders === 30) {
+            // } else if(countAuthRenders === 50) {
                 setRender("login")
             } else {
                 setCountAuthRenders(countAuthRenders+1)
@@ -49,6 +51,10 @@ const RequireAuth = () => {
     
     if(!isLoading.user || render ==="login"){
         switch (render) {
+            case "administrator":
+                // FinalComponent = (<Navigate to="/administrator" state={{ from: location }} replace />);
+                FinalComponent = (<Administrator />);
+            break;
             case "home":
                 FinalComponent = (<Outlet />);
             break;
@@ -56,10 +62,7 @@ const RequireAuth = () => {
             case "login":
                 FinalComponent = (<Navigate to="/login" state={{ from: location }} replace />);
             break;
-            case "administrator":
-                // FinalComponent = (<Navigate to="/administrator" state={{ from: location }} replace />);
-                FinalComponent = (<Administrator />);
-            break;
+            
             default:
                 FinalComponent = (
                     <Backdrop

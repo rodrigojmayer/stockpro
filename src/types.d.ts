@@ -157,7 +157,11 @@ export interface DataMenuOptions {
   massive: boolean,
   users: boolean,
   profile: boolean,
-  preferences: boolean
+  preferences: boolean,
+}
+export interface DataMenuOptionsAdmin {
+  admin_categories: boolean, 
+  home: boolean
 }
 export interface DataCreateStockOptions {
   mainData: boolean,
