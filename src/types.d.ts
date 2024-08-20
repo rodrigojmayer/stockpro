@@ -130,6 +130,15 @@ export interface ColumnData {
   deleted: boolean;
   [key: string]: any;
 }
+export interface ColumnDataCategories {
+  _id: string;
+  id: number;
+  name: string;
+  name_dan: string;
+  name_esp: string;
+  name_ita: string;
+  deleted: boolean;
+}
 
 export interface ColumnDataCustom {
   _id?:  any;

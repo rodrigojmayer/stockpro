@@ -20,8 +20,8 @@ const RequireAuth = () => {
 
     useEffect(() => {
         if(Object.keys(auth).length !== 0 || countAuthRenders>0){
-            console.log("auth._id: ", auth)
-            console.log("countAuthRenders: ", countAuthRenders)
+            // console.log("auth._id: ", auth)
+            // console.log("countAuthRenders: ", countAuthRenders)
             if (auth._id){
                 if(auth._id === "65ec59db81901b6dd1f45a13" && location.pathname === "/administrator") {
                     setRender("administrator")
