@@ -133,11 +133,9 @@ export interface ColumnData {
 export interface ColumnDataCategories {
   _id: string;
   id: number;
-  name: string;
-  name_dan: string;
-  name_esp: string;
-  name_ita: string;
-  deleted: boolean;
+  dataKey: string;
+  label: string;
+  width: number;
 }
 
 export interface ColumnDataCustom {

@@ -1140,6 +1140,9 @@ export const modalStyleInternalConfirmTermsAndPrivacy = {
 export const modalStyleInternalForgottenPass = {
     width: "280px",
 }
+export const modalStyleInternalAdmin = {
+    maxWidth: "100%",
+}
 
 export const modalStyleChangePassExternal = {
     top: "23%",

@@ -197,7 +197,7 @@ export default function MassiveUpdateStock(
         .map((column:any) => ({...column, width:column.width }))
 
     // const columns = [...modifiedColumns , { label: "fs"}]
-
+        // console.log("columns: ", columns)
     columns.push({ 
     //     _id: 0,
     //     label: "plus_minus" , 

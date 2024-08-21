@@ -42,7 +42,7 @@ import IonTrash from "../assets/ion_trash.svg";
 import SaveChanges from './SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../Styles'
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, modalStyleInternalAdmin } from '../Styles'
 import { ColumnDataCategories, ColumnDataCustom, ChildProps, UserEditData, Data } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
@@ -80,40 +80,42 @@ const VirtuosoTableComponents: TableComponents<Data> = {
     console.log("newRow: ", newRow)
     const RowContent = (item:any) => {
         let lab
-        if (item.column._id === 1){
-            return(
-                <TextField
-                    // key="password"
-                    sx= {{
-                        margin: "0 auto",
-                        width: "90% !important",
-                    }}
-                    maxRows={1}
-                    size="small"
-                //   type="number"
-                    className={`${classes.inputMainData} `}
-                    // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
-                    value={newRow[item.column.dataKey]==="" ? newRow[item.column.dataKey] : Math.abs(newRow[item.column.dataKey])}
-                    // onChange={ (event:any) => writeValue(event, newRow._id) }
-                //   onChange={ () => console.log("testin") }
-                    InputProps={{
-                        className: classes.inputClassName,
-                        inputMode: "numeric",
-                        inputProps: {
-                            style: { 
-                            textAlign: "center", 
-                            height: 20,
-                            },
-                        },
-                    }}
-                    inputRef={(_index===0  ? input => input && input.focus() : undefined)}
-                />
-            )
-        } else {
+        console.log("item: ", item)
+        // if (item.column._id === 1){
+        //     return(
+        //         <TextField
+        //             // key="password"
+        //             sx= {{
+        //                 margin: "0 auto",
+        //                 width: "90% !important",
+        //             }}
+        //             maxRows={1}
+        //             size="small"
+        //         //   type="number"
+        //             className={`${classes.inputMainData} `}
+        //             // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
+        //             value={newRow[item.column.dataKey]==="" ? newRow[item.column.dataKey] : Math.abs(newRow[item.column.dataKey])}
+        //             // onChange={ (event:any) => writeValue(event, newRow._id) }
+        //         //   onChange={ () => console.log("testin") }
+        //             InputProps={{
+        //                 className: classes.inputClassName,
+        //                 inputMode: "numeric",
+        //                 inputProps: {
+        //                     style: { 
+        //                     textAlign: "center", 
+        //                     height: 20,
+        //                     },
+        //                 },
+        //             }}
+        //             inputRef={(_index===0  ? input => input && input.focus() : undefined)}
+        //         />
+        //     )
+        // } else {
             return(
                 
               <Tooltip 
                 title={newRow[item.column.dataKey]} 
+                // title={newRow[item.column.name]} 
                 disableHoverListener={String(newRow[item.column.dataKey]).length <= 10}
                 slotProps={{
                     popper: {
@@ -134,13 +136,15 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                         }}
                     >
                         {/* { ( newRow[item.column.dataKey] || newRow[item.column.dataKey] === 0 ) ? newRow[item.column.dataKey] : "-"} */}
-                        {  newRow[item.column.name]}
+                        { newRow[item.column.dataKey] }
+                        {/* { newRow[item.column._id] } */}
+                        {/* { item.column.name } */}
                         {/* {  newRow[item.column]} */}
-                        {/* {  "asdf"} */}
+                        {/* {"asdf"} */}
                     </Typography>
                 </Tooltip>
             )
-        }
+        // }
     }
    
     return (
@@ -158,13 +162,13 @@ const VirtuosoTableComponents: TableComponents<Data> = {
               padding: "0",
             }}
           >
-            <div 
+            {/* <div 
             //   className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}`}
             //   className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}`}
               className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]}`  : "" } ${classes.table_rows}  ${classes[`_${user_background_color}table_rows_color` as keyof typeof classes]}`}
-            >
+            > */}
                 {RowContent({column: column})}
-            </div>
+            {/* </div> */}
           </TableCell>
         ))}
       </React.Fragment>
@@ -182,10 +186,10 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
     const { user, setUser } = useContext<any>(UserContext); 
     const { users } = useContext<any>(UsersContext) 
     const { categories } = useContext<any>(CategoriesContext) 
-    const categoryArray = categories
-    console.log("categoryArray: ", categoryArray)
+    console.log("categories: ", categories)
     const { categoriesSub } = useContext<any>(CategoriesSubContext) 
-    const categorySubArray = categoriesSub
+    // const categorySubArray = categoriesSub
+    console.log("categoriesSub: ", categoriesSub)
     const { labelsUsers } = useContext<any>(LanguageLabelsContext)
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     // const usersArray = users
@@ -216,8 +220,60 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
     //         category: 2,
     //         sub_category: 3,
     //     }})
-        
-    const filteredFields = categorySubArray
+
+    const columns = [
+    {
+        _id: "1",
+        id: 1,
+        dataKey: "id_category",
+        label: "Id category",
+        width: 120
+    }, {
+        _id: "2",
+        id: 2,
+        dataKey: "category",
+        label: "Category",
+        width: 120
+    }, {
+        _id: "3",
+        id: 3,
+        dataKey: "id_sub_category",
+        label: "Id sub category",
+        width: 120
+    }, {
+        _id: "4",
+        id: 4,
+        dataKey: "name",
+        label: "Sub category",
+        width: 120
+    }]
+    const ColumnLabel = (item:any) => {
+        let lab
+        // if (item.column._id === 0){
+        //     lab = ""
+        // } else if (item.column._id === 1){
+        //     lab = 
+        //           <ButtonOperator
+        //               sizeIcoExt="35px !important"
+        //               sizeIcoInt="42px !important"
+        //               // colorIco = "white"  // Fix color
+        //               colorIco = {buttonOperatorColor}
+        //               clicked={() => swapOperator()}
+        //           />
+        // } else {
+            lab = item.column.label
+        // }
+        return(
+            <Typography noWrap
+                sx={{
+                    padding: "0 4px ",
+                }}
+            >
+                {lab}
+            </Typography>
+        )
+    }
+    const filteredFields = categoriesSub
     const [filteredData, setFilteredData] = useState<any>(filteredFields)
     
     const handleCloseErrorModal = () => {
@@ -263,7 +319,7 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
             >
                 <Box sx={modalStyleExternal }>
                     <Box 
-                        sx={{ ...modalStyleInternal }}
+                        sx={{ ...modalStyleInternal, ...modalStyleInternalAdmin}}
                         className={`${classes[`_${user.background_color}main_background_color` as keyof typeof classes]} ${classes[`_${user.background_color}modal_color` as keyof typeof classes]}`}
                     >
                         <ErrorModal
@@ -301,7 +357,7 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
                                         return (
                                             <TableRow 
                                             >
-                                                {categoryArray.map((column:any, index:number) => (
+                                                {columns.map((column:any, index:number) => (
                                                 <TableCell
                                                     key={column._id}
                                                     variant="head"
@@ -309,7 +365,7 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
                                                     // className= {classes._0main_background_colorD}
                                                     // className= {classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]}
                                                     // className={`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]} ${index === columns.length - 1 ? classes[`_${user.background_color}gradient_effect` as keyof typeof classes] : "" }`}
-                                                    className={`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]} ${index === categoryArray.length - 1 ? classes.gradient_effect : "" }`}
+                                                    className={`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]} ${index === columns.length - 1 ? classes.gradient_effect : "" }`}
 
                                                     style={{ 
                                                         width: column.width, 
@@ -319,16 +375,16 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
                                                     padding: "8px 0",
                                                     }}
                                                 >
-                                                    {/* <ColumnLabel
+                                                    <ColumnLabel
                                                         column={column}
-                                                    /> */}
+                                                    />
                                                 </TableCell>
                                                 ))}
                                             </TableRow>
                                         );
                                     }}
                                     itemContent={(index: number) =>
-                                        rowContent(index, filteredData[index], categoryArray, classes, user.background_color) 
+                                        rowContent(index, filteredData[index], columns, classes, user.background_color) 
                                     }
                                 />
                             </div>
