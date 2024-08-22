@@ -186,10 +186,10 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
     const { user, setUser } = useContext<any>(UserContext); 
     const { users } = useContext<any>(UsersContext) 
     const { categories } = useContext<any>(CategoriesContext) 
-    console.log("categories: ", categories)
+    // console.log("categories: ", categories)
     const { categoriesSub } = useContext<any>(CategoriesSubContext) 
     // const categorySubArray = categoriesSub
-    console.log("categoriesSub: ", categoriesSub)
+    // console.log("categoriesSub: ", categoriesSub)
     const { labelsUsers } = useContext<any>(LanguageLabelsContext)
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
     // const usersArray = users
@@ -222,31 +222,35 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
     //     }})
 
     const columns = [
-    {
-        _id: "1",
-        id: 1,
-        dataKey: "id_category",
-        label: "Id category",
-        width: 120
-    }, {
-        _id: "2",
-        id: 2,
-        dataKey: "category",
-        label: "Category",
-        width: 120
-    }, {
-        _id: "3",
-        id: 3,
-        dataKey: "id_sub_category",
-        label: "Id sub category",
-        width: 120
-    }, {
-        _id: "4",
-        id: 4,
-        dataKey: "name",
-        label: "Sub category",
-        width: 120
-    }]
+        // {
+        //     _id: "1",
+        //     id: 1,
+        //     dataKey: "id_category",
+        //     label: "Id category",
+        //     width: 120
+        // },
+        {
+            _id: "2",
+            id: 2,
+            dataKey: "category",
+            label: "Category",
+            width: 120
+        },
+        // {
+        //     _id: "3",
+        //     id: 3,
+        //     dataKey: "id_sub_category",
+        //     label: "Id sub category",
+        //     width: 120
+        // },
+        {
+            _id: "4",
+            id: 4,
+            dataKey: "sub_category",
+            label: "Sub category",
+            width: 120
+        }
+]
     const ColumnLabel = (item:any) => {
         let lab
         // if (item.column._id === 0){
@@ -273,7 +277,22 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
             </Typography>
         )
     }
-    const filteredFields = categoriesSub
+    // const filteredFields = categoriesSub
+    const filteredFields = categoriesSub.map((categorySub: any) => {
+        if(categorySub.name !== "-"){    
+            let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
+            return ({
+                _id: categorySub._id,
+                id_category: categoryFind.id,
+                category: categoryFind.name,
+                id_sub_category: categorySub.id,
+                sub_category: categorySub.name
+            }) 
+        }
+    }).filter(Boolean)
+    
+    // console.log("filteredFields: ", filteredFields)
+
     const [filteredData, setFilteredData] = useState<any>(filteredFields)
     
     const handleCloseErrorModal = () => {
