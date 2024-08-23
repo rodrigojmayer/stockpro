@@ -6,10 +6,10 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { PlusButton, UpdateButton } from '../components/Buttons';
 import ModalsGroupAdministrator from '../components/ModalsGroupAdministrator';
 import MainSearch from '../components/MainSearch';
-import TableProducts from '../components/TableProducts';
+import TableCategories from '../components/TableCategories';
 import ManageStock from '../components/ManageStock';
 import UpdateAmountStock from '../components/UpdateAmountStock';
-import { Data } from '../types';
+import { Data } from '../types'; 
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import { ColumnsContext } from '../context/ColumnsContext';
@@ -267,14 +267,14 @@ function Administrator() {
               </Grid>
             </Grid>
           </Container>
-          {/* {openBackdrop ? "": 
-            <TableProducts 
+          {openBackdrop ? "": 
+            <TableCategories 
               data={filteredData} 
               columns={columnsUserOrder} 
               openUpdateAmountStock={openUpdateAmountStock} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             />
-          } */}
+          }
         </ModalsGroupAdministrator>
         {/* <ManageStock
             open={showCreateStock} 

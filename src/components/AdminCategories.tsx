@@ -75,7 +75,14 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   // const { classes } = useStylesGlobal()
   // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: TableClasses) {
     // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
-  function rowContent(_index: number, row: Data, columns: ColumnDataCategories[], classes: any, user_background_color: any) {
+  function rowContent(
+        _index: number, 
+        row: Data, 
+        columns: ColumnDataCategories[], 
+        classes: any, 
+        user_background_color: any
+    ) {
+
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
     // console.log("newRow: ", newRow)
     const RowContent = (item:any) => {
@@ -250,7 +257,7 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
             label: "Sub category",
             width: 120
         }
-]
+    ]
     const ColumnLabel = (item:any) => {
         let lab
         // if (item.column._id === 0){
