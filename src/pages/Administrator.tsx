@@ -21,7 +21,6 @@ import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
 
-
 function Administrator() {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);

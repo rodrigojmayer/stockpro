@@ -86,72 +86,40 @@ const VirtuosoTableComponents: TableComponents<Data> = {
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
     // console.log("newRow: ", newRow)
     const RowContent = (item:any) => {
-        let lab
-        // console.log("item: ", item)
-        // if (item.column._id === 1){
-        //     return(
-        //         <TextField
-        //             // key="password"
-        //             sx= {{
-        //                 margin: "0 auto",
-        //                 width: "90% !important",
-        //             }}
-        //             maxRows={1}
-        //             size="small"
-        //         //   type="number"
-        //             className={`${classes.inputMainData} `}
-        //             // value={valueUpdate!==null  ? Math.abs(valueUpdate):""}
-        //             value={newRow[item.column.dataKey]==="" ? newRow[item.column.dataKey] : Math.abs(newRow[item.column.dataKey])}
-        //             // onChange={ (event:any) => writeValue(event, newRow._id) }
-        //         //   onChange={ () => console.log("testin") }
-        //             InputProps={{
-        //                 className: classes.inputClassName,
-        //                 inputMode: "numeric",
-        //                 inputProps: {
-        //                     style: { 
-        //                     textAlign: "center", 
-        //                     height: 20,
-        //                     },
-        //                 },
-        //             }}
-        //             inputRef={(_index===0  ? input => input && input.focus() : undefined)}
-        //         />
-        //     )
-        // } else {
-            return(
-                
-              <Tooltip 
-                title={newRow[item.column.dataKey]} 
-                // title={newRow[item.column.name]} 
-                disableHoverListener={String(newRow[item.column.dataKey]).length <= 10}
-                slotProps={{
-                    popper: {
-                    sx: {
-                        [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
-                        {
-                            marginTop: '0px',
-                            marginLeft: '5px',
-                        },
-                    }
-                    }
-                }}
-              >
-                    <Typography noWrap 
-                        sx={{
-                            // padding: "7.78px 4px",
-                            padding: "1.4px 4px",
-                        }}
-                    >
-                        {/* { ( newRow[item.column.dataKey] || newRow[item.column.dataKey] === 0 ) ? newRow[item.column.dataKey] : "-"} */}
-                        { newRow[item.column.dataKey] }
-                        {/* { newRow[item.column._id] } */}
-                        {/* { item.column.name } */}
-                        {/* {  newRow[item.column]} */}
-                        {/* {"asdf"} */}
-                    </Typography>
-                </Tooltip>
-            )
-        // }
+        console.log("item: ", item)
+        return(
+            
+            <Tooltip 
+            title={newRow[item.column.dataKey]} 
+            // title={newRow[item.column.name]} 
+            disableHoverListener={String(newRow[item.column.dataKey]).length <= 10}
+            slotProps={{
+                popper: {
+                sx: {
+                    [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
+                    {
+                        marginTop: '0px',
+                        marginLeft: '5px',
+                    },
+                }
+                }
+            }}
+            >
+                <Typography noWrap 
+                    sx={{
+                        // padding: "7.78px 4px",
+                        padding: "1.4px 4px",
+                    }}
+                >
+                    {/* { ( newRow[item.column.dataKey] || newRow[item.column.dataKey] === 0 ) ? newRow[item.column.dataKey] : "-"} */}
+                    { newRow[item.column.dataKey] }
+                    {/* { newRow[item.column._id] } */}
+                    {/* { item.column.name } */}
+                    {/* {  newRow[item.column]} */}
+                    {/* {"asdf"} */}
+                </Typography>
+            </Tooltip>
+        )
     }
    
     return (
@@ -410,7 +378,12 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
                                         );
                                     }}
                                     itemContent={(index: number) =>
-                                        rowContent(index, filteredData[index], columns, classes, user.background_color) 
+                                        rowContent(index, 
+                                            filteredData[index], 
+                                            columns, 
+                                            classes, 
+                                            user.background_color
+                                        ) 
                                     }
                                 />
                             </div>

@@ -6,32 +6,25 @@ import {
   TableRow, 
   TableCell, 
   TableBody, 
-  Paper, 
-  Box, 
+  Paper,  
   Switch,
   Tooltip
 } from '@mui/material';
 import { tooltipClasses } from '@mui/material/Tooltip';
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
-import { Data, DataTable, ColumnData, ProductUpdateData } from '../types';
+import { Data, DataTable, ColumnDataCategories } from '../types';
 import { UserContext } from '../context/UserContext'
 import { ColumnsContext } from '../context/ColumnsContext'
 import { useStylesGlobal } from '../Styles';
-import { blueGrey } from '@mui/material/colors';
-import { CheckListStockContext } from '../context/CheckListStockContext';
-import ShowImgModal from './ShowImgModal';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import LockIcon from '@mui/icons-material/Lock';
-import { Anchor } from '@mui/icons-material';
 import CustomFields from './CustomFields';
 import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 import { CategoriesContext } from '../context/CategoriesContext';
@@ -49,8 +42,6 @@ const INITIAL_STATE = {
   measure: "",
   category: "",
   sub_category: "",
-  // custom_fields: [],
-  // id_custom_field_product: NaN,
 }
 
 const VirtuosoTableComponents: TableComponents<Data> = {
@@ -67,32 +58,44 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   )),
 };
 
-// const { classes } = useStylesGlobal()
-// function rowContent(_index: number, row: Data, columnsTable: ColumnData[], classes: TableClasses) {
-// function rowContent(_index: number, row: Data, columnsTable: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
 function rowContent(
     _index: number, 
     row: Data, 
-    columnsTable: ColumnData[], 
+    columnsTable: ColumnDataCategories[], 
     classes: any, 
-    openUpdateAmountStock:(newData: Data) => void, 
-    checkListStock:any, 
-    checkingRow:(id_row: any) => void,
-    // handleOpenShowImg:(selectedImgUrlHandle: string) => void,
+    openUpdateAmountStock:(newData: Data) => void,  
     user_background_color:any,
   ) {
 
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
-  if (newRow.custom_fields) {
-    for (const key in newRow.custom_fields) {
-      newRow = {
-            ...newRow,
-            ...newRow.custom_fields
-          }
-    }
+  const RowContent = (item:any) => {
+    return( 
+      <Tooltip 
+        title={newRow[item.column.dataKey]} 
+        disableHoverListener={String(newRow[item.column.dataKey]).length <= 10}
+        slotProps={{
+            popper: {
+            sx: {
+                [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
+                {
+                    marginTop: '0px',
+                    marginLeft: '5px',
+                },
+            }
+            }
+        }}
+      >
+        <Typography noWrap 
+            sx={{
+                padding: "1.4px 4px",
+            }}
+        >
+          { newRow[item.column.dataKey] }
+        </Typography>
+      </Tooltip>
+    )
   }
-
   return (
     <React.Fragment >
       {columnsTable.map((column) => (
@@ -120,7 +123,6 @@ function rowContent(
               "alert_date_enabled": newRow.alert_date_enabled, 
               "alerted_date": newRow.alerted_date, 
               "newRow": newRow})}
-          // className={`${ _index%2 ? classes._0table_row_odd  : classes._0table_row_even }`}
           className={`${ _index%2 ? classes[`_${user_background_color}table_row_odd` as keyof typeof classes]  : classes[`_${user_background_color}table_row_even` as keyof typeof classes] }`}
           style={{ 
              border:0,
@@ -129,70 +131,7 @@ function rowContent(
             padding: "0",
           }}
         >
-          <div 
-            // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes._0table_alert_on_background} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}  ${classes._0table_rows_color}`}
-            // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes._0table_alert_on_color}`  : "" } ${classes.table_rows}  ${classes._0table_rows_color}`}
-            // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]}`  : "" } ${classes.table_rows}  ${classes._0table_rows_color}`}
-            className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? `${classes[`_${user_background_color}table_alert_on_background` as keyof typeof classes]} ${classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]}`  : "" } ${classes.table_rows}  ${classes[`_${user_background_color}table_rows_color` as keyof typeof classes]}`}
-          > 
-          { 
-          ( column.dataKey === "check_stock" ) ? 
-            <Checkbox 
-              checked={checkListStock.includes(newRow._id)? true : false}
-              onClick={(e:any)=> {
-                e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                checkingRow(newRow._id)
-              }}
-              // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes._0table_alert_on_color  : classes._0table_rows_color }`}
-              // className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]  : classes._0table_rows_color }`}
-              className={`${ ((newRow.alerted_amount && newRow.alert_amount_enabled) || (newRow.alerted_date && newRow.alert_date_enabled)) ? classes[`_${user_background_color}table_alert_on_color` as keyof typeof classes]  : classes[`_${user_background_color}table_rows_color` as keyof typeof classes] }`}
-              sx={{
-                  padding: "0", 
-              }}
-              color="default"
-            />
-          : 
-            // ( column.dataKey !== "url_image"  || !newRow[column.dataKey]) ?
-                <Tooltip 
-                title={newRow[column.dataKey]} 
-                disableHoverListener={String(newRow[column.dataKey])?.length <= 13}
-                slotProps={{
-                  popper: {
-                    sx: {
-                      [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
-                      {
-                        marginTop: '0px',
-                        marginLeft: '5px',
-                      },
-                    }
-                  }
-                }}
-                >
-                <Typography noWrap 
-                sx={{
-                    padding: "0 4px ",
-                  }}
-                >
-                  { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
-                </Typography>
-              </Tooltip> 
-            // :
-            //   <img 
-            //     style={{
-            //       display: "block", // Ensure the image is treated as a block element
-            //       margin: "auto",   // Set margins to auto to horizontally center the image
-            //       objectFit: 'contain',
-            //       paddingTop: "0.27px ", // Set to avoid small space when the row is alerted
-            //     }} 
-            //     // src={newRow[column.dataKey]} 
-            //     src={`https://cdn.filestackcontent.com/resize=w:34,h:34,fit:crop/auto_image/compress/${newRow[column.dataKey]}`} 
-            //     onClick={(e:any)=> {
-            //       e.stopPropagation() // Prevent the click event from propagating to the parent cell
-            //       handleOpenShowImg(newRow[column.dataKey])
-            //     }}
-            //   /> 
-          }
-          </div>
+          {RowContent({column: column})}
         </TableCell>
       ))}
     </React.Fragment>
@@ -202,8 +141,7 @@ function rowContent(
 export default function TableCategories(
   { 
     data, 
-    openUpdateAmountStock, 
-    handleDisabledUpdateButton, 
+    openUpdateAmountStock
   }:  DataTable ) {
 
   const  {classes} = useStylesGlobal()
@@ -213,27 +151,12 @@ export default function TableCategories(
 
   const { user } = useContext<any>(UserContext);
   const { categories } = useContext<any>(CategoriesContext) 
-  // console.log("categories: ", categories)
   const { categoriesSub } = useContext<any>(CategoriesSubContext) 
-  const { defaultColumns, customColumns, columnsUserOrder, setColumnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
-  const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
-  // console.log("defaultColumns: ", defaultColumns)
-  // console.log("customColumns: ", customColumns)
-  // console.log("columns: ", columns)
-  // console.log("columnsUserOrder: ", columnsUserOrder)
-  // console.log("filteredColumnsCustom: ", filteredColumnsCustom)
-  
-  // const columnsTable = columnsUserOrder
+  const { columnsUserOrder } = useContext<any>(ColumnsContext);
+
   const elementToAdd = {dataKey: "check_stock", id: 0, width: 40,}
   const columnsTable = [elementToAdd, ...columnsUserOrder];
   const columns = [
-    // {
-    //     _id: "1",
-    //     id: 1,
-    //     dataKey: "id_category",
-    //     label: "Id category",
-    //     width: 120
-    // },
     {
         _id: "2",
         id: 2,
@@ -241,13 +164,6 @@ export default function TableCategories(
         label: "Category",
         width: 120
     },
-    // {
-    //     _id: "3",
-    //     id: 3,
-    //     dataKey: "id_sub_category",
-    //     label: "Id sub category",
-    //     width: 120
-    // },
     {
         _id: "4",
         id: 4,
@@ -255,9 +171,22 @@ export default function TableCategories(
         label: "Sub category",
         width: 120
     }
-]
+  ]
 
+  const filteredFields = categoriesSub.map((categorySub: any) => {
+    if(categorySub.name !== "-"){    
+        let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
+        return ({
+            _id: categorySub._id,
+            id_category: categoryFind.id,
+            category: categoryFind.name,
+            id_sub_category: categorySub.id,
+            sub_category: categorySub.name
+        }) 
+    }
+  }).filter(Boolean)
 
+  const [filteredData, setFilteredData] = useState<any>(filteredFields)
   const initialManageColumns = columns.map((column:any) => {
     const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
     const isInArray = foundColumn !== undefined ? true : false;
@@ -269,147 +198,10 @@ export default function TableCategories(
     return 0;
   })
 
-
   const [manageColumns, setManageColumns] = useState(initialManageColumns)
-  // console.log("columnsTable: ", columnsTable)
-  // console.log("initialManageColumns: ", initialManageColumns)
-  // console.log("manageColumns: ", manageColumns)
-  // console.log("columns: ", columns)
   const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
-  const [filteredData, setFilteredData] = useState(data)
   const [sortedData, setSortedData] = useState(data)
-  const [rowsUserSort, setRowsUserSort] = useState({
-    field: "_id",
-    asc: true
-  })
-  // const [alertsOnTopUserSort, setAlertsOnTopUserSort] = useState(true)
-  const [alertsOnTopUserSort, setAlertsOnTopUserSort] = useState(user.alerts_on_top)
-  // const [rowsUserSort, setRowsUserSort] = useState("_id_ASC")
-
-  const checkingRow = (id_row:any) => {
-    // console.log("checkingRow _id: ", id_row)
-    const updatedCheckListStock = checkListStock.includes(id_row)
-    ? checkListStock.filter((item: any) => item !== id_row)
-    : [...checkListStock, id_row];
-    setCheckListStock(updatedCheckListStock)
-  }
-  const checkingAll = () => {
-    const all_ids = filteredData.map((data) => {
-      return data._id
-      // console.log("filteredData: ", all_ids)
-    })
-    // if (all_ids.every((id) => checkListStock.includes(id))) {
-    if (all_ids.every((id) => checkListStock.includes(id))) {
-      // If all IDs are already in checkListStock, remove them
-      // console.log("all_ids[0]: ", all_ids[0])
-      // console.log("typeof id: ", typeof all_ids[0])
-      const updatedCheckListStock = checkListStock.filter((stockId: any) => !all_ids.includes(stockId));
-      setCheckListStock(updatedCheckListStock);
-    } else {
-      // If not all IDs are in checkListStock, add the missing ones
-      const missingIds = all_ids.filter((id) => !checkListStock.includes(id));
-      const updatedCheckListStock = [...checkListStock, ...missingIds];
-      setCheckListStock(updatedCheckListStock);
-    }
-  }
-
-  const formatAlertDate = (dateString: string | null) => {
-    if (!dateString) return null
-    const date = new Date(dateString)
-    return date.getTime() // Returns the time in miliseconds since January 1, 1970 (UNIX timestamp)
-  }
-
-  // const [dataVersion, setDataVersion] = useState(0);
-  const orderByField = (field: any, calledFrom: string) => {
-    if(field==="url_image")
-      return
-    let newSortAsc:boolean = true
-    if(calledFrom === "onClick"){
-      newSortAsc = (field === rowsUserSort.field ? !rowsUserSort.asc: rowsUserSort.asc)
-    } else{
-      newSortAsc = rowsUserSort.asc
-    }
-    let arraySorted = filteredData.slice();
-    setRowsUserSort({field: field, asc: newSortAsc});
-    let aField, bField
-    arraySorted.sort((a, b) => {
-      if(field === "alert_date" ){
-        if(typeof a[field] === "string"){
-          let aDate = a[field]
-          aDate = aDate.split("/")
-          aDate = new Date( aDate[2], aDate[1] - 1, aDate[0]);
-          aField = aDate.getTime()
-        } else {
-          aField = 0
-        }
-        if(typeof b[field] === "string"){
-          let bDate = b[field]
-          bDate = bDate.split("/")
-          bDate = new Date( bDate[2], bDate[1] - 1, bDate[0]);
-          bField = bDate.getTime()
-        } else {
-          bField = 0
-        }
-      } else {
-        if (typeof a[field] === "string"){
-          aField = a[field].toLowerCase()
-        } else if (a[field] === undefined){
-          aField ="-"
-        } else {
-          aField = a[field]
-        }
-        if (typeof b[field] === "string"){
-          bField = b[field].toLowerCase()
-        } else if (b[field] === undefined){
-          bField ="-"
-        } else {
-          bField = b[field]
-        }
-      }
-      
-      if(newSortAsc ){
-        if (aField < bField) return -1;
-        if (aField > bField) return 1;
-        return 0;
-      } else {
-        if (aField < bField) return 1;
-        if (aField > bField) return -1;
-        return 0;
-      }
-    })
-    
-    if(alertsOnTopUserSort){
-      // Sort the products array by the 'alert_on' field
-      arraySorted.sort((a:any, b:any) => {
-        const alertOnA = formatAlertDate((a.alerted_amount && a.alert_amount_enabled) || (a.alerted_date && a.alert_date_enabled))
-        const alertOnB = formatAlertDate((b.alerted_amount && b.alert_amount_enabled) || (b.alerted_date && b.alert_date_enabled))
-        if (alertOnA && alertOnB) {
-          return alertOnA - alertOnB
-        }
-        // If one of the dates is null or undefined, place it at the end
-        return alertOnA ? -1 : 1
-      })
-      
-    }
-
-
-    // setFilteredData(arraySorted);
-    setSortedData(arraySorted);
-    // console.log("array: ", array)
-  }
-  
-  const handleOpenShowImg = (selectedImgUrlHandle: string) => {
-    setShowImgModal(selectedImgUrlHandle)
-    setOpenShowImgModal(true)
-  }
-  const handleCloseShowImgModal = () => {
-    setOpenShowImgModal(false)
-  }
-  
-  const [showImgModal, setShowImgModal] = useState(""); 
-  const [openShowImgModal, setOpenShowImgModal] = useState(false); 
   const [openCustomFieldsModal, setOpenCustomFieldsModal] = useState(false); 
-
   const handleCloseCustomFieldsModal = () => {
     setOpenCustomFieldsModal(false)
   }
@@ -426,68 +218,23 @@ export default function TableCategories(
   const openTableOptions = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation()
     setAnchorEl(event.currentTarget);
-    setCheckListStock([])
   };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
   const handleClose = () => {
     // Delay resetting anchorEl until after the menu has closed
-    // setTimeout(() => {
-      // if(anchorEl)
-        setAnchorEl(null);
-    // }, 100); // Adjust the delay as needed
-};
-  
-  const handleAlertsOnTop = () => {
-   
-    setAlertsOnTopUserSort(!alertsOnTopUserSort)
-    // handleClose()
-    
-    const fetchEditUsersAlertsOnTop = async () => {
-      let loadingSuccess: boolean = false
-      try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${user._id}/`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                alerts_on_top: !alertsOnTopUserSort
-            })
-          })
-          if (response) {
-              loadingSuccess = true
-          } else {
-              console.error('Update failed.')
-          }
-      } catch (error: unknown) {
-          // Handle the case where the response is not OK (e.g., show an error message)
-      }
-  }
-  fetchEditUsersAlertsOnTop()
-  }
+    setAnchorEl(null);
+  };
   
   const openSubTableOptions = (event: React.MouseEvent<HTMLElement>) => {
-    console.log("manageColumns: ", manageColumns)
-    
-  console.log("columns: ", columns)
     event.stopPropagation()
     setAnchorEl2(event.currentTarget);
-    // handleClose()
-    // setAnchorEl(null);
   }
   
   const handleClose2 = () => {
-    // if(anchorEl2)
     setAnchorEl(null);
     setAnchorEl2(null);
-      // handleClose()
   };
 
   const handlePickColumn = (columnSelected: any) => {
-    // console.log("columnSelected: ", columnSelected)
-    // console.log("manageColumns: ", manageColumns)
     if(columnSelected.id === -1) return
     const indexColumnUserOrder = columnsUserOrder.findIndex((columnUserOrder:any) => columnUserOrder._id === columnSelected._id);
     const actualColumnUserOrder = columnsUserOrder
@@ -521,283 +268,103 @@ export default function TableCategories(
                 console.error('Update failed.')
             }
         } catch (error: unknown) {
-            // Handle the case where the response is not OK (e.g., show an error message)
         }
     }
     fetchEditUsersFieldsOrder()
 
     setManageColumns(actualManageColumn)
-    // setColumnsUserOrder(actualColumnUserOrder)
   }
 
-  useEffect(()=> {
-    if(checkListStock.length>0)
-      handleDisabledUpdateButton(false)
-    else
-      handleDisabledUpdateButton(true)
-  }, [checkListStock])
-
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  
     setFilteredRows({ ...filteredRows, [event.target.id]: (event.target.value) })
   };
-  useEffect(() => {
-    setFilteredData(data.filter((item) => {
-      let vals = true
-      Object.keys(filteredRows).forEach((arg)=> {
-        const str = arg as string;
-
-        // console.log("filteredRows: ", filteredRows)
-        let value = filteredRows[str as keyof typeof filteredRows]
-        if(arg=== "amount") {
-          // console.log("item: ", item)
-          // console.log("item.amount: ", item.amount)
-          // console.log("arg: ", arg)
-          // console.log("value: ", value)
-          // console.log("isNaN(value): ", isNaN(value))
-        }
-
-        if (typeof value == "string")
-        // if (typeof value == "string" || value===0)
-          value = value.toString().toLowerCase()
-        // else if (isNaN(value))
-        else if (isNaN(value))
-          value = ""
-        if (value !== "" ){
-          // console.log("item[str as keyof typeof item]: ", item[str as keyof typeof item])
-
-          if(item[str as keyof typeof item] || item[str as keyof typeof item] === 0){
-            // console.log("item.amount2: ", item.amount)
-
-            if(!item[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
-              vals = false
-            }
-          } 
-          else if(item.custom_fields ){
-            if(item.custom_fields[str as keyof typeof item] || item.custom_fields[str as keyof typeof item] == ""){
-              if(!item.custom_fields[str as keyof typeof item].toString().toLowerCase().includes(value.toString())){
-                vals = false
-              }
-            }
-            else{
-              vals = false
-            }
-          }
-          else{
-            vals = false
-          }
-        }
-      })
-      return vals
-    }))
-  }, [ filteredRows, data]);
-  const [initialRender, setInitialRender] = useState(true);
-  useEffect(() => {
-    if (initialRender) {
-      // console.log("Initial rendering");
-      setInitialRender(false); // Update the flag after the initial rendering
-      return; // Exit early to prevent further execution of the effect
-    }
-    // console.log("rowsUserSort: ", rowsUserSort)
-      orderByField(rowsUserSort.field, "useEffect")
-  }, [filteredData, alertsOnTopUserSort])
-  
-  useEffect(() => {
-    const updateManageColumns = columns.map((column:any) => {
-      const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
-      const isInArray = foundColumn !== undefined ? true : false;
-      return {_id:column._id, id:column.id, width:column.width, label: column.label, dataKey:column.dataKey, showInTable: isInArray}
-    })
-    updateManageColumns.sort((a:any, b:any) => {
-      if (a.label.toLowerCase() < b.label.toLowerCase()) return -1;
-      if (a.label.toLowerCase() > b.label.toLowerCase()) return 1;
-      return 0;
-    })
-    setManageColumns(updateManageColumns)
-  }, [columns])
 
   return (
     
-<div>
-    <ShowImgModal
-        openShowImgModal={openShowImgModal}
-        closeShowImgModal={handleCloseShowImgModal} 
-        showImgModal={showImgModal}
-    />
-    <CustomFields 
-        open={openCustomFieldsModal} 
-        handleClose={handleCloseCustomFieldsModal}  
-    /> 
-    <Paper style={{backgroundColor: "rgb(0, 0, 0, 0)", height: `calc(100dvh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
-      <TableVirtuoso 
-        data={sortedData}
-        components={VirtuosoTableComponents}
-        style={{
-          // backgroundColor: "rgb(45, 72, 91)", 
-          backgroundColor: "rgb(0, 0, 0, 0)", 
-          borderRadius: "10px", 
-          scrollbarWidth: "none", boxShadow: `-5px 5px 20px 2px black `,
-          cursor: "pointer"
-        }}
-        fixedHeaderContent={() => {
-            return (
-              <TableRow>
-                {columnsTable.map((columnTable:any, index: number) => (
-                  <TableCell
-                    key={columnTable.id}
-                    variant="head" 
-                    align='center'
-                    className={`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]} ${index === columnsTable.length - 1 ? classes.gradient_effect : "" }`}
-                    
-                    style={{ 
-                      // width: "100px", 
-                      width: columnTable.width, 
-                      border:0
-                    }}
-                    sx={{
-                      padding: "8px 0",
-                    }}
-                  >
-                    <Typography noWrap
-                      sx={{
-                        padding: "0 4px ",
+    <div>
+      <CustomFields 
+          open={openCustomFieldsModal} 
+          handleClose={handleCloseCustomFieldsModal}  
+      /> 
+      <Paper style={{backgroundColor: "rgb(0, 0, 0, 0)", height: `calc(100dvh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
+        <TableVirtuoso 
+          data={sortedData}
+          components={VirtuosoTableComponents}
+          style={{
+            backgroundColor: "rgb(0, 0, 0, 0)", 
+            borderRadius: "10px", 
+            scrollbarWidth: "none", boxShadow: `-5px 5px 20px 2px black `,
+            cursor: "pointer"
+          }}
+          fixedHeaderContent={() => {
+              return (
+                <TableRow>
+                  {columns.map((columnTable:any, index: number) => (
+                    <TableCell
+                      key={columnTable.id}
+                      variant="head" 
+                      align='center'
+                      className={`${classes[`_${user.background_color}main_background_colorD` as keyof typeof classes]} ${classes[`_${user.background_color}table_header_color` as keyof typeof classes]} ${index === columnsTable.length - 1 ? classes.gradient_effect : "" }`}
+                      
+                      style={{ 
+                        width: columnTable.width, 
+                        border:0
                       }}
-                      onClick={(e:any)=> {
-                        e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                        orderByField(columnTable.dataKey, "onClick")
-                      }} 
+                      sx={{
+                        padding: "8px 0",
+                      }}
                     >
-                      { columnTable.label ? 
-                            columnTable.label 
-                          : 
-                          <>
-                            <IconButton
-                              onClick={
-                                openTableOptions
-                              }
-                              // className={classes._0table_header_color}
-                              className={classes[`_${user.background_color}table_header_color` as keyof typeof classes]}
-                              style={{ 
-                                width: "30px", 
-                                border:0
-                              }}
-                              sx={{
-                                padding: "0",
-                                //  paddingTop: "-10px",
-                                top: "-5px",
-                              }}
-                            >
-                              <MoreVertIcon fontSize="small" />
-                            </IconButton>  
-                            <Menu
-                              disableScrollLock={true}
-                              id="demo-positioned-menu"
-                              aria-labelledby="demo-positioned-button"
-                              anchorEl={anchorEl}
-                              open={open}
-                              onClose={handleClose}
-                              // onExited={() => setAnchorEl(null)} 
-                              anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                              }}
-                              transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                              }}
-                              style={{ 
-                                marginTop: '20px', 
-                                marginLeft: '15px',
-                              }}
+                      <Typography noWrap
+                        sx={{
+                          padding: "0 4px ",
+                        }}
+                      >
+                        { columnTable.label ? 
+                              columnTable.label 
+                            : 
+                            <>
+                              <IconButton
+                                onClick={
+                                  openTableOptions
+                                }
+                                className={classes[`_${user.background_color}table_header_color` as keyof typeof classes]}
+                                style={{ 
+                                  width: "30px", 
+                                  border:0
+                                }}
+                                sx={{
+                                  padding: "0",
+                                  top: "-5px",
+                                }}
+                              >
+                                <MoreVertIcon fontSize="small" />
+                              </IconButton>  
+                              <Menu
+                                disableScrollLock={true}
+                                id="demo-positioned-menu"
+                                aria-labelledby="demo-positioned-button"
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose} 
+                                anchorOrigin={{
+                                  vertical: 'top',
+                                  horizontal: 'left',
+                                }}
+                                transformOrigin={{
+                                  vertical: 'top',
+                                  horizontal: 'left',
+                                }}
+                                style={{ 
+                                  marginTop: '20px', 
+                                  marginLeft: '15px',
+                                }}
 
-                              MenuListProps={{
-                                  sx: { padding: 0,  
-                                  },
-                              }}
-                              // PaperProps={{
-                              //   sx: { borderRadius: '5px' }, // Adjust the value as needed
-                              // }}
-                            >
-                              <MenuItem 
-                                onClick={() => handleAlertsOnTop()}
-                                // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
-                                className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                                MenuListProps={{
+                                    sx: { padding: 0,  
+                                    },
+                                }}
                               >
-                                <Typography 
-                                  align="center" 
-                                  variant="body2" 
-                                > 
-                                  <Switch 
-                                    size='small'
-                                    color='success'  
-                                    checked={alertsOnTopUserSort}
-                                  />  
-                                  {labelsTableProducts.alerts_on_top}
-                                </Typography>
-                              </MenuItem>
-                              <MenuItem 
-                                onClick={ openSubTableOptions }
-                                // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
-                                className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                              >
-                                <Typography 
-                                  align="center" 
-                                  variant="body2" 
-                                > 
-                                  {labelsTableProducts.manage_columns}
-                                </Typography>
-                              </MenuItem>
-                              {(user.id_access_level < 4) &&
                                 <MenuItem 
-                                  onClick={ handleOpenCustomFieldsModal  }
-                                  // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
-                                  className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                                >
-                                  <Typography 
-                                    align="center" 
-                                    variant="body2" 
-                                  > 
-                                    {labelsTableProducts.custom_fields}
-                                  </Typography>
-                                </MenuItem> 
-                              }
-                            </Menu>
-                            <Menu
-                            // <Paper style={{ height: `calc(100vh - ${(breakpointLG?"32px":"150px")})`, width: '94vw', margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
-                              // className={breakpointMD ? `${classes.table_menu} ${classes._0table_menu_background_color}` : ""}
-                              className={breakpointMD ? `${classes.table_menu} ${classes[`_${user.background_color}table_menu_background_color` as keyof typeof classes]}` : ""}
-                              //  className={classes.menu} 
-                              id="demo-positioned-menu2"
-                              aria-labelledby="demo-positioned-button2"
-                              anchorEl={anchorEl2}
-                              open={open2}
-                              onClose={handleClose2}
-                              anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                              }}
-                              transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                              }}
-                              style={{ 
-                                marginTop: '-57px', 
-                                marginLeft: '0px',
-                                height: '370px',
-                              }}
-                              MenuListProps={{
-                                  sx: { padding: 0,
-                                  },
-                              }}
-                              // PaperProps={{
-                              //   sx: { borderRadius: '7px' }, // Adjust the value as needed
-                              // }}
-                            >
-                              {manageColumns.map((manageColumn:any) => (
-                                <MenuItem 
-                                  key={manageColumn.id}
-                                  onClick={() => handlePickColumn(manageColumn) }
-                                  // className={`${classes.menu_item} ${classes._0menu_item_background_color}`} 
                                   className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
                                 >
                                   <Typography 
@@ -807,94 +374,125 @@ export default function TableCategories(
                                     <Switch 
                                       size='small'
                                       color='success'  
-                                      checked={manageColumn.showInTable}
                                     />  
-                                      {manageColumn.label}
-                                      {manageColumn.id==-1 ? 
-                                        <LockIcon 
-                                          style={{
-                                            paddingTop: "10px",
-                                          }}
-                                          fontSize='small'
-                                        /> 
-                                      : 
-                                        "" }
+                                    {labelsTableProducts.alerts_on_top}
                                   </Typography>
-                                </MenuItem> 
-                              ))}
-                            </Menu>
-                          </>
-                        }
-                        </Typography>
-                       
-                      { ( columnTable.dataKey === "check_stock" ) ? 
-                        <Checkbox  
-                          checked={(checkListStock.length===data.length && data.length!==0 )? true : false}
-                          onClick={(e:any)=> {
-                            e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                            checkingAll()
-                          }} 
-                          // className={classes._0table_header_color}
-                          className={classes[`_${user.background_color}table_header_color` as keyof typeof classes]}
-                          sx={{
-                            // color: blueGrey[50],
-                            padding: 0,
-                            // '&.Mui-checked': {
-                              // color: blueGrey[50],
-                            // },
-                          }}
-                          // color="default"
-                        />
-                      :
-                          <TextField
-                            // id={column.dataKey}
-                            id={columnTable.dataKey.toString()}
-                            // id="filled-multiline-flexible"
-                            // value={filters[0].dataKey}
-                            onChange={handleFilterChange}
-                            disabled={ columnTable.dataKey==="url_image"}
-                            className={`${ columnTable.dataKey==="url_image" ? classes.table_disabled  : "" }`}
-                            maxRows={1}
-                            size="small"
-                            sx={{
-                              backgroundColor: "white",
-                              borderRadius: 1,
-                              margin: "8px",
-                            }}
-                            InputProps={{
-                              style: {
-                                height:"36px",
-                              },
-                            }}
-                          />
-                        }
-                  </TableCell>
-                ))}
-              </TableRow>
-            );
-          }}
-        // itemContent={rowContent}
-        itemContent={(index: number) =>
-          rowContent(
-              index, 
-              // filteredData[index], 
-              sortedData[index], 
-              columnsTable, 
-              classes, 
-              openUpdateAmountStock, 
-              checkListStock, 
-              checkingRow,
-              // handleOpenShowImg,
-              user.background_color
-          ) 
-          // rowContent(index, filteredData[index], columnsTable)
-        }
-        
-      />
-    </Paper>
-
-</div>
-
-  
+                                </MenuItem>
+                                <MenuItem 
+                                  onClick={ openSubTableOptions }
+                                  className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                                >
+                                  <Typography 
+                                    align="center" 
+                                    variant="body2" 
+                                  > 
+                                    {labelsTableProducts.manage_columns}
+                                  </Typography>
+                                </MenuItem>
+                                {(user.id_access_level < 4) &&
+                                  <MenuItem 
+                                    onClick={ handleOpenCustomFieldsModal  }
+                                    className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                                  >
+                                    <Typography 
+                                      align="center" 
+                                      variant="body2" 
+                                    > 
+                                      {labelsTableProducts.custom_fields}
+                                    </Typography>
+                                  </MenuItem> 
+                                }
+                              </Menu>
+                              <Menu
+                                className={breakpointMD ? `${classes.table_menu} ${classes[`_${user.background_color}table_menu_background_color` as keyof typeof classes]}` : ""}
+                                id="demo-positioned-menu2"
+                                aria-labelledby="demo-positioned-button2"
+                                anchorEl={anchorEl2}
+                                open={open2}
+                                onClose={handleClose2}
+                                anchorOrigin={{
+                                  vertical: 'top',
+                                  horizontal: 'left',
+                                }}
+                                transformOrigin={{
+                                  vertical: 'top',
+                                  horizontal: 'left',
+                                }}
+                                style={{ 
+                                  marginTop: '-57px', 
+                                  marginLeft: '0px',
+                                  height: '370px',
+                                }}
+                                MenuListProps={{
+                                    sx: { padding: 0,
+                                    },
+                                }}
+                              >
+                                {manageColumns.map((manageColumn:any) => (
+                                  <MenuItem 
+                                    key={manageColumn.id}
+                                    onClick={() => handlePickColumn(manageColumn) }
+                                    className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                                  >
+                                    <Typography 
+                                      align="center" 
+                                      variant="body2" 
+                                    > 
+                                      <Switch 
+                                        size='small'
+                                        color='success'  
+                                        checked={manageColumn.showInTable}
+                                      />  
+                                        {manageColumn.label}
+                                        {manageColumn.id==-1 ? 
+                                          <LockIcon 
+                                            style={{
+                                              paddingTop: "10px",
+                                            }}
+                                            fontSize='small'
+                                          /> 
+                                        : 
+                                          "" }
+                                    </Typography>
+                                  </MenuItem> 
+                                ))}
+                              </Menu>
+                            </>
+                          }
+                          </Typography>
+                            <TextField
+                              id={columnTable.dataKey.toString()}
+                              onChange={handleFilterChange}
+                              maxRows={1}
+                              size="small"
+                              sx={{
+                                backgroundColor: "white",
+                                borderRadius: 1,
+                                margin: "8px",
+                              }}
+                              InputProps={{
+                                style: {
+                                  height:"36px",
+                                },
+                              }}
+                            />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            }}
+          itemContent={(index: number) =>
+            rowContent(
+                index, 
+                filteredData[index], 
+                columns, 
+                classes, 
+                openUpdateAmountStock, 
+                user.background_color
+            )
+          }
+        />
+      </Paper>
+    </div>
   );
 }
