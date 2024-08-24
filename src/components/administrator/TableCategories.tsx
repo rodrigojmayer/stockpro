@@ -16,19 +16,19 @@ import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
-import { Data, DataTable, ColumnDataCategories } from '../types';
-import { UserContext } from '../context/UserContext'
-import { ColumnsContext } from '../context/ColumnsContext'
-import { useStylesGlobal } from '../Styles';
+import { Data, DataTable, ColumnDataCategories } from '../../types';
+import { UserContext } from '../../context/UserContext'
+import { ColumnsContext } from '../../context/ColumnsContext'
+import { useStylesGlobal } from '../../Styles';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import LockIcon from '@mui/icons-material/Lock';
-import CustomFields from './CustomFields';
-import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
-import { CategoriesContext } from '../context/CategoriesContext';
-import { CategoriesSubContext } from '../context/CategoriesSubContext';
+import CustomFields from '../CustomFields';
+import { LanguageLabelsContext } from '../../context/LanguageLabelsContext';
+import { CategoriesContext } from '../../context/CategoriesContext';
+import { CategoriesSubContext } from '../../context/CategoriesSubContext';
 
 
 // type TableClasses = ReturnType<typeof useStyles>;

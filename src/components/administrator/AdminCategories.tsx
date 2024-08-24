@@ -33,29 +33,29 @@ import { OkButton,
          CancelButton, 
          PlusButton,
          AddButton,
-        } from './Buttons';
+        } from '../Buttons';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import ControlPointTwoToneIcon from '@mui/icons-material/ControlPointTwoTone';
 import EditIcon from '@mui/icons-material/Edit';
 import List from '@mui/material/List/List';
 import IonTrash from "../assets/ion_trash.svg";
-import SaveChanges from './SaveChanges';
+import SaveChanges from '../SaveChanges';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { useStylesGlobal, modalStyleExternal, modalStyleInternal, modalStyleInternalAdmin } from '../Styles'
-import { ColumnDataCategories, ColumnDataCustom, ChildProps, UserEditData, Data } from '../types';
-import { UserContext } from '../context/UserContext';
-import { IsLoadingContext } from '../context/IsLoadingContext';
-import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
+import { useStylesGlobal, modalStyleExternal, modalStyleInternal, modalStyleInternalAdmin } from '../../Styles'
+import { ColumnDataCategories, ColumnDataCustom, ChildProps, UserEditData, Data } from '../../types';
+import { UserContext } from '../../context/UserContext';
+import { IsLoadingContext } from '../../context/IsLoadingContext';
+import { LanguageLabelsContext } from '../../context/LanguageLabelsContext';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import ErrorModal from './ErrorModal';
-import { UsersContext } from '../context/UsersContext';
-import ManageUser from './ManageUser';
-import { CheckListStockContext } from '../context/CheckListStockContext';
+import ErrorModal from '../ErrorModal';
+import { UsersContext } from '../../context/UsersContext';
+import ManageUser from '../ManageUser';
+import { CheckListStockContext } from '../../context/CheckListStockContext';
 import { TableComponents, TableVirtuoso } from 'react-virtuoso';
-import { CategoriesSubContext } from '../context/CategoriesSubContext';
-import { CategoriesContext } from '../context/CategoriesContext';
+import { CategoriesSubContext } from '../../context/CategoriesSubContext';
+import { CategoriesContext } from '../../context/CategoriesContext';
 
 
 const VirtuosoTableComponents: TableComponents<Data> = {

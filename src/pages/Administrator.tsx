@@ -4,9 +4,9 @@ import { Container, Grid } from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import { PlusButton, UpdateButton } from '../components/Buttons';
-import ModalsGroupAdministrator from '../components/ModalsGroupAdministrator';
+import ModalsGroupAdministrator from '../components/administrator/ModalsGroupAdministrator';
 import MainSearch from '../components/MainSearch';
-import TableCategories from '../components/TableCategories';
+import TableCategories from '../components/administrator/TableCategories';
 import ManageStock from '../components/ManageStock';
 import UpdateAmountStock from '../components/UpdateAmountStock';
 import { Data } from '../types'; 

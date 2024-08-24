@@ -6,18 +6,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Container, Grid } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-import { MenuButton, PlusButton, UpdateButton } from './Buttons';
-import MenuOptionsAdministrator from './MenuOptionsAdministrator';
+import { MenuButton, PlusButton, UpdateButton } from '../Buttons';
+import MenuOptionsAdministrator from '../MenuOptionsAdministrator';
 // import Fields from './Fields';
 // import Alerts from './Alerts';
-import Profile from './Profile';
-import { ColumnData, Data, DataMenuOptionsAdmin } from '../types';
-import Preferences from './Preferences';
-import Users from './Users';
-import MainSearch from './MainSearch';
-import { useStylesGlobal } from '../Styles';
+import Profile from '../Profile';
+import { ColumnData, Data, DataMenuOptionsAdmin } from '../../types';
+import Preferences from '../Preferences';
+import Users from '../Users';
+import MainSearch from '../MainSearch';
+import { useStylesGlobal } from '../../Styles';
 // import MassiveUpdateStock from './MassiveUpdateStock';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 import AdminCategories from './AdminCategories';
 
 const INITIAL_MENU_OPTIONS = {
