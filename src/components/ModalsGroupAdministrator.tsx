@@ -63,8 +63,6 @@ export default function ModalsGroup(
     const handleOpenMenu = () => setOpenMenu(true);
     const handleCloseMenu = () => setOpenMenu(false);
     const [openOptions, setOpenOptions] = useState<DataMenuOptionsAdmin>(INITIAL_MENU_OPTIONS);
-    // const [ searchQuery, setSearchQuery ] = useState("")
-    
   
     const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
             setOpenOptions({...openOptions, [newData.option]: newData.open});
@@ -78,9 +76,9 @@ export default function ModalsGroup(
         }
     }
     
-    useEffect(() => {
-        // console.log("ModalsGroup columns: ", columns)
-    }, [openMenu])
+    // useEffect(() => {
+    //     // console.log("ModalsGroup columns: ", columns)
+    // }, [openMenu])
     return (
         <div>
             <MenuOptionsAdministrator
@@ -101,10 +99,10 @@ export default function ModalsGroup(
                 handleClose={handleCloseOptions} 
                 data={data} 
             /> */}
-            <AdminCategories
+            {/* <AdminCategories
                 open={openOptions.admin_categories}
                 handleClose={handleCloseOptions} 
-            />
+            /> */}
             {/* <Users
                 open={openOptions.users}
                 handleClose={handleCloseOptions} 
@@ -118,35 +116,24 @@ export default function ModalsGroup(
                 handleClose={handleCloseOptions} 
             /> */}
             <AppBar 
-                // className={`${classes.menu_appbar} ${classes._0main_background_colorDD}`}
-                // className={`${classes.menu_appbar} ${classes[`_${user.background_color}main_background_colorDD` as keyof typeof classes]}`}
                 className={`${classes.menu_appbar} ${classes[`_${user.background_color}main_background_colorDD` as keyof typeof classes]} ${classes[`_${user.background_color}main_colorDD` as keyof typeof classes]}`}
                 sx={{ top: (breakpointLG?0:"auto"), bottom: 0 }}
             >  
                 <Toolbar >
                     <Grid container  >
-                        <Grid item xs={10} md={3} lg={11}  sx={{ marginTop: "7px"}}>
+                        <Grid item xs={10} md={3} lg={3}  sx={{ marginTop: "7px"}}>
                             <Typography variant= "h6" className={classes.menu_logo}>
-                                StockPro (Beta) Administrator
+                                StockPro (Beta) Admin
                                 {test}
                             </Typography>
                         </Grid>
-                        {/* <Grid item xs={0} md={8} lg={1} > */}
-                            {/* <Container sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}>
-                                <MainSearch setSearchQuery={setSearchQuery} />
-                            </Container> */}
-                            {/* <Container 
+                        <Grid item xs={0} md={8} lg={8} >
+                            <Container 
                                 maxWidth="md" 
                                 style={{padding: "0"}} 
                                 sx={{ marginTop: "7px", display: (breakpointLG?"block":"none") }}
                             >
                                 <Grid container>
-                                    <Grid item xs={1} >
-                                        <UpdateButton
-                                            clicked={()=>openMassiveUpdateStock("update")}
-                                            disabled={disabledUpdateButton}
-                                        />
-                                    </Grid>
                                     <Grid item xs={10}>
                                         <MainSearch setSearchQuery={setSearchQuery} />
                                     </Grid>
@@ -156,8 +143,8 @@ export default function ModalsGroup(
                                         />
                                     </Grid>
                                 </Grid>
-                            </Container> */}
-                        {/* </Grid> */}
+                            </Container>
+                        </Grid>
                         <Grid item xs={2} md={1} >
                             <MenuButton
                                 onDataChanged={handleOpenMenu}

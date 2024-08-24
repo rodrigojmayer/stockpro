@@ -81,9 +81,9 @@ export default function ModalsGroup(
         }
     }
     
-    useEffect(() => {
-        // console.log("ModalsGroup columns: ", columns)
-    }, [openMenu])
+    // useEffect(() => {
+    //     // console.log("ModalsGroup columns: ", columns)
+    // }, [openMenu])
     return (
         <div>
             <MenuOptions
