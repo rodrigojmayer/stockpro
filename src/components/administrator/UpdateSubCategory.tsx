@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box,
          Container,
          Grid,
@@ -70,7 +70,7 @@ export default function UpdateSubCategory(
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
     const { categories } = useContext<any>(CategoriesContext) 
     const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext);
-    
+    // console.log("categories: ", categories) 
     
     const [ signUpdate, setSignUpdate ] = useState<number>(-1)
     const [ valueUpdate, setValueUpdate ] = useState<number>(1)
@@ -87,6 +87,7 @@ export default function UpdateSubCategory(
         setCategoryTemp(subCategoryUpdate.category);
         setSubCategoryTemp(subCategoryUpdate.sub_category);
     }, [open])
+
     // const swapOperator = () => {
     //     const productAmount = Number(productUpdate.amount)
     //     let newSign = -(signUpdate)
@@ -315,6 +316,11 @@ export default function UpdateSubCategory(
 
     
     // console.log("signUpdate: ", signUpdate)
+        if ( !categoryTemp ||
+            !subCategoryTemp ) {
+        return <Typography>Loading...</Typography>;
+    }
+
     return (
         <Modal
         className={classes.modal_external_background}
@@ -346,9 +352,9 @@ export default function UpdateSubCategory(
                         <SaveChanges
                             openSaveChanges={openSaveChanges}
                             closeSaveChanges={handleCloseSaveChanges} 
-
+                            
                             messageBeforeSave={messageBeforeSave}
-                        />
+                            />
                         {/* <ErrorModal
                             openErrorModal={openErrorModal}
                             closeErrorModal={handleCloseErrorModal}
@@ -357,8 +363,7 @@ export default function UpdateSubCategory(
                         <Box className={`${classes.customBoxColumn}`}>
                             <Typography noWrap align='center' variant="h5" className={classes.title}>
                                 Update Sub Category
-                            </Typography>
-                            
+                            </Typography>   
                             <Box className={classes.customBoxRow}>
                                 <TextField 
                                     label="Category"
@@ -372,9 +377,9 @@ export default function UpdateSubCategory(
                                     >
                                         {categories.map((category: any) => (
                                             <MenuItem 
-                                                key={category.id} 
-                                                value={category.name}
-                                                sx={{ justifyContent: "space-between" }}
+                                            key={category.id} 
+                                            value={category.name}
+                                            sx={{ justifyContent: "space-between" }}
                                             >
                                                 {category.name}
                                             </MenuItem>
@@ -396,44 +401,44 @@ export default function UpdateSubCategory(
                                     }}
                                     // inputRef={input => input && input.focus()}
                                     // inputRef={firstInputRef} // Set the ref to the first input    
-                                />
+                                    />
                             </Box> 
 
 
                             {/* <Grid container spacing={0} alignItems="center" >
                                 <Grid item xs={3} display="flex" justifyContent="center">
-                                    <Typography variant="h6" >
-                                        {labelsUpdateAmountStock.amount}
+                                <Typography variant="h6" >
+                                {labelsUpdateAmountStock.amount}
                                     </Typography> </Grid>
-                                <Grid item xs={3} />
-                                <Grid item xs={3} display="flex" justifyContent="center">
+                                    <Grid item xs={3} />
+                                    <Grid item xs={3} display="flex" justifyContent="center">
                                     <UpButton
-                                        direction="up"
-                                        clicked={() => upValue()}
+                                    direction="up"
+                                    clicked={() => upValue()}
                                     /> 
-                                </Grid>
-                                <Grid item xs={3} />
-                                <Grid item xs={3} display="flex" justifyContent="center">
+                                    </Grid>
+                                    <Grid item xs={3} />
+                                    <Grid item xs={3} display="flex" justifyContent="center">
                                     <Typography variant="h6" >
-                                        {productUpdate.amount}
+                                    {productUpdate.amount}
                                     </Typography>
-                                </Grid>
-                                <Grid item xs={3} display="flex" justifyContent="center" > 
+                                    </Grid>
+                                    <Grid item xs={3} display="flex" justifyContent="center" > 
                                     <ButtonOperator
-                                        sizeIcoExt="50px !important"
-                                        sizeIcoInt="57px !important"
-                                        // colorIco = "white"  // Fix color
-                                        colorIco = {buttonOperatorColor}
-                                        clicked={() => swapOperator()}
+                                    sizeIcoExt="50px !important"
+                                    sizeIcoInt="57px !important"
+                                    // colorIco = "white"  // Fix color
+                                    colorIco = {buttonOperatorColor}
+                                    clicked={() => swapOperator()}
                                     />
-                                </Grid>
-                                <Grid item xs={3} display="flex" justifyContent="center" >
+                                    </Grid>
+                                    <Grid item xs={3} display="flex" justifyContent="center" >
                                     <TextField
-                                        maxRows={1}
-                                        size="small"
-                                        // type="number"
-                                        className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
-                                        // value={Math.abs(valueUpdate)}
+                                    maxRows={1}
+                                    size="small"
+                                    // type="number"
+                                    className={`${classes.inputMainData} ${classes.inputUpdateAmountStock}`}
+                                    // value={Math.abs(valueUpdate)}
                                         value={valueUpdate}
                                         onChange={ (event:any) => writeValue(event) }
                                         style= {{
@@ -448,16 +453,16 @@ export default function UpdateSubCategory(
                                         }}
                                         // inputRef={firstInputRef}
                                         inputRef={firstInputRef ? input => input && input.select() : undefined}
-                                    />
-                                </Grid>
-                                <Grid item xs={3} display="flex" justifyContent="center" >
-                                    <Typography variant="h6" >
+                                        />
+                                        </Grid>
+                                        <Grid item xs={3} display="flex" justifyContent="center" >
+                                        <Typography variant="h6" >
                                         {productUpdate.measure}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={6} />
-                                <Grid item xs={3} display="flex" justifyContent="center" >
-                                    <UpButton
+                                        </Typography>
+                                        </Grid>
+                                        <Grid item xs={6} />
+                                        <Grid item xs={3} display="flex" justifyContent="center" >
+                                        <UpButton
                                         direction="down"
                                         // clicked={() => setValueUpdate(valueUpdate-1)}
                                         clicked={() => downValue()}
@@ -476,11 +481,11 @@ export default function UpdateSubCategory(
                         <Box className={classes.finishButtons}>
                             {user.id_access_level === 4 ? 
                                     "" 
-                                : 
+                                    : 
                                     <EditButton
-                                        clicked={() => handleOpenEditStock()}
+                                    clicked={() => handleOpenEditStock()}
                                     />
-                            } 
+                                } 
                             <CancelButton
                             clicked={() => close()}
                             />
@@ -491,6 +496,6 @@ export default function UpdateSubCategory(
                     </Box>
                 </Box>
             </form>
-        </Modal>
+            </Modal>
     )
 }

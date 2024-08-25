@@ -43,13 +43,15 @@ function Administrator() {
       "name_ita": "",
       "deleted": false,
     })
-    const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
-    const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
-    const openUpdateAmountStock = (newData:CategoriesSubData) => {
-      // console.log("products: ", products)
+    // const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
+    const [ showUpdateSubCategoryUpdate, setShowUpdateSubCategoryUpdate ] = useState(false)
+    const handleCloseUpdateAmountStock = () => setShowUpdateSubCategoryUpdate(false)
+    const openUpdateSubCategoryUpdate = (newData:CategoriesSubData) => {
+      
+       // console.log("products: ", products)
       console.log("newData: ", newData)
   
-      setShowUpdateAmountStock(true)
+      setShowUpdateSubCategoryUpdate(true)
       let dateObject
       let formattedDate
       // if(typeof newData.alert_date === 'string'){
@@ -189,7 +191,7 @@ function Administrator() {
             <TableCategories 
               data={filteredData}
               // columns={columnsUserOrder} 
-              openUpdateAmountStock={openUpdateAmountStock} 
+              openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             />
           {/* } */}
@@ -201,7 +203,7 @@ function Administrator() {
             columnsCustom={filteredColumnsCustom}
         /> */}
         <UpdateSubCategory
-            open={showUpdateAmountStock}
+            open={showUpdateSubCategoryUpdate}
             handleClose={handleCloseUpdateAmountStock}
             columnsCustom={filteredColumnsCustom}
             subCategoryUpdate={subCategoryUpdate}

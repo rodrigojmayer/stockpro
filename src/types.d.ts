@@ -129,7 +129,7 @@ export interface DataTableSubCategory {
   // columns: ColumnData[]
   // openUpdateAmountStock: (id_prod: Number, name_prod: String, amount_prod: Number) => void
   // openUpdateAmountStock: (newData: ProductUpdateData) => void
-  openUpdateAmountStock: (newData: CategoriesSubData) => void
+  openUpdateSubCategoryUpdate: (newData: CategoriesSubData) => void
   handleDisabledUpdateButton: (newData: boolean) => void
 }
 
