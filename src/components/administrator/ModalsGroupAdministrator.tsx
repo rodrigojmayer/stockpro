@@ -11,7 +11,7 @@ import MenuOptionsAdministrator from '../MenuOptionsAdministrator';
 // import Fields from './Fields';
 // import Alerts from './Alerts';
 import Profile from '../Profile';
-import { ColumnData, Data, DataMenuOptionsAdmin } from '../../types';
+import { ColumnData, CategoriesSubData, DataMenuOptionsAdmin } from '../../types';
 import Preferences from '../Preferences';
 import Users from '../Users';
 import MainSearch from '../MainSearch';
@@ -31,12 +31,12 @@ interface ModalsGroupAdministratorProps {
     columnsDefault: ColumnData[]
     columnsCustom: ColumnData[]
     idColumnsTableOrder: Number[]
-    data: Data[]
+    data: CategoriesSubData[]
     // columnsHiddenFields: ColumnData[]
     children: React.ReactNode
     // showCreataddButtonShoweStock: boolean
     setSearchQuery: (value: string) => void;
-    openMassiveUpdateStock: (value: string) => void;
+    // openMassiveUpdateStock: (value: string) => void;
     disabledUpdateButton: boolean;
     openCreateStock: () => void;
   }
@@ -50,7 +50,7 @@ export default function ModalsGroup(
         idColumnsTableOrder,
         data,
         setSearchQuery,
-        openMassiveUpdateStock,
+        // openMassiveUpdateStock,
         disabledUpdateButton,
         openCreateStock,
     }: ModalsGroupAdministratorProps) {

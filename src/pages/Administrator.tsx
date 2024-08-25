@@ -8,8 +8,8 @@ import ModalsGroupAdministrator from '../components/administrator/ModalsGroupAdm
 import MainSearch from '../components/MainSearch';
 import TableCategories from '../components/administrator/TableCategories';
 import ManageStock from '../components/ManageStock';
-import UpdateAmountStock from '../components/UpdateAmountStock';
-import { Data } from '../types'; 
+import UpdateSubCategory from '../components/administrator/UpdateSubCategory';
+import { CategoriesSubData } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import { ColumnsContext } from '../context/ColumnsContext';
@@ -33,74 +33,53 @@ function Administrator() {
     const [ showCreateStock, setShowCreateStock ] = useState(false)
     const handleCloseCreateStock = () => setShowCreateStock(false)
     const openCreateStock = () => setShowCreateStock(true)
-    const [ productUpdate, setProductUpdate ] = useState<Data>({
+    const [ subCategoryUpdate, setSubCategoryUpdate ] = useState<CategoriesSubData>({
       "_id": "",
       "id": 0,
-      "id_client": 0,
-      "product": "",
-      "amount": 0,
-      "measure": "",
-      "category": "",
-      "sub_category": "",
-      "id_sub_category": 1,
-      "code": "",
-      "price": "",
-      "description": "",
-      "url_image": "",
-      "alert_amount": 0,
-      "alert_amount_enabled": true,
-      "alerted_amount": false,
-      "alert_date": "",
-      "alert_date_enabled": true,
-      "alerted_date": false,
-      "custom_fields": [],
+      "id_category": 1,
+      "name": "",
+      "name_esp": "",
+      "name_dan": "",
+      "name_ita": "",
+      "deleted": false,
     })
     const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
     const handleCloseUpdateAmountStock = () => setShowUpdateAmountStock(false)
-    const openUpdateAmountStock = (newData:Data) => {
+    const openUpdateAmountStock = (newData:CategoriesSubData) => {
       // console.log("products: ", products)
-      // console.log("newData: ", newData)
+      console.log("newData: ", newData)
   
       setShowUpdateAmountStock(true)
       let dateObject
       let formattedDate
-      if(typeof newData.alert_date === 'string'){
-        const dateDay = newData.alert_date.substring(0,2)
-        const dateMonth = newData.alert_date.substring(3,5)
-        const dateYear = newData.alert_date.substring(6,10)
-        const dateString = `${dateYear}-${dateMonth}-${dateDay}T00:00:00Z`
-        dateObject = new Date(dateString)
-        formattedDate = dateObject.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-        });
-      } else {
-        dateObject = newData.alert_date
-        formattedDate = newData.alert_date
-      }
+      // if(typeof newData.alert_date === 'string'){
+      //   const dateDay = newData.alert_date.substring(0,2)
+      //   const dateMonth = newData.alert_date.substring(3,5)
+      //   const dateYear = newData.alert_date.substring(6,10)
+      //   const dateString = `${dateYear}-${dateMonth}-${dateDay}T00:00:00Z`
+      //   dateObject = new Date(dateString)
+      //   formattedDate = dateObject.toLocaleDateString('en-US', {
+      //     year: 'numeric',
+      //     month: 'numeric',
+      //     day: 'numeric',
+      //   });
+      // } else {
+      //   dateObject = newData.alert_date
+      //   formattedDate = newData.alert_date
+      // }
   
-      setProductUpdate({
+      setSubCategoryUpdate({
         "_id": newData._id,
         "id": newData.id,
-        "id_client": newData.id_client,
-        "product": newData.product,
-        "amount": newData.amount,
-        "measure": newData.measure,
+        "id_category": newData.id_category,
+        "name": newData.name,
+        "name_esp": newData.name_esp,
+        "name_dan": newData.name_dan,
+        "name_ita": newData.name_ita,
+        "deleted": newData.deleted,
         "category": newData.category,
-        "code": newData.code,
-        "price": newData.price,
-        "description": newData.description,
-        "url_image": newData.url_image,
-        "sub_category": newData.sub_category,
-        "id_sub_category": newData.id_sub_category,
-        "alert_amount": newData.alert_amount,
-        "alert_amount_enabled": newData.alert_amount_enabled,
-        "alerted_amount": newData.alerted_amount,
-        "alert_date": formattedDate,
-        "alert_date_enabled": newData.alert_date_enabled,
-        "alerted_date": newData.alerted_date,
-        "custom_fields": newData.newRow.custom_fields,
+        "id_sub_category": newData.id,
+        "sub_category": newData.sub_category
       })
     }  
   
@@ -109,153 +88,93 @@ function Administrator() {
       setDisabledUpdateButton(value_disable)
     }
     
-    const [ massiveUpdate, setMassiveUpdate] = useState<Data[]>([{
-      "_id": "",
-      "id": 0,
-      "id_client": 0,
-      "product": "",
-      "amount": 0,
-      "measure": "",
-      "category": "",
-      "sub_category": "",
-      "id_sub_category": 1,
-      "code": "",
-      "price": "",
-      "description": "",
-      "url_image": "",
-      "alert_amount": 0,
-      "alert_amount_enabled": true,
-      "alerted_amount": false,
-      "alert_date": "",
-      "alert_date_enabled": true,
-      "alerted_date": false,
-      "custom_fields": [],
-    }])
-    const [ showMassiveUpdateStock, setShowMassiveUpdateStock ] = useState(false)
-    const handleMassiveUpdateStock = () => setShowMassiveUpdateStock(false)
-    const openMassiveUpdateStock = (newData:String) => {
-      setShowMassiveUpdateStock(true)
-      setMassiveUpdate(
-        products.filter((item:any) => {
-          return (
-            checkListStock.includes(item._id)
-          )
-        })
-      );
-    }
-    
-    const [filteredData, setFilteredData] = useState<Data[]>([])
+    const [filteredData, setFilteredData] = useState<CategoriesSubData[]>([])
       
-    useEffect(() => {
-        setFilteredData(
-          products.filter((item:any) => {
-            // console.log("item: ", item)
-            item.category = item.category_obj[labelsManageStock.category_name]
-            item.sub_category = item.sub_category_obj[labelsManageStock.category_name]
-            // item.category= "pepe"
-            const columnsUserOrderWithoutImages = columnsUserOrder.filter((column:any) => column.dataKey !=="url_image")
-            const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 
-              columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
-            )
-            return (
-              columnsUserOrderWithoutImages.some((column:any) => 
-                (item[column.dataKey] || item[column.dataKey]===0) &&
-                item[column.dataKey]
-                  .toString()
-                  .toLowerCase()
-                  .includes(searchQuery.toLowerCase()) 
-              ) || (
-                item.custom_fields &&
-                filteredColumnsCustomUser
-                  .some((customColumn:any) =>
-                          Object.entries(item.custom_fields).filter(
-                            ([key, value]) => 
-                            (value as string).toString().toLowerCase().includes(searchQuery.toLowerCase())
-                            && key == customColumn.dataKey
-                          ).length
-                )
-              )
-            )
-          })
-        );
-    }, [searchQuery, products, columnsUserOrder]) 
+    // useEffect(() => {
+    //     setFilteredData(
+    //       products.filter((item:any) => {
+    //         // console.log("item: ", item)
+    //         item.category = item.category_obj[labelsManageStock.category_name]
+    //         item.sub_category = item.sub_category_obj[labelsManageStock.category_name]
+    //         // item.category= "pepe"
+    //         // const columnsUserOrderWithoutImages = columnsUserOrder.filter((column:any) => column.dataKey !=="url_image")
+    //         // const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 
+    //         //   columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
+    //         // )
+    //         return (
+    //           columnsUserOrderWithoutImages.some((column:any) => 
+    //             (item[column.dataKey] || item[column.dataKey]===0) &&
+    //             item[column.dataKey]
+    //               .toString()
+    //               .toLowerCase()
+    //               .includes(searchQuery.toLowerCase()) 
+    //           ) || (
+    //             item.custom_fields &&
+    //             filteredColumnsCustomUser
+    //               .some((customColumn:any) =>
+    //                       Object.entries(item.custom_fields).filter(
+    //                         ([key, value]) => 
+    //                         (value as string).toString().toLowerCase().includes(searchQuery.toLowerCase())
+    //                         && key == customColumn.dataKey
+    //                       ).length
+    //             )
+    //           )
+    //         )
+    //       })
+    //     );
+    // }, [searchQuery, products, columnsUserOrder]) 
   
   
-    useEffect(() => {
-      if (  
-            isLoading.user || 
-            isLoading.measures || 
-            isLoading.filestack || 
-            isLoading.accessLevels || 
-            isLoading.categories || 
-            isLoading.categories_sub || 
-            isLoading.defaultColumns || 
-            isLoading.columns || 
-            isLoading.products || 
-            isLoading.customColumns || 
-            isLoading.fieldsFetchEditCustomColumn || 
-            isLoading.fieldsFetchCreateCustomColumn || 
-            isLoading.fieldsFetchEditUsersFieldsOrder
-      ) {
-        setOpenBackdrop(true)
-      } else {
-        setOpenBackdrop(false)
-      }
+    // useEffect(() => {
+    //   if (  
+    //         isLoading.user || 
+    //         isLoading.measures || 
+    //         isLoading.filestack || 
+    //         isLoading.accessLevels || 
+    //         isLoading.categories || 
+    //         isLoading.categories_sub || 
+    //         isLoading.defaultColumns || 
+    //         isLoading.columns || 
+    //         isLoading.products || 
+    //         isLoading.customColumns || 
+    //         isLoading.fieldsFetchEditCustomColumn || 
+    //         isLoading.fieldsFetchCreateCustomColumn || 
+    //         isLoading.fieldsFetchEditUsersFieldsOrder
+    //   ) {
+    //     setOpenBackdrop(true)
+    //   } else {
+    //     setOpenBackdrop(false)
+    //   }
   
-    }, [isLoading])
+    // }, [isLoading])
   
     
     useEffect(() => {
-      setProductUpdate({
+      setSubCategoryUpdate({
         "_id": "",
         "id": 0,
-        "id_client": 0,
-        "product": "",
-        "amount": 0,
-        "measure": "",
-        "category": "",
-        "sub_category": "",
-        "id_sub_category": 1,
-        "code": "",
-        "price": "",
-        "description": "",
-        "url_image": "",
-        "alert_amount": 0,
-        "alert_amount_enabled": true,
-        "alerted_amount": false,
-        "alert_date": "",
-        "alert_date_enabled": true,
-        "alerted_date": false,
-        "custom_fields": [],
+        "id_category": 1,
+        "name": "",
+        "name_esp": "",
+        "name_dan": "",
+        "name_ita": "",
+        "deleted": false,
       })
     }, [showCreateStock])
   
     return (
       <div className="App">
-        {/* <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={openBackdrop} // Loading...
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop> */}
         <ModalsGroupAdministrator 
           columnsDefault={defaultColumns} 
           columnsCustom={customColumns}
           idColumnsTableOrder={idColumnsTableOrder} 
           data={filteredData}
           setSearchQuery={setSearchQuery}
-          openMassiveUpdateStock={openMassiveUpdateStock}
           disabledUpdateButton={disabledUpdateButton}
           openCreateStock={openCreateStock}
         >
           <Container maxWidth="md" sx={{ display: (breakpointLG?"none":"block") }} style={{padding: "0"}} >
             <Grid container>
-              <Grid item xs={2} >
-                <UpdateButton
-                  clicked={()=>openMassiveUpdateStock("update")}
-                  disabled={disabledUpdateButton}
-                />
-              </Grid>
               <Grid item xs={8} >
                 <MainSearch setSearchQuery={setSearchQuery} />
               </Grid>
@@ -266,14 +185,14 @@ function Administrator() {
               </Grid>
             </Grid>
           </Container>
-          {openBackdrop ? "": 
+          {/* {openBackdrop ? "":  */}
             <TableCategories 
-              data={filteredData} 
-              columns={columnsUserOrder} 
+              data={filteredData}
+              // columns={columnsUserOrder} 
               openUpdateAmountStock={openUpdateAmountStock} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             />
-          }
+          {/* } */}
         </ModalsGroupAdministrator>
         {/* <ManageStock
             open={showCreateStock} 
@@ -281,17 +200,17 @@ function Administrator() {
             data={productUpdate}
             columnsCustom={filteredColumnsCustom}
         /> */}
-        <UpdateAmountStock
+        <UpdateSubCategory
             open={showUpdateAmountStock}
             handleClose={handleCloseUpdateAmountStock}
             columnsCustom={filteredColumnsCustom}
-            productUpdate={productUpdate}
+            subCategoryUpdate={subCategoryUpdate}
         />
-        <MassiveUpdateStock
+        {/* <MassiveUpdateStock
             open={showMassiveUpdateStock}
             handleClose={handleMassiveUpdateStock}
             data={massiveUpdate}
-        />
+        /> */}
       </div>
     )
 

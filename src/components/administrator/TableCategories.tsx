@@ -16,7 +16,7 @@ import { useState, useEffect, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
-import { Data, DataTable, ColumnDataCategories } from '../../types';
+import { CategoriesSubData, DataTableSubCategory, ColumnDataCategories } from '../../types';
 import { UserContext } from '../../context/UserContext'
 import { ColumnsContext } from '../../context/ColumnsContext'
 import { useStylesGlobal } from '../../Styles';
@@ -34,17 +34,17 @@ import { CategoriesSubContext } from '../../context/CategoriesSubContext';
 // type TableClasses = ReturnType<typeof useStyles>;
 
 const INITIAL_STATE = {
-  _id: "",
-  id: NaN,
-  id_client: NaN,
-  product: "",
-  amount: NaN,
-  measure: "",
-  category: "",
-  sub_category: "",
+  "_id": "",
+  "id": 0,
+  "id_category": 1,
+  "name": "",
+  "name_esp": "",
+  "name_dan": "",
+  "name_ita": "",
+  "deleted": false,
 }
 
-const VirtuosoTableComponents: TableComponents<Data> = {
+const VirtuosoTableComponents: TableComponents<CategoriesSubData> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
     <TableContainer component={Paper} {...props} ref={ref} />
   )),
@@ -60,19 +60,23 @@ const VirtuosoTableComponents: TableComponents<Data> = {
 
 function rowContent(
     _index: number, 
-    row: Data, 
+    row: CategoriesSubData, 
     columnsTable: ColumnDataCategories[], 
     classes: any, 
-    openUpdateAmountStock:(newData: Data) => void,  
+    openUpdateAmountStock:(newData: CategoriesSubData) => void,  
     user_background_color:any,
   ) {
 
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
 
   const RowContent = (item:any) => {
+    // console.log("newRow: ", newRow)
+    // console.log("item.column.dataKey: ", item.column.dataKey)
+    // console.log("newRow[item.column.dataKey]: ", newRow[item.column.dataKey])
+
     return( 
       <Tooltip 
-        title={newRow[item.column.dataKey]} 
+        title={newRow[item.column.dataKey]}
         disableHoverListener={String(newRow[item.column.dataKey]).length <= 10}
         slotProps={{
             popper: {
@@ -103,26 +107,17 @@ function rowContent(
           key={column.id}
           align='center'
           onClick={() => openUpdateAmountStock({
-              "_id":newRow._id, 
-              "id": newRow.id, 
-              "id_client": newRow.id_client, 
-              "product": newRow.product, 
-              "amount": newRow.amount, 
-              "measure": newRow.measure, 
-              "category": newRow.category, 
-              "sub_category": newRow.sub_category,
-              "id_sub_category": newRow.id_sub_category, 
-              "code": newRow.code, 
-              "price": newRow.price, 
-              "description": newRow.description, 
-              "url_image": newRow.url_image, 
-              "alert_amount": newRow.alert_amount, 
-              "alert_amount_enabled": newRow.alert_amount_enabled, 
-              "alerted_amount": newRow.alerted_amount, 
-              "alert_date": newRow.alert_date, 
-              "alert_date_enabled": newRow.alert_date_enabled, 
-              "alerted_date": newRow.alerted_date, 
-              "newRow": newRow})}
+            "_id": newRow._id,
+            "id": newRow.id,
+            // "name": newRow.name,
+            "name_esp": newRow.name_esp,
+            "name_dan": newRow.name_dan,
+            // "name_ita": newRow.name_ita,
+            "id_category": newRow.id_category,
+            "category": newRow.category,
+            "sub_category": newRow.sub_category,
+            // "deleted": newRow.deleted,
+          })}
           className={`${ _index%2 ? classes[`_${user_background_color}table_row_odd` as keyof typeof classes]  : classes[`_${user_background_color}table_row_even` as keyof typeof classes] }`}
           style={{ 
              border:0,
@@ -142,7 +137,7 @@ export default function TableCategories(
   { 
     data, 
     openUpdateAmountStock
-  }:  DataTable ) {
+  }:  DataTableSubCategory ) {
 
   const  {classes} = useStylesGlobal()
   const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -173,6 +168,7 @@ export default function TableCategories(
     }
   ]
 
+  // console.log("categoriesSub: ", categoriesSub)
   const filteredFields = categoriesSub.map((categorySub: any) => {
     if(categorySub.name !== "-"){    
         let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
@@ -182,11 +178,25 @@ export default function TableCategories(
             category: categoryFind.name,
             id_sub_category: categorySub.id,
             sub_category: categorySub.name
+          // _id: categorySub._id,
+          // id: categorySub.id,
+          // id_category: categoryFind.id,
+          // name: categorySub.name,
+          // name_esp: "",
+          // name_dan: "",
+          // name_ita: "",
+          // deleted: "",
         }) 
     }
   }).filter(Boolean)
 
-  const [filteredData, setFilteredData] = useState<any>(filteredFields)
+  const [filteredData, setFilteredData] = useState(filteredFields)
+  // console.log("filteredFields: ", filteredFields)
+  useEffect(() => {
+    // setFilteredData(filteredFields)
+  console.log("filteredData: ", filteredData)
+
+  }, [filteredData]);
   const initialManageColumns = columns.map((column:any) => {
     const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
     const isInArray = foundColumn !== undefined ? true : false;
@@ -199,7 +209,7 @@ export default function TableCategories(
   })
 
   const [manageColumns, setManageColumns] = useState(initialManageColumns)
-  const [filteredRows, setFilteredRows] = useState<Data>(INITIAL_STATE);
+  const [filteredRows, setFilteredRows] = useState<CategoriesSubData>(INITIAL_STATE);
   const [sortedData, setSortedData] = useState(data)
   const [openCustomFieldsModal, setOpenCustomFieldsModal] = useState(false); 
   const handleCloseCustomFieldsModal = () => {
@@ -288,7 +298,7 @@ export default function TableCategories(
       /> 
       <Paper style={{backgroundColor: "rgb(0, 0, 0, 0)", height: `calc(100dvh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
         <TableVirtuoso 
-          data={sortedData}
+          data={filteredData}
           components={VirtuosoTableComponents}
           style={{
             backgroundColor: "rgb(0, 0, 0, 0)", 
@@ -319,145 +329,146 @@ export default function TableCategories(
                           padding: "0 4px ",
                         }}
                       >
-                        { columnTable.label ? 
+                        { 
+                        // columnTable.label ? 
                               columnTable.label 
-                            : 
-                            <>
-                              <IconButton
-                                onClick={
-                                  openTableOptions
-                                }
-                                className={classes[`_${user.background_color}table_header_color` as keyof typeof classes]}
-                                style={{ 
-                                  width: "30px", 
-                                  border:0
-                                }}
-                                sx={{
-                                  padding: "0",
-                                  top: "-5px",
-                                }}
-                              >
-                                <MoreVertIcon fontSize="small" />
-                              </IconButton>  
-                              <Menu
-                                disableScrollLock={true}
-                                id="demo-positioned-menu"
-                                aria-labelledby="demo-positioned-button"
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose} 
-                                anchorOrigin={{
-                                  vertical: 'top',
-                                  horizontal: 'left',
-                                }}
-                                transformOrigin={{
-                                  vertical: 'top',
-                                  horizontal: 'left',
-                                }}
-                                style={{ 
-                                  marginTop: '20px', 
-                                  marginLeft: '15px',
-                                }}
+                            // : 
+                            // <>
+                            //   <IconButton
+                            //     onClick={
+                            //       openTableOptions
+                            //     }
+                            //     className={classes[`_${user.background_color}table_header_color` as keyof typeof classes]}
+                            //     style={{ 
+                            //       width: "30px", 
+                            //       border:0
+                            //     }}
+                            //     sx={{
+                            //       padding: "0",
+                            //       top: "-5px",
+                            //     }}
+                            //   >
+                            //     <MoreVertIcon fontSize="small" />
+                            //   </IconButton>  
+                            //   <Menu
+                            //     disableScrollLock={true}
+                            //     id="demo-positioned-menu"
+                            //     aria-labelledby="demo-positioned-button"
+                            //     anchorEl={anchorEl}
+                            //     open={open}
+                            //     onClose={handleClose} 
+                            //     anchorOrigin={{
+                            //       vertical: 'top',
+                            //       horizontal: 'left',
+                            //     }}
+                            //     transformOrigin={{
+                            //       vertical: 'top',
+                            //       horizontal: 'left',
+                            //     }}
+                            //     style={{ 
+                            //       marginTop: '20px', 
+                            //       marginLeft: '15px',
+                            //     }}
 
-                                MenuListProps={{
-                                    sx: { padding: 0,  
-                                    },
-                                }}
-                              >
-                                <MenuItem 
-                                  className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                                >
-                                  <Typography 
-                                    align="center" 
-                                    variant="body2" 
-                                  > 
-                                    <Switch 
-                                      size='small'
-                                      color='success'  
-                                    />  
-                                    {labelsTableProducts.alerts_on_top}
-                                  </Typography>
-                                </MenuItem>
-                                <MenuItem 
-                                  onClick={ openSubTableOptions }
-                                  className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                                >
-                                  <Typography 
-                                    align="center" 
-                                    variant="body2" 
-                                  > 
-                                    {labelsTableProducts.manage_columns}
-                                  </Typography>
-                                </MenuItem>
-                                {(user.id_access_level < 4) &&
-                                  <MenuItem 
-                                    onClick={ handleOpenCustomFieldsModal  }
-                                    className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                                  >
-                                    <Typography 
-                                      align="center" 
-                                      variant="body2" 
-                                    > 
-                                      {labelsTableProducts.custom_fields}
-                                    </Typography>
-                                  </MenuItem> 
-                                }
-                              </Menu>
-                              <Menu
-                                className={breakpointMD ? `${classes.table_menu} ${classes[`_${user.background_color}table_menu_background_color` as keyof typeof classes]}` : ""}
-                                id="demo-positioned-menu2"
-                                aria-labelledby="demo-positioned-button2"
-                                anchorEl={anchorEl2}
-                                open={open2}
-                                onClose={handleClose2}
-                                anchorOrigin={{
-                                  vertical: 'top',
-                                  horizontal: 'left',
-                                }}
-                                transformOrigin={{
-                                  vertical: 'top',
-                                  horizontal: 'left',
-                                }}
-                                style={{ 
-                                  marginTop: '-57px', 
-                                  marginLeft: '0px',
-                                  height: '370px',
-                                }}
-                                MenuListProps={{
-                                    sx: { padding: 0,
-                                    },
-                                }}
-                              >
-                                {manageColumns.map((manageColumn:any) => (
-                                  <MenuItem 
-                                    key={manageColumn.id}
-                                    onClick={() => handlePickColumn(manageColumn) }
-                                    className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                                  >
-                                    <Typography 
-                                      align="center" 
-                                      variant="body2" 
-                                    > 
-                                      <Switch 
-                                        size='small'
-                                        color='success'  
-                                        checked={manageColumn.showInTable}
-                                      />  
-                                        {manageColumn.label}
-                                        {manageColumn.id==-1 ? 
-                                          <LockIcon 
-                                            style={{
-                                              paddingTop: "10px",
-                                            }}
-                                            fontSize='small'
-                                          /> 
-                                        : 
-                                          "" }
-                                    </Typography>
-                                  </MenuItem> 
-                                ))}
-                              </Menu>
-                            </>
+                            //     MenuListProps={{
+                            //         sx: { padding: 0,  
+                            //         },
+                            //     }}
+                            //   >
+                            //     <MenuItem 
+                            //       className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                            //     >
+                            //       <Typography 
+                            //         align="center" 
+                            //         variant="body2" 
+                            //       > 
+                            //         <Switch 
+                            //           size='small'
+                            //           color='success'  
+                            //         />  
+                            //         {labelsTableProducts.alerts_on_top}
+                            //       </Typography>
+                            //     </MenuItem>
+                            //     <MenuItem 
+                            //       onClick={ openSubTableOptions }
+                            //       className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                            //     >
+                            //       <Typography 
+                            //         align="center" 
+                            //         variant="body2" 
+                            //       > 
+                            //         {labelsTableProducts.manage_columns}
+                            //       </Typography>
+                            //     </MenuItem>
+                            //     {(user.id_access_level < 4) &&
+                            //       <MenuItem 
+                            //         onClick={ handleOpenCustomFieldsModal  }
+                            //         className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                            //       >
+                            //         <Typography 
+                            //           align="center" 
+                            //           variant="body2" 
+                            //         > 
+                            //           {labelsTableProducts.custom_fields}
+                            //         </Typography>
+                            //       </MenuItem> 
+                            //     }
+                            //   </Menu>
+                            //   <Menu
+                            //     className={breakpointMD ? `${classes.table_menu} ${classes[`_${user.background_color}table_menu_background_color` as keyof typeof classes]}` : ""}
+                            //     id="demo-positioned-menu2"
+                            //     aria-labelledby="demo-positioned-button2"
+                            //     anchorEl={anchorEl2}
+                            //     open={open2}
+                            //     onClose={handleClose2}
+                            //     anchorOrigin={{
+                            //       vertical: 'top',
+                            //       horizontal: 'left',
+                            //     }}
+                            //     transformOrigin={{
+                            //       vertical: 'top',
+                            //       horizontal: 'left',
+                            //     }}
+                            //     style={{ 
+                            //       marginTop: '-57px', 
+                            //       marginLeft: '0px',
+                            //       height: '370px',
+                            //     }}
+                            //     MenuListProps={{
+                            //         sx: { padding: 0,
+                            //         },
+                            //     }}
+                            //   >
+                            //     {manageColumns.map((manageColumn:any) => (
+                            //       <MenuItem 
+                            //         key={manageColumn.id}
+                            //         onClick={() => handlePickColumn(manageColumn) }
+                            //         className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
+                            //       >
+                            //         <Typography 
+                            //           align="center" 
+                            //           variant="body2" 
+                            //         > 
+                            //           <Switch 
+                            //             size='small'
+                            //             color='success'  
+                            //             checked={manageColumn.showInTable}
+                            //           />  
+                            //             {manageColumn.label}
+                            //             {manageColumn.id==-1 ? 
+                            //               <LockIcon 
+                            //                 style={{
+                            //                   paddingTop: "10px",
+                            //                 }}
+                            //                 fontSize='small'
+                            //               /> 
+                            //             : 
+                            //               "" }
+                            //         </Typography>
+                            //       </MenuItem> 
+                            //     ))}
+                            //   </Menu>
+                            // </>
                           }
                           </Typography>
                             <TextField

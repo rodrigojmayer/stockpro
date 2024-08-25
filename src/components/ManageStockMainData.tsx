@@ -79,7 +79,7 @@ export default function ManageStockMainData(
 
     // console.log("------------------")
     // console.log("categorySubArray: ", categorySubArray)
-    // console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
+    console.log("stockSubCategoryTemp: ", stockSubCategoryTemp)
     // console.log("stockIdCategorySubTemp: ", stockIdCategorySubTemp)
     // console.log("stockCategorySubArrayTemp: ", stockCategorySubArrayTemp)
     // console.log("------------------")

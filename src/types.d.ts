@@ -77,13 +77,19 @@ export interface CategoriesData {
 };
 
 export interface CategoriesSubData {
+  _id: string;
+  [key?: string]: any;
   id: number;
   id_category: number;
-  name: string;
-  name_esp: string;
-  name_dan: string;
-  name_ita: string;
-  deleted: boolean;
+  name?: string;
+  name_esp?: string;
+  name_dan?: string;
+  name_ita?: string;
+  deleted?: boolean;
+  
+  category?: string;
+  id_sub_category?: number;
+  sub_category?: string
 };
 
 export interface Data {
@@ -110,13 +116,20 @@ export interface Data {
   alerted_date?: boolean;
 }
 
-
 export interface DataTable {
   data: Data[] 
   columns: ColumnData[]
   // openUpdateAmountStock: (id_prod: Number, name_prod: String, amount_prod: Number) => void
   // openUpdateAmountStock: (newData: ProductUpdateData) => void
   openUpdateAmountStock: (newData: Data) => void
+  handleDisabledUpdateButton: (newData: boolean) => void
+}
+export interface DataTableSubCategory {
+  data: CategoriesSubData[] 
+  // columns: ColumnData[]
+  // openUpdateAmountStock: (id_prod: Number, name_prod: String, amount_prod: Number) => void
+  // openUpdateAmountStock: (newData: ProductUpdateData) => void
+  openUpdateAmountStock: (newData: CategoriesSubData) => void
   handleDisabledUpdateButton: (newData: boolean) => void
 }
 
