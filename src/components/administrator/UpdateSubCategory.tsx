@@ -64,7 +64,7 @@ export default function UpdateSubCategory(
     const close = () => {
         handleClose(false)
     } 
-    console.log("subCategoryUpdate: ", subCategoryUpdate)
+    // console.log("subCategoryUpdate: ", subCategoryUpdate)
     const { user } = useContext<any>(UserContext);
     const { labelsUpdateAmountStock } = useContext<any>(LanguageLabelsContext);
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
@@ -75,8 +75,8 @@ export default function UpdateSubCategory(
     const [ signUpdate, setSignUpdate ] = useState<number>(-1)
     const [ valueUpdate, setValueUpdate ] = useState<number>(1)
     // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
-    const [ categoryTemp, setCategoryTemp ] = useState(subCategoryUpdate.category)
-    const [ subCategoryTemp, setSubCategoryTemp ] = useState(subCategoryUpdate.sub_category)
+    const [ categoryTemp, setCategoryTemp ] = useState<any>("")
+    const [ subCategoryTemp, setSubCategoryTemp ] = useState<any>("")
     // const [ alertedAmount, setAlertedAmount ] = useState(false)
     // const [ alertedAmount, setAlertedAmount ] = useState(false)
     // const [ alertedAmount, setAlertedAmount ] = useState(false)
@@ -84,10 +84,21 @@ export default function UpdateSubCategory(
     
 
     useEffect(() => {
-        setCategoryTemp(subCategoryUpdate.category);
-        setSubCategoryTemp(subCategoryUpdate.sub_category);
-    }, [open])
+            setOpenBackdrop(true)
+            setCategoryTemp(subCategoryUpdate.category);
+            setSubCategoryTemp(subCategoryUpdate.sub_category);
+    }, [open]) 
+    useEffect(() => {
+        if(categoryTemp && subCategoryTemp)
+            setOpenBackdrop(false)
+    }, [categoryTemp, subCategoryTemp])
 
+    const onCategoryTempChange = (value: string) => {
+        setCategoryTemp(value)
+    }
+    const onSubCategoryTempChange = (value: string) => {
+        setSubCategoryTemp(value)
+    }
     // const swapOperator = () => {
     //     const productAmount = Number(productUpdate.amount)
     //     let newSign = -(signUpdate)
@@ -316,8 +327,7 @@ export default function UpdateSubCategory(
 
     
     // console.log("signUpdate: ", signUpdate)
-        if ( !categoryTemp ||
-            !subCategoryTemp ) {
+    if (openBackdrop ) {
         return <Typography>Loading...</Typography>;
     }
 
@@ -373,7 +383,7 @@ export default function UpdateSubCategory(
                                     InputProps={{className: classes.inputClassName}}
                                     // value={CategoriesSubData.category}
                                     value={categoryTemp}
-                                    // onChange={ (event:any) => onStockMeasureChange(event.target.value) }
+                                    onChange={ (event:any) => onCategoryTempChange(event.target.value) }
                                     >
                                         {categories.map((category: any) => (
                                             <MenuItem 
@@ -391,7 +401,7 @@ export default function UpdateSubCategory(
                                     label="Sub Category"
                                     value={subCategoryTemp}
                                     // value={null}
-                                    // onChange={ (event:any) => onStockNameChange(event.target.value) }
+                                    onChange={ (event:any) => onSubCategoryTempChange(event.target.value) }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}

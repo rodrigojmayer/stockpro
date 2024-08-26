@@ -45,13 +45,25 @@ function Administrator() {
     })
     // const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
     const [ showUpdateSubCategoryUpdate, setShowUpdateSubCategoryUpdate ] = useState(false)
-    const handleCloseUpdateAmountStock = () => setShowUpdateSubCategoryUpdate(false)
-    const openUpdateSubCategoryUpdate = (newData:CategoriesSubData) => {
+    const handleCloseUpdateAmountStock = () => {
+      setShowUpdateSubCategoryUpdate(false)
+      
+      setSubCategoryUpdate({
+        "_id": "",
+        "id": 0,
+        "id_category": 1,
+        "name": "",
+        "name_esp": "",
+        "name_dan": "",
+        "name_ita": "",
+        "deleted": false,
+      })
+    }
+      const openUpdateSubCategoryUpdate = (newData:CategoriesSubData) => {
       
        // console.log("products: ", products)
       console.log("newData: ", newData)
   
-      setShowUpdateSubCategoryUpdate(true)
       let dateObject
       let formattedDate
       // if(typeof newData.alert_date === 'string'){
@@ -69,7 +81,8 @@ function Administrator() {
       //   dateObject = newData.alert_date
       //   formattedDate = newData.alert_date
       // }
-  
+      setShowUpdateSubCategoryUpdate(true)
+     
       setSubCategoryUpdate({
         "_id": newData._id,
         "id": newData.id,
