@@ -18,7 +18,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import Paper from '@mui/material/Paper/Paper';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
-
 import { OkButton,
          CancelButton, 
          PlusButton,
@@ -32,7 +31,6 @@ import SaveChanges from '../SaveChanges';
 // import Checkbox from '@mui/material/Checkbox';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../../Styles'
 import { CategoriesSubData, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../../types';
-
 // import { CategoriesContext } from '../context/CategoriesContext';
 // import { MeasuresContext } from '../context/MeasuresContext';
 import { UserContext } from '../../context/UserContext';
@@ -44,7 +42,6 @@ import { useNavigate } from 'react-router-dom';
 import { CheckListStockContext } from '../../context/CheckListStockContext';
 import { LanguageLabelsContext } from '../../context/LanguageLabelsContext';
 import { CategoriesContext } from '../../context/CategoriesContext';
-
 interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
@@ -52,8 +49,7 @@ interface ChildProps {
     // productUpdate:  ProductUpdateData 
     subCategoryUpdate:  CategoriesSubData 
 }
-
-export default function UpdateSubCategory( 
+export default function ManageCategories( 
     {   open, 
         handleClose, 
         columnsCustom,
@@ -81,7 +77,7 @@ export default function UpdateSubCategory(
     // const [ alertedAmount, setAlertedAmount ] = useState(false)
     // const [ alertedAmount, setAlertedAmount ] = useState(false)
     // const [ alertedAmount, setAlertedAmount ] = useState(false)
-    
+
 
     useEffect(() => {
             setOpenBackdrop(true)
@@ -127,7 +123,6 @@ export default function UpdateSubCategory(
     //     const topValue = 999 - productAmount
     //     if ( signUpdate < 0 ){
     //         newValue = valueUpdate-1
-
     //     } else {
     //         newValue = valueUpdate+1
     //     }
@@ -178,7 +173,6 @@ export default function UpdateSubCategory(
     //         setValueUpdate(newValue);
     //     }
     // }
-
     let ButtonOperator
     let buttonOperatorColor
     // if (valueUpdate > 0 ){
@@ -188,9 +182,7 @@ export default function UpdateSubCategory(
     } else {
         ButtonOperator = MinusButton       
         buttonOperatorColor = "rgb(250, 100, 100)"
-
     }
-
     const [updatedResultVisible, setUpdatedResultVisible] = useState(false);
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openEditStock, setOpenEditStock] = useState(false);  
@@ -202,10 +194,7 @@ export default function UpdateSubCategory(
     const handleCloseErrorModal = () => {
         setOpenErrorModal(false)
     }
-
     // console.log("alert_amount: ", productUpdate.alert_amount)
-
-
     const handleCloseSaveChanges = (ans?:boolean) => {
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
@@ -230,7 +219,6 @@ export default function UpdateSubCategory(
             //                 "alerted_amount": alertedAmount
             //             })
             //         })
-
             //         // Check if the response status is successful
             //         if (response.ok) {
             //             const responseData = await response.json() // parse the response data
@@ -262,8 +250,6 @@ export default function UpdateSubCategory(
             //     }
             // } 
             // fetchUpdateStockProduct();       //////////Change the name for update
-
-
             // setSelectedUsers(selectedUsersTemp)
             // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
@@ -273,7 +259,6 @@ export default function UpdateSubCategory(
             ...prevLoading,
             fieldsFetchCreateStock: false,
         }));
-
     }
     
     const handleOpenSaveChanges = () => {
@@ -288,12 +273,10 @@ export default function UpdateSubCategory(
     const handleOpenEditStock = () => {
         setOpenEditStock(true)
     }
-
     const handleCloseEditStock = () => {
         close()
         setOpenEditStock(false)
     }  
-
     // ...
     
     // useEffect(() => {
@@ -312,11 +295,9 @@ export default function UpdateSubCategory(
     //         setUpdatedResultVisible(false);
     //     }
     // }, [updatedResultVisible, resultUpdated, productUpdate.alert_amount]);
-
     // useEffect(() => {
     //     console.log("UpdateAmoungStock.tsx useEffect isLoading.fieldsFetchCreateStock: ", isLoading.fieldsFetchCreateStock)
     //     console.log("UpdateAmoungStock.tsx useEffect updatedResultVisible: ", updatedResultVisible)
-
     //     if(isLoading.fieldsFetchCreateStock && updatedResultVisible){
     //         // alert("Reload page")
     //                 // setIsFetching(false)
@@ -325,7 +306,7 @@ export default function UpdateSubCategory(
     //     }
     // }, [isLoading]) // To know if after save should reload the page
 
-    
+
     // console.log("signUpdate: ", signUpdate)
     if (openBackdrop ) {
         return <Typography>Loading...</Typography>;
@@ -413,8 +394,6 @@ export default function UpdateSubCategory(
                                     // inputRef={firstInputRef} // Set the ref to the first input    
                                     />
                             </Box> 
-
-
                             {/* <Grid container spacing={0} alignItems="center" >
                                 <Grid item xs={3} display="flex" justifyContent="center">
                                 <Typography variant="h6" >

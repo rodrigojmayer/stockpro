@@ -18,7 +18,7 @@ import MainSearch from '../MainSearch';
 import { useStylesGlobal } from '../../Styles';
 // import MassiveUpdateStock from './MassiveUpdateStock';
 import { UserContext } from '../../context/UserContext';
-import AdminCategories from './AdminCategories';
+// import AdminCategories from './AdminCategories';
 
 const INITIAL_MENU_OPTIONS = {
     admin_categories: false,

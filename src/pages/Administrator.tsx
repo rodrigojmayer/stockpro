@@ -8,7 +8,7 @@ import ModalsGroupAdministrator from '../components/administrator/ModalsGroupAdm
 import MainSearch from '../components/MainSearch';
 import TableCategories from '../components/administrator/TableCategories';
 import ManageStock from '../components/ManageStock';
-import UpdateSubCategory from '../components/administrator/UpdateSubCategory';
+import ManageCategories from '../components/administrator/ManageCategories'; 
 import { CategoriesSubData } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
@@ -18,9 +18,7 @@ import MassiveUpdateStock from '../components/MassiveUpdateStock';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
-
 const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
-
 function Administrator() {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
@@ -47,7 +45,7 @@ function Administrator() {
     const [ showUpdateSubCategoryUpdate, setShowUpdateSubCategoryUpdate ] = useState(false)
     const handleCloseUpdateAmountStock = () => {
       setShowUpdateSubCategoryUpdate(false)
-      
+
       setSubCategoryUpdate({
         "_id": "",
         "id": 0,
@@ -60,10 +58,10 @@ function Administrator() {
       })
     }
       const openUpdateSubCategoryUpdate = (newData:CategoriesSubData) => {
-      
+
        // console.log("products: ", products)
       console.log("newData: ", newData)
-  
+
       let dateObject
       let formattedDate
       // if(typeof newData.alert_date === 'string'){
@@ -82,7 +80,7 @@ function Administrator() {
       //   formattedDate = newData.alert_date
       // }
       setShowUpdateSubCategoryUpdate(true)
-     
+
       setSubCategoryUpdate({
         "_id": newData._id,
         "id": newData.id,
@@ -215,7 +213,7 @@ function Administrator() {
             data={productUpdate}
             columnsCustom={filteredColumnsCustom}
         /> */}
-        <UpdateSubCategory
+        <ManageCategories
             open={showUpdateSubCategoryUpdate}
             handleClose={handleCloseUpdateAmountStock}
             columnsCustom={filteredColumnsCustom}
@@ -228,8 +226,6 @@ function Administrator() {
         /> */}
       </div>
     )
-
-
     // return (
     //     <div className="App">
     //         tetin
