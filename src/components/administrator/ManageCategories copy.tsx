@@ -98,7 +98,7 @@ export default function ManageCategories(
         return true
         
     }) || null;
-    console.log("selectedCategorySub:", selectedCategorySub);
+    // console.log("selectedCategorySub:", selectedCategorySub);
     // console.log("selectedCategorySubArray:", selectedCategorySubArray);
     // const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<string>(data.id_sub_category); 
     const [stockSubCategoryTemp, setStockSubCategoryTemp] = useState<any>(selectedCategorySub[0]); 

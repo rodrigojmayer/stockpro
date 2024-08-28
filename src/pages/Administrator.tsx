@@ -60,7 +60,7 @@ function Administrator() {
       const openUpdateSubCategoryUpdate = (newData:CategoriesSubData) => {
 
        // console.log("products: ", products)
-      console.log("newData: ", newData)
+      // console.log("newData: ", newData)
 
       let dateObject
       let formattedDate
