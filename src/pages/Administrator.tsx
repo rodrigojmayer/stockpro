@@ -216,7 +216,6 @@ function Administrator() {
         <ManageCategories
             open={showUpdateSubCategoryUpdate}
             handleClose={handleCloseUpdateAmountStock}
-            columnsCustom={filteredColumnsCustom}
             subCategoryUpdate={subCategoryUpdate}
         />
         {/* <MassiveUpdateStock
