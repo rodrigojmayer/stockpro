@@ -35,10 +35,10 @@ function Administrator() {
       "_id": "",
       "id": 0,
       "id_category": 1,
-      "name": "",
-      "name_esp": "",
-      "name_dan": "",
-      "name_ita": "",
+      "sub_category_en": "",
+      "sub_category_es": "",
+      "sub_category_dk": "",
+      "sub_category_it": "",
       "deleted": false,
     })
     // const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
@@ -50,17 +50,17 @@ function Administrator() {
         "_id": "",
         "id": 0,
         "id_category": 1,
-        "name": "",
-        "name_esp": "",
-        "name_dan": "",
-        "name_ita": "",
+        "sub_category_en": "",
+        "sub_category_es": "",
+        "sub_category_dk": "",
+        "sub_category_it": "",
         "deleted": false,
       })
     }
       const openUpdateSubCategoryUpdate = (newData:CategoriesSubData) => {
 
        // console.log("products: ", products)
-      // console.log("newData: ", newData)
+      console.log("newData: ", newData)
 
       let dateObject
       let formattedDate
@@ -85,10 +85,10 @@ function Administrator() {
         "_id": newData._id,
         "id": newData.id,
         "id_category": newData.id_category,
-        "name": newData.name,
-        "name_esp": newData.name_esp,
-        "name_dan": newData.name_dan,
-        "name_ita": newData.name_ita,
+        "sub_category_en": newData.sub_category_en,
+        "sub_category_es": newData.sub_category_es,
+        "sub_category_dk": newData.sub_category_dk,
+        "sub_category_it": newData.sub_category_it,
         "deleted": newData.deleted,
         "category": newData.category,
         "id_sub_category": newData.id,

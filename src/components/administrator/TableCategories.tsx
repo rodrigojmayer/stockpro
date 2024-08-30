@@ -37,10 +37,10 @@ const INITIAL_STATE = {
   "_id": "",
   "id": 0,
   "id_category": 1,
-  "name": "",
-  "name_esp": "",
-  "name_dan": "",
-  "name_ita": "",
+  "sub_category_en": "",
+  "sub_category_es": "",
+  "sub_category_dk": "",
+  "sub_category_it": "",
   "deleted": false,
 }
 
@@ -110,12 +110,12 @@ function rowContent(
             "_id": newRow._id,
             "id": newRow.id,
             // "name": newRow.name,
-            "name_esp": newRow.name_esp,
-            "name_dan": newRow.name_dan,
-            // "name_ita": newRow.name_ita,
+            "sub_category_es": newRow.sub_category_es,
+            "sub_category_dk": newRow.sub_category_dk,
+            "sub_category_it": newRow.sub_category_it,
             "id_category": newRow.id_category,
             "category": newRow.category,
-            "sub_category": newRow.sub_category,
+            "sub_category_en": newRow.sub_category_en,
             // "deleted": newRow.deleted,
           })}
           className={`${ _index%2 ? classes[`_${user_background_color}table_row_odd` as keyof typeof classes]  : classes[`_${user_background_color}table_row_even` as keyof typeof classes] }`}
@@ -160,24 +160,48 @@ export default function TableCategories(
         width: 120
     },
     {
-        _id: "4",
-        id: 4,
-        dataKey: "sub_category",
+        _id: "5",
+        id: 5,
+        dataKey: "sub_category_en",
         label: "Sub category",
+        width: 120
+    },
+    {
+        _id: "6",
+        id: 6,
+        dataKey: "sub_category_es",
+        label: "Esp",
+        width: 120
+    },
+    {
+        _id: "7",
+        id: 7,
+        dataKey: "sub_category_dk",
+        label: "DK",
+        width: 120
+    },
+    {
+        _id: "8",
+        id: 8,
+        dataKey: "sub_category_it",
+        label: "It",
         width: 120
     }
   ]
 
   // console.log("categoriesSub: ", categoriesSub)
   const filteredFields = categoriesSub.map((categorySub: any) => {
-    if(categorySub.name !== "-"){    
+    if(categorySub.sub_category_en !== "-"){    
         let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
         return ({
             _id: categorySub._id,
             id_category: categoryFind.id,
             category: categoryFind.name,
             id_sub_category: categorySub.id,
-            sub_category: categorySub.name
+            sub_category_en: categorySub.sub_category_en,
+            sub_category_es: categorySub.sub_category_es,
+            sub_category_it: categorySub.sub_category_it,
+            sub_category_dk: categorySub.sub_category_dk,
           // _id: categorySub._id,
           // id: categorySub.id,
           // id_category: categoryFind.id,
@@ -194,7 +218,7 @@ export default function TableCategories(
   // console.log("filteredFields: ", filteredFields)
   useEffect(() => {
     // setFilteredData(filteredFields)
-  console.log("filteredData: ", filteredData)
+  // console.log("filteredData: ", filteredData)
 
   }, [filteredData]);
   const initialManageColumns = columns.map((column:any) => {
@@ -329,147 +353,7 @@ export default function TableCategories(
                           padding: "0 4px ",
                         }}
                       >
-                        { 
-                        // columnTable.label ? 
-                              columnTable.label 
-                            // : 
-                            // <>
-                            //   <IconButton
-                            //     onClick={
-                            //       openTableOptions
-                            //     }
-                            //     className={classes[`_${user.background_color}table_header_color` as keyof typeof classes]}
-                            //     style={{ 
-                            //       width: "30px", 
-                            //       border:0
-                            //     }}
-                            //     sx={{
-                            //       padding: "0",
-                            //       top: "-5px",
-                            //     }}
-                            //   >
-                            //     <MoreVertIcon fontSize="small" />
-                            //   </IconButton>  
-                            //   <Menu
-                            //     disableScrollLock={true}
-                            //     id="demo-positioned-menu"
-                            //     aria-labelledby="demo-positioned-button"
-                            //     anchorEl={anchorEl}
-                            //     open={open}
-                            //     onClose={handleClose} 
-                            //     anchorOrigin={{
-                            //       vertical: 'top',
-                            //       horizontal: 'left',
-                            //     }}
-                            //     transformOrigin={{
-                            //       vertical: 'top',
-                            //       horizontal: 'left',
-                            //     }}
-                            //     style={{ 
-                            //       marginTop: '20px', 
-                            //       marginLeft: '15px',
-                            //     }}
-
-                            //     MenuListProps={{
-                            //         sx: { padding: 0,  
-                            //         },
-                            //     }}
-                            //   >
-                            //     <MenuItem 
-                            //       className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                            //     >
-                            //       <Typography 
-                            //         align="center" 
-                            //         variant="body2" 
-                            //       > 
-                            //         <Switch 
-                            //           size='small'
-                            //           color='success'  
-                            //         />  
-                            //         {labelsTableProducts.alerts_on_top}
-                            //       </Typography>
-                            //     </MenuItem>
-                            //     <MenuItem 
-                            //       onClick={ openSubTableOptions }
-                            //       className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                            //     >
-                            //       <Typography 
-                            //         align="center" 
-                            //         variant="body2" 
-                            //       > 
-                            //         {labelsTableProducts.manage_columns}
-                            //       </Typography>
-                            //     </MenuItem>
-                            //     {(user.id_access_level < 4) &&
-                            //       <MenuItem 
-                            //         onClick={ handleOpenCustomFieldsModal  }
-                            //         className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                            //       >
-                            //         <Typography 
-                            //           align="center" 
-                            //           variant="body2" 
-                            //         > 
-                            //           {labelsTableProducts.custom_fields}
-                            //         </Typography>
-                            //       </MenuItem> 
-                            //     }
-                            //   </Menu>
-                            //   <Menu
-                            //     className={breakpointMD ? `${classes.table_menu} ${classes[`_${user.background_color}table_menu_background_color` as keyof typeof classes]}` : ""}
-                            //     id="demo-positioned-menu2"
-                            //     aria-labelledby="demo-positioned-button2"
-                            //     anchorEl={anchorEl2}
-                            //     open={open2}
-                            //     onClose={handleClose2}
-                            //     anchorOrigin={{
-                            //       vertical: 'top',
-                            //       horizontal: 'left',
-                            //     }}
-                            //     transformOrigin={{
-                            //       vertical: 'top',
-                            //       horizontal: 'left',
-                            //     }}
-                            //     style={{ 
-                            //       marginTop: '-57px', 
-                            //       marginLeft: '0px',
-                            //       height: '370px',
-                            //     }}
-                            //     MenuListProps={{
-                            //         sx: { padding: 0,
-                            //         },
-                            //     }}
-                            //   >
-                            //     {manageColumns.map((manageColumn:any) => (
-                            //       <MenuItem 
-                            //         key={manageColumn.id}
-                            //         onClick={() => handlePickColumn(manageColumn) }
-                            //         className={`${classes.menu_item} ${classes[`_${user.background_color}menu_item_background_color` as keyof typeof classes]}`} 
-                            //       >
-                            //         <Typography 
-                            //           align="center" 
-                            //           variant="body2" 
-                            //         > 
-                            //           <Switch 
-                            //             size='small'
-                            //             color='success'  
-                            //             checked={manageColumn.showInTable}
-                            //           />  
-                            //             {manageColumn.label}
-                            //             {manageColumn.id==-1 ? 
-                            //               <LockIcon 
-                            //                 style={{
-                            //                   paddingTop: "10px",
-                            //                 }}
-                            //                 fontSize='small'
-                            //               /> 
-                            //             : 
-                            //               "" }
-                            //         </Typography>
-                            //       </MenuItem> 
-                            //     ))}
-                            //   </Menu>
-                            // </>
-                          }
+                        { columnTable.label }
                           </Typography>
                             <TextField
                               id={columnTable.dataKey.toString()}

@@ -3,13 +3,13 @@ import { CategoriesSubData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 
 const INITIAL_CATEGORY_SUB = {
+  _id: "",
   id: NaN,
   id_category: NaN,
-  name: '',
-  name_esp: '',
-  name_dan: '',
-  name_ita: '',
-  sub_categories: [],
+  sub_category_en: '',
+  sub_category_es: '',
+  sub_category_dk: '',
+  sub_category_it: '',
   deleted: false,
 };
 
@@ -31,7 +31,20 @@ export const CategoriesSubProvider: React.FC<CategoriesSubProviderProps> = ({ ch
         
         if (response.ok) {
           const json = await response.json();
-          setCategoriesSub(json);
+          const json_sub_categories = json.map((sub_category:any) => {
+            return (
+              {_id: sub_category._id,
+              id: sub_category.id,
+              id_category: sub_category.id_category,
+              sub_category_en: sub_category.name,
+              sub_category_es: sub_category.name_esp,
+              sub_category_dk: sub_category.name_dan,
+              sub_category_it: sub_category.name_ita,
+              deleted: sub_category.deleted}
+            )
+          })
+          // console.log("json_sub_categories: ",json_sub_categories)
+          setCategoriesSub(json_sub_categories);
         } else {
           setCategoriesSub(INITIAL_CATEGORY_SUB);
           // Handle the case where the response is not OK (e.g., show an error message)

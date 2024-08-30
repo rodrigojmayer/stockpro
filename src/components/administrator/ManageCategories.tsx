@@ -40,33 +40,47 @@ export default function ManageCategories(
     
     // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
     const [ categoryTemp, setCategoryTemp ] = useState<any>("")
-    const [ subCategoryTemp, setSubCategoryTemp ] = useState<any>("")
+    const [ subCategoryEnTemp, setSubCategoryEnTemp ] = useState<any>("")
+    const [ subCategoryEsTemp, setSubCategoryEsTemp ] = useState<any>("")
+    const [ subCategoryDkTemp, setSubCategoryDkTemp ] = useState<any>("")
+    const [ subCategoryItTemp, setSubCategoryItTemp ] = useState<any>("")
 
+    // console.log("subCategoryUpdate: ", subCategoryUpdate)
 
     useEffect(() => {
             setOpenBackdrop(true)
             // setCategoryTemp(subCategoryUpdate.category);
-            setSubCategoryTemp(subCategoryUpdate.sub_category);
+            setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
+            setSubCategoryEsTemp(subCategoryUpdate.sub_category_es);
+            setSubCategoryDkTemp(subCategoryUpdate.sub_category_dk);
+            setSubCategoryItTemp(subCategoryUpdate.sub_category_it);
             setOpenBackdrop(true);
         
             // Find the category by name and get its ID
             const category = categories.find((cat: any) => cat.name === subCategoryUpdate.category);
             setCategoryTemp(category ? category.id : "");  // Set the ID or empty string if not found
         
-            setSubCategoryTemp(subCategoryUpdate.sub_category);
+            setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
     }, [open]) 
     useEffect(() => {
-        if(categoryTemp && subCategoryTemp)
+        if(categoryTemp && subCategoryEnTemp)
             setOpenBackdrop(false)
-    }, [categoryTemp, subCategoryTemp])
+    }, [categoryTemp, subCategoryEnTemp])
 
     const onCategoryTempChange = (value: any) => {
-        console.log("value: ", value)
-        // setCategoryTemp(e.value)
         setCategoryTemp(value)
     }
-    const onSubCategoryTempChange = (value: string) => {
-        setSubCategoryTemp(value)
+    const onSubCategoryEnTempChange = (value: string) => {
+        setSubCategoryEnTemp(value)
+    }
+    const onSubCategoryEsTempChange = (value: string) => {
+        setSubCategoryEsTemp(value)
+    }
+    const onSubCategoryDkTempChange = (value: string) => {
+        setSubCategoryDkTemp(value)
+    }
+    const onSubCategoryItTempChange = (value: string) => {
+        setSubCategoryItTemp(value)
     }
     
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
@@ -84,9 +98,9 @@ export default function ManageCategories(
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            console.log("categoryTemp: ", categoryTemp)
-            console.log("subCategoryTemp: ", subCategoryTemp)
-            console.log("subCategoryUpdate: ", subCategoryUpdate)
+            // console.log("categoryTemp: ", categoryTemp)
+            // console.log("subCategoryEnTemp: ", subCategoryEnTemp)
+            // console.log("subCategoryUpdate: ", subCategoryUpdate)
             
             
             const fetchUpdateSubCategory = async () => {
@@ -99,8 +113,11 @@ export default function ManageCategories(
                             // Add any other requires headers here
                         },
                         body:JSON.stringify({
-                            // "id_category": subCategoryTemp,
-                            "name": subCategoryTemp
+                            "id_category": categoryTemp,
+                            "name": subCategoryEnTemp,
+                            "name_esp": subCategoryEsTemp,
+                            "name_dan": subCategoryDkTemp,
+                            "name_ita": subCategoryItTemp
                         })
                     })
                     // Check if the response status is successful
@@ -237,10 +254,9 @@ export default function ManageCategories(
                             </Box> 
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Sub Category"
-                                    value={subCategoryTemp}
-                                    // value={null}
-                                    onChange={ (event:any) => onSubCategoryTempChange(event.target.value) }
+                                    label="Sub Category En"
+                                    value={subCategoryEnTemp}
+                                    onChange={ (event:any) => onSubCategoryEnTempChange(event.target.value) }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -248,8 +264,48 @@ export default function ManageCategories(
                                         className: classes.inputClassName,
                                         inputProps: {maxLength: 30}
                                     }}
-                                    // inputRef={input => input && input.focus()}
-                                    // inputRef={firstInputRef} // Set the ref to the first input    
+                                    />
+                            </Box> 
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Sub Category Es"
+                                    value={subCategoryEsTemp}
+                                    onChange={ (event:any) => onSubCategoryEsTempChange(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 30}
+                                    }}
+                                    />
+                            </Box> 
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Sub Category Dk"
+                                    value={subCategoryDkTemp}
+                                    onChange={ (event:any) => onSubCategoryDkTempChange(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 30}
+                                    }}
+                                    />
+                            </Box> 
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Sub Category It"
+                                    value={subCategoryItTemp}
+                                    onChange={ (event:any) => onSubCategoryItTempChange(event.target.value) }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 30}
+                                    }}
                                     />
                             </Box> 
                         </Box>  
