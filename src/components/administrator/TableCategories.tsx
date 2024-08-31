@@ -114,7 +114,10 @@ function rowContent(
             "sub_category_dk": newRow.sub_category_dk,
             "sub_category_it": newRow.sub_category_it,
             "id_category": newRow.id_category,
-            "category": newRow.category,
+            "category_en": newRow.category_en,
+            "category_es": newRow.category_es,
+            "category_dk": newRow.category_dk,
+            "category_it": newRow.category_it,
             "sub_category_en": newRow.sub_category_en,
             // "deleted": newRow.deleted,
           })}
@@ -153,38 +156,59 @@ export default function TableCategories(
   const columnsTable = [elementToAdd, ...columnsUserOrder];
   const columns = [
     {
+        _id: "1",
+        id: 1,
+        dataKey: "category_en",
+        label: "Category Eng",
+        width: 120
+    },
+    {
         _id: "2",
         id: 2,
-        dataKey: "category",
-        label: "Category",
+        dataKey: "category_es",
+        label: "Category Esp",
+        width: 120
+    },
+    {
+        _id: "3",
+        id: 3,
+        dataKey: "category_dk",
+        label: "Category Dk",
+        width: 120
+    },
+    {
+        _id: "4",
+        id: 4,
+        dataKey: "category_it",
+        label: "Category It",
         width: 120
     },
     {
         _id: "5",
         id: 5,
         dataKey: "sub_category_en",
-        label: "Sub category",
+        label: "Sub Eng",
         width: 120
     },
     {
         _id: "6",
         id: 6,
         dataKey: "sub_category_es",
-        label: "Esp",
+        label: "Sub Esp",
         width: 120
     },
     {
         _id: "7",
         id: 7,
         dataKey: "sub_category_dk",
-        label: "DK",
+        label: "Sub Dk",
         width: 120
     },
     {
         _id: "8",
         id: 8,
         dataKey: "sub_category_it",
-        label: "It",
+        label: "Sub It",
         width: 120
     }
   ]
@@ -196,7 +220,10 @@ export default function TableCategories(
         return ({
             _id: categorySub._id,
             id_category: categoryFind.id,
-            category: categoryFind.name,
+            category_en: categoryFind.category_en,
+            category_es: categoryFind.category_es,
+            category_dk: categoryFind.category_dk,
+            category_it: categoryFind.category_it,
             id_sub_category: categorySub.id,
             sub_category_en: categorySub.sub_category_en,
             sub_category_es: categorySub.sub_category_es,

@@ -46,6 +46,7 @@ export default function ManageCategories(
     const [ subCategoryItTemp, setSubCategoryItTemp ] = useState<any>("")
 
     // console.log("subCategoryUpdate: ", subCategoryUpdate)
+    console.log("categories: ", categories)
 
     useEffect(() => {
             setOpenBackdrop(true)
@@ -57,7 +58,7 @@ export default function ManageCategories(
             setOpenBackdrop(true);
         
             // Find the category by name and get its ID
-            const category = categories.find((cat: any) => cat.name === subCategoryUpdate.category);
+            const category = categories.find((cat: any) => cat.category_en === subCategoryUpdate.category_en);
             setCategoryTemp(category ? category.id : "");  // Set the ID or empty string if not found
         
             setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
@@ -247,11 +248,12 @@ export default function ManageCategories(
                                             value={category.id}
                                             sx={{ justifyContent: "space-between" }}
                                             >
-                                                {category.name}
+                                                {category.category_en}
                                             </MenuItem>
                                         ))}
                                 </TextField>
                             </Box> 
+                            {categories.map((category: any) => {if(category.id === categoryTemp){return(category.category_en)}})}
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Sub Category En"

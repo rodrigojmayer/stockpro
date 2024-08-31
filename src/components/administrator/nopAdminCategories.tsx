@@ -254,14 +254,17 @@ export default function AdminCategories( { open, handleClose }: ChildProps) {
     }
     // const filteredFields = categoriesSub
     const filteredFields = categoriesSub.map((categorySub: any) => {
-        if(categorySub.name !== "-"){    
+        // if(categorySub.name !== "-"){    
+        if(categorySub.sub_category_en !== "-"){    
             let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
             return ({
                 _id: categorySub._id,
                 id_category: categoryFind.id,
-                category: categoryFind.name,
+                // category: categoryFind.name,
+                category: categoryFind.category_en,
                 id_sub_category: categorySub.id,
-                sub_category: categorySub.name
+                // sub_category: categorySub.name
+                sub_category: categorySub.sub_category_en
             }) 
         }
     }).filter(Boolean)

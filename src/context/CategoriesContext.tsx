@@ -4,7 +4,11 @@ import { IsLoadingContext } from './IsLoadingContext';
 
 const INITIAL_CATEGORY = {
   id: NaN,
-  name: '',
+  // name: '',
+  category_en: "",
+  category_es: "",
+  category_dk: "",
+  category_it: "",
   sub_categories: [],
   deleted: false,
 };
@@ -32,7 +36,18 @@ export const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children
         
         if (response.ok) {
           const json = await response.json();
-          setCategories(json);
+          const json_categories = json.map((category:any) => {
+            return (
+              {_id: category._id,
+              id: category.id,
+              category_en: category.name,
+              category_es: category.name_esp,
+              category_dk: category.name_dan,
+              category_it: category.name_ita,
+              deleted: category.deleted}
+            )
+          })
+          setCategories(json_categories);
         } else {
           setCategories(INITIAL_CATEGORY);
           // Handle the case where the response is not OK (e.g., show an error message)

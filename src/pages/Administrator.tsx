@@ -90,7 +90,10 @@ function Administrator() {
         "sub_category_dk": newData.sub_category_dk,
         "sub_category_it": newData.sub_category_it,
         "deleted": newData.deleted,
-        "category": newData.category,
+        "category_en": newData.category_en,
+        "category_es": newData.category_es,
+        "category_dk": newData.category_dk,
+        "category_it": newData.category_it,
         "id_sub_category": newData.id,
         "sub_category": newData.sub_category
       })
@@ -167,10 +170,10 @@ function Administrator() {
         "_id": "",
         "id": 0,
         "id_category": 1,
-        "name": "",
-        "name_esp": "",
-        "name_dan": "",
-        "name_ita": "",
+        "sub_category_en": "",
+        "sub_category_es": "",
+        "sub_category_dk": "",
+        "sub_category_it": "",
         "deleted": false,
       })
     }, [showCreateStock])

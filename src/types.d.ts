@@ -71,7 +71,11 @@ export interface AccessLevelsData {
 
 export interface CategoriesData {
   id: number;
-  name: string;
+  // name: string;
+  category_en?: string;
+  category_es?: string;
+  category_dk?: string;
+  category_it?: string;
   sub_categories: array;
   deleted: boolean;
 };
