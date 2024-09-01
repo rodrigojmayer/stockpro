@@ -292,7 +292,7 @@ export default function ManageStock(
         const selectedCategorySub = categorySubArray.filter((categorySub: any) => categorySub.id_category === id) || null;
         setStockCategorySubArrayTemp(selectedCategorySub)
         const selectedIdCategorySub = selectedCategorySub
-            .filter((categorySub: any) => categorySub[labelsManageStock.category_name] === "-") || null;
+            .filter((categorySub: any) => categorySub[labelsManageStock.sub_category_name] === "-") || null;
             // const selectedIdCategorySub = selectedCategorySub.find((categorySub: any) => categorySub.name === "-")?.id;
 
         // console.log("selectedIdCategorySub: ", selectedIdCategorySub)

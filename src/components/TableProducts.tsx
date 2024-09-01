@@ -81,7 +81,7 @@ function rowContent(
   ) {
 
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
-
+  console.log("newRow: ", newRow)
   if (newRow.custom_fields) {
     for (const key in newRow.custom_fields) {
       newRow = {

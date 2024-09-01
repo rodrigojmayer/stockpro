@@ -151,7 +151,8 @@ function Home() {
         products.filter((item:any) => {
           // console.log("item: ", item)
           item.category = item.category_obj[labelsManageStock.category_name]
-          item.sub_category = item.sub_category_obj[labelsManageStock.category_name]
+          // item.sub_category = item.sub_category_obj[labelsManageStock.category_name]
+          item.sub_category = item.sub_category_obj[labelsManageStock.sub_category_name]
           // item.category= "pepe"
           const columnsUserOrderWithoutImages = columnsUserOrder.filter((column:any) => column.dataKey !=="url_image")
           const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 

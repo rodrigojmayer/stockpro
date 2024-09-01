@@ -381,7 +381,7 @@ export default function ManageStockMainData(
                                 >
                                     <Tooltip
                                         // title={subCategory.name}
-                                        title={subCategory[labelsManageStock.category_name]}
+                                        title={subCategory[labelsManageStock.sub_category_name]}
                                         disableHoverListener={subCategory.length <= 9}
                                         arrow
                                         key={index}
@@ -395,7 +395,7 @@ export default function ManageStockMainData(
                                     >
                                         <Box className={classes.menuItemContent}>
                                             {/* {subCategory.name} */}
-                                            {subCategory[labelsManageStock.category_name]}
+                                            {subCategory[labelsManageStock.sub_category_name]}
                                         </Box>
                                     </Tooltip>
                                 </MenuItem> 
