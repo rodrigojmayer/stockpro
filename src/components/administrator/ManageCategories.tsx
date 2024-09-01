@@ -253,7 +253,13 @@ export default function ManageCategories(
                                         ))}
                                 </TextField>
                             </Box> 
-                            {categories.map((category: any) => {if(category.id === categoryTemp){return(category.category_en)}})}
+                            <Box className={classes.customBoxRow}>
+                            {categories.map((category: any) => {if(category.id === categoryTemp){return(category.category_es)}})}
+                            &nbsp;/&nbsp; 
+                            {categories.map((category: any) => {if(category.id === categoryTemp){return(category.category_dk)}})}
+                            &nbsp;/&nbsp;
+                            {categories.map((category: any) => {if(category.id === categoryTemp){return(category.category_it)}})}
+                            </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Sub Category En"
