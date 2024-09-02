@@ -76,7 +76,7 @@ export interface CategoriesData {
   category_es?: string;
   category_dk?: string;
   category_it?: string;
-  sub_categories: array;
+  sub_categories?: array;
   deleted: boolean;
 };
 

@@ -11,7 +11,7 @@ import { OkButton,
         } from '../Buttons';
 import SaveChanges from '../SaveChanges';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../../Styles'
-import { CategoriesSubData, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../../types';
+import { CategoriesData, DataCreateStockOptions, ColumnData, ProductUpdateData } from '../../types';
 import { UserContext } from '../../context/UserContext';
 import { IsLoadingContext } from '../../context/IsLoadingContext';
 import ErrorModal from '../ErrorModal';
@@ -21,12 +21,12 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     // productUpdate:  ProductUpdateData 
-    subCategoryUpdate:  CategoriesSubData 
+    categoryUpdate:  CategoriesData 
 }
-export default function ManageCategories( 
+export default function ManageCategory( 
     {   open, 
         handleClose, 
-        subCategoryUpdate,
+        categoryUpdate,
     }: ChildProps) {
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -39,38 +39,38 @@ export default function ManageCategories(
     const { categories } = useContext<any>(CategoriesContext) 
     
     // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
-    const [ categoryTemp, setCategoryTemp ] = useState<any>("")
+    // const [ categoryTemp, setCategoryTemp ] = useState<any>("")
     const [ subCategoryEnTemp, setSubCategoryEnTemp ] = useState<any>("")
     const [ subCategoryEsTemp, setSubCategoryEsTemp ] = useState<any>("")
     const [ subCategoryDkTemp, setSubCategoryDkTemp ] = useState<any>("")
     const [ subCategoryItTemp, setSubCategoryItTemp ] = useState<any>("")
 
     // console.log("subCategoryUpdate: ", subCategoryUpdate)
-    console.log("categories: ", categories)
+    // console.log("categories: ", categories)
 
-    useEffect(() => {
-            setOpenBackdrop(true)
-            // setCategoryTemp(subCategoryUpdate.category);
-            setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
-            setSubCategoryEsTemp(subCategoryUpdate.sub_category_es);
-            setSubCategoryDkTemp(subCategoryUpdate.sub_category_dk);
-            setSubCategoryItTemp(subCategoryUpdate.sub_category_it);
-            setOpenBackdrop(true);
+    // useEffect(() => {
+    //         setOpenBackdrop(true)
+    //         // setCategoryTemp(subCategoryUpdate.category);
+    //         setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
+    //         setSubCategoryEsTemp(subCategoryUpdate.sub_category_es);
+    //         setSubCategoryDkTemp(subCategoryUpdate.sub_category_dk);
+    //         setSubCategoryItTemp(subCategoryUpdate.sub_category_it);
+    //         setOpenBackdrop(true);
         
-            // Find the category by name and get its ID
-            const category = categories.find((cat: any) => cat.category_en === subCategoryUpdate.category_en);
-            setCategoryTemp(category ? category.id : "");  // Set the ID or empty string if not found
+    //         // Find the category by name and get its ID
+    //         const category = categories.find((cat: any) => cat.category_en === subCategoryUpdate.category_en);
+    //         setCategoryTemp(category ? category.id : "");  // Set the ID or empty string if not found
         
-            setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
-    }, [open]) 
-    useEffect(() => {
-        if(categoryTemp && subCategoryEnTemp)
-            setOpenBackdrop(false)
-    }, [categoryTemp, subCategoryEnTemp])
+    //         setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
+    // }, [open]) 
+    // useEffect(() => {
+    //     if(categoryTemp && subCategoryEnTemp)
+    //         setOpenBackdrop(false)
+    // }, [categoryTemp, subCategoryEnTemp])
 
-    const onCategoryTempChange = (value: any) => {
-        setCategoryTemp(value)
-    }
+    // const onCategoryTempChange = (value: any) => {
+    //     setCategoryTemp(value)
+    // }
     const onSubCategoryEnTempChange = (value: string) => {
         setSubCategoryEnTemp(value)
     }
@@ -85,7 +85,7 @@ export default function ManageCategories(
     }
     
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
-    const [openEditStock, setOpenEditStock] = useState(false);  
+    const [openEditCategory, setOpenEditCategory] = useState(false);  
     const [messageBeforeSave, setMessageBeforeSave] = useState("");  
     
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -104,53 +104,53 @@ export default function ManageCategories(
             // console.log("subCategoryUpdate: ", subCategoryUpdate)
             
             
-            const fetchUpdateSubCategory = async () => {
-                let loadingSuccess: boolean = false
-                try {
-                    const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categoriesSub/${subCategoryUpdate._id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json', // Set the appropriate content-type for my API
-                            // Add any other requires headers here
-                        },
-                        body:JSON.stringify({
-                            "id_category": categoryTemp,
-                            "name": subCategoryEnTemp,
-                            "name_esp": subCategoryEsTemp,
-                            "name_dan": subCategoryDkTemp,
-                            "name_ita": subCategoryItTemp
-                        })
-                    })
-                    // Check if the response status is successful
-                    if (response.ok) {
-                        const responseData = await response.json() // parse the response data
-                        // console.log('POST request successful: ', responseData)
-                        loadingSuccess = true
-                    } else {
-                        // Handle non-successful responses
-                        console.error('Request failed: ', response.status, response.statusText)
-                        // Handle the error here
-                    }
-                } catch (error: unknown) {
-                    if (typeof error === 'string') {
-                        // 'error' is now narrowed down to type 'string'
-                        console.error('Error:', error)
-                    } else if (error instanceof Error) {
-                        // 'error' is now narrowed down to type 'Error'
-                        console.error('Error object:', error.message)
-                    } else {
-                        // Handle other cases as needed
-                    }
-                } finally {
-                    // setIsLoading(())
-                    // setIsLoading((prevLoading: any) => ({
-                    //     ...prevLoading,
-                    //     fieldsFetchCreateStock: loadingSuccess,
-                    // }));
+            // const fetchUpdateSubCategory = async () => {
+            //     let loadingSuccess: boolean = false
+            //     try {
+            //         const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categoriesSub/${subCategoryUpdate._id}`, {
+            //             method: 'PATCH',
+            //             headers: {
+            //                 'Content-Type': 'application/json', // Set the appropriate content-type for my API
+            //                 // Add any other requires headers here
+            //             },
+            //             body:JSON.stringify({
+            //                 "id_category": categoryTemp,
+            //                 "name": subCategoryEnTemp,
+            //                 "name_esp": subCategoryEsTemp,
+            //                 "name_dan": subCategoryDkTemp,
+            //                 "name_ita": subCategoryItTemp
+            //             })
+            //         })
+            //         // Check if the response status is successful
+            //         if (response.ok) {
+            //             const responseData = await response.json() // parse the response data
+            //             // console.log('POST request successful: ', responseData)
+            //             loadingSuccess = true
+            //         } else {
+            //             // Handle non-successful responses
+            //             console.error('Request failed: ', response.status, response.statusText)
+            //             // Handle the error here
+            //         }
+            //     } catch (error: unknown) {
+            //         if (typeof error === 'string') {
+            //             // 'error' is now narrowed down to type 'string'
+            //             console.error('Error:', error)
+            //         } else if (error instanceof Error) {
+            //             // 'error' is now narrowed down to type 'Error'
+            //             console.error('Error object:', error.message)
+            //         } else {
+            //             // Handle other cases as needed
+            //         }
+            //     } finally {
+            //         // setIsLoading(())
+            //         // setIsLoading((prevLoading: any) => ({
+            //         //     ...prevLoading,
+            //         //     fieldsFetchCreateStock: loadingSuccess,
+            //         // }));
                     
-                }
-            } 
-            fetchUpdateSubCategory();       //////////Change the name for update
+            //     }
+            // } 
+            // fetchUpdateSubCategory();       //////////Change the name for update
             // setSelectedUsers(selectedUsersTemp)
             // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
             close()
@@ -171,12 +171,12 @@ export default function ManageCategories(
         setOpenSaveChanges(true);
     }
     
-    const handleOpenEditStock = () => {
-        setOpenEditStock(true)
+    const handleOpenEditCategory = () => {
+        setOpenEditCategory(true)
     }
-    const handleCloseEditStock = () => {
+    const handleCloseEditCategory = () => {
         close()
-        setOpenEditStock(false)
+        setOpenEditCategory(false)
     }  
 
     // console.log("signUpdate: ", signUpdate)
@@ -229,9 +229,9 @@ export default function ManageCategories(
                         /> */}
                         <Box className={`${classes.customBoxColumn}`}>
                             <Typography noWrap align='center' variant="h5" className={classes.title}>
-                                Update Sub Category
+                                Update Category
                             </Typography>   
-                            <Box className={classes.customBoxRow}>
+                            {/* <Box className={classes.customBoxRow}>
                                 <TextField 
                                     label="Category"
                                     size="small"
@@ -252,18 +252,21 @@ export default function ManageCategories(
                                             </MenuItem>
                                         ))}
                                 </TextField>
-                            </Box> 
-                            <Box className={classes.customBoxRow}>
+                                <EditButton
+                                    clicked={() => handleOpenEditCategory()}
+                                    />
+                            </Box>  */}
+                            {/* <Box className={classes.customBoxRow}>
                             {categories.map((category: any) => {if(category.id === categoryTemp){return(category.category_es)}})}
                             &nbsp;/&nbsp; 
                             {categories.map((category: any) => {if(category.id === categoryTemp){return(category.category_dk)}})}
                             &nbsp;/&nbsp;
                             {categories.map((category: any) => {if(category.id === categoryTemp){return(category.category_it)}})}
-                            </Box>
+                            </Box> */}
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Sub Category En"
-                                    value={subCategoryEnTemp}
+                                    label="Category En"
+                                    value={categoryUpdate.category_en}
                                     onChange={ (event:any) => onSubCategoryEnTempChange(event.target.value) }
                                     maxRows={1}
                                     size="small"
@@ -276,8 +279,8 @@ export default function ManageCategories(
                             </Box> 
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Sub Category Es"
-                                    value={subCategoryEsTemp}
+                                    label="Category Es"
+                                    value={categoryUpdate.category_es}
                                     onChange={ (event:any) => onSubCategoryEsTempChange(event.target.value) }
                                     maxRows={1}
                                     size="small"
@@ -290,8 +293,8 @@ export default function ManageCategories(
                             </Box> 
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Sub Category Dk"
-                                    value={subCategoryDkTemp}
+                                    label="Category Dk"
+                                    value={categoryUpdate.category_dk}
                                     onChange={ (event:any) => onSubCategoryDkTempChange(event.target.value) }
                                     maxRows={1}
                                     size="small"
@@ -304,8 +307,8 @@ export default function ManageCategories(
                             </Box> 
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Sub Category It"
-                                    value={subCategoryItTemp}
+                                    label="Category It"
+                                    value={categoryUpdate.category_it}
                                     onChange={ (event:any) => onSubCategoryItTempChange(event.target.value) }
                                     maxRows={1}
                                     size="small"
@@ -318,13 +321,13 @@ export default function ManageCategories(
                             </Box> 
                         </Box>  
                         <Box className={classes.finishButtons}>
-                            {user.id_access_level === 4 ? 
+                            {/* {user.id_access_level === 4 ? 
                                     "" 
                                     : 
                                     <EditButton
                                     clicked={() => handleOpenEditStock()}
                                     />
-                                } 
+                                }  */}
                             <CancelButton
                             clicked={() => close()}
                             />

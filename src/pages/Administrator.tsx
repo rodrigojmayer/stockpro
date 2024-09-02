@@ -8,7 +8,7 @@ import ModalsGroupAdministrator from '../components/administrator/ModalsGroupAdm
 import MainSearch from '../components/MainSearch';
 import TableCategories from '../components/administrator/TableCategories';
 import ManageStock from '../components/ManageStock';
-import ManageCategories from '../components/administrator/ManageCategories'; 
+import ManageSubCategory from '../components/administrator/ManageSubCategory'; 
 import { CategoriesSubData } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
@@ -216,7 +216,7 @@ function Administrator() {
             data={productUpdate}
             columnsCustom={filteredColumnsCustom}
         /> */}
-        <ManageCategories
+        <ManageSubCategory
             open={showUpdateSubCategoryUpdate}
             handleClose={handleCloseUpdateAmountStock}
             subCategoryUpdate={subCategoryUpdate}
