@@ -87,6 +87,13 @@ export default function ManageSubCategory(
         setCategoryTemp({ ...categoryTemp, id: value})
 
     }
+    const updateCategory = (value: any, field: string) => {
+        // setCategoryTemp(value)  
+        // console.log("updateCategory value: ", value) Hola
+
+        setCategoryTemp({ ...categoryTemp, [field]: value})
+
+    }
     const onSubCategoryEnTempChange = (value: string) => {
         setSubCategoryEnTemp(value)
     }
@@ -247,8 +254,8 @@ export default function ManageSubCategory(
                         <ManageCategory  ///////////////////// Continue with the edit stock modal here
                             open={openManageCategory} 
                             handleClose={handleCloseManageCategory} 
-                            categoryUpdate={categoryTemp} 
-                            // columnsCustom={columnsCustom} 
+                            categoryTemp={categoryTemp}
+                            updateCategory={updateCategory} 
                         />
                         <Box className={`${classes.customBoxColumn}`}>
                             <Typography noWrap align='center' variant="h5" className={classes.title}>

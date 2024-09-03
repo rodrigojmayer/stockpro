@@ -3,6 +3,7 @@ import { CategoriesData } from '../types';
 import { IsLoadingContext } from './IsLoadingContext';
 
 const INITIAL_CATEGORY = {
+  _id: "",
   id: NaN,
   // name: '',
   category_en: "",

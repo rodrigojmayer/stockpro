@@ -21,12 +21,14 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     // productUpdate:  ProductUpdateData 
-    categoryUpdate:  CategoriesData 
+    categoryTemp:  CategoriesData 
+    updateCategory: (newData: any, field: string) => void
 }
 export default function ManageCategory( 
     {   open, 
         handleClose, 
-        categoryUpdate,
+        categoryTemp,
+        updateCategory
     }: ChildProps) {
     const { classes } = useStylesGlobal();
     const close = () => {
@@ -38,12 +40,14 @@ export default function ManageCategory(
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
     const { categories } = useContext<any>(CategoriesContext) 
     
+    // const categoryLoad = categoryTemp 
     // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
     // const [ categoryTemp, setCategoryTemp ] = useState<any>("")
-    const [ subCategoryEnTemp, setSubCategoryEnTemp ] = useState<any>("")
-    const [ subCategoryEsTemp, setSubCategoryEsTemp ] = useState<any>("")
-    const [ subCategoryDkTemp, setSubCategoryDkTemp ] = useState<any>("")
-    const [ subCategoryItTemp, setSubCategoryItTemp ] = useState<any>("")
+    const [ categoryLoad, setCategoryLoad ] = useState<any>(categoryTemp)
+    // const [ categoryEnTemp, setSubCategoryEnTemp ] = useState<any>("")
+    // const [ subCategoryEsTemp, setSubCategoryEsTemp ] = useState<any>("")
+    // const [ subCategoryDkTemp, setSubCategoryDkTemp ] = useState<any>("")
+    // const [ subCategoryItTemp, setSubCategoryItTemp ] = useState<any>("")
 
     // console.log("subCategoryUpdate: ", subCategoryUpdate)
     // console.log("categories: ", categories)
@@ -71,18 +75,18 @@ export default function ManageCategory(
     // const onCategoryTempChange = (value: any) => {
     //     setCategoryTemp(value)
     // }
-    const onSubCategoryEnTempChange = (value: string) => {
-        setSubCategoryEnTemp(value)
-    }
-    const onSubCategoryEsTempChange = (value: string) => {
-        setSubCategoryEsTemp(value)
-    }
-    const onSubCategoryDkTempChange = (value: string) => {
-        setSubCategoryDkTemp(value)
-    }
-    const onSubCategoryItTempChange = (value: string) => {
-        setSubCategoryItTemp(value)
-    }
+    // const onCategoryEnTempChange = (value: string) => {
+    //     setSubCategoryEnTemp(value)
+    // }
+    // const onCategoryEsTempChange = (value: string) => {
+    //     setSubCategoryEsTemp(value)
+    // }
+    // const onCategoryDkTempChange = (value: string) => {
+    //     setSubCategoryDkTemp(value)
+    // }
+    // const onCategoryItTempChange = (value: string) => {
+    //     setSubCategoryItTemp(value)
+    // }
     
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openEditCategory, setOpenEditCategory] = useState(false);  
@@ -99,60 +103,70 @@ export default function ManageCategory(
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            // console.log("categoryTemp: ", categoryTemp)
-            // console.log("subCategoryEnTemp: ", subCategoryEnTemp)
+            console.log("categoryTemp.category_en: ", categoryTemp.category_en)
+            console.log("categoryLoad.category_en: ", categoryLoad.category_en)
             // console.log("subCategoryUpdate: ", subCategoryUpdate)
             
+            const bodyUpdate: CategoriesData = {}
+            // // bodyUpdate.id_client = user.id_client
+            // // bodyUpdate.deleted = false
+            // // if(!edition || data.product!=stockNameTemp)
+            if(categoryLoad.category_en != categoryTemp.category_en)
+                bodyUpdate.name = categoryTemp.category_en
+            if(categoryLoad.category_es != categoryTemp.category_es)
+                bodyUpdate.name_esp = categoryTemp.category_es
+            if(categoryLoad.category_dk != categoryTemp.category_dk)
+                bodyUpdate.name_dan = categoryTemp.category_dk
+            if(categoryLoad.category_it != categoryTemp.category_it)
+                bodyUpdate.name_ita = categoryTemp.category_it
             
-            // const fetchUpdateSubCategory = async () => {
-            //     let loadingSuccess: boolean = false
-            //     try {
-            //         const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categoriesSub/${subCategoryUpdate._id}`, {
-            //             method: 'PATCH',
-            //             headers: {
-            //                 'Content-Type': 'application/json', // Set the appropriate content-type for my API
-            //                 // Add any other requires headers here
-            //             },
-            //             body:JSON.stringify({
-            //                 "id_category": categoryTemp,
-            //                 "name": subCategoryEnTemp,
-            //                 "name_esp": subCategoryEsTemp,
-            //                 "name_dan": subCategoryDkTemp,
-            //                 "name_ita": subCategoryItTemp
-            //             })
-            //         })
-            //         // Check if the response status is successful
-            //         if (response.ok) {
-            //             const responseData = await response.json() // parse the response data
-            //             // console.log('POST request successful: ', responseData)
-            //             loadingSuccess = true
-            //         } else {
-            //             // Handle non-successful responses
-            //             console.error('Request failed: ', response.status, response.statusText)
-            //             // Handle the error here
-            //         }
-            //     } catch (error: unknown) {
-            //         if (typeof error === 'string') {
-            //             // 'error' is now narrowed down to type 'string'
-            //             console.error('Error:', error)
-            //         } else if (error instanceof Error) {
-            //             // 'error' is now narrowed down to type 'Error'
-            //             console.error('Error object:', error.message)
-            //         } else {
-            //             // Handle other cases as needed
-            //         }
-            //     } finally {
-            //         // setIsLoading(())
-            //         // setIsLoading((prevLoading: any) => ({
-            //         //     ...prevLoading,
-            //         //     fieldsFetchCreateStock: loadingSuccess,
-            //         // }));
+            const fetchUpdateCategory = async () => {
+                let loadingSuccess: boolean = false
+                try {
+                    const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categories/${categoryTemp._id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                            // Add any other requires headers here
+                        },
+                        body:JSON.stringify(bodyUpdate)
+                        // body:JSON.stringify({
+                        //     "name": categoryTemp.category_en,
+                        //     "name_esp": categoryTemp.category_es,
+                        //     "name_dan": categoryTemp.category_dk,
+                        //     "name_ita": categoryTemp.category_it
+                        // })
+                    })
+                    // Check if the response status is successful
+                    if (response.ok) {
+                        const responseData = await response.json() // parse the response data
+                        // console.log('POST request successful: ', responseData)
+                        loadingSuccess = true
+                    } else {
+                        // Handle non-successful responses
+                        console.error('Request failed: ', response.status, response.statusText)
+                        // Handle the error here
+                    }
+                } catch (error: unknown) {
+                    if (typeof error === 'string') {
+                        // 'error' is now narrowed down to type 'string'
+                        console.error('Error:', error)
+                    } else if (error instanceof Error) {
+                        // 'error' is now narrowed down to type 'Error'
+                        console.error('Error object:', error.message)
+                    } else {
+                        // Handle other cases as needed
+                    }
+                } finally {
+                    // setIsLoading(())
+                    // setIsLoading((prevLoading: any) => ({
+                    //     ...prevLoading,
+                    //     fieldsFetchCreateStock: loadingSuccess,
+                    // }));
                     
-            //     }
-            // } 
-            // fetchUpdateSubCategory();       //////////Change the name for update
-            // setSelectedUsers(selectedUsersTemp)
-            // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
+                }
+            } 
+            fetchUpdateCategory();       //////////Change the name for update
             close()
         }
         setOpenSaveChanges(false);
@@ -171,13 +185,13 @@ export default function ManageCategory(
         setOpenSaveChanges(true);
     }
     
-    const handleOpenEditCategory = () => {
-        setOpenEditCategory(true)
-    }
-    const handleCloseEditCategory = () => {
-        close()
-        setOpenEditCategory(false)
-    }  
+    // const handleOpenEditCategory = () => {
+    //     setOpenEditCategory(true)
+    // }
+    // const handleCloseEditCategory = () => {
+    //     close()
+    //     setOpenEditCategory(false)
+    // }  
 
     // console.log("signUpdate: ", signUpdate)
     if (openBackdrop ) {
@@ -266,8 +280,8 @@ export default function ManageCategory(
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Category En"
-                                    value={categoryUpdate.category_en}
-                                    onChange={ (event:any) => onSubCategoryEnTempChange(event.target.value) }
+                                    value={categoryTemp.category_en}
+                                    onChange={ (event:any) => updateCategory(event.target.value, "category_en") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -280,8 +294,8 @@ export default function ManageCategory(
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Category Es"
-                                    value={categoryUpdate.category_es}
-                                    onChange={ (event:any) => onSubCategoryEsTempChange(event.target.value) }
+                                    value={categoryTemp.category_es}
+                                    onChange={ (event:any) => updateCategory(event.target.value, "category_es") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -294,8 +308,8 @@ export default function ManageCategory(
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Category Dk"
-                                    value={categoryUpdate.category_dk}
-                                    onChange={ (event:any) => onSubCategoryDkTempChange(event.target.value) }
+                                    value={categoryTemp.category_dk}
+                                    onChange={ (event:any) => updateCategory(event.target.value, "category_dk") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -308,8 +322,8 @@ export default function ManageCategory(
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Category It"
-                                    value={categoryUpdate.category_it}
-                                    onChange={ (event:any) => onSubCategoryItTempChange(event.target.value) }
+                                    value={categoryTemp.category_it}
+                                    onChange={ (event:any) => updateCategory(event.target.value, "category_it") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}

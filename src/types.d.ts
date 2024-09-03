@@ -70,14 +70,20 @@ export interface AccessLevelsData {
 };
 
 export interface CategoriesData {
-  id: number;
+  _id?: string;
+  id?: number;
   // name: string;
   category_en?: string;
   category_es?: string;
   category_dk?: string;
   category_it?: string;
   sub_categories?: array;
-  deleted: boolean;
+  deleted?: boolean;
+
+  name?: string;
+  name_esp?: string;
+  name_dan?: string;
+  name_ita?: string;
 };
 
 export interface CategoriesSubData {
