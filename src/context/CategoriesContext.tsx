@@ -30,42 +30,51 @@ export const CategoriesProvider: React.FC<CategoriesProviderProps> = ({ children
   const [categories, setCategories] = useState<CategoriesData>(INITIAL_CATEGORY);
   const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categories/`);
-        
-        if (response.ok) {
-          const json = await response.json();
-          const json_categories = json.map((category:any) => {
-            return (
-              {_id: category._id,
-              id: category.id,
-              category_en: category.name,
-              category_es: category.name_esp,
-              category_dk: category.name_dan,
-              category_it: category.name_ita,
-              deleted: category.deleted}
-            )
-          })
-          setCategories(json_categories);
-        } else {
-          setCategories(INITIAL_CATEGORY);
-          // Handle the case where the response is not OK (e.g., show an error message)
-        }
-      } catch (error: unknown) {
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categories/`);
+      
+      if (response.ok) {
+        const json = await response.json();
+        const json_categories = json.map((category:any) => {
+          return (
+            {_id: category._id,
+            id: category.id,
+            category_en: category.name,
+            category_es: category.name_esp,
+            category_dk: category.name_dan,
+            category_it: category.name_ita,
+            deleted: category.deleted}
+          )
+        })
+        setCategories(json_categories);
+      } else {
         setCategories(INITIAL_CATEGORY);
-        // Handle any network or fetch-related errors
-      } finally {
-            setIsLoading((prevLoading:any) => ({
-            ...prevLoading,
-            categories: false,
-            }));
-        }
-    };
-
+        // Handle the case where the response is not OK (e.g., show an error message)
+      }
+    } catch (error: unknown) {
+      setCategories(INITIAL_CATEGORY);
+      // Handle any network or fetch-related errors
+    } finally {
+          setIsLoading((prevLoading:any) => ({
+          ...prevLoading,
+          categories: false,
+          }));
+      }
+  };
+  useEffect(() => {
     fetchCategories();
   }, []);
+  
+  useEffect(() => {
+    if (isLoading.categories) {
+      fetchCategories();
+      setIsLoading((prevLoading: any) => ({
+          ...prevLoading,
+          categories: false,
+      }));
+    }
+  }, [isLoading.categories])
 
   return ( 
     <CategoriesContext.Provider value={{ categories, setCategories }}>

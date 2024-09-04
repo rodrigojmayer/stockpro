@@ -198,7 +198,9 @@ export default function ManageSubCategory(
         setOpenManageCategory(true)
     }
     const handleCloseManageCategory = () => {
-        close()
+        // close()
+        console.log("categories: ", categories)
+        categories
         setOpenManageCategory(false)
     }  
 

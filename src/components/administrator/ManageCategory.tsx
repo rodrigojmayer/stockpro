@@ -159,10 +159,10 @@ export default function ManageCategory(
                     }
                 } finally {
                     // setIsLoading(())
-                    // setIsLoading((prevLoading: any) => ({
-                    //     ...prevLoading,
-                    //     fieldsFetchCreateStock: loadingSuccess,
-                    // }));
+                    setIsLoading((prevLoading: any) => ({
+                        ...prevLoading,
+                        categories: loadingSuccess,
+                    }));
                     
                 }
             } 
@@ -170,10 +170,10 @@ export default function ManageCategory(
             close()
         }
         setOpenSaveChanges(false);
-        setIsLoading((prevLoading: any) => ({
-            ...prevLoading,
-            fieldsFetchCreateStock: false,
-        }));
+        // setIsLoading((prevLoading: any) => ({
+        //     ...prevLoading,
+        //     fieldsFetchCreateStock: false,
+        // }));
     }
     
     const handleOpenSaveChanges = () => {

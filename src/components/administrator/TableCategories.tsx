@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { tooltipClasses } from '@mui/material/Tooltip';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextField from '@mui/material/TextField';
@@ -29,6 +29,7 @@ import CustomFields from '../CustomFields';
 import { LanguageLabelsContext } from '../../context/LanguageLabelsContext';
 import { CategoriesContext } from '../../context/CategoriesContext';
 import { CategoriesSubContext } from '../../context/CategoriesSubContext';
+import { IsLoadingContext } from '../../context/IsLoadingContext';
 
 
 // type TableClasses = ReturnType<typeof useStyles>;
@@ -151,6 +152,9 @@ export default function TableCategories(
   const { categories } = useContext<any>(CategoriesContext) 
   const { categoriesSub } = useContext<any>(CategoriesSubContext) 
   const { columnsUserOrder } = useContext<any>(ColumnsContext);
+  const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
+
+  const isInitialRender = useRef(true);
 
   const elementToAdd = {dataKey: "check_stock", id: 0, width: 40,}
   const columnsTable = [elementToAdd, ...columnsUserOrder];
@@ -214,8 +218,11 @@ export default function TableCategories(
   ]
 
   // console.log("categoriesSub: ", categoriesSub)
-  const filteredFields = categoriesSub.map((categorySub: any) => {
-    if(categorySub.sub_category_en !== "-"){    
+  // useEffect(() => {
+  function filterFields () {
+
+    const filteredFields = categoriesSub.map((categorySub: any) => {
+      if(categorySub.sub_category_en !== "-"){    
         let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
         return ({
             _id: categorySub._id,
@@ -229,25 +236,32 @@ export default function TableCategories(
             sub_category_es: categorySub.sub_category_es,
             sub_category_it: categorySub.sub_category_it,
             sub_category_dk: categorySub.sub_category_dk,
-          // _id: categorySub._id,
-          // id: categorySub.id,
-          // id_category: categoryFind.id,
-          // name: categorySub.name,
-          // name_esp: "",
-          // name_dan: "",
-          // name_ita: "",
-          // deleted: "",
-        }) 
+            // _id: categorySub._id,
+            // id: categorySub.id,
+            // id_category: categoryFind.id,
+            // name: categorySub.name,
+            // name_esp: "",
+            // name_dan: "",
+            // name_ita: "",
+            // deleted: "",
+          }) 
+        }
+      }).filter(Boolean)
+      // console.log("filteredFields: ", filteredFields)
+      return filteredFields
     }
-  }).filter(Boolean)
-
-  const [filteredData, setFilteredData] = useState(filteredFields)
+      
+  const [filteredData, setFilteredData] = useState(filterFields())
   // console.log("filteredFields: ", filteredFields)
   useEffect(() => {
-    // setFilteredData(filteredFields)
-  // console.log("filteredData: ", filteredData)
-
-  }, [filteredData]);
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+    // console.log("Use effect() categories: ", categories)
+    setFilteredData(filterFields())
+  // }, [filteredData]);
+}, [categories, categoriesSub])
   const initialManageColumns = columns.map((column:any) => {
     const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
     const isInArray = foundColumn !== undefined ? true : false;
