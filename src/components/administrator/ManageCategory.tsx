@@ -163,6 +163,7 @@ export default function ManageCategory(
                         ...prevLoading,
                         categories: loadingSuccess,
                     }));
+                    setCategoryLoad(categoryTemp)
                     
                 }
             } 
