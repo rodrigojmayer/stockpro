@@ -87,10 +87,10 @@ export interface CategoriesData {
 };
 
 export interface CategoriesSubData {
-  _id: string;
+  _id?: string;
   [key?: string]: any;
-  id: number;
-  id_category: number;
+  id?: number;
+  id_category?: number;
   sub_category_en?: string;
   sub_category_es?: string;
   sub_category_dk?: string;
@@ -100,6 +100,12 @@ export interface CategoriesSubData {
   category?: string;
   id_sub_category?: number;
   sub_category?: string
+
+  
+  name?: string;
+  name_esp?: string;
+  name_dan?: string;
+  name_ita?: string;
 };
 
 export interface Data {

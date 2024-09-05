@@ -48,10 +48,18 @@ export default function ManageSubCategory(
         category_it: "",
         deleted: false
     })
-    const [ subCategoryEnTemp, setSubCategoryEnTemp ] = useState<any>("")
-    const [ subCategoryEsTemp, setSubCategoryEsTemp ] = useState<any>("")
-    const [ subCategoryDkTemp, setSubCategoryDkTemp ] = useState<any>("")
-    const [ subCategoryItTemp, setSubCategoryItTemp ] = useState<any>("")
+    const [ subCategoryTemp, setSubCategoryTemp ] = useState<CategoriesSubData>({
+        id: NaN,
+        sub_category_en: "",
+        sub_category_es: "",
+        sub_category_dk: "",
+        sub_category_it: "",
+        deleted: false
+    })
+    // const [ subCategoryEnTemp, setSubCategoryEnTemp ] = useState<any>("")
+    // const [ subCategoryEsTemp, setSubCategoryEsTemp ] = useState<any>("")
+    // const [ subCategoryDkTemp, setSubCategoryDkTemp ] = useState<any>("")
+    // const [ subCategoryItTemp, setSubCategoryItTemp ] = useState<any>("")
 
     // console.log("subCategoryUpdate: ", subCategoryUpdate)
     // console.log("categories: ", categories)
@@ -59,28 +67,35 @@ export default function ManageSubCategory(
     useEffect(() => {
             setOpenBackdrop(true)
             // setCategoryTemp(subCategoryUpdate.category);
-            setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
-            setSubCategoryEsTemp(subCategoryUpdate.sub_category_es);
-            setSubCategoryDkTemp(subCategoryUpdate.sub_category_dk);
-            setSubCategoryItTemp(subCategoryUpdate.sub_category_it);
+            // setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
+            // setSubCategoryEsTemp(subCategoryUpdate.sub_category_es);
+            // setSubCategoryDkTemp(subCategoryUpdate.sub_category_dk);
+            // setSubCategoryItTemp(subCategoryUpdate.sub_category_it);
+            setSubCategoryTemp ({ ...subCategoryTemp, 
+                sub_category_en: subCategoryUpdate.sub_category_en,
+                sub_category_es: subCategoryUpdate.sub_category_es,
+                sub_category_dk: subCategoryUpdate.sub_category_dk,
+                sub_category_it: subCategoryUpdate.sub_category_it,
+            })
             setOpenBackdrop(true);
         
             // Find the category by name and get its ID
             const category = categories.find((cat: any) => cat.category_en === subCategoryUpdate.category_en);
             // setCategoryTemp(category ? category.id : "");  // Set the ID or empty string if not found
-            console.log("category: ", category)
+            // console.log("category: ", category)
             // setCategoryTemp({ ...categoryTemp, id: (category ? category.id : "")})
             setCategoryTemp(category)
             
-            setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
+            // setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
     }, [open]) 
     useEffect(() => {
 
-        console.log("categoryTemp: ", categoryTemp)
+        // console.log("categoryTemp: ", categoryTemp)
         
-        if(categoryTemp?.id && subCategoryEnTemp)
+        // if(categoryTemp?.id && subCategoryEnTemp)
+        if(categoryTemp?.id && subCategoryTemp.sub_category_en)
             setOpenBackdrop(false)
-    }, [categoryTemp, subCategoryEnTemp])
+    }, [categoryTemp, subCategoryTemp.sub_category_en])
 
     const onCategoryTempChange = (value: any) => {
         // setCategoryTemp(value)   
@@ -88,24 +103,23 @@ export default function ManageSubCategory(
 
     }
     const updateCategory = (value: any, field: string) => {
-        // setCategoryTemp(value)  
-        // console.log("updateCategory value: ", value) Hola
-
         setCategoryTemp({ ...categoryTemp, [field]: value})
-
     }
-    const onSubCategoryEnTempChange = (value: string) => {
-        setSubCategoryEnTemp(value)
+    const updateSubCategory = (value: any, field: string) => {
+        setSubCategoryTemp({ ...subCategoryTemp, [field]: value})
     }
-    const onSubCategoryEsTempChange = (value: string) => {
-        setSubCategoryEsTemp(value)
-    }
-    const onSubCategoryDkTempChange = (value: string) => {
-        setSubCategoryDkTemp(value)
-    }
-    const onSubCategoryItTempChange = (value: string) => {
-        setSubCategoryItTemp(value)
-    }
+    // const onSubCategoryEnTempChange = (value: string) => {
+    //     setSubCategoryEnTemp(value)
+    // }
+    // const onSubCategoryEsTempChange = (value: string) => {
+    //     setSubCategoryEsTemp(value)
+    // }
+    // const onSubCategoryDkTempChange = (value: string) => {
+    //     setSubCategoryDkTemp(value)
+    // }
+    // const onSubCategoryItTempChange = (value: string) => {
+    //     setSubCategoryItTemp(value)
+    // }
     
     const [openSaveChanges, setOpenSaveChanges] = useState(false);  
     const [openManageCategory, setOpenManageCategory] = useState(false);  
@@ -138,10 +152,10 @@ export default function ManageSubCategory(
                         },
                         body:JSON.stringify({
                             "id_category": categoryTemp.id,
-                            "name": subCategoryEnTemp,
-                            "name_esp": subCategoryEsTemp,
-                            "name_dan": subCategoryDkTemp,
-                            "name_ita": subCategoryItTemp
+                            "name": subCategoryTemp.sub_category_en,
+                            "name_esp": subCategoryTemp.sub_category_es,
+                            "name_dan": subCategoryTemp.sub_category_dk,
+                            "name_ita": subCategoryTemp.sub_category_it
                         })
                     })
                     // Check if the response status is successful
@@ -166,10 +180,10 @@ export default function ManageSubCategory(
                     }
                 } finally {
                     // setIsLoading(())
-                    // setIsLoading((prevLoading: any) => ({
-                    //     ...prevLoading,
-                    //     fieldsFetchCreateStock: loadingSuccess,
-                    // }));
+                    setIsLoading((prevLoading: any) => ({
+                        ...prevLoading,
+                        categories_sub: loadingSuccess,
+                    }));
                     
                 }
             } 
@@ -298,8 +312,8 @@ export default function ManageSubCategory(
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Sub Category En"
-                                    value={subCategoryEnTemp}
-                                    onChange={ (event:any) => onSubCategoryEnTempChange(event.target.value) }
+                                    value={subCategoryTemp.sub_category_en}
+                                    onChange={ (event:any) => updateSubCategory(event.target.value, "sub_category_en") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -312,8 +326,8 @@ export default function ManageSubCategory(
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Sub Category Es"
-                                    value={subCategoryEsTemp}
-                                    onChange={ (event:any) => onSubCategoryEsTempChange(event.target.value) }
+                                    value={subCategoryTemp.sub_category_es}
+                                    onChange={ (event:any) => updateSubCategory(event.target.value, "sub_category_es") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -326,8 +340,8 @@ export default function ManageSubCategory(
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Sub Category Dk"
-                                    value={subCategoryDkTemp}
-                                    onChange={ (event:any) => onSubCategoryDkTempChange(event.target.value) }
+                                    value={subCategoryTemp.sub_category_dk}
+                                    onChange={ (event:any) => updateSubCategory(event.target.value, "sub_category_dk") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -340,8 +354,8 @@ export default function ManageSubCategory(
                             <Box className={classes.customBoxRow}>
                                 <TextField
                                     label="Sub Category It"
-                                    value={subCategoryItTemp}
-                                    onChange={ (event:any) => onSubCategoryItTempChange(event.target.value) }
+                                    value={subCategoryTemp.sub_category_it}
+                                    onChange={ (event:any) => updateSubCategory(event.target.value, "sub_category_it") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
