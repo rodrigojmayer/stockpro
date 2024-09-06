@@ -8,6 +8,7 @@ import ModalsGroupAdministrator from '../components/administrator/ModalsGroupAdm
 import MainSearch from '../components/MainSearch';
 import TableCategories from '../components/administrator/TableCategories';
 import TableClients from '../components/administrator/TableClients';
+import Tables from '../components/administrator/Tables';
 import ManageStock from '../components/ManageStock';
 import ManageSubCategory from '../components/administrator/ManageSubCategory'; 
 import { CategoriesSubData, DataMenuOptionsAdmin } from '../types';
@@ -21,33 +22,33 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
 
-function tableSelected(
-  filteredData: any, 
-  openUpdateSubCategoryUpdate: any,
-  handleDisabledUpdateButton: any,
-  openOptions: string
-) {
-  if (openOptions === "admin_categories"){
+// function tableSelected(
+//   filteredData: any, 
+//   openUpdateSubCategoryUpdate: any,
+//   handleDisabledUpdateButton: any,
+//   openOptions: string
+// ) {
+//   if (openOptions === "admin_categories"){
 
-    return (
-      <TableCategories 
-      data={filteredData}
-      // columns={columnsUserOrder} 
-      openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
-      handleDisabledUpdateButton={handleDisabledUpdateButton} 
-      />
-    )
-  } else {
-    return(
-    <TableClients 
-      data={filteredData}
-      // columns={columnsUserOrder} 
-      openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
-      handleDisabledUpdateButton={handleDisabledUpdateButton} 
-    />
-  )
-}
-}
+//     return (
+//       <TableCategories 
+//       data={filteredData}
+//       // columns={columnsUserOrder} 
+//       openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+//       handleDisabledUpdateButton={handleDisabledUpdateButton} 
+//       />
+//     )
+//   } else {
+//     return(
+//     <TableClients 
+//       data={filteredData}
+//       // columns={columnsUserOrder} 
+//       openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+//       handleDisabledUpdateButton={handleDisabledUpdateButton} 
+//     />
+//   )
+// }
+// }
 
 
 
@@ -248,13 +249,18 @@ function Administrator() {
               openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             /> */}
-
-          {tableSelected(
+          <Tables 
+              data={filteredData}
+              // columns={columnsUserOrder} 
+              openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+              handleDisabledUpdateButton={handleDisabledUpdateButton} 
+            />
+          {/* {tableSelected(
             filteredData, 
             openUpdateSubCategoryUpdate, 
             handleDisabledUpdateButton,
             openOptions
-            )}
+            )} */}
           
           {/* } */}
         </ModalsGroupAdministrator>
