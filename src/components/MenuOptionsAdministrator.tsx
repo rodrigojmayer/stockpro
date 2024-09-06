@@ -58,6 +58,7 @@ export default function MenuOptionsAdministrator({ open, handleClose,  onData}: 
     const  buttons = [
         <Button value="home" key="home" variant="text" onClick={navigateHome}>Home</Button>,
         <Button value="admin_categories" key="admin_categories" variant="text" onClick={selOp}>Categories</Button>,
+        <Button value="admin_clients" key="admin_clients" variant="text" onClick={selOp}>Clients</Button>,
         // <Button value="preferences" key="preferences" variant="text" onClick={selOp}>{labelsMenuOptions.preferences}</Button>,
         // <Button value="logout" key="logout" variant="text" onClick={signOut}>{labelsMenuOptions.logout}</Button>,
     ];

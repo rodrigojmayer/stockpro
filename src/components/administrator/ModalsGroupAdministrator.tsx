@@ -39,6 +39,7 @@ interface ModalsGroupAdministratorProps {
     // openMassiveUpdateStock: (value: string) => void;
     disabledUpdateButton: boolean;
     openCreateStock: () => void;
+    setOpenOptions: (value: string) => void;
   }
 
 
@@ -53,6 +54,7 @@ export default function ModalsGroup(
         // openMassiveUpdateStock,
         disabledUpdateButton,
         openCreateStock,
+        setOpenOptions
     }: ModalsGroupAdministratorProps) {
     // export default function ModalsGroup( {children, columns}: MyComponentProps) {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -62,19 +64,22 @@ export default function ModalsGroup(
     const [openMenu, setOpenMenu] = useState(false);
     const handleOpenMenu = () => setOpenMenu(true);
     const handleCloseMenu = () => setOpenMenu(false);
-    const [openOptions, setOpenOptions] = useState<DataMenuOptionsAdmin>(INITIAL_MENU_OPTIONS);
+    // const [openOptions, setOpenOptions] = useState<DataMenuOptionsAdmin>(INITIAL_MENU_OPTIONS);
   
     const handleOpenOptions = (newData:  {option: string, open: boolean}) => {
-            setOpenOptions({...openOptions, [newData.option]: newData.open});
+        // console.log("newData.option: ", newData.option)
+        // console.log("newData.open: ", newData.open)
+        // setOpenOptions({...openOptions, [newData.option]: newData.open});
+        setOpenOptions(newData.option);
     }
-    const handleCloseOptions = () => {
-        for(const [key, value] of Object.entries(openOptions)) {
-            if (value){
-                setOpenOptions({ ...openOptions, [key]: false})
-                break;
-            }
-        }
-    }
+    // const handleCloseOptions = () => {
+    //     for(const [key, value] of Object.entries(openOptions)) {
+    //         if (value){
+    //             setOpenOptions({ ...openOptions, [key]: false})
+    //             break;
+    //         }
+    //     }
+    // }
     
     // useEffect(() => {
     //     // console.log("ModalsGroup columns: ", columns)

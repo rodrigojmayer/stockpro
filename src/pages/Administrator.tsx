@@ -7,9 +7,10 @@ import { PlusButton, UpdateButton } from '../components/Buttons';
 import ModalsGroupAdministrator from '../components/administrator/ModalsGroupAdministrator';
 import MainSearch from '../components/MainSearch';
 import TableCategories from '../components/administrator/TableCategories';
+import TableClients from '../components/administrator/TableClients';
 import ManageStock from '../components/ManageStock';
 import ManageSubCategory from '../components/administrator/ManageSubCategory'; 
-import { CategoriesSubData } from '../types';
+import { CategoriesSubData, DataMenuOptionsAdmin } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import { ColumnsContext } from '../context/ColumnsContext';
@@ -19,6 +20,37 @@ import { CheckListStockContext } from '../context/CheckListStockContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
+
+function tableSelected(
+  filteredData: any, 
+  openUpdateSubCategoryUpdate: any,
+  handleDisabledUpdateButton: any,
+  openOptions: string
+) {
+  if (openOptions === "admin_categories"){
+
+    return (
+      <TableCategories 
+      data={filteredData}
+      // columns={columnsUserOrder} 
+      openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+      handleDisabledUpdateButton={handleDisabledUpdateButton} 
+      />
+    )
+  } else {
+    return(
+    <TableClients 
+      data={filteredData}
+      // columns={columnsUserOrder} 
+      openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+      handleDisabledUpdateButton={handleDisabledUpdateButton} 
+    />
+  )
+}
+}
+
+
+
 function Administrator() {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
@@ -31,6 +63,7 @@ function Administrator() {
     const [ showCreateStock, setShowCreateStock ] = useState(false)
     const handleCloseCreateStock = () => setShowCreateStock(false)
     const openCreateStock = () => setShowCreateStock(true)
+    const [openOptions, setOpenOptions] = useState<string>("admin_categories");
     const [ subCategoryUpdate, setSubCategoryUpdate ] = useState<CategoriesSubData>({
       "_id": "",
       "id": 0,
@@ -188,6 +221,7 @@ function Administrator() {
           setSearchQuery={setSearchQuery}
           disabledUpdateButton={disabledUpdateButton}
           openCreateStock={openCreateStock}
+          setOpenOptions={setOpenOptions}
         >
           <Container maxWidth="md" sx={{ display: (breakpointLG?"none":"block") }} style={{padding: "0"}} >
             <Grid container>
@@ -202,12 +236,26 @@ function Administrator() {
             </Grid>
           </Container>
           {/* {openBackdrop ? "":  */}
-            <TableCategories 
+            {/* <TableCategories 
               data={filteredData}
               // columns={columnsUserOrder} 
               openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             />
+            <TableClients 
+              data={filteredData}
+              // columns={columnsUserOrder} 
+              openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+              handleDisabledUpdateButton={handleDisabledUpdateButton} 
+            /> */}
+
+          {tableSelected(
+            filteredData, 
+            openUpdateSubCategoryUpdate, 
+            handleDisabledUpdateButton,
+            openOptions
+            )}
+          
           {/* } */}
         </ModalsGroupAdministrator>
         {/* <ManageStock
@@ -235,3 +283,4 @@ function Administrator() {
     // )
 }
 export default Administrator
+
