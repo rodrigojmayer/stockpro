@@ -76,10 +76,9 @@ function Administrator() {
       "deleted": false,
     })
     // const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
-    const [ showUpdateSubCategoryUpdate, setShowUpdateSubCategoryUpdate ] = useState(false)
+    const [ showSubCategoryUpdate, setShowSubCategoryUpdate ] = useState(false)
     const handleCloseUpdateAmountStock = () => {
-      setShowUpdateSubCategoryUpdate(false)
-
+      setShowSubCategoryUpdate(false)
       setSubCategoryUpdate({
         "_id": "",
         "id": 0,
@@ -91,29 +90,9 @@ function Administrator() {
         "deleted": false,
       })
     }
-      const openUpdateSubCategoryUpdate = (newData:CategoriesSubData) => {
-
-       // console.log("products: ", products)
+      const openSubCategoryUpdate = (newData:CategoriesSubData) => {
       console.log("newData: ", newData)
-
-      let dateObject
-      let formattedDate
-      // if(typeof newData.alert_date === 'string'){
-      //   const dateDay = newData.alert_date.substring(0,2)
-      //   const dateMonth = newData.alert_date.substring(3,5)
-      //   const dateYear = newData.alert_date.substring(6,10)
-      //   const dateString = `${dateYear}-${dateMonth}-${dateDay}T00:00:00Z`
-      //   dateObject = new Date(dateString)
-      //   formattedDate = dateObject.toLocaleDateString('en-US', {
-      //     year: 'numeric',
-      //     month: 'numeric',
-      //     day: 'numeric',
-      //   });
-      // } else {
-      //   dateObject = newData.alert_date
-      //   formattedDate = newData.alert_date
-      // }
-      setShowUpdateSubCategoryUpdate(true)
+      setShowSubCategoryUpdate(true)
 
       setSubCategoryUpdate({
         "_id": newData._id,
@@ -240,24 +219,24 @@ function Administrator() {
             {/* <TableCategories 
               data={filteredData}
               // columns={columnsUserOrder} 
-              openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+              openSubCategoryUpdate={openSubCategoryUpdate} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             />
             <TableClients 
               data={filteredData}
               // columns={columnsUserOrder} 
-              openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+              openSubCategoryUpdate={openSubCategoryUpdate} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             /> */}
-          <Tables 
+            <Tables 
               data={filteredData}
               // columns={columnsUserOrder} 
-              openUpdateSubCategoryUpdate={openUpdateSubCategoryUpdate} 
+              openSubCategoryUpdate={openSubCategoryUpdate} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             />
           {/* {tableSelected(
             filteredData, 
-            openUpdateSubCategoryUpdate, 
+            openSubCategoryUpdate, 
             handleDisabledUpdateButton,
             openOptions
             )} */}
@@ -271,7 +250,7 @@ function Administrator() {
             columnsCustom={filteredColumnsCustom}
         /> */}
         <ManageSubCategory
-            open={showUpdateSubCategoryUpdate}
+            open={showSubCategoryUpdate}
             handleClose={handleCloseUpdateAmountStock}
             subCategoryUpdate={subCategoryUpdate}
         />
