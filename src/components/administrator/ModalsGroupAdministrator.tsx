@@ -31,7 +31,6 @@ interface ModalsGroupAdministratorProps {
     columnsDefault: ColumnData[]
     columnsCustom: ColumnData[]
     idColumnsTableOrder: Number[]
-    data: CategoriesSubData[]
     // columnsHiddenFields: ColumnData[]
     children: React.ReactNode
     // showCreataddButtonShoweStock: boolean
@@ -49,7 +48,6 @@ export default function ModalsGroup(
         columnsDefault, 
         columnsCustom, 
         idColumnsTableOrder,
-        data,
         setSearchQuery,
         // openMassiveUpdateStock,
         disabledUpdateButton,

@@ -20,7 +20,7 @@ export interface ClientData {
   _id: string;
   id: number;
   id_group_filestack: number;
-  client: string;
+  client?: string;
   deleted: boolean;
   enabled: boolean;
 }

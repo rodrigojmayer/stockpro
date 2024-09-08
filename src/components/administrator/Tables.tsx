@@ -147,122 +147,52 @@ export default function Tables(
   const  {classes} = useStylesGlobal()
   const breakpointLG = useMediaQuery('(min-width:1024px)');
   const breakpointMD = useMediaQuery('(min-width: 724px)');
-  const { labelsTableProducts } = useContext<any>(LanguageLabelsContext)
-
+  // const { labelsTableProducts } = useContext<any>(LanguageLabelsContext)
+console.log("Tables data: ", data)
   const { user } = useContext<any>(UserContext);
-  const { categories } = useContext<any>(CategoriesContext) 
-  const { categoriesSub } = useContext<any>(CategoriesSubContext) 
+  // const { categories } = useContext<any>(CategoriesContext) 
+  // const { categoriesSub } = useContext<any>(CategoriesSubContext) 
   const { columnsUserOrder } = useContext<any>(ColumnsContext);
-  const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
+  // const { isLoading, setIsLoading } = useContext<any>(IsLoadingContext);
 
-  const isInitialRender = useRef(true);
+  // const isInitialRender = useRef(true);
 
   const elementToAdd = {dataKey: "check_stock", id: 0, width: 40,}
   const columnsTable = [elementToAdd, ...columnsUserOrder];
-  // const columns = [
-  //   {
-  //       _id: "1",
-  //       id: 1,
-  //       dataKey: "category_en",
-  //       label: "Category Eng",
-  //       width: 120
-  //   },
-  //   {
-  //       _id: "2",
-  //       id: 2,
-  //       dataKey: "category_es",
-  //       label: "Category Esp",
-  //       width: 120
-  //   },
-  //   {
-  //       _id: "3",
-  //       id: 3,
-  //       dataKey: "category_dk",
-  //       label: "Category Dk",
-  //       width: 120
-  //   },
-  //   {
-  //       _id: "4",
-  //       id: 4,
-  //       dataKey: "category_it",
-  //       label: "Category It",
-  //       width: 120
-  //   },
-  //   {
-  //       _id: "5",
-  //       id: 5,
-  //       dataKey: "sub_category_en",
-  //       label: "Sub Eng",
-  //       width: 120
-  //   },
-  //   {
-  //       _id: "6",
-  //       id: 6,
-  //       dataKey: "sub_category_es",
-  //       label: "Sub Esp",
-  //       width: 120
-  //   },
-  //   {
-  //       _id: "7",
-  //       id: 7,
-  //       dataKey: "sub_category_dk",
-  //       label: "Sub Dk",
-  //       width: 120
-  //   },
-  //   {
-  //       _id: "8",
-  //       id: 8,
-  //       dataKey: "sub_category_it",
-  //       label: "Sub It",
-  //       width: 120
+
+  // function filterFields () {
+
+  //   const filteredFields = categoriesSub.map((categorySub: any) => {
+  //     if(categorySub.sub_category_en !== "-"){    
+  //       let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
+  //       return ({
+  //           _id: categorySub._id,
+  //           id_category: categoryFind.id,
+  //           category_en: categoryFind.category_en,
+  //           category_es: categoryFind.category_es,
+  //           category_dk: categoryFind.category_dk,
+  //           category_it: categoryFind.category_it,
+  //           id_sub_category: categorySub.id,
+  //           sub_category_en: categorySub.sub_category_en,
+  //           sub_category_es: categorySub.sub_category_es,
+  //           sub_category_it: categorySub.sub_category_it,
+  //           sub_category_dk: categorySub.sub_category_dk,
+  //         }) 
+  //       }
+  //     }).filter(Boolean)
+  //     return filteredFields
   //   }
-  // ]
-
-  // console.log("categoriesSub: ", categoriesSub)
-  // useEffect(() => {
-  function filterFields () {
-
-    const filteredFields = categoriesSub.map((categorySub: any) => {
-      if(categorySub.sub_category_en !== "-"){    
-        let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
-        return ({
-            _id: categorySub._id,
-            id_category: categoryFind.id,
-            category_en: categoryFind.category_en,
-            category_es: categoryFind.category_es,
-            category_dk: categoryFind.category_dk,
-            category_it: categoryFind.category_it,
-            id_sub_category: categorySub.id,
-            sub_category_en: categorySub.sub_category_en,
-            sub_category_es: categorySub.sub_category_es,
-            sub_category_it: categorySub.sub_category_it,
-            sub_category_dk: categorySub.sub_category_dk,
-            // _id: categorySub._id,
-            // id: categorySub.id,
-            // id_category: categoryFind.id,
-            // name: categorySub.name,
-            // name_esp: "",
-            // name_dan: "",
-            // name_ita: "",
-            // deleted: "",
-          }) 
-        }
-      }).filter(Boolean)
-      // console.log("filteredFields: ", filteredFields)
-      return filteredFields
-    }
       
-  const [filteredData, setFilteredData] = useState(filterFields())
-  // console.log("filteredFields: ", filteredFields)
-  useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
-      return;
-    }
-    // console.log("Use effect() categories: ", categories)
-    setFilteredData(filterFields())
-  // }, [filteredData]);
-}, [categories, categoriesSub])
+  // const [filteredData, setFilteredData] = useState(filterFields())
+
+  // useEffect(() => {
+  //   if (isInitialRender.current) {
+  //     isInitialRender.current = false;
+  //     return;
+  //   }
+  //   setFilteredData(filterFields())
+  // }, [categories, categoriesSub])
+
   const initialManageColumns = columns.map((column:any) => {
     const foundColumn = columnsUserOrder.find((columnUserOrder:any) => columnUserOrder._id === column._id)
     const isInArray = foundColumn !== undefined ? true : false;
@@ -364,7 +294,7 @@ export default function Tables(
       /> 
       <Paper style={{backgroundColor: "rgb(0, 0, 0, 0)", height: `calc(100dvh - ${(breakpointLG?"105px":"150px")})`, width: (breakpointLG?"98vw":"94vw"), margin: "12px auto 0 auto" ,borderRadius: "10px"}}>
         <TableVirtuoso 
-          data={filteredData}
+          data={data}
           components={VirtuosoTableComponents}
           style={{
             backgroundColor: "rgb(0, 0, 0, 0)", 
@@ -421,7 +351,7 @@ export default function Tables(
           itemContent={(index: number) =>
             rowContent(
                 index, 
-                filteredData[index], 
+                data[index], 
                 columns, 
                 classes, 
                 openSubCategoryUpdate, 

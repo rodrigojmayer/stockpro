@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useRef } from 'react'
 import { Container, Grid } from '@mui/material'
 // import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Backdrop from '@mui/material/Backdrop'
@@ -20,6 +20,9 @@ import MassiveUpdateStock from '../components/MassiveUpdateStock';
 import { CheckListStockContext } from '../context/CheckListStockContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
+import { CategoriesSubContext } from '../context/CategoriesSubContext';
+import { CategoriesContext } from '../context/CategoriesContext';
+import { ClientsContext } from '../context/ClientsContext';
 const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
 
 // function tableSelected(
@@ -141,8 +144,8 @@ const columns_admin_clients = [
   {
       _id: "5",
       id: 5,
-      dataKey: "name",
-      label: "Name",
+      dataKey: "client",
+      label: "Client",
       width: 120
   }
 ]
@@ -152,225 +155,221 @@ const columnsMap: { [key: string]: { _id: string; id: number; dataKey: string; l
   // Add other column arrays here
 };
 
-function Administrator() {
-    const breakpointLG = useMediaQuery('(min-width:1024px)');
-    const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
-    const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
-    const { products } = useContext<any>(ProductsContext)
-    const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
-    // console.log("products: ", products)
-    const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
-    const [ searchQuery, setSearchQuery ] = useState("")
-    const [ showCreateStock, setShowCreateStock ] = useState(false)
-    const handleCloseCreateStock = () => setShowCreateStock(false)
-    const openCreateStock = () => setShowCreateStock(true)
-    const [openOptions, setOpenOptions] = useState<string>("admin_categories")
-    const [columnsSelected, setColumnsSelected] = useState<ColumnDataAdministrator[]>(columns_admin_categories);
-    const [ subCategoryUpdate, setSubCategoryUpdate ] = useState<CategoriesSubData>({
-      "_id": "",
-      "id": 0,
-      "id_category": 1,
-      "sub_category_en": "",
-      "sub_category_es": "",
-      "sub_category_dk": "",
-      "sub_category_it": "",
-      "deleted": false,
-    })
-    // const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
-    const [ showSubCategoryUpdate, setShowSubCategoryUpdate ] = useState(false)
-    const handleCloseUpdateAmountStock = () => {
-      setShowSubCategoryUpdate(false)
-      setSubCategoryUpdate({
-        "_id": "",
-        "id": 0,
-        "id_category": 1,
-        "sub_category_en": "",
-        "sub_category_es": "",
-        "sub_category_dk": "",
-        "sub_category_it": "",
-        "deleted": false,
-      })
-    }
-      const openSubCategoryUpdate = (newData:CategoriesSubData) => {
-      console.log("newData: ", newData)
-      setShowSubCategoryUpdate(true)
+const initial_state_category = {
+  id: NaN,
+  category_en: "",
+  category_es: "",
+  category_dk: "",
+  category_it: "",
+  deleted: false
+}
+const initial_state_sub_category = {
+  _id: "",
+  id: 0,
+  id_category: 1,
+  sub_category_en: "",
+  sub_category_es: "",
+  sub_category_dk: "",
+  sub_category_it: "",
+  deleted: false,
+}
 
-      setSubCategoryUpdate({
-        "_id": newData._id,
-        "id": newData.id,
-        "id_category": newData.id_category,
-        "sub_category_en": newData.sub_category_en,
-        "sub_category_es": newData.sub_category_es,
-        "sub_category_dk": newData.sub_category_dk,
-        "sub_category_it": newData.sub_category_it,
-        "deleted": newData.deleted,
-        "category_en": newData.category_en,
-        "category_es": newData.category_es,
-        "category_dk": newData.category_dk,
-        "category_it": newData.category_it,
-        "id_sub_category": newData.id,
-        "sub_category": newData.sub_category
-      })
-    }  
+function Administrator() {
+  const breakpointLG = useMediaQuery('(min-width:1024px)');
+  const isInitialRender = useRef(true);
+  const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
+  const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
+  const { clients } = useContext<any>(ClientsContext) 
+  console.log("clients: ", clients)
+  const { categories } = useContext<any>(CategoriesContext) 
+  const { categoriesSub } = useContext<any>(CategoriesSubContext)
+  const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
+  // console.log("products: ", products)
+  const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
+  const [ searchQuery, setSearchQuery ] = useState("")
+  const [ showCreateStock, setShowCreateStock ] = useState(false)
+  const openCreateStock = () => setShowCreateStock(true)
+  const [openOptions, setOpenOptions] = useState<string>("admin_categories")
+  const [columnsSelected, setColumnsSelected] = useState<ColumnDataAdministrator[]>(columns_admin_categories);
+  const [ subCategoryUpdate, setSubCategoryUpdate ] = useState<CategoriesSubData>(initial_state_sub_category)
+  // const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
+  const [ showSubCategoryUpdate, setShowSubCategoryUpdate ] = useState(false)
+  const handleCloseUpdateAmountStock = () => {
+    setShowSubCategoryUpdate(false)
+    setSubCategoryUpdate(initial_state_sub_category)
+  }
+    const openSubCategoryUpdate = (newData:CategoriesSubData) => {
+    // console.log("newData: ", newData)
+    setShowSubCategoryUpdate(true)
+
+    setSubCategoryUpdate({
+      "_id": newData._id,
+      "id": newData.id,
+      "id_category": newData.id_category,
+      "sub_category_en": newData.sub_category_en,
+      "sub_category_es": newData.sub_category_es,
+      "sub_category_dk": newData.sub_category_dk,
+      "sub_category_it": newData.sub_category_it,
+      "deleted": newData.deleted,
+      "category_en": newData.category_en,
+      "category_es": newData.category_es,
+      "category_dk": newData.category_dk,
+      "category_it": newData.category_it,
+      "id_sub_category": newData.id,
+      "sub_category": newData.sub_category
+    })
+  }  
+
+  const [ disabledUpdateButton, setDisabledUpdateButton ] = useState<boolean>(true)
+  const handleDisabledUpdateButton = (value_disable:boolean) => {
+    setDisabledUpdateButton(value_disable)
+  }
   
-    const [ disabledUpdateButton, setDisabledUpdateButton ] = useState<boolean>(true)
-    const handleDisabledUpdateButton = (value_disable:boolean) => {
-      setDisabledUpdateButton(value_disable)
+  
+  function filterFields () {
+    // if(openOptions === "admin_categories"){
+      const filteredFields = categoriesSub.map((categorySub: any) => {
+        if(categorySub.sub_category_en !== "-"){    
+          let categoryFind = categories.find((category:any) => category.id === categorySub.id_category)
+          return ({
+            _id: categorySub._id,
+            id_category: categoryFind.id,
+            category_en: categoryFind.category_en,
+            category_es: categoryFind.category_es,
+            category_dk: categoryFind.category_dk,
+            category_it: categoryFind.category_it,
+            id_sub_category: categorySub.id,
+            sub_category_en: categorySub.sub_category_en,
+            sub_category_es: categorySub.sub_category_es,
+            sub_category_it: categorySub.sub_category_it,
+            sub_category_dk: categorySub.sub_category_dk,
+          }) 
+        }
+      }).filter(Boolean)
+      return filteredFields
+    // } else if(openOptions === "columns_admin_clients") {
+    //   fetchClients()
+    // }
+  }
+  // const fetchClientsData = async () => {
+  //   try {
+  //     const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/clients/`)
+  //     if (!response.ok) {
+  //       throw new Error(`Request failed with status: ${response.status}`);
+  //     }
+  //     const json = await response.json();
+  //     // console.log("/*-/*-/*-json: ", json)
+  //     // console.log("/*-/*-/*-response: ", response)
+  //     // if(json.name===undefined) json.name = ""
+  //     // if(json.last_name===undefined) json.last_name = ""
+  //     console.log("json: ", json)
+  //     // const data = await response.json();
+  //     // console.log("data: ", data)
+
+  //     // setClientsData(data);
+  //     // return(json);
+  //     // return ({
+  //     //   _id: categorySub._id,
+  //     //   id: categoryFind.id,
+  //     //   deleted: categoryFind.category_en,
+  //     //   enabled: categoryFind.category_es,
+  //     //   id_group_filestack: categoryFind.category_dk,
+  //     //   name: categoryFind.category_dk,
+        
+  //     // }) 
+  //     const transformedData = json.map((client: any) => ({
+  //       _id: client._id || null, // Assign null if field is missing
+  //       id: client.id || null,
+  //       deleted: client.deleted || false,
+  //       enabled: client.enabled || false,
+  //       id_group_filestack: client.id_group_filestack || null,
+  //       name: client.name || "",  // Provide default values if fields are missing
+  //     }));
+  
+  //     console.log("Transformed Clients Data: ", transformedData);
+  //     return transformedData;
+  //   } catch (error: any) {
+  //     // Handle any network or fetch-related errors
+  //     console.error("ClientContext.tsx fetchClientByClient error.message: ", error.message)
+  //     console.error("ClientContext.tsx  fetchClientByClient error.stack: ", error.stack)
+  //   } finally {
+  //     setIsLoading((prevLoading:any) => ({
+  //       ...prevLoading,
+  //       client: false,
+  //     }));
+  //   }
+  // }
+
+  // const clients = fetchClients()
+  
+
+  const [categoriesData, setCategoriesData] = useState(filterFields())
+  const [clientsData, setClientsData] = useState(filterFields())
+  const [filteredData, setFilteredData] = useState(filterFields())
+
+  useEffect(() => { // to update table after saving changes
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
     }
-    
-    const [filteredData, setFilteredData] = useState<CategoriesSubData[]>([])
-      
-    // useEffect(() => {
-    //     setFilteredData(
-    //       products.filter((item:any) => {
-    //         // console.log("item: ", item)
-    //         item.category = item.category_obj[labelsManageStock.category_name]
-    //         item.sub_category = item.sub_category_obj[labelsManageStock.category_name]
-    //         // item.category= "pepe"
-    //         // const columnsUserOrderWithoutImages = columnsUserOrder.filter((column:any) => column.dataKey !=="url_image")
-    //         // const filteredColumnsCustomUser = filteredColumnsCustom.filter((item1:any) => 
-    //         //   columnsUserOrder.some((item2: any) => item2.dataKey === item1.dataKey)
-    //         // )
-    //         return (
-    //           columnsUserOrderWithoutImages.some((column:any) => 
-    //             (item[column.dataKey] || item[column.dataKey]===0) &&
-    //             item[column.dataKey]
-    //               .toString()
-    //               .toLowerCase()
-    //               .includes(searchQuery.toLowerCase()) 
-    //           ) || (
-    //             item.custom_fields &&
-    //             filteredColumnsCustomUser
-    //               .some((customColumn:any) =>
-    //                       Object.entries(item.custom_fields).filter(
-    //                         ([key, value]) => 
-    //                         (value as string).toString().toLowerCase().includes(searchQuery.toLowerCase())
-    //                         && key == customColumn.dataKey
-    //                       ).length
-    //             )
-    //           )
-    //         )
-    //       })
-    //     );
-    // }, [searchQuery, products, columnsUserOrder]) 
+    setCategoriesData(filterFields())
+  }, [categories, categoriesSub])
   
-  
-    // useEffect(() => {
-    //   if (  
-    //         isLoading.user || 
-    //         isLoading.measures || 
-    //         isLoading.filestack || 
-    //         isLoading.accessLevels || 
-    //         isLoading.categories || 
-    //         isLoading.categories_sub || 
-    //         isLoading.defaultColumns || 
-    //         isLoading.columns || 
-    //         isLoading.products || 
-    //         isLoading.customColumns || 
-    //         isLoading.fieldsFetchEditCustomColumn || 
-    //         isLoading.fieldsFetchCreateCustomColumn || 
-    //         isLoading.fieldsFetchEditUsersFieldsOrder
-    //   ) {
-    //     setOpenBackdrop(true)
-    //   } else {
-    //     setOpenBackdrop(false)
-    //   }
-  
-    // }, [isLoading])
-  
-    
-    useEffect(() => {
-      setSubCategoryUpdate({
-        "_id": "",
-        "id": 0,
-        "id_category": 1,
-        "sub_category_en": "",
-        "sub_category_es": "",
-        "sub_category_dk": "",
-        "sub_category_it": "",
-        "deleted": false,
-      })
-    }, [showCreateStock])
-    useEffect(() => {
-      const columnSelected = "columns_" + openOptions
-      setColumnsSelected(columnsMap[columnSelected])
-    }, [openOptions])
-    
-    return (
-      <div className="App">
-        <ModalsGroupAdministrator 
-          columnsDefault={defaultColumns} 
-          columnsCustom={customColumns}
-          idColumnsTableOrder={idColumnsTableOrder} 
-          data={filteredData}
-          setSearchQuery={setSearchQuery}
-          disabledUpdateButton={disabledUpdateButton}
-          openCreateStock={openCreateStock}
-          setOpenOptions={setOpenOptions}
-        >
-          <Container maxWidth="md" sx={{ display: (breakpointLG?"none":"block") }} style={{padding: "0"}} >
-            <Grid container>
-              <Grid item xs={8} >
-                <MainSearch setSearchQuery={setSearchQuery} />
-              </Grid>
-              <Grid item xs={2} >
-                <PlusButton
-                  clicked={openCreateStock}
-                />
-              </Grid>
+  useEffect(() => {
+    setSubCategoryUpdate(initial_state_sub_category)
+  }, [showCreateStock])
+
+  useEffect(() => { //to change of table showed
+      console.log("openOptions: ", openOptions)
+
+    if(openOptions === "admin_categories"){
+
+      // const columnSelected = "columns_" + openOptions
+      // setColumnsSelected(columnsMap[columnSelected])
+      setColumnsSelected(columns_admin_categories)
+      setFilteredData(categoriesData)
+    } else if (openOptions === "admin_clients" )  {
+      setColumnsSelected(columns_admin_clients)
+      setFilteredData(clients)
+    }
+  }, [openOptions])
+  return (
+    <div className="App">
+      <ModalsGroupAdministrator 
+        columnsDefault={defaultColumns} 
+        columnsCustom={customColumns}
+        idColumnsTableOrder={idColumnsTableOrder} 
+        setSearchQuery={setSearchQuery}
+        disabledUpdateButton={disabledUpdateButton}
+        openCreateStock={openCreateStock}
+        setOpenOptions={setOpenOptions}
+      >
+        <Container maxWidth="md" sx={{ display: (breakpointLG?"none":"block") }} style={{padding: "0"}} >
+          <Grid container>
+            <Grid item xs={8} >
+              <MainSearch setSearchQuery={setSearchQuery} />
             </Grid>
-          </Container>
-          {/* {openBackdrop ? "":  */}
-            {/* <TableCategories 
-              data={filteredData}
-              // columns={columnsUserOrder} 
-              openSubCategoryUpdate={openSubCategoryUpdate} 
-              handleDisabledUpdateButton={handleDisabledUpdateButton} 
-            />
-            <TableClients 
-              data={filteredData}
-              // columns={columnsUserOrder} 
-              openSubCategoryUpdate={openSubCategoryUpdate} 
-              handleDisabledUpdateButton={handleDisabledUpdateButton} 
-            /> */}
-            <Tables 
-              data={filteredData}
-              columns={columnsSelected} 
-              openSubCategoryUpdate={openSubCategoryUpdate} 
-              handleDisabledUpdateButton={handleDisabledUpdateButton} 
-            />
-          {/* {tableSelected(
-            filteredData, 
-            openSubCategoryUpdate, 
-            handleDisabledUpdateButton,
-            openOptions
-            )} */}
-          
-          {/* } */}
-        </ModalsGroupAdministrator>
-        {/* <ManageStock
-            open={showCreateStock} 
-            handleClose={handleCloseCreateStock} 
-            data={productUpdate}
-            columnsCustom={filteredColumnsCustom}
-        /> */}
-        <ManageSubCategory
-            open={showSubCategoryUpdate}
-            handleClose={handleCloseUpdateAmountStock}
-            subCategoryUpdate={subCategoryUpdate}
-        />
-        {/* <MassiveUpdateStock
-            open={showMassiveUpdateStock}
-            handleClose={handleMassiveUpdateStock}
-            data={massiveUpdate}
-        /> */}
-      </div>
-    )
-    // return (
-    //     <div className="App">
-    //         tetin
-    //     </div>
-    // )
+            <Grid item xs={2} >
+              <PlusButton
+                clicked={openCreateStock}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+          <Tables 
+            data={filteredData}
+            columns={columnsSelected} 
+            openSubCategoryUpdate={openSubCategoryUpdate} 
+            handleDisabledUpdateButton={handleDisabledUpdateButton} 
+          />
+      </ModalsGroupAdministrator>
+      <ManageSubCategory
+          open={showSubCategoryUpdate}
+          handleClose={handleCloseUpdateAmountStock}
+          subCategoryUpdate={subCategoryUpdate}
+      />
+    </div>
+  )
 }
 export default Administrator
 
