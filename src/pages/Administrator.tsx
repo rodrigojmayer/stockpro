@@ -11,7 +11,7 @@ import TableClients from '../components/administrator/TableClients';
 import Tables from '../components/administrator/Tables';
 import ManageStock from '../components/ManageStock';
 import ManageSubCategory from '../components/administrator/ManageSubCategory'; 
-import { CategoriesSubData, DataMenuOptionsAdmin } from '../types';
+import { CategoriesSubData, ColumnDataAdministrator } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import { ColumnsContext } from '../context/ColumnsContext';
@@ -50,7 +50,107 @@ const idColumnsTableOrder: Number[] = [-1, -2, -3, -4]
 // }
 // }
 
+const columns_admin_categories = [
+  {
+      _id: "1",
+      id: 1,
+      dataKey: "category_en",
+      label: "Category Eng",
+      width: 120
+  },
+  {
+      _id: "2",
+      id: 2,
+      dataKey: "category_es",
+      label: "Category Esp",
+      width: 120
+  },
+  {
+      _id: "3",
+      id: 3,
+      dataKey: "category_dk",
+      label: "Category Dk",
+      width: 120
+  },
+  {
+      _id: "4",
+      id: 4,
+      dataKey: "category_it",
+      label: "Category It",
+      width: 120
+  },
+  {
+      _id: "5",
+      id: 5,
+      dataKey: "sub_category_en",
+      label: "Sub Eng",
+      width: 120
+  },
+  {
+      _id: "6",
+      id: 6,
+      dataKey: "sub_category_es",
+      label: "Sub Esp",
+      width: 120
+  },
+  {
+      _id: "7",
+      id: 7,
+      dataKey: "sub_category_dk",
+      label: "Sub Dk",
+      width: 120
+  },
+  {
+      _id: "8",
+      id: 8,
+      dataKey: "sub_category_it",
+      label: "Sub It",
+      width: 120
+  }
+];
 
+const columns_admin_clients = [
+  {
+      _id: "1",
+      id: 1,
+      dataKey: "id",
+      label: "ID",
+      width: 120
+  },
+  {
+      _id: "2",
+      id: 2,
+      dataKey: "enabled",
+      label: "Enabled",
+      width: 120
+  },
+  {
+      _id: "3",
+      id: 3,
+      dataKey: "deleted",
+      label: "Deleted",
+      width: 120
+  },
+  {
+      _id: "4",
+      id: 4,
+      dataKey: "id_group_filestack",
+      label: "ID Group Filestack",
+      width: 120
+  },
+  {
+      _id: "5",
+      id: 5,
+      dataKey: "name",
+      label: "Name",
+      width: 120
+  }
+]
+const columnsMap: { [key: string]: { _id: string; id: number; dataKey: string; label: string; width: number; }[] } = {
+  columns_admin_categories,
+  columns_admin_clients,
+  // Add other column arrays here
+};
 
 function Administrator() {
     const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -64,7 +164,8 @@ function Administrator() {
     const [ showCreateStock, setShowCreateStock ] = useState(false)
     const handleCloseCreateStock = () => setShowCreateStock(false)
     const openCreateStock = () => setShowCreateStock(true)
-    const [openOptions, setOpenOptions] = useState<string>("admin_categories");
+    const [openOptions, setOpenOptions] = useState<string>("admin_categories")
+    const [columnsSelected, setColumnsSelected] = useState<ColumnDataAdministrator[]>(columns_admin_categories);
     const [ subCategoryUpdate, setSubCategoryUpdate ] = useState<CategoriesSubData>({
       "_id": "",
       "id": 0,
@@ -190,7 +291,11 @@ function Administrator() {
         "deleted": false,
       })
     }, [showCreateStock])
-  
+    useEffect(() => {
+      const columnSelected = "columns_" + openOptions
+      setColumnsSelected(columnsMap[columnSelected])
+    }, [openOptions])
+    
     return (
       <div className="App">
         <ModalsGroupAdministrator 
@@ -230,7 +335,7 @@ function Administrator() {
             /> */}
             <Tables 
               data={filteredData}
-              // columns={columnsUserOrder} 
+              columns={columnsSelected} 
               openSubCategoryUpdate={openSubCategoryUpdate} 
               handleDisabledUpdateButton={handleDisabledUpdateButton} 
             />

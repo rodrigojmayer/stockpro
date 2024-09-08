@@ -142,7 +142,7 @@ export interface DataTable {
 }
 export interface DataTableSubCategory {
   data: CategoriesSubData[] 
-  // columns: ColumnData[]
+  columns: ColumnDataAdministrator[]
   // openUpdateAmountStock: (id_prod: Number, name_prod: String, amount_prod: Number) => void
   // openUpdateAmountStock: (newData: ProductUpdateData) => void
   openSubCategoryUpdate: (newData: CategoriesSubData) => void
@@ -160,6 +160,13 @@ export interface ColumnData {
   [key: string]: any;
 }
 export interface ColumnDataCategories {
+  _id: string;
+  id: number;
+  dataKey: string;
+  label: string;
+  width: number;
+}
+export interface ColumnDataAdministrator {
   _id: string;
   id: number;
   dataKey: string;

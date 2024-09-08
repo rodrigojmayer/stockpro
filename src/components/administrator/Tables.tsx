@@ -140,6 +140,7 @@ function rowContent(
 export default function Tables(
   { 
     data, 
+    columns,
     openSubCategoryUpdate
   }:  DataTableSubCategory ) {
 
@@ -158,64 +159,64 @@ export default function Tables(
 
   const elementToAdd = {dataKey: "check_stock", id: 0, width: 40,}
   const columnsTable = [elementToAdd, ...columnsUserOrder];
-  const columns = [
-    {
-        _id: "1",
-        id: 1,
-        dataKey: "category_en",
-        label: "Category Eng",
-        width: 120
-    },
-    {
-        _id: "2",
-        id: 2,
-        dataKey: "category_es",
-        label: "Category Esp",
-        width: 120
-    },
-    {
-        _id: "3",
-        id: 3,
-        dataKey: "category_dk",
-        label: "Category Dk",
-        width: 120
-    },
-    {
-        _id: "4",
-        id: 4,
-        dataKey: "category_it",
-        label: "Category It",
-        width: 120
-    },
-    {
-        _id: "5",
-        id: 5,
-        dataKey: "sub_category_en",
-        label: "Sub Eng",
-        width: 120
-    },
-    {
-        _id: "6",
-        id: 6,
-        dataKey: "sub_category_es",
-        label: "Sub Esp",
-        width: 120
-    },
-    {
-        _id: "7",
-        id: 7,
-        dataKey: "sub_category_dk",
-        label: "Sub Dk",
-        width: 120
-    },
-    {
-        _id: "8",
-        id: 8,
-        dataKey: "sub_category_it",
-        label: "Sub It",
-        width: 120
-    }
-  ]
+  // const columns = [
+  //   {
+  //       _id: "1",
+  //       id: 1,
+  //       dataKey: "category_en",
+  //       label: "Category Eng",
+  //       width: 120
+  //   },
+  //   {
+  //       _id: "2",
+  //       id: 2,
+  //       dataKey: "category_es",
+  //       label: "Category Esp",
+  //       width: 120
+  //   },
+  //   {
+  //       _id: "3",
+  //       id: 3,
+  //       dataKey: "category_dk",
+  //       label: "Category Dk",
+  //       width: 120
+  //   },
+  //   {
+  //       _id: "4",
+  //       id: 4,
+  //       dataKey: "category_it",
+  //       label: "Category It",
+  //       width: 120
+  //   },
+  //   {
+  //       _id: "5",
+  //       id: 5,
+  //       dataKey: "sub_category_en",
+  //       label: "Sub Eng",
+  //       width: 120
+  //   },
+  //   {
+  //       _id: "6",
+  //       id: 6,
+  //       dataKey: "sub_category_es",
+  //       label: "Sub Esp",
+  //       width: 120
+  //   },
+  //   {
+  //       _id: "7",
+  //       id: 7,
+  //       dataKey: "sub_category_dk",
+  //       label: "Sub Dk",
+  //       width: 120
+  //   },
+  //   {
+  //       _id: "8",
+  //       id: 8,
+  //       dataKey: "sub_category_it",
+  //       label: "Sub It",
+  //       width: 120
+  //   }
+  // ]
 
   // console.log("categoriesSub: ", categoriesSub)
   // useEffect(() => {

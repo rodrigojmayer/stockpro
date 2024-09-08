@@ -64,7 +64,7 @@ function rowContent(
     row: CategoriesSubData, 
     columnsTable: ColumnDataCategories[], 
     classes: any, 
-    openUpdateSubCategoryUpdate:(newData: CategoriesSubData) => void,  
+    openSubCategoryUpdate:(newData: CategoriesSubData) => void,  
     user_background_color:any,
   ) {
 
@@ -107,7 +107,7 @@ function rowContent(
         <TableCell
           key={column.id}
           align='center'
-          onClick={() => openUpdateSubCategoryUpdate({
+          onClick={() => openSubCategoryUpdate({
             "_id": newRow._id,
             "id": newRow.id,
             // "name": newRow.name,
@@ -140,7 +140,7 @@ function rowContent(
 export default function TableCategories(
   { 
     data, 
-    openUpdateSubCategoryUpdate
+    openSubCategoryUpdate
   }:  DataTableSubCategory ) {
 
   const  {classes} = useStylesGlobal()
@@ -423,7 +423,7 @@ export default function TableCategories(
                 filteredData[index], 
                 columns, 
                 classes, 
-                openUpdateSubCategoryUpdate, 
+                openSubCategoryUpdate, 
                 user.background_color
             )
           }
