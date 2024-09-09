@@ -148,7 +148,7 @@ export default function Tables(
   const breakpointLG = useMediaQuery('(min-width:1024px)');
   const breakpointMD = useMediaQuery('(min-width: 724px)');
   // const { labelsTableProducts } = useContext<any>(LanguageLabelsContext)
-console.log("Tables data: ", data)
+// console.log("Tables data: ", data)
   const { user } = useContext<any>(UserContext);
   // const { categories } = useContext<any>(CategoriesContext) 
   // const { categoriesSub } = useContext<any>(CategoriesSubContext) 
