@@ -11,7 +11,7 @@ import TableClients from '../components/administrator/TableClients';
 import Tables from '../components/administrator/Tables';
 import ManageStock from '../components/ManageStock';
 import ManageSubCategory from '../components/administrator/ManageSubCategory'; 
-import { CategoriesSubData, ColumnDataAdministrator } from '../types';
+import { CategoriesSubData, ClientData, ColumnDataAdministrator } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
 import { ColumnsContext } from '../context/ColumnsContext';
@@ -173,6 +173,14 @@ const initial_state_sub_category = {
   sub_category_it: "",
   deleted: false,
 }
+const initial_state_client = {
+  _id: "",
+  id: NaN,
+  id_group_filestack: NaN,
+  client: '',
+  deleted: false,
+  enabled: true,
+};
 
 function Administrator() {
   const breakpointLG = useMediaQuery('(min-width:1024px)');
@@ -180,7 +188,7 @@ function Administrator() {
   const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
   const { defaultColumns, customColumns, columns, columnsUserOrder, filteredColumnsCustom  } = useContext<any>(ColumnsContext);
   const { clients } = useContext<any>(ClientsContext) 
-  console.log("clients: ", clients)
+  // console.log("clients: ", clients)
   const { categories } = useContext<any>(CategoriesContext) 
   const { categoriesSub } = useContext<any>(CategoriesSubContext)
   const { labelsManageStock } = useContext<any>(LanguageLabelsContext)
@@ -192,32 +200,50 @@ function Administrator() {
   const [openOptions, setOpenOptions] = useState<string>("admin_categories")
   const [columnsSelected, setColumnsSelected] = useState<ColumnDataAdministrator[]>(columns_admin_categories);
   const [ subCategoryUpdate, setSubCategoryUpdate ] = useState<CategoriesSubData>(initial_state_sub_category)
+  const [ clientUpdate, setClientUpdate ] = useState<ClientData>(initial_state_client)
   // const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
   const [ showSubCategoryUpdate, setShowSubCategoryUpdate ] = useState(false)
+  const [ showClientUpdate, setShowClientUpdate ] = useState(false)
   const handleCloseUpdateAmountStock = () => {
     setShowSubCategoryUpdate(false)
     setSubCategoryUpdate(initial_state_sub_category)
+    
+    setShowClientUpdate(false)
+    setClientUpdate(initial_state_client)
   }
-    const openSubCategoryUpdate = (newData:CategoriesSubData) => {
-    // console.log("newData: ", newData)
-    setShowSubCategoryUpdate(true)
+    const openSubCategoryUpdate = (newData:any) => {
+      console.log("newData: ", newData)
+      console.log("openOptions: ", openOptions)
+    
+    if(openOptions === "admin_categories"){ 
+      setShowSubCategoryUpdate(true)
 
-    setSubCategoryUpdate({
-      "_id": newData._id,
-      "id": newData.id,
-      "id_category": newData.id_category,
-      "sub_category_en": newData.sub_category_en,
-      "sub_category_es": newData.sub_category_es,
-      "sub_category_dk": newData.sub_category_dk,
-      "sub_category_it": newData.sub_category_it,
-      "deleted": newData.deleted,
-      "category_en": newData.category_en,
-      "category_es": newData.category_es,
-      "category_dk": newData.category_dk,
-      "category_it": newData.category_it,
-      "id_sub_category": newData.id,
-      "sub_category": newData.sub_category
-    })
+      setSubCategoryUpdate({
+        "_id": newData._id,
+        "id": newData.id,
+        "id_category": newData.id_category,
+        "sub_category_en": newData.sub_category_en,
+        "sub_category_es": newData.sub_category_es,
+        "sub_category_dk": newData.sub_category_dk,
+        "sub_category_it": newData.sub_category_it,
+        "deleted": newData.deleted,
+        "category_en": newData.category_en,
+        "category_es": newData.category_es,
+        "category_dk": newData.category_dk,
+        "category_it": newData.category_it,
+        "id_sub_category": newData.id,
+        "sub_category": newData.sub_category
+      })
+    } else if(openOptions === "admin_clients") {
+      setClientUpdate({
+        "_id": newData._id,
+        "id": newData.id,
+        "id_group_filestack": newData.id_group_filestack,
+        "client": newData.client,
+        "deleted": newData.deleted,
+        "enabled": newData.enabled
+      })
+    }
   }  
 
   const [ disabledUpdateButton, setDisabledUpdateButton ] = useState<boolean>(true)

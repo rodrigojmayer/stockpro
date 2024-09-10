@@ -64,7 +64,7 @@ function rowContent(
     row: CategoriesSubData, 
     columnsTable: ColumnDataCategories[], 
     classes: any, 
-    openSubCategoryUpdate:(newData: CategoriesSubData) => void,  
+    openSubCategoryUpdate:(newData: any) => void,  
     user_background_color:any,
   ) {
 
@@ -107,21 +107,22 @@ function rowContent(
         <TableCell
           key={column.id}
           align='center'
-          onClick={() => openSubCategoryUpdate({
-            "_id": newRow._id,
-            "id": newRow.id,
-            // "name": newRow.name,
-            "sub_category_es": newRow.sub_category_es,
-            "sub_category_dk": newRow.sub_category_dk,
-            "sub_category_it": newRow.sub_category_it,
-            "id_category": newRow.id_category,
-            "category_en": newRow.category_en,
-            "category_es": newRow.category_es,
-            "category_dk": newRow.category_dk,
-            "category_it": newRow.category_it,
-            "sub_category_en": newRow.sub_category_en,
-            // "deleted": newRow.deleted,
-          })}
+          // onClick={() => openSubCategoryUpdate({
+          //   "_id": newRow._id,
+          //   "id": newRow.id,
+          //   // "name": newRow.name,
+          //   "sub_category_es": newRow.sub_category_es,
+          //   "sub_category_dk": newRow.sub_category_dk,
+          //   "sub_category_it": newRow.sub_category_it,
+          //   "id_category": newRow.id_category,
+          //   "category_en": newRow.category_en,
+          //   "category_es": newRow.category_es,
+          //   "category_dk": newRow.category_dk,
+          //   "category_it": newRow.category_it,
+          //   "sub_category_en": newRow.sub_category_en,
+          //   // "deleted": newRow.deleted,
+          // })}
+          onClick={() => openSubCategoryUpdate(newRow)}
           className={`${ _index%2 ? classes[`_${user_background_color}table_row_odd` as keyof typeof classes]  : classes[`_${user_background_color}table_row_even` as keyof typeof classes] }`}
           style={{ 
              border:0,
