@@ -18,7 +18,7 @@ export interface UserData {
 
 export interface ClientData {
   _id: string;
-  id: number;
+  id?: number;
   id_group_filestack: number;
   client?: string;
   deleted: boolean;

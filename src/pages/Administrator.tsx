@@ -11,6 +11,7 @@ import TableClients from '../components/administrator/TableClients';
 import Tables from '../components/administrator/Tables';
 import ManageStock from '../components/ManageStock';
 import ManageSubCategory from '../components/administrator/ManageSubCategory'; 
+import ManageClient from '../components/administrator/ManageClient';
 import { CategoriesSubData, ClientData, ColumnDataAdministrator } from '../types';
 import { UserContext } from '../context/UserContext';
 import { IsLoadingContext } from '../context/IsLoadingContext';
@@ -156,7 +157,7 @@ const columnsMap: { [key: string]: { _id: string; id: number; dataKey: string; l
 };
 
 const initial_state_category = {
-  id: NaN,
+  id: 0,
   category_en: "",
   category_es: "",
   category_dk: "",
@@ -175,7 +176,7 @@ const initial_state_sub_category = {
 }
 const initial_state_client = {
   _id: "",
-  id: NaN,
+  id: 0,
   id_group_filestack: NaN,
   client: '',
   deleted: false,
@@ -204,20 +205,23 @@ function Administrator() {
   // const [ showUpdateAmountStock, setShowUpdateAmountStock ] = useState(false)
   const [ showSubCategoryUpdate, setShowSubCategoryUpdate ] = useState(false)
   const [ showClientUpdate, setShowClientUpdate ] = useState(false)
-  const handleCloseUpdateAmountStock = () => {
+  const handleCloseUpdateSubCategory = () => {
     setShowSubCategoryUpdate(false)
     setSubCategoryUpdate(initial_state_sub_category)
-    
+  }
+  const handleCloseUpdateClient = () => {
     setShowClientUpdate(false)
     setClientUpdate(initial_state_client)
   }
-    const openSubCategoryUpdate = (newData:any) => {
-      console.log("newData: ", newData)
-      console.log("openOptions: ", openOptions)
-    
+  const openSubCategoryUpdate = (newData:any) => {
+    console.log("newData: ", newData)
+    console.log("openOptions: ", openOptions)
+  
     if(openOptions === "admin_categories"){ 
+      // setShowClientUpdate(false)
       setShowSubCategoryUpdate(true)
 
+      // setClientUpdate(initial_state_client)
       setSubCategoryUpdate({
         "_id": newData._id,
         "id": newData.id,
@@ -235,6 +239,10 @@ function Administrator() {
         "sub_category": newData.sub_category
       })
     } else if(openOptions === "admin_clients") {
+      console.log("Right here?: ")
+      // setShowSubCategoryUpdate(false)
+      setShowClientUpdate(true)
+      // setSubCategoryUpdate(initial_state_client)
       setClientUpdate({
         "_id": newData._id,
         "id": newData.id,
@@ -346,7 +354,7 @@ function Administrator() {
   }, [showCreateStock])
 
   useEffect(() => { //to change of table showed
-      console.log("openOptions: ", openOptions)
+    console.log("openOptions: ", openOptions)
 
     if(openOptions === "admin_categories"){
 
@@ -382,17 +390,22 @@ function Administrator() {
             </Grid>
           </Grid>
         </Container>
-          <Tables 
-            data={filteredData}
-            columns={columnsSelected} 
-            openSubCategoryUpdate={openSubCategoryUpdate} 
-            handleDisabledUpdateButton={handleDisabledUpdateButton} 
-          />
+        <Tables 
+          data={filteredData}
+          columns={columnsSelected} 
+          openSubCategoryUpdate={openSubCategoryUpdate} 
+          handleDisabledUpdateButton={handleDisabledUpdateButton} 
+        />
       </ModalsGroupAdministrator>
       <ManageSubCategory
-          open={showSubCategoryUpdate}
-          handleClose={handleCloseUpdateAmountStock}
-          subCategoryUpdate={subCategoryUpdate}
+        open={showSubCategoryUpdate}
+        handleClose={handleCloseUpdateSubCategory}
+        subCategoryUpdate={subCategoryUpdate}
+      />
+      <ManageClient
+        open={showClientUpdate}
+        handleClose={handleCloseUpdateClient}
+        clientUpdate={clientUpdate}
       />
     </div>
   )

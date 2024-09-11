@@ -22,13 +22,13 @@ interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     // productUpdate:  ProductUpdateData 
-    subCategoryUpdate:  CategoriesSubData 
+    clientUpdate:  any 
 }
-export default function ManageSubCategory( 
-    {   open, 
-        handleClose, 
-        subCategoryUpdate,
-    }: ChildProps) {
+export default function ManageClient( 
+{   open, 
+    handleClose, 
+    clientUpdate,
+}: ChildProps) {
     const { classes } = useStylesGlobal();
     const close = () => {
         handleClose(false)
@@ -37,95 +37,49 @@ export default function ManageSubCategory(
     const { user } = useContext<any>(UserContext);
     const { labelsUpdateAmountStock } = useContext<any>(LanguageLabelsContext);
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
-    const { categories } = useContext<any>(CategoriesContext) 
-    
-    // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
-    const [ categoryTemp, setCategoryTemp ] = useState<CategoriesData>({
-        id: NaN,
-        category_en: "",
-        category_es: "",
-        category_dk: "",
-        category_it: "",
-        deleted: false
-    })
-    const [ subCategoryTemp, setSubCategoryTemp ] = useState<CategoriesSubData>({
-        id: NaN,
-        sub_category_en: "",
-        sub_category_es: "",
-        sub_category_dk: "",
-        sub_category_it: "",
-        deleted: false
-    })
-    // const [ subCategoryEnTemp, setSubCategoryEnTemp ] = useState<any>("")
-    // const [ subCategoryEsTemp, setSubCategoryEsTemp ] = useState<any>("")
-    // const [ subCategoryDkTemp, setSubCategoryDkTemp ] = useState<any>("")
-    // const [ subCategoryItTemp, setSubCategoryItTemp ] = useState<any>("")
 
-    // console.log("subCategoryUpdate: ", subCategoryUpdate)
-    // console.log("categories: ", categories)
+    const [ clientTemp, setClientTemp ] = useState<CategoriesSubData>({
+        _id: "",
+        id: NaN,
+        id_group_filestack: NaN,
+        client: '',
+        deleted: false,
+        enabled: true,
+    })
 
     useEffect(() => {
-            setOpenBackdrop(true)
-            // setCategoryTemp(subCategoryUpdate.category);
-            // setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
-            // setSubCategoryEsTemp(subCategoryUpdate.sub_category_es);
-            // setSubCategoryDkTemp(subCategoryUpdate.sub_category_dk);
-            // setSubCategoryItTemp(subCategoryUpdate.sub_category_it);
-            setSubCategoryTemp ({ ...subCategoryTemp, 
-                sub_category_en: subCategoryUpdate.sub_category_en,
-                sub_category_es: subCategoryUpdate.sub_category_es,
-                sub_category_dk: subCategoryUpdate.sub_category_dk,
-                sub_category_it: subCategoryUpdate.sub_category_it,
-            })
-            setOpenBackdrop(true);
+        setOpenBackdrop(true)
+        setClientTemp ({ ...clientTemp, 
+            id_group_filestack: clientUpdate.id_group_filestack,
+            client: clientUpdate.client,
+            deleted: clientUpdate.deleted,
+            enabled: clientUpdate.enabled,
+        })
+        setOpenBackdrop(true);
         
-            // Find the category by name and get its ID
-            const category = categories.find((cat: any) => cat.category_en === subCategoryUpdate.category_en);
-            // setCategoryTemp(category ? category.id : "");  // Set the ID or empty string if not found
-            // console.log("category: ", category)
-            // setCategoryTemp({ ...categoryTemp, id: (category ? category.id : "")})
-            setCategoryTemp(category)
-            
-            // setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
     }, [open]) 
     useEffect(() => {
 
-        console.log("-----------open------: ", open)
-        // console.log("categoryTemp------: ", categoryTemp)
-        // console.log("categoryTemp?.id------: ", categoryTemp?.id)
-        // console.log("subCategoryTemp.sub_category_en------: ", subCategoryTemp.sub_category_en)
+        console.log("clientTemp?.id: ", clientTemp?.id)
         
         // if(categoryTemp?.id && subCategoryEnTemp)
-        if(categoryTemp?.id && subCategoryTemp.sub_category_en && open)
+        if(open)
             setOpenBackdrop(false)
-    }, [categoryTemp, subCategoryTemp.sub_category_en])
+    }, [clientTemp])
 
-    const onCategoryTempChange = (value: any) => {
-        // setCategoryTemp(value)   
-        setCategoryTemp({ ...categoryTemp, id: value})
+    // const onCategoryTempChange = (value: any) => {
+    //     // setCategoryTemp(value)   
+    //     setCategoryTemp({ ...categoryTemp, id: value})
 
+    // }
+    // const updateCategory = (value: any, field: string) => {
+    //     setCategoryTemp({ ...categoryTemp, [field]: value})
+    // }
+    const updateClient = (value: any, field: string) => {
+        setClientTemp({ ...clientTemp, [field]: value})
     }
-    const updateCategory = (value: any, field: string) => {
-        setCategoryTemp({ ...categoryTemp, [field]: value})
-    }
-    const updateSubCategory = (value: any, field: string) => {
-        setSubCategoryTemp({ ...subCategoryTemp, [field]: value})
-    }
-    // const onSubCategoryEnTempChange = (value: string) => {
-    //     setSubCategoryEnTemp(value)
-    // }
-    // const onSubCategoryEsTempChange = (value: string) => {
-    //     setSubCategoryEsTemp(value)
-    // }
-    // const onSubCategoryDkTempChange = (value: string) => {
-    //     setSubCategoryDkTemp(value)
-    // }
-    // const onSubCategoryItTempChange = (value: string) => {
-    //     setSubCategoryItTemp(value)
-    // }
     
-    const [openSaveChanges, setOpenSaveChanges] = useState(false);  
-    const [openManageCategory, setOpenManageCategory] = useState(false);  
+    const [openSaveChanges, setOpenSaveChanges] = useState(false);   
     const [messageBeforeSave, setMessageBeforeSave] = useState("");  
     
     const [openErrorModal, setOpenErrorModal] = useState(false);  
@@ -144,55 +98,54 @@ export default function ManageSubCategory(
             // console.log("subCategoryUpdate: ", subCategoryUpdate)
             
             
-            const fetchUpdateSubCategory = async () => {
-                let loadingSuccess: boolean = false
-                try {
-                    const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categoriesSub/${subCategoryUpdate._id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json', // Set the appropriate content-type for my API
-                            // Add any other requires headers here
-                        },
-                        body:JSON.stringify({
-                            "id_category": categoryTemp.id,
-                            "name": subCategoryTemp.sub_category_en,
-                            "name_esp": subCategoryTemp.sub_category_es,
-                            "name_dan": subCategoryTemp.sub_category_dk,
-                            "name_ita": subCategoryTemp.sub_category_it
-                        })
-                    })
-                    // Check if the response status is successful
-                    if (response.ok) {
-                        const responseData = await response.json() // parse the response data
-                        // console.log('POST request successful: ', responseData)
-                        loadingSuccess = true
-                    } else {
-                        // Handle non-successful responses
-                        console.error('Request failed: ', response.status, response.statusText)
-                        // Handle the error here
-                    }
-                } catch (error: unknown) {
-                    if (typeof error === 'string') {
-                        // 'error' is now narrowed down to type 'string'
-                        console.error('Error:', error)
-                    } else if (error instanceof Error) {
-                        // 'error' is now narrowed down to type 'Error'
-                        console.error('Error object:', error.message)
-                    } else {
-                        // Handle other cases as needed
-                    }
-                } finally {
-                    // setIsLoading(())
-                    setIsLoading((prevLoading: any) => ({
-                        ...prevLoading,
-                        categories_sub: loadingSuccess,
-                    }));
+            // const fetchUpdateSubCategory = async () => {
+            //     let loadingSuccess: boolean = false
+            //     try {
+            //         const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categoriesSub/${subCategoryUpdate._id}`, {
+            //             method: 'PATCH',
+            //             headers: {
+            //                 'Content-Type': 'application/json', // Set the appropriate content-type for my API
+            //                 // Add any other requires headers here
+            //             },
+            //             body:JSON.stringify({
+            //                 "id_category": categoryTemp.id,
+            //                 "name": subCategoryTemp.sub_category_en,
+            //                 "name_esp": subCategoryTemp.sub_category_es,
+            //                 "name_dan": subCategoryTemp.sub_category_dk,
+            //                 "name_ita": subCategoryTemp.sub_category_it
+            //             })
+            //         })
+            //         // Check if the response status is successful
+            //         if (response.ok) {
+            //             const responseData = await response.json() // parse the response data
+            //             // console.log('POST request successful: ', responseData)
+            //             loadingSuccess = true
+            //         } else {
+            //             // Handle non-successful responses
+            //             console.error('Request failed: ', response.status, response.statusText)
+            //             // Handle the error here
+            //         }
+            //     } catch (error: unknown) {
+            //         if (typeof error === 'string') {
+            //             // 'error' is now narrowed down to type 'string'
+            //             console.error('Error:', error)
+            //         } else if (error instanceof Error) {
+            //             // 'error' is now narrowed down to type 'Error'
+            //             console.error('Error object:', error.message)
+            //         } else {
+            //             // Handle other cases as needed
+            //         }
+            //     } finally {
+            //         // setIsLoading(())
+            //         setIsLoading((prevLoading: any) => ({
+            //             ...prevLoading,
+            //             categories_sub: loadingSuccess,
+            //         }));
                     
-                }
-            } 
-            fetchUpdateSubCategory();       //////////Change the name for update
-            // setSelectedUsers(selectedUsersTemp)
-            // setEmailsAlerts(emailsAlertsTemp.filter(emailAlert => { if(emailAlert.email != "") return emailAlert}))
+            //     }
+            // } 
+            // fetchUpdateSubCategory();       //////////Change the name for update
+            
             close()
         }
         setOpenSaveChanges(false);
@@ -211,16 +164,7 @@ export default function ManageSubCategory(
         setOpenSaveChanges(true);
     }
     
-    const handleOpenManageCategory = () => {
-        setOpenManageCategory(true)
-    }
-    const handleCloseManageCategory = () => {
-        // close()
-        console.log("categories: ", categories)
-        categories
-        setOpenManageCategory(false)
-    }  
-
+    
     // console.log("signUpdate: ", signUpdate)
     if (openBackdrop ) {
         return <Typography>Loading...</Typography>;
@@ -264,23 +208,17 @@ export default function ManageSubCategory(
                             closeSaveChanges={handleCloseSaveChanges} 
                             
                             messageBeforeSave={messageBeforeSave}
-                            />
+                        />
                         {/* <ErrorModal
                             openErrorModal={openErrorModal}
                             closeErrorModal={handleCloseErrorModal}
                             errorData={errorData} 
                         /> */} 
-                        <ManageCategory  ///////////////////// Continue with the edit stock modal here
-                            open={openManageCategory} 
-                            handleClose={handleCloseManageCategory} 
-                            categoryTemp={categoryTemp}
-                            updateCategory={updateCategory} 
-                        />
                         <Box className={`${classes.customBoxColumn}`}>
                             <Typography noWrap align='center' variant="h5" className={classes.title}>
-                                Update Sub Category
+                                Update Client
                             </Typography>   
-                            <Box className={classes.customBoxRow}>
+                            {/* <Box className={classes.customBoxRow}>
                                 <TextField 
                                     label="Category"
                                     size="small"
@@ -288,7 +226,7 @@ export default function ManageSubCategory(
                                     className={classes.inputMainData}
                                     InputProps={{className: classes.inputClassName}}
                                     // value={CategoriesSubData.category}
-                                    value={categoryTemp?.id}
+                                    value={categoryTemp.id}
                                     onChange={ (event:any) => onCategoryTempChange(event.target.value) }
                                     >
                                         {categories.map((category: any) => (
@@ -303,20 +241,48 @@ export default function ManageSubCategory(
                                 </TextField>
                                 <EditButton
                                     clicked={() => handleOpenManageCategory()}
+                                    />
+                            </Box>  */}
+                            {/* <Box className={classes.customBoxRow}>
+                            {categories.map((category: any) => {if(category.id === categoryTemp.id){return(category.category_es)}})}
+                            &nbsp;/&nbsp; 
+                            {categories.map((category: any) => {if(category.id === categoryTemp.id){return(category.category_dk)}})}
+                            &nbsp;/&nbsp;
+                            {categories.map((category: any) => {if(category.id === categoryTemp.id){return(category.category_it)}})}
+                            </Box> */}
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Id Grou Filestack"
+                                    value={clientTemp.id_group_filestack}
+                                    onChange={ (event:any) => updateClient(event.target.value, "id_group_filestack") }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 30}
+                                    }}
                                 />
                             </Box> 
                             <Box className={classes.customBoxRow}>
-                            {categories.map((category: any) => {if(category.id === categoryTemp?.id){return(category.category_es)}})}
-                            &nbsp;/&nbsp; 
-                            {categories.map((category: any) => {if(category.id === categoryTemp?.id){return(category.category_dk)}})}
-                            &nbsp;/&nbsp;
-                            {categories.map((category: any) => {if(category.id === categoryTemp?.id){return(category.category_it)}})}
+                                <TextField
+                                    label="Client"
+                                    value={clientTemp.client}
+                                    onChange={ (event:any) => updateClient(event.target.value, "client") }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 30}
+                                    }}
+                                />
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Sub Category En"
-                                    value={subCategoryTemp.sub_category_en}
-                                    onChange={ (event:any) => updateSubCategory(event.target.value, "sub_category_en") }
+                                    label="Deleted"
+                                    value={clientTemp.deleted}
+                                    onChange={ (event:any) => updateClient(event.target.value, "deleted") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -325,40 +291,12 @@ export default function ManageSubCategory(
                                         inputProps: {maxLength: 30}
                                     }}
                                 />
-                            </Box> 
+                            </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Sub Category Es"
-                                    value={subCategoryTemp.sub_category_es}
-                                    onChange={ (event:any) => updateSubCategory(event.target.value, "sub_category_es") }
-                                    maxRows={1}
-                                    size="small"
-                                    className={classes.inputMainData}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        inputProps: {maxLength: 30}
-                                    }}
-                                />
-                            </Box> 
-                            <Box className={classes.customBoxRow}>
-                                <TextField
-                                    label="Sub Category Dk"
-                                    value={subCategoryTemp.sub_category_dk}
-                                    onChange={ (event:any) => updateSubCategory(event.target.value, "sub_category_dk") }
-                                    maxRows={1}
-                                    size="small"
-                                    className={classes.inputMainData}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        inputProps: {maxLength: 30}
-                                    }}
-                                    />
-                            </Box> 
-                            <Box className={classes.customBoxRow}>
-                                <TextField
-                                    label="Sub Category It"
-                                    value={subCategoryTemp.sub_category_it}
-                                    onChange={ (event:any) => updateSubCategory(event.target.value, "sub_category_it") }
+                                    label="Enabled"
+                                    value={clientTemp.enabled}
+                                    onChange={ (event:any) => updateClient(event.target.value, "enabled") }
                                     maxRows={1}
                                     size="small"
                                     className={classes.inputMainData}
@@ -387,6 +325,6 @@ export default function ManageSubCategory(
                     </Box>
                 </Box>
             </form>
-        </Modal>
+            </Modal>
     )
 }
