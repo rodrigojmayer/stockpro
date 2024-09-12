@@ -60,7 +60,7 @@ export default function ManageClient(
     }, [open]) 
     useEffect(() => {
 
-        console.log("clientTemp?.id: ", clientTemp?.id)
+        // console.log("clientTemp?.id: ", clientTemp?.id)
         
         // if(categoryTemp?.id && subCategoryEnTemp)
         if(open)

@@ -90,7 +90,7 @@ export default function ManageSubCategory(
     }, [open]) 
     useEffect(() => {
 
-        console.log("-----------open------: ", open)
+        // console.log("-----------open------: ", open)
         // console.log("categoryTemp------: ", categoryTemp)
         // console.log("categoryTemp?.id------: ", categoryTemp?.id)
         // console.log("subCategoryTemp.sub_category_en------: ", subCategoryTemp.sub_category_en)

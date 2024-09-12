@@ -260,7 +260,7 @@ function Administrator() {
   }
   
   
-  function filterFields () {
+  function filterCategoriesFields () {
     // if(openOptions === "admin_categories"){
       const filteredFields = categoriesSub.map((categorySub: any) => {
         if(categorySub.sub_category_en !== "-"){    
@@ -337,16 +337,17 @@ function Administrator() {
   // const clients = fetchClients()
   
 
-  const [categoriesData, setCategoriesData] = useState(filterFields())
-  const [clientsData, setClientsData] = useState(filterFields())
-  const [filteredData, setFilteredData] = useState(filterFields())
+  const [categoriesData, setCategoriesData] = useState(filterCategoriesFields())
+  const [clientsData, setClientsData] = useState(filterCategoriesFields())
+  const [filteredData, setFilteredData] = useState(filterCategoriesFields())
 
   useEffect(() => { // to update table after saving changes
     if (isInitialRender.current) {
       isInitialRender.current = false;
       return;
     }
-    setCategoriesData(filterFields())
+    // setCategoriesData(filterFields())
+    setFilteredData(filterCategoriesFields())
   }, [categories, categoriesSub])
   
   useEffect(() => {
@@ -354,7 +355,7 @@ function Administrator() {
   }, [showCreateStock])
 
   useEffect(() => { //to change of table showed
-    console.log("openOptions: ", openOptions)
+    // console.log("openOptions: ", openOptions)
 
     if(openOptions === "admin_categories"){
 
