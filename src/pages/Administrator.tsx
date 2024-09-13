@@ -214,8 +214,8 @@ function Administrator() {
     setClientUpdate(initial_state_client)
   }
   const openSubCategoryUpdate = (newData:any) => {
-    console.log("newData: ", newData)
-    console.log("openOptions: ", openOptions)
+    // console.log("newData: ", newData)
+    // console.log("openOptions: ", openOptions)
   
     if(openOptions === "admin_categories"){ 
       // setShowClientUpdate(false)
@@ -239,7 +239,7 @@ function Administrator() {
         "sub_category": newData.sub_category
       })
     } else if(openOptions === "admin_clients") {
-      console.log("Right here?: ")
+      // console.log("Right here?: ")
       // setShowSubCategoryUpdate(false)
       setShowClientUpdate(true)
       // setSubCategoryUpdate(initial_state_client)

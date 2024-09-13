@@ -48,8 +48,8 @@ export const ClientsProvider: React.FC<ClientsProviderProps> = ({ children }) =>
       const transformedData = json.map((client: any) => ({
               _id: client._id || null, // Assign null if field is missing
               id: client.id || null,
-              deleted: client.deleted ? "Deleted":"Active",
-              enabled: client.enabled ? "Enabled":"Disabled",
+              deleted: client.deleted ? "True":"False",
+              enabled: client.enabled ? "True":"False",
               id_group_filestack: client.id_group_filestack || 0,
               client: client.client || "-",  // Provide default values if fields are missing
             }));

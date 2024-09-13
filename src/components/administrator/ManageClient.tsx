@@ -4,7 +4,9 @@ import { Box,
          TextField,
          Typography,
          MenuItem,
+         Grid,
         } from '@mui/material';
+import Switch from '@mui/material/Switch';
 import { OkButton,
          CancelButton, 
          EditButton
@@ -47,13 +49,21 @@ export default function ManageClient(
         enabled: true,
     })
 
+    
+
+    const onEnabledChange = (value: any) => {
+        setClientTemp({ ...clientTemp, enabled: value})
+    }
+    const onDeletedChange = (value: any) => {
+        setClientTemp({ ...clientTemp, deleted: value})
+    }
     useEffect(() => {
         setOpenBackdrop(true)
         setClientTemp ({ ...clientTemp, 
             id_group_filestack: clientUpdate.id_group_filestack,
             client: clientUpdate.client,
-            deleted: clientUpdate.deleted,
-            enabled: clientUpdate.enabled,
+            deleted: clientUpdate.deleted === "True" ? true:false,
+            enabled: clientUpdate.enabled === "True" ? true:false,
         })
         setOpenBackdrop(true);
         
@@ -90,7 +100,7 @@ export default function ManageClient(
     }
     // console.log("alert_amount: ", productUpdate.alert_amount)
     const handleCloseSaveChanges = (ans?:boolean) => {
-        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+        console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
             // console.log("categoryTemp: ", categoryTemp)
@@ -280,20 +290,6 @@ export default function ManageClient(
                             </Box>
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Deleted"
-                                    value={clientTemp.deleted}
-                                    onChange={ (event:any) => updateClient(event.target.value, "deleted") }
-                                    maxRows={1}
-                                    size="small"
-                                    className={classes.inputMainData}
-                                    InputProps={{
-                                        className: classes.inputClassName,
-                                        inputProps: {maxLength: 30}
-                                    }}
-                                />
-                            </Box>
-                            <Box className={classes.customBoxRow}>
-                                <TextField
                                     label="Enabled"
                                     value={clientTemp.enabled}
                                     onChange={ (event:any) => updateClient(event.target.value, "enabled") }
@@ -306,6 +302,47 @@ export default function ManageClient(
                                     }}
                                     />
                             </Box> 
+                            <Grid item xs={3} >
+                                <Typography >Enabled</Typography>
+                            </Grid>
+                            <Grid item xs={2} >
+                                <Switch 
+                                    color='success' 
+                                    checked={clientTemp.enabled}
+                                    onChange={(event:any) => {
+                                        onEnabledChange(event.target.checked)
+                                    }}
+                                />                           
+                            </Grid>
+
+                            <Box className={classes.customBoxRow}>
+                                <TextField
+                                    label="Deleted"
+                                    value={clientTemp.deleted}
+                                    onChange={ (event:any) => updateClient(event.target.value, "deleted") }
+                                    maxRows={1}
+                                    size="small"
+                                    className={classes.inputMainData}
+                                    InputProps={{
+                                        className: classes.inputClassName,
+                                        inputProps: {maxLength: 30}
+                                    }}
+                                />
+                            </Box>
+                            <Grid item xs={3} >
+                                <Typography >Deleted</Typography>
+                            </Grid>
+                            <Grid item xs={2} >
+                                <Switch 
+                                    color='success' 
+                                    checked={clientTemp.deleted}
+                                    onChange={(event:any) => {
+                                        onDeletedChange(event.target.checked)
+                                    }}
+                                />                           
+                            </Grid>
+
+
                         </Box> 
                         <Box className={classes.finishButtons}>
                             {/* {user.id_access_level === 4 ? 
