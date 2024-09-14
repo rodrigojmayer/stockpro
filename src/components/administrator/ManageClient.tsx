@@ -100,7 +100,7 @@ export default function ManageClient(
     }
     // console.log("alert_amount: ", productUpdate.alert_amount)
     const handleCloseSaveChanges = (ans?:boolean) => {
-        console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
+        // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
             // console.log("categoryTemp: ", categoryTemp)
