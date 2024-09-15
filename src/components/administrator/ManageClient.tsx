@@ -60,6 +60,8 @@ export default function ManageClient(
     useEffect(() => {
         setOpenBackdrop(true)
         setClientTemp ({ ...clientTemp, 
+            _id: clientUpdate._id,
+            id: clientUpdate.id,
             id_group_filestack: clientUpdate.id_group_filestack,
             client: clientUpdate.client,
             deleted: clientUpdate.deleted === "True" ? true:false,
@@ -103,58 +105,56 @@ export default function ManageClient(
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            // console.log("categoryTemp: ", categoryTemp)
-            // console.log("subCategoryEnTemp: ", subCategoryEnTemp)
-            // console.log("subCategoryUpdate: ", subCategoryUpdate)
+            console.log("clientTemp: ", clientTemp)
             
             
-            // const fetchUpdateSubCategory = async () => {
-            //     let loadingSuccess: boolean = false
-            //     try {
-            //         const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categoriesSub/${subCategoryUpdate._id}`, {
-            //             method: 'PATCH',
-            //             headers: {
-            //                 'Content-Type': 'application/json', // Set the appropriate content-type for my API
-            //                 // Add any other requires headers here
-            //             },
-            //             body:JSON.stringify({
-            //                 "id_category": categoryTemp.id,
-            //                 "name": subCategoryTemp.sub_category_en,
-            //                 "name_esp": subCategoryTemp.sub_category_es,
-            //                 "name_dan": subCategoryTemp.sub_category_dk,
-            //                 "name_ita": subCategoryTemp.sub_category_it
-            //             })
-            //         })
-            //         // Check if the response status is successful
-            //         if (response.ok) {
-            //             const responseData = await response.json() // parse the response data
-            //             // console.log('POST request successful: ', responseData)
-            //             loadingSuccess = true
-            //         } else {
-            //             // Handle non-successful responses
-            //             console.error('Request failed: ', response.status, response.statusText)
-            //             // Handle the error here
-            //         }
-            //     } catch (error: unknown) {
-            //         if (typeof error === 'string') {
-            //             // 'error' is now narrowed down to type 'string'
-            //             console.error('Error:', error)
-            //         } else if (error instanceof Error) {
-            //             // 'error' is now narrowed down to type 'Error'
-            //             console.error('Error object:', error.message)
-            //         } else {
-            //             // Handle other cases as needed
-            //         }
-            //     } finally {
-            //         // setIsLoading(())
-            //         setIsLoading((prevLoading: any) => ({
-            //             ...prevLoading,
-            //             categories_sub: loadingSuccess,
-            //         }));
+            const fetchUpdateClient = async () => {
+                let loadingSuccess: boolean = false
+                try {
+                    const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/clients/${clientTemp._id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json', // Set the appropriate content-type for my API
+                            // Add any other requires headers here
+                        },
+                        body:JSON.stringify({
+                            "id": clientTemp.id,
+                            "client": clientTemp.client,
+                            "deleted": clientTemp.deleted,
+                            "enabled": clientTemp.enabled,
+                            "id_group_filestack": clientTemp.id_group_filestack
+                        })
+                    })
+                    // Check if the response status is successful
+                    if (response.ok) {
+                        const responseData = await response.json() // parse the response data
+                        // console.log('POST request successful: ', responseData)
+                        loadingSuccess = true
+                    } else {
+                        // Handle non-successful responses
+                        console.error('Request failed: ', response.status, response.statusText)
+                        // Handle the error here
+                    }
+                } catch (error: unknown) {
+                    if (typeof error === 'string') {
+                        // 'error' is now narrowed down to type 'string'
+                        console.error('Error:', error)
+                    } else if (error instanceof Error) {
+                        // 'error' is now narrowed down to type 'Error'
+                        console.error('Error object:', error.message)
+                    } else {
+                        // Handle other cases as needed
+                    }
+                } finally {
+                    // setIsLoading(())
+                    setIsLoading((prevLoading: any) => ({
+                        ...prevLoading,
+                        categories_sub: loadingSuccess,
+                    }));
                     
-            //     }
-            // } 
-            // fetchUpdateSubCategory();       //////////Change the name for update
+                }
+            } 
+            fetchUpdateClient();       //////////Change the name for update
             
             close()
         }
