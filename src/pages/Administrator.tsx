@@ -341,14 +341,35 @@ function Administrator() {
   const [clientsData, setClientsData] = useState(filterCategoriesFields())
   const [filteredData, setFilteredData] = useState(filterCategoriesFields())
 
+  // useEffect(() => { // to update table after saving changes
+  //   if (isInitialRender.current) {
+  //     isInitialRender.current = false;
+  //     return;
+  //   }
+  //   // setCategoriesData(filterFields())
+  //   setFilteredData(filterCategoriesFields())
+  // }, [categories, categoriesSub])
   useEffect(() => { // to update table after saving changes
     if (isInitialRender.current) {
       isInitialRender.current = false;
       return;
     }
     // setCategoriesData(filterFields())
-    setFilteredData(filterCategoriesFields())
-  }, [categories, categoriesSub])
+    if(openOptions === "admin_categories"){
+    setFilteredData(filterCategoriesFields())}
+    else if (openOptions === "admin_clients" )  {
+      setColumnsSelected(columns_admin_clients)
+      setFilteredData(clients)
+    }
+  }, [categories, categoriesSub, clients])
+  // useEffect(() => { // to update table after saving changes
+  //   if (isInitialRender.current) {
+  //     isInitialRender.current = false;
+  //     return;
+  //   }
+  //   // setCategoriesData(filterFields())
+  //   setFilteredData(clients)
+  // }, [clients])
   
   useEffect(() => {
     setSubCategoryUpdate(initial_state_sub_category)

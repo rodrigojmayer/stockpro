@@ -149,7 +149,7 @@ export default function ManageClient(
                     // setIsLoading(())
                     setIsLoading((prevLoading: any) => ({
                         ...prevLoading,
-                        categories_sub: loadingSuccess,
+                        clients: loadingSuccess,
                     }));
                     
                 }

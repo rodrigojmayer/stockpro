@@ -73,6 +73,15 @@ export const ClientsProvider: React.FC<ClientsProviderProps> = ({ children }) =>
     }
   }, [user]);  
 
+  useEffect(() => {
+    if (isLoading.clients) {
+      fetchUserByClient();
+      setIsLoading((prevLoading: any) => ({
+          ...prevLoading,
+          clients: false,
+      }));
+    }
+  }, [isLoading.clients])
   return (
     <ClientsContext.Provider value={{ INITIAL_CLIENTS, clients  }}>
       {children}
