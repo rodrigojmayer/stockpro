@@ -37,7 +37,7 @@ interface ModalsGroupAdministratorProps {
     setSearchQuery: (value: string) => void;
     // openMassiveUpdateStock: (value: string) => void;
     disabledUpdateButton: boolean;
-    openCreateStock: () => void;
+    openCreate: () => void;
     setOpenOptions: (value: string) => void;
   }
 
@@ -51,7 +51,7 @@ export default function ModalsGroup(
         setSearchQuery,
         // openMassiveUpdateStock,
         disabledUpdateButton,
-        openCreateStock,
+        openCreate,
         setOpenOptions
     }: ModalsGroupAdministratorProps) {
     // export default function ModalsGroup( {children, columns}: MyComponentProps) {
@@ -142,7 +142,7 @@ export default function ModalsGroup(
                                     </Grid>
                                     <Grid item xs={1} >
                                         <PlusButton
-                                            clicked={openCreateStock}
+                                            clicked={openCreate}
                                         />
                                     </Grid>
                                 </Grid>

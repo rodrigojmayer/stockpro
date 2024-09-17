@@ -196,9 +196,23 @@ function Administrator() {
   // console.log("products: ", products)
   const { checkListStock, setCheckListStock } = useContext<any>(CheckListStockContext)
   const [ searchQuery, setSearchQuery ] = useState("")
-  const [ showCreateStock, setShowCreateStock ] = useState(false)
-  const openCreateStock = () => setShowCreateStock(true)
+  // const [ showCreateStock, setShowCreateStock ] = useState(false)
+  // const openCreateStock = () => {
+  //   setShowCreateStock(true)
+  // }
+  const openCreate = () => {
+    // console.log("openCreate: ")
+    console.log("openOptions: ", openOptions)
+    if(openOptions === "admin_categories"){
+      setSubCategoryUpdate(initial_state_sub_category)
+      setShowSubCategoryUpdate(true)
+    } else if (openOptions === "admin_clients" )  {
+      setClientUpdate(initial_state_client)
+      setShowClientUpdate(true)
+    }
+  }
   const [openOptions, setOpenOptions] = useState<string>("admin_categories")
+  // const [edition, setEdition] = useState<boolean>(false);
   const [columnsSelected, setColumnsSelected] = useState<ColumnDataAdministrator[]>(columns_admin_categories);
   const [ subCategoryUpdate, setSubCategoryUpdate ] = useState<CategoriesSubData>(initial_state_sub_category)
   const [ clientUpdate, setClientUpdate ] = useState<ClientData>(initial_state_client)
@@ -371,9 +385,15 @@ function Administrator() {
   //   setFilteredData(clients)
   // }, [clients])
   
-  useEffect(() => {
-    setSubCategoryUpdate(initial_state_sub_category)
-  }, [showCreateStock])
+  // useEffect(() => {
+  //   setSubCategoryUpdate(initial_state_sub_category)
+  // }, [showCreateStock])
+  // useEffect(() => {
+  //   if(openOptions === "admin_categories"){
+  //     setSubCategoryUpdate(initial_state_sub_category)
+  //   } else if (openOptions === "admin_clients" )  {
+  //   }
+  // }, [showCreate])
 
   useEffect(() => { //to change of table showed
     // console.log("openOptions: ", openOptions)
@@ -397,7 +417,7 @@ function Administrator() {
         idColumnsTableOrder={idColumnsTableOrder} 
         setSearchQuery={setSearchQuery}
         disabledUpdateButton={disabledUpdateButton}
-        openCreateStock={openCreateStock}
+        openCreate={openCreate}
         setOpenOptions={setOpenOptions}
       >
         <Container maxWidth="md" sx={{ display: (breakpointLG?"none":"block") }} style={{padding: "0"}} >
@@ -407,7 +427,7 @@ function Administrator() {
             </Grid>
             <Grid item xs={2} >
               <PlusButton
-                clicked={openCreateStock}
+                clicked={openCreate}
               />
             </Grid>
           </Grid>

@@ -18,7 +18,19 @@ import ErrorModal from '../ErrorModal';
 import { LanguageLabelsContext } from '../../context/LanguageLabelsContext';
 import { CategoriesContext } from '../../context/CategoriesContext';
 import ManageCategory from './ManageCategory';
-interface ChildProps {
+
+
+const initial_state_sub_category = {
+    _id: "",
+    id: 0,
+    id_category: 1,
+    sub_category_en: "",
+    sub_category_es: "",
+    sub_category_dk: "",
+    sub_category_it: "",
+    deleted: false,
+  }
+  interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
     // productUpdate:  ProductUpdateData 
@@ -34,28 +46,32 @@ export default function ManageSubCategory(
         handleClose(false)
     } 
     // console.log("subCategoryUpdate: ", subCategoryUpdate)
+    // console.log("subCategoryUpdate: ", subCategoryUpdate)
     const { user } = useContext<any>(UserContext);
     const { labelsUpdateAmountStock } = useContext<any>(LanguageLabelsContext);
     const { isLoading, setIsLoading, openBackdrop, setOpenBackdrop } = useContext<any>(IsLoadingContext);
     const { categories } = useContext<any>(CategoriesContext) 
     
     // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
-    const [ categoryTemp, setCategoryTemp ] = useState<CategoriesData>({
-        id: NaN,
-        category_en: "",
-        category_es: "",
-        category_dk: "",
-        category_it: "",
-        deleted: false
-    })
-    const [ subCategoryTemp, setSubCategoryTemp ] = useState<CategoriesSubData>({
-        id: NaN,
-        sub_category_en: "",
-        sub_category_es: "",
-        sub_category_dk: "",
-        sub_category_it: "",
-        deleted: false
-    })
+    const base_category = categories.find((cat: any) => cat.id === 1);
+    const [ categoryTemp, setCategoryTemp ] = useState<CategoriesData>(base_category)
+    // const [ categoryTemp, setCategoryTemp ] = useState<CategoriesData>({
+    //     id: NaN,
+    //     category_en: "",
+    //     category_es: "",
+    //     category_dk: "",
+    //     category_it: "",
+    //     deleted: false
+    // })
+    const [ subCategoryTemp, setSubCategoryTemp ] = useState<CategoriesSubData>(initial_state_sub_category)
+    // const [ subCategoryTemp, setSubCategoryTemp ] = useState<CategoriesSubData>({
+    //     id: NaN,
+    //     sub_category_en: "",
+    //     sub_category_es: "",
+    //     sub_category_dk: "",
+    //     sub_category_it: "",
+    //     deleted: false
+    // })
     // const [ subCategoryEnTemp, setSubCategoryEnTemp ] = useState<any>("")
     // const [ subCategoryEsTemp, setSubCategoryEsTemp ] = useState<any>("")
     // const [ subCategoryDkTemp, setSubCategoryDkTemp ] = useState<any>("")
@@ -65,27 +81,26 @@ export default function ManageSubCategory(
     // console.log("categories: ", categories)
 
     useEffect(() => {
-            setOpenBackdrop(true)
-            // setCategoryTemp(subCategoryUpdate.category);
-            // setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
-            // setSubCategoryEsTemp(subCategoryUpdate.sub_category_es);
-            // setSubCategoryDkTemp(subCategoryUpdate.sub_category_dk);
-            // setSubCategoryItTemp(subCategoryUpdate.sub_category_it);
-            setSubCategoryTemp ({ ...subCategoryTemp, 
-                sub_category_en: subCategoryUpdate.sub_category_en,
-                sub_category_es: subCategoryUpdate.sub_category_es,
-                sub_category_dk: subCategoryUpdate.sub_category_dk,
-                sub_category_it: subCategoryUpdate.sub_category_it,
-            })
-            setOpenBackdrop(true);
-        
-            // Find the category by name and get its ID
-            const category = categories.find((cat: any) => cat.category_en === subCategoryUpdate.category_en);
-            // setCategoryTemp(category ? category.id : "");  // Set the ID or empty string if not found
-            // console.log("category: ", category)
-            // setCategoryTemp({ ...categoryTemp, id: (category ? category.id : "")})
-            setCategoryTemp(category)
-            
+        // setOpenBackdrop(true)
+        if(subCategoryUpdate._id !== ""){
+
+                setSubCategoryTemp ({ ...subCategoryTemp, 
+                    sub_category_en: subCategoryUpdate.sub_category_en,
+                    sub_category_es: subCategoryUpdate.sub_category_es,
+                    sub_category_dk: subCategoryUpdate.sub_category_dk,
+                    sub_category_it: subCategoryUpdate.sub_category_it,
+                })
+                // setOpenBackdrop(true);
+                // Find the category by name and get its ID
+                // if
+                const category = categories.find((cat: any) => cat.category_en === subCategoryUpdate.category_en);
+                console.log("category: ", category)
+                setCategoryTemp(category)
+            } else {
+                setSubCategoryTemp(initial_state_sub_category)
+                setCategoryTemp(base_category)
+                setOpenBackdrop(false)
+            }
             // setSubCategoryEnTemp(subCategoryUpdate.sub_category_en);
     }, [open]) 
     useEffect(() => {
