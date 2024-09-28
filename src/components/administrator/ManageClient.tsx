@@ -262,7 +262,7 @@ export default function ManageClient(
                             </Box> */}
                             <Box className={classes.customBoxRow}>
                                 <TextField
-                                    label="Id Grou Filestack"
+                                    label="Id Group Filestack"
                                     value={clientTemp.id_group_filestack}
                                     onChange={ (event:any) => updateClient(event.target.value, "id_group_filestack") }
                                     maxRows={1}

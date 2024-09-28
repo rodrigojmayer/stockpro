@@ -177,7 +177,7 @@ const initial_state_sub_category = {
 const initial_state_client = {
   _id: "",
   id: 0,
-  id_group_filestack: NaN,
+  id_group_filestack: 0,
   client: '',
   deleted: false,
   enabled: true,
@@ -208,7 +208,8 @@ function Administrator() {
       setShowSubCategoryUpdate(true)
     } else if (openOptions === "admin_clients" )  {
       setClientUpdate(initial_state_client)
-      setShowClientUpdate(true)
+      alert("not necessary for the moment to create clients")
+      // setShowClientUpdate(true)
     }
   }
   const [openOptions, setOpenOptions] = useState<string>("admin_categories")

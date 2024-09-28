@@ -863,7 +863,7 @@ export const useStylesGlobal = makeStyles()({
         top: 64,
         right: 0,
         width: "15%",
-        height: "30%",
+        height: "35%",
         borderRadius: "0 0 10px 10px",
     },
     

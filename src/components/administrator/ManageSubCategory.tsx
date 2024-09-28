@@ -7,7 +7,8 @@ import { Box,
         } from '@mui/material';
 import { OkButton,
          CancelButton, 
-         EditButton
+         EditButton,
+         PlusButton
         } from '../Buttons';
 import SaveChanges from '../SaveChanges';
 import { useStylesGlobal, modalStyleExternal, modalStyleInternal } from '../../Styles'
@@ -30,6 +31,15 @@ const initial_state_sub_category = {
     sub_category_it: "",
     deleted: false,
   }
+const new_category = {
+    _id: "",
+    id: 1,
+    category_en: "",
+    category_es: "",
+    category_dk: "",
+    category_it: "",
+    deleted: false
+}
   interface ChildProps {
     open:  boolean
     handleClose: (newData: boolean) => void
@@ -53,6 +63,8 @@ export default function ManageSubCategory(
     const { categories } = useContext<any>(CategoriesContext) 
     
     // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
+    const [ createCategory, setCreateCategory ] = useState<boolean>(false)
+    
     const base_category = categories.find((cat: any) => cat.id === 1);
     const [ categoryTemp, setCategoryTemp ] = useState<CategoriesData>(base_category)
     // const [ categoryTemp, setCategoryTemp ] = useState<CategoriesData>({
@@ -154,29 +166,35 @@ export default function ManageSubCategory(
         // console.log("ans: ", ans)   // If true should save the changes, if false shouldnt. In both cases has to close all the modals. If undefined should do nothing, just close the modal save changes
         if(ans){
             
-            // console.log("categoryTemp: ", categoryTemp)
-            // console.log("subCategoryEnTemp: ", subCategoryEnTemp)
-            // console.log("subCategoryUpdate: ", subCategoryUpdate)
+            console.log("categoryTemp: ", categoryTemp)
+            console.log("subCategoryTemp: ", subCategoryTemp)
+            console.log("subCategoryUpdate: ", subCategoryUpdate)
             
             
             const fetchUpdateSubCategory = async () => {
                 let loadingSuccess: boolean = false
+                const manage_method = (subCategoryUpdate._id === "" ? 'POST' : 'PATCH')
                 try {
                     const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categoriesSub/${subCategoryUpdate._id}`, {
-                        method: 'PATCH',
+                        // method: 'PATCH',
+                        method: manage_method,
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
                         },
                         body:JSON.stringify({
                             "id_category": categoryTemp.id,
+                            "id": subCategoryTemp.id,
                             "name": subCategoryTemp.sub_category_en,
                             "name_esp": subCategoryTemp.sub_category_es,
                             "name_dan": subCategoryTemp.sub_category_dk,
-                            "name_ita": subCategoryTemp.sub_category_it
+                            "name_ita": subCategoryTemp.sub_category_it,
+                            "deleted": subCategoryTemp.deleted
                         })
                     })
                     // Check if the response status is successful
+                    console.log("response: ", response)
+
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
                         // console.log('POST request successful: ', responseData)
@@ -226,13 +244,18 @@ export default function ManageSubCategory(
         setOpenSaveChanges(true);
     }
     
-    const handleOpenManageCategory = () => {
+    const handleOpenManageCategory = (create:boolean) => {
+        if(create){
+            setCreateCategory(true)
+            setCategoryTemp(new_category)
+        } else {
+            setCreateCategory(false)
+        }
         setOpenManageCategory(true)
     }
     const handleCloseManageCategory = () => {
         // close()
-        console.log("categories: ", categories)
-        categories
+        // console.log("categories: ", categories)
         setOpenManageCategory(false)
     }  
 
@@ -289,11 +312,13 @@ export default function ManageSubCategory(
                             open={openManageCategory} 
                             handleClose={handleCloseManageCategory} 
                             categoryTemp={categoryTemp}
+                            setCategoryTemp={setCategoryTemp}
                             updateCategory={updateCategory} 
+                            
                         />
                         <Box className={`${classes.customBoxColumn}`}>
                             <Typography noWrap align='center' variant="h5" className={classes.title}>
-                                Update Sub Category
+                                { subCategoryUpdate._id !== "" ? "Update Sub Category" : "Create Sub Category" }
                             </Typography>   
                             <Box className={classes.customBoxRow}>
                                 <TextField 
@@ -317,7 +342,10 @@ export default function ManageSubCategory(
                                         ))}
                                 </TextField>
                                 <EditButton
-                                    clicked={() => handleOpenManageCategory()}
+                                    clicked={() => handleOpenManageCategory(false)}
+                                />
+                                <PlusButton
+                                    clicked={() => handleOpenManageCategory(true)}
                                 />
                             </Box> 
                             <Box className={classes.customBoxRow}>

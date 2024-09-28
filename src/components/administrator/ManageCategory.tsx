@@ -22,12 +22,14 @@ interface ChildProps {
     handleClose: (newData: boolean) => void
     // productUpdate:  ProductUpdateData 
     categoryTemp:  CategoriesData 
+    setCategoryTemp: (newData: any) => void
     updateCategory: (newData: any, field: string) => void
 }
 export default function ManageCategory( 
     {   open, 
         handleClose, 
         categoryTemp,
+        setCategoryTemp,
         updateCategory
     }: ChildProps) {
     const { classes } = useStylesGlobal();
@@ -41,6 +43,7 @@ export default function ManageCategory(
     const { categories } = useContext<any>(CategoriesContext) 
     
     // const categoryLoad = categoryTemp 
+    // console.log(categoryTemp) 
     // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
     // const [ categoryTemp, setCategoryTemp ] = useState<any>("")
     const [ categoryLoad, setCategoryLoad ] = useState<any>(categoryTemp)
@@ -122,9 +125,11 @@ export default function ManageCategory(
             
             const fetchUpdateCategory = async () => {
                 let loadingSuccess: boolean = false
+                let responseCategoryData:CategoriesData = categoryTemp
+                const manage_method = (categoryTemp._id === "" ? 'POST' : 'PATCH')
                 try {
                     const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/categories/${categoryTemp._id}`, {
-                        method: 'PATCH',
+                        method: manage_method,
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API
                             // Add any other requires headers here
@@ -141,6 +146,7 @@ export default function ManageCategory(
                     if (response.ok) {
                         const responseData = await response.json() // parse the response data
                         // console.log('POST request successful: ', responseData)
+                        responseCategoryData = responseData
                         loadingSuccess = true
                     } else {
                         // Handle non-successful responses
@@ -163,7 +169,7 @@ export default function ManageCategory(
                         ...prevLoading,
                         categories: loadingSuccess,
                     }));
-                    setCategoryLoad(categoryTemp)
+                    setCategoryTemp(responseCategoryData)
                     
                 }
             } 
@@ -244,7 +250,7 @@ export default function ManageCategory(
                         /> */}
                         <Box className={`${classes.customBoxColumn}`}>
                             <Typography noWrap align='center' variant="h5" className={classes.title}>
-                                Update Category
+                                {categoryTemp._id !== "" ? "Update Category" : "Create Category" }
                             </Typography>   
                             {/* <Box className={classes.customBoxRow}>
                                 <TextField 
