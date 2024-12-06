@@ -64,6 +64,37 @@ function App() {
         openFirstTimeValidateUser: subPaths[2],
       }));
       subPaths[2] = ""
+    } else if (subPaths[1] === "keepalive"){
+      const keepalive = async () => {   
+        try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/keepalive`, {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json', // Set the appropriate content-type for my API
+              },
+          })
+          const responseData = await response.json() // parse the response data
+          console.log("keepalive responseData: ", responseData)
+          // Check if the response status is successful
+          // if (response.ok) {
+          //    setOpenConfirmUserValidatedModal(true)
+          //    setTextData(responseData.message)
+          // } else {
+          //   // Handle the error here
+          //   setOpenErrorModal(true) // Open the modal for duplicate product error
+          //   setErrorData(responseData.errorCode)
+          // }
+        } catch (error: unknown) {
+          console.log("keepalive error: ", error)
+            
+        // } finally {
+        //   setIsLoading((prevLoading: any) => ({
+        //     ...prevLoading,
+        //     openFirstTimeValidateUser: "",
+        //   }));
+        }
+      }
+      keepalive();
     }
   }, [pathname])
   // navigate('/home')
@@ -159,9 +190,9 @@ function App() {
           
           {/* public routes */}
             <Route element={<Redirect />} >
-                <Route path="login" element={<Login />} />
-                <Route path="signup" element={<SignUp />} />
-              </Route>
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<SignUp />} />
+            </Route>
           </Route>
             {/* catch all */}
             {/* <Route path="*" element={<Login />}  /> */}
