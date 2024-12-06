@@ -63,7 +63,7 @@ export default function ManageSubCategory(
     const { categories } = useContext<any>(CategoriesContext) 
     
     // const [ resultUpdated, setResultUpdated ] = useState<number | string>(subCategoryUpdate.amount)
-    const [ createCategory, setCreateCategory ] = useState<boolean>(false)
+    // const [ createCategory, setCreateCategory ] = useState<boolean>(false)
     
     const base_category = categories.find((cat: any) => cat.id === 1);
     const [ categoryTemp, setCategoryTemp ] = useState<CategoriesData>(base_category)
@@ -246,10 +246,10 @@ export default function ManageSubCategory(
     
     const handleOpenManageCategory = (create:boolean) => {
         if(create){
-            setCreateCategory(true)
+            // setCreateCategory(true)
             setCategoryTemp(new_category)
         } else {
-            setCreateCategory(false)
+            // setCreateCategory(false)
         }
         setOpenManageCategory(true)
     }
