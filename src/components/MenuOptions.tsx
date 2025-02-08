@@ -43,14 +43,23 @@ export default function MenuOptions({ open, handleClose,  onData}: ChildProps) {
         window.location.reload(); // Force a full page refresh
     }
 
+    function wait(ms:number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
     const signOut = async() => {
 
         try {
+            // await wait(2000); // ⏱️ You can tweak this (e.g., 2000ms if needed)
             await logout()
+            await wait(2000); // ⏱️ You can tweak this (e.g., 2000ms if needed)
+            // await wait(2000000); // ⏱️ You can tweak this (e.g., 2000ms if needed)
             setUser(INITIAL_USER)
         } catch (error: unknown) {
             console.error('Logout error: ', error)
         } finally {
+            // console.log("Previous navigate to login**********")
+            await wait(2000); // ⏱️ You can tweak this (e.g., 2000ms if needed)
+            // console.log("Previous navigate to login**********")
             navigate('/login')
         }
     }

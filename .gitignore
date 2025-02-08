@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 *.env
+# Ignore test environment variables
+.env.test

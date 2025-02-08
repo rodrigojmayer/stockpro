@@ -31,6 +31,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 // import useAuth from './hooks/useAuth';
 import { useStylesGlobal } from './Styles';
 import Administrator from './pages/Administrator';
+import { getClientId } from './utils/env';
 
 
 const theme = createTheme({
@@ -46,6 +47,7 @@ const theme = createTheme({
 
 function App() {
   const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
+  // const CLIENT_ID = getClientId();
   const { user } = useContext<any>(UserContext);
 
   const { setIsLoading } = useContext<any>(IsLoadingContext);
@@ -68,6 +70,7 @@ function App() {
       const keepalive = async () => {   
         try {
           const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/keepalive`, {
+          // const response = await fetch(`${process.env.VITE_API_URL_BACKEND}/keepalive`, {
               method: 'GET',
               headers: {
                   'Content-Type': 'application/json', // Set the appropriate content-type for my API

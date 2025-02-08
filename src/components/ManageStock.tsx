@@ -193,6 +193,13 @@ export default function ManageStock(
                     } else {
                         // Handle non-successful responses
                         console.error('Request failed: ', response.status, response.statusText)
+                        const errorData = await response.json(); // Parse the body even on error
+                        console.error('Error Code:', errorData.errorCode); // <-- Access errorCode here
+                        console.error('Error Message:', errorData.error);
+                        console.log(typeof errorData.errorCode)
+                        setOpenErrorModal(true)
+                        setErrorData(errorData.errorCode)
+
                         // Handle the error here
                     }
                 } catch (error: unknown) {
@@ -212,10 +219,12 @@ export default function ManageStock(
                     }));
                     
                     setCheckListStock([])
+                    if(loadingSuccess)
+                        close()
                 }
             } 
             fetchManageStockProduct()
-            close()
+            
         }
         setOpenSaveChanges(false);
     }

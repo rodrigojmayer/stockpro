@@ -27,7 +27,6 @@ import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 export default function SignUp () {
     // const addUser = useAddUser(); 
     const postUser = useAddUser(); 
-    
     const { classes } = useStylesGlobal();
     const {  user } = useContext<any>(UserContext);
     const { labelsSignUp } = useContext<any>(LanguageLabelsContext)
@@ -205,7 +204,8 @@ export default function SignUp () {
             // postClient()
             const bodyCreate: UserEditData = {}
             bodyCreate.deleted = false
-            bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
+            // bodyCreate.language =  1    //  FIX LANGUAGE SELECTED
+            bodyCreate.language =  user.language
             bodyCreate.background_color = 0
             bodyCreate.alerts_enabled = false
             bodyCreate.ordered_fields = [-1,-2,-3,-4,-5]

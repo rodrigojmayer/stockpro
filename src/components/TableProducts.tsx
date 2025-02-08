@@ -81,7 +81,7 @@ function rowContent(
   ) {
 
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
-  console.log("newRow: ", newRow)
+  // console.log("newRow: ", newRow)
   if (newRow.custom_fields) {
     for (const key in newRow.custom_fields) {
       newRow = {
@@ -167,6 +167,7 @@ function rowContent(
                 <Typography noWrap 
                 sx={{
                     padding: "0 4px ",
+                    textDecoration:  ((column.dataKey === "alert_amount" && !newRow['alert_amount_enabled']) || (column.dataKey === "alert_date" && !newRow['alert_date_enabled'])) ? 'line-through' : "",
                   }}
                 >
                   { ( newRow[column.dataKey] || newRow[column.dataKey] === 0 ) ? newRow[column.dataKey] : "-"}
@@ -243,6 +244,7 @@ export default function TableProducts(
   const [sortedData, setSortedData] = useState(data)
   const [rowsUserSort, setRowsUserSort] = useState({
     field: "_id",
+    id: -1,
     asc: true
   })
   // const [alertsOnTopUserSort, setAlertsOnTopUserSort] = useState(true)
@@ -283,7 +285,8 @@ export default function TableProducts(
   }
 
   // const [dataVersion, setDataVersion] = useState(0);
-  const orderByField = (field: any, calledFrom: string) => {
+  const orderByField = (field: any, id: number, calledFrom: string) => {
+    // console.log("TableProducts orderByField field: ", field)
     if(field==="url_image")
       return
     let newSortAsc:boolean = true
@@ -293,25 +296,41 @@ export default function TableProducts(
       newSortAsc = rowsUserSort.asc
     }
     let arraySorted = filteredData.slice();
-    setRowsUserSort({field: field, asc: newSortAsc});
-    let aField, bField
+    setRowsUserSort({field, id, asc: newSortAsc});
+    let aField: string | number, bField: string | number
     arraySorted.sort((a, b) => {
+      // console.log("TableProducts orderByField a: ", a)
+      // console.log("TableProducts orderByField b: ", b)
       if(field === "alert_date" ){
         if(typeof a[field] === "string"){
-          let aDate = a[field]
-          aDate = aDate.split("/")
-          aDate = new Date( aDate[2], aDate[1] - 1, aDate[0]);
-          aField = aDate.getTime()
+          const parts = a[field].split("/")
+          if (parts.length === 3) {
+            const aDate = new Date( +parts[2], +parts[1] - 1, +parts[0]);
+            aField = aDate.getTime()
+          }
         } else {
           aField = 0
         }
         if(typeof b[field] === "string"){
-          let bDate = b[field]
-          bDate = bDate.split("/")
-          bDate = new Date( bDate[2], bDate[1] - 1, bDate[0]);
-          bField = bDate.getTime()
+          const parts = b[field].split("/")
+          if (parts.length === 3) {
+            const bDate = new Date( +parts[2], +parts[1] - 1, +parts[0]);
+            bField = bDate.getTime()
+          }
         } else {
           bField = 0
+        }
+      } else if(id > 0){  // Condition for custom fields
+        // console.log("a.custom_fields: ", a.custom_fields && a.custom_fields[field])
+        if (a.custom_fields && a.custom_fields[field]){
+          aField = a.custom_fields[field].toLowerCase() 
+        } else {
+          aField ="-"
+        }
+        if (b.custom_fields && b.custom_fields[field]){
+          bField = b.custom_fields[field].toLowerCase() 
+        } else {
+          bField ="-"
         }
       } else {
         if (typeof a[field] === "string"){
@@ -562,7 +581,7 @@ export default function TableProducts(
       return; // Exit early to prevent further execution of the effect
     }
     // console.log("rowsUserSort: ", rowsUserSort)
-      orderByField(rowsUserSort.field, "useEffect")
+    orderByField(rowsUserSort.field, rowsUserSort.id, "useEffect")
   }, [filteredData, alertsOnTopUserSort])
   
   useEffect(() => {
@@ -627,7 +646,8 @@ export default function TableProducts(
                       }}
                       onClick={(e:any)=> {
                         e.stopPropagation() // Prevent the click event from propagating to the parent cell
-                        orderByField(columnTable.dataKey, "onClick")
+                        // console.log("columnTable: ", columnTable)
+                        orderByField(columnTable.dataKey, columnTable.id, "onClick")
                       }} 
                     >
                       { columnTable.label ? 

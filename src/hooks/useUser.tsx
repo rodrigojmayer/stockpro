@@ -101,6 +101,7 @@ export default function useUser () {
           "pass": userPass,
           "rememberUser": rememberUser,          
           "googleDecodedToken": googleDecodedToken,
+          "language": user.language, // TODO: FIX
         }),
         {
           headers: { 'Content-Type': 'application/json'},

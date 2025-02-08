@@ -148,6 +148,7 @@ export default function Login () {
   
   const handleLoginGoogleSuccess = async (response: any) => {
     // Handle the successful Google login response here
+    // console.log("handleLoginGoogleSuccess response: ", response)
     const googleDecodedToken:JwtPayload = jwtDecode(response.credential);
     const userEmailData = googleDecodedToken
     setGmailUserLogged(userEmailData)     //////////// check for what is this

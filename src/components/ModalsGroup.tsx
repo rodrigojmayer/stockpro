@@ -126,7 +126,7 @@ export default function ModalsGroup(
                     <Grid container  >
                         <Grid item xs={10} md={3} lg={2}  sx={{ marginTop: "7px"}}>
                             <Typography variant= "h6" className={classes.menu_logo}>
-                                StockPro (Beta)
+                                StockPro
                                 {test}
                             </Typography>
                         </Grid>
@@ -166,8 +166,7 @@ export default function ModalsGroup(
                 </Toolbar>
             </AppBar>
             <Container className={classes.menu_page}
-                sx={{
-                    minHeight: `calc(100vh - ${(breakpointLG?"32px":"96px")})` }}
+                sx={{ minHeight: `calc(100vh - ${(breakpointLG?"32px":"96px")})` }}
             >
                 <div className={(breakpointLG?classes.menu_toolbar:"")}></div>
                 {children}

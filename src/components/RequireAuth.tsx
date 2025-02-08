@@ -12,7 +12,7 @@ const RequireAuth = () => {
     const [ authState, setAuthState ] = useState(auth._id);
     const [render, setRender] = useState("loading");
     // const [initialPathname, setInitialPathname] = useState(location.pathname);
-    // const [countAuthRenders, setCountAuthRenders] = useState(0);
+    const [countAuthRenders, setCountAuthRenders] = useState(0);
     const navigate = useNavigate();
     // console.log("location: ", location.pathname)
 
@@ -32,8 +32,9 @@ const RequireAuth = () => {
         if(authState!==auth._id) setAuthState(auth._id);
         // console.log("-------------------" )
         // console.log("render: ", render)
-        // // if(Object.keys(auth).length !== 0 || countAuthRenders>0){
+        if(Object.keys(auth).length !== 0 || countAuthRenders>0){
         // console.log("auth: ", auth)
+        if(authState!==auth._id) setAuthState(auth._id);
         // console.log("Object.keys(auth).length: ", Object.keys(auth).length)
         // if(Object.keys(auth).length===0) setRender("login");
         // // console.log("countAuthRenders: ", countAuthRenders)
@@ -47,15 +48,15 @@ const RequireAuth = () => {
         //         navigate('/')
         //         setRender("home")
         //     }
-        // } else if(countAuthRenders === 30) {
+        } else if(countAuthRenders === 30) {
         // } else if(countAuthRenders === 50) {
-            // setRender("login")
+            setRender("login")
         // } else {setRender("login");
             // setCountAuthRenders(countAuthRenders+1)
         // }
-        // } else {
-        //     setCountAuthRenders(countAuthRenders+1)
-        // }
+        } else {
+            setCountAuthRenders(countAuthRenders+1)
+        }
     // }, [auth, countAuthRenders])
     }, [auth])
     
@@ -67,7 +68,7 @@ const RequireAuth = () => {
         if (authState){
             if(authState === "65ec59db81901b6dd1f45a13" && isLoading.administrator) {
                 // console.log("in to the second if-----******")
-                navigate('/administrator')
+                // navigate('/administrator')
                 setRender("administrator")
                 setIsLoading((prevLoading:any) => ({
                     ...prevLoading,

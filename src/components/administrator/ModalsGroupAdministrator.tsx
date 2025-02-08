@@ -126,7 +126,7 @@ export default function ModalsGroup(
                     <Grid container  >
                         <Grid item xs={10} md={3} lg={3}  sx={{ marginTop: "7px"}}>
                             <Typography variant= "h6" className={classes.menu_logo}>
-                                StockPro (Beta) Admin
+                                StockPro - Admin
                                 {test}
                             </Typography>
                         </Grid>

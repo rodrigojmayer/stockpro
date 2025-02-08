@@ -81,7 +81,7 @@ const VirtuosoTableComponents: TableComponents<Data> = {
     // function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, openUpdateAmountStock:(newData: ProductUpdateData) => void) {
   function rowContent(_index: number, row: Data, columns: ColumnData[], classes: any, writeValue:any, firstInputRef: any, user_background_color: any) {
     let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
-    console.log("newRow: ", newRow)
+    // console.log("newRow: ", newRow)
     const RowContent = (item:any) => {
         let lab
         if (item.column._id === 1){
@@ -102,12 +102,12 @@ const VirtuosoTableComponents: TableComponents<Data> = {
                 //   onChange={ () => console.log("testin") }
                     InputProps={{
                         className: classes.inputClassName,
-                        inputMode: "numeric",
                         inputProps: {
                             style: { 
-                            textAlign: "center", 
-                            height: 20,
+                                textAlign: "center", 
+                                height: 20,
                             },
+                            inputMode: "numeric",
                         },
                     }}
                     inputRef={(_index===0 && firstInputRef ? input => input && input.focus() : undefined)}
