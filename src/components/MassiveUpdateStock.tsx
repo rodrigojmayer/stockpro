@@ -12,7 +12,8 @@ import { Box,
          TextField,
          Tooltip
         } from '@mui/material';
-        import { tooltipClasses } from '@mui/material/Tooltip';
+import CustomTableHead from './wrappers/TableHeadWrapper';
+import { tooltipClasses } from '@mui/material/Tooltip';
 import { OkButton,
          CancelButton,
          PlusButton,
@@ -69,7 +70,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
     Table: (props) => (
       <Table {...props} sx={{ borderCollapse: 'separate', tableLayout: 'fixed' }} />
     ),
-    TableHead,
+    // TableHead,
+    TableHead: CustomTableHead, 
     TableRow: ({ item: _item, ...props }) => <TableRow {...props} />,
     TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
       <TableBody {...props} ref={ref} />

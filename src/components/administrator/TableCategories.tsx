@@ -10,6 +10,7 @@ import {
   Switch,
   Tooltip
 } from '@mui/material';
+import CustomTableHead from '../wrappers/TableHeadWrapper';
 import { tooltipClasses } from '@mui/material/Tooltip';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
 import { useState, useEffect, useContext, useRef } from 'react';
@@ -52,7 +53,8 @@ const VirtuosoTableComponents: TableComponents<CategoriesSubData> = {
   Table: (props) => (
     <Table {...props} sx={{ borderCollapse: 'separate', tableLayout: 'fixed' }} />
   ),
-  TableHead,
+  // TableHead,
+  TableHead: CustomTableHead, 
   TableRow: ({ item: _item, ...props }) => <TableRow {...props} />,
   TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
     <TableBody {...props} ref={ref} />

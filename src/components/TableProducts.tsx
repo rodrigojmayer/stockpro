@@ -11,6 +11,7 @@ import {
   Switch,
   Tooltip
 } from '@mui/material';
+import CustomTableHead from './wrappers/TableHeadWrapper';
 import { tooltipClasses } from '@mui/material/Tooltip';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
@@ -58,7 +59,8 @@ const VirtuosoTableComponents: TableComponents<Data> = {
   Table: (props) => (
     <Table {...props} sx={{ borderCollapse: 'separate', tableLayout: 'fixed' }} />
   ),
-  TableHead,
+  // TableHead,
+  TableHead: CustomTableHead, 
   TableRow: ({ item: _item, ...props }) => <TableRow {...props} />,
   TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
     <TableBody {...props} ref={ref} />
