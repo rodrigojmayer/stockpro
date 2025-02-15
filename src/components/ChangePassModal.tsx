@@ -18,7 +18,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ErrorModal from './ErrorModal';
 import SaveChanges from './SaveChanges';
 import ConfirmChangedPassModal from './ConfirmChangedPassModal';
-import { getWsUrl, getApiUrlBackend } from '@/utils/env';
+// import { getWsUrl, getApiUrlBackend } from '@/utils/env';
 
 type ChangePassModalProps = {
     openChangePassModal: boolean;
@@ -124,10 +124,10 @@ export default function ChangePassModal( props: ChangePassModalProps) {
                     //     (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL_BACKEND) ||
                     //     process.env.VITE_API_URL_BACKEND ||
                     //     'ws://default-url';
-                    const API_URL_BACKEND = getApiUrlBackend();
-                    const response = await fetch(`${API_URL_BACKEND}/users/changePass`, {
+                    // const API_URL_BACKEND = getApiUrlBackend();
+                    // const response = await fetch(`${API_URL_BACKEND}/users/changePass`, {
+                    const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/changePass`, {
                     // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/changePass`, {
-                    // const response = await fetch(`${process.env.VITE_API_URL_BACKEND}/users/changePass`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json', // Set the appropriate content-type for my API

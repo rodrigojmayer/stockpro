@@ -14,8 +14,14 @@ export default defineConfig({
       // 'Content-Security-Policy': "script-src 'self' 'unsafe-inline' https://apis.google.com/js/api.js'unsafe-eval'; object-src 'self'"
       // "content_security_policy": "script-src 'self' https://apis.google.com/js/api.js 'unsafe-eval'; object-src 'self'"
     // }
+    allowedHosts: ['stockpro-deploy.onrender.com'], // ✅ Add this line
   },
-  
+  // optimizeDeps: {
+  //   exclude: ['filestack-react'],
+  // },
+  // ssr: {
+  //   noExternal: ['filestack-react'], // ensures it's bundled if SSR
+  // },
   // resolve: {
   //   alias: {
   //     // Make sure to use the correct path to your `@svgr/webpack` installation

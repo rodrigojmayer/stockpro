@@ -2,8 +2,8 @@
 import TableHead from '@mui/material/TableHead';
 import React from 'react';
 
-const CustomTableHead = (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
-  <TableHead {...props} />
+const CustomTableHead = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>> (
+  (props, ref) => <TableHead ref={ref} {...props} />
 );
 
 export default CustomTableHead;

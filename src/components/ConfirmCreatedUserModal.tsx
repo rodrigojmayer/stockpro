@@ -10,6 +10,7 @@ import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
 
 
 // const PrettoSlider = styled(Slider)({
@@ -49,7 +50,8 @@ type ConfirmCreatedUserModalProps = {
 export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalProps) {
     const { openConfirmCreatedUserModal, closeConfirmCreatedUserModal } = props;
     const { classes } = useStylesGlobal();
-    const { user } = useContext<any>(UserContext);
+    const { user } = useContext<any>(UserContext);    
+    const { labelsSignUpConfirmation } = useContext<any>(LanguageLabelsContext)
     
     const navigate = useNavigate();
     
@@ -73,15 +75,15 @@ export default function ConfirmCreatedUserModal( props: ConfirmCreatedUserModalP
                         margin="20px 10px"
                     >
                         <Typography variant='body1' align="center" >
-                            Thanks for signing up to StockPro
+                            {labelsSignUpConfirmation.confirmation_thanks}
                         </Typography> 
                         <Typography variant='body2' align="center" >
                             <MarkEmailReadIcon/>
                         </Typography> 
                         <Typography variant='body2' align="center" >
-                            We have sent you an email confirmation. 
+                            {labelsSignUpConfirmation.confirmation_sent}
                             <br/> 
-                            Please check your inbox
+                            {labelsSignUpConfirmation.confirmation_code}
                         </Typography> 
                     </Box>
                     <Box className={classes.finishButtons}>

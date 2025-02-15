@@ -5,7 +5,7 @@ import AuthContext from "../context/AuthProvider"
 
 import useWebSocket from 'react-use-websocket'
 import useLogout from '../hooks/useLogout';
-import { getWsUrl, getApiUrlBackend } from '@/utils/env';
+// import { getWsUrl, getApiUrlBackend } from '@/utils/env';
 
 const INITIAL_USER = {
   _id: "",
@@ -58,10 +58,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   // const WS_URL =
   //   (typeof process.env !== 'undefined' && process.env?.VITE_WS_URL) || // Browser
   //   import.meta.env.VITE_WS_URL
-  // const WS_URL = import.meta.env.VITE_WS_URL   //////////////////////////////////////////////////////////////Commented to fix tests environment
+  const WS_URL = import.meta.env.VITE_WS_URL   //////////////////////////////////////////////////////////////Commented to fix tests environment
   // const WS_URL = typeof import.meta !== 'undefined' ? import.meta.env.VITE_WS_URL : process.env.VITE_WS_URL;
 
-const WS_URL = getWsUrl();
+// const WS_URL = getWsUrl();
 
   // console.log("user.user: ", user.user)
   const { sendJsonMessage, lastJsonMessage } = useWebSocket<any>(WS_URL, {
@@ -82,11 +82,11 @@ const WS_URL = getWsUrl();
       // const API_URL_BACKEND = typeof import.meta !== 'undefined' && import.meta.env
       //   ? import.meta.env.VITE_API_URL_BACKEND
       //   : process.env.VITE_API_URL_BACKEND;
-      const API_URL_BACKEND = getApiUrlBackend();
+      // const API_URL_BACKEND = getApiUrlBackend();
 
       // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/user/${profileStringWithoutQuotes}`)
-      // const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${auth._id}`)
-      const response = await fetch(`${API_URL_BACKEND}/users/${auth._id}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL_BACKEND}/users/${auth._id}`)
+      // const response = await fetch(`${API_URL_BACKEND}/users/${auth._id}`)
       // const response = await fetch(`${process.env.VITE_API_URL_BACKEND}/users/${auth._id}`)
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);

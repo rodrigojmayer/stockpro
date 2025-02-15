@@ -11,7 +11,7 @@ import { UpButton,
         } from './Buttons';
 import { useStylesGlobal } from '../Styles'
 import { FilestackContext } from '../context/FilestackContext';
-import { PickerOverlay } from 'filestack-react';
+// import { PickerOverlay } from 'filestack-react';
 import IonTrash from "../assets/ion_trash.svg";
 import { UserContext } from '../context/UserContext';
 import { LanguageLabelsContext } from '../context/LanguageLabelsContext';
@@ -174,14 +174,14 @@ export default function ManageStockSecondaryData(
                     onClose={handleClosePicker}
                 > 
                     <Box className={classes.customZIndexTop} >
-                        <PickerOverlay
-                            apikey={apiKey}
-                            onUploadDone={(res: any) => {
-                                if(imageUrlHandle){
-                                    console.log("There is already the imageUrlHandle: ", imageUrlHandle)
-                                    onHandleUnsavedImages(imageUrlHandle)
-                                }
-                                onSetImageUrlHandle(res.filesUploaded[0])
+                        {/*<PickerOverlay
+                             apikey={apiKey}
+                             onUploadDone={(res: any) => {
+                                 if(imageUrlHandle){
+                                     console.log("There is already the imageUrlHandle: ", imageUrlHandle)
+                                     onHandleUnsavedImages(imageUrlHandle)
+                                 }
+                                 onSetImageUrlHandle(res.filesUploaded[0])
                             }}
                             pickerOptions={{
                                 onClose: () => {
@@ -190,7 +190,7 @@ export default function ManageStockSecondaryData(
                                 lang: labelsManageStock.filestack_options,
                                 accept: ["image/*"],
                             }}
-                        />
+                        />*/}
                     </Box> 
                 </Modal> 
                 <Box className={`${classes.customBoxRow} ${classes.customBoxRowArrowButton}`}>

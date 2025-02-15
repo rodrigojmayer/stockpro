@@ -28,6 +28,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
   const [labelsLogin, setLabelsLogin] = useState({}); // New state for loading status
   const [labelsSignUp, setLabelsSignUp] = useState({}); // New state for loading status
   const [labelsConfirmTermsAndPrivacy, setLabelsConfirmTermsAndPrivacy] = useState({}); // New state for loading status
+  const [labelsSignUpConfirmation, setLabelsSignUpConfirmation] = useState({}); // New state for loading status
   const [labelsManageForgottenPass, setLabelsManageForgottenPass] = useState({}); // New state for loading status
   const [labelsConfirmDeleteModal, setLabelsConfirmDeleteModal] = useState({}); // New state for loading status
   
@@ -142,6 +143,11 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       });
       setLabelsConfirmTermsAndPrivacy({
         terms: "EnglishTerms",
+      });
+      setLabelsSignUpConfirmation({
+        confirmation_thanks: "Thanks for signing up to StockPro",
+        confirmation_sent: "We have sent you an email confirmation.",
+        confirmation_code: "(Please check your spam folder if you can't find it in your inbox)",
       });
       setLabelsManageForgottenPass({
         account_recovery: "Account recovery",
@@ -269,6 +275,11 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       setLabelsConfirmTermsAndPrivacy({
         terms: "SpanishTerms",
       });
+      setLabelsSignUpConfirmation({
+        confirmation_thanks: "Gracias por suscribirse a StockPro",
+        confirmation_sent: "Le hemos enviado un correo electrónico de confirmación.",
+        confirmation_code: "(Por favor revise su carpeta de SPAM si no lo encuentra en su bandeja de entrada)",
+      });
       setLabelsManageForgottenPass({
         account_recovery: "Recuperación de cuenta",
         confirm_recovery_email: "Para obtener un código de verificación, primero confirme la dirección de correo electrónico de recuperación",
@@ -394,6 +405,11 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       });
       setLabelsConfirmTermsAndPrivacy({
         terms: "DanishTerms",
+      });
+      setLabelsSignUpConfirmation({
+        confirmation_thanks: "Tak for din tilmelding til StockPro",
+        confirmation_sent: "Vi har sendt dig en e-mailbekræftelse.",
+        confirmation_code: "(Tjek venligst din SPAM-mappe, hvis du ikke kan finde den i din indbakke)",
       });
       setLabelsManageForgottenPass({
         account_recovery: "Kontogendannelse",
@@ -521,6 +537,11 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       setLabelsConfirmTermsAndPrivacy({
         terms: "ItalianTerms",
       });
+      setLabelsSignUpConfirmation({
+        confirmation_thanks: "Grazie per esserti iscritto a StockPro",
+        confirmation_sent: "Ti abbiamo inviato un'e-mail di conferma.",
+        confirmation_code: "(Se non riesci a trovarlo nella posta in arrivo, controlla la cartella SPAM)",
+      });
       setLabelsManageForgottenPass({
         account_recovery: "Recupero dell'account",
         confirm_recovery_email: "Per ottenere un codice di verifica, conferma prima l'indirizzo email di recupero",
@@ -558,6 +579,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
         labelsLogin,
         labelsSignUp,
         labelsConfirmTermsAndPrivacy,
+        labelsSignUpConfirmation,
         labelsManageForgottenPass,
         labelsConfirmDeleteModal,
       }} 

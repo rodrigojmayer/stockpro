@@ -31,7 +31,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 // import useAuth from './hooks/useAuth';
 import { useStylesGlobal } from './Styles';
 import Administrator from './pages/Administrator';
-import { getClientId } from './utils/env';
+// import { getClientId } from './utils/env';
 
 
 const theme = createTheme({
