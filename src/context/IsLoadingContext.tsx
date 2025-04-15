@@ -9,6 +9,7 @@ type IsLoadingProviderProps = {
 export const IsLoadingProvider: React.FC<IsLoadingProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState({
     accessLevels: true,
+    administrator: false,
     categories: true,
     categories_sub: true,
     columns: true,
