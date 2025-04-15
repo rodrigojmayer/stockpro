@@ -28,7 +28,7 @@ import SignUp from './pages/SignUp';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // import Cookies from 'js-cookie';
-import useAuth from './hooks/useAuth';
+// import useAuth from './hooks/useAuth';
 import { useStylesGlobal } from './Styles';
 import Administrator from './pages/Administrator';
 
@@ -50,7 +50,7 @@ function App() {
 
   const { setIsLoading } = useContext<any>(IsLoadingContext);
   // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
-  const { auth, persist } = useAuth();
+  // const { auth, persist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const { hash, pathname, search } = location;
