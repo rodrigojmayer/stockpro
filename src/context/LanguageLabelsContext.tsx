@@ -177,7 +177,7 @@ export const LanguageLabelsProvider: React.FC<LanguageLabelsProviderProps> = ({ 
       });
       setLabelsTableProducts({
         alerts_on_top: "Alertas primero",
-        manage_columns: "Gestionar campos",
+        manage_columns: "Administrar columnas",
         custom_fields: "Campos propios",
       });
       setLabelsProfile({

@@ -50,7 +50,7 @@ export default function ManageUser(
     const [userLastName, setUserLastName] = useState<string>('');
     const [userUser, setUserUser] = useState<string>('');
     const [userEmail, setUserEmail] = useState<string>('');
-    const[ userAlertsEnabled, setUserAlertsEnabled ] = useState<boolean>(false)
+    const [userAlertsEnabled, setUserAlertsEnabled] = useState<boolean>(false)
     const [userDeleted, setUserDeleted] = useState<boolean>(false);
     const [userEnabled, setUserEnabled] = useState<boolean>(true);
     // const [userPassword, setUserPassword] = useState<string>('');
