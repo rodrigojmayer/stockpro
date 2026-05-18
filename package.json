@@ -21,6 +21,7 @@
     "@react-oauth/google": "^0.12.1",
     "@types/material-ui": "^0.21.12",
     "dayjs": "^1.11.10",
+    "fast-xml-parser": "^5.8.0",
     "filestack-react": "^6.0.0",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
