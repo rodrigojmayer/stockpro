@@ -32,6 +32,7 @@
     "react-router-dom": "^6.22.0",
     "react-use-websocket": "^4.5.0",
     "react-virtuoso": "^4.3.5",
+    "rollup": "^3.30.0",
     "ts-node": "^10.9.1",
     "tss-react": "^4.8.3"
   },
