@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     // port: 3000,
-    port: parseInt(process.env.PORT || '3000', 10),
+    port: parseInt(process.env.VITE_PORT || '5000', 10),
     // port: 8080,
     // headers: {
       // 'Content-Security-Policy': "script-src 'self' 'unsafe-inline' https://apis.google.com; script-src-elem 'self' 'unsafe-inline'"

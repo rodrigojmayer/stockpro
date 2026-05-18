@@ -82,6 +82,9 @@ function rowContent(
     user_background_color:any,
   ) {
 
+    // console.log("_index: ", _index)
+    // console.log("row: ", row)
+    // console.log("columnsTable: ", columnsTable)
   let newRow = { ...row } // Create a copy of the item to add in the same level the custom_fields
   // console.log("newRow: ", newRow)
   if (newRow.custom_fields) {
@@ -237,7 +240,7 @@ export default function TableProducts(
 
 
   const [manageColumns, setManageColumns] = useState(initialManageColumns)
-  // console.log("columnsTable: ", columnsTable)
+  console.log("columnsTable: ", columnsTable)
   // console.log("initialManageColumns: ", initialManageColumns)
   // console.log("manageColumns: ", manageColumns)
   // console.log("columns: ", columns)
